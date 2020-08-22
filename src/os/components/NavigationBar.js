@@ -8,6 +8,7 @@ import { grey } from "@material-ui/core/colors";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,11 +22,12 @@ const useStyles = makeStyles(() => ({
 
 export const NavigationBar = ({ notifications = [] }) => {
   const classes = useStyles();
+  const history =  useHistory()
+    
   return (
     <BottomNavigation
-      value={null}
-      onChange={() => {}}
       className={classes.root}
+      onChange={e => e.target.value === 'back' ? history.goBack() : history.push('/')}
     >
       <BottomNavigationAction
         label="Back"
@@ -33,8 +35,8 @@ export const NavigationBar = ({ notifications = [] }) => {
         icon={<KeyboardArrowLeftIcon className={classes.icon} color="error" />}
       />
       <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
+        label="Home"
+        value="home"
         icon={<AppsIcon className={classes.icon} />}
       />
     </BottomNavigation>
