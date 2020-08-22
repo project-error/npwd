@@ -2,6 +2,7 @@ import React from "react";
 import "./Phone.css";
 import { Route } from "react-router-dom";
 import { HomeApp } from "./apps/home/components/Home";
+import { ContactsApp } from "./apps/contacts/components/Contacts";
 
 function Phone() {
   return (
@@ -17,6 +18,7 @@ function Phone() {
           <div className="PhoneScreen" id="phone">
             <div className="PhoneAppContainer">
               <Route exact path="/" component={HomeApp} />
+              <Route exact path="/contacts" component={ContactsApp} />
             </div>
           </div>
         </div>

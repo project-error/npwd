@@ -2,6 +2,7 @@ import React from "react";
 import { AppWrapper } from "../../../ui/components";
 import { useSettings } from "../../settings/hooks/useSettings";
 import { GridMenu } from "./GridMenu";
+import { Box } from "@material-ui/core";
 
 export const HomeApp = () => {
   const [settings] = useSettings();
@@ -11,7 +12,9 @@ export const HomeApp = () => {
         backgroundImage: `${process.env.PUBLIC_URL}url(/media/backgrounds/${settings.wallpaper})`,
       }}
     >
-      <GridMenu apps={settings.apps} />
+      <Box padding={2}>
+        <GridMenu apps={settings.apps} />
+      </Box>
     </AppWrapper>
   );
 };

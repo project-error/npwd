@@ -1,14 +1,16 @@
 import React from "react";
 import { AppIcon } from "./AppIcon";
+import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export const GridMenu = ({ apps }) => {
   return (
-    <div style={{ display: "flex" }}>
+    <Grid container spacing={6}>
       {apps.map((app) => (
-        <div style={{ flex: '1 1 20%',  }}>
-          <AppIcon icon={app.icon} label={app.name} />
-        </div>
+        <Grid item component={Link} to="/contacts">
+            <AppIcon icon={app.icon} label={app.name} />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 };
