@@ -12,7 +12,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     zIndex: 2,
   },
@@ -26,6 +26,7 @@ export const ContextMenu = ({ open, onClose, options }) => {
         <List aria-label="context menu">
           {options.map((option) => (
             <ListItem
+              selected={option.selected}
               button
               key={option.key || option.label}
               onClick={(e) => {

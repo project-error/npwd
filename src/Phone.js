@@ -1,12 +1,12 @@
 import React from "react";
 import "./Phone.css";
 import "./i18n";
-import MessageIcon from "@material-ui/icons/Email";
 import { Route } from "react-router-dom";
 import { useSettings } from "./apps/settings/hooks/useSettings";
 import { NotificationBar } from "./os/components/NotificationBar";
 import { NotificationIcon } from "./os/components/NotificationIcon";
 import { NavigationBar } from "./os/components/NavigationBar";
+import MessageIcon from "@material-ui/icons/Email";
 
 import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/Contacts";

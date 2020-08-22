@@ -17,14 +17,16 @@
   z-index: 999;
   width: 500px;
   height: 1000px;
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .PhoneScreen {
   overflow: hidden;
   position: absolute;
   background-color: black;
-  border: 8px solid black;
+  border-top: 2px solid black;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
   bottom: 100px;
   left: 50px;
   right: 50px;

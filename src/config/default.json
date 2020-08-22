@@ -2,10 +2,16 @@
   "4gNetowrk": "AT&T",
   "language": "en_US",
   "wallpapers": ["default.png", "dragon.jpg", "legacy.jpg"],
+  "frames": ["default.png", "s10.png"],
   "themes": {
     "default-dark": {
       "palette": {
         "type": "dark"
+      }
+    },
+    "default-light": {
+      "palette": {
+        "type": "light"
       }
     }
   }

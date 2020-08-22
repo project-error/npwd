@@ -4,10 +4,21 @@ import { List, ListItem, ListItemText } from "@material-ui/core";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
-import { useContextMenu } from "../../../ui/hooks/useContextMenu";
+import {
+  useContextMenu,
+  MapStringOptions,
+} from "../../../ui/hooks/useContextMenu";
 import { useConfig } from "../../../config/hooks/useConfig";
 import { useSettings } from "../hooks/useSettings";
 import { useApps } from "../../appmarket/hooks/useApps";
+
+export const SettingItem = ({ options, label, value, onClick }) => {
+  return (
+    <ListItem onClick={() => onClick(options)} button>
+      <ListItemText primary={label} secondary={value} />
+    </ListItem>
+  );
+};
 
 export const SettingsApp = () => {
   const { t } = useTranslation();
@@ -15,23 +26,42 @@ export const SettingsApp = () => {
   const { getApp } = useApps();
   const { setSettings, settings } = useSettings();
 
-  const wallpaperOptions = config.wallpapers.map((w) => ({
-    label: w,
-    key: w,
-    onClick: () => setSettings("wallpaper", w),
-  }));
-
-  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu(
-    wallpaperOptions
+  const wallpapers = config.wallpapers.map(
+    MapStringOptions(settings.wallpaper, (val) => setSettings("wallpaper", val))
   );
+  const frames = config.frames.map(
+    MapStringOptions(settings.frame, (val) => setSettings("frame", val))
+  );
+  const themes = Object.keys(config.themes).map(
+    MapStringOptions(settings.theme, (val) => setSettings("theme", val))
+  );
+
+  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
     <AppWrapper>
-      <AppTitle color={getApp("settings").backgroundColor}>{t("APPS_SETTINGS")}</AppTitle>
+      <AppTitle color={getApp("settings").backgroundColor}>
+        {t("APPS_SETTINGS")}
+      </AppTitle>
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List>
-          <ListItem onClick={openMenu} button>
-            <ListItemText primary={t("APPS_SETTINGS_OPTIONS_WALLPAPER")} secondary={settings.wallpaper} />
-          </ListItem>
+          <SettingItem
+            label="Theme"
+            value={settings.theme}
+            options={themes}
+            onClick={openMenu}
+          />
+          <SettingItem
+            label="Wallpaper"
+            value={settings.wallpaper}
+            options={wallpapers}
+            onClick={openMenu}
+          />
+          <SettingItem
+            label="Frame"
+            value={settings.frame}
+            options={frames}
+            onClick={openMenu}
+          />
         </List>
       </AppContent>
       <ContextMenu />
