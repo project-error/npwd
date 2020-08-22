@@ -9,8 +9,9 @@ import { Navigation } from "./os/components/Navigation";
 import MessageIcon from "@material-ui/icons/Email";
 
 import { HomeApp } from "./apps/home/components/Home";
-import { ContactsApp } from "./apps/contacts/components/Contacts";
-import { SettingsApp } from "./apps/settings/components/Settings";
+import { ContactsApp } from "./apps/contacts/components/ContactsApp";
+import { SettingsApp } from "./apps/settings/components/SettingsApp";
+import { PhoneApp } from './apps/phone/components/PhoneApp';
 import { ThemeProvider } from "@material-ui/core";
 
 function Phone() {
@@ -40,6 +41,7 @@ function Phone() {
                 <Route exact path="/" component={HomeApp} />
                 <Route exact path="/contacts" component={ContactsApp} />
                 <Route exact path="/settings" component={SettingsApp} />
+                <Route exact path="/phone" component={PhoneApp} />
               </div>
               <Navigation />
             </div>
