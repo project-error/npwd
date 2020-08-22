@@ -1,16 +1,15 @@
 import React from "react";
-import { makeStyles, Typography, Grid } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
+import { makeStyles, Typography, Grid, IconButton } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SignalIcon from "@material-ui/icons/SignalCellular3Bar";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: fade(grey[800], 0.7),
+    backgroundColor: fade(theme.palette.background.paper, 0.7),
     height: "25px",
     width: "100%",
-    color: "white",
-    zIndex: 2
+    color: theme.palette.text.primary,
+    zIndex: 2,
   },
   item: {
     margin: "0 6px",
@@ -18,6 +17,11 @@ const useStyles = makeStyles(() => ({
   text: {
     position: "relative",
     bottom: "2px",
+    color: theme.palette.text.primary,
+  },
+  icon: {
+    padding: '4px',
+    color: theme.palette.text.primary,
   },
 }));
 
@@ -31,9 +35,9 @@ export const NotificationBar = ({ notifications = [] }) => {
       wrap="nowrap"
     >
       <Grid container item wrap="nowrap">
-        {notifications.map((n) => (
-          <Grid item className={classes.item}>
-            {n}
+        {notifications.map((notification) => (
+          <Grid item component={IconButton} className={classes.icon}>
+            {notification.icon}
           </Grid>
         ))}
       </Grid>
@@ -45,7 +49,6 @@ export const NotificationBar = ({ notifications = [] }) => {
           <Typography
             className={classes.text}
             variant="button"
-            color="white"
           >{`AT&T`}</Typography>
         </Grid>
       </Grid>

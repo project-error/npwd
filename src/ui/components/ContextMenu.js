@@ -27,8 +27,8 @@ export const ContextMenu = ({ open, onClose, options }) => {
           {options.map((option) => (
             <ListItem
               selected={option.selected}
-              button
               key={option.key || option.label}
+              button
               onClick={(e) => {
                 option.onClick(e, option);
                 onClose();
