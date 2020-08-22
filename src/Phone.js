@@ -8,13 +8,12 @@ import { NotificationBar } from "./os/components/NotificationBar";
 import { NotificationIcon } from "./os/components/NotificationIcon";
 import { NavigationBar } from "./os/components/NavigationBar";
 
-
 import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/Contacts";
 import { SettingsApp } from "./apps/settings/components/Settings";
 
 function Phone() {
-  const [settings] = useSettings();
+  const { settings } = useSettings();
   return (
     <div className="PhoneWrapper">
       <div style={{ zoom: "80%" }}>
@@ -32,7 +31,9 @@ function Phone() {
               backgroundImage: `${process.env.PUBLIC_URL}url(/media/backgrounds/${settings.wallpaper})`,
             }}
           >
-            <NotificationBar notifications={[<NotificationIcon Icon={MessageIcon} />]} />
+            <NotificationBar
+              notifications={[<NotificationIcon Icon={MessageIcon} />]}
+            />
             <div className="PhoneAppContainer">
               <Route exact path="/" component={HomeApp} />
               <Route exact path="/contacts" component={ContactsApp} />

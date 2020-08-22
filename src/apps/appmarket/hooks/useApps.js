@@ -34,5 +34,5 @@ export const useApps = () => {
     // eslint-disable-next-line
   }, []);
 
-  return [apps, setApps];
+  return { apps, setApps };
 };

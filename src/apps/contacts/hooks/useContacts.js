@@ -1,8 +1,8 @@
-import { createContext } from "react";
-import { useConfig } from "../../../config/hooks/useConfig";
+import { useRecoilState, atom } from "recoil";
 
-export const ContactsContext = createContext({
-  all: [
+const contactListState = atom({
+  key: "contactList",
+  default: [
     {
       display: "Test Contact",
       phoneNumber: "000-1111",
@@ -15,6 +15,6 @@ export const ContactsContext = createContext({
 });
 
 export const useContacts = () => {
-  const [contacts, setContacts] = useConfig(ContactsContext);
-  return [contacts.all, contacts => setContacts('all', contacts)]
+  const [contactList, setContactList] = useRecoilState(contactListState);
+  return { contactList, setContactList };
 };

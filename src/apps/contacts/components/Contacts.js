@@ -21,13 +21,13 @@ const useStyles = makeStyles(() => ({
 
 export const ContactsApp = () => {
   const classes = useStyles();
-  const [contacts] = useContacts();
+  const { contactList } = useContacts();
   const { t } = useTranslation();
   return (
     <AppWrapper className={classes.root}>
       <AppTitle className={classes.title}>{t("APPS_CONTACTS")}</AppTitle>
       <AppContent>
-        <ContactList onCall={() => console.log("Calling")} onMessage={() => console.log("Opening messages")}/>
+        <ContactList contacts={contactList} onCall={() => console.log("Calling")} onMessage={() => console.log("Opening messages")}/>
       </AppContent>
     </AppWrapper>
   );

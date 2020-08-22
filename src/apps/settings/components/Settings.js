@@ -22,7 +22,7 @@ export const SettingsApp = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [config] = useConfig();
-  const [_settings, setSettings] = useSettings();
+  const { setSettings } = useSettings();
 
   const wallpaperOptions = config.wallpapers.map((w) => ({
     label: w,
