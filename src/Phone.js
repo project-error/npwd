@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./Phone.css";
 
-function App() {
+function Phone() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div class="PhoneWrapper">
+      <div class="Phone">
+        <div class="PhoneFrame" style={{backgroundImage: `url(/public/media/frames/defaults.png)`}}></div>
+        <div class="PhoneScreen" id="phone">
+          Wasap
+        </div>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Phone;
