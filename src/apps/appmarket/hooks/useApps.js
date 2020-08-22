@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
-import { blue, grey } from "@material-ui/core/colors";
+import { blue, grey, green } from "@material-ui/core/colors";
 import { useTranslation } from "react-i18next";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from '@material-ui/icons/Settings'
+import PhoneIcon from '@material-ui/icons/Phone';
 import { atom } from "recoil";
 
 const appsState = atom({
@@ -16,6 +17,14 @@ export const useApps = () => {
   const { t } = useTranslation();
   useEffect(() => {
     setApps("preinstalled", [
+      {
+        id: 'phone',
+        name: t('APPS_PHONE'),
+        icon: <PhoneIcon />,
+        backgroundColor: green[400],
+        color: green[50],
+        path: '/phone'
+      },
       {
         id: 'contacts',
         name: t('APPS_CONTACTS'),
