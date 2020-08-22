@@ -16,7 +16,7 @@ export const ContactList = ({ contacts, onCall, onMessage }) => {
             primary={contact.display}
             secondary={contact.phoneNumber}
           />
-          <Button onClick={onCall}>
+          <Button onClick={() => onCall(contact.display)}>
             <PhoneIcon />
           </Button>
           <Button onClick={onMessage}>
