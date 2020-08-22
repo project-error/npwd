@@ -10,12 +10,13 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
+    padding: 0
   },
   avatar: {
     backgroundColor: ({ backgroundColor }) => backgroundColor,
     color: ({ color }) => color,
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
     fontSize: theme.typography.h4.fontSize,
   }
 }));

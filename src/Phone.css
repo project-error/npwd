@@ -24,11 +24,13 @@
   overflow: hidden;
   position: absolute;
   background-color: black;
+  border: 8px solid black;
   bottom: 100px;
   left: 50px;
   right: 50px;
   top: 100px;
   display: flex;
+  flex-direction: column;
 }
 
 .PhoneAppContainer {
