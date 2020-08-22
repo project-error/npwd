@@ -1,5 +1,4 @@
 import React from "react";
-import { ClickAwayListener } from "@material-ui/core";
 
 export const AppWrapper = ({ children, style, handleClickAway, ...props }) => {
   return (

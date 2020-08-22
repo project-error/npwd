@@ -4,11 +4,14 @@ import "./main.css";
 import Phone from "./Phone";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Phone />
+      <RecoilRoot>
+        <Phone />
+      </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

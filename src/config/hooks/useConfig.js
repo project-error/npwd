@@ -1,20 +1,22 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import _set from "lodash/set";
 import Default from "../default.json";
+import { atom, useRecoilState } from "recoil";
 
-export const ConfigContext = createContext(Default);
+const configState = atom({
+  key: 'config',
+  default: Default
+})
 
-export const useConfig = (Context = ConfigContext) => {
-  const configCtx = useContext(Context);
-  const [config, _setConfig] = useState({ ...configCtx });
+console.log(Default)
 
-  useEffect(() => {
-    _setConfig({ ...configCtx });
-  }, [configCtx]);
+export const useConfig = (state = configState) => {
+  const [config, _setConfig] = useRecoilState(state)
 
   const setConfig = (key, value) => {
-    const state = { ...config };
-    _setConfig(_set(state, key, value));
+    _setConfig(oldConfig => ({
+      ...oldConfig,
+      [key]: value
+    }));
   };
+
   return [config, setConfig];
 };

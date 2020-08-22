@@ -1,9 +1,12 @@
-import { createContext } from 'react';
 import Default from '../default.json';
 import { useConfig } from '../../../config/hooks/useConfig';
+import { atom } from 'recoil';
 
-export const SettingsContext = createContext(Default);
+const settingsState = atom({
+    key: 'settings',
+    default: Default
+  })
 
 export const useSettings = () => {
-    return useConfig(SettingsContext);
+    return useConfig(settingsState);
 };

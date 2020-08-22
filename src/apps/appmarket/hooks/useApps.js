@@ -1,14 +1,18 @@
-import React, { createContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
 import { blue, grey } from "@material-ui/core/colors";
 import { useTranslation } from "react-i18next";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from '@material-ui/icons/Settings'
+import { atom } from "recoil";
 
-const AppsContext = createContext(null);
+const appsState = atom({
+  key: 'apps',
+  default: null
+});
 
 export const useApps = () => {
-  const [apps, setApps] = useConfig(AppsContext);
+  const [apps, setApps] = useConfig(appsState);
   const { t } = useTranslation();
   useEffect(() => {
     setApps("preinstalled", [

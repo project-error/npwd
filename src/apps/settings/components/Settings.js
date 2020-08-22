@@ -22,14 +22,16 @@ export const SettingsApp = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [config] = useConfig();
-  const [settings, setSettings] = useSettings();
+  const [_settings, setSettings] = useSettings();
 
   const wallpaperOptions = config.wallpapers.map((w) => ({
     label: w,
     onClick: () => setSettings("wallpaper", w),
   }));
 
-  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu(wallpaperOptions);
+  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu(
+    wallpaperOptions
+  );
   return (
     <AppWrapper className={classes.root}>
       <AppTitle className={classes.title}>{t("APPS_SETTINGS")}</AppTitle>
@@ -40,7 +42,7 @@ export const SettingsApp = () => {
           </ListItem>
         </List>
       </AppContent>
-      <ContextMenu handleClickAway={closeMenu} />
+      <ContextMenu />
     </AppWrapper>
   );
 };

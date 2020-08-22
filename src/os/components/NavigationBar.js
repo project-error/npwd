@@ -5,7 +5,6 @@ import {
   BottomNavigationAction,
 } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
 import { useHistory } from "react-router-dom";
