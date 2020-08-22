@@ -4,9 +4,17 @@ export const AppWrapper = ({ children, style, ...props }) => {
   return (
     <div
       {...props}
-      style={{ width: "100%", height: "100%", display: "flex", ...style }}
+      style={{
+        padding: 0,
+        margin: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        ...style,
+      }}
     >
-      <div style={{ padding: "1em" }}>{children}</div>
+      {children}
     </div>
   );
 };

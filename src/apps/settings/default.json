@@ -1,25 +1,3 @@
 {
-    "wallpaper": "default.png",
-    "apps": [
-        {
-            "name": "Contacts",
-            "icon": "contacts.png"
-        },
-        {
-            "name": "Contacts",
-            "icon": "contacts.png"
-        },
-        {
-            "name": "Contacts",
-            "icon": "contacts.png"
-        },
-        {
-            "name": "Contacts",
-            "icon": "contacts.png"
-        },
-        {
-            "name": "Contacts",
-            "icon": "contacts.png"
-        }
-    ]
+    "wallpaper": "default.png"
 }
