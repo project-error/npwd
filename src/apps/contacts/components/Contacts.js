@@ -5,6 +5,7 @@ import lightBlue from "@material-ui/core/colors/lightBlue";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
+import { useContacts } from "../hooks/useContacts";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export const ContactsApp = () => {
   const classes = useStyles();
+  const [contacts] = useContacts();
   const { t } = useTranslation();
   return (
     <AppWrapper className={classes.root}>
