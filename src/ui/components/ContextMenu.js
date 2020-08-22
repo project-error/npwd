@@ -6,13 +6,14 @@ import {
   ListItemText,
   Slide,
   makeStyles,
+  Paper,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    backgroundColor: theme.palette.background.default,
-    color: "black",
+    position: 'absolute',
+    bottom: 0,
     zIndex: 2,
   },
 }));
@@ -21,12 +22,12 @@ export const ContextMenu = ({ open, onClose, options }) => {
   const classes = useStyles();
   return (
     <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-      <div className={classes.root}>
-        <List component="nav" aria-label="context menu">
+      <Paper square className={classes.root}>
+        <List aria-label="context menu">
           {options.map((option) => (
             <ListItem
               button
-              key={option.key}
+              key={option.key || option.label}
               onClick={(e) => {
                 option.onClick(e, option);
                 onClose();
@@ -37,7 +38,7 @@ export const ContextMenu = ({ open, onClose, options }) => {
             </ListItem>
           ))}
         </List>
-      </div>
+      </Paper>
     </Slide>
   );
 };

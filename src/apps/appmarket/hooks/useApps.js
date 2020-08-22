@@ -8,7 +8,7 @@ import { atom } from "recoil";
 
 const appsState = atom({
   key: 'apps',
-  default: null
+  default: { preinstalled: [] }
 });
 
 export const useApps = () => {
@@ -17,6 +17,7 @@ export const useApps = () => {
   useEffect(() => {
     setApps("preinstalled", [
       {
+        id: 'contacts',
         name: t('APPS_CONTACTS'),
         icon: <ContactsIcon />,
         backgroundColor: blue[500],
@@ -24,6 +25,7 @@ export const useApps = () => {
         path: '/contacts'
       },
       {
+        id: 'settings',
         name: t('APPS_SETTINGS'),
         icon: <SettingsIcon />,
         backgroundColor: grey[700],
@@ -34,5 +36,9 @@ export const useApps = () => {
     // eslint-disable-next-line
   }, []);
 
-  return { apps, setApps };
+  const allApps = [...apps.preinstalled];
+
+  const getApp = id => allApps.find(a => a.id === id) || {};
+
+  return { apps, allApps, setApps, getApp };
 };

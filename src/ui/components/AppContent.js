@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, makeStyles, Backdrop } from "@material-ui/core";
+import { Box, makeStyles, Backdrop, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     position: "absolute",
     zIndex: 1,
+  },
+  paper: {
+    width: "100%",
+    height: "100%",
   },
 }));
 
@@ -21,19 +25,15 @@ export const AppContent = ({
 }) => {
   const classes = useStyles();
   return (
-    <Box
-      px={2}
-      pt={1}
-      flexGrow={1}
-      style={{ width: "100%", ...props }}
-      {...props}
-    >
-      <Backdrop
-        className={classes.backdrop}
-        open={backdrop}
-        onClick={onClickBackdrop}
-      ></Backdrop>
-      {children}
+    <Box flexGrow={1} className={classes.box} {...props}>
+      <Paper square px={2} pt={1} elevation={0} className={classes.paper}>
+        <Backdrop
+          className={classes.backdrop}
+          open={backdrop || false}
+          onClick={onClickBackdrop}
+        ></Backdrop>
+        {children}
+      </Paper>
     </Box>
   );
 };
