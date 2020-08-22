@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { grey } from "@material-ui/core/colors";
 import { useContextMenu } from "../../../ui/hooks/useContextMenu";
 import { useConfig } from "../../../config/hooks/useConfig";
+import { useSettings } from "../hooks/useSettings";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,7 +22,14 @@ export const SettingsApp = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [config] = useConfig();
-  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu(config.wallpapers.map(w => ({ label: w })));
+  const [settings, setSettings] = useSettings();
+
+  const wallpaperOptions = config.wallpapers.map((w) => ({
+    label: w,
+    onClick: () => setSettings("wallpaper", w),
+  }));
+
+  const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu(wallpaperOptions);
   return (
     <AppWrapper className={classes.root}>
       <AppTitle className={classes.title}>{t("APPS_SETTINGS")}</AppTitle>
