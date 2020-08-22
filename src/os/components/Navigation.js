@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavigationBar = ({ notifications = [] }) => {
+export const Navigation = () => {
   const classes = useStyles();
   const history = useHistory();
 

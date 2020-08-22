@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import { useSettings } from "./apps/settings/hooks/useSettings";
 import { NotificationBar } from "./os/components/NotificationBar";
 import { NotificationIcon } from "./os/components/NotificationIcon";
-import { NavigationBar } from "./os/components/NavigationBar";
+import { Navigation } from "./os/components/Navigation";
 import MessageIcon from "@material-ui/icons/Email";
 
 import { HomeApp } from "./apps/home/components/Home";
@@ -34,14 +34,14 @@ function Phone() {
               }}
             >
               <NotificationBar
-                notifications={[<NotificationIcon Icon={MessageIcon} />]}
+                notifications={[{ icon: <NotificationIcon Icon={MessageIcon} /> }, { icon: <NotificationIcon Icon={MessageIcon} /> }]}
               />
               <div className="PhoneAppContainer">
                 <Route exact path="/" component={HomeApp} />
                 <Route exact path="/contacts" component={ContactsApp} />
                 <Route exact path="/settings" component={SettingsApp} />
               </div>
-              <NavigationBar />
+              <Navigation />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { AppWrapper } from "../../../ui/components";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
@@ -14,9 +14,12 @@ import { useApps } from "../../appmarket/hooks/useApps";
 
 export const SettingItem = ({ options, label, value, onClick }) => {
   return (
-    <ListItem onClick={() => onClick(options)} button>
-      <ListItemText primary={label} secondary={value} />
-    </ListItem>
+    <>
+      <ListItem onClick={() => onClick(options)} button>
+        <ListItemText primary={label} secondary={value} />
+      </ListItem>
+      <Divider />
+    </>
   );
 };
 
