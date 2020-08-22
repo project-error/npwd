@@ -27,7 +27,7 @@ export const NavigationBar = ({ notifications = [] }) => {
   return (
     <BottomNavigation
       className={classes.root}
-      onChange={e => e.target.value === 'back' ? history.goBack() : history.push('/')}
+      onChange={(_e, value) => value === 'back' ? history.goBack() : history.push('/')}
     >
       <BottomNavigationAction
         label="Back"
