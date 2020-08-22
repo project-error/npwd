@@ -3,11 +3,18 @@ import "./Phone.css";
 
 function Phone() {
   return (
-    <div class="PhoneWrapper">
-      <div class="Phone">
-        <div class="PhoneFrame" style={{backgroundImage: `url(/public/media/frames/defaults.png)`}}></div>
-        <div class="PhoneScreen" id="phone">
-          Wasap
+    <div className="PhoneWrapper">
+      <div style={{ zoom: '80%' }}>
+        <div className="Phone">
+          <div
+            className="PhoneFrame"
+            style={{
+              backgroundImage: `url(/public/media/frames/defaults.png)`,
+            }}
+          ></div>
+          <div className="PhoneScreen" id="phone">
+            Wasap
+          </div>
         </div>
       </div>
     </div>
