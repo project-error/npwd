@@ -32,7 +32,7 @@ export const NavigationBar = ({ notifications = [] }) => {
       <BottomNavigationAction
         label="Back"
         value="back"
-        icon={<KeyboardArrowLeftIcon className={classes.icon} color="error" />}
+        icon={<KeyboardArrowLeftIcon className={classes.icon} />}
       />
       <BottomNavigationAction
         label="Home"
