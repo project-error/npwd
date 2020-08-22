@@ -1,5 +1,5 @@
 import React from "react";
-import { AppIcon } from "../../../ui/components/AppIcon";
+import { AppIcon } from "./AppIcon";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -13,23 +13,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const GridMenu = ({ apps }) => {
+export const GridMenu = ({ items, Component = AppIcon }) => {
   const classes = useStyles();
   return (
     <Grid container justify="center">
       <Grid container item>
-        {apps &&
-          apps.length &&
-          apps.map((app) => (
+        {items &&
+          items.length &&
+          items.map((item) => (
             <Grid
               item
               className={classes.item}
-              key={app.name}
+              key={item.name}
               tabindex="-1"
               component={Link}
-              to={app.path}
+              to={item.path}
             >
-              <AppIcon {...app} />
+              <Component {...item} />
             </Grid>
           ))}
       </Grid>
