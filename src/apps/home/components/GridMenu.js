@@ -27,7 +27,7 @@ export const GridMenu = ({ apps }) => {
               key={app.name}
               tabindex="-1"
               component={Link}
-              to="/contacts"
+              to={app.path}
             >
               <AppIcon {...app} />
             </Grid>

@@ -1,8 +1,9 @@
 import React, { createContext, useEffect } from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
-import ContactsIcon from "@material-ui/icons/Contacts";
-import { blue } from "@material-ui/core/colors";
+import { blue, grey } from "@material-ui/core/colors";
 import { useTranslation } from "react-i18next";
+import ContactsIcon from "@material-ui/icons/Contacts";
+import SettingsIcon from '@material-ui/icons/Settings'
 
 const AppsContext = createContext(null);
 
@@ -15,31 +16,15 @@ export const useApps = () => {
         name: t('APPS_CONTACTS'),
         icon: <ContactsIcon />,
         backgroundColor: blue[500],
-        color: blue[50]
+        color: blue[50],
+        path: '/contacts'
       },
       {
-        name: "Contacts1",
-      },
-      {
-        name: "Contacts2",
-      },
-      {
-        name: "Contacts3",
-      },
-      {
-        name: "Contacts4",
-      },
-      {
-        name: "Contacts4",
-      },
-      {
-        name: "Contacts4",
-      },
-      {
-        name: "Contacts4",
-      },
-      {
-        name: "Contacts4",
+        name: t('APPS_SETTINGS'),
+        icon: <SettingsIcon />,
+        backgroundColor: grey[700],
+        color: grey[50],
+        path: '/settings'
       }
     ]);
     // eslint-disable-next-line
