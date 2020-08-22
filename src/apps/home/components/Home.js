@@ -6,7 +6,6 @@ import { useApps } from "../../appmarket/hooks/useApps";
 
 export const HomeApp = () => {
   const [apps] = useApps();
-  console.log(apps)
   return (
     <AppWrapper>
       <Box width="100%" mt={6} px={1}>{apps && <GridMenu apps={apps.preinstalled} />}</Box>
