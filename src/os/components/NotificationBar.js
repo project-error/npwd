@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
     height: "25px",
     width: "100%",
     color: "white",
+    zIndex: 2
   },
   item: {
     margin: "0 6px",

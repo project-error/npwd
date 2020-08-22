@@ -12,8 +12,9 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {
-    backgroundColor: fade(grey[800], 0.7),
+    backgroundColor: grey[800],
     color: "white",
+    zIndex: 2
   },
   icon: {
       color: "white"

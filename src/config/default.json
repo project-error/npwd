@@ -1,4 +1,9 @@
 {
     "4gNetowrk": "AT&T",
-    "language": "en_US"
+    "language": "en_US",
+    "wallpapers": [
+        "default.png",
+        "dragon.jpg",
+        "legacy.jpg"
+    ]
 }

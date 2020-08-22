@@ -4,6 +4,7 @@
 
         "APPS_CONTACTS": "Contacts",
         "APPS_MESSAGES": "Messages",
-        "APPS_SETTINGS": "Settings"
+        "APPS_SETTINGS": "Settings",
+        "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper"
     }
 }
