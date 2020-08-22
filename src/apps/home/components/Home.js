@@ -15,7 +15,7 @@ export const HomeApp = () => {
         backgroundImage: `${process.env.PUBLIC_URL}url(/media/backgrounds/${settings.wallpaper})`,
       }}
     >
-      <Box padding={2}>{apps && <GridMenu apps={apps.preinstalled} />}</Box>
+      <Box mt={6} px={4}>{apps && <GridMenu apps={apps.preinstalled} />}</Box>
     </AppWrapper>
   );
 };

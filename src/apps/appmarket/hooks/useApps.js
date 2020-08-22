@@ -1,6 +1,7 @@
 import React, { createContext, useEffect } from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
 import ContactsIcon from "@material-ui/icons/Contacts";
+import { blue } from "@material-ui/core/colors";
 
 const AppsContext = createContext(null);
 
@@ -12,6 +13,8 @@ export const useApps = () => {
       {
         name: "Contacts",
         icon: <ContactsIcon />,
+        backgroundColor: blue[500],
+        color: blue[50]
       },
       {
         name: "Contacts1",
