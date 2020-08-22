@@ -11,23 +11,21 @@ import MessageIcon from "@material-ui/icons/Email";
 import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/Contacts";
 import { SettingsApp } from "./apps/settings/components/Settings";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core";
-import { useConfig } from "./config/hooks/useConfig";
+import { ThemeProvider } from "@material-ui/core";
 
 function Phone() {
-  const { settings } = useSettings();
-  const [config] = useConfig();
+  const { settings, currentTheme } = useSettings();
   return (
-    <div className="PhoneWrapper">
-      <div style={{ zoom: "80%" }}>
-        <div className="Phone">
-          <div
-            className="PhoneFrame"
-            style={{
-              backgroundImage: `${process.env.PUBLIC_URL}url(/media/frames/${settings.frame})`,
-            }}
-          ></div>
-          <ThemeProvider theme={createMuiTheme(config.themes[settings.theme])}>
+    <ThemeProvider theme={currentTheme()}>
+      <div className="PhoneWrapper">
+        <div style={{ zoom: "80%" }}>
+          <div className="Phone">
+            <div
+              className="PhoneFrame"
+              style={{
+                backgroundImage: `${process.env.PUBLIC_URL}url(/media/frames/${settings.frame})`,
+              }}
+            ></div>
             <div
               id="phone"
               className="PhoneScreen"
@@ -45,10 +43,10 @@ function Phone() {
               </div>
               <NavigationBar />
             </div>
-          </ThemeProvider>
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 
