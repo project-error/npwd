@@ -1,0 +1,9 @@
+{
+    "wallpaper": "default.png",
+    "apps": [
+        {
+            "name": "Contacts",
+            "icon": "contacts.png"
+        }
+    ]
+}

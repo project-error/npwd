@@ -1,7 +1,7 @@
 import React from "react";
 import "./Phone.css";
-import { HomeApp } from "./apps/home";
 import { Route } from "react-router-dom";
+import { HomeApp } from "./apps/home/components/Home";
 
 function Phone() {
   return (
