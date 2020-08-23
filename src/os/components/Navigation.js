@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
+import PhoneIcon from "@material-ui/icons/Phone";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,23 +19,25 @@ const useStyles = makeStyles((theme) => ({
 export const Navigation = () => {
   const classes = useStyles();
   const history = useHistory();
-
   return (
     <BottomNavigation
       className={classes.root}
-      onChange={(_e, value) =>
-        value === "back" ? history.goBack() : history.push("/")
-      }
+      onChange={(_e, value) => value()}
     >
       <BottomNavigationAction
         label="Back"
-        value="back"
+        value={() => history.goBack()}
         icon={<KeyboardArrowLeftIcon />}
       />
       <BottomNavigationAction
         label="Home"
-        value="home"
+        value={() => history.push('/')}
         icon={<AppsIcon className={classes.icon} />}
+      />
+      <BottomNavigationAction
+        label="Phone"
+        value={() => history.push('/phone')}
+        icon={<PhoneIcon className={classes.icon} />}
       />
     </BottomNavigation>
   );
