@@ -24,7 +24,7 @@ setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
       data: {
-        app: "simcard",
+        app: "SIMCARD",
         method: "setNumber",
         data: "111-1111",
       },

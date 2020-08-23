@@ -4,7 +4,7 @@ import { simcardState } from "./state";
 
 export const useSimcardService = () => {
   const setNumber = useSetRecoilState(simcardState.number);
-  useNuiEvent("simcard", "setNumber", (data) => {
+  useNuiEvent("SIMCARD", "setNumber", (data) => {
     setNumber(data);
   });
 };
