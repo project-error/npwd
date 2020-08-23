@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { AppIcon } from "./AppIcon";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useKeyboard } from "../../os/hooks/useKeyboard";
+import { useKeyboard } from "../../os/keyboard/hooks/useKeyboard";
 
 const useStyles = makeStyles((theme) => ({
   root: {

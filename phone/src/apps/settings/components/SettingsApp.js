@@ -13,6 +13,7 @@ import { useSettings } from "../hooks/useSettings";
 import { useApps } from "../../appmarket/hooks/useApps";
 import { List } from "../../../ui/components/List";
 import { ListItem } from "../../../ui/components/ListItem";
+import { useSimcard } from "../../../os/simcard/hooks/useSimcard";
 
 export const SettingItem = ({ options, label, value, onClick }) => {
   return (
@@ -30,6 +31,7 @@ export const SettingsApp = () => {
   const [config] = useConfig();
   const { getApp } = useApps();
   const { setSettings, settings } = useSettings();
+  const simcard = useSimcard(); 
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(settings.wallpaper, (val) => setSettings("wallpaper", val))
@@ -66,6 +68,10 @@ export const SettingsApp = () => {
             value={settings.frame}
             options={frames}
             onClick={openMenu}
+          />
+          <SettingItem
+            label="Phone Number"
+            value={simcard.number}
           />
         </List>
       </AppContent>

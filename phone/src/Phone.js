@@ -3,9 +3,6 @@ import "./Phone.css";
 import "./i18n";
 import { Route } from "react-router-dom";
 import { useSettings } from "./apps/settings/hooks/useSettings";
-import { NotificationBar } from "./os/components/NotificationBar";
-import { NotificationIcon } from "./os/components/NotificationIcon";
-import { Navigation } from "./os/components/Navigation";
 import MessageIcon from "@material-ui/icons/Email";
 
 import { HomeApp } from "./apps/home/components/Home";
@@ -15,9 +12,29 @@ import { PhoneApp } from "./apps/phone/components/PhoneApp";
 import { BankApp } from "./apps/bank/components/BankApp";
 import { ThemeProvider } from "@material-ui/core";
 import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
-import { useInitKeyboard } from "./os/hooks/useKeyboard";
+import { useInitKeyboard } from "./os/keyboard/hooks/useKeyboard";
+import { NotificationIcon } from "./os/notifications/components/NotificationIcon";
+import { NotificationBar } from "./os/notifications/components/NotificationBar";
+import { Navigation } from "./os/navigation-bar/components/Navigation";
+import { useNuiService } from "./os/nui-events/hooks/useNuiService";
+import { useSimcardService } from "./os/simcard/hooks/useSimcardService";
+
+// @TODO: Remove this testing shit
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "simcard",
+        method: "setNumber",
+        data: "111-1111",
+      },
+    })
+  );
+}, 3000);
 
 function Phone() {
+  useNuiService();
+  useSimcardService();
   useInitKeyboard();
   const { settings, currentTheme } = useSettings();
 
