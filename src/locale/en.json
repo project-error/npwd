@@ -4,6 +4,7 @@
         "APPS_PHONE": "Phone",
         "APPS_CONTACTS": "Contacts",
         "APPS_MESSAGES": "Messages",
+        "APPS_CALCULATOR": "Calculator",
         "APPS_SETTINGS": "Settings",
         "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper",
         "APPS_SETTINGS_OPTIONS_FRAME": "Frame"

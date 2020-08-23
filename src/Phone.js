@@ -13,6 +13,7 @@ import { ContactsApp } from "./apps/contacts/components/ContactsApp";
 import { SettingsApp } from "./apps/settings/components/SettingsApp";
 import { PhoneApp } from './apps/phone/components/PhoneApp';
 import { ThemeProvider } from "@material-ui/core";
+import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
 
 function Phone() {
   const { settings, currentTheme } = useSettings();
@@ -42,6 +43,7 @@ function Phone() {
                 <Route exact path="/contacts" component={ContactsApp} />
                 <Route exact path="/settings" component={SettingsApp} />
                 <Route exact path="/phone" component={PhoneApp} />
+                <Route exact path="/calculator" component={CalculatorApp} />
               </div>
               <Navigation />
             </div>
