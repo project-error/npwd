@@ -12,7 +12,7 @@ import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/ContactsApp";
 import { SettingsApp } from "./apps/settings/components/SettingsApp";
 import { PhoneApp } from "./apps/phone/components/PhoneApp";
-import { BankApp } from './apps/bank/component/BankApp';
+import { BankApp } from "./apps/bank/components/BankApp";
 import { ThemeProvider } from "@material-ui/core";
 import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
 import { useInitKeyboard } from "./os/hooks/useKeyboard";
@@ -41,7 +41,10 @@ function Phone() {
             >
               <NotificationBar
                 notifications={[
-                  { key: 'newMessage', icon: <NotificationIcon Icon={MessageIcon} /> },
+                  {
+                    key: "newMessage",
+                    icon: <NotificationIcon Icon={MessageIcon} />,
+                  },
                 ]}
               />
               <div className="PhoneAppContainer">
