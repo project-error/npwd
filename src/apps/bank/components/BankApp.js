@@ -5,6 +5,8 @@ import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
 import { Button } from "@material-ui/core";
+import { useBank } from '../hooks/useBank';
+import { TransactionList } from './transactionList';
 import "./BankApp.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const BankApp = () => {
+  const { transactionList } = useBank();
   const { t } = useTranslation();
   const classes = useStyles();
   return (
@@ -47,6 +50,9 @@ export const BankApp = () => {
             {t("APPS_BANK_TRANSFER")}
           </Button>
         </div>
+        <TransactionList 
+          transactions={transactionList}
+        />
       </AppContent>
     </AppWrapper>
   );
