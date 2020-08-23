@@ -2,7 +2,7 @@ import React from "react";
 import {
   makeStyles,
   BottomNavigation,
-  BottomNavigationAction
+  BottomNavigationAction,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
@@ -25,19 +25,19 @@ export const Navigation = () => {
       onChange={(_e, value) => value()}
     >
       <BottomNavigationAction
-        label="Back"
-        value={() => history.goBack()}
-        icon={<KeyboardArrowLeftIcon />}
+        label="Phone"
+        value={() => history.push("/phone")}
+        icon={<PhoneIcon className={classes.icon} />}
       />
       <BottomNavigationAction
         label="Home"
-        value={() => history.push('/')}
+        value={() => history.push("/")}
         icon={<AppsIcon className={classes.icon} />}
       />
       <BottomNavigationAction
-        label="Phone"
-        value={() => history.push('/phone')}
-        icon={<PhoneIcon className={classes.icon} />}
+        label="Back"
+        value={() => history.goBack()}
+        icon={<KeyboardArrowLeftIcon />}
       />
     </BottomNavigation>
   );

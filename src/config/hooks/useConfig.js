@@ -6,8 +6,6 @@ const configState = atom({
   default: Default
 })
 
-console.log(Default)
-
 export const useConfig = (state = configState) => {
   const [config, _setConfig] = useRecoilState(state)
 

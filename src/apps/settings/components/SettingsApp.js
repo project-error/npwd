@@ -1,6 +1,6 @@
 import React from "react";
 import { AppWrapper } from "../../../ui/components";
-import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
+import { ListItemText, Divider } from "@material-ui/core";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,8 @@ import {
 import { useConfig } from "../../../config/hooks/useConfig";
 import { useSettings } from "../hooks/useSettings";
 import { useApps } from "../../appmarket/hooks/useApps";
+import { List } from "../../../ui/components/List";
+import { ListItem } from "../../../ui/components/ListItem";
 
 export const SettingItem = ({ options, label, value, onClick }) => {
   return (

@@ -23,7 +23,7 @@ export const ContextMenu = ({ open, onClose, options }) => {
   return (
     <Slide direction="up" in={open} mountOnEnter unmountOnExit>
       <Paper square className={classes.root}>
-        <List aria-label="context menu">
+        <List>
           {options.map((option) => (
             <ListItem
               selected={option.selected}

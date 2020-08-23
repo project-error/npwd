@@ -11,12 +11,15 @@ import MessageIcon from "@material-ui/icons/Email";
 import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/ContactsApp";
 import { SettingsApp } from "./apps/settings/components/SettingsApp";
-import { PhoneApp } from './apps/phone/components/PhoneApp';
+import { PhoneApp } from "./apps/phone/components/PhoneApp";
 import { ThemeProvider } from "@material-ui/core";
 import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
+import { useInitKeyboard } from "./os/hooks/useKeyboard";
 
 function Phone() {
+  useInitKeyboard();
   const { settings, currentTheme } = useSettings();
+
   return (
     <ThemeProvider theme={currentTheme()}>
       <div className="PhoneWrapper">
@@ -36,7 +39,9 @@ function Phone() {
               }}
             >
               <NotificationBar
-                notifications={[{ icon: <NotificationIcon Icon={MessageIcon} /> }, { icon: <NotificationIcon Icon={MessageIcon} /> }]}
+                notifications={[
+                  { key: 'newMessage', icon: <NotificationIcon Icon={MessageIcon} /> },
+                ]}
               />
               <div className="PhoneAppContainer">
                 <Route exact path="/" component={HomeApp} />

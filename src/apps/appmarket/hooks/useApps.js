@@ -38,7 +38,7 @@ export const useApps = () => {
       },
       {
         id: "calculator",
-        name: t("APPS_SETTINGS"),
+        name: t("APPS_CALCULATOR"),
         icon: <CalculatorIcon />,
         backgroundColor: currentTheme().palette.primary.light,
         color: currentTheme().palette.primary.contrastText,

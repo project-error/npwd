@@ -3,7 +3,7 @@ import MaterialListItem from "@material-ui/core/ListItem";
 
 export const ListItem = ({ ...props }) => {
   return (
-    <MaterialListItem {...props} aria-label="list item">
+    <MaterialListItem aria-label="list item" {...props}>
       {props.children}
     </MaterialListItem>
   );
