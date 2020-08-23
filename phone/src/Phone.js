@@ -46,14 +46,14 @@ function Phone() {
             <div
               className="PhoneFrame"
               style={{
-                backgroundImage: `${process.env.PUBLIC_URL}url(/media/frames/${settings.frame})`,
+                backgroundImage: `url(${process.env.PUBLIC_URL}/media/frames/${settings.frame})`,
               }}
             ></div>
             <div
               id="phone"
               className="PhoneScreen"
               style={{
-                backgroundImage: `${process.env.PUBLIC_URL}url(/media/backgrounds/${settings.wallpaper})`,
+                backgroundImage: `url(${process.env.PUBLIC_URL}/media/backgrounds/${settings.wallpaper})`,
               }}
             >
               <NotificationBar
