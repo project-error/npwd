@@ -1,13 +1,13 @@
 import React from "react";
 import {
-  ListItem,
-  List,
   ListItemIcon,
   ListItemText,
   Slide,
   makeStyles,
   Paper,
 } from "@material-ui/core";
+import { List } from "./List";
+import { ListItem } from "./ListItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ export const ContextMenu = ({ open, onClose, options }) => {
   return (
     <Slide direction="up" in={open} mountOnEnter unmountOnExit>
       <Paper square className={classes.root}>
-        <List aria-label="context menu">
+        <List>
           {options.map((option) => (
             <ListItem
               selected={option.selected}
@@ -34,7 +34,7 @@ export const ContextMenu = ({ open, onClose, options }) => {
                 onClose();
               }}
             >
-              <ListItemIcon>{option.icon}</ListItemIcon>
+              {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
               <ListItemText primary={option.label} />
             </ListItem>
           ))}

@@ -36,7 +36,7 @@ export const NotificationBar = ({ notifications = [] }) => {
     >
       <Grid container item wrap="nowrap">
         {notifications.map((notification) => (
-          <Grid item component={IconButton} className={classes.icon}>
+          <Grid item key={notification.key} component={IconButton} className={classes.icon}>
             {notification.icon}
           </Grid>
         ))}

@@ -1,11 +1,11 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Button } from "@material-ui/core";
 
 import PhoneIcon from "@material-ui/icons/Phone";
 import ChatIcon from "@material-ui/icons/Chat";
+import { List } from "../../../ui/components/List";
+import { ListItem } from "../../../ui/components/ListItem";
 
 export const ContactList = ({ contacts, onCall, onMessage }) => {
   return (

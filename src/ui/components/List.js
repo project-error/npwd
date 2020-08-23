@@ -1,11 +1,10 @@
-import React from 'react'
-import List from '@material-ui/core/List';
+import React from "react";
+import MaterialList from "@material-ui/core/List";
 
-export const PhoneList = (props) => {
-    
-    return (
-        <List component='nav' className={props.className} aria-label='mailbox folders'>
-                {props.children}
-        </List>
-    )
-}
+export const List = ({ ...props }) => {
+  return (
+    <MaterialList aria-label="list" {...props}>
+      {props.children}
+    </MaterialList>
+  );
+};
