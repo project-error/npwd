@@ -12,6 +12,7 @@ import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/ContactsApp";
 import { SettingsApp } from "./apps/settings/components/SettingsApp";
 import { PhoneApp } from "./apps/phone/components/PhoneApp";
+import { BankApp } from './apps/bank/component/BankApp';
 import { ThemeProvider } from "@material-ui/core";
 import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
 import { useInitKeyboard } from "./os/hooks/useKeyboard";
@@ -48,6 +49,7 @@ function Phone() {
                 <Route exact path="/contacts" component={ContactsApp} />
                 <Route exact path="/settings" component={SettingsApp} />
                 <Route exact path="/phone" component={PhoneApp} />
+                <Route exact path="/bank" component={BankApp} />
                 <Route exact path="/calculator" component={CalculatorApp} />
               </div>
               <Navigation />
