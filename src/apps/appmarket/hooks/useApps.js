@@ -3,14 +3,9 @@ import { useConfig } from "../../../config/hooks/useConfig";
 import { blue, grey, green, orange } from "@material-ui/core/colors";
 import { useTranslation } from "react-i18next";
 import ContactsIcon from "@material-ui/icons/Contacts";
-<<<<<<< HEAD
 import SettingsIcon from '@material-ui/icons/Settings'
 import PhoneIcon from '@material-ui/icons/Phone';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-=======
-import SettingsIcon from "@material-ui/icons/Settings";
-import PhoneIcon from "@material-ui/icons/Phone";
->>>>>>> 6ce38f2746e21d5096169f5d1f0f2a40c0cd9a9d
 import { atom } from "recoil";
 import { useSettings } from "../../settings/hooks/useSettings";
 import { CalculatorIcon } from "../../calculator/components/CalculatorIcon";

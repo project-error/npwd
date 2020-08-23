@@ -11,12 +11,7 @@ import MessageIcon from "@material-ui/icons/Email";
 import { HomeApp } from "./apps/home/components/Home";
 import { ContactsApp } from "./apps/contacts/components/ContactsApp";
 import { SettingsApp } from "./apps/settings/components/SettingsApp";
-<<<<<<< HEAD
-import { PhoneApp } from './apps/phone/components/PhoneApp';
-import { BankApp } from './apps/bank/component/BankApp';
-=======
 import { PhoneApp } from "./apps/phone/components/PhoneApp";
->>>>>>> 6ce38f2746e21d5096169f5d1f0f2a40c0cd9a9d
 import { ThemeProvider } from "@material-ui/core";
 import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
 import { useInitKeyboard } from "./os/hooks/useKeyboard";
@@ -53,11 +48,7 @@ function Phone() {
                 <Route exact path="/contacts" component={ContactsApp} />
                 <Route exact path="/settings" component={SettingsApp} />
                 <Route exact path="/phone" component={PhoneApp} />
-<<<<<<< HEAD
-                <Route exact path="/bank" component={BankApp} />
-=======
                 <Route exact path="/calculator" component={CalculatorApp} />
->>>>>>> 6ce38f2746e21d5096169f5d1f0f2a40c0cd9a9d
               </div>
               <Navigation />
             </div>
