@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
-import { blue, grey, green } from "@material-ui/core/colors";
+import { blue, grey, green, orange } from "@material-ui/core/colors";
 import { useTranslation } from "react-i18next";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from '@material-ui/icons/Settings'
 import PhoneIcon from '@material-ui/icons/Phone';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import { atom } from "recoil";
 
 const appsState = atom({
@@ -40,6 +41,14 @@ export const useApps = () => {
         backgroundColor: grey[700],
         color: grey[50],
         path: '/settings'
+      },
+      {
+        id: 'bank',
+        name: t('APPS_BANK'),
+        icon: <AccountBalanceIcon />,
+        backgroundColor: orange[600],
+        color: orange[50],
+        path: '/bank'
       }
     ]);
     // eslint-disable-next-line
