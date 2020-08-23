@@ -1,24 +1,24 @@
-import React from 'react';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+import React from "react";
 import ListItemText from "@material-ui/core/ListItemText";
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
-import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
+import PhoneCallbackIcon from "@material-ui/icons/PhoneCallback";
+import PhoneForwardedIcon from "@material-ui/icons/PhoneForwarded";
+import { List } from "../../../ui/components/List";
+import { ListItem } from "../../../ui/components/ListItem";
+
+const CallTypeIcon = {
+  incoming: <PhoneCallbackIcon />,
+  outgoing: <PhoneForwardedIcon />,
+};
 
 export const PhoneList = ({ calls }) => {
-    const CallTypeIcon = {'incoming': <PhoneCallbackIcon />, 'outgoing': <PhoneForwardedIcon />}
-
-    return (
-        <List>
-            {calls.map((call) => (
-                <ListItem key={call.id} divider>
-                    <ListItemText 
-                        primary={call.caller}
-                        secondary={call.phoneNumber}
-                    />
-                    {CallTypeIcon[call.type]}
-                </ListItem>
-            ))}
-        </List>
-    )
-} 
+  return (
+    <List>
+      {calls.map((call) => (
+        <ListItem key={call.id} divider>
+          <ListItemText primary={call.caller} secondary={call.phoneNumber} />
+          {CallTypeIcon[call.type]}
+        </ListItem>
+      ))}
+    </List>
+  );
+};
