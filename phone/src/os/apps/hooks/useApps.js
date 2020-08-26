@@ -25,7 +25,7 @@ const appsState = atom({
         backgroundColor: green[400],
         color: green[50],
         path: "/phone",
-        Route: () => <Route exact path="/phone" component={DialerApp} />,
+        Route: () => <Route path="/phone" component={DialerApp} />,
       },
       {
         id: "CONTACTS",
@@ -34,7 +34,7 @@ const appsState = atom({
         backgroundColor: blue[500],
         color: blue[50],
         path: "/contacts",
-        Route: () => <Route exact path="/contacts" component={ContactsApp} />,
+        Route: () => <Route path="/contacts" component={ContactsApp} />,
       },
       {
         id: "CALCULATOR",
@@ -43,9 +43,7 @@ const appsState = atom({
         backgroundColor: purple[500],
         color: grey[50],
         path: "/calculator",
-        Route: () => (
-          <Route exact path="/calculator" component={CalculatorApp} />
-        ),
+        Route: () => <Route path="/calculator" component={CalculatorApp} />,
       },
       {
         id: "SETTINGS",
@@ -54,7 +52,7 @@ const appsState = atom({
         backgroundColor: grey[700],
         color: grey[50],
         path: "/settings",
-        Route: () => <Route exact path="/settings" component={SettingsApp} />,
+        Route: () => <Route path="/settings" component={SettingsApp} />,
       },
       {
         id: "BANK",
@@ -63,7 +61,7 @@ const appsState = atom({
         backgroundColor: orange[600],
         color: orange[50],
         path: "/bank",
-        Route: () => <Route exact path="/bank" component={BankApp} />,
+        Route: () => <Route path="/bank" component={BankApp} />,
       },
     ],
   },

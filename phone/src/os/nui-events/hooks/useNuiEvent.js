@@ -11,8 +11,8 @@ export const useNuiEvent = (app, method, handler, options = {}) => {
 
   useEffect(() => {
     const eventListener = (event) => {
-      const { data } = event;
       if (savedHandler.current && savedHandler.current.call) {
+        const { data } = event;
         savedHandler.current(data);
       }
     };
