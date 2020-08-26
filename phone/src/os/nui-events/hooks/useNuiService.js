@@ -4,9 +4,8 @@ import { eventNameFactory } from "../utils/nuiUtils";
 export const useNuiService = (options = {}) => {
   const { capture, passive, once } = options;
   const eventListener = (event) => {
-    console.log(event);
     const { app, method, data } = event.data;
-    if (app && method && data) {
+    if (app && method && data !== undefined) {
       window.dispatchEvent(
         new MessageEvent(eventNameFactory(app, method), {
           data,

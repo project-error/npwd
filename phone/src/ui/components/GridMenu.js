@@ -32,9 +32,9 @@ export const GridMenu = ({ items, Component = AppIcon }) => {
           items.length &&
           items.map((item) => (
             <Grid
+              key={item.id}
               item
               className={classes.item}
-              key={item.name}
               tabIndex="-1"
               component={Link}
               to={item.path}
