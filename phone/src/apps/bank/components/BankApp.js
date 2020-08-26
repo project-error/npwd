@@ -5,9 +5,10 @@ import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
 import { Button } from "@material-ui/core";
-import { useBank } from '../hooks/useBank';
-import { TransactionList } from './transactionList';
+import { useBank } from "../hooks/useBank";
+import { TransactionList } from "./TransactionList";
 import "./BankApp.css";
+import { useApp } from "../../../os/apps/hooks/useApps";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,11 +34,10 @@ export const BankApp = () => {
   const { transactionList } = useBank();
   const { t } = useTranslation();
   const classes = useStyles();
+  const bank = useApp("BANK");
   return (
     <AppWrapper>
-      <AppTitle className={classes.root}>
-        <h1 className={classes.header}>WhoDis Banking</h1>
-      </AppTitle>
+      <AppTitle {...bank} className={classes.root} />
       <AppContent>
         <div className={classes.bankOptions}>
           <Button className={classes.bankOptionsButton}>
@@ -50,9 +50,7 @@ export const BankApp = () => {
             {t("APPS_BANK_TRANSFER")}
           </Button>
         </div>
-        <TransactionList 
-          transactions={transactionList}
-        />
+        <TransactionList transactions={transactionList} />
       </AppContent>
     </AppWrapper>
   );

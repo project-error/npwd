@@ -10,7 +10,7 @@ const CallTypeIcon = {
   outgoing: <PhoneForwardedIcon />,
 };
 
-export const PhoneList = ({ calls }) => {
+export const DialerHistory = ({ calls }) => {
   return (
     <List>
       {calls.map((call) => (
