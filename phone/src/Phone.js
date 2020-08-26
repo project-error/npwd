@@ -6,12 +6,7 @@ import { useSettings } from "./apps/settings/hooks/useSettings";
 import MessageIcon from "@material-ui/icons/Email";
 
 import { HomeApp } from "./apps/home/components/Home";
-import { ContactsApp } from "./apps/contacts/components/ContactsApp";
-import { SettingsApp } from "./apps/settings/components/SettingsApp";
-import { DialerApp } from "./apps/dialer/components/DialerApp";
-import { BankApp } from "./apps/bank/components/BankApp";
 import { ThemeProvider } from "@material-ui/core";
-import { CalculatorApp } from "./apps/calculator/components/CalculatorApp";
 import { useInitKeyboard } from "./os/keyboard/hooks/useKeyboard";
 import { NotificationIcon } from "./os/notifications/components/NotificationIcon";
 import { NotificationBar } from "./os/notifications/components/NotificationBar";
@@ -19,6 +14,7 @@ import { Navigation } from "./os/navigation-bar/components/Navigation";
 import { useNuiService } from "./os/nui-events/hooks/useNuiService";
 import { useSimcardService } from "./os/simcard/hooks/useSimcardService";
 import { usePhoneService } from "./os/phone/hooks/usePhoneService";
+import { useApps } from "./os/apps/hooks/useApps";
 
 // @TODO: Remove this testing shit
 // Used for testing NUI events while we work on clientside
@@ -32,19 +28,7 @@ setTimeout(() => {
       },
     })
   );
-}, 3000);
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "PHONE",
-        method: "setPowerOff",
-        data: false,
-      },
-    })
-  );
-}, 4000);
+}, 1000);
 
 setTimeout(() => {
   window.dispatchEvent(
@@ -56,14 +40,27 @@ setTimeout(() => {
       },
     })
   );
-}, 3000);
+}, 1000);
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "PHONE",
+        method: "setPowerOff",
+        data: false,
+      },
+    })
+  );
+}, 2300);
 
 function Phone() {
   useNuiService();
   const { visibility, powerOff } = usePhoneService();
+  const { settings, currentTheme } = useSettings();
+  const { allApps } = useApps();
   useSimcardService();
   useInitKeyboard();
-  const { settings, currentTheme } = useSettings();
 
   if (visibility === false) {
     return null;
@@ -101,11 +98,9 @@ function Phone() {
                   />
                   <div className="PhoneAppContainer">
                     <Route exact path="/" component={HomeApp} />
-                    <Route exact path="/contacts" component={ContactsApp} />
-                    <Route exact path="/settings" component={SettingsApp} />
-                    <Route exact path="/phone" component={DialerApp} />
-                    <Route exact path="/bank" component={BankApp} />
-                    <Route exact path="/calculator" component={CalculatorApp} />
+                    {allApps.map((App) => (
+                      <App.Route key={App.id} />
+                    ))}
                   </div>
                   <Navigation />
                 </>

@@ -11,7 +11,7 @@ export const ContactsApp = () => {
   const contacts = useApp("CONTACTS");
   return (
     <AppWrapper>
-      <AppTitle {...contacts} />
+      <AppTitle app={contacts} />
       <AppContent>
         <ContactList
           contacts={contactList}

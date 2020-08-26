@@ -8,6 +8,5 @@ export const usePhoneService = () => {
   const setPowerOff = useSetRecoilState(phoneState.powerOff);
   useNuiEvent("PHONE", "setPowerOff", setPowerOff);
   useNuiEvent("PHONE", "setVisibility", setVisibility);
-  const { visibility, powerOff } = usePhone();
-  return { visibility, powerOff };
+  return usePhone();
 };

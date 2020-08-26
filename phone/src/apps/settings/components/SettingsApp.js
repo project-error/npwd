@@ -32,7 +32,7 @@ export const SettingsApp = () => {
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
     <AppWrapper>
-      <AppTitle {...settingsApp} />
+      <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List>
           <SettingItem

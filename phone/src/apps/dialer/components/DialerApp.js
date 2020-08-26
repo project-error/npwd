@@ -11,7 +11,7 @@ export const DialerApp = () => {
   const dialer = useApp("DIALER");
   return (
     <AppWrapper>
-      <AppTitle {...dialer} />
+      <AppTitle app={dialer} />
       <AppContent>
         <DialerHistory calls={history} />
       </AppContent>

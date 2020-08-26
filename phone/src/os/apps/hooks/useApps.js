@@ -7,6 +7,12 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
+import { Route } from "react-router-dom";
+import { DialerApp } from "../../../apps/dialer/components/DialerApp";
+import { ContactsApp } from "../../../apps/contacts/components/ContactsApp";
+import { CalculatorApp } from "../../../apps/calculator/components/CalculatorApp";
+import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
+import { BankApp } from "../../../apps/bank/components/BankApp";
 
 const appsState = atom({
   key: "apps",
@@ -19,6 +25,7 @@ const appsState = atom({
         backgroundColor: green[400],
         color: green[50],
         path: "/phone",
+        Route: () => <Route exact path="/phone" component={DialerApp} />,
       },
       {
         id: "CONTACTS",
@@ -27,6 +34,7 @@ const appsState = atom({
         backgroundColor: blue[500],
         color: blue[50],
         path: "/contacts",
+        Route: () => <Route exact path="/contacts" component={ContactsApp} />,
       },
       {
         id: "CALCULATOR",
@@ -35,6 +43,9 @@ const appsState = atom({
         backgroundColor: purple[500],
         color: grey[50],
         path: "/calculator",
+        Route: () => (
+          <Route exact path="/calculator" component={CalculatorApp} />
+        ),
       },
       {
         id: "SETTINGS",
@@ -43,6 +54,7 @@ const appsState = atom({
         backgroundColor: grey[700],
         color: grey[50],
         path: "/settings",
+        Route: () => <Route exact path="/settings" component={SettingsApp} />,
       },
       {
         id: "BANK",
@@ -51,6 +63,7 @@ const appsState = atom({
         backgroundColor: orange[600],
         color: orange[50],
         path: "/bank",
+        Route: () => <Route exact path="/bank" component={BankApp} />,
       },
     ],
   },

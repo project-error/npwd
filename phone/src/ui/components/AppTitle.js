@@ -14,9 +14,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export const AppTitle = ({
-  backgroundColor,
-  color,
-  nameLocale,
+  app: { backgroundColor, color, nameLocale },
   variant = "h4",
   ...props
 }) => {

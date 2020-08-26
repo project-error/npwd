@@ -9,7 +9,7 @@ export const CalculatorApp = () => {
   const calculator = useApp("CALCULATOR");
   return (
     <AppWrapper>
-      <AppTitle {...calculator} />
+      <AppTitle app={calculator} />
       <AppContent>
         <Calculator />
       </AppContent>

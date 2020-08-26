@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
+import { Button } from "../../../ui/components/Button";
 import { useTranslation } from "react-i18next";
-import { Button } from "@material-ui/core";
 import { useBank } from "../hooks/useBank";
 import { TransactionList } from "./TransactionList";
 import "./BankApp.css";
@@ -23,11 +23,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: 50,
   },
-  bankOptions: {},
-  bankOptionsButton: {
-    display: "block",
-    textAlign: "center",
-  },
 }));
 
 export const BankApp = () => {
@@ -37,18 +32,12 @@ export const BankApp = () => {
   const bank = useApp("BANK");
   return (
     <AppWrapper>
-      <AppTitle {...bank} className={classes.root} />
+      <AppTitle app={bank} className={classes.root} />
       <AppContent>
-        <div className={classes.bankOptions}>
-          <Button className={classes.bankOptionsButton}>
-            {t("APPS_BANK_DEPOSIT")}
-          </Button>
-          <Button className={classes.bankOptionsButton}>
-            {t("APPS_BANK_WITHDRAW")}
-          </Button>
-          <Button className={classes.bankOptionsButton}>
-            {t("APPS_BANK_TRANSFER")}
-          </Button>
+        <div>
+          <Button fullWidth>{t("APPS_BANK_DEPOSIT")}</Button>
+          <Button fullWidth>{t("APPS_BANK_WITHDRAW")}</Button>
+          <Button fullWidth>{t("APPS_BANK_TRANSFER")}</Button>
         </div>
         <TransactionList transactions={transactionList} />
       </AppContent>
