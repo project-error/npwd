@@ -4,12 +4,9 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj 
 end)
 
---RegisterCommand('server_getnumber', function(source, args, rawCommand)
---    TriggerEvent('phone:server:getCredentials', source)
---end, false)
 
 RegisterServerEvent('phone:server:getCredentials')
-AddEventHandler('phone:server:getCredentials', function(source)
+AddEventHandler('phone:server:getCredentials', function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
@@ -20,8 +17,9 @@ AddEventHandler('phone:server:getCredentials', function(source)
         function(result)
             for k,v in pairs(result) do
                 print(v.phone_number)
-                local number = v.phone_number
-                TriggerClientEvent('phone:client:sendCredentials', _source, number)
+                number = v.phone_number
             end
+            TriggerClientEvent('phone:client:sendCredentials', _source, number)
     end)
+    TriggerClientEvent('phone:client:send', _source)
 end)

@@ -12,6 +12,11 @@ end)
 --end, false)
 
 RegisterCommand('phone:open', function(source, args, rawCommand)
+    TriggerServerEvent('phone:server:getCredentials')
+end, false)
+
+RegisterNetEvent('phone:client:send')
+AddEventHandler('phone:client:send', function()
     SendNUIMessage(
         {
          app = 'PHONE',
@@ -20,8 +25,7 @@ RegisterCommand('phone:open', function(source, args, rawCommand)
         }
     )
     SetNuiFocus(true, true)
-end, false)
-
+end)
 
 RegisterCommand('phone:hide', function(source, args, rawCommand)
     SendNUIMessage(
@@ -36,7 +40,7 @@ end, false)
 
 RegisterNetEvent('phone:client:sendCredentials')
 AddEventHandler('phone:client:sendCredentials', function(number)
-    print("My number is " .. number)
+    print(number)
     SendNUIMessage(
         {
             app = "SIMCARD",
