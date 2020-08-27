@@ -7,7 +7,10 @@ import {
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
 import PhoneIcon from "@material-ui/icons/Phone";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import { useHistory } from "react-router-dom";
+
+import Nui from "../../nui-events/utils/Nui";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Navigation = () => {
+  const closePhone = () => {
+    console.log("Phone closed");
+    Nui.send("phone:close");
+  };
+
   const classes = useStyles();
   const history = useHistory();
   return (
@@ -33,6 +41,11 @@ export const Navigation = () => {
         label="Home"
         value={() => history.push("/")}
         icon={<AppsIcon className={classes.icon} />}
+      />
+      <BottomNavigationAction
+        label="Close"
+        value={() => closePhone()}
+        icon={<RadioButtonUncheckedIcon className={classes.icon} />}
       />
       <BottomNavigationAction
         label="Back"

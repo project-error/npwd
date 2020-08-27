@@ -56,7 +56,7 @@ import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 //      data: {
 //        app: "PHONE",
 //        method: "setVisibility",
-//        data: false,
+//        data: true,
 //      },
 //    })
 //  );
