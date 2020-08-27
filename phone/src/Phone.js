@@ -16,19 +16,39 @@ import { useSimcardService } from "./os/simcard/hooks/useSimcardService";
 import { usePhoneService } from "./os/phone/hooks/usePhoneService";
 import { useApps } from "./os/apps/hooks/useApps";
 
+import { useContactsService } from "./apps/contacts/hooks/useContactsService";
+
 // @TODO: Remove this testing shit
 // Used for testing NUI events while we work on clientside
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "SIMCARD",
-        method: "setNumber",
-        data: "111-1111",
-      },
-    })
-  );
-}, 1000);
+//setTimeout(() => {
+//  window.dispatchEvent(
+//    new MessageEvent("message", {
+//      data: {
+//        app: "SIMCARD",
+//        method: "setNumber",
+//        data: "111-1134",
+//      },
+//    })
+//  );
+//}, 1000);
+
+//setTimeout(() => {
+//  window.dispatchEvent(
+//    new MessageEvent("message", {
+//      data: {
+//        app: "BANK",
+//        method: "setContacts",
+//        data: [
+//          {
+//            id: 1,
+//            number: '345-4366',
+//            display: 'Kevin'
+//          },
+//        ],
+//      },
+//    })
+//  );
+//}, 1000);
 
 //setTimeout(() => {
 //  window.dispatchEvent(
@@ -36,7 +56,7 @@ setTimeout(() => {
 //      data: {
 //        app: "PHONE",
 //        method: "setVisibility",
-//        data: true,
+//        data: false,
 //      },
 //    })
 //  );
@@ -44,23 +64,16 @@ setTimeout(() => {
 
 function Phone() {
   useNuiService();
-  const { visibility, powerOff } = usePhoneService();
+  const { visibility } = usePhoneService();
   const { settings, currentTheme } = useSettings();
   const { allApps } = useApps();
   useSimcardService();
+  useContactsService();
   useInitKeyboard();
 
   if (visibility === false) {
     return null;
   }
-
-  const screenStyle = powerOff
-    ? {
-        backgroundColor: "black",
-      }
-    : {
-        backgroundImage: `url(${process.env.PUBLIC_URL}/media/backgrounds/${settings.wallpaper})`,
-      };
 
   return (
     <ThemeProvider theme={currentTheme()}>
@@ -73,26 +86,30 @@ function Phone() {
                 backgroundImage: `url(${process.env.PUBLIC_URL}/media/frames/${settings.frame})`,
               }}
             ></div>
-            <div id="phone" className="PhoneScreen" style={screenStyle}>
-              {!powerOff && (
-                <>
-                  <NotificationBar
-                    notifications={[
-                      {
-                        key: "newMessage",
-                        icon: <NotificationIcon Icon={MessageIcon} />,
-                      },
-                    ]}
-                  />
-                  <div className="PhoneAppContainer">
-                    <Route exact path="/" component={HomeApp} />
-                    {allApps.map((App) => (
-                      <App.Route key={App.id} />
-                    ))}
-                  </div>
-                  <Navigation />
-                </>
-              )}
+            <div
+              id="phone"
+              className="PhoneScreen"
+              style={{
+                backgroundImage: `${process.env.PUBLIC_URL}url(/media/backgrounds/${settings.wallpaper})`,
+              }}
+            >
+              <>
+                <NotificationBar
+                  notifications={[
+                    {
+                      key: "newMessage",
+                      icon: <NotificationIcon Icon={MessageIcon} />,
+                    },
+                  ]}
+                />
+                <div className="PhoneAppContainer">
+                  <Route exact path="/" component={HomeApp} />
+                  {allApps.map((App) => (
+                    <App.Route key={App.id} />
+                  ))}
+                </div>
+                <Navigation />
+              </>
             </div>
           </div>
         </div>

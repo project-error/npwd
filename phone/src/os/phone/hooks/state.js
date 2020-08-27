@@ -5,8 +5,4 @@ export const phoneState = {
     key: "phoneVisibility",
     default: false,
   }),
-  powerOff: atom({
-    key: "phonePowerOff",
-    default: true,
-  }),
 };

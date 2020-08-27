@@ -6,20 +6,19 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import ChatIcon from "@material-ui/icons/Chat";
 import { List } from "../../../ui/components/List";
 import { ListItem } from "../../../ui/components/ListItem";
+import { useContacts } from "../hooks/useContacts";
 
-export const ContactList = ({ contacts, onCall, onMessage }) => {
+export const ContactList = () => {
+  const contacts = useContacts();
   return (
     <List>
-      {contacts.map((contact) => (
+      {contacts.contacts.map((contact) => (
         <ListItem key={contact.id} divider>
-          <ListItemText
-            primary={contact.display}
-            secondary={contact.phoneNumber}
-          />
-          <Button onClick={() => onCall(contact.display)}>
+          <ListItemText primary={contact.display} secondary={contact.number} />
+          <Button>
             <PhoneIcon />
           </Button>
-          <Button onClick={onMessage}>
+          <Button>
             <ChatIcon />
           </Button>
         </ListItem>
