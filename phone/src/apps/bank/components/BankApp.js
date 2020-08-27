@@ -6,7 +6,7 @@ import { AppContent } from "../../../ui/components/AppContent";
 import { Button } from "../../../ui/components/Button";
 import { useTranslation } from "react-i18next";
 import { useBank } from "../hooks/useBank";
-import { TransactionList } from "./TransactionList";
+import { TransactionList } from "./transactionList";
 import "./BankApp.css";
 import { useApp } from "../../../os/apps/hooks/useApps";
 
