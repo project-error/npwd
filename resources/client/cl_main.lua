@@ -12,11 +12,11 @@ end)
 --end, false)
 
 RegisterCommand('phone:open', function(source, args, rawCommand)
-    TriggerServerEvent('phone:server:getCredentials')
+    TriggerServerEvent('phone:getCredentials', source)
 end, false)
 
-RegisterNetEvent('phone:client:send')
-AddEventHandler('phone:client:send', function()
+RegisterNetEvent('phone:send')
+AddEventHandler('phone:send', function()
     SendNUIMessage(
         {
          app = 'PHONE',
@@ -25,6 +25,7 @@ AddEventHandler('phone:client:send', function()
         }
     )
     SetNuiFocus(true, true)
+    TriggerEvent('phone:sendContacts')
 end)
 
 RegisterCommand('phone:hide', function(source, args, rawCommand)
@@ -38,8 +39,19 @@ RegisterCommand('phone:hide', function(source, args, rawCommand)
     SetNuiFocus(false, false)
 end, false)
 
-RegisterNetEvent('phone:client:sendCredentials')
-AddEventHandler('phone:client:sendCredentials', function(number)
+RegisterNUICallback('phone:close', function()
+    SendNUIMessage(
+        {
+         app = 'PHONE',
+         method = 'setVisibility',
+         data = false
+        }
+    )
+    SetNuiFocus(false, false)
+end)
+
+RegisterNetEvent('phone:sendCredentials')
+AddEventHandler('phone:sendCredentials', function(number)
     print(number)
     SendNUIMessage(
         {
