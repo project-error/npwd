@@ -18,49 +18,92 @@ import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 
-// @TODO: Remove this testing shit
-// Used for testing NUI events while we work on clientside
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "SIMCARD",
-//        method: "setNumber",
-//        data: "111-1134",
-//      },
-//    })
-//  );
-//}, 1000);
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "SIMCARD",
+        method: "setNumber",
+        data: "111-1134",
+      },
+    })
+  );
+}, 1000);
 
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "BANK",
-//        method: "setContacts",
-//        data: [
-//          {
-//            id: 1,
-//            number: '345-4366',
-//            display: 'Kevin'
-//          },
-//        ],
-//      },
-//    })
-//  );
-//}, 1000);
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "BANK",
+        method: "setContacts",
+        data: [
+          {
+            id: 1,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 2,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 3,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 4,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 2,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 3,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 4,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 2,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 3,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 4,
+            number: "345-4366",
+            display: "Kevin",
+          },
+        ],
+      },
+    })
+  );
+}, 1000);
 
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "PHONE",
-//        method: "setVisibility",
-//        data: true,
-//      },
-//    })
-//  );
-//}, 1000);
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "PHONE",
+        method: "setVisibility",
+        data: true,
+      },
+    })
+  );
+}, 1000);
 
 function Phone() {
   useNuiService();
