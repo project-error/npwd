@@ -48,6 +48,7 @@ AddEventHandler('phone:send', function()
 end)
 
 RegisterNUICallback('phone:close', function()
+    isPhoneOpen = false
     SendNUIMessage(
         {
          app = 'PHONE',
