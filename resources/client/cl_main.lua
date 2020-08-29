@@ -6,13 +6,46 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
   end
 end)
------------------------------------------------------------------------- End of ESX
-
---RegisterCommand('phone:get', function(source, args, rawCommand)
---    TriggerServerEvent('phone:server:getCredentials')
---end, false)
-
+-----
+--END OF ESX 
+-----
 local isPhoneOpen = false
+--RegisterKeyMapping('phone', _U('keymap_phone'), 'keyboard', '')
+
+--[[RegisterCommand('phone:get', function(source, args, rawCommand)
+    riggerServerEvent('phone:server:getCredentials')
+end, false)]]
+
+Citizen.CreateThread(function()
+    while true do
+    Citizen.Wait(10)
+       if IsControlJustPressed(1, Config.KeyTogglePhone) then
+            if isPhoneOpen == false then
+                isPhoneOpen = true
+                print(Config.KeyTogglePhone) --Left for testing purposes. 
+                SendNUIMessage( -- Shows phone
+                    {
+                    app = 'PHONE',
+                    method = 'setVisibility',
+                    data = true
+                    }
+                )
+                SetNuiFocus(true, true)
+            elseif isPhoneOpen == true then
+                isPhoneOpen = false
+                print(Config.KeyTogglePhone) --Left for testing purposes. 
+                SendNUIMessage( -- Hides phone
+                    {
+                    app = 'PHONE',
+                    method = 'setVisibility',
+                    data = false
+                    }
+                )
+                SetNuiFocus(false, false)
+            end
+        end
+    end
+end)
 
 RegisterCommand('phone', function(source) -- Toggles Phone
     TriggerServerEvent('phone:getCredentials', source) 
