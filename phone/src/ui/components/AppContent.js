@@ -1,10 +1,9 @@
 import React from "react";
-import { Box, makeStyles, Backdrop, Paper, Container } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+import { Box, makeStyles, Backdrop, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    height: "80vh",
+    height: "67vh",
     overflow: "auto",
   },
   box: {
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "100%",
-    height: "80vh",
   },
 }));
 

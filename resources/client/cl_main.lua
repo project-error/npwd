@@ -6,6 +6,17 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
   end
 end)
+
+RegisterCommand('phone:close', function(source, args, rawCommand)
+    SendNUIMessage( -- Hides phone
+                    {
+                    app = 'PHONE',
+                    method = 'setVisibility',
+                    data = false
+                    }
+                )
+                SetNuiFocus(false, false)
+end)
 -----
 --END OF ESX 
 -----
@@ -31,6 +42,7 @@ Citizen.CreateThread(function()
                     }
                 )
                 SetNuiFocus(true, true)
+                TriggerServerEvent('phone:getCredentials', source)
             elseif isPhoneOpen == true then
                 isPhoneOpen = false
                 print(Config.KeyTogglePhone) --Left for testing purposes. 
