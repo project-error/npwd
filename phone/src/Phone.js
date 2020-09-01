@@ -18,6 +18,7 @@ import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 
+// These events are just for testing. Comment it out before building.
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
@@ -44,46 +45,6 @@ setTimeout(() => {
           },
           {
             id: 2,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 3,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 4,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 2,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 3,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 4,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 2,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 3,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 4,
             number: "345-4366",
             display: "Kevin",
           },

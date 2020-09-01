@@ -15,10 +15,18 @@ export const ContactList = () => {
       {contacts.contacts.map((contact) => (
         <ListItem key={contact.id} divider>
           <ListItemText primary={contact.display} secondary={contact.number} />
-          <Button>
+          <Button
+            onClick={() =>
+              console.log("Call: " + contact.display, contact.number)
+            }
+          >
             <PhoneIcon />
           </Button>
-          <Button>
+          <Button
+            onClick={() =>
+              console.log("Message: " + contact.display, contact.number)
+            }
+          >
             <ChatIcon />
           </Button>
         </ListItem>
