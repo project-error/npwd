@@ -1,0 +1,10 @@
+.display-block {
+  /*Sets modal to center*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-none {
+  display: none;
+}
