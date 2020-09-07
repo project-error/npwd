@@ -20,18 +20,12 @@ ESX.RegisterServerCallback('phone:getContacts', function(source, cb)
     end)
 end)
 
-RegisterCommand('add_contact', function(source, args, rawCommand)
-    local _source = source
-    local display = args[1]
-    local number = args[2]
-    TriggerEvent('phone:addContacts', source, display, number)
-end)
-
 RegisterServerEvent('phone:addContacts')
-AddEventHandler('phone:addContacts', function(source, display, number)
+AddEventHandler('phone:addContacts', function(display, number)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
+    print(display, number)
     MySQL.Async.execute('INSERT INTO phone_contacts (`identifier`, `number`, `display`) VALUES (@identifier, @number, @display)', 
     {  
         identifier = _identifier,
