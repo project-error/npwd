@@ -8,15 +8,13 @@ Citizen.CreateThread(function()
 end)
 
 RegisterCommand('phone:close', function(source, args, rawCommand)
-    SendNUIMessage( -- Hides phone
-                    {
-                    app = 'PHONE',
-                    method = 'setVisibility',
-                    data = false
-                    }
-                )
-                SetNuiFocus(false, false)
-end)
+    SendNUIMessage({
+        app = 'PHONE',
+        method = 'setVisibility',
+        data = false
+    })
+    SetNuiFocus(false, false)
+end, false)
 -----
 --END OF ESX 
 -----

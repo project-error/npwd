@@ -19,3 +19,10 @@ AddEventHandler('phone:sendContacts', function()
         )
     end)
 end)
+
+RegisterNUICallback('contacts:add', function(data)
+  local display = data.name
+  local number = data.number
+  TriggerServerEvent('phone:addContacts', display, number)
+  TriggerEvent('phone:sendContacts')
+end)
