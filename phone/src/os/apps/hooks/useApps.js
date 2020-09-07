@@ -1,10 +1,18 @@
 import React from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
-import { blue, grey, green, orange, purple } from "@material-ui/core/colors";
+import {
+  blue,
+  grey,
+  green,
+  orange,
+  purple,
+  amber,
+} from "@material-ui/core/colors";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import MessageIcon from "@material-ui/icons/Message";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
 import { Route } from "react-router-dom";
@@ -13,6 +21,7 @@ import { ContactsApp } from "../../../apps/contacts/components/ContactsApp";
 import { CalculatorApp } from "../../../apps/calculator/components/CalculatorApp";
 import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
 import { BankApp } from "../../../apps/bank/components/BankApp";
+import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
 
 const appsState = atom({
   key: "apps",
@@ -26,6 +35,15 @@ const appsState = atom({
         color: green[50],
         path: "/phone",
         Route: () => <Route path="/phone" component={DialerApp} />,
+      },
+      {
+        id: "MESSAGES",
+        nameLocale: "APPS_MESSAGES",
+        icon: <MessageIcon />,
+        backgroundColor: amber[400],
+        color: amber[50],
+        path: "/messages",
+        Route: () => <Route path="/messages" component={MessagesApp} />,
       },
       {
         id: "CONTACTS",
