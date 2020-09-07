@@ -19,52 +19,52 @@ import { useApps } from "./os/apps/hooks/useApps";
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 
 // These events are just for testing. Comment it out before building.
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "SIMCARD",
-        method: "setNumber",
-        data: "111-1134",
-      },
-    })
-  );
-}, 1000);
+//setTimeout(() => {
+//  window.dispatchEvent(
+//    new MessageEvent("message", {
+//      data: {
+//        app: "SIMCARD",
+//        method: "setNumber",
+//        data: "111-1134",
+//      },
+//    })
+//  );
+//}, 1000);
 
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "BANK",
-        method: "setContacts",
-        data: [
-          {
-            id: 1,
-            number: "345-4366",
-            display: "Kevin",
-          },
-          {
-            id: 2,
-            number: "345-4366",
-            display: "Kevin",
-          },
-        ],
-      },
-    })
-  );
-}, 1000);
+//setTimeout(() => {
+//  window.dispatchEvent(
+//    new MessageEvent("message", {
+//      data: {
+//        app: "BANK",
+//        method: "setContacts",
+//        data: [
+//          {
+//            id: 1,
+//            number: "345-4366",
+//            display: "Kevin",
+//          },
+//          {
+//            id: 2,
+//            number: "345-4366",
+//            display: "Kevin",
+//          },
+//        ],
+//      },
+//    })
+//  );
+//}, 1000);
 
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "PHONE",
-        method: "setVisibility",
-        data: true,
-      },
-    })
-  );
-}, 1000);
+//setTimeout(() => {
+//  window.dispatchEvent(
+//    new MessageEvent("message", {
+//      data: {
+//        app: "PHONE",
+//        method: "setVisibility",
+//        data: true,
+//      },
+//    })
+//  );
+//}, 1000);
 
 function Phone() {
   useNuiService();

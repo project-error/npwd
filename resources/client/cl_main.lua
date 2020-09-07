@@ -18,20 +18,71 @@ end, false)
 -----
 --END OF ESX 
 -----
+local prop = 0
 local isPhoneOpen = false
+local phoneModel = "prop_amb_phone"
 --RegisterKeyMapping('phone', _U('keymap_phone'), 'keyboard', '')
 
 --[[RegisterCommand('phone:get', function(source, args, rawCommand)
     riggerServerEvent('phone:server:getCredentials')
 end, false)]]
 
+function loadAnimDict(dict)
+	while ( not HasAnimDictLoaded(dict)) do
+		RequestAnimDict(dict)
+		Citizen.Wait(0)
+	end
+end
+
+function newPhoneProp()
+    deletePhone()
+    DeleteObject(prop)
+	RequestModel(phoneModel)
+	while not HasModelLoaded(phoneModel) do
+		Citizen.Wait(1)
+    end
+    
+    local playerPed = GetPlayerPed(-1)
+    local x,y,z = table.unpack(GetEntityCoords(playerPed))
+    prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true)
+    local boneIndex = GetPedBoneIndex(playerPed, 28422)
+	AttachEntityToEntity(prop, playerPed, boneIndex, 28422, 0.0, 0.0, 0.0, 0.0, 0.0, -.0, true, true, false, true, 1, true)
+end
+
+function phoneAnim()
+    loadAnimDict('cellphone@')
+    TaskPlayAnim(GetPlayerPed(-1), 'cellphone@', 'cellphone_text_in', 9.0, -1, -1, 50, 0, false, false, false)
+end
+
+--function deleteProp()
+--    print(prop)
+--    if prop ~= 0 then
+--		DeleteObject(prop)
+--        ClearAllPedProps(prop)  
+--		prop = 0
+--	end
+--end
+
+function deletePhone()
+	if prop ~= 0 then
+		Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(prop))
+		prop = 0
+	end
+end
+
+
+
+
 Citizen.CreateThread(function()
     while true do
-    Citizen.Wait(10)
+    Citizen.Wait(0)
        if IsControlJustPressed(1, Config.KeyTogglePhone) then
             if isPhoneOpen == false then
                 isPhoneOpen = true
                 print(Config.KeyTogglePhone) --Left for testing purposes. 
+                newPhoneProp()
+                phoneAnim()
+
                 SendNUIMessage( -- Shows phone
                     {
                     app = 'PHONE',
@@ -44,6 +95,8 @@ Citizen.CreateThread(function()
             elseif isPhoneOpen == true then
                 isPhoneOpen = false
                 print(Config.KeyTogglePhone) --Left for testing purposes. 
+                ClearPedTasksImmediately(GetPlayerPed(-1))
+                deletePhone()
                 SendNUIMessage( -- Hides phone
                     {
                     app = 'PHONE',
@@ -58,10 +111,11 @@ Citizen.CreateThread(function()
 end)
 
 RegisterCommand('phone', function(source) -- Toggles Phone
-    TriggerServerEvent('phone:getCredentials', source) 
     if isPhoneOpen == false then 
         isPhoneOpen = true 
+        phoneAnim()
         print("phone is now open") --Left for testing purposes. 
+        TriggerServerEvent('phone:getCredentials', source) 
         SendNUIMessage( -- Shows phone
             {
             app = 'PHONE',
@@ -81,6 +135,7 @@ RegisterCommand('phone', function(source) -- Toggles Phone
             }
         )
         SetNuiFocus(false, false)
+        ClearPedTasksImmediately(GetPlayerPed(-1))
     end
 end, false)
 
@@ -100,6 +155,8 @@ RegisterNUICallback('phone:close', function()
         }
     )
     SetNuiFocus(false, false)
+    ClearPedTasksImmediately(GetPlayerPed(-1))
+    deletePhone()
 end)
 
 RegisterNetEvent('phone:sendCredentials')

@@ -23,3 +23,10 @@ AddEventHandler('phone:getCredentials', function()
     end)
     TriggerClientEvent('phone:send', _source)
 end)
+
+RegisterCommand('getnumber', function(source, args)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+    print(_identifier)
+end)
