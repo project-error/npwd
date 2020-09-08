@@ -7,37 +7,56 @@ TriggerEvent(
     end
 )
 
-function getIdentifierByNumber(phoneNumber)
+
+function getIdentifierByNumber(phoneNumber) 
     local result = MySQL.Sync.fetchAll("SELECT users.identifier FROM users WHERE users.phone_number = @phone_number", {
         ['@phone_number'] = phoneNumber
     })
     if result[1] ~= nil then
-        print(result[1].identifier)
         return result[1].identifier
     end
     return nil
 end
 
 function getSourceFromIdentifier(identifier, cb)
-    TriggerEvent("es:getPlayers", function(users)
-        for k , user in pairs(users) do
-            if (user.getIdentifier ~= nil and user.getIdentifier() == identifier) or (user.identifier == identifier) then
-                cb(k)
-                return
-            end
-        end
-    end)
-    cb(nil)
+	local xPlayers = ESX.GetPlayers()
+	for i=1, #xPlayers, 1 do
+		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+		if(xPlayer.identifier ~= nil and xPlayer.identifier == identifier) or (xPlayer.identifier == identifier) then
+			cb(xPlayer.source)
+			return
+		end
+	end
+	cb(nil)
 end
+
+function getPlayerID(source)
+    local identifiers = GetPlayerIdentifiers(source)
+    local player = getIdentifiant(identifiers)
+    return player
+end
+function getIdentifiant(id)
+    for _, v in ipairs(id) do
+        return v
+    end
+end
+
+
+
+RegisterServerEvent('phone:startCall')
+AddEventHandler('phone:startCall', function(phoneNumber)
+    TriggerEvent('phone:initalizeCall', phoneNumber)
+end)
 
 RegisterServerEvent('phone:initalizeCall')
 AddEventHandler('phone:initalizeCall', function(phoneNumber)
+    local sourcePlayer = tonumber(source)
     local zPlayer = getIdentifierByNumber(phoneNumber)
-    getSourceFromIdentifier(zPlayer, function(target)
-        if tonumber(target) ~= nil then 
-            print(tonumber(target))
-        end
-    end) 
+    if zPlayer ~= nil then
+        getSourceFromIdentifier(zPlayer, function(target)
+            if tonumber(target) ~= nil then
+                print('Target: ' .. target)
+            end
+        end)
+    end
 end)
-
-
