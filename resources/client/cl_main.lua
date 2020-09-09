@@ -135,42 +135,13 @@ end
 Citizen.CreateThread(function()
     while true do
     Citizen.Wait(0)
-       if IsControlJustPressed(1, Config.KeyTogglePhone) then
-            if isPhoneOpen == false then
-                isPhoneOpen = true
-                print(Config.KeyTogglePhone) --Left for testing purposes. 
-                phoneOpenAnim()
-                SetCursorLocation(0.936, 0.922) -- Experimental
-                local res = GetActiveScreenResolution()
-                --print(res)
-                SendNUIMessage( -- Shows phone
-                    {
-                    app = 'PHONE',
-                    method = 'setVisibility',
-                    data = true
-                    }
-                )
-                SetNuiFocus(true, true)
-                TriggerServerEvent('phone:getCredentials', source)
-            elseif isPhoneOpen == true then
-                isPhoneOpen = false
-                print(Config.KeyTogglePhone) --Left for testing purposes. 
-                phoneCloseAnim()
-
-                SendNUIMessage( -- Hides phone
-                    {
-                    app = 'PHONE',
-                    method = 'setVisibility',
-                    data = false
-                    }
-                )
-                SetNuiFocus(false, false)
-            end
+        if IsControlJustPressed(1, Config.KeyTogglePhone) then
+            Phone()
         end
     end
 end)
 
-RegisterCommand('phone', function(source) -- Toggles Phone
+function Phone() --Open/close phone
     if isPhoneOpen == false then 
         isPhoneOpen = true 
         phoneOpenAnim()
@@ -200,6 +171,10 @@ RegisterCommand('phone', function(source) -- Toggles Phone
         SetNuiFocus(false, false)
         phoneCloseAnim()
     end
+end
+
+RegisterCommand('phone', function(source) -- Toggles Phone
+    Phone()
 end, false)
 
 
@@ -209,16 +184,7 @@ AddEventHandler('phone:send', function()
 end)
 
 RegisterNUICallback('phone:close', function() -- Called for when the phone is closed via the UI.
-    isPhoneOpen = false
-    SendNUIMessage(
-        {
-         app = 'PHONE',
-         method = 'setVisibility',
-         data = false
-        }
-    )
-    SetNuiFocus(false, false)
-    phoneCloseAnim() -- Closes the phone and deletes the prop.
+    Phone()
 end)
 
 RegisterNetEvent('phone:sendCredentials')
