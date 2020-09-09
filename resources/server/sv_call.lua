@@ -98,3 +98,18 @@ AddEventHandler('phone:initalizeCall', function(source, phoneNumber)
         TriggerClientEvent('phone:waitingCall', sourcePlayer, phoneNumber, true)
     end
 end)
+
+
+RegisterServerEvent('phone:acceptCall')
+AddEventHandler('phone:acceptCall', function(source, phoneNumber)
+    if phoneNumber ~= nil then
+        getSourceFromIdentifier(zPlayer, function (target)
+            if target ~= nil then
+                TriggerClientEvent('phone:acceptCall', sourcePlayer, phoneNumber, true)
+                TriggerClientEvent('phone:acceptCall', target, phoneNumber, false)
+            else
+                TriggerClientEvent('phone:acceptCall', sourcePlayer, phoneNumber, true)
+            end
+        end)
+    end
+end)
