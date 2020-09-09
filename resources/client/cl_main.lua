@@ -31,20 +31,27 @@ end, false)]]
 ----
 local prop = 0
 local isPhoneOpen = false
+local propCreated = false
 local phoneModel = "prop_amb_phone" -- Refered to in newphoneProp function. Requires custom phone being streamed.
 
 function newPhoneProp() -- Function for creating the phone prop
     deletePhone() -- deletes the already existing prop before creating another.
-	RequestModel(phoneModel)
-	while not HasModelLoaded(phoneModel) do
-		Citizen.Wait(1)
+    if propCreated == false then
+        RequestModel(phoneModel)
+        while not HasModelLoaded(phoneModel) do
+            Citizen.Wait(1)
+        end
+        
+        local playerPed = GetPlayerPed(-1)
+        local x,y,z = table.unpack(GetEntityCoords(playerPed))
+        prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true)
+        local boneIndex = GetPedBoneIndex(playerPed, 28422)
+        AttachEntityToEntity(prop, playerPed, boneIndex, 28422, 0.0, 0.0, 0.0, 0.0, 0.0, -.0, true, true, false, true, 1, true) -- Attaches the phone to the player.
+        propCreated = true
+        print("prop created")
+    elseif propCreated == true then
+        print("prop already created")
     end
-    
-    local playerPed = GetPlayerPed(-1)
-    local x,y,z = table.unpack(GetEntityCoords(playerPed))
-    prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true)
-    local boneIndex = GetPedBoneIndex(playerPed, 28422)
-	AttachEntityToEntity(prop, playerPed, boneIndex, 28422, 0.0, 0.0, 0.0, 0.0, 0.0, -.0, true, true, false, true, 1, true) -- Attaches the phone to the player.
 end
 
 function loadAnimDict(dict) -- Loads the animation dict. Used in the anim functions.
@@ -117,7 +124,9 @@ end
 function deletePhone() -- Triggered in newphoneProp function. Only way to destory the prop correctly.
 	if prop ~= 0 then
 		Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(prop))
-		prop = 0
+        prop = 0
+        propCreated = false
+        print("prop destroyed")
 	end
 end
 
