@@ -8,10 +8,32 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNUICallback('phone:startCall', function(data)
-    print('Calling ' .. data.number)
+    print('Start call with ' .. data.number)
     local phoneNumber = data.number
-    TriggerServerEvent('phone:initalizeCall', phoneNumber)
+    startCall(phoneNumber)
 end)
 
+--[[RegisterCommand('answer', function(source) -- Toggles Phone
+  if isPhoneOpen == false then 
 
+end, false)]]
 
+function startCall (phoneNumber)
+  TriggerServerEvent('phone:startCall', phoneNumber)
+end
+
+function acceptCall (phoneNumber)
+  TriggerServerEvent('phone:acceptCall', infoCall, rtcAnswer)
+end
+
+function rejectCall(phoneNumber)
+  TriggerServerEvent('phone:rejectCall', infoCall)
+end
+
+RegisterNetEvent('phone:waitingCall')
+AddEventHandler('phone:waitingCall', function(phoneNumber)
+  local playerPed = PlayerPedId()
+  print(phoneNumber)
+  print("oi")
+  TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'cellCall', 0.4)
+end)
