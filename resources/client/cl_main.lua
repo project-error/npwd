@@ -132,6 +132,23 @@ function phoneCloseAnim() --Phone Close Animation
     end 
 end
 
+function carryingPhone(cb)
+	cb(true)
+end
+
+function carryingPhone(cb)
+  if (ESX == nil) then return cb(0) end
+  ESX.TriggerServerCallback('phone:getItemAmount', function(qtty)
+    cb(qtty > 0)
+  end, 'phone')
+end
+
+function noPhone() 
+	if (ESX == nil) then return end
+    --exports['mythic_notify']:SendAlert('error', 'Oi Mate, No El Telephono')
+    ESX.ShowNotification('Oi Mate, No El Telephono')
+  end
+
 Citizen.CreateThread(function()
     while true do
     Citizen.Wait(0)
@@ -142,35 +159,75 @@ Citizen.CreateThread(function()
 end)
 
 function Phone() --Open/close phone
-    if isPhoneOpen == false then 
-        isPhoneOpen = true 
-        phoneOpenAnim()
-        print("phone is now open") --Left for testing purposes. 
-        TriggerServerEvent('phone:getCredentials', source) 
-        SetCursorLocation(0.936, 0.922) -- Experimental
-        local res = GetActiveScreenResolution()
-        --print(res)
-        SendNUIMessage( -- Shows phone
-            {
-            app = 'PHONE',
-            method = 'setVisibility',
-            data = true
-            }
-        )
-        SetNuiFocus(true, true)
-    else
-        isPhoneOpen = false
-        print("phone is now closed") --Left for testing purposes. 
-        SendNUIMessage( -- Hides phone
-            {
-             app = 'PHONE',
-             method = 'setVisibility',
-             data = false
-            }
-        )
-        SetNuiFocus(false, false)
-        phoneCloseAnim()
-    end
+    if Config.PhoneAsItem == true then
+        --print("ConfigOn")  
+        carryingPhone(function (carryingPhone)
+            if carryingPhone == true then 
+                if isPhoneOpen == false then 
+                    isPhoneOpen = true 
+                    phoneOpenAnim()
+                    print("phone is now open") --Left for testing purposes. 
+                    TriggerServerEvent('phone:getCredentials', source) 
+                    SetCursorLocation(0.936, 0.922) -- Experimental
+                    local res = GetActiveScreenResolution()
+                    --print(res)
+                    SendNUIMessage( -- Shows phone
+                        {
+                        app = 'PHONE',
+                        method = 'setVisibility',
+                        data = true
+                        }
+                    )
+                    SetNuiFocus(true, true)
+                else
+                    isPhoneOpen = false
+                    print("phone is now closed") --Left for testing purposes. 
+                    SendNUIMessage( -- Hides phone
+                        {
+                        app = 'PHONE',
+                        method = 'setVisibility',
+                        data = false
+                        }
+                    )
+                    SetNuiFocus(false, false)
+                    phoneCloseAnim()
+                end
+            else
+                noPhone()
+            end
+        end) 
+    elseif Config.PhoneAsItem == false then   
+        --print("ConfigOff")  
+        if isPhoneOpen == false then 
+            isPhoneOpen = true 
+            phoneOpenAnim()
+            print("phone is now open") --Left for testing purposes. 
+            TriggerServerEvent('phone:getCredentials', source) 
+            SetCursorLocation(0.936, 0.922) -- Experimental
+            local res = GetActiveScreenResolution()
+            --print(res)
+            SendNUIMessage( -- Shows phone
+                {
+                app = 'PHONE',
+                method = 'setVisibility',
+                data = true
+                }
+            )
+            SetNuiFocus(true, true)
+        else
+            isPhoneOpen = false
+            print("phone is now closed") --Left for testing purposes. 
+            SendNUIMessage( -- Hides phone
+                {
+                app = 'PHONE',
+                method = 'setVisibility',
+                data = false
+                }
+            )
+            SetNuiFocus(false, false)
+            phoneCloseAnim()
+        end
+    end       
 end
 
 RegisterCommand('phone', function(source) -- Toggles Phone

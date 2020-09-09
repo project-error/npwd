@@ -30,3 +30,14 @@ RegisterCommand('getnumber', function(source, args)
     local _identifier = xPlayer.getIdentifier()
     print(_identifier)
 end)
+
+ESX.RegisterServerCallback('phone:getItemAmount', function(source, cb, item)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local items = xPlayer.getInventoryItem(item)
+
+    if items == nil then
+        cb(0)
+    else
+        cb(items.count)
+    end
+end)
