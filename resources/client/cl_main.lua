@@ -40,11 +40,13 @@ function newPhoneProp() -- Function for creating the phone prop
         RequestModel(phoneModel)
         while not HasModelLoaded(phoneModel) do
             Citizen.Wait(1)
+            print("MODEL HASNT LOADED")
         end
         
         local playerPed = GetPlayerPed(-1)
         local x,y,z = table.unpack(GetEntityCoords(playerPed))
         prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true)
+        --prop = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
         local boneIndex = GetPedBoneIndex(playerPed, 28422)
         AttachEntityToEntity(prop, playerPed, boneIndex, 28422, 0.0, 0.0, 0.0, 0.0, 0.0, -.0, true, true, false, true, 1, true) -- Attaches the phone to the player.
         propCreated = true
@@ -52,6 +54,15 @@ function newPhoneProp() -- Function for creating the phone prop
     elseif propCreated == true then
         print("prop already created")
     end
+end
+
+function deletePhone() -- Triggered in newphoneProp function. Only way to destory the prop correctly.
+	if prop ~= 0 then
+		Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(prop))
+        prop = 0
+        propCreated = false
+        print("prop destroyed")
+	end
 end
 
 function loadAnimDict(dict) -- Loads the animation dict. Used in the anim functions.
@@ -74,7 +85,7 @@ function phoneOpenAnim() --Phone Open Animation
         loadAnimDict(dict)
         TaskPlayAnim(GetPlayerPed(-1), dict, 'cellphone_text_in', 8.0, -1, -1, flag, 0, false, false, false) 
         Wait(300) -- Gives time for animation starts before creating the phone
-        newPhoneProp() -- Creates the phone and attaches it.
+        --newPhoneProp() -- Creates the phone and attaches it.
     else -- While not in a vehicle it will use this dict.
         local dict = 'cellphone@'
         local kek = "pepeout"
@@ -119,15 +130,6 @@ function phoneCloseAnim() --Phone Close Animation
         StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) -- clears the animation
         deletePhone() -- Deletes the prop.
     end 
-end
-
-function deletePhone() -- Triggered in newphoneProp function. Only way to destory the prop correctly.
-	if prop ~= 0 then
-		Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(prop))
-        prop = 0
-        propCreated = false
-        print("prop destroyed")
-	end
 end
 
 Citizen.CreateThread(function()
