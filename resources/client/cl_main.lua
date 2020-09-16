@@ -294,8 +294,8 @@ Citizen.CreateThread(function()
             if chance <= Config.DestoryChance then -- Chance of destroying the phone.
                 countPhone(function (countPhone)
                     if countPhone == true then
-                        print("Phone destroyed")
-                        exports['mythic_notify']:SendAlert('error', "You went swimming with your phone.")
+                        --print("Phone destroyed")
+                        ESX.ShowNotification('Your phone is ruined from the water!')
                         destroyedPhone = true
                     end
                 end)
