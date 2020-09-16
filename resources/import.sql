@@ -1,4 +1,4 @@
-ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) NULL DEFAULT NULL;
+ALTER TABLE `rusers` ADD COLUMN `phone_number` VARCHAR(20) NULL DEFAULT NULL;
 
 CREATE TABLE es_extended.phone_contacts (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -14,3 +14,4 @@ CHARACTER SET utf8mb4,
 COLLATE utf8mb4_general_ci;
 
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('phone', 'Phone', 1, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('dphone', 'Destroyed Phone', 1, 0, 1);

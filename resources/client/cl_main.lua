@@ -132,9 +132,9 @@ function phoneCloseAnim() --Phone Close Animation
     end 
 end
 
-function carryingPhone(cb)
+--[[function carryingPhone(cb)
 	cb(true)
-end
+end]]
 
 function carryingPhone(cb)
   if (ESX == nil) then return cb(0) end
@@ -147,7 +147,7 @@ function noPhone()
 	if (ESX == nil) then return end
     --exports['mythic_notify']:SendAlert('error', 'Oi Mate, No El Telephono')
     ESX.ShowNotification('Oi Mate, No El Telephono')
-  end
+end
 
 Citizen.CreateThread(function()
     while true do
@@ -270,4 +270,39 @@ AddEventHandler('onResourceStop', function(resource)
         ClearPedTasks(GetPlayerPed(-1)) -- Leave here until launch as it'll fix any stuck animations.
     end
 end)
-  
+
+------
+--Phone Destory When Wet
+------
+
+function countPhone(cb)
+    if (ESX == nil) then 
+        return cb(0) 
+    end
+    ESX.TriggerServerCallback('phone:removephone', function(qtty)
+      cb(qtty > 0)
+    end, 'phone')
+end
+
+local destroyedPhone = false
+
+Citizen.CreateThread(function()
+    while Config.SwimDestroy do -- Checks if phone should destroy while swimming.
+    Citizen.Wait(Config.RunRate * 1000) -- Checks how often the player is swimming x * 1 second.
+        if IsPedSwimming(GetPlayerPed(-1)) then
+           local chance = GetRandomIntInRange(0, 100)
+            if chance <= Config.DestoryChance then -- Chance of destroying the phone.
+                countPhone(function (countPhone)
+                    if countPhone == true then
+                        print("Phone destroyed")
+                        exports['mythic_notify']:SendAlert('error', "You went swimming with your phone.")
+                        destroyedPhone = true
+                    end
+                end)
+            end
+            if destroyedPhone == true then -- If the phone was destroyed earlier then we will wait to check again.
+                Wait(Config.DestroyPhoneReCheck * 60000) -- Waits x * 1 minute before checking again because it's pointless to re check.
+            end
+        end
+    end
+end)
