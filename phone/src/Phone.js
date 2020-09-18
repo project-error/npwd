@@ -4,7 +4,7 @@ import "./i18n";
 import { Route } from "react-router-dom";
 import { useSettings } from "./apps/settings/hooks/useSettings";
 import MessageIcon from "@material-ui/icons/Email";
-
+import { CallModal } from "./modal/components/CallModal";
 import { HomeApp } from "./apps/home/components/Home";
 import { ThemeProvider } from "@material-ui/core";
 import { useInitKeyboard } from "./os/keyboard/hooks/useKeyboard";
@@ -18,53 +18,53 @@ import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 
-// These events are just for testing. Comment it out before building.
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "SIMCARD",
-//        method: "setNumber",
-//        data: "111-1134",
-//      },
-//    })
-//  );
-//}, 1000);
+//These events are just for testing. Comment it out before building.
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "SIMCARD",
+        method: "setNumber",
+        data: "111-1134",
+      },
+    })
+  );
+}, 1000);
 
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "BANK",
-//        method: "setContacts",
-//        data: [
-//          {
-//            id: 1,
-//            number: "345-4366",
-//            display: "Kevin",
-//          },
-//          {
-//            id: 2,
-//            number: "345-4366",
-//            display: "Kevin",
-//          },
-//        ],
-//      },
-//    })
-//  );
-//}, 1000);
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "BANK",
+        method: "setContacts",
+        data: [
+          {
+            id: 1,
+            number: "345-4366",
+            display: "Kevin",
+          },
+          {
+            id: 2,
+            number: "345-4366",
+            display: "Kevin",
+          },
+        ],
+      },
+    })
+  );
+}, 1000);
 
-//setTimeout(() => {
-//  window.dispatchEvent(
-//    new MessageEvent("message", {
-//      data: {
-//        app: "PHONE",
-//        method: "setVisibility",
-//        data: true,
-//      },
-//    })
-//  );
-//}, 1000);
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "PHONE",
+        method: "setVisibility",
+        data: true,
+      },
+    })
+  );
+}, 1000);
 
 function Phone() {
   useNuiService();
@@ -78,6 +78,8 @@ function Phone() {
   if (visibility === false) {
     return null;
   }
+
+  const calling = true;
 
   return (
     <ThemeProvider theme={currentTheme()}>
@@ -107,10 +109,17 @@ function Phone() {
                   ]}
                 />
                 <div className="PhoneAppContainer">
-                  <Route exact path="/" component={HomeApp} />
-                  {allApps.map((App) => (
-                    <App.Route key={App.id} />
-                  ))}
+                  {calling ? (
+                    <CallModal />
+                  ) : (
+                    <>
+                      <Route exact path="/" component={HomeApp} />
+
+                      {allApps.map((App) => (
+                        <App.Route key={App.id} />
+                      ))}
+                    </>
+                  )}
                 </div>
                 <Navigation />
               </>

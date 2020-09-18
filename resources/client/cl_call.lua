@@ -18,7 +18,7 @@ RegisterNUICallback('phone:startCall', function(data)
     startCall(phoneNumber)
 end)
 
-RegisterNetEvent("phone:acceptCall")
+--[[RegisterNetEvent("phone:acceptCall")
 AddEventHandler("phone:acceptCall", function(phoneNumber, initiator)
   print("should accept")
   if inCall == false then
@@ -42,17 +42,17 @@ AddEventHandler("phone:acceptCall", function(phoneNumber, initiator)
     SetNuiFocus(true, true)
     TriggerServerEvent('phone:getCredentials', source)
   end
-end)
+end)--]]
 
 RegisterCommand('answer', function(source) -- Toggles Phone
   local rocko = 2222222
   local chip = 1111111
-  acceptCall (rocko)
+  acceptCall(rocko, chip)
   print(rocko)
 end, false)
 
-function startCall (phoneNumber)
-  TriggerServerEvent('phone:startCall', phoneNumber)
+function startCall(transmitter, target)
+  TriggerServerEvent('phone:startCall', transmitter, target)
 end
 
 function acceptCall (phoneNumber)
