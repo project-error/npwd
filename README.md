@@ -22,6 +22,8 @@ The development environment assumes you have the following prerequisites:
 
 ### Development Environment
 
+#### Steps
+
 1. Clone the repo into your `server-data/resources/[local]` folder
 1. Go into the react project: `cd phone`
 1. Install node dependencies: `yarn install`
@@ -29,6 +31,8 @@ The development environment assumes you have the following prerequisites:
 3. Add the `new-phone-who-dis` app to your `server.cfg`
 4. Start your fivem server
 
-Development iteration cycle:
+#### Development iteration cycle:
+
 - If iterating on client/server LUA make your change and then `restart new-phone-who-dis` in the fivem server terminal
 - If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then `restart new-phone-who-dis` after making your change
+- Avoid commiting `index.html` as the development version overrides the production version
