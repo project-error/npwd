@@ -9,5 +9,4 @@ Config.PhoneAsItem = false
 Config.twitter = {}
 Config.twitter.characterLimit = 240
 Config.twitter.renderImages = true  -- whether or not links to images are automatically rendered on the UI
-Config.twitter.renderGifs = true  -- whether or not links to gifs are automatically rendered on the UI
-Config.twitter.renderVideos = true  -- whether or not links to videos are automatically rendered on the UI
+Config.twitter.maxImages = 3 -- max amount of images that can be attached to a single tweet

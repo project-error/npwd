@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { v4 as uuidv4 } from "uuid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper } from "@material-ui/core";
 import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexFlow: "row nowrap",
     justifyContent: "flex-start",
+    paddingLeft: "5px", // re-align left buttons after overriding material-ui spacing
   },
   rightButtons: {
     display: "flex",
@@ -52,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     background: "transparent",
+    minWidth: "45px", // override default material-ui spacing between buttons
   },
   buttonHidden: {
     display: "none",
@@ -72,9 +75,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const TEMP_MEDIA = [
+  {
+    id: uuidv4(),
+    mediaType: "image",
+    mediaLink:
+      "http://www.freedigitalphotos.net/images/thumbs/city-10011901.jpg",
+  },
+  {
+    id: uuidv4(),
+    mediaType: "image",
+    mediaLink:
+      "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80",
+  },
+  {
+    id: uuidv4(),
+    mediaType: "image",
+    mediaLink:
+      "https://static01.nyt.com/images/2020/07/17/business/00virus-cities1/00virus-cities1-mediumSquareAt3X.jpg",
+  },
+  {
+    id: uuidv4(),
+    mediaType: "image",
+    mediaLink:
+      "https://image.cnbcfm.com/api/v1/image/105066394-GettyImages-498350103_1.jpg?v=1591858410",
+  },
+  {
+    id: uuidv4(),
+    mediaType: "image",
+    mediaLink:
+      "https://www.cbre.us/-/media/cbre/countryunitedkingdom/images/our-cities/231_what_makes_a_successful_city_image2_1024x576.jpg",
+  },
+];
+
 export const AddTweetModal = ({ visible, handleClose }) => {
   const [text, setText] = useState("");
-  const [media, setMedia] = useState(null);
+  const [media, setMedia] = useState(TEMP_MEDIA);
   const [mediaType, setMediaType] = useState(null);
   const [mediaLink, setMediaLink] = useState(null);
   const classes = useStyles();
@@ -84,24 +120,30 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     : classes.displayNone;
 
   const submitTweet = () => {
-    const data = { text, ...media };
+    const data = { text, media };
 
     console.log("submitting tweet");
-
     console.log(data);
   };
 
   const addMedia = useCallback(() => {
-    setMedia({ mediaType, mediaLink });
+    // we add an ID here so that we can have a distinct identifier on the
+    // client before it is added to the database. This ID is NOT what used
+    // or contained in the database.
+    setMedia(media.concat([{ id: uuidv4(), mediaType, mediaLink }]));
     setMediaType(null);
     setMediaLink(null);
   }, [mediaType, mediaLink]);
 
-  const closeMedia = useCallback(() => {
+  const _removeMedia = (id) => setMedia(media.filter((m) => m.id !== id));
+  const removeMedia = useCallback(_removeMedia, [media]);
+
+  const closeMediaPrompt = useCallback(() => {
     setMediaType(null);
     setMediaLink(null);
   }, []);
 
+  console.log(media);
   return (
     <div className={showHideClassName}>
       <Paper className={classes.root}>
@@ -115,7 +157,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
             handleChange={(e) => setMediaLink(e.target.value)}
           />
         )}
-        {media && <MediaDisplay {...media} />}
+        <MediaDisplay media={media} removeMedia={removeMedia} />
         <div className={classes.buttonsContainer}>
           <div className={classes.leftButtons}>
             <Button
@@ -143,7 +185,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
                 className={classes.closeMedia}
                 variant="contained"
                 color="secondary"
-                onClick={closeMedia}
+                onClick={closeMediaPrompt}
               >
                 {t("APPS_TWITTER_CLOSE_MEDIA")}
               </Button>
