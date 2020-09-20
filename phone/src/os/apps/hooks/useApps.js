@@ -2,6 +2,7 @@ import React from "react";
 import { useConfig } from "../../../config/hooks/useConfig";
 import {
   blue,
+  common,
   grey,
   green,
   orange,
@@ -13,6 +14,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import MessageIcon from "@material-ui/icons/Message";
+import AccessibilityIcon from "@material-ui/icons/Accessibility";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
 import { Route } from "react-router-dom";
@@ -22,6 +24,7 @@ import { CalculatorApp } from "../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
 import { BankApp } from "../../../apps/bank/components/BankApp";
 import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
+import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
 
 const appsState = atom({
   key: "apps",
@@ -80,6 +83,15 @@ const appsState = atom({
         color: orange[50],
         path: "/bank",
         Route: () => <Route path="/bank" component={BankApp} />,
+      },
+      {
+        id: "TWITTER",
+        nameLocale: "APPS_TWITTER",
+        icon: <AccessibilityIcon />,
+        backgroundColor: blue[600],
+        color: common.white,
+        path: "/twitter",
+        Route: () => <Route path="/twitter" component={TwitterApp} />,
       },
     ],
   },

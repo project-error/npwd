@@ -11,6 +11,10 @@
     "APPS_BANK_WITHDRAW": "Withdraw",
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Frame"
+    "APPS_SETTINGS_OPTIONS_FRAME": "Frame",
+    "APPS_TWITTER": "Twitter",
+    "APPS_TWITTER_PLACEHOLDER": "What's happening?",
+    "APPS_TWITTER_TWEET": "Tweet",
+    "APPS_TWITTER_CLOSE": "Close"
   }
 }
