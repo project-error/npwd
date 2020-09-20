@@ -38,7 +38,8 @@ export const TwitterApp = () => {
     const listener = window.addEventListener(
       "keydown",
       (e) => {
-        if (e.key == "Escape" || e.key == "Esc") {
+        const isEscapeKey = e.key == "Escape" || e.key == "Esc";
+        if (isEscapeKey) {
           e.preventDefault();
           hideModal();
         }

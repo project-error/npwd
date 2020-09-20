@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -12,24 +12,22 @@ const useStyles = makeStyles((theme) => ({
   textFieldInput: {
     fontSize: "22px",
   },
-  display: {
-    height: "200px",
-  },
 }));
 
-export const TweetText = ({ text, handleChange }) => {
-  const classes = useStyles();
+export const MediaPrompt = ({ value, handleChange }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+
   return (
     <TextField
-      value={text}
+      value={value}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
       onChange={handleChange}
       multiline
-      placeholder={t("APPS_TWITTER_PLACEHOLDER")}
+      placeholder={t("APPS_TWITTER_MEDIA_PLACEHOLDER")}
     />
   );
 };
 
-export default TweetText;
+export default MediaPrompt;

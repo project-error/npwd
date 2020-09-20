@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Paper } from "@material-ui/core";
+import { Button, Paper } from "@material-ui/core";
 import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 import GifIcon from "@material-ui/icons/Gif";
 import CloseIcon from "@material-ui/icons/Close";
 import EmojiIcon from "@material-ui/icons/SentimentSatisfied";
 
+import types from "../types";
+import MediaDisplay from "./MediaDisplay";
+import MediaPrompt from "./MediaPrompt";
 import TweetText from "./TweetText";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     background: "transparent",
   },
+  buttonHidden: {
+    display: "none",
+  },
+  closeMedia: {
+    marginLeft: "8px",
+  },
   displayBlock: {
     /*Sets modal to center*/
     display: "flex",
@@ -65,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const AddTweetModal = ({ visible, handleClose }) => {
   const [text, setText] = useState("");
+  const [media, setMedia] = useState(null);
+  const [mediaType, setMediaType] = useState(null);
+  const [mediaLink, setMediaLink] = useState(null);
   const classes = useStyles();
   const { t } = useTranslation();
   const showHideClassName = visible
@@ -72,8 +84,23 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     : classes.displayNone;
 
   const submitTweet = () => {
+    const data = { text, ...media };
+
     console.log("submitting tweet");
+
+    console.log(data);
   };
+
+  const addMedia = useCallback(() => {
+    setMedia({ mediaType, mediaLink });
+    setMediaType(null);
+    setMediaLink(null);
+  }, [mediaType, mediaLink]);
+
+  const closeMedia = useCallback(() => {
+    setMediaType(null);
+    setMediaLink(null);
+  }, []);
 
   return (
     <div className={showHideClassName}>
@@ -81,23 +108,46 @@ export const AddTweetModal = ({ visible, handleClose }) => {
         <Button className={classes.close} onClick={handleClose}>
           <CloseIcon color="action" />
         </Button>
-        <TweetText value={text} onChange={(e) => setText(e.target.value)} />
+        <TweetText text={text} handleChange={(e) => setText(e.target.value)} />
+        {mediaType && (
+          <MediaPrompt
+            value={mediaLink}
+            handleChange={(e) => setMediaLink(e.target.value)}
+          />
+        )}
+        {media && <MediaDisplay {...media} />}
         <div className={classes.buttonsContainer}>
           <div className={classes.leftButtons}>
-            <Button className={classes.button}>
+            <Button
+              className={classes.button}
+              onClick={() => setMediaType(types.IMAGE)}
+            >
               <InsertPhotoIcon color="action" />
-            </Button>
-            <Button className={classes.button}>
-              <GifIcon color="action" />
             </Button>
             <Button className={classes.button}>
               <EmojiIcon color="action" />
             </Button>
           </div>
           <div className={classes.rightButtons}>
-            <Button variant="contained" color="primary" onClick={submitTweet}>
-              {t("APPS_TWITTER_TWEET")}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={mediaType ? addMedia : submitTweet}
+            >
+              {mediaType
+                ? t("APPS_TWITTER_SUBMIT_MEDIA")
+                : t("APPS_TWITTER_TWEET")}
             </Button>
+            {mediaType && (
+              <Button
+                className={classes.closeMedia}
+                variant="contained"
+                color="secondary"
+                onClick={closeMedia}
+              >
+                {t("APPS_TWITTER_CLOSE_MEDIA")}
+              </Button>
+            )}
           </div>
         </div>
       </Paper>
