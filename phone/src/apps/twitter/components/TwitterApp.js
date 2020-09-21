@@ -34,21 +34,6 @@ export const TwitterApp = () => {
   const openModal = useCallback(() => setModalVisible(true), []);
   const hideModal = useCallback(() => setModalVisible(false), []);
 
-  useEffect(() => {
-    const listener = window.addEventListener(
-      "keydown",
-      (e) => {
-        const isEscapeKey = e.key == "Escape" || e.key == "Esc";
-        if (isEscapeKey) {
-          e.preventDefault();
-          hideModal();
-        }
-      },
-      true
-    );
-    return () => window.removeEventListener("keydown", listener);
-  }, []);
-
   return (
     <AppWrapper>
       <AppTitle app={twitter} className={classes.root} />

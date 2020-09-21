@@ -1,0 +1,8 @@
+.emoji-mart {
+  margin: 0px 15px 8px 15px !important;
+  width: calc(100% - 30px) !important;
+}
+
+.emoji-mart-bar {
+  display: none;
+}
