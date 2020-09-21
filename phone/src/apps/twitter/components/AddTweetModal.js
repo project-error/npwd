@@ -130,11 +130,15 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const reset = useCallback(() => {
     setMediaType(null);
     setMediaLink(null);
-    setShowMedia(false);
     setShowEmoji(false);
     setMedia([]);
     setText("");
   }, []);
+
+  const _handleClose = useCallback(() => {
+    reset();
+    handleClose();
+  });
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
@@ -142,18 +146,13 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     if (isEscapeKey) {
       e.preventDefault();
       reset();
-      handleClose();
+      _handleClose();
     }
   };
   useEffect(() => {
     const listener = window.addEventListener("keydown", _handleEscape, true);
     return () => window.removeEventListener("keydown", listener);
   }, []);
-
-  const _handleClose = useCallback(() => {
-    reset();
-    handleClose();
-  });
 
   const showHideClassName = visible
     ? classes.displayBlock
