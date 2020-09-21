@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     maxHeight: "125px", // constrain images so we don't overwhelm the UI
-    maxWidth: "500px",
+    maxWidth: "300px",
     padding: "0px 3px 3px 0px",
   },
 }));

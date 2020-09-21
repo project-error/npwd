@@ -115,8 +115,6 @@ const TEMP_MEDIA = [
   },
 ];
 
-const URL_REGEX = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-
 export const AddTweetModal = ({ visible, handleClose }) => {
   const [showEmoji, setShowEmoji] = useState(false);
 
@@ -170,14 +168,16 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const addMedia = useCallback(() => {
     setMediaType(null);
     setMediaLink(null);
+
     // only add the media if it's a valid URL
-    // TODO - can we test that it's a valid image in JS?
-    if (mediaLink.match(URL_REGEX)) {
-      // we add an ID here so that we can have a distinct identifier on the
-      // client before it is added to the database. This ID is NOT what used
-      // or contained in the database.
+    const image = new Image();
+    image.onload = () => {
       setMedia(media.concat([{ id: uuidv4(), mediaType, mediaLink }]));
-    }
+    };
+    image.onerror = () => {
+      console.warn("Invalid image: ", mediaLink);
+    };
+    image.src = mediaLink;
   }, [mediaType, mediaLink]);
   const _removeMedia = (id) => setMedia(media.filter((m) => m.id !== id));
   const removeMedia = useCallback(_removeMedia, [media]);

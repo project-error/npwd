@@ -26,6 +26,7 @@ export const MediaPrompt = ({ visible, value, handleChange }) => {
       className={classes.textField}
       onChange={handleChange}
       multiline
+      size="small"
       placeholder={t("APPS_TWITTER_MEDIA_PLACEHOLDER")}
     />
   );
