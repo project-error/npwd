@@ -1,11 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { blue } from "@material-ui/core/colors";
 import { makeStyles, Button } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { AppTitle } from "../../../ui/components/AppTitle";
 import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
-import { useTranslation } from "react-i18next";
 import { useApp } from "../../../os/apps/hooks/useApps";
 
 import TweetList from "./TweetList";
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const TwitterApp = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { t } = useTranslation();
   const classes = useStyles();
   const twitter = useApp("TWITTER");
 
