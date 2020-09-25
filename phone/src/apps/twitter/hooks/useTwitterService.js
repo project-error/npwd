@@ -16,17 +16,27 @@ function processTweet(tweet) {
   // we store images in the database as a varchar field with
   // comma separated links to images, so here we split them
   // back into their distinct members
-  console.log(tweet);
   const imageLinks = tweet.images ? tweet.images.split(IMAGE_DELIMITER) : [];
-  console.log(imageLinks);
   const images = imageLinks.map((link) => ({ id: uuidv4(), link }));
   return { ...tweet, images };
 }
 
+/**
+ * Service to handle all NUI <> client interactions. We take
+ * this opportunity to act as a middleware layer between the
+ * client and the react components. Because I'm terrible with lua
+ * I have given up on parsing/cleaning database query results there
+ * there and have moved that logic here instead.
+ */
 export const useTwitterService = () => {
+  const setProfile = useSetRecoilState(twitterState.profile);
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
   const setCreateSuccess = useSetRecoilState(twitterState.createTweetSuccess);
+
+  const _setProfile = (profile) => {
+    setProfile(profile[0]); // server returns an array of 1 profile
+  };
 
   const _setCreateSuccess = (isSuccessful) => {
     setCreateSuccess(isSuccessful === 1); // numeric 1 is returned by MySQL on successful query
@@ -37,9 +47,8 @@ export const useTwitterService = () => {
     setTweets(tweets.map(processTweet));
   };
 
+  useNuiEvent(types.APP_TWITTER, "getOrCreateTwitterProfile", _setProfile);
   useNuiEvent(types.APP_TWITTER, "fetchTweets", _setTweets);
   useNuiEvent(types.APP_TWITTER, "createTweetLoading", setCreateLoading);
   useNuiEvent(types.APP_TWITTER, "createTweetResult", _setCreateSuccess);
-
-  return useTweets();
 };

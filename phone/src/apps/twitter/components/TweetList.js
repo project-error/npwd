@@ -5,11 +5,10 @@ import { List } from "../../../ui/components/List";
 import { useTweets } from "../hooks/useTweets";
 import Tweet from "./Tweet";
 
-const TWEETS_REFRESH_RATE = 5000; // TODO move this to twitter config
+const TWEETS_REFRESH_RATE = 50000000; // TODO move this to twitter config
 
 export function TweetList() {
   const { tweets } = useTweets();
-  console.log(tweets);
 
   useEffect(() => {
     Nui.send("phone:fetchTweets", {});

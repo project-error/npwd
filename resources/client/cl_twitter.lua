@@ -9,7 +9,6 @@ end)
 
 local APP_NAME = 'TWITTER'
 
-
 function sendMessage(method, data)
     SendNUIMessage(
         {
@@ -39,4 +38,11 @@ RegisterNUICallback('phone:createTweet', function(data)
     sendMessage('createTweetResult',  isSuccessful)
     TriggerEvent('phone:fetchTweets')
   end, data)
+end)
+
+RegisterNUICallback('phone:getOrCreateTwitterProfile', function()
+  print('phone:getOrCreateTwitterProfile')
+  ESX.TriggerServerCallback('phone:getOrCreateTwitterProfile', function(profile)
+    sendMessage('getOrCreateTwitterProfile',  profile)
+  end)
 end)
