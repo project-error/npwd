@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const MediaPrompt = ({ visible, value, handleChange }) => {
+export const ImagePrompt = ({ visible, value, handleChange }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -27,9 +27,9 @@ export const MediaPrompt = ({ visible, value, handleChange }) => {
       onChange={handleChange}
       multiline
       size="small"
-      placeholder={t("APPS_TWITTER_MEDIA_PLACEHOLDER")}
+      placeholder={t("APPS_TWITTER_IMAGE_PLACEHOLDER")}
     />
   );
 };
 
-export default MediaPrompt;
+export default ImagePrompt;

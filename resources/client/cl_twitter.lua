@@ -30,7 +30,6 @@ end)
 
 
 RegisterNUICallback('phone:fetchTweets', function()
-    print('RegisterNUICallback: phone:fetchTweets')
     TriggerEvent('phone:fetchTweets')
   end)
 

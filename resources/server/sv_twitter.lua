@@ -21,11 +21,12 @@ ESX.RegisterServerCallback('phone:createTweet', function(source, cb, data)
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
 
-    MySQL.Async.execute('INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`) VALUES (@identifier, @realUser, @message)', 
+    MySQL.Async.execute('INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`, `images`) VALUES (@identifier, @realUser, @message, @images)', 
     {  
         ['identifier'] = _identifier,
         ['realUser']  = data.realUser,
-        ['message']  = data.message
+        ['message']  = data.message,
+        ['images'] = data.images
     }, function(result) 
         cb(result)
     end)

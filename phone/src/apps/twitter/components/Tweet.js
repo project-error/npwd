@@ -7,6 +7,7 @@ import ReplyIcon from "@material-ui/icons/Reply";
 import QuoteIcon from "@material-ui/icons/FormatQuote";
 
 import { ListItem } from "../../../ui/components/ListItem";
+import ImageDisplay from "./ImageDisplay";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,11 +27,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Tweet = ({ message, media }) => {
+export const Tweet = (tweet) => {
+  const { message, images } = tweet;
   const classes = useStyles();
+
   return (
     <ListItem className={classes.root} divider>
       <ListItemText className={classes.text} primary={message} />
+      <ImageDisplay visible images={images} small />
       <div className={classes.buttonContainer}>
         <Button>
           <FavoriteBorderIcon />

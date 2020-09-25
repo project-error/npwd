@@ -5,7 +5,7 @@ import { List } from "../../../ui/components/List";
 import { useTweets } from "../hooks/useTweets";
 import Tweet from "./Tweet";
 
-const TWEETS_REFRESH_RATE = 5000;
+const TWEETS_REFRESH_RATE = 5000; // TODO move this to twitter config
 
 export function TweetList() {
   const { tweets } = useTweets();
@@ -17,6 +17,7 @@ export function TweetList() {
     }, TWEETS_REFRESH_RATE);
     return () => window.clearTimeout(timeout);
   }, []);
+  console.log(tweets);
 
   return (
     <List>

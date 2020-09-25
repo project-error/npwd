@@ -14,9 +14,9 @@
     "APPS_SETTINGS_OPTIONS_FRAME": "Frame",
     "APPS_TWITTER": "Twitter",
     "APPS_TWITTER_PLACEHOLDER": "What's happening?",
-    "APPS_TWITTER_MEDIA_PLACEHOLDER": "A link to your image or gif",
-    "APPS_TWITTER_SUBMIT_MEDIA": "Add Media",
-    "APPS_TWITTER_CLOSE_MEDIA": "Close",
+    "APPS_TWITTER_IMAGE_PLACEHOLDER": "A link to your image or gif",
+    "APPS_TWITTER_SUBMIT_IMAGE": "Add Media",
+    "APPS_TWITTER_CLOSE_IMAGE": "Close",
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_CLOSE": "Close",
     "APPS_TWITTER_CREATE_FAILED": "Failed to send your tweet"

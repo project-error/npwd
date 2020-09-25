@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "justify-content",
     marginRight: "15px",
   },
-  closeMedia: {
+  close: {
     marginLeft: "8px",
   },
 }));
 
 export const ControlButtons = ({
-  mediaType,
+  showImagePrompt,
   showEmoji,
   onCloseClick,
   onPrimaryClick,
@@ -29,11 +29,11 @@ export const ControlButtons = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const mediaPromptVisible = mediaType && !showEmoji;
-  const primaryButtonText = mediaPromptVisible
-    ? t("APPS_TWITTER_SUBMIT_MEDIA")
+  const imagePromptVisible = showImagePrompt && !showEmoji;
+  const primaryButtonText = imagePromptVisible
+    ? t("APPS_TWITTER_SUBMIT_IMAGE")
     : t("APPS_TWITTER_TWEET");
-  const showCloseButton = mediaType || showEmoji;
+  const showCloseButton = showImagePrompt || showEmoji;
 
   if (isLoading) return <h1>!!!</h1>;
 
@@ -44,12 +44,12 @@ export const ControlButtons = ({
       </Button>
       {showCloseButton && (
         <Button
-          className={classes.closeMedia}
+          className={classes.close}
           variant="contained"
           color="secondary"
           onClick={onCloseClick}
         >
-          {t("APPS_TWITTER_CLOSE_MEDIA")}
+          {t("APPS_TWITTER_CLOSE_IMAGE")}
         </Button>
       )}
     </div>

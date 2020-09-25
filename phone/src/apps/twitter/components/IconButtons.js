@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const IconButtons = ({ onMediaClick, onEmojiClick }) => {
+export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const classes = useStyles();
   return (
     <div className={classes.buttons}>
-      <Button className={classes.button} onClick={onMediaClick}>
+      <Button className={classes.button} onClick={onImageClick}>
         <InsertPhotoIcon color="action" />
       </Button>
       <Button className={classes.button} onClick={onEmojiClick}>

@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "2px 15px",
   },
-  mediaImage: {
+  imageContainer: {
     // catch the close button here so it doesn't go all the way up to the modal
     position: "relative",
     display: "inline-block",
@@ -29,22 +29,29 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "300px",
     padding: "0px 3px 3px 0px",
   },
+  imgSmall: {
+    maxHeight: "75px", // constrain images so we don't overwhelm the UI
+    maxWidth: "125px",
+    padding: "0px 1px 1px 0px",
+  },
 }));
 
-export const MediaImage = ({ mediaLink, handleClick }) => {
+export const Image = ({ link, handleClick, small }) => {
   const classes = useStyles();
   return (
-    <div className={classes.mediaImage}>
-      <IconButton
-        className={classes.imgButton}
-        onClick={handleClick}
-        size="small"
-      >
-        <CloseIcon />
-      </IconButton>
-      <img className={classes.img} src={mediaLink} />
+    <div className={classes.imageContainer}>
+      {handleClick && (
+        <IconButton
+          className={classes.imgButton}
+          onClick={handleClick}
+          size="small"
+        >
+          <CloseIcon />
+        </IconButton>
+      )}
+      <img className={small ? classes.imgSmall : classes.img} src={link} />
     </div>
   );
 };
 
-export default MediaImage;
+export default Image;
