@@ -9,15 +9,23 @@ const TWEETS_REFRESH_RATE = 5000; // TODO move this to twitter config
 
 export function TweetList() {
   const { tweets } = useTweets();
+  console.log(tweets);
 
   useEffect(() => {
     Nui.send("phone:fetchTweets", {});
+
+    // this is a polling implementation. It is possible that
+    // there is some interaction where, on a new tweet, all
+    // clients are sent the updated query data. Until that can
+    // be accomplished this is naive but robust.
+    //
+    // TODO don't call fetchTweets - implement a function that only
+    // returns tweets that we don't already have
     const timeout = window.setTimeout(() => {
       Nui.send("phone:fetchTweets", {});
     }, TWEETS_REFRESH_RATE);
     return () => window.clearTimeout(timeout);
   }, []);
-  console.log(tweets);
 
   return (
     <List>

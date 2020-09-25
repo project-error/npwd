@@ -9,7 +9,7 @@ import QuoteIcon from "@material-ui/icons/FormatQuote";
 import { ListItem } from "../../../ui/components/ListItem";
 import ImageDisplay from "./ImageDisplay";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     overflowX: "hidden",
     display: "flex",

@@ -15,11 +15,11 @@ export const ImageDisplay = ({ visible, images, removeImage, small }) => {
 
   return (
     <div className={classes.root}>
-      {images.map((link) => (
+      {images.map((image) => (
         <Image
-          key={link}
-          link={link}
-          handleClick={removeImage ? () => removeImage(link) : null}
+          key={image.id}
+          link={image.link}
+          handleClick={removeImage ? () => removeImage(image.id) : null}
           small={small}
         />
       ))}

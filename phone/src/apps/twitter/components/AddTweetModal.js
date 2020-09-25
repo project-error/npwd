@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -8,7 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 import Nui from "../../../os/nui-events/utils/Nui";
 import { IMAGE_DELIMITER } from "../utils/images";
 import { withValidImage } from "../utils/images";
-import "./emoji.css";
 import EmojiSelect from "./EmojiSelect";
 import ImageDisplay from "./ImageDisplay";
 import ImagePrompt from "./ImagePrompt";
@@ -65,7 +63,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const classes = useStyles();
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
-  const [image, setimage] = useState("");
+  const [link, setLink] = useState("");
 
   const [message, setMessage] = useState("");
   const [images, setImages] = useState([]);
@@ -74,7 +72,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     setShowImagePrompt(null);
     setShowEmoji(false);
 
-    setimage("");
+    setLink("");
     setImages([]);
     setMessage("");
   };
@@ -104,7 +102,10 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const submitTweet = () => {
     const data = {
       message,
-      images: images && images.length > 0 ? images.join(IMAGE_DELIMITER) : "",
+      images:
+        images && images.length > 0
+          ? images.map((image) => image.link).join(IMAGE_DELIMITER)
+          : "",
       realUser: "testUser",
     };
     Nui.send("phone:createTweet", data);
@@ -114,18 +115,29 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const handleMessageChange = (e) => setMessage(e.target.value);
 
   const addImage = () => {
+    // strip any whitespace from the link in case the user
+    // added some spaces/returns accidentally
+    const cleanedLink = link.replace("/ /g", "");
+    // because we're only storing strings in the database we need
+    // to give this an arbirtrary (but unique) id so that we can
+    // correctly filter an array of images when the user wants to
+    // delete them. This handles an edge case where the user adds
+    // two of the same image.
+    const image = { id: uuidv4(), link: cleanedLink };
     // it's worth noting that we only perform this validation on
     // the client of the user who is submitting the image. When
     // other users see this image on their TweetList it will be
     // from the database and should already have passed through
     // this logic
-    withValidImage(image, () => setImages([...images, image]));
+    withValidImage(cleanedLink, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
-    setimage("");
+    setLink("");
   };
-  const removeImage = (image) => setImages(images.filter((i) => i !== image));
-  const handleimageChange = (e) => setimage(e.target.value);
+  const removeImage = (id) =>
+    setImages(images.filter((image) => id !== image.id));
+  const handleimageChange = (e) => setLink(e.target.value);
+
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
     setShowImagePrompt(!showImagePrompt);
@@ -153,7 +165,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
         <AddTweetStatus />
         <ImagePrompt
           visible={showImagePrompt}
-          value={image}
+          value={link}
           handleChange={handleimageChange}
         />
         <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
