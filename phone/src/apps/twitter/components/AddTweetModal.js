@@ -76,26 +76,25 @@ export const AddTweetModal = ({ visible, handleClose }) => {
   const [images, setImages] = useState(IMAGES);
   const classes = useStyles();
 
-  const reset = useCallback(() => {
+  const reset = () => {
     setShowImagePrompt(null);
     setShowEmoji(false);
 
     setimage("");
     setImages([]);
     setText("");
-  }, []);
+  };
 
-  const _handleClose = useCallback(() => {
+  const _handleClose = () => {
     reset();
     handleClose();
-  });
+  };
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
     const isEscapeKey = e.key == "Escape" || e.key == "Esc";
     if (isEscapeKey) {
       e.preventDefault();
-      reset();
       _handleClose();
     }
   };
@@ -115,6 +114,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
       realUser: "testUser",
     };
     Nui.send("phone:createTweet", data);
+    _handleClose();
   };
 
   const handleTextChange = (e) => setText(e.target.value);
