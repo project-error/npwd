@@ -12,7 +12,7 @@ import "./emoji.css";
 import EmojiSelect from "./EmojiSelect";
 import ImageDisplay from "./ImageDisplay";
 import ImagePrompt from "./ImagePrompt";
-import TweetText from "./TweetText";
+import TweetMessage from "./TweetMessage";
 import ControlButtons from "./ControlButtons";
 import IconButtons from "./IconButtons";
 import AddTweetStatus from "./AddTweetStatus";
@@ -61,20 +61,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IMAGES = [
-  "https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/boston/c07044da_9483_4fd5_8e37_5b75513dcc80_6b058b6f-7bdc-4f11-b217-4561c07901f3.jpg",
-  "https://www.hiusa.org/wp-content/uploads/2020/04/Aerial-View-Boston-Osman-Rana-Unsplash-1000x550-compressor-778x446.jpg",
-  "https://www.mccarter.com/wp-content/uploads/2019/10/Location-Boston.png",
-];
-
 export const AddTweetModal = ({ visible, handleClose }) => {
+  const classes = useStyles();
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
   const [image, setimage] = useState("");
 
-  const [text, setText] = useState("");
-  const [images, setImages] = useState(IMAGES);
-  const classes = useStyles();
+  const [message, setMessage] = useState("");
+  const [images, setImages] = useState([]);
 
   const reset = () => {
     setShowImagePrompt(null);
@@ -82,7 +76,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
 
     setimage("");
     setImages([]);
-    setText("");
+    setMessage("");
   };
 
   const _handleClose = () => {
@@ -109,17 +103,22 @@ export const AddTweetModal = ({ visible, handleClose }) => {
 
   const submitTweet = () => {
     const data = {
-      message: text,
-      images: images.join(IMAGE_DELIMITER),
+      message,
+      images: images && images.length > 0 ? images.join(IMAGE_DELIMITER) : "",
       realUser: "testUser",
     };
     Nui.send("phone:createTweet", data);
     _handleClose();
   };
 
-  const handleTextChange = (e) => setText(e.target.value);
+  const handleMessageChange = (e) => setMessage(e.target.value);
 
   const addImage = () => {
+    // it's worth noting that we only perform this validation on
+    // the client of the user who is submitting the image. When
+    // other users see this image on their TweetList it will be
+    // from the database and should already have passed through
+    // this logic
     withValidImage(image, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
@@ -137,8 +136,11 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     setImages("");
     setShowEmoji(!showEmoji);
   };
-  const handleEmojiClick = (emojiObject, e) => {
-    setText(text.concat(emojiObject.native));
+
+  // this is when a user clicks on an emoji icon itself (i.e. a smiley face)
+  // not the emoji icon on the UI
+  const handleSelectEmoji = (emojiObject, e) => {
+    setMessage(message.concat(emojiObject.native));
   };
 
   return (
@@ -147,14 +149,14 @@ export const AddTweetModal = ({ visible, handleClose }) => {
         <Button className={classes.close} onClick={_handleClose}>
           <CloseIcon color="action" />
         </Button>
-        <TweetText text={text} handleChange={handleTextChange} />
+        <TweetMessage message={message} handleChange={handleMessageChange} />
         <AddTweetStatus />
         <ImagePrompt
           visible={showImagePrompt}
           value={image}
           handleChange={handleimageChange}
         />
-        <EmojiSelect visible={showEmoji} onEmojiClick={handleEmojiClick} />
+        <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
         <ImageDisplay
           visible={!showEmoji && images.length > 0}
           images={images}

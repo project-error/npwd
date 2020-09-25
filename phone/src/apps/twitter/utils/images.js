@@ -5,8 +5,12 @@
 // here we'll use to join and split these strings
 export const IMAGE_DELIMITER = "||!||";
 
+/**
+ * Validate that the URL successfully loads in the browser
+ * @param {string} link - a URL we are trying to validate
+ * @param {func} onSuccess - callback if the link is valid
+ */
 export function withValidImage(link, onSuccess) {
-  // only add the media if it's a valid URL
   const image = new Image();
   image.onload = onSuccess;
   image.onerror = () => {

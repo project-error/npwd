@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TweetText = ({ text, handleChange }) => {
+export const TweetMessage = ({ message, handleChange }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
     <TextField
-      value={text}
+      value={message}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
       onChange={handleChange}
@@ -32,4 +32,4 @@ export const TweetText = ({ text, handleChange }) => {
   );
 };
 
-export default TweetText;
+export default TweetMessage;
