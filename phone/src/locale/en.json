@@ -18,6 +18,7 @@
     "APPS_TWITTER_SUBMIT_MEDIA": "Add Media",
     "APPS_TWITTER_CLOSE_MEDIA": "Close",
     "APPS_TWITTER_TWEET": "Tweet",
-    "APPS_TWITTER_CLOSE": "Close"
+    "APPS_TWITTER_CLOSE": "Close",
+    "APPS_TWITTER_CREATE_FAILED": "Failed to send your tweet"
   }
 }

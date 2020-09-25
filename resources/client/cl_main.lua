@@ -238,6 +238,7 @@ end, false)
 RegisterNetEvent('phone:send')
 AddEventHandler('phone:send', function()
     TriggerEvent('phone:sendContacts')
+    TriggerEvent('phone:fetchTweets')
 end)
 
 RegisterNUICallback('phone:close', function() -- Called for when the phone is closed via the UI.

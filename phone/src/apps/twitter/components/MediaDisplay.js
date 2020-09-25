@@ -29,7 +29,7 @@ export const MediaDisplay = ({ visible, media, removeMedia }) => {
     <div className={classes.root}>
       {media.map((mediaItem) => (
         <Media
-          id={mediaItem.id}
+          key={mediaItem.id}
           handleClose={() => removeMedia(mediaItem.id)}
           {...mediaItem}
         />

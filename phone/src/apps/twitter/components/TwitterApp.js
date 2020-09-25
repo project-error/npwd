@@ -8,6 +8,7 @@ import { AppContent } from "../../../ui/components/AppContent";
 import { useTranslation } from "react-i18next";
 import { useApp } from "../../../os/apps/hooks/useApps";
 
+import TweetList from "./TweetList";
 import AddTweetModal from "./AddTweetModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TwitterApp = () => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const { t } = useTranslation();
   const classes = useStyles();
   const twitter = useApp("TWITTER");
@@ -46,6 +47,7 @@ export const TwitterApp = () => {
       </Button>
       <AppContent>
         <AddTweetModal visible={modalVisible} handleClose={hideModal} />
+        <TweetList />
       </AppContent>
     </AppWrapper>
   );
