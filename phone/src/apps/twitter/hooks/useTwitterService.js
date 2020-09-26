@@ -30,6 +30,12 @@ function processTweet(tweet) {
  */
 export const useTwitterService = () => {
   const setProfile = useSetRecoilState(twitterState.profile);
+  const setUpdateProfileLoading = useSetRecoilState(
+    twitterState.updateProfileLoading
+  );
+  const setUpdateProfileSuccess = useSetRecoilState(
+    twitterState.updateProfileSuccess
+  );
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
   const setCreateSuccess = useSetRecoilState(twitterState.createTweetSuccess);
@@ -37,10 +43,14 @@ export const useTwitterService = () => {
   const _setProfile = (profile) => {
     setProfile(profile[0]); // server returns an array of 1 profile
   };
+  const _setUpdateProfileSuccess = (isSuccessful) => {
+    setUpdateProfileSuccess(isSuccessful === 1); // numeric 1 is returned by MySQL on successful query
+    setUpdateProfileLoading(false); // on any result we should set loading to false
+  };
 
   const _setCreateSuccess = (isSuccessful) => {
-    setCreateSuccess(isSuccessful === 1); // numeric 1 is returned by MySQL on successful query
-    setCreateLoading(false); // on any result we should set loading to false
+    setCreateSuccess(isSuccessful === 1);
+    setCreateLoading(false);
   };
 
   const _setTweets = (tweets) => {
@@ -48,6 +58,16 @@ export const useTwitterService = () => {
   };
 
   useNuiEvent(types.APP_TWITTER, "getOrCreateTwitterProfile", _setProfile);
+  useNuiEvent(
+    types.APP_TWITTER,
+    "updateProfileLoading",
+    setUpdateProfileLoading
+  );
+  useNuiEvent(
+    types.APP_TWITTER,
+    "updateProfileResult",
+    _setUpdateProfileSuccess
+  );
   useNuiEvent(types.APP_TWITTER, "fetchTweets", _setTweets);
   useNuiEvent(types.APP_TWITTER, "createTweetLoading", setCreateLoading);
   useNuiEvent(types.APP_TWITTER, "createTweetResult", _setCreateSuccess);

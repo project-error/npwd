@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   box: {
     width: "100%",
+    height: "100%", // allow application to fill entireity of space
     position: "relative",
     overflow: "auto",
   },
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "100%",
+    height: "100%", // allow application to fill entireity of space
   },
 }));
 

@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "0px 3px 3px 0px",
   },
   imgSmall: {
-    maxHeight: "75px", // constrain images so we don't overwhelm the UI
-    maxWidth: "125px",
+    maxHeight: "200px", // constrain images so we don't overwhelm the UI
+    maxWidth: "100%",
     padding: "0px 1px 1px 0px",
   },
 }));

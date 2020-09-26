@@ -18,6 +18,7 @@ import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
+import { TwitterApp } from "./apps/twitter/components/TwitterApp";
 
 // These events are just for testing. Comment it out before building.
 //setTimeout(() => {
@@ -109,7 +110,7 @@ function Phone() {
                   ]}
                 />
                 <div className="PhoneAppContainer">
-                  <Route exact path="/" component={HomeApp} />
+                  <Route exact path="/" component={TwitterApp} />
                   {allApps.map((App) => (
                     <App.Route key={App.id} />
                   ))}

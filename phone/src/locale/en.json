@@ -19,6 +19,11 @@
     "APPS_TWITTER_CLOSE_IMAGE": "Close",
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_CLOSE": "Close",
-    "APPS_TWITTER_CREATE_FAILED": "Failed to send your tweet"
+    "APPS_TWITTER_CREATE_FAILED": "Failed to send your tweet",
+    "APPS_TWITTER_EDIT_PROFILE_AVATAR": "Avatar URL",
+    "APPS_TWITTER_EDIT_PROFILE_NAME": "Profile name",
+    "APPS_TWITTER_EDIT_PROFILE_BIO": "Bio",
+    "APPS_TWITTER_EDIT_PROFILE_LOCATION": "Location",
+    "APPS_TWITTER_EDIT_PROFILE_JOB": "Job"
   }
 }

@@ -104,3 +104,33 @@ ESX.RegisterServerCallback('phone:getOrCreateTwitterProfile', function(source, c
         cb(result)
     end)
 end)
+
+function updateProfile(identifier, data, cb)
+    print(identifier)
+    print(data)
+    MySQL.Async.execute('UPDATE npwd_twitter_profiles SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job WHERE identifier = @identifier', 
+    {  
+        ['identifier'] = identifier,
+        ['avatar_url'] = data.avatar_url,
+        ['profile_name'] = data.profile_name,
+        ['bio'] = data.bio,
+        ['location'] = data.location,
+        ['job'] = data.job,
+    }, function(result)
+        print('result1: ', result)
+        cb(result)
+    end)
+end
+
+
+ESX.RegisterServerCallback('phone:updateTwitterProfile', function(source, cb, data) 
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+
+    updateProfile(_identifier, data, function(result)
+        print('result2: ', result)
+        cb(result)
+    end)
+end)
+
