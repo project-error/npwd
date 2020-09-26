@@ -15,6 +15,7 @@ import { useProfile } from "../hooks/useProfile";
 
 import "./twitter.css";
 
+// TODO move this to the router so the application back button works
 const PAGE_COMPONENT_MAPPING = {
   0: <TweetList />,
   1: <TweetList />,
@@ -25,7 +26,7 @@ const MINIMUM_LOAD_TIME = 750;
 export const TwitterApp = () => {
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [activePage, setActivePage] = useState(2);
+  const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
 
   useEffect(() => {

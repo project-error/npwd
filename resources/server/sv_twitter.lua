@@ -11,10 +11,24 @@ TriggerEvent('esx:getSharedObject', function(obj)
 end)
 
 ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
-    local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
-    local _identifier = xPlayer.getIdentifier()
-    MySQL.Async.fetchAll('SELECT * FROM npwd_twitter_tweets WHERE visible = 1 ORDER BY updatedAt DESC', {}, function(tweets)
+    MySQL.Async.fetchAll([[
+        SELECT
+            npwd_twitter_tweets.id,
+            npwd_twitter_tweets.createdAt,
+            npwd_twitter_tweets.likes,
+            npwd_twitter_tweets.identifier,
+            npwd_twitter_tweets.visible,
+            npwd_twitter_tweets.images,
+            npwd_twitter_tweets.message,
+            npwd_twitter_profiles.profile_name,
+            npwd_twitter_profiles.avatar_url,
+            TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
+        FROM npwd_twitter_tweets
+        LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+        WHERE visible = 1
+        ORDER BY npwd_twitter_tweets.createdAt DESC 
+        LIMIT 75
+    ]], {}, function(tweets)
         cb(tweets)
     end)
 end)

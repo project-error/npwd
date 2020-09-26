@@ -28,11 +28,9 @@ export function TweetList() {
 
   return (
     <List>
-      {tweets
-        .filter((t) => t.visible)
-        .map((tweet) => (
-          <Tweet key={tweet.id} {...tweet} />
-        ))}
+      {tweets.map((tweet) => (
+        <Tweet key={tweet.id} {...tweet} />
+      ))}
     </List>
   );
 }
