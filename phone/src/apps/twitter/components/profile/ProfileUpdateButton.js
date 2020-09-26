@@ -25,7 +25,6 @@ export function ProfileUpdateButton({ handleClick }) {
   useEffect(() => {
     setMimimumLoadPassed(false);
     const timeout = window.setTimeout(() => {
-      console.log("debug 1.0");
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
     return () => window.clearTimeout(timeout);

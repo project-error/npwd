@@ -55,13 +55,11 @@ export const TwitterApp = () => {
   );
 
   return (
-    <AppWrapper>
+    <AppWrapper id="twitter-app">
       <TwitterTitle />
       <AppContent>
-        <div id="twitter-content">
-          <AddTweetModal visible={modalVisible} handleClose={hideModal} />
-          {component}
-        </div>
+        <AddTweetModal visible={modalVisible} handleClose={hideModal} />
+        {component}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       <BottomNavigation
