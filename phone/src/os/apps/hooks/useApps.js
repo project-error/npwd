@@ -11,6 +11,7 @@ import {
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import MessageIcon from "@material-ui/icons/Message";
 import { atom } from "recoil";
@@ -22,6 +23,7 @@ import { CalculatorApp } from "../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
 import { BankApp } from "../../../apps/bank/components/BankApp";
 import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
+import { ExampleApp } from "../../../apps/example/components/ExampleApp";
 
 const appsState = atom({
   key: "apps",
@@ -80,6 +82,15 @@ const appsState = atom({
         color: orange[50],
         path: "/bank",
         Route: () => <Route path="/bank" component={BankApp} />,
+      },
+      {
+        id: "EXAMPLE",
+        nameLocale: "APPS_EXAMPLE",
+        icon: <CalendarTodayIcon />,
+        backgroundColor: blue[500],
+        color: blue[50],
+        path: "/example",
+        Route: () => <Route path="/example" component={ExampleApp} />,
       },
     ],
   },

@@ -79,7 +79,7 @@ function Phone() {
     return null;
   }
 
-  const calling = true;
+  const calling = false;
 
   return (
     <ThemeProvider theme={currentTheme()}>
