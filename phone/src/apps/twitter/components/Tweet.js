@@ -25,7 +25,9 @@ const useStyles = makeStyles(() => ({
   },
   content: {
     display: "flex",
+    marginTop: "-10px", // easier to do this here than override the MUI styles
     flexFlow: "column nowrap",
+    width: "100%",
   },
   date: {
     marginLeft: "10px",
@@ -33,7 +35,9 @@ const useStyles = makeStyles(() => ({
   buttonContainer: {
     display: "flex",
     flexFlow: "row nowrap",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
+    width: "100%",
+    marginLeft: "-20px", // easier to do this here than override the MUI styles
   },
 }));
 
@@ -80,10 +84,10 @@ export const Tweet = (tweet) => {
         <ListItemText primary={<Primary />} secondary={<Message />} />
         <div className={classes.buttonContainer}>
           <Button>
-            <FavoriteBorderIcon />
+            <ReplyIcon />
           </Button>
           <Button>
-            <ReplyIcon />
+            <FavoriteBorderIcon />
           </Button>
           <Button>
             <QuoteIcon />
