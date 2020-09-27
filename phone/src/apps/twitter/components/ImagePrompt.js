@@ -28,6 +28,7 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       multiline
       size="small"
       placeholder={t("APPS_TWITTER_IMAGE_PLACEHOLDER")}
+      inputRef={(input) => input && input.focus()}
     />
   );
 };
