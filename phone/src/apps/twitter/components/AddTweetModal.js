@@ -15,7 +15,6 @@ import ImagePrompt from "./ImagePrompt";
 import TweetMessage from "./TweetMessage";
 import ControlButtons from "./ControlButtons";
 import IconButtons from "./IconButtons";
-import AddTweetStatus from "./AddTweetStatus";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -169,7 +168,6 @@ export const AddTweetModal = () => {
           <CloseIcon color="action" />
         </Button>
         <TweetMessage message={message} handleChange={handleMessageChange} />
-        <AddTweetStatus />
         <ImagePrompt
           visible={showImagePrompt}
           value={link}

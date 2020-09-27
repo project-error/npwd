@@ -28,7 +28,7 @@ export const TweetMessage = ({ message, handleChange }) => {
       className={classes.textField}
       onChange={handleChange}
       multiline
-      placeholder={t("APPS_TWITTER_PLACEHOLDER")}
+      placeholder={t("APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER")}
       inputRef={(input) => input && input.focus()}
     />
   );

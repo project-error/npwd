@@ -1,9 +1,6 @@
 import React, { memo } from "react";
 import { Picker } from "emoji-mart";
 
-import "./emoji.css";
-import "emoji-mart/css/emoji-mart.css";
-
 export const EmojiSelect = ({ visible, onEmojiClick }) => {
   if (!visible) return null;
 

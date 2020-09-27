@@ -30,7 +30,7 @@ export const twitterState = {
     default: false,
   }),
   updateProfileSuccess: atom({
-    key: "createTweetSuccess",
+    key: "updateProfileSuccess",
     default: null,
   }),
 };

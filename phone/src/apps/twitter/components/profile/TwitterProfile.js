@@ -37,7 +37,6 @@ export function TwitterProfile() {
   const [job, handleJobChange] = useState(profile.job || "");
 
   const handleUpdate = () => {
-    console.log("Update database");
     const data = {
       avatar_url: avatarUrl,
       profile_name: name,

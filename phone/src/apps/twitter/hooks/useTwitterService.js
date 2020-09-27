@@ -44,12 +44,13 @@ export const useTwitterService = () => {
     setProfile(profile[0]); // server returns an array of 1 profile
   };
   const _setUpdateProfileSuccess = (isSuccessful) => {
-    setUpdateProfileSuccess(isSuccessful === 1); // numeric 1 is returned by MySQL on successful query
+    console.log("got: ", isSuccessful);
+    setUpdateProfileSuccess(isSuccessful);
     setUpdateProfileLoading(false); // on any result we should set loading to false
   };
 
   const _setCreateSuccess = (isSuccessful) => {
-    setCreateSuccess(isSuccessful === 1);
+    setCreateSuccess(isSuccessful);
     setCreateLoading(false);
   };
 

@@ -1,9 +1,11 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import { twitterState } from "./state";
 
 export const useTweetStatus = () => {
   const isLoading = useRecoilValue(twitterState.createTweetLoading);
-  const isSuccessful = useRecoilValue(twitterState.createTweetSuccess);
-  return { isLoading, isSuccessful };
+  const [isSuccessful, setIsSuccessful] = useRecoilState(
+    twitterState.createTweetSuccess
+  );
+  return { isLoading, isSuccessful, setIsSuccessful };
 };

@@ -1,11 +1,5 @@
 ESX = nil
 
-function printO(o)
-    for key, value in pairs(o) do
-        print(key, value)
-    end
-end
-
 TriggerEvent('esx:getSharedObject', function(obj) 
     ESX = obj 
 end)
@@ -39,10 +33,10 @@ ESX.RegisterServerCallback('phone:createTweet', function(source, cb, data)
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
 
-    MySQL.Async.execute([[
+    MySQL.Async.transaction({[[
         INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`, `images`)
         VALUES (@identifier, @realUser, @message, @images)
-    ]], 
+    ]]}, 
     {  
         identifier = _identifier,
         realUser  = data.realUser,
@@ -132,11 +126,11 @@ ESX.RegisterServerCallback('phone:getOrCreateTwitterProfile', function(source, c
     end)
 end)
 
-function updateProfile(identifier, data, cb)
-    MySQL.Async.execute([[
+function updateTwitterProfile(identifier, data, cb)
+    MySQL.Async.transaction({[[
         UPDATE npwd_twitter_profiles
         SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job WHERE identifier = @identifier
-    ]], 
+    ]]}, 
     {  
         identifier = identifier,
         avatar_url= data.avatar_url,
@@ -150,13 +144,12 @@ function updateProfile(identifier, data, cb)
     end)
 end
 
-
 ESX.RegisterServerCallback('phone:updateTwitterProfile', function(source, cb, data) 
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
 
-    updateProfile(_identifier, data, function(result)
+    updateTwitterProfile(_identifier, data, function(result)
         cb(result)
     end)
 end)

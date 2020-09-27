@@ -7,14 +7,16 @@ import { AppContent } from "../../../ui/components/AppContent";
 import TweetListContainer from "./TweetListContainer";
 import AddTweetModal from "./AddTweetModal";
 import { AppLoader } from "../../../ui/components/AppLoader";
+import { useModal } from "../hooks/useModal";
+import { useProfile } from "../hooks/useProfile";
 import TweetButton from "./TweetButton";
 import TwitterTitle from "./TwitterTitle";
 import BottomNavigation from "./BottomNavigation";
 import TwitterProfile from "./profile/TwitterProfile";
-import { useProfile } from "../hooks/useProfile";
+import AlertBar from "./alerts/AlertBar";
 
 import "./twitter.css";
-import { useModal } from "../hooks/useModal";
+import "emoji-mart/css/emoji-mart.css";
 
 const useStyles = makeStyles((theme) => ({
   backgroundModal: {
@@ -56,7 +58,6 @@ export const TwitterApp = () => {
   });
 
   const openModal = () => setModalVisible(true);
-  const hideModal = () => setModalVisible(false);
   const handlePageChange = (e, page) => setActivePage(page);
 
   // we add a minimum (but short) load time here so that
@@ -77,6 +78,7 @@ export const TwitterApp = () => {
       <TwitterTitle />
       <AppContent>{component}</AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
+      <AlertBar />
       <BottomNavigation
         activePage={activePage}
         handleChange={handlePageChange}
