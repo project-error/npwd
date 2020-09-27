@@ -30,8 +30,16 @@ const useStyles = makeStyles(() => ({
     flexFlow: "column nowrap",
     width: "100%",
   },
+  profile: {
+    fontSize: "24px",
+    fontWeight: "bold",
+  },
   date: {
     marginLeft: "10px",
+    fontSize: "16px",
+  },
+  message: {
+    fontSize: "22px",
   },
   buttonContainer: {
     display: "flex",
@@ -58,14 +66,17 @@ export const Tweet = (tweet) => {
   const formattedMessage = message.replace(/\n\r?/g, "<br />");
   const Message = () => (
     <>
-      <div dangerouslySetInnerHTML={{ __html: formattedMessage }} />
+      <div
+        className={classes.message}
+        dangerouslySetInnerHTML={{ __html: formattedMessage }}
+      />
       <ImageDisplay visible images={images} small />
     </>
   );
 
   const Primary = () => (
     <>
-      <strong>{`@${profile_name}`}</strong>
+      <span className={classes.profile}>{`@${profile_name}`}</span>
       <Typography
         className={classes.date}
         component="span"

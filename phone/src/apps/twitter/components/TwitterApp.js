@@ -14,9 +14,11 @@ import TwitterTitle from "./TwitterTitle";
 import BottomNavigation from "./BottomNavigation";
 import TwitterProfile from "./profile/TwitterProfile";
 import AlertBar from "./alerts/AlertBar";
+import TwitterLoader from "./TwitterLoader";
 
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
+import { useTweets } from "../hooks/useTweets";
 
 const useStyles = makeStyles((theme) => ({
   backgroundModal: {
@@ -38,6 +40,7 @@ const PAGE_COMPONENT_MAPPING = {
   2: <TwitterProfile />,
 };
 const MINIMUM_LOAD_TIME = 750;
+const TWEETS_REFRESH_RATE = 50000000; // TODO move this to twitter config
 
 export const TwitterApp = () => {
   const classes = useStyles();
@@ -45,9 +48,23 @@ export const TwitterApp = () => {
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
+  const { tweets } = useTweets();
 
   useEffect(() => {
     Nui.send("phone:getOrCreateTwitterProfile", {});
+    Nui.send("phone:fetchTweets", {});
+
+    // this is a polling implementation. It is possible that
+    // there is some interaction where, on a new tweet, all
+    // clients are sent the updated query data. Until that can
+    // be accomplished this is naive but robust.
+    //
+    // TODO don't call fetchTweets - implement a function that only
+    // returns tweets that we don't already have
+    const timeout = window.setTimeout(() => {
+      Nui.send("phone:fetchTweets", {});
+    }, TWEETS_REFRESH_RATE);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -63,20 +80,17 @@ export const TwitterApp = () => {
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately
   // another flash to the tweets screen.
-  const hasLoaded = profile && minimumLoadPassed;
+  const hasLoaded = tweets && profile && minimumLoadPassed;
   const showTweetButton = hasLoaded && activePage === 0;
-  const component = hasLoaded ? (
-    PAGE_COMPONENT_MAPPING[activePage]
-  ) : (
-    <AppLoader />
-  );
+
+  if (!hasLoaded) return <TwitterLoader />;
 
   return (
     <AppWrapper id="twitter-app">
       <AddTweetModal />
       <div className={modalVisible ? classes.backgroundModal : null} />
       <TwitterTitle />
-      <AppContent>{component}</AppContent>
+      <AppContent>{PAGE_COMPONENT_MAPPING[activePage]}</AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       <AlertBar />
       <BottomNavigation

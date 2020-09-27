@@ -7,7 +7,7 @@ export const twitterState = {
   }),
   tweets: atom({
     key: "tweets",
-    default: [],
+    default: null,
   }),
   showCreateTweetModal: atom({
     key: "showCreateTweetModal",
