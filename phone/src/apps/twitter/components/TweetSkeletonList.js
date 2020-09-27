@@ -6,9 +6,16 @@ import TweetSkeleton from "./TweetSkeleton";
 export function TweetSkeletonList() {
   return (
     <List>
-      {new Array(10).map(() => (
-        <TweetSkeleton />
-      ))}
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
+      <TweetSkeleton />
     </List>
   );
 }

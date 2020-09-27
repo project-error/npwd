@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -6,7 +6,6 @@ import TweetList from "./TweetList";
 
 import Nui from "../../../os/nui-events/utils/Nui";
 import SearchButton from "./SearchButton";
-import { useTweets } from "../hooks/useTweets";
 import { useFilteredTweets } from "../hooks/useFilteredTweets";
 
 const useStyles = makeStyles({
@@ -26,10 +25,6 @@ function TwitterSearch() {
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState("");
   const { tweets, setTweets } = useFilteredTweets();
-
-  useEffect(() => {
-    setTweets(null); // clear the filtered tweets on app load
-  });
 
   const handleChange = (e) => setSearchValue(e.target.value);
 

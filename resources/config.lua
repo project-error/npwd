@@ -7,6 +7,8 @@ Config.KeyTakeCall  = 38  -- E
 Config.PhoneAsItem = false
 
 Config.twitter = {}
+Config.twitter.registerByName = true -- if users can register by first_name and last_name from the users table
+Config.twitter.registerByPhoneNumber = true -- if users can register by phone_number from the users table
 Config.twitter.characterLimit = 240
 Config.twitter.allowEdtiableProfileName = true
 Config.twitter.showAvatars = true
