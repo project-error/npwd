@@ -39,29 +39,41 @@ ESX.RegisterServerCallback('phone:createTweet', function(source, cb, data)
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
 
-    MySQL.Async.execute('INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`, `images`) VALUES (@identifier, @realUser, @message, @images)', 
+    MySQL.Async.execute([[
+        INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`, `images`)
+        VALUES (@identifier, @realUser, @message, @images)
+    ]], 
     {  
-        ['identifier'] = _identifier,
-        ['realUser']  = data.realUser,
-        ['message']  = data.message,
-        ['images'] = data.images
-    }, function(result) 
+        identifier = _identifier,
+        realUser  = data.realUser,
+        message  = data.message,
+        images = data.images
+    },
+    function(result) 
         cb(result)
     end)
 end)
 
 function getProfile(identifier, cb)
-    MySQL.Async.fetchAll('SELECT * FROM npwd_twitter_profiles WHERE identifier = @identifier', 
-    {  
-        ['identifier'] = identifier,
-    }, function(result)
+    MySQL.Async.fetchAll([[
+        SELECT * FROM npwd_twitter_profiles
+        WHERE identifier = @identifier
+    ]], 
+    { identifier = identifier }, 
+    function(result)
         cb(result)
     end)
 end
 
 function getProfileName(identifier, cb)
     local defaultProfileName = '' -- handle any edge cases where the user does not exist or their name isn't populated
-    MySQL.Async.fetchAll('SELECT first_name, last_name FROM users WHERE identifier = @identifier LIMIT 1',  {['identifier'] = identifier }, function(users)
+    MySQL.Async.fetchAll([[
+        SELECT first_name, last_name
+        FROM users
+        WHERE identifier = @identifier LIMIT 1
+    ]], 
+    { identifier = identifier },
+    function(users)
         -- no user found with this identifier
        if next(users) == nil then
            cb(defaultProfileName)
@@ -81,11 +93,12 @@ end
 
 function createDefaultProfile(identifier, cb)
     getProfileName(identifier, function(profileName)
-        MySQL.Async.execute('INSERT INTO npwd_twitter_profiles (`identifier`, `profile_name`) VALUES (@identifier, @profile_name)', 
-        {  
-            ['identifier'] = identifier,
-            ['profile_name'] = profileName,
-        }, function(result)
+        MySQL.Async.execute([[
+            INSERT INTO npwd_twitter_profiles (`identifier`, `profile_name`)
+            VALUES (@identifier, @profile_name)
+        ]],
+        { identifier = identifier, profileName = profileName },
+        function(result)
             if result == 1 then  -- if we created the profile then return it
                 getProfile(identifier, cb)
             else -- otherwise just give back the failed result
@@ -120,15 +133,19 @@ ESX.RegisterServerCallback('phone:getOrCreateTwitterProfile', function(source, c
 end)
 
 function updateProfile(identifier, data, cb)
-    MySQL.Async.execute('UPDATE npwd_twitter_profiles SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job WHERE identifier = @identifier', 
+    MySQL.Async.execute([[
+        UPDATE npwd_twitter_profiles
+        SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job WHERE identifier = @identifier
+    ]], 
     {  
-        ['identifier'] = identifier,
-        ['avatar_url'] = data.avatar_url,
-        ['profile_name'] = data.profile_name,
-        ['bio'] = data.bio,
-        ['location'] = data.location,
-        ['job'] = data.job,
-    }, function(result)
+        identifier = identifier,
+        avatar_url= data.avatar_url,
+        profile_name = data.profile_name,
+        bio = data.bio,
+        location = data.location,
+        job = data.job,
+    },
+    function(result)
         cb(result)
     end)
 end
