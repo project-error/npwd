@@ -9,6 +9,14 @@ export const twitterState = {
     key: "tweets",
     default: [],
   }),
+  showCreateTweetModal: atom({
+    key: "showCreateTweetModal",
+    default: false,
+  }),
+  modalMessage: atom({
+    key: "modalMessage",
+    default: "",
+  }),
   createTweetLoading: atom({
     key: "createTweetLoading",
     default: false,

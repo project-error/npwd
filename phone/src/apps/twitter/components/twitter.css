@@ -1,6 +1,11 @@
 /* 00acee is "twitter blue" and we want to use that to override
 some of the Material UI primary theme settings */
 
+/* override buttons on the tweet modal */
+#twitter-app .MuiButton-containedPrimary {
+  background: #00acee !important;
+}
+
 /* override the bottom navigation active color */
 #twitter-app .Mui-selected {
   color: #00acee !important;

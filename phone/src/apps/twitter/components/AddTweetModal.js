@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -7,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import Nui from "../../../os/nui-events/utils/Nui";
 import { IMAGE_DELIMITER } from "../utils/images";
 import { withValidImage } from "../utils/images";
+import { useModal } from "../hooks/useModal";
 import EmojiSelect from "./EmojiSelect";
 import ImageDisplay from "./ImageDisplay";
 import ImagePrompt from "./ImagePrompt";
@@ -16,17 +18,19 @@ import IconButtons from "./IconButtons";
 import AddTweetStatus from "./AddTweetStatus";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: 5,
-    marginTop: 20,
-  },
   root: {
-    zIndex: 2,
-    background: "#232323",
+    zIndex: 10,
+    background: "#424242",
     marginTop: "15px",
     width: "90%",
     display: "flex",
     flexFlow: "column nowrap",
+    position: "absolute",
+    top: "35px",
+  },
+  button: {
+    margin: 5,
+    marginTop: 20,
   },
   close: {
     position: "absolute",
@@ -59,13 +63,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const AddTweetModal = ({ visible, handleClose }) => {
+export const AddTweetModal = () => {
   const classes = useStyles();
+  const { message, setMessage, modalVisible, setModalVisible } = useModal();
+
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
   const [link, setLink] = useState("");
 
-  const [message, setMessage] = useState("");
   const [images, setImages] = useState([]);
 
   const reset = () => {
@@ -79,7 +84,7 @@ export const AddTweetModal = ({ visible, handleClose }) => {
 
   const _handleClose = () => {
     reset();
-    handleClose();
+    setModalVisible(false);
   };
 
   // when the user presses escape we should close the modal
@@ -95,11 +100,13 @@ export const AddTweetModal = ({ visible, handleClose }) => {
     return () => window.removeEventListener("keydown", listener);
   }, []);
 
-  const showHideClassName = visible
+  const showHideClassName = modalVisible
     ? classes.displayBlock
     : classes.displayNone;
 
   const submitTweet = () => {
+    if (message.trim().length === 0) return;
+
     const data = {
       message,
       images:

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export const TweetMessage = ({ message, handleChange }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
   return (
     <TextField
       value={message}
@@ -28,6 +29,7 @@ export const TweetMessage = ({ message, handleChange }) => {
       onChange={handleChange}
       multiline
       placeholder={t("APPS_TWITTER_PLACEHOLDER")}
+      inputRef={(input) => input && input.focus()}
     />
   );
 };

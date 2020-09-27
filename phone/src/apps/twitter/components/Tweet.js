@@ -7,13 +7,13 @@ import MuiAvatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import ReplyIcon from "@material-ui/icons/Reply";
-import QuoteIcon from "@material-ui/icons/FormatQuote";
 
 import { ListItem } from "../../../ui/components/ListItem";
 import { secondsToHumanReadable } from "../utils/time";
+import ReplyButton from "./ReplyButton";
 import ImageDisplay from "./ImageDisplay";
 import Avatar from "./Avatar";
+import { QuoteButton } from "./QuoteButton";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
     flexFlow: "row nowrap",
     alignItems: "flex-start",
     width: "100%",
+    marginTop: "3px",
   },
   content: {
     display: "flex",
@@ -52,9 +53,12 @@ export const Tweet = (tweet) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  // this is a workaround to transfer string new lines and returns that
+  // are stored into the database into html for the UI to render
+  const formattedMessage = message.replace(/\n\r?/g, "<br />");
   const Message = () => (
     <>
-      <div>{message}</div>
+      <div dangerouslySetInnerHTML={{ __html: formattedMessage }} />
       <ImageDisplay visible images={images} small />
     </>
   );
@@ -83,15 +87,11 @@ export const Tweet = (tweet) => {
       <div className={classes.content}>
         <ListItemText primary={<Primary />} secondary={<Message />} />
         <div className={classes.buttonContainer}>
-          <Button>
-            <ReplyIcon />
-          </Button>
+          <ReplyButton profile_name={profile_name} />
           <Button>
             <FavoriteBorderIcon />
           </Button>
-          <Button>
-            <QuoteIcon />
-          </Button>
+          <QuoteButton message={message} />
         </div>
       </div>
     </ListItem>

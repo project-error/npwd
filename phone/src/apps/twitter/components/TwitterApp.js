@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Nui from "../../../os/nui-events/utils/Nui";
 import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
-import TweetList from "./TweetList";
+import TweetListContainer from "./TweetListContainer";
 import AddTweetModal from "./AddTweetModal";
 import { AppLoader } from "../../../ui/components/AppLoader";
 import TweetButton from "./TweetButton";
@@ -14,18 +14,33 @@ import TwitterProfile from "./profile/TwitterProfile";
 import { useProfile } from "../hooks/useProfile";
 
 import "./twitter.css";
+import { useModal } from "../hooks/useModal";
+
+const useStyles = makeStyles((theme) => ({
+  backgroundModal: {
+    background: "black",
+    opacity: "0.6",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5,
+  },
+}));
 
 // TODO move this to the router so the application back button works
 const PAGE_COMPONENT_MAPPING = {
-  0: <TweetList />,
-  1: <TweetList />,
+  0: <TweetListContainer />,
+  1: <TweetListContainer />,
   2: <TwitterProfile />,
 };
 const MINIMUM_LOAD_TIME = 750;
 
 export const TwitterApp = () => {
+  const classes = useStyles();
+  const { modalVisible, setModalVisible } = useModal();
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
 
@@ -57,11 +72,10 @@ export const TwitterApp = () => {
 
   return (
     <AppWrapper id="twitter-app">
+      <AddTweetModal />
+      <div className={modalVisible ? classes.backgroundModal : null} />
       <TwitterTitle />
-      <AppContent>
-        <AddTweetModal visible={modalVisible} handleClose={hideModal} />
-        {component}
-      </AppContent>
+      <AppContent>{component}</AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       <BottomNavigation
         activePage={activePage}
