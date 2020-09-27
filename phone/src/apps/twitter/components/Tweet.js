@@ -37,15 +37,15 @@ const useStyles = makeStyles(() => ({
     alignItems: "flex-end",
   },
   profile: {
-    fontSize: "22px",
+    fontSize: "18px",
     fontWeight: "bold",
   },
   date: {
     marginLeft: "10px",
-    fontSize: "16px",
+    fontSize: "14px",
   },
   message: {
-    fontSize: "20px",
+    fontSize: "18px",
     color: "rgba(255, 255, 255, 0.7)",
   },
   buttonContainer: {
