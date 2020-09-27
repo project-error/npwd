@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import TweetList from "./TweetList";
 
+import Nui from "../../../os/nui-events/utils/Nui";
 import SearchButton from "./SearchButton";
 import { useTweets } from "../hooks/useTweets";
+import { useFilteredTweets } from "../hooks/useFilteredTweets";
 
 const useStyles = makeStyles({
   root: {
@@ -22,23 +24,20 @@ const useStyles = makeStyles({
 function TwitterSearch() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { tweets } = useTweets();
   const [searchValue, setSearchValue] = useState("");
-  const [filteredTweets, setFilteredTweets] = useState(tweets);
+  const { tweets, setTweets } = useFilteredTweets();
+
+  useEffect(() => {
+    setTweets(null); // clear the filtered tweets on app load
+  });
+
   const handleChange = (e) => setSearchValue(e.target.value);
 
   const handleSubmit = () => {
-    if (!searchValue.trim()) return;
+    const cleanedSearchValue = searchValue.trim();
+    if (!cleanedSearchValue) return;
 
-    setFilteredTweets(
-      tweets.filter((tweet) => {
-        const v = searchValue.toLowerCase();
-        return (
-          tweet.profile_name.toLowerCase().includes(v) ||
-          tweet.message.toLowerCase().includes(v)
-        );
-      })
-    );
+    Nui.send("phone:fetchTweetsFiltered", cleanedSearchValue);
   };
 
   return (
@@ -55,7 +54,7 @@ function TwitterSearch() {
             inputRef={(input) => input && input.focus()}
           />
         </div>
-        <TweetList tweets={filteredTweets} />
+        <TweetList tweets={tweets || []} />
       </div>
       <SearchButton handleClick={handleSubmit} />
     </>

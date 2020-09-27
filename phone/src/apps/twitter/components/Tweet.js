@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import MuiAvatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import MoreIcon from "@material-ui/icons/MoreVert";
 
 import { ListItem } from "../../../ui/components/ListItem";
 import { secondsToHumanReadable } from "../utils/time";
@@ -30,8 +30,14 @@ const useStyles = makeStyles(() => ({
     flexFlow: "column nowrap",
     width: "100%",
   },
+  primary: {
+    display: "flex",
+    flexFlow: "row nowrap",
+    width: "100%",
+    alignItems: "flex-end",
+  },
   profile: {
-    fontSize: "24px",
+    fontSize: "22px",
     fontWeight: "bold",
   },
   date: {
@@ -40,6 +46,7 @@ const useStyles = makeStyles(() => ({
   },
   message: {
     fontSize: "20px",
+    color: "rgba(255, 255, 255, 0.7)",
   },
   buttonContainer: {
     display: "flex",
@@ -47,6 +54,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
     width: "100%",
     marginLeft: "-20px", // easier to do this here than override the MUI styles
+    marginTop: "3px",
   },
 }));
 
@@ -61,32 +69,9 @@ export const Tweet = (tweet) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const Primary = () => (
-    <>
-      <span className={classes.profile}>{`@${profile_name}`}</span>
-      <Typography
-        className={classes.date}
-        component="span"
-        variant="body2"
-        color="textSecondary"
-      >
-        {secondsToHumanReadable(t, seconds_since_tweet)}
-      </Typography>
-    </>
-  );
-
   // this is a workaround to transfer string new lines and returns that
   // are stored into the database into html for the UI to render
   const formattedMessage = message.replace(/\n\r?/g, "<br />");
-  const Message = () => (
-    <>
-      <div
-        className={classes.message}
-        dangerouslySetInnerHTML={{ __html: formattedMessage }}
-      />
-      <ImageDisplay visible images={images} small />
-    </>
-  );
 
   return (
     <ListItem className={classes.root} divider>
@@ -96,13 +81,31 @@ export const Tweet = (tweet) => {
         </MuiAvatar>
       </ListItemAvatar>
       <div className={classes.content}>
-        <ListItemText primary={<Primary />} secondary={<Message />} />
+        <div className={classes.primary}>
+          <div className={classes.profile}>{`@${profile_name}`}</div>
+          <Typography
+            className={classes.date}
+            component="div"
+            variant="body2"
+            color="textSecondary"
+          >
+            {secondsToHumanReadable(t, seconds_since_tweet)}
+          </Typography>
+        </div>
+        <div
+          className={classes.message}
+          dangerouslySetInnerHTML={{ __html: formattedMessage }}
+        />
+        <ImageDisplay visible images={images} small />
         <div className={classes.buttonContainer}>
           <ReplyButton profile_name={profile_name} />
           <Button>
             <FavoriteBorderIcon />
           </Button>
           <QuoteButton message={message} />
+          <Button>
+            <MoreIcon />
+          </Button>
         </div>
       </div>
     </ListItem>

@@ -4,7 +4,7 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj 
 end)
 
-ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
+function fetchAllTweets(cb)
     MySQL.Async.fetchAll([[
         SELECT
             npwd_twitter_tweets.id,
@@ -22,9 +22,49 @@ ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
         WHERE visible = 1
         ORDER BY npwd_twitter_tweets.createdAt DESC 
         LIMIT 100
-    ]], {}, function(tweets)
+    ]],
+    {},
+    function(tweets)
         cb(tweets)
     end)
+end
+
+function fetchTweetsFiltered(searchValue, cb)
+    local searchValueParameterized = '%' .. searchValue .. '%'
+    MySQL.Async.fetchAll([[
+        SELECT
+            npwd_twitter_tweets.id,
+            npwd_twitter_tweets.createdAt,
+            npwd_twitter_tweets.likes,
+            npwd_twitter_tweets.identifier,
+            npwd_twitter_tweets.visible,
+            npwd_twitter_tweets.images,
+            npwd_twitter_tweets.message,
+            npwd_twitter_profiles.profile_name,
+            npwd_twitter_profiles.avatar_url,
+            TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
+        FROM npwd_twitter_tweets
+        LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+        WHERE visible = 1 AND (npwd_twitter_profiles.profile_name LIKE @profile_name OR npwd_twitter_tweets.message LIKE @message)
+        ORDER BY npwd_twitter_tweets.createdAt DESC 
+        LIMIT 100
+    ]],
+    {
+        profile_name = searchValueParameterized,
+        message = searchValueParameterized
+    },
+    function(tweets)
+        cb(tweets)
+    end)
+end
+
+ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
+    fetchAllTweets(cb)
+end)
+
+  -- search value expected to be lower case
+ESX.RegisterServerCallback('phone:fetchTweetsFiltered', function(source, cb, searchValue)
+    fetchTweetsFiltered(searchValue, cb)
 end)
 
 

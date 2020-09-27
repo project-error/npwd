@@ -27,10 +27,24 @@ AddEventHandler('phone:fetchTweets', function()
     end)
 end)
 
+RegisterNetEvent('phone:fetchTweetsFiltered')
+AddEventHandler('phone:fetchTweetsFiltered', function(searchValue)
+  print('fetchTweetsFiltered', searchValue)
+  ESX.TriggerServerCallback('phone:fetchTweetsFiltered', function(tweets)
+      sendMessage('fetchTweetsFiltered',  tweets)
+  end, searchValue)
+end)
+
 
 RegisterNUICallback('phone:fetchTweets', function()
-    TriggerEvent('phone:fetchTweets')
-  end)
+  TriggerEvent('phone:fetchTweets')
+end)
+
+  
+RegisterNUICallback('phone:fetchTweetsFiltered', function(searchValue)
+  TriggerEvent('phone:fetchTweetsFiltered', searchValue)
+end)
+
 
 RegisterNUICallback('phone:createTweet', function(data)
   sendMessage('createTweetLoading',  true)

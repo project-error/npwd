@@ -9,6 +9,10 @@ export const twitterState = {
     key: "tweets",
     default: null,
   }),
+  filteredTweets: atom({
+    key: "filteredTweets",
+    default: null,
+  }),
   showCreateTweetModal: atom({
     key: "showCreateTweetModal",
     default: false,

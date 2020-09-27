@@ -37,6 +37,7 @@ export const useTwitterService = () => {
     twitterState.updateProfileSuccess
   );
   const setTweets = useSetRecoilState(twitterState.tweets);
+  const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
   const setCreateSuccess = useSetRecoilState(
     twitterState.createTweetSuccessful
@@ -58,6 +59,9 @@ export const useTwitterService = () => {
   const _setTweets = (tweets) => {
     setTweets(tweets.map(processTweet));
   };
+  const _setFilteredTweets = (tweets) => {
+    setFilteredTweets(tweets.map(processTweet));
+  };
 
   useNuiEvent(types.APP_TWITTER, "getOrCreateTwitterProfile", _setProfile);
   useNuiEvent(
@@ -71,6 +75,7 @@ export const useTwitterService = () => {
     _setUpdateProfileSuccess
   );
   useNuiEvent(types.APP_TWITTER, "fetchTweets", _setTweets);
+  useNuiEvent(types.APP_TWITTER, "fetchTweetsFiltered", _setFilteredTweets);
   useNuiEvent(types.APP_TWITTER, "createTweetLoading", setCreateLoading);
   useNuiEvent(types.APP_TWITTER, "createTweetResult", _setCreateSuccess);
 };

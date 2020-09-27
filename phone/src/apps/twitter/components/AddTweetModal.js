@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexFlow: "column nowrap",
     position: "absolute",
-    top: "35px",
+    top: "80px",
   },
   button: {
     margin: 5,
