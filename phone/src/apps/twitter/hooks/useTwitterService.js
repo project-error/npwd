@@ -38,13 +38,14 @@ export const useTwitterService = () => {
   );
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
-  const setCreateSuccess = useSetRecoilState(twitterState.createTweetSuccess);
+  const setCreateSuccess = useSetRecoilState(
+    twitterState.createTweetSuccessful
+  );
 
   const _setProfile = (profile) => {
     setProfile(profile[0]); // server returns an array of 1 profile
   };
   const _setUpdateProfileSuccess = (isSuccessful) => {
-    console.log("got: ", isSuccessful);
     setUpdateProfileSuccess(isSuccessful);
     setUpdateProfileLoading(false); // on any result we should set loading to false
   };

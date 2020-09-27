@@ -20,7 +20,7 @@ const MINIMUM_LOAD_TIME = 750;
 export function ProfileUpdateButton({ handleClick }) {
   const classes = useStyles();
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(true);
-  const { updateInProgress } = useProfile();
+  const { updateProfileLoading } = useProfile();
 
   useEffect(() => {
     setMimimumLoadPassed(false);
@@ -28,9 +28,9 @@ export function ProfileUpdateButton({ handleClick }) {
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
     return () => window.clearTimeout(timeout);
-  }, [updateInProgress]);
+  }, [updateProfileLoading]);
 
-  const isLoading = updateInProgress || !minimumLoadPassed;
+  const isLoading = updateProfileLoading || !minimumLoadPassed;
 
   return (
     <div className={classes.root}>

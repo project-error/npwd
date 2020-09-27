@@ -21,12 +21,12 @@ export const twitterState = {
     key: "createTweetLoading",
     default: false,
   }),
-  createTweetSuccess: atom({
-    key: "createTweetSuccess",
+  createTweetSuccessful: atom({
+    key: "createTweetSuccessful",
     default: null,
   }),
   updateProfileLoading: atom({
-    key: "createTweetLoading",
+    key: "updateProfileLoading",
     default: false,
   }),
   updateProfileSuccess: atom({

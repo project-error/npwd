@@ -1,10 +1,13 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
 import Button from "@material-ui/core/Button";
 import ReplyIcon from "@material-ui/icons/Reply";
-import { useModal } from "../hooks/useModal";
+
+import { twitterState } from "../hooks/state";
 
 export const ReplyButton = ({ profile_name }) => {
-  const { setMessage, setModalVisible } = useModal();
+  const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
+  const setMessage = useSetRecoilState(twitterState.modalMessage);
 
   const handleClick = () => {
     setMessage(`@${profile_name} `);

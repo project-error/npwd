@@ -3,9 +3,13 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { twitterState } from "./state";
 
 export const useTweetStatus = () => {
-  const isLoading = useRecoilValue(twitterState.createTweetLoading);
-  const [isSuccessful, setIsSuccessful] = useRecoilState(
-    twitterState.createTweetSuccess
+  const createTweetLoading = useRecoilValue(twitterState.createTweetLoading);
+  const [createTweetSuccessful, setCreateTweetSuccessful] = useRecoilState(
+    twitterState.createTweetSuccessful
   );
-  return { isLoading, isSuccessful, setIsSuccessful };
+  return {
+    createTweetLoading,
+    createTweetSuccessful,
+    setCreateTweetSuccessful,
+  };
 };

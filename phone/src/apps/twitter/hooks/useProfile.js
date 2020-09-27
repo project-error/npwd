@@ -3,9 +3,16 @@ import { twitterState } from "./state";
 
 export const useProfile = () => {
   const profile = useRecoilValue(twitterState.profile);
-  const updateInProgress = useRecoilValue(twitterState.updateProfileLoading);
-  const [updateSuccessful, setUpdateSuccessful] = useRecoilState(
+  const updateProfileLoading = useRecoilValue(
+    twitterState.updateProfileLoading
+  );
+  const [updateProfileSuccessful, setUpdateProfileSuccessful] = useRecoilState(
     twitterState.updateProfileSuccess
   );
-  return { profile, updateInProgress, updateSuccessful, setUpdateSuccessful };
+  return {
+    profile,
+    updateProfileLoading,
+    updateProfileSuccessful,
+    setUpdateProfileSuccessful,
+  };
 };

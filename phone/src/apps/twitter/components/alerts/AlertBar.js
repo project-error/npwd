@@ -19,43 +19,37 @@ const ALERT_TIMEOUT = 4000;
 export default function AlertBar() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { updateSuccessful, setUpdateSuccessful } = useProfile();
-  const { isSuccessful, setIsSuccessful } = useTweetStatus();
+  const { updateProfileSuccessful, setUpdateProfileSuccessful } = useProfile();
+  const { createTweetSuccessful, setCreateTweetSuccessful } = useTweetStatus();
   const [severity, setSeverity] = useState(null);
   const [open, setOpen] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setOpen(false);
-    setUpdateSuccessful(null);
-    setIsSuccessful(null);
+    setUpdateProfileSuccessful(null);
+    setCreateTweetSuccessful(null);
   };
 
   useEffect(() => {
-    console.log(
-      "isSuccessful: ",
-      isSuccessful,
-      " updateSuccessful: ",
-      updateSuccessful
-    );
-    if (isSuccessful === true) {
+    if (createTweetSuccessful === true) {
       setOpen(true);
       setSeverity("success");
       setMessage(t("APPS_TWITTER_CREATE_SUCCESS"));
-    } else if (isSuccessful === false) {
+    } else if (createTweetSuccessful === false) {
       setOpen(true);
       setSeverity("error");
       setMessage(t("APPS_TWITTER_CREATE_FAILED"));
-    } else if (updateSuccessful === true) {
+    } else if (updateProfileSuccessful === true) {
       setOpen(true);
       setSeverity("success");
       setMessage(t("APPS_TWITTER_EDIT_PROFILE_SUCCESS"));
-    } else if (updateSuccessful === false) {
+    } else if (updateProfileSuccessful === false) {
       setOpen(true);
       setSeverity("error");
       setMessage(t("APPS_TWITTER_EDIT_PROFILE_FAILURE"));
     }
-  }, [updateSuccessful, isSuccessful]);
+  }, [updateProfileSuccessful, createTweetSuccessful]);
 
   return (
     <Snackbar

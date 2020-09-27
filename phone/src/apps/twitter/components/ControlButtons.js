@@ -24,7 +24,7 @@ export const ControlButtons = ({
   onCloseClick,
   onPrimaryClick,
 }) => {
-  const { isLoading } = useTweetStatus();
+  const { createTweetLoading } = useTweetStatus();
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export const ControlButtons = ({
     : t("APPS_TWITTER_TWEET");
   const showCloseButton = showImagePrompt || showEmoji;
 
-  if (isLoading) return <h1>!!!</h1>;
+  if (createTweetLoading) return <h1>!!!</h1>;
 
   return (
     <div className={classes.buttons}>
