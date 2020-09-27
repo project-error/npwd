@@ -12,7 +12,14 @@ const useStyles = makeStyles({
   },
 });
 
-function ProfileField({ label, value, handleChange, allowChange, multiline }) {
+function ProfileField({
+  label,
+  value,
+  handleChange,
+  allowChange,
+  multiline,
+  inputRef,
+}) {
   const classes = useStyles();
   const _handleChange = (e) => handleChange(e.target.value);
 
@@ -25,6 +32,7 @@ function ProfileField({ label, value, handleChange, allowChange, multiline }) {
         onChange={_handleChange}
         disabled={!allowChange}
         multiline={multiline}
+        inputRef={inputRef}
       />
     </div>
   );
@@ -33,6 +41,7 @@ function ProfileField({ label, value, handleChange, allowChange, multiline }) {
 ProfileField.defaultProps = {
   allowChange: true,
   multiline: false,
+  inputRef: null,
 };
 
 export default ProfileField;

@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
     fontSize: "16px",
   },
   message: {
-    fontSize: "22px",
+    fontSize: "20px",
   },
   buttonContainer: {
     display: "flex",
@@ -61,19 +61,6 @@ export const Tweet = (tweet) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // this is a workaround to transfer string new lines and returns that
-  // are stored into the database into html for the UI to render
-  const formattedMessage = message.replace(/\n\r?/g, "<br />");
-  const Message = () => (
-    <>
-      <div
-        className={classes.message}
-        dangerouslySetInnerHTML={{ __html: formattedMessage }}
-      />
-      <ImageDisplay visible images={images} small />
-    </>
-  );
-
   const Primary = () => (
     <>
       <span className={classes.profile}>{`@${profile_name}`}</span>
@@ -85,6 +72,19 @@ export const Tweet = (tweet) => {
       >
         {secondsToHumanReadable(t, seconds_since_tweet)}
       </Typography>
+    </>
+  );
+
+  // this is a workaround to transfer string new lines and returns that
+  // are stored into the database into html for the UI to render
+  const formattedMessage = message.replace(/\n\r?/g, "<br />");
+  const Message = () => (
+    <>
+      <div
+        className={classes.message}
+        dangerouslySetInnerHTML={{ __html: formattedMessage }}
+      />
+      <ImageDisplay visible images={images} small />
     </>
   );
 

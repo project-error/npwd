@@ -6,7 +6,6 @@ import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
 import TweetListContainer from "./TweetListContainer";
 import AddTweetModal from "./AddTweetModal";
-import { AppLoader } from "../../../ui/components/AppLoader";
 import { useModal } from "../hooks/useModal";
 import { useProfile } from "../hooks/useProfile";
 import TweetButton from "./TweetButton";
@@ -15,6 +14,7 @@ import BottomNavigation from "./BottomNavigation";
 import TwitterProfile from "./profile/TwitterProfile";
 import AlertBar from "./alerts/AlertBar";
 import TwitterLoader from "./TwitterLoader";
+import TwitterSearch from "./TwitterSearch";
 
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 // TODO move this to the router so the application back button works
 const PAGE_COMPONENT_MAPPING = {
   0: <TweetListContainer />,
-  1: <TweetListContainer />,
+  1: <TwitterSearch />,
   2: <TwitterProfile />,
 };
 const MINIMUM_LOAD_TIME = 750;

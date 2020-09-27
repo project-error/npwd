@@ -66,6 +66,7 @@ export function TwitterProfile() {
         value={bio}
         handleChange={handleBioChange}
         multiline
+        inputRef={(input) => input && input.focus()}
       />
       <ProfileField
         label={t("APPS_TWITTER_EDIT_PROFILE_LOCATION")}

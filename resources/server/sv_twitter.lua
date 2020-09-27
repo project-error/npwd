@@ -21,7 +21,7 @@ ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
         LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
         WHERE visible = 1
         ORDER BY npwd_twitter_tweets.createdAt DESC 
-        LIMIT 75
+        LIMIT 100
     ]], {}, function(tweets)
         cb(tweets)
     end)

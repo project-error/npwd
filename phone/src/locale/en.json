@@ -19,6 +19,8 @@
     "APPS_TWITTER_SUBMIT_IMAGE": "Add Media",
     "APPS_TWITTER_CLOSE_IMAGE": "Close",
     "APPS_TWITTER_CLOSE": "Close",
+    "APPS_TWITTER_SEARCH_TWEETS": "Search for tweets",
+    "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
     "APPS_TWITTER_CREATE_SUCCESS": "Successfully sent your tweet",
     "APPS_TWITTER_CREATE_FAILED": "Failed to send your tweet",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "Avatar URL",

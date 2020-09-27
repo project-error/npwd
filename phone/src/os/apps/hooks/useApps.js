@@ -14,7 +14,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import MessageIcon from "@material-ui/icons/Message";
-import AccessibilityIcon from "@material-ui/icons/Accessibility";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
 import { Route } from "react-router-dom";
@@ -87,7 +87,7 @@ const appsState = atom({
       {
         id: "TWITTER",
         nameLocale: "APPS_TWITTER",
-        icon: <AccessibilityIcon />,
+        icon: <TwitterIcon />,
         backgroundColor: blue[600],
         color: common.white,
         path: "/twitter",
