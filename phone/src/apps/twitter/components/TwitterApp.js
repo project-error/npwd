@@ -4,21 +4,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Nui from "../../../os/nui-events/utils/Nui";
 import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
-import TweetListContainer from "./TweetListContainer";
+import TweetListContainer from "./tweet/TweetListContainer";
 import AddTweetModal from "./AddTweetModal";
 import { useModal } from "../hooks/useModal";
 import { useProfile } from "../hooks/useProfile";
-import TweetButton from "./TweetButton";
+import TweetButton from "./buttons/TweetButton";
 import TwitterTitle from "./TwitterTitle";
 import BottomNavigation from "./BottomNavigation";
-import TwitterProfile from "./profile/TwitterProfile";
+import TwitterProfile from "./profile/Profile";
 import AlertBar from "./alerts/AlertBar";
-import TwitterLoader from "./TwitterLoader";
 import TwitterSearch from "./TwitterSearch";
 
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
-import { useTweets } from "../hooks/useTweets";
 
 const useStyles = makeStyles((theme) => ({
   backgroundModal: {

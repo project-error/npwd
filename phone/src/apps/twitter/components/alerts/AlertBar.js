@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Snackbar from "@material-ui/core/Snackbar";
+import { Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useProfile } from "../../hooks/useProfile";

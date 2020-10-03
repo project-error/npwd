@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
+import { Fab } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: "absolute",
     bottom: "75px",

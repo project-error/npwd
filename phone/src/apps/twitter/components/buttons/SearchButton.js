@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
+import { Fab } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({

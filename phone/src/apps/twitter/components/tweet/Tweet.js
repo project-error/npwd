@@ -1,19 +1,21 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import MuiAvatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {
+  ListItemAvatar,
+  Avatar as MuiAvatar,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
-import { ListItem } from "../../../ui/components/ListItem";
-import { secondsToHumanReadable } from "../utils/time";
-import ReplyButton from "./ReplyButton";
-import ImageDisplay from "./ImageDisplay";
-import Avatar from "./Avatar";
-import { QuoteButton } from "./QuoteButton";
+import { ListItem } from "../../../../ui/components/ListItem";
+import { secondsToHumanReadable } from "../../utils/time";
+import ReplyButton from "../buttons/ReplyButton";
+import ImageDisplay from "../images/ImageDisplay";
+import Avatar from "../Avatar";
+import { QuoteButton } from "../buttons/QuoteButton";
 
 const useStyles = makeStyles(() => ({
   root: {

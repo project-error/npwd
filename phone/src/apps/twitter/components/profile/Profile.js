@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function TwitterProfile() {
+export function Profile() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { profile } = useProfile();
@@ -82,4 +82,4 @@ export function TwitterProfile() {
   );
 }
 
-export default TwitterProfile;
+export default Profile;

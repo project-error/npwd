@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import ProfileIcon from "@material-ui/icons/Person";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useTweets } from "../hooks/useTweets";
+import { useTweets } from "../../hooks/useTweets";
 import TweetList from "./TweetList";
 
 export function TweetListContainer() {

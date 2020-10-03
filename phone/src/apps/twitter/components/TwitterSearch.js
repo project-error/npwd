@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
-import TweetList from "./TweetList";
+import TweetList from "./tweet/TweetList";
 
 import Nui from "../../../os/nui-events/utils/Nui";
-import SearchButton from "./SearchButton";
+import SearchButton from "./buttons/SearchButton";
 import { useFilteredTweets } from "../hooks/useFilteredTweets";
 
 const useStyles = makeStyles({

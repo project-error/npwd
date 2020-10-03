@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Paper } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,11 +10,11 @@ import { IMAGE_DELIMITER } from "../utils/images";
 import { withValidImage } from "../utils/images";
 import { useModal } from "../hooks/useModal";
 import EmojiSelect from "./EmojiSelect";
-import ImageDisplay from "./ImageDisplay";
-import ImagePrompt from "./ImagePrompt";
-import TweetMessage from "./TweetMessage";
-import ControlButtons from "./ControlButtons";
-import IconButtons from "./IconButtons";
+import ImageDisplay from "./images/ImageDisplay";
+import ImagePrompt from "./images/ImagePrompt";
+import TweetMessage from "./tweet/TweetMessage";
+import ControlButtons from "./buttons/ControlButtons";
+import IconButtons from "./buttons/IconButtons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,10 +88,6 @@ export const AddTweetModal = () => {
     return () => window.removeEventListener("keydown", listener);
   }, []);
 
-  const showHideClassName = modalVisible
-    ? classes.displayBlock
-    : classes.displayNone;
-
   const submitTweet = () => {
     if (message.trim().length === 0) return;
 
@@ -128,7 +123,7 @@ export const AddTweetModal = () => {
     withValidImage(cleanedLink, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
-    setLink("");
+    setImages([]);
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
