@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { v4 as uuidv4 } from "uuid";
 
 import Nui from "../../../os/nui-events/utils/Nui";
+import Modal from "../../../ui/components/Modal";
 import { IMAGE_DELIMITER } from "../utils/images";
 import { withValidImage } from "../utils/images";
 import { useModal } from "../hooks/useModal";
@@ -43,17 +44,6 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "row nowrap",
     justifyContent: "space-between",
     flex: "1 0 45px",
-  },
-  displayBlock: {
-    /*Sets modal to center*/
-    display: "flex",
-    flexFlow: "column nowrap",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-  },
-  displayNone: {
-    display: "none",
   },
   emojiPicker: {
     background: "none",
@@ -162,37 +152,35 @@ export const AddTweetModal = () => {
   };
 
   return (
-    <div className={showHideClassName}>
-      <Paper className={classes.root}>
-        <Button className={classes.close} onClick={_handleClose}>
-          <CloseIcon color="action" />
-        </Button>
-        <TweetMessage message={message} handleChange={handleMessageChange} />
-        <ImagePrompt
-          visible={showImagePrompt}
-          value={link}
-          handleChange={handleimageChange}
+    <Modal visible={modalVisible} handleClose={_handleClose}>
+      <Button className={classes.close} onClick={_handleClose}>
+        <CloseIcon color="action" />
+      </Button>
+      <TweetMessage message={message} handleChange={handleMessageChange} />
+      <ImagePrompt
+        visible={showImagePrompt}
+        value={link}
+        handleChange={handleimageChange}
+      />
+      <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
+      <ImageDisplay
+        visible={!showEmoji && images.length > 0}
+        images={images}
+        removeImage={removeImage}
+      />
+      <div className={classes.buttonsContainer}>
+        <IconButtons
+          onImageClick={toggleShowImagePrompt}
+          onEmojiClick={toggleShowEmoji}
         />
-        <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
-        <ImageDisplay
-          visible={!showEmoji && images.length > 0}
-          images={images}
-          removeImage={removeImage}
+        <ControlButtons
+          showImagePrompt={showImagePrompt}
+          showEmoji={showEmoji}
+          onPrimaryClick={showImagePrompt ? addImage : submitTweet}
+          onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
         />
-        <div className={classes.buttonsContainer}>
-          <IconButtons
-            onImageClick={toggleShowImagePrompt}
-            onEmojiClick={toggleShowEmoji}
-          />
-          <ControlButtons
-            showImagePrompt={showImagePrompt}
-            showEmoji={showEmoji}
-            onPrimaryClick={showImagePrompt ? addImage : submitTweet}
-            onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
-          />
-        </div>
-      </Paper>
-    </div>
+      </div>
+    </Modal>
   );
 };
 
