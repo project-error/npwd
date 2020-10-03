@@ -8,7 +8,6 @@ import { AppContent } from "../../../ui/components/AppContent";
 import TweetListContainer from "./tweet/TweetListContainer";
 import AddTweetModal from "./AddTweetModal";
 import { useModal } from "../hooks/useModal";
-import { useProfile } from "../hooks/useProfile";
 import TweetButton from "./buttons/TweetButton";
 import TwitterTitle from "./TwitterTitle";
 import BottomNavigation from "./BottomNavigation";
@@ -19,7 +18,7 @@ import TwitterSearch from "./TwitterSearch";
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   backgroundModal: {
     background: "black",
     opacity: "0.6",

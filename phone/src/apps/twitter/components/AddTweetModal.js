@@ -15,6 +15,7 @@ import ImagePrompt from "./images/ImagePrompt";
 import TweetMessage from "./tweet/TweetMessage";
 import ControlButtons from "./buttons/ControlButtons";
 import IconButtons from "./buttons/IconButtons";
+import { usePhone } from "../../../os/phone/hooks/usePhone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 export const AddTweetModal = () => {
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
+  const { config } = usePhone();
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
@@ -89,7 +91,9 @@ export const AddTweetModal = () => {
   }, []);
 
   const submitTweet = () => {
-    if (message.trim().length === 0) return;
+    const cleanedMessage = message.trim();
+    if (cleanedMessage.length === 0) return;
+    if (cleanedMessage.length > config.twitter.characterLimit) return;
 
     const data = {
       message,
@@ -123,7 +127,7 @@ export const AddTweetModal = () => {
     withValidImage(cleanedLink, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
-    setImages([]);
+    setLink('')
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
@@ -146,6 +150,8 @@ export const AddTweetModal = () => {
     setMessage(message.concat(emojiObject.native));
   };
 
+  if (!config) return null;
+
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
       <Button className={classes.close} onClick={_handleClose}>
@@ -165,7 +171,7 @@ export const AddTweetModal = () => {
       />
       <div className={classes.buttonsContainer}>
         <IconButtons
-          onImageClick={toggleShowImagePrompt}
+          onImageClick={images.length < config.twitter.maxImages ? toggleShowImagePrompt : null}
           onEmojiClick={toggleShowEmoji}
         />
         <ControlButtons

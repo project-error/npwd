@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import { useSettings } from "./apps/settings/hooks/useSettings";
 import MessageIcon from "@material-ui/icons/Email";
 
+import Nui from "./os/nui-events/utils/Nui"
 import { HomeApp } from "./apps/home/components/Home";
 import { ThemeProvider } from "@material-ui/core";
 import { useInitKeyboard } from "./os/keyboard/hooks/useKeyboard";

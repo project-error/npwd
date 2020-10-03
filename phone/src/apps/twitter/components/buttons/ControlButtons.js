@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
-import { useTweetStatus } from "../../hooks/useTweetStatus";
-
 const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
@@ -24,8 +22,6 @@ export const ControlButtons = ({
   onCloseClick,
   onPrimaryClick,
 }) => {
-  const { createTweetLoading } = useTweetStatus();
-
   const classes = useStyles();
   const { t } = useTranslation();
 

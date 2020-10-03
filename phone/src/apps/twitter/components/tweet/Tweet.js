@@ -16,6 +16,7 @@ import ReplyButton from "../buttons/ReplyButton";
 import ImageDisplay from "../images/ImageDisplay";
 import Avatar from "../Avatar";
 import { QuoteButton } from "../buttons/QuoteButton";
+import { usePhone } from "../../../../os/phone/hooks/usePhone";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -70,6 +71,12 @@ export const Tweet = (tweet) => {
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
+  const { config } = usePhone();
+
+  console.log(config);
+
+  if (!config) return null;
+  const { enableAvatars, enableImages } = config.twitter;
 
   // this is a workaround to transfer string new lines and returns that
   // are stored into the database into html for the UI to render
@@ -77,11 +84,13 @@ export const Tweet = (tweet) => {
 
   return (
     <ListItem className={classes.root} divider>
-      <ListItemAvatar>
-        <MuiAvatar>
-          <Avatar avatarUrl={avatar_url} height="45px" width="45px" />
-        </MuiAvatar>
-      </ListItemAvatar>
+      {enableAvatars && (
+        <ListItemAvatar>
+          <MuiAvatar>
+            <Avatar avatarUrl={avatar_url} height="45px" width="45px" />
+          </MuiAvatar>
+        </ListItemAvatar>
+      )}
       <div className={classes.content}>
         <div className={classes.primary}>
           <div className={classes.profile}>{`@${profile_name}`}</div>
@@ -98,7 +107,7 @@ export const Tweet = (tweet) => {
           className={classes.message}
           dangerouslySetInnerHTML={{ __html: formattedMessage }}
         />
-        <ImageDisplay visible images={images} small />
+        {enableImages && <ImageDisplay visible images={images} small />}
         <div className={classes.buttonContainer}>
           <ReplyButton profile_name={profile_name} />
           <Button>

@@ -7,6 +7,7 @@ import { useProfile } from "../../hooks/useProfile";
 import Avatar from "../Avatar";
 import ProfileField from "./ProfileField";
 import ProfileUpdateButton from "../buttons/ProfileUpdateButton";
+import { usePhone } from "../../../../os/phone/hooks/usePhone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,8 @@ export function Profile() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { profile } = useProfile();
+  const { config } = usePhone();
+
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -47,19 +50,26 @@ export function Profile() {
     Nui.send("phone:updateTwitterProfile", data);
   };
 
+   // fetching the config is an asynchronous call so defend against it
+  if (!config) return null;
+
+  const { enableAvatars, allowEdtiableProfileName } = config.twitter;
+
   return (
     <div className={classes.root}>
-      <Avatar avatarUrl={avatarUrl} showInvalidImage />
+      {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
       <div className={classes.spacer} />
       <ProfileField
         label={t("APPS_TWITTER_EDIT_PROFILE_AVATAR")}
         value={avatarUrl}
         handleChange={handleAvatarChange}
+        allowChange={enableAvatars}
       />
       <ProfileField
         label={t("APPS_TWITTER_EDIT_PROFILE_NAME")}
         value={name}
         handleChange={handleNameChange}
+        allowChange={allowEdtiableProfileName}
       />
       <ProfileField
         label={t("APPS_TWITTER_EDIT_PROFILE_BIO")}

@@ -5,6 +5,12 @@ TriggerEvent('esx:getSharedObject', function(obj)
 end)
 
 
+ESX.RegisterServerCallback('phone:phoneConfig', function(source, cb)
+    print('server phone:phoneConfig')
+    cb(Config)
+end)
+
+
 RegisterServerEvent('phone:getCredentials')
 AddEventHandler('phone:getCredentials', function()
     local _source = source

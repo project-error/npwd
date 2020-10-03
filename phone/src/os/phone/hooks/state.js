@@ -5,4 +5,8 @@ export const phoneState = {
     key: "phoneVisibility",
     default: false,
   }),
+  phoneConfig: atom({
+    key: "phoneConfig",
+    default: null,
+  }),
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { usePhone } from "../../../os/phone/hooks/usePhone";
 import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from "../utils/constants";
 
 const useStyles = makeStyles({
@@ -16,9 +17,12 @@ const useStyles = makeStyles({
 function Avatar({ avatarUrl, showInvalidImage, height, width }) {
   const classes = useStyles();
   const [showImageError, setShowImageError] = useState(false);
+  const { config } = usePhone();
 
   const handleImageError = () => setShowImageError(true);
   const handleImageLoad = () => setShowImageError(false);
+
+  if (!config || !config.twitter.enableAvatars) return null;
 
   return (
     <div className={classes.root}>

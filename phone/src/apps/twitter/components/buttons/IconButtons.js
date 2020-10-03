@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 import EmojiIcon from "@material-ui/icons/SentimentSatisfied";
+import { usePhone } from "../../../../os/phone/hooks/usePhone";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -19,14 +20,19 @@ const useStyles = makeStyles((theme) => ({
 
 export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const classes = useStyles();
+  const { config } = usePhone();
+  
+  if (!config) return null;
+  const { enableImages, enableEmojis } = config.twitter;
+
   return (
     <div className={classes.buttons}>
-      <Button className={classes.button} onClick={onImageClick}>
+      {enableImages && (<Button className={classes.button} onClick={onImageClick}>
         <InsertPhotoIcon color="action" />
-      </Button>
-      <Button className={classes.button} onClick={onEmojiClick}>
+      </Button>)}
+      {enableEmojis && (<Button className={classes.button} onClick={onEmojiClick}>
         <EmojiIcon color="action" />
-      </Button>
+      </Button>)}
     </div>
   );
 };

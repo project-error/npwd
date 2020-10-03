@@ -158,6 +158,18 @@ Citizen.CreateThread(function()
     end
 end)
 
+Citizen.CreateThread(function()
+    ESX.TriggerServerCallback('phone:phoneConfig', function(config)
+        SendNUIMessage(
+            {
+                app = "PHONE",
+                method = "phoneConfig",
+                data = config
+            }
+        )
+      end, searchValue)
+end)
+
 function Phone() --Open/close phone
     if Config.PhoneAsItem == true then
         --print("ConfigOn")  
@@ -233,7 +245,6 @@ end
 RegisterCommand('phone', function(source) -- Toggles Phone
     Phone()
 end, false)
-
 
 RegisterNetEvent('phone:send')
 AddEventHandler('phone:send', function()
