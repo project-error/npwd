@@ -73,8 +73,6 @@ export const Tweet = (tweet) => {
   const { t } = useTranslation();
   const { config } = usePhone();
 
-  console.log(config);
-
   if (!config) return null;
   const { enableAvatars, enableImages } = config.twitter;
 
@@ -87,7 +85,7 @@ export const Tweet = (tweet) => {
       {enableAvatars && (
         <ListItemAvatar>
           <MuiAvatar>
-            <Avatar avatarUrl={avatar_url} height="45px" width="45px" />
+            <Avatar avatarUrl={avatar_url} height="40px" width="40px" />
           </MuiAvatar>
         </ListItemAvatar>
       )}

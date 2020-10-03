@@ -131,7 +131,7 @@ function createDefaultProfile(identifier, cb)
             INSERT INTO npwd_twitter_profiles (`identifier`, `profile_name`)
             VALUES (@identifier, @profile_name)
         ]],
-        { identifier = identifier, profileName = profileName },
+        { identifier = identifier, profile_name = profileName },
         function(result)
             if result == 1 then  -- if we created the profile then return it
                 getProfile(identifier, cb)

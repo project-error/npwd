@@ -32,4 +32,3 @@ Config.twitter.enableAvatars = true -- whether or not player avatars are visible
 Config.twitter.enableEmojis = true  -- whether or not the emoji menu is available
 Config.twitter.enableImages = true  -- whether or not links to images are rendered on the UI and if players can add new ones
 Config.twitter.maxImages = 3 -- max amount of images that can be attached to a single tweet
-Config.PhoneAsItem = true
