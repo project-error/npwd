@@ -32,12 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO move this to the router so the application back button works
-const PAGE_COMPONENT_MAPPING = {
-  0: <TweetListContainer />,
-  1: <TwitterSearch />,
-  2: <TwitterProfile />,
-};
 const TWEETS_REFRESH_RATE = 15000; // TODO move this to twitter config
 
 export const TwitterApp = () => {

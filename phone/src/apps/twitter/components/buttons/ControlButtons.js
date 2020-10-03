@@ -35,8 +35,6 @@ export const ControlButtons = ({
     : t("APPS_TWITTER_TWEET");
   const showCloseButton = showImagePrompt || showEmoji;
 
-  if (createTweetLoading) return <h1>!!!</h1>;
-
   return (
     <div className={classes.buttons}>
       <Button variant="contained" color="primary" onClick={onPrimaryClick}>

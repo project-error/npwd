@@ -271,9 +271,3 @@ AddEventHandler('onResourceStop', function(resource)
     end
 end)
   
-
-
-Citizen.CreateThread(function()
-    Citizen.Wait(0)
-    Phone()
-end)
