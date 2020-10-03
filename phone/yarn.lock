@@ -4381,11 +4381,6 @@ emoji-mart@^3.0.0:
     "@babel/runtime" "^7.0.0"
     prop-types "^15.6.0"
 
-emoji-picker-react@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-3.2.3.tgz#c8f51d0130a1171475f94847a5dca851412aad43"
-  integrity sha512-Rw29mb3wPVRwgW+kUz5kVjXqvTMRax7ye9onF5qi5pdBroQzjPWdfV//wcF+fxKO3ppoaomy0OhPS5Scq3VtFA==
-
 emoji-regex@^7.0.1, emoji-regex@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
