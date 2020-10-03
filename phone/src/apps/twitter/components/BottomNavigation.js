@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
@@ -20,9 +21,21 @@ export function TwitterBottomNavigation({ activePage, handleChange }) {
       onChange={handleChange}
       className={classes.root}
     >
-      <BottomNavigationAction icon={<HomeIcon />} />
-      <BottomNavigationAction icon={<SearchIcon />} />
-      <BottomNavigationAction icon={<ProfileIcon />} />
+      <BottomNavigationAction
+        component={Link}
+        to="/twitter"
+        icon={<HomeIcon />}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/twitter/search"
+        icon={<SearchIcon />}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/twitter/profile"
+        icon={<ProfileIcon />}
+      />
     </BottomNavigation>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Nui from "../../../os/nui-events/utils/Nui";
@@ -70,7 +71,13 @@ export const TwitterApp = () => {
       <AddTweetModal />
       <div className={modalVisible ? classes.backgroundModal : null} />
       <TwitterTitle />
-      <AppContent>{PAGE_COMPONENT_MAPPING[activePage]}</AppContent>
+      <AppContent>
+        <Switch>
+          <Route path="/twitter" exact component={TweetListContainer} />
+          <Route path="/twitter/search" component={TwitterSearch} />
+          <Route path="/twitter/profile" component={TwitterProfile} />
+        </Switch>
+      </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       <AlertBar />
       <BottomNavigation
