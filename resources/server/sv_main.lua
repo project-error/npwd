@@ -5,8 +5,9 @@ TriggerEvent('esx:getSharedObject', function(obj)
 end)
 
 
+-- we pass the server configuration to the phone so that we can have phone or
+-- app specific settings configured by the server owner
 ESX.RegisterServerCallback('phone:phoneConfig', function(source, cb)
-    print('server phone:phoneConfig')
     cb(Config)
 end)
 
