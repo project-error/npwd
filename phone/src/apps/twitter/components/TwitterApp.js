@@ -37,15 +37,13 @@ const PAGE_COMPONENT_MAPPING = {
   1: <TwitterSearch />,
   2: <TwitterProfile />,
 };
-const MINIMUM_LOAD_TIME = 500;
-const TWEETS_REFRESH_RATE = 50000000; // TODO move this to twitter config
+const TWEETS_REFRESH_RATE = 15000; // TODO move this to twitter config
 
 export const TwitterApp = () => {
   const classes = useStyles();
   const { modalVisible, setModalVisible } = useModal();
-  const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
   const [activePage, setActivePage] = useState(0);
-  const { profile } = useProfile();
+
   useEffect(() => {
     Nui.send("phone:getOrCreateTwitterProfile", {});
     Nui.send("phone:fetchTweets", {});
@@ -63,21 +61,9 @@ export const TwitterApp = () => {
     return () => window.clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      setMimimumLoadPassed(true);
-    }, MINIMUM_LOAD_TIME);
-    return () => window.clearTimeout(timeout);
-  });
-
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);
-
-  // we add a minimum (but short) load time here so that
-  // there isn't a quick flash of loading and immediately
-  // another flash to the tweets screen.
-  const hasLoaded = profile && minimumLoadPassed;
-  const showTweetButton = hasLoaded && activePage === 0;
+  const showTweetButton = activePage === 0;
 
   return (
     <AppWrapper id="twitter-app">

@@ -169,7 +169,8 @@ end)
 function updateTwitterProfile(identifier, data, cb)
     MySQL.Async.transaction({[[
         UPDATE npwd_twitter_profiles
-        SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job WHERE identifier = @identifier
+        SET avatar_url = @avatar_url, profile_name = @profile_name, bio = @bio, location = @location, job = @job
+        WHERE identifier = @identifier
     ]]}, 
     {  
         identifier = identifier,

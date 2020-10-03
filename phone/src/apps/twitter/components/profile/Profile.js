@@ -6,7 +6,7 @@ import Nui from "../../../../os/nui-events/utils/Nui";
 import { useProfile } from "../../hooks/useProfile";
 import Avatar from "../Avatar";
 import ProfileField from "./ProfileField";
-import ProfileUpdateButton from "./ProfileUpdateButton";
+import ProfileUpdateButton from "../buttons/ProfileUpdateButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -49,7 +49,7 @@ function TwitterSearch() {
             inputRef={(input) => input && input.focus()}
           />
         </div>
-        <TweetList tweets={tweets || []} />
+        {tweets && tweets.length > 0 && <TweetList tweets={tweets} />}
       </div>
       <SearchButton handleClick={handleSubmit} />
     </>
