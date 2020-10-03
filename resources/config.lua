@@ -6,6 +6,22 @@ Config.KeyTogglePhone = 288 -- F1
 Config.KeyTakeCall  = 38  -- E
 Config.PhoneAsItem = false
 
+------
+--Destroy Phone
+------
+
+Config.SwimDestroy = false --only set true if you have PhoneAsItem.
+
+Config.RunRate = 10 --SECONDS  /// Will do the initial thread every X SECONDS to check if the player is swimming so the phone can be destroyed based off the chance below.
+
+Config.DestoryChance = 100 --PERCENT BASED /// from 0 to 100 where 100 is equal to 100% chance and 10 is equal to 10%. This is dependent on the amount above so dont set it too low.
+
+Config.DestroyPhoneReCheck = 3 --MINUTES /// WIll wait the check for x MINUTES as they have no phone now and have been given a destroyed phone = to the number of phones they had.
+
+
+------
+--Twitter
+------
 Config.twitter = {}
 -- Config.twitter.registerByName = true -- if users can register by first_name and last_name from the users table
 -- Config.twitter.registerByPhoneNumber = true -- if users can register by phone_number from the users table
@@ -16,3 +32,4 @@ Config.twitter.enableAvatars = true -- whether or not player avatars are visible
 Config.twitter.enableEmojis = true  -- whether or not the emoji menu is available
 Config.twitter.enableImages = true  -- whether or not links to images are rendered on the UI and if players can add new ones
 Config.twitter.maxImages = 3 -- max amount of images that can be attached to a single tweet
+Config.PhoneAsItem = true

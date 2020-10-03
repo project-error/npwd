@@ -12,6 +12,7 @@ import {
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import MessageIcon from "@material-ui/icons/Message";
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -25,6 +26,7 @@ import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
 import { BankApp } from "../../../apps/bank/components/BankApp";
 import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
 import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
+import { ExampleApp } from "../../../apps/example/components/ExampleApp";
 
 const appsState = atom({
   key: "apps",
@@ -92,6 +94,15 @@ const appsState = atom({
         color: common.white,
         path: "/twitter",
         Route: () => <Route path="/twitter" component={TwitterApp} />,
+      },
+      {
+        id: "EXAMPLE",
+        nameLocale: "APPS_EXAMPLE",
+        icon: <CalendarTodayIcon />,
+        backgroundColor: blue[500],
+        color: blue[50],
+        path: "/example",
+        Route: () => <Route path="/example" component={ExampleApp} />,
       },
     ],
   },

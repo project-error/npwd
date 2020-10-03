@@ -14,6 +14,7 @@ CHARACTER SET utf8mb4,
 COLLATE utf8mb4_general_ci;
 
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('phone', 'Phone', 1, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('dphone', 'Destroyed Phone', 1, 0, 1);
 
 CREATE TABLE `npwd_twitter_tweets` (
   `id` int NOT NULL AUTO_INCREMENT,
