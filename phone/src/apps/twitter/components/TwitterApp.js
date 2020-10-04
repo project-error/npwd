@@ -41,8 +41,6 @@ export const TwitterApp = () => {
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
 
-  console.log(profile);
-
   useEffect(() => {
     Nui.send("phone:getOrCreateTwitterProfile", {});
     Nui.send("phone:fetchTweets", {});
