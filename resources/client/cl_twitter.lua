@@ -9,7 +9,7 @@ end)
 
 local APP_NAME = 'TWITTER'
 
-function sendMessage(method, data)
+function sendTwitterMessage(method, data)
     SendNUIMessage(
         {
             app = APP_NAME,
@@ -23,7 +23,7 @@ RegisterNetEvent('phone:fetchTweets')
 AddEventHandler('phone:fetchTweets', function()
     print('RegisterNetEvent: phone:fetchTweets')
     ESX.TriggerServerCallback('phone:fetchTweets', function(tweets)
-        sendMessage('fetchTweets',  tweets)
+        sendTwitterMessage('fetchTweets',  tweets)
     end)
 end)
 
@@ -31,7 +31,7 @@ RegisterNetEvent('phone:fetchTweetsFiltered')
 AddEventHandler('phone:fetchTweetsFiltered', function(searchValue)
   print('fetchTweetsFiltered', searchValue)
   ESX.TriggerServerCallback('phone:fetchTweetsFiltered', function(tweets)
-      sendMessage('fetchTweetsFiltered',  tweets)
+      sendTwitterMessage('fetchTweetsFiltered',  tweets)
   end, searchValue)
 end)
 
@@ -47,23 +47,23 @@ end)
 
 
 RegisterNUICallback('phone:createTweet', function(data)
-  sendMessage('createTweetLoading',  true)
+  sendTwitterMessage('createTweetLoading',  true)
   ESX.TriggerServerCallback('phone:createTweet', function(isSuccessful)
-    sendMessage('createTweetResult',  isSuccessful)
+    sendTwitterMessage('createTweetResult',  isSuccessful)
     TriggerEvent('phone:fetchTweets')
   end, data)
 end)
 
 RegisterNUICallback('phone:getOrCreateTwitterProfile', function()
   ESX.TriggerServerCallback('phone:getOrCreateTwitterProfile', function(profile)
-    sendMessage('getOrCreateTwitterProfile',  profile)
+    sendTwitterMessage('getOrCreateTwitterProfile',  profile)
   end)
 end)
 
 RegisterNUICallback('phone:updateTwitterProfile', function(data)
-  sendMessage('updateProfileLoading',  true)
+  sendTwitterMessage('updateProfileLoading',  true)
   ESX.TriggerServerCallback('phone:updateTwitterProfile', function(result)
-    sendMessage('updateProfileResult',  result)
+    sendTwitterMessage('updateProfileResult',  result)
     TriggerEvent('phone:getOrCreateTwitterProfile')
   end, data)
 end)

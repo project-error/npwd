@@ -7,15 +7,8 @@ end)
 function fetchAllTweets(cb)
     MySQL.Async.fetchAll([[
         SELECT
-            npwd_twitter_tweets.id,
-            npwd_twitter_tweets.createdAt,
-            npwd_twitter_tweets.likes,
-            npwd_twitter_tweets.identifier,
-            npwd_twitter_tweets.visible,
-            npwd_twitter_tweets.images,
-            npwd_twitter_tweets.message,
-            npwd_twitter_profiles.profile_name,
-            npwd_twitter_profiles.avatar_url,
+            npwd_twitter_tweets.*,
+            npwd_twitter_profiles.*,
             TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
         FROM npwd_twitter_tweets
         LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
@@ -33,15 +26,8 @@ function fetchTweetsFiltered(searchValue, cb)
     local searchValueParameterized = '%' .. searchValue .. '%'
     MySQL.Async.fetchAll([[
         SELECT
-            npwd_twitter_tweets.id,
-            npwd_twitter_tweets.createdAt,
-            npwd_twitter_tweets.likes,
-            npwd_twitter_tweets.identifier,
-            npwd_twitter_tweets.visible,
-            npwd_twitter_tweets.images,
-            npwd_twitter_tweets.message,
-            npwd_twitter_profiles.profile_name,
-            npwd_twitter_profiles.avatar_url,
+            npwd_twitter_tweets.*,
+            npwd_twitter_profiles.*,
             TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
         FROM npwd_twitter_tweets
         LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
