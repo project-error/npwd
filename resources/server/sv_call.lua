@@ -1,4 +1,5 @@
 ESX = nil
+db = DatabaseConfig  -- helper variable for use in server functions
 
 TriggerEvent(
     "esx:getSharedObject",
@@ -8,7 +9,7 @@ TriggerEvent(
 )
 
 function getIdentifierByNumber(phoneNumber) 
-    local result = MySQL.Sync.fetchAll("SELECT users.identifier FROM users WHERE users.phone_number = @phone_number", {
+    local result = MySQL.Sync.fetchAll("SELECT " .. db.id .. " AS identifier FROM " .. db.userTable .. " WHERE " .. db.phoneNumber .. " = @phone_number", {
         ['@phone_number'] = phoneNumber
     })
     if result[1] ~= nil then
@@ -18,7 +19,7 @@ function getIdentifierByNumber(phoneNumber)
 end
 
 function getPhoneNumber(identifier) 
-    local result = MySQL.Sync.fetchAll("SELECT users.phone_number FROM users WHERE users.identifier = @identifier", {
+    local result = MySQL.Sync.fetchAll("SELECT " .. db.phoneNumber .. " AS phone_number FROM " .. db.userTable .. " WHERE " .. db.id .. " = @identifier", {
         ['@identifier'] = identifier
     })
     if result[1] ~= nil then

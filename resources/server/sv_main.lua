@@ -1,4 +1,5 @@
 ESX = nil
+db = DatabaseConfig  -- helper variable for use in server functions
 
 TriggerEvent('esx:getSharedObject', function(obj) 
     ESX = obj 
@@ -10,7 +11,7 @@ AddEventHandler('phone:getCredentials', function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
-    MySQL.Async.fetchAll('SELECT phone_number FROM users WHERE `identifier`=@identifier', 
+    MySQL.Async.fetchAll('SELECT ' .. db.phoneNumber .. ' AS phone_number FROM ' .. db.userTable .. ' WHERE ' .. db.id .. '=@identifier', 
     {
         ['@identifier'] = _identifier
     },  

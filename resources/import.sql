@@ -1,6 +1,8 @@
+-- comment this out if your server has a different table/location for phone_number
+-- or if it already exists in the users table
 ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) NULL DEFAULT NULL;
 
-CREATE TABLE es_extended.phone_contacts (
+CREATE TABLE npwd_phone_contacts (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(60) DEFAULT NULL,
   number varchar(10) DEFAULT NULL,

@@ -1,10 +1,25 @@
+------
+-- Database table & column mapping. This mapping allows us to maintain
+-- a framework agnostic approach where integration into custom implementations
+-- is possible. This mappings default to values that work with ESX.
+------
+DatabaseConfig = {
+    userTable = 'users',
+    -- all of these fields are required to be in the userTable
+    id = 'identifier',
+    firstName = 'firstname',
+    lastName = 'lastname',
+    phoneNumber = 'phone_number'
+}
+
+
 Config = {}
 
 Config.Locale = 'en'
 
 Config.KeyTogglePhone = 288 -- F1
 Config.KeyTakeCall  = 38  -- E
-Config.PhoneAsItem = true
+Config.PhoneAsItem = false
 
 ------
 --Destroy Phone

@@ -1,4 +1,5 @@
 ESX = nil
+db = DatabaseConfig  -- helper variable for use in server functions
 
 TriggerEvent('esx:getSharedObject', function(obj) 
     ESX = obj 
@@ -8,7 +9,7 @@ ESX.RegisterServerCallback('phone:getContacts', function(source, cb)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
-    MySQL.Async.fetchAll('SELECT * FROM phone_contacts WHERE `identifier`=@identifier', 
+    MySQL.Async.fetchAll('SELECT * FROM npwd_phone_contacts WHERE `identifier`=@identifier', 
     {
         ['@identifier'] = _identifier
     }, function(contacts)
@@ -26,7 +27,7 @@ AddEventHandler('phone:addContacts', function(display, number)
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
     print(display, number)
-    MySQL.Async.execute('INSERT INTO phone_contacts (`identifier`, `number`, `display`) VALUES (@identifier, @number, @display)', 
+    MySQL.Async.execute('INSERT INTO npwd_phone_contacts (`identifier`, `number`, `display`) VALUES (@identifier, @number, @display)', 
     {  
         identifier = _identifier,
         number = number,
