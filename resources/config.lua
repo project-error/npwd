@@ -4,12 +4,14 @@
 -- is possible. This mappings default to values that work with ESX.
 ------
 DatabaseConfig = {
-    userTable = 'users',
-    -- all of the following columns are required to be in the userTable
-    id = 'identifier', -- unique id of a player
-    firstName = 'firstname', -- character's first name
-    lastName = 'lastname',  -- character's last name
-    phoneNumber = 'phone_number' -- character's phone number
+    users = {
+        table = 'users',
+        -- columns in the table
+        id = 'another_identifier',
+        firstName = 'my_first_name',
+        lastName = 'my_last_name',
+        phoneNumber = 'my_phone_number'
+    }
 }
 
 
@@ -19,7 +21,7 @@ Config.Locale = 'en'
 
 Config.KeyTogglePhone = 288 -- F1
 Config.KeyTakeCall  = 38  -- E
-Config.PhoneAsItem = true
+Config.PhoneAsItem = false
 
 ------
 --Destroy Phone

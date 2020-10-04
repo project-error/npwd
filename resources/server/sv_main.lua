@@ -11,7 +11,7 @@ AddEventHandler('phone:getCredentials', function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local _identifier = xPlayer.getIdentifier()
-    MySQL.Async.fetchAll('SELECT ' .. db.phoneNumber .. ' AS phone_number FROM ' .. db.userTable .. ' WHERE ' .. db.id .. '=@identifier', 
+    MySQL.Async.fetchAll('SELECT ' .. db.users.phoneNumber .. ' AS phone_number FROM ' .. db.users.table .. ' WHERE ' .. db.users.id .. '=@identifier', 
     {
         ['@identifier'] = _identifier
     },  

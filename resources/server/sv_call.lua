@@ -9,7 +9,7 @@ TriggerEvent(
 )
 
 function getIdentifierByNumber(phoneNumber) 
-    local result = MySQL.Sync.fetchAll("SELECT " .. db.id .. " AS identifier FROM " .. db.userTable .. " WHERE " .. db.phoneNumber .. " = @phone_number", {
+    local result = MySQL.Sync.fetchAll("SELECT " .. db.users.id .. " AS identifier FROM " .. db.users.table .. " WHERE " .. db.users.phoneNumber .. " = @phone_number", {
         ['@phone_number'] = phoneNumber
     })
     if result[1] ~= nil then
@@ -19,7 +19,7 @@ function getIdentifierByNumber(phoneNumber)
 end
 
 function getPhoneNumber(identifier) 
-    local result = MySQL.Sync.fetchAll("SELECT " .. db.phoneNumber .. " AS phone_number FROM " .. db.userTable .. " WHERE " .. db.id .. " = @identifier", {
+    local result = MySQL.Sync.fetchAll("SELECT " .. db.users.phoneNumber .. " AS phone_number FROM " .. db.users.table .. " WHERE " .. db.users.id .. " = @identifier", {
         ['@identifier'] = identifier
     })
     if result[1] ~= nil then
