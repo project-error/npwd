@@ -1,5 +1,4 @@
 ESX = nil
-db = DatabaseConfig  -- helper variable for use in server functions
 
 TriggerEvent('esx:getSharedObject', function(obj) 
     ESX = obj 
