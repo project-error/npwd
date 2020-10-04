@@ -23,8 +23,7 @@ Config.DestroyPhoneReCheck = 3 --MINUTES /// WIll wait the check for x MINUTES a
 --Twitter
 ------
 Config.twitter = {}
--- Config.twitter.registerByName = true -- if users can register by first_name and last_name from the users table
--- Config.twitter.registerByPhoneNumber = true -- if users can register by phone_number from the users table
+Config.twitter.generateProfileNameFromUsers = true -- if the player's profile name should be generated from the users.first_name and users.last_name table
 Config.twitter.characterLimit = 240  -- character limit on tweet messages
 Config.twitter.allowEdtiableProfileName = true  -- whether or not players can edit their profile names
 -- Config.twitter.enableLikes = true -- whether or not players can like other player's tweets and that they are visible

@@ -17,6 +17,7 @@ import TwitterSearch from "./TwitterSearch";
 
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
+import { useProfile } from "../hooks/useProfile";
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -37,6 +38,9 @@ export const TwitterApp = () => {
   const classes = useStyles();
   const { modalVisible, setModalVisible } = useModal();
   const [activePage, setActivePage] = useState(0);
+  const { profile } = useProfile();
+
+  console.log(profile);
 
   useEffect(() => {
     Nui.send("phone:getOrCreateTwitterProfile", {});

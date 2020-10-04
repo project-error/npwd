@@ -60,12 +60,11 @@ ESX.RegisterServerCallback('phone:createTweet', function(source, cb, data)
     local _identifier = xPlayer.getIdentifier()
 
     MySQL.Async.transaction({[[
-        INSERT INTO npwd_twitter_tweets (`identifier`, `realUser`, `message`, `images`)
-        VALUES (@identifier, @realUser, @message, @images)
+        INSERT INTO npwd_twitter_tweets (`identifier`, `message`, `images`)
+        VALUES (@identifier, @message, @images)
     ]]}, 
     {  
         identifier = _identifier,
-        realUser  = data.realUser,
         message  = data.message,
         images = data.images
     },
@@ -86,28 +85,27 @@ function getProfile(identifier, cb)
 end
 
 function getProfileName(identifier, cb)
-    local defaultProfileName = '' -- handle any edge cases where the user does not exist or their name isn't populated
+    local defaultProfileName = ''
+    if Config.twitter.generateProfileNameFromUsers == false then
+        print('use default')
+        cb(defaultProfileName)
+        return
+    end
+
+    -- TODO: make this query configurable
     MySQL.Async.fetchAll([[
-        SELECT first_name, last_name
+        SELECT CONCAT(first_name, '_', last_name) AS profile_name
         FROM users
         WHERE identifier = @identifier LIMIT 1
     ]], 
     { identifier = identifier },
     function(users)
-        -- no user found with this identifier
-       if next(users) == nil then
-           cb(defaultProfileName)
-           return
-       end
-
-       local first_name = users[1].first_name
-       local last_name = users[1].last_name
-       if (first_name == "" and last_name == "") then
+        if next(users) == nil then -- no user found with this identifier
             cb(defaultProfileName)
-        else
-            local profileName = first_name .. '_' .. last_name
-            cb(profileName)
+            return
         end
+
+        cb(users[1].profile_name)
     end)
 end
 
