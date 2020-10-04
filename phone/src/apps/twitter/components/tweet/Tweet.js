@@ -80,6 +80,8 @@ export const Tweet = (tweet) => {
   // are stored into the database into html for the UI to render
   const formattedMessage = message.replace(/\n\r?/g, "<br />");
 
+  const profileName = profile_name ? `@${profile_name}` : "";
+
   return (
     <ListItem className={classes.root} divider>
       {enableAvatars && (
@@ -91,7 +93,7 @@ export const Tweet = (tweet) => {
       )}
       <div className={classes.content}>
         <div className={classes.primary}>
-          <div className={classes.profile}>{`@${profile_name}`}</div>
+          <div className={classes.profile}>{profileName}</div>
           <Typography
             className={classes.date}
             component="div"

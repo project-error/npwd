@@ -21,7 +21,6 @@ end
 
 RegisterNetEvent('phone:fetchTweets')
 AddEventHandler('phone:fetchTweets', function()
-    print('RegisterNetEvent: phone:fetchTweets')
     ESX.TriggerServerCallback('phone:fetchTweets', function(tweets)
         sendTwitterMessage('fetchTweets',  tweets)
     end)
@@ -29,7 +28,6 @@ end)
 
 RegisterNetEvent('phone:fetchTweetsFiltered')
 AddEventHandler('phone:fetchTweetsFiltered', function(searchValue)
-  print('fetchTweetsFiltered', searchValue)
   ESX.TriggerServerCallback('phone:fetchTweetsFiltered', function(tweets)
       sendTwitterMessage('fetchTweetsFiltered',  tweets)
   end, searchValue)
@@ -54,10 +52,22 @@ RegisterNUICallback('phone:createTweet', function(data)
   end, data)
 end)
 
-RegisterNUICallback('phone:getOrCreateTwitterProfile', function()
+
+function getOrCreateTwitterProfile()
   ESX.TriggerServerCallback('phone:getOrCreateTwitterProfile', function(profile)
     sendTwitterMessage('getOrCreateTwitterProfile',  profile)
   end)
+end
+
+-- called directly from the UI on app load
+RegisterNUICallback('phone:getOrCreateTwitterProfile', function()
+  getOrCreateTwitterProfile()
+end)
+
+-- called during subsequent updates
+RegisterNetEvent('phone:getOrCreateTwitterProfile')
+AddEventHandler('phone:getOrCreateTwitterProfile', function()
+  getOrCreateTwitterProfile()
 end)
 
 RegisterNUICallback('phone:updateTwitterProfile', function(data)

@@ -77,6 +77,7 @@ function getProfile(identifier, cb)
     MySQL.Async.fetchAll([[
         SELECT * FROM npwd_twitter_profiles
         WHERE identifier = @identifier
+        LIMIT 1
     ]], 
     { identifier = identifier }, 
     function(result)

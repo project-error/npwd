@@ -18,6 +18,7 @@ import TwitterSearch from "./TwitterSearch";
 import "./twitter.css";
 import "emoji-mart/css/emoji-mart.css";
 import { useProfile } from "../hooks/useProfile";
+import ProfilePrompt from "./profile/ProfilePrompt";
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -59,9 +60,14 @@ export const TwitterApp = () => {
     return () => window.clearTimeout(timeout);
   }, []);
 
+  // before any other action can be taken by the user we force
+  // them have a profile name
+  const promptProfileName =
+    profile && (!profile.profile_name || !profile.profile_name.trim());
+
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);
-  const showTweetButton = activePage === 0;
+  const showTweetButton = !promptProfileName && activePage === 0;
 
   return (
     <AppWrapper id="twitter-app">
@@ -69,18 +75,24 @@ export const TwitterApp = () => {
       <div className={modalVisible ? classes.backgroundModal : null} />
       <TwitterTitle />
       <AppContent>
-        <Switch>
-          <Route path="/twitter" exact component={TweetListContainer} />
-          <Route path="/twitter/search" component={TwitterSearch} />
-          <Route path="/twitter/profile" component={TwitterProfile} />
-        </Switch>
+        {promptProfileName ? (
+          <ProfilePrompt />
+        ) : (
+          <Switch>
+            <Route path="/twitter" exact component={TweetListContainer} />
+            <Route path="/twitter/search" component={TwitterSearch} />
+            <Route path="/twitter/profile" component={TwitterProfile} />
+          </Switch>
+        )}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       <AlertBar />
-      <BottomNavigation
-        activePage={activePage}
-        handleChange={handlePageChange}
-      />
+      {!promptProfileName && (
+        <BottomNavigation
+          activePage={activePage}
+          handleChange={handlePageChange}
+        />
+      )}
     </AppWrapper>
   );
 };
