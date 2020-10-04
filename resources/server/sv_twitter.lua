@@ -90,14 +90,13 @@ end
 function getProfileName(identifier, cb)
     local defaultProfileName = ''
     if Config.twitter.generateProfileNameFromUsers == false then
-        print('use default')
         cb(defaultProfileName)
         return
     end
 
     -- TODO: make this query configurable
     MySQL.Async.fetchAll([[
-        SELECT CONCAT(first_name, '_', last_name) AS profile_name
+        SELECT CONCAT(firstname, '_', lastname) AS profile_name
         FROM users
         WHERE identifier = @identifier LIMIT 1
     ]], 
