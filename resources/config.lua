@@ -5,11 +5,11 @@
 ------
 DatabaseConfig = {
     userTable = 'users',
-    -- all of these fields are required to be in the userTable
-    id = 'identifier',
-    firstName = 'firstname',
-    lastName = 'lastname',
-    phoneNumber = 'phone_number'
+    -- all of the following columns are required to be in the userTable
+    id = 'identifier', -- unique id of a player
+    firstName = 'firstname', -- character's first name
+    lastName = 'lastname',  -- character's last name
+    phoneNumber = 'phone_number' -- character's phone number
 }
 
 
