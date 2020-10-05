@@ -3,5 +3,6 @@ import { phoneState } from "./state";
 
 export const usePhone = () => {
   const visibility = useRecoilValue(phoneState.visibility);
-  return { visibility };
+  const config = useRecoilValue(phoneState.phoneConfig);
+  return { visibility, config };
 };

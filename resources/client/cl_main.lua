@@ -149,6 +149,18 @@ function noPhone()
     ESX.ShowNotification('Oi Mate, No El Telephono')
 end
 
+function sendPhoneConfig()
+    ESX.TriggerServerCallback('phone:phoneConfig', function(config)
+        SendNUIMessage(
+            {
+                app = "PHONE",
+                method = "phoneConfig",
+                data = config
+            }
+        )
+      end)
+end
+
 Citizen.CreateThread(function()
     while true do
     Citizen.Wait(0)
@@ -157,6 +169,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 
 function Phone() --Open/close phone
     if Config.PhoneAsItem == true then
@@ -178,6 +191,7 @@ function Phone() --Open/close phone
                         data = true
                         }
                     )
+                    sendPhoneConfig()
                     SetNuiFocus(true, true)
                 else
                     isPhoneOpen = false
@@ -213,6 +227,7 @@ function Phone() --Open/close phone
                 data = true
                 }
             )
+            sendPhoneConfig()
             SetNuiFocus(true, true)
         else
             isPhoneOpen = false
@@ -233,7 +248,6 @@ end
 RegisterCommand('phone', function(source) -- Toggles Phone
     Phone()
 end, false)
-
 
 RegisterNetEvent('phone:send')
 AddEventHandler('phone:send', function()

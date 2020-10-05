@@ -17,6 +17,7 @@ import { usePhoneService } from "./os/phone/hooks/usePhoneService";
 import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
+import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -73,6 +74,7 @@ function Phone() {
   const { allApps } = useApps();
   useSimcardService();
   useContactsService();
+  useTwitterService();
   useInitKeyboard();
 
   if (visibility === false) {

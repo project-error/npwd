@@ -27,5 +27,6 @@ files {
     'resources/html/*.js',
     'resources/html/media/frames/*.png',
     'resources/html/media/backgrounds/*.png',
-    'resources/html/media/backgrounds/*.jpg'
+    'resources/html/media/backgrounds/*.jpg',
+    'resources/html/media/twitter/*'
 }

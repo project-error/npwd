@@ -10,14 +10,15 @@ export const useNuiEvent = (app, method, handler, options = {}) => {
   }, [handler]);
 
   useEffect(() => {
+    const eventName = eventNameFactory(app, method);
     const eventListener = (event) => {
       if (savedHandler.current && savedHandler.current.call) {
         const { data } = event;
+        console.log(eventName, data);
         savedHandler.current(data);
       }
     };
     const opts = { capture, passive, once };
-    const eventName = eventNameFactory(app, method);
     window.addEventListener(eventName, eventListener, opts);
     return () => window.removeEventListener(eventName, eventListener, opts);
   }, [app, method, capture, passive, once]);

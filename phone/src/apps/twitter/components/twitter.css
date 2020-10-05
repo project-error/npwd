@@ -1,0 +1,42 @@
+/* 00acee is "twitter blue" and we want to use that to override
+some of the Material UI primary theme settings */
+
+/* override buttons on the tweet modal */
+#twitter-app .MuiButton-containedPrimary {
+  background: #00acee !important;
+}
+
+/* override the bottom navigation active color */
+#twitter-app .Mui-selected {
+  color: #00acee !important;
+}
+/* override the FAB (action buttons) background when selected */
+#twitter-app .MuiFab-primary {
+  background: #00acee !important;
+}
+
+/* override the labels on text fields */
+#twitter-app .MuiInputLabel-formControl.Mui-focused {
+  color: #00acee !important;
+}
+
+/* override the underlines of text fields */
+#twitter-app .Mui-focused:after {
+  border-bottom-color: #00acee !important;
+}
+
+/*
+override position of the snackbar so that it appears
+within the phone rather than on the game UI */
+#twitter-app .MuiSnackbar-root {
+  position: absolute;
+}
+
+.emoji-mart {
+  margin: 0px 15px 8px 15px !important;
+  width: calc(100% - 30px) !important;
+}
+
+.emoji-mart-bar {
+  display: none;
+}
