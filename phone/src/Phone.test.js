@@ -1,9 +1,12 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { RecoilRoot } from "recoil";
+import { shallow } from "enzyme";
+import Phone from "./Phone";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it("renders Phone", () => {
+  shallow(
+    <RecoilRoot>
+      <Phone />
+    </RecoilRoot>
+  );
 });
