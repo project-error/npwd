@@ -1,3 +1,19 @@
+------
+-- Database table & column mapping. This mapping allows us to maintain
+-- a framework agnostic approach where integration into custom implementations
+-- is possible. This mappings default to values that work with ESX.
+------
+DatabaseConfig = {
+    users = {
+        table = 'users',
+        -- columns in the table
+        id = 'another_identifier',
+        firstName = 'my_first_name',
+        lastName = 'my_last_name',
+        phoneNumber = 'my_phone_number'
+    }
+}
+
 Config = {}
 
 Config.Locale = 'en'
