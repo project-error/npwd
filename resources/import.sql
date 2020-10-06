@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   UNIQUE KEY `profile_name_UNIQUE` (`profile_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `npwd_twitter_likes` (
+CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `profile_id` int NOT NULL,
   `tweet_id` int NOT NULL,
