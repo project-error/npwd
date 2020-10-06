@@ -12,6 +12,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 
 import { ListItem } from "../../../../ui/components/ListItem";
 import { secondsToHumanReadable } from "../../utils/time";
+import LikeButton from "../buttons/LikeButton";
 import ReplyButton from "../buttons/ReplyButton";
 import ImageDisplay from "../images/ImageDisplay";
 import Avatar from "../Avatar";
@@ -63,11 +64,13 @@ const useStyles = makeStyles(() => ({
 
 export const Tweet = (tweet) => {
   const {
+    id,
     message,
     images,
     avatar_url,
     profile_name,
     seconds_since_tweet,
+    isLiked,
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -110,9 +113,7 @@ export const Tweet = (tweet) => {
         {enableImages && <ImageDisplay visible images={images} small />}
         <div className={classes.buttonContainer}>
           <ReplyButton profile_name={profile_name} />
-          <Button>
-            <FavoriteBorderIcon />
-          </Button>
+          <LikeButton tweetId={id} isLiked={isLiked} />
           <QuoteButton message={message} />
           <Button>
             <MoreIcon />

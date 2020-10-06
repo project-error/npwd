@@ -2,7 +2,7 @@
 -- or if it already exists in the users table
 ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) NULL DEFAULT NULL;
 
-CREATE TABLE npwd_phone_contacts (
+CREATE TABLE IF NOT EXISTS npwd_phone_contacts (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(60) DEFAULT NULL,
   number varchar(10) DEFAULT NULL,
@@ -18,7 +18,7 @@ COLLATE utf8mb4_general_ci;
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('phone', 'Phone', 1, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('dphone', 'Destroyed Phone', 1, 0, 1);
 
-CREATE TABLE `npwd_twitter_tweets` (
+CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
   `id` int NOT NULL AUTO_INCREMENT,
   `message` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -31,7 +31,7 @@ CREATE TABLE `npwd_twitter_tweets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `npwd_twitter_profiles` (
+CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `profile_name` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `identifier` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,

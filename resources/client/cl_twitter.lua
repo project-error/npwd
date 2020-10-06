@@ -77,3 +77,7 @@ RegisterNUICallback('phone:updateTwitterProfile', function(data)
     TriggerEvent('phone:getOrCreateTwitterProfile')
   end, data)
 end)
+
+RegisterNUICallback('phone:toggleLike', function(tweetId)
+  TriggerServerEvent('phone:toggleLike', tweetId)
+end)
