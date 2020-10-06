@@ -44,3 +44,14 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `profile_name_UNIQUE` (`profile_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `npwd_twitter_likes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `profile_id` int NOT NULL,
+  `tweet_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `profile_idx` (`profile_id`),
+  KEY `tweet_idx` (`tweet_id`),
+  CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
+  CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
