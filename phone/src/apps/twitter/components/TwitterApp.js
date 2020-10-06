@@ -43,7 +43,6 @@ export const TwitterApp = () => {
 
   useEffect(() => {
     Nui.send("phone:getOrCreateTwitterProfile", {});
-    Nui.send("phone:fetchTweets", {});
 
     // this is a polling implementation. It is possible that
     // there is some interaction where, on a new tweet, all
