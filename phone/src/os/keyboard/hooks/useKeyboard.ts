@@ -78,9 +78,12 @@ export const useInitKeyboard = () => {
     [getters]
   );
 
-  useEffect(function registerEscapeHandler() {
-    setEscape({ handler: () => console.log("close phone") });
-  }, [setEscape]);
+  useEffect(
+    function registerEscapeHandler() {
+      setEscape({ handler: () => console.log("close phone") });
+    },
+    [setEscape]
+  );
 };
 
 export const useKeyboard = () => {

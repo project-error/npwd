@@ -3,10 +3,10 @@ import { ContextMenu } from "../components/ContextMenu";
 
 export const MapStringOptions = (current, onClick) => (string) => {
   return {
-    selected: current === string, 
+    selected: current === string,
     label: string,
     key: string,
-    onClick: () => onClick(string)
+    onClick: () => onClick(string),
   };
 };
 

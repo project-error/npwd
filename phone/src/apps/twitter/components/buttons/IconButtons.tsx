@@ -21,18 +21,22 @@ const useStyles = makeStyles((theme) => ({
 export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const classes = useStyles();
   const { config } = usePhone();
-  
+
   if (!config) return null;
   const { enableImages, enableEmojis } = config.twitter;
 
   return (
     <div className={classes.buttons}>
-      {enableImages && (<Button className={classes.button} onClick={onImageClick}>
-        <InsertPhotoIcon color="action" />
-      </Button>)}
-      {enableEmojis && (<Button className={classes.button} onClick={onEmojiClick}>
-        <EmojiIcon color="action" />
-      </Button>)}
+      {enableImages && (
+        <Button className={classes.button} onClick={onImageClick}>
+          <InsertPhotoIcon color="action" />
+        </Button>
+      )}
+      {enableEmojis && (
+        <Button className={classes.button} onClick={onEmojiClick}>
+          <EmojiIcon color="action" />
+        </Button>
+      )}
     </div>
   );
 };

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
-    padding: 0
+    padding: 0,
   },
   avatar: {
     backgroundColor: ({ backgroundColor }) => backgroundColor,
@@ -18,11 +18,14 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
     fontSize: theme.typography.h4.fontSize,
-  }
+  },
 }));
 
 export const AppIcon = ({ name, icon, backgroundColor, color }) => {
-  const classes = useStyles({ backgroundColor: backgroundColor || green[50], color: color || green[400] });
+  const classes = useStyles({
+    backgroundColor: backgroundColor || green[50],
+    color: color || green[400],
+  });
   return (
     <Button className={classes.root}>
       <Avatar className={classes.avatar}>

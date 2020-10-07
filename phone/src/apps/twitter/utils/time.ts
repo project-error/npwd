@@ -12,7 +12,10 @@ const DAYS = "APPS_TWITTER_TIME_DAYS";
  * @param {function} t - translation object passed from a component implementing the hook
  * @param {number} seconds - seconds to translate to a string
  */
-export function secondsToHumanReadable(t, seconds) {
+export function secondsToHumanReadable(
+  t: (input: string) => string,
+  seconds: number
+): string {
   if (seconds < 60) {
     return t(JUST_NOW);
   } else if (seconds < ONE_HOUR) {

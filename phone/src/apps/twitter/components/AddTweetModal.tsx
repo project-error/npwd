@@ -127,7 +127,7 @@ export const AddTweetModal = () => {
     withValidImage(cleanedLink, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
-    setLink('')
+    setLink("");
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
@@ -171,7 +171,11 @@ export const AddTweetModal = () => {
       />
       <div className={classes.buttonsContainer}>
         <IconButtons
-          onImageClick={images.length < config.twitter.maxImages ? toggleShowImagePrompt : null}
+          onImageClick={
+            images.length < config.twitter.maxImages
+              ? toggleShowImagePrompt
+              : null
+          }
           onEmojiClick={toggleShowEmoji}
         />
         <ControlButtons

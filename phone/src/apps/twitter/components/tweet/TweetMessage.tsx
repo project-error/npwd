@@ -23,8 +23,11 @@ export const TweetMessage = ({ message, handleChange }) => {
   const { config } = usePhone();
   const { t } = useTranslation();
 
-  const overCharacterLimit = message.trim().length > config.twitter.characterLimit;
-  const characterWarningPrompt = `${t("APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT")} (${config.twitter.characterLimit})`;
+  const overCharacterLimit =
+    message.trim().length > config.twitter.characterLimit;
+  const characterWarningPrompt = `${t(
+    "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT"
+  )} (${config.twitter.characterLimit})`;
 
   return (
     <TextField

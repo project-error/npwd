@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import en from "./locale/en.json";
 
 const resources = {
-  en
+  en,
 };
 
 i18n

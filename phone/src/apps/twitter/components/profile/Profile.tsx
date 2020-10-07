@@ -27,7 +27,6 @@ export function Profile() {
   const { profile } = useProfile();
   const { config } = usePhone();
 
-
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
   // Annoyingling adding conditionals above this line to not render
@@ -50,7 +49,7 @@ export function Profile() {
     Nui.send("phone:updateTwitterProfile", data);
   };
 
-   // fetching the config is an asynchronous call so defend against it
+  // fetching the config is an asynchronous call so defend against it
   if (!config) return null;
 
   const { enableAvatars, allowEdtiableProfileName } = config.twitter;

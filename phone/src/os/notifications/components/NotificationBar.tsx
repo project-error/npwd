@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
   },
   icon: {
-    padding: '4px',
+    padding: "4px",
     color: theme.palette.text.primary,
   },
 }));
@@ -36,7 +36,12 @@ export const NotificationBar = ({ notifications = [] }) => {
     >
       <Grid container item wrap="nowrap">
         {notifications.map((notification) => (
-          <Grid item key={notification.key} component={IconButton} className={classes.icon}>
+          <Grid
+            item
+            key={notification.key}
+            component={IconButton}
+            className={classes.icon}
+          >
             {notification.icon}
           </Grid>
         ))}
