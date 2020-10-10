@@ -18,6 +18,7 @@ import { useApps } from "./os/apps/hooks/useApps";
 
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
+import { useSelloutService } from "./apps/sellout/hooks/useSelloutService"; 
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -67,6 +68,33 @@ setTimeout(() => {
   );
 }, 1000);
 
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent('message', {
+      data: {
+        app: 'SELLOUT',
+        method: 'setListings',
+        data: [
+          {
+            id: 1, 
+            name: 'Donald Trump',
+            number: '123-4567',
+            description: 'This is me just selling the whole country, because like why not dude',
+            img: 'some shady link?'
+          },
+          {
+            id: 2,
+            name: 'Joe Biden',
+            number: '666-6666',
+            description: 'I think I might buy it Trump!',
+            img: 'even shadier link?'
+          }
+        ]
+      }
+    })
+  )
+})
+
 function Phone() {
   useNuiService();
   const { visibility } = usePhoneService();
@@ -76,6 +104,7 @@ function Phone() {
   useContactsService();
   useTwitterService();
   useInitKeyboard();
+  useSelloutService();
 
   if (visibility === false) {
     return null;
