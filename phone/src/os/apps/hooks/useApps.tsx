@@ -7,8 +7,12 @@ import {
   green,
   orange,
   purple,
+  red,
   amber,
 } from "@material-ui/core/colors";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAd } from '@fortawesome/free-solid-svg-icons'
+
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -27,6 +31,7 @@ import { BankApp } from "../../../apps/bank/components/BankApp";
 import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
 import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
 import { ExampleApp } from "../../../apps/example/components/ExampleApp";
+import { SelloutApp } from "../../../apps/sellout/components/SelloutApp";
 
 const appsState = atom({
   key: "apps",
@@ -94,6 +99,15 @@ const appsState = atom({
         color: common.white,
         path: "/twitter",
         Route: () => <Route path="/twitter" component={TwitterApp} />,
+      },
+      {
+        id: "SELLOUT",
+        nameLocale: "APPS_SELLOUT",
+        icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
+        backgroundColor: red[500],
+        color: common.white,
+        path: "/sellout",
+        Route: () => <Route path="/sellout" component={SelloutApp} />,
       },
       {
         id: "EXAMPLE",
