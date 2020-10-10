@@ -2,6 +2,8 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAd } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +25,7 @@ export const SelloutTitle = () => {
   const classes = useStyles();
   return (
     <Paper className={classes.root} square variant="outlined" elevation={24}>
-      <LinkedInIcon className={classes.icon} />
+      <FontAwesomeIcon icon={faAd} className={classes.icon} />
     </Paper>
   );
 };
