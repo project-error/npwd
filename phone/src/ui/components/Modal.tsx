@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     zIndex: 10,
     background: "#424242",
@@ -31,16 +31,16 @@ export const Modal = ({ children, visible, handleClose }) => {
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
-    const isEscapeKey = e.key == "Escape" || e.key == "Esc";
+    const isEscapeKey = e.key === "Escape" || e.key === "Esc";
     if (isEscapeKey) {
       e.preventDefault();
       handleClose();
     }
   };
   useEffect(() => {
-    const listener = window.addEventListener("keydown", _handleEscape, true);
-    return () => window.removeEventListener("keydown", listener);
-  }, []);
+    window.addEventListener("keydown", _handleEscape, true);
+    return () => window.removeEventListener("keydown", _handleEscape);
+  });
 
   const showHideClassName = visible
     ? classes.displayBlock

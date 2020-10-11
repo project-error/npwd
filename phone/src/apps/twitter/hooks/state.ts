@@ -3,7 +3,7 @@ import { atom } from "recoil";
 export const twitterState = {
   profile: atom({
     key: "profile",
-    default: null,
+    default: {},
   }),
   tweets: atom({
     key: "tweets",

@@ -49,7 +49,11 @@ export const Image = ({ link, handleClick, small }) => {
           <CloseIcon />
         </IconButton>
       )}
-      <img className={small ? classes.imgSmall : classes.img} src={link} />
+      <img
+        alt="small avatar"
+        className={small ? classes.imgSmall : classes.img}
+        src={link}
+      />
     </div>
   );
 };

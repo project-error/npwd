@@ -59,10 +59,10 @@ export const SelloutItem = (listing) => {
             </Typography>
           </div>
           <ImageDisplay imgURL={listing.img} />
-          <Typography variant="h7" className={classes.desc}>
+          <Typography variant="h6" className={classes.desc}>
             {listing.description}
           </Typography>
-          <div className={classes.postActions}>
+          <div>
             <Button>
               <ChatIcon style={{ color: "#f44336" }} />
             </Button>

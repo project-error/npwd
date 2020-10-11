@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -22,6 +22,8 @@ export const TweetMessage = ({ message, handleChange }) => {
   const classes = useStyles();
   const { config } = usePhone();
   const { t } = useTranslation();
+
+  if (!config) return null;
 
   const overCharacterLimit =
     message.trim().length > config.twitter.characterLimit;

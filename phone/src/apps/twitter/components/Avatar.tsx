@@ -30,7 +30,7 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
         <img
           className={classes.img}
           src={showInvalidImage ? IMG_INVALID_AVATAR : IMG_DEFAULT_AVATAR}
-          alt="Invalid avatar image"
+          alt="Invalid avatar"
           style={{ height, width }}
         />
       )}

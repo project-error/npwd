@@ -2,7 +2,7 @@ import React from "react";
 import { Box, makeStyles, Backdrop, Paper } from "@material-ui/core";
 import { AppContentTypes } from "../interface/InterfaceUI";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   wrapper: {
     height: "67vh",
     overflow: "auto",
@@ -34,7 +34,7 @@ export const AppContent = ({
   return (
     <Paper className={classes.wrapper}>
       <Box flexGrow={1} className={classes.box} {...props}>
-        <Paper square px={2} pt={1} elevation={0} className={classes.paper}>
+        <Paper square elevation={0} className={classes.paper}>
           <Backdrop
             className={classes.backdrop}
             open={backdrop || false}

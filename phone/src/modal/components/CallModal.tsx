@@ -1,14 +1,20 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import { AppWrapper } from "../../ui/components/AppWrapper";
 import { AppTitle } from "../../ui/components/AppTitle";
 import { AppContent } from "../../ui/components/AppContent";
-import { Button } from "../../ui/components/Button";
 
 export const CallModal = () => {
   return (
     <AppWrapper>
-      <AppTitle app="Call" />
+      <AppTitle
+        app={{
+          backgroundColor: green[400],
+          color: green[50],
+          nameLocale: "Call",
+        }}
+        variant="h4"
+      />
       <AppContent>
         <h1
           style={{

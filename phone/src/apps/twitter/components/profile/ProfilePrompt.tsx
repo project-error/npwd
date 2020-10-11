@@ -23,6 +23,7 @@ export function ProfilePrompt() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { profile } = useProfile();
+
   const [name, handleNameChange] = useState(profile.profile_name || "");
 
   const handleUpdate = () => {

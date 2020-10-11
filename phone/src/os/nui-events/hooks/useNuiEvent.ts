@@ -1,8 +1,14 @@
 import { useEffect, useRef } from "react";
 import { eventNameFactory } from "../utils/nuiUtils";
 
-export const useNuiEvent = (app, method, handler, options = {}) => {
-  const savedHandler = useRef();
+interface IOptions {
+  capture?: boolean;
+  passive?: boolean;
+  once?: boolean;
+}
+
+export const useNuiEvent = (app, method, handler, options: IOptions = {}) => {
+  const savedHandler: any = useRef();
   const { capture, passive, once } = options;
 
   useEffect(() => {

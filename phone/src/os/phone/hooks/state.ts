@@ -7,6 +7,6 @@ export const phoneState = {
   }),
   phoneConfig: atom({
     key: "phoneConfig",
-    default: null,
+    default: undefined,
   }),
 };

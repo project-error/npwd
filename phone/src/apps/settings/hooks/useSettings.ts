@@ -8,7 +8,7 @@ const settingsState = atom({
   default: Default,
 });
 
-export const useSettings = () => {
+export const useSettings = (): any => {
   const [settings, setSettings] = useConfig(settingsState);
   const [config] = useConfig();
   const currentTheme = () => createMuiTheme(config.themes[settings.theme]);

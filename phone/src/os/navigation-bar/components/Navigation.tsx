@@ -35,17 +35,17 @@ export const Navigation = () => {
       <BottomNavigationAction
         label="Phone"
         value={() => history.push("/phone")}
-        icon={<PhoneIcon className={classes.icon} />}
+        icon={<PhoneIcon />}
       />
       <BottomNavigationAction
         label="Home"
         value={() => history.push("/")}
-        icon={<AppsIcon className={classes.icon} />}
+        icon={<AppsIcon />}
       />
       <BottomNavigationAction
         label="Close"
         value={() => closePhone()}
-        icon={<RadioButtonUncheckedIcon className={classes.icon} />}
+        icon={<RadioButtonUncheckedIcon />}
       />
       <BottomNavigationAction
         label="Back"

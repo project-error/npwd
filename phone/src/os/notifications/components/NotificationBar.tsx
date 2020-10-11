@@ -25,7 +25,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NotificationBar = ({ notifications = [] }) => {
+interface INotification {
+  key: string;
+  icon: JSX.Element;
+}
+
+interface IProps {
+  notifications?: INotification[];
+}
+
+export const NotificationBar = ({ notifications = [] }: IProps) => {
   const classes = useStyles();
   return (
     <Grid
