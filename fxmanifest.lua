@@ -6,7 +6,8 @@ author { "chip", "BTNGaming", "ROCKY_southpaw" }
 client_script {
     '@es_extended/locale.lua',
     'resources/locales/*.lua',
-    'resources/client/*lua'
+    'resources/client/*lua',
+    'resources/dist/client/*.client.js'
 }
 
 shared_script {
@@ -17,7 +18,8 @@ server_script {
     "@mysql-async/lib/MySQL.lua",
     '@es_extended/locale.lua',
     'resources/locales/*.lua',
-    'resources/server/*.lua'
+    'resources/server/*.lua',
+    'resources/dist/server/*.server.js'
 }
 
 ui_page 'resources/html/index.html'
