@@ -1,16 +1,16 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ResourceManifestPlugin = require('./webpack.fxmanifest.plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ResourceManifestPlugin = require("./webpack.fxmanifest.plugin");
 
-module.exports = require('./webpack.common')({
-  mode: 'production',
+module.exports = require("./webpack.common")({
+  mode: "production",
 
   // In production, we skip all hot-reloading stuff
-  entry: [path.join(process.cwd(), 'src/index.js')],
+  entry: [path.join(process.cwd(), "src/index.tsx")],
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
+      template: "public/index.html",
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -29,7 +29,7 @@ module.exports = require('./webpack.common')({
   ],
 
   performance: {
-    assetFilter: assetFilename =>
+    assetFilter: (assetFilename) =>
       !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
 });

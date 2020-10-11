@@ -4,40 +4,45 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj 
 end)
 
-function fetchAllTweets(cb)
+function fetchAllTweets(profileId, cb)
     MySQL.Async.fetchAll([[
         SELECT
             npwd_twitter_profiles.profile_name,
             npwd_twitter_profiles.avatar_url,
             npwd_twitter_tweets.*,
+			npwd_twitter_likes.id IS NOT NULL AS isLiked,
             TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
         FROM npwd_twitter_tweets
         LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+        LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = @profileId
         WHERE visible = 1
         ORDER BY npwd_twitter_tweets.createdAt DESC 
         LIMIT 100
     ]],
-    {},
+    { profileId = profileId },
     function(tweets)
         cb(tweets)
     end)
 end
 
-function fetchTweetsFiltered(searchValue, cb)
+function fetchTweetsFiltered(profileId, searchValue, cb)
     local searchValueParameterized = '%' .. searchValue .. '%'
     MySQL.Async.fetchAll([[
         SELECT
             npwd_twitter_profiles.profile_name,
             npwd_twitter_profiles.avatar_url,
             npwd_twitter_tweets.*,
+			npwd_twitter_likes.id IS NOT NULL AS isLiked,
             TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
         FROM npwd_twitter_tweets
         LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+        LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = @profileId
         WHERE visible = 1 AND (npwd_twitter_profiles.profile_name LIKE @profile_name OR npwd_twitter_tweets.message LIKE @message)
         ORDER BY npwd_twitter_tweets.createdAt DESC 
         LIMIT 100
     ]],
     {
+        profileId = profileId,
         profile_name = searchValueParameterized,
         message = searchValueParameterized
     },
@@ -47,12 +52,26 @@ function fetchTweetsFiltered(searchValue, cb)
 end
 
 ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
-    fetchAllTweets(cb)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+    
+    getProfile(_identifier, function(result)
+        local profile = result[1]
+        fetchAllTweets(profile.id, cb)
+    end)
 end)
 
   -- search value expected to be lower case
 ESX.RegisterServerCallback('phone:fetchTweetsFiltered', function(source, cb, searchValue)
-    fetchTweetsFiltered(searchValue, cb)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+    
+    getProfile(_identifier, function(result)
+        local profile = result[1]
+        fetchTweetsFiltered(profile.id, searchValue, cb)
+    end)
 end)
 
 
@@ -181,3 +200,50 @@ ESX.RegisterServerCallback('phone:updateTwitterProfile', function(source, cb, da
     end)
 end)
 
+
+function doesLikeExist(profileId, tweetId, cb)
+    MySQL.Async.fetchAll([[
+        SELECT * FROM npwd_twitter_likes
+        WHERE profile_id = @profileId AND tweet_id = @tweetId
+        LIMIT 1
+    ]], 
+    { profileId = profileId, tweetId = tweetId }, 
+    function(result)
+        cb(result)
+    end)
+end
+
+function createLike(profileId, tweetId)
+    MySQL.Async.execute([[
+        INSERT INTO npwd_twitter_likes (`profile_id`, `tweet_id`)
+        VALUES (@profileId, @tweetId)
+    ]],
+    { profileId = profileId, tweetId = tweetId })
+end
+
+function deleteLike(profileId, tweetId)
+    MySQL.Async.execute([[
+        DELETE FROM npwd_twitter_likes
+        WHERE profile_id = @profileId AND tweet_id = @tweetId
+    ]],
+    { profileId = profileId, tweetId = tweetId })
+end
+
+
+RegisterServerEvent('phone:toggleLike')
+AddEventHandler('phone:toggleLike', function(tweetId)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+    
+    getProfile(_identifier, function(result)
+        local profile = result[1]
+        doesLikeExist(profile.id, tweetId, function(result)
+            if next(result) == nil then -- like doesn't exist
+                createLike(profile.id, tweetId)
+            else -- like does exist
+                deleteLike(profile.id, tweetId)
+            end
+        end)
+    end)
+end)

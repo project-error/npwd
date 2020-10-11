@@ -25,6 +25,11 @@ some of the Material UI primary theme settings */
   border-bottom-color: #00acee !important;
 }
 
+/* override circular progress on the likes button */
+#twitter-app .MuiCircularProgress-colorPrimary {
+  color: #00acee !important;
+}
+
 /*
 override position of the snackbar so that it appears
 within the phone rather than on the game UI */

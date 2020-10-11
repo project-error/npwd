@@ -7,10 +7,10 @@ DatabaseConfig = {
     users = {
         table = 'users',
         -- columns in the table
-        id = 'another_identifier',
-        firstName = 'my_first_name',
-        lastName = 'my_last_name',
-        phoneNumber = 'my_phone_number'
+        id = 'identifier',
+        firstName = 'first_name',
+        lastName = 'last_name',
+        phoneNumber = 'phone_number'
     }
 }
 
