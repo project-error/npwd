@@ -1,3 +1,8 @@
-let ESX = null;
+import { ESXServer } from "fivem-esx-js/server/esx_server";
 
-emit('esx:getSharedObject', (obj) => ESX = obj);
+import './db';
+import './sv_twitter';
+
+let ESX: ESXServer = null;
+
+emit('esx:getSharedObject', (obj: ESXServer) => ESX = obj);
