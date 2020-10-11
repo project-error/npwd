@@ -10,8 +10,8 @@ import {
   red,
   amber,
 } from "@material-ui/core/colors";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAd } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAd } from "@fortawesome/free-solid-svg-icons";
 
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";

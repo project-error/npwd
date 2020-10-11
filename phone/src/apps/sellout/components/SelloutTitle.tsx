@@ -2,8 +2,8 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAd } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAd } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,10 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Typography,
-  Paper,
-} from "@material-ui/core";
+import { Button, Typography, Paper } from "@material-ui/core";
 import { ImageDisplay } from "../images/ImageDisplay";
 import { ListItem } from "../../../../ui/components/ListItem";
 import ChatIcon from "@material-ui/icons/Chat";

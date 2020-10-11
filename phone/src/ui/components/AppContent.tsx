@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, makeStyles, Backdrop, Paper } from "@material-ui/core";
-import { AppContentTypes } from '../interface/InterfaceUI';
+import { AppContentTypes } from "../interface/InterfaceUI";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -29,7 +29,7 @@ export const AppContent = ({
   backdrop,
   onClickBackdrop,
   ...props
-}: AppContentTypes)  => {
+}: AppContentTypes) => {
   const classes = useStyles();
   return (
     <Paper className={classes.wrapper}>
