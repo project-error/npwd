@@ -6,7 +6,7 @@ const configState = atom({
   default: Default,
 });
 
-export const useConfig = (state = configState) => {
+export const useConfig = (state: any = configState): any => {
   const [config, _setConfig] = useRecoilState(state);
 
   const setConfig = (key, value) => {

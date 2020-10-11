@@ -1,10 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Typography,
-  Paper,
-} from "@material-ui/core";
+import { Button, Typography, Paper } from "@material-ui/core";
 import { ImageDisplay } from "../images/ImageDisplay";
 import { ListItem } from "../../../../ui/components/ListItem";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -63,10 +59,10 @@ export const SelloutItem = (listing) => {
             </Typography>
           </div>
           <ImageDisplay imgURL={listing.img} />
-          <Typography variant="h7" className={classes.desc}>
+          <Typography variant="h6" className={classes.desc}>
             {listing.description}
           </Typography>
-          <div className={classes.postActions}>
+          <div>
             <Button>
               <ChatIcon style={{ color: "#f44336" }} />
             </Button>

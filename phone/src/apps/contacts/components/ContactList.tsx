@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Button } from "@material-ui/core";
 
@@ -13,7 +13,6 @@ import Nui from "../../../os/nui-events/utils/Nui";
 
 export const ContactList = () => {
   const contacts = useContacts();
-  const [call, setCall] = useState("");
 
   const startCall = (number) => {
     console.log(number);

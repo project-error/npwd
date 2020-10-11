@@ -24,7 +24,7 @@ function TwitterSearch() {
   const classes = useStyles();
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState("");
-  const { tweets, setTweets } = useFilteredTweets();
+  const { tweets } = useFilteredTweets();
 
   const handleChange = (e) => setSearchValue(e.target.value);
 
@@ -34,6 +34,8 @@ function TwitterSearch() {
 
     Nui.send("phone:fetchTweetsFiltered", cleanedSearchValue);
   };
+
+  const filteredTweets = tweets || [];
 
   return (
     <>
@@ -49,7 +51,7 @@ function TwitterSearch() {
             inputRef={(input) => input && input.focus()}
           />
         </div>
-        {tweets && tweets.length > 0 && <TweetList tweets={tweets} />}
+        {filteredTweets.length > 0 && <TweetList tweets={tweets} />}
       </div>
       <SearchButton handleClick={handleSubmit} />
     </>

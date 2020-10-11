@@ -69,7 +69,7 @@ export const TwitterApp = () => {
   return (
     <AppWrapper id="twitter-app">
       <AddTweetModal />
-      <div className={modalVisible ? classes.backgroundModal : null} />
+      <div className={modalVisible ? classes.backgroundModal : undefined} />
       <TwitterTitle />
       <AppContent>
         {promptProfileName ? (

@@ -6,6 +6,7 @@ export interface AppContentTypes {
 }
 
 export interface AppWrapperTypes {
+  id?: string;
   children: any;
   style?: any;
   handleClickAway?: any;

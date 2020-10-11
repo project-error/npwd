@@ -55,7 +55,7 @@ export const useInitKeyboard = () => {
     Escape: useRecoilValue(keyboardState.Escape),
   };
 
-  const setEscape = useSetRecoilState(keyboardState.Escape);
+  const setEscape = useSetRecoilState<any>(keyboardState.Escape);
 
   useEffect(
     function handleNUIKeyboardMessage() {

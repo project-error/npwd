@@ -21,8 +21,8 @@ export default function AlertBar() {
   const { t } = useTranslation();
   const { updateProfileSuccessful, setUpdateProfileSuccessful } = useProfile();
   const { createTweetSuccessful, setCreateTweetSuccessful } = useTweetStatus();
-  const [severity, setSeverity] = useState(null);
-  const [open, setOpen] = useState(null);
+  const [severity, setSeverity] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(null);
 
   const handleClose = () => {
@@ -49,7 +49,7 @@ export default function AlertBar() {
       setSeverity("error");
       setMessage(t("APPS_TWITTER_EDIT_PROFILE_FAILURE"));
     }
-  }, [updateProfileSuccessful, createTweetSuccessful]);
+  }, [updateProfileSuccessful, createTweetSuccessful, t]);
 
   return (
     <Snackbar

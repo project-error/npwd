@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { callerState } from "./state";
 
 export const useCall = () => {

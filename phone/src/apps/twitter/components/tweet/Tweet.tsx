@@ -7,7 +7,6 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
 import { ListItem } from "../../../../ui/components/ListItem";

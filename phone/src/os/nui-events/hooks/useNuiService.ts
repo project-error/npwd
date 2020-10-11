@@ -1,7 +1,13 @@
 import { useEffect } from "react";
 import { eventNameFactory } from "../utils/nuiUtils";
 
-export const useNuiService = (options = {}) => {
+interface IOptions {
+  capture?: boolean;
+  passive?: boolean;
+  once?: boolean;
+}
+
+export const useNuiService = (options: IOptions = {}) => {
   const { capture, passive, once } = options;
   const eventListener = (event) => {
     const { app, method, data } = event.data;

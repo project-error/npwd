@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface Image {
+  id: string;
+  link: string;
+}
+
 export const AddTweetModal = () => {
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
@@ -61,10 +66,10 @@ export const AddTweetModal = () => {
   const [showImagePrompt, setShowImagePrompt] = useState(false);
   const [link, setLink] = useState("");
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Image[]>([]);
 
   const reset = () => {
-    setShowImagePrompt(null);
+    setShowImagePrompt(false);
     setShowEmoji(false);
 
     setLink("");
@@ -79,16 +84,18 @@ export const AddTweetModal = () => {
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
-    const isEscapeKey = e.key == "Escape" || e.key == "Esc";
+    const isEscapeKey = e.key === "Escape" || e.key === "Esc";
     if (isEscapeKey) {
       e.preventDefault();
       _handleClose();
     }
   };
   useEffect(() => {
-    const listener = window.addEventListener("keydown", _handleEscape, true);
-    return () => window.removeEventListener("keydown", listener);
-  }, []);
+    window.addEventListener("keydown", _handleEscape, true);
+    return () => window.removeEventListener("keydown", _handleEscape);
+  });
+
+  if (!config) return null;
 
   const submitTweet = () => {
     const cleanedMessage = message.trim();
@@ -140,7 +147,7 @@ export const AddTweetModal = () => {
   const toggleShowEmoji = () => {
     // clear the images so we can seemlessly toggle between emoji/images
     setShowImagePrompt(false);
-    setImages("");
+    setImages([]);
     setShowEmoji(!showEmoji);
   };
 

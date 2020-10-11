@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const AddContactModal = ({ handleClose, show, children }) => {
+export const AddContactModal = ({ handleClose, show }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const classes = useStyles();
