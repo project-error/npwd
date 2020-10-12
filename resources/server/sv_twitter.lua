@@ -51,16 +51,16 @@ function fetchTweetsFiltered(profileId, searchValue, cb)
     end)
 end
 
-ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
-    local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
-    local _identifier = xPlayer.getIdentifier()
+-- ESX.RegisterServerCallback('phone:fetchTweets', function(source, cb)
+--     local _source = source
+--     local xPlayer = ESX.GetPlayerFromId(_source)
+--     local _identifier = xPlayer.getIdentifier()
     
-    getProfile(_identifier, function(result)
-        local profile = result[1]
-        fetchAllTweets(profile.id, cb)
-    end)
-end)
+--     getProfile(_identifier, function(result)
+--         local profile = result[1]
+--         fetchAllTweets(profile.id, cb)
+--     end)
+-- end)
 
   -- search value expected to be lower case
 ESX.RegisterServerCallback('phone:fetchTweetsFiltered', function(source, cb, searchValue)

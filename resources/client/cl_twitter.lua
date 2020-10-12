@@ -19,12 +19,6 @@ function sendTwitterMessage(method, data)
     )
 end
 
-RegisterNetEvent('phone:fetchTweets')
-AddEventHandler('phone:fetchTweets', function()
-    ESX.TriggerServerCallback('phone:fetchTweets', function(tweets)
-        sendTwitterMessage('fetchTweets',  tweets)
-    end)
-end)
 
 RegisterNetEvent('phone:fetchTweetsFiltered')
 AddEventHandler('phone:fetchTweetsFiltered', function(searchValue)
@@ -34,9 +28,6 @@ AddEventHandler('phone:fetchTweetsFiltered', function(searchValue)
 end)
 
 
-RegisterNUICallback('phone:fetchTweets', function()
-  TriggerEvent('phone:fetchTweets')
-end)
 
   
 RegisterNUICallback('phone:fetchTweetsFiltered', function(searchValue)
