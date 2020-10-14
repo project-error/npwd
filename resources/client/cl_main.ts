@@ -1,5 +1,6 @@
 import { ESXClient } from "fivem-esx-js/client/esx_client";
-import { config } from "process";
+import config from '../utils/config';
+
 let ESX: ESXClient = null;
 
 setTick(() => {
@@ -21,17 +22,6 @@ RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
     )
 }, false) 
 
-
-//RegisterKeyMapping('phone', _U('keymap_phone'), 'keyboard', '') -- Lets people set a keybind for the phone command but can't be implemented yet.
-
-//[[RegisterCommand('phone:get', function(source, args, rawCommand)
-//    TriggerServerEvent('phone:server:getCredentials')
-//end, false)]]
-
-//
-//Start of Phone
-//
-
 let prop = 0
 let isPhoneOpen = false
 let propCreated = false
@@ -39,7 +29,7 @@ let phoneModel = "prop_amb_phone" // Refered to in newphoneProp function. Requir
 
 const newPhoneProp = () =>  { //Function for creating the phone prop
     deletePhone() //deletes the already existing prop before creating another.
-    if (propCreated == false) {
+    if (!propCreated) {
         RequestModel(phoneModel)
         while (!HasModelLoaded(phoneModel)) {
           Wait(1)
@@ -55,7 +45,7 @@ const newPhoneProp = () =>  { //Function for creating the phone prop
         propCreated = true
         console.log("prop created")
     }
-    else if (propCreated == true) {
+    else if (propCreated) {
       console.log("prop already created")
     }
 }
@@ -131,47 +121,41 @@ function phoneCloseAnim() { //Phone Close Animation
     }
 }
 
-//function carryingPhone(cb)
-//	cb(true)
-//end
-
 async function carryingPhone(cb: any) {
-  if (ESX == null) return cb(0);
-  const qtty = await ESX.TriggerServerCallback('phone:getItemAmount', 'phone');
-  cb(qtty > 0);
+  if (ESX === null) return cb(0);
+  ESX.TriggerServerCallback('phone:getItemAmount', (qtty: number) => {
+    cb(qtty > 0);
+  }, 'phone');
 }
 
 function noPhone() {
-	if (ESX == null) return;
-    //exports['mythic_notify']('error', 'Oi Mate, No El Telephono')
+	if (ESX === null) return;
     ESX.ShowNotification('Oi Mate, No El Telephono')
 }
 
 function sendPhoneConfig() {
-  ESX.TriggerServerCallback('phone:phoneConfig', function(config: any) {
-    SendNuiMessage(
-      JSON.stringify({
-        app: "PHONE",
-        method: "phoneConfig",
-        data: config
-      })
-    )
-  });
+  SendNuiMessage(
+    JSON.stringify({
+      app: "PHONE",
+      method: "phoneConfig",
+      data: config
+    })
+  )
 }
 
 setTick(() => {
-  if (IsControlJustPressed(1, 288)) {
+  if (IsControlJustPressed(1, config.KeyTogglePhone)) {
     Phone();
   }
 })
 
-let PhoneAsItem = false;
+let PhoneAsItem = config.PhoneAsItem;
 
 function Phone() {
-  if (PhoneAsItem == true) {
+  if (PhoneAsItem) {
     carryingPhone((carryingPhone: any) => {
-      if (carryingPhone == true) {
-        if (isPhoneOpen == false) {
+      if (carryingPhone) {
+        if (!isPhoneOpen) {
           isPhoneOpen = true 
           phoneOpenAnim()
           console.log("phone is now open") //Left for testing purposes. 
@@ -207,79 +191,56 @@ function Phone() {
       }
     })
   }
-  else if (PhoneAsItem == false) {   
-    //print("ConfigOff")  
-    if (isPhoneOpen == false) { 
-    isPhoneOpen = true 
-    phoneOpenAnim()
-    console.log("phone is now open") //Left for testing purposes. 
-    TriggerServerEvent('phone:getCredentials', source) 
-    SetCursorLocation(0.936, 0.922) //Experimental
-    let res = GetActiveScreenResolution()
-    //print(res)
-    SendNuiMessage(
-      JSON.stringify({
-        app: "PHONE",
-        method: "setVisibility",
-        data: true
-      })
-    )
-    sendPhoneConfig()
-    SetNuiFocus(true, true)
+  else if (!PhoneAsItem) {   
+    if (!isPhoneOpen) { 
+      isPhoneOpen = true 
+      phoneOpenAnim()
+      console.log("phone is now open") //Left for testing purposes. 
+      TriggerServerEvent('phone:getCredentials', source) 
+      SetCursorLocation(0.936, 0.922) //Experimental
+      let res = GetActiveScreenResolution()
+      SendNuiMessage(
+        JSON.stringify({
+          app: "PHONE",
+          method: "setVisibility",
+          data: true
+        })
+      )
+      sendPhoneConfig()
+      SetNuiFocus(true, true)
     }
     else {
-    isPhoneOpen = false
-    console.log("phone is now closed") //Left for testing purposes. 
-    SendNuiMessage( //Hides phone
-      JSON.stringify({
-        app: "PHONE",
-        method: "setVisibility",
-        data: false
-      })
-    )
-    SetNuiFocus(false, false)
-    phoneCloseAnim()
+      isPhoneOpen = false
+      console.log("phone is now closed") //Left for testing purposes. 
+      SendNuiMessage( //Hides phone
+        JSON.stringify({
+          app: "PHONE",
+          method: "setVisibility",
+          data: false
+        })
+      )
+      SetNuiFocus(false, false)
+      phoneCloseAnim()
+    }
   }
 }
 
 
 
 
-RegisterCommand('phone', function(source) { //-- Toggles Phone
+RegisterCommand('phone', () => { //-- Toggles Phone
   Phone()
 }, false)
-
-
-// Need to add the contacts file before even doing this
-//RegisterNetEvent('phone:send')
-//AddEventHandler('phone:send', function()
-//    TriggerEvent('phone:sendContacts')
-//end)
-
 
 
 RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, () => {
   Phone();
-}) // //Called for when the phone is closed via the UI.
+}) // Called for when the phone is closed via the UI.
 
 
-
-// Will take care of this later on the other branch
-//RegisterNetEvent('phone:sendCredentials')
-//AddEventHandler('phone:sendCredentials', function(number)
-//    print(number)
-//    SendNUIMessage(
-//        {
-//            app = "SIMCARD",
-//            method = "setNumber",
-//            data = number
-//        }
-//    )
-//end)
-
-AddEventHandler('onResourceStop', function(resource) {
-  if (resource == GetCurrentResourceName()) {
+AddEventHandler('onResourceStop', function(resource: string) {
+  if (resource === GetCurrentResourceName()) {
     SendNuiMessage(
       JSON.stringify({
         app: 'PHONE',
@@ -296,54 +257,32 @@ AddEventHandler('onResourceStop', function(resource) {
 //
 //Phone Destory When Wet
 //
-
-async function countPhone(cb: any) {
-  if (ESX == null) return cb(0)
-  const qtty = await ESX.TriggerServerCallback('phone:getItemAmount', 'phone');
-  cb(qtty > 0);
+function countPhone(cb: any) {
+  if (ESX === null) return cb(0)
+  ESX.TriggerServerCallback('phone:getItemAmount', (qtty: number) => {
+    cb(qtty > 0);
+  }, 'phone');
 }
 
 let destroyedPhone = false
 
-let SwimDestroy = false;
 
 setTick(() => {
-  while (SwimDestroy) {
-  Wait(10 * 1000);
+  while (config.SwimDestroy) {
+    Wait(config.RunRate * 1000);
     if (IsPedSwimming(PlayerPedId())) {
       let chance = Math.floor((Math.random() * 100) + 1);
-      if (chance <= 100) {
+      if (chance <= config.DestoryChance) {
         countPhone((countPhone: boolean) => {
-          if (countPhone == true) {
+          if (countPhone) {
             ESX.ShowNotification('Your phone is ruined from the water!')
             destroyedPhone = true
           }
         })
       }
-      if (destroyedPhone == true) {
-        Wait(3 * 60000)
+      if (destroyedPhone) {
+        Wait(config.DestroyPhoneReCheck * 60000)
       }
     } 
   }
 })
-
-//Citizen.CreateThread(function()
-//    while Config.SwimDestroy do -- Checks if phone should destroy while swimming.
-//    Citizen.Wait(Config.RunRate * 1000) -- Checks how often the player is swimming x * 1 second.
-//        if IsPedSwimming(GetPlayerPed(-1)) then
-//           local chance = GetRandomIntInRange(0, 100)
-//            if chance <= Config.DestoryChance then -- Chance of destroying the phone.
-//                countPhone(function (countPhone)
-//                    if countPhone == true then
-//                        --print("Phone destroyed")
-//                        ESX.ShowNotification('Your phone is ruined from the water!')
-//                        destroyedPhone = true
-//                    end
-//                end)
-//            end
-//            if destroyedPhone == true then -- If the phone was destroyed earlier then we will wait to check again.
-//                Wait(Config.DestroyPhoneReCheck * 60000) -- Waits x * 1 minute before checking again because it's pointless to re check.
-//            end
-//        end
-//    end
-//end)

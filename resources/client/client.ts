@@ -1,5 +1,7 @@
 import { ESXClient } from "fivem-esx-js/client/esx_client";
+import './cl_main';
 import './cl_twitter';
+
 
 let ESX: ESXClient = null;
 
