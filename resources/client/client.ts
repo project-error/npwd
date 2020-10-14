@@ -3,7 +3,7 @@ import './cl_main';
 import './cl_twitter';
 
 
-let ESX: ESXClient = null;
+export let ESX: ESXClient = null;
 
 setTick(() => {
   while (ESX === null) {

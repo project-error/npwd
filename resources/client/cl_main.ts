@@ -1,15 +1,6 @@
-import { ESXClient } from "fivem-esx-js/client/esx_client";
+import { ESX } from "../client/client";
 import config from '../utils/config';
 import { Delay } from '../utils/fivem';
-
-let ESX: ESXClient = null;
-
-setTick(() => {
-  while (ESX === null) {
-    emit('esx:getSharedObject', (obj: ESXClient) => ESX = obj);
-  };
-});
-
 
 
 RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
