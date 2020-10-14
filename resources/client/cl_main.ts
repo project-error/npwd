@@ -1,5 +1,6 @@
 import { ESXClient } from "fivem-esx-js/client/esx_client";
 import config from '../utils/config';
+import { Delay } from '../utils/fivem';
 
 let ESX: ESXClient = null;
 
@@ -8,6 +9,7 @@ setTick(() => {
     emit('esx:getSharedObject', (obj: ESXClient) => ESX = obj);
   };
 });
+
 
 
 RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
@@ -27,12 +29,12 @@ let isPhoneOpen = false
 let propCreated = false
 let phoneModel = "prop_amb_phone" // Refered to in newphoneProp function. Requires custom phone being streamed.
 
-const newPhoneProp = () =>  { //Function for creating the phone prop
+const newPhoneProp = async () =>  { //Function for creating the phone prop
     deletePhone() //deletes the already existing prop before creating another.
     if (!propCreated) {
         RequestModel(phoneModel)
         while (!HasModelLoaded(phoneModel)) {
-          Wait(1)
+          await Delay(1)
           console.log("MODEL HASNT LOADED")
         }
         
@@ -60,14 +62,14 @@ function deletePhone() { //-- Triggered in newphoneProp function. Only way to de
   }
 }
 
-function loadAnimDict(dict: any) { //-- Loads the animation dict. Used in the anim functions.
+async function loadAnimDict(dict: any) { //-- Loads the animation dict. Used in the anim functions.
 	while (!HasAnimDictLoaded(dict)) {
 		RequestAnimDict(dict)
-		Wait(0)
+		await Delay(0)
   }
 }
 
-function phoneOpenAnim() { //Phone Open Animation
+async function phoneOpenAnim() { //Phone Open Animation
     const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
     deletePhone() //Deleting  before creating a new phone where itll be deleted again.
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //-- true refers to at get in.
@@ -75,24 +77,24 @@ function phoneOpenAnim() { //Phone Open Animation
         const kek = "pepein"
 
         ClearPedTasks(GetPlayerPed(-1))
-        loadAnimDict(dict)
+        await loadAnimDict(dict)
         TaskPlayAnim(GetPlayerPed(-1), dict, 'cellphone_text_in', 8.0, -1, -1, flag, 0, false, false, false) 
-        Wait(300) //Gives time for animation starts before creating the phone
-        //newPhoneProp() //Creates the phone and attaches it.
+        await Delay(300) //Gives time for animation starts before creating the phone
+        await newPhoneProp() //Creates the phone and attaches it.
     }
     else { //While not in a vehicle it will use this dict.
         const dict = 'cellphone@'
         const kek = "pepeout"
 
         ClearPedTasks(GetPlayerPed(-1))
-        loadAnimDict(dict)
+        await loadAnimDict(dict)
         TaskPlayAnim(GetPlayerPed(-1), dict, 'cellphone_text_in', 8.0, -1, -1, flag, 0, false, false, false) 
-        Wait(300) //Gives time for animation starts before creating the phone
-        newPhoneProp() //Creates the phone and attaches it.
+        await Delay(300) //Gives time for animation starts before creating the phone
+        await newPhoneProp() //Creates the phone and attaches it.
     }
 }
 
-function phoneCloseAnim() { //Phone Close Animation
+async function phoneCloseAnim() { //Phone Close Animation
     const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
     const anim = 'cellphone_text_out'
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //true refers to at get in.
@@ -101,10 +103,10 @@ function phoneCloseAnim() { //Phone Close Animation
 
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
         deletePhone() //Deletes the prop early incase they get out of the vehicle.
-        Wait(250) //lets it get to a certain point
+        await Delay(250) //lets it get to a certain point
         loadAnimDict(dict) //loads the new animation
         TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 1, false, false, false) //puts phone into pocket
-        Wait(200) //waits until the phone is in the pocket
+        await Delay(200) //waits until the phone is in the pocket
         StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
     }
     else { //While not in a vehicle it will use this dict.
@@ -112,10 +114,10 @@ function phoneCloseAnim() { //Phone Close Animation
         const kek = "pepeout"
 
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
-        Wait(100) //lets it get to a certain point
+        await Delay(100) //lets it get to a certain point
         loadAnimDict(dict) //loads the new animation
         TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 1, false, false, false) //puts phone into pocket
-        Wait(200) //waits until the phone is in the pocket
+        await Delay(200) //waits until the phone is in the pocket
         StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
         deletePhone() //Deletes the prop.
     }
@@ -149,15 +151,14 @@ setTick(() => {
   }
 })
 
-let PhoneAsItem = config.PhoneAsItem;
 
-function Phone() {
-  if (PhoneAsItem) {
-    carryingPhone((carryingPhone: any) => {
+async function Phone() {
+  if (config.PhoneAsItem) {
+    carryingPhone(async (carryingPhone: any) => {
       if (carryingPhone) {
         if (!isPhoneOpen) {
           isPhoneOpen = true 
-          phoneOpenAnim()
+          await phoneOpenAnim()
           console.log("phone is now open") //Left for testing purposes. 
           TriggerServerEvent('phone:getCredentials', source) 
           SetCursorLocation(0.936, 0.922) //Experimental
@@ -191,10 +192,10 @@ function Phone() {
       }
     })
   }
-  else if (!PhoneAsItem) {   
+  else if (!config.PhoneAsItem) {   
     if (!isPhoneOpen) { 
       isPhoneOpen = true 
-      phoneOpenAnim()
+      await phoneOpenAnim()
       console.log("phone is now open") //Left for testing purposes. 
       TriggerServerEvent('phone:getCredentials', source) 
       SetCursorLocation(0.936, 0.922) //Experimental
@@ -220,7 +221,7 @@ function Phone() {
         })
       )
       SetNuiFocus(false, false)
-      phoneCloseAnim()
+      await phoneCloseAnim()
     }
   }
 }
@@ -267,9 +268,9 @@ function countPhone(cb: any) {
 let destroyedPhone = false
 
 
-setTick(() => {
+setTick(async () => {
   while (config.SwimDestroy) {
-    Wait(config.RunRate * 1000);
+    await Delay(config.RunRate * 1000);
     if (IsPedSwimming(PlayerPedId())) {
       let chance = Math.floor((Math.random() * 100) + 1);
       if (chance <= config.DestoryChance) {
@@ -281,7 +282,7 @@ setTick(() => {
         })
       }
       if (destroyedPhone) {
-        Wait(config.DestroyPhoneReCheck * 60000)
+        await Delay(config.DestroyPhoneReCheck * 60000)
       }
     } 
   }
