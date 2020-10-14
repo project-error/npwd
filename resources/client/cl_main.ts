@@ -10,7 +10,7 @@ RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
       JSON.stringify({
         app: "PHONE",
         method: "setVisibility",
-        data: true 
+        data: false
       })
     )
 }, false) 
@@ -56,7 +56,7 @@ function deletePhone() { //-- Triggered in newphoneProp function. Only way to de
 async function loadAnimDict(dict: any) { //-- Loads the animation dict. Used in the anim functions.
 	while (!HasAnimDictLoaded(dict)) {
 		RequestAnimDict(dict)
-		await Delay(0)
+		await Delay(100)
   }
 }
 
@@ -151,7 +151,7 @@ async function Phone() {
           isPhoneOpen = true 
           await phoneOpenAnim()
           console.log("phone is now open") //Left for testing purposes. 
-          TriggerServerEvent('phone:getCredentials', source) 
+          emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.936, 0.922) //Experimental
           let res = GetActiveScreenResolution()
           SendNuiMessage(
@@ -278,3 +278,13 @@ setTick(async () => {
     } 
   }
 })
+
+onNet('phone:sendCredentials', (number: string) => {
+  SendNuiMessage(
+    JSON.stringify({
+      app: "SIMCARD",
+      method: "setNumber",
+      data: number
+    })
+  )
+});

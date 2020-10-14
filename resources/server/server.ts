@@ -2,6 +2,7 @@ import { ESXServer } from "fivem-esx-js/server/esx_server";
 
 import './db';
 import './sv_twitter';
+import './sv_main';
 
 export let ESX: ESXServer = null;
 
