@@ -43,7 +43,7 @@ export const useTwitterService = () => {
   );
 
   const _setProfile = (profile) => {
-    setProfile(profile[0]); // server returns an array of 1 profile
+    setProfile(profile);
   };
   const _setUpdateProfileSuccess = (isSuccessful) => {
     setUpdateProfileSuccess(isSuccessful);
