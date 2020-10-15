@@ -1,6 +1,7 @@
 import { ESX } from "../client/client";
 import config from '../utils/config';
 import { Delay } from '../utils/fivem';
+import events from '../utils/events';
 
 
 RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
@@ -151,6 +152,7 @@ async function Phone() {
           isPhoneOpen = true 
           await phoneOpenAnim()
           console.log("phone is now open") //Left for testing purposes. 
+          emitNet(events.CONTACTS_GET_CONTACTS);
           emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.936, 0.922) //Experimental
           let res = GetActiveScreenResolution()
@@ -187,8 +189,9 @@ async function Phone() {
     if (!isPhoneOpen) { 
       isPhoneOpen = true 
       await phoneOpenAnim()
-      console.log("phone is now open") //Left for testing purposes. 
-      TriggerServerEvent('phone:getCredentials', source) 
+      console.log("phone is now open") //Left for testing purposes.
+      emitNet(events.CONTACTS_GET_CONTACTS);
+      emitNet('phone:getCredentials') 
       SetCursorLocation(0.936, 0.922) //Experimental
       let res = GetActiveScreenResolution()
       SendNuiMessage(
