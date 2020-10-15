@@ -13,7 +13,7 @@ RegisterCommand('phone:close', (source: any, args: string[], raw: any) => {
         data: false
       })
     )
-}, false) 
+}, false);
 
 let prop = 0
 let isPhoneOpen = false
@@ -216,8 +216,6 @@ async function Phone() {
     }
   }
 }
-
-
 
 
 RegisterCommand('phone', () => { //-- Toggles Phone
