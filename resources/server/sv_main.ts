@@ -32,35 +32,3 @@ onNet('phone:getCredentials', async () => {
     console.log('Failed to get number. ', error);
   };
 });
-
-
-//
-//ESX.RegisterServerCallback('phone:getItemAmount', function(source, cb, item)
-//    local xPlayer = ESX.GetPlayerFromId(source)
-//    local items = xPlayer.getInventoryItem(item)
-//
-//    if items == nil then
-//        cb(0)
-//    else
-//        cb(items.count)
-//    end
-//end)
-//
-//----
-//--Destroy Phone
-//--
-//
-//ESX.RegisterServerCallback('phone:removephone', function(source, cb, item)
-//    local xPlayer = ESX.GetPlayerFromId(source)
-//    local items = xPlayer.getInventoryItem(item)
-//
-//    if items == nil then
-//        cb(0)
-//    else
-//        cb(items.count)
-//        if items.count > 0 then
-//            xPlayer.removeInventoryItem('phone', items.count)
-//            xPlayer.addInventoryItem('dphone', items.count)
-//        end
-//    end
-//end)
