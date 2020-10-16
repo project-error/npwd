@@ -147,7 +147,6 @@ export const AddTweetModal = () => {
   const toggleShowEmoji = () => {
     // clear the images so we can seemlessly toggle between emoji/images
     setShowImagePrompt(false);
-    setImages([]);
     setShowEmoji(!showEmoji);
   };
 

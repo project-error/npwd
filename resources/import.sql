@@ -50,8 +50,9 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   `profile_id` int NOT NULL,
   `tweet_id` int NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_combination` (`profile_id`,`tweet_id`),
   KEY `profile_idx` (`profile_id`),
   KEY `tweet_idx` (`tweet_id`),
   CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
   CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

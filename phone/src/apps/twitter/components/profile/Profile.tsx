@@ -32,7 +32,7 @@ export function Profile() {
   // Annoyingling adding conditionals above this line to not render
   // when profile === null results in a react error that different
   // amounts of hooks are rendering
-  const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url);
+  const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url || "");
   const [name, handleNameChange] = useState(profile.profile_name || "");
   const [bio, handleBioChange] = useState(profile.bio || "");
   const [location, handleLocationChange] = useState(profile.location || "");

@@ -5,6 +5,6 @@ import { useContacts } from "./useContacts";
 
 export const useContactsService = () => {
   const setContacts = useSetRecoilState(contactsState.contacts);
-  useNuiEvent("BANK", "setContacts", setContacts);
+  useNuiEvent("CONTACTS", "setContacts", setContacts);
   return useContacts();
 };
