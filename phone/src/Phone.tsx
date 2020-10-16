@@ -44,19 +44,19 @@ setTimeout(() => {
             id: 1,
             number: "345-4366",
             display: "Gjelten",
-            img: 'https://i.imgur.com/Qpw6j8D.png'
+            avatar: 'https://i.imgur.com/Qpw6j8D.png'
           },
           {
             id: 2,
             number: "456-4366",
             display: "Loyd",
-            img: ''
+            avatar: ''
           },
           {
             id: 3,
             number: "123-4366",
             display: "Fabian",
-            img: 'https://i.imgur.com/B8ta5Aa.jpeg'
+            avatar: 'https://i.imgur.com/B8ta5Aa.jpeg'
           },
         ],
       },
