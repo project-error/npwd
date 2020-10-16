@@ -103,7 +103,7 @@ export const AddContactModal = () => {
             fullWidth
             placeholder="Number"
             variant="standard"
-            type="number"
+            type="text"
           />
         </ListItem>
         <ListItem>

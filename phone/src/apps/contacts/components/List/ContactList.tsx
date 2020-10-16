@@ -37,8 +37,8 @@ export const ContactList = () => {
       {contacts.contacts.filter(contact => contact.display.includes(filteredContacts) || contact.number.includes(filteredContacts)).map((contact) => (
         <ListItem key={contact.id} divider>
           <ListItemAvatar>
-            {contact.img ? (
-              <MuiAvatar src={contact.img} />
+            {contact.avatar ? (
+              <MuiAvatar src={contact.avatar} />
             ): (
               <MuiAvatar>{contact.display.slice(0, 1)}</MuiAvatar>
             )}
