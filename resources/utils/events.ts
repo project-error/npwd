@@ -24,5 +24,6 @@ export default {
   CONTACTS_SEND_CONTACTS: 'phone:sendContacts',
   CONTACTS_GET_CONTACTS: 'phone:getContacts',
   CONTACTS_ADD_CONTACT_NUI: 'contacts:add',
-  CONTACTS_ADD_CONTACT: 'phone:addContacts'
+  CONTACTS_ADD_CONTACT: 'contacts:add',
+  CONTACTS_UPDATE_CONTACTS: 'phone:updateContacts'
 }

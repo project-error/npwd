@@ -10,11 +10,16 @@ onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {
       data: contacts
     })
   )
-})
+});
 
-RegisterNuiCallbackType(events.CONTACTS_ADD_CONTACT_NUI);
-on(`__cfx_nui:${events.CONTACTS_ADD_CONTACT_NUI}`, (data: any) => {
+RegisterNuiCallbackType(events.CONTACTS_ADD_CONTACT);
+on(`__cfx_nui:${events.CONTACTS_ADD_CONTACT}`, (data: any) => {
   const display = data.name;
   const number = data.number;
-  emitNet(events.CONTACTS_ADD_CONTACT, display, number);
+  const avatar = data.avatar;
+  emitNet(events.CONTACTS_ADD_CONTACT, number, display, avatar);
+  
+  setTimeout(() => {
+    emitNet(events.CONTACTS_GET_CONTACTS)
+  }, 1000)
 });

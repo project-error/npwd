@@ -2,7 +2,6 @@ import { ESX } from './server';
 import { pool } from './db';
 import events from '../utils/events';
 
-
 interface Contacts {
   display: string;
   number: string;
@@ -15,36 +14,35 @@ async function fetchAllContacts(identifier: string) : Promise<Contacts[]> {
   return contacts;
 }
 
-onNet(events.CONTACTS_GET_CONTACTS, async (callback: any) => {
+async function addContact(identifier: string, number: string, display: string, avatar: string):Promise<any> {
+  const query = "INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)"
+
+  await pool.query(query, [identifier, number, display, avatar]);
+}
+
+onNet(events.CONTACTS_GET_CONTACTS, async () => {
   try {
     const _source = (global as any).source;
     const xPlayer = ESX.GetPlayerFromId(_source);
     const _identifier = xPlayer.getIdentifier();
 
     const contacts = await fetchAllContacts(_identifier);
-    console.log("Contacts: ")
-    contacts.forEach(element => {
-      console.log(element.display, element.number);
-    });
     emitNet(events.CONTACTS_SEND_CONTACTS, _source, contacts)
 
   } catch(error) {
     console.log("Failed to fetch contacts: ", error);
   }
-
 })
 
-//RegisterServerEvent('phone:addContacts')
-//AddEventHandler('phone:addContacts', function(display, number)
-//    local _source = source
-//    local xPlayer = ESX.GetPlayerFromId(_source)
-//    local _identifier = xPlayer.getIdentifier()
-//    print(display, number)
-//    MySQL.Async.execute('INSERT INTO npwd_phone_contacts (`identifier`, `number`, `display`) VALUES (@identifier, @number, @display)', 
-//    {  
-//        identifier = _identifier,
-//        number = number,
-//        display = display
-//    }, function()
-//    end)
-//end)
+onNet(events.CONTACTS_ADD_CONTACT, (number: string, display: string, avatar: string) => {
+  try {
+    const _source = (global as any).source;
+    const xPlayer = ESX.GetPlayerFromId(_source);
+    const _identifier = xPlayer.getIdentifier()
+    addContact(_identifier, number, display, avatar);
+    emit(events.CONTACTS_GET_CONTACTS);
+
+  } catch(error) {
+    console.log("Failed to add contact: ", error);
+  }
+});
