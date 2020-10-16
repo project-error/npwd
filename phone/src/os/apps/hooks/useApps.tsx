@@ -5,21 +5,17 @@ import {
   common,
   grey,
   green,
-  orange,
   purple,
   red,
   amber,
 } from "@material-ui/core/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAd } from "@fortawesome/free-solid-svg-icons";
+import { faAd, faPlaneArrival, faPhoneAlt, faLandmark } from "@fortawesome/free-solid-svg-icons";
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
-import PhoneIcon from "@material-ui/icons/Phone";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import MessageIcon from "@material-ui/icons/Message";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
 import { Route } from "react-router-dom";
@@ -40,18 +36,18 @@ const appsState = atom({
       {
         id: "DIALER",
         nameLocale: "APPS_DIALER",
-        icon: <PhoneIcon />,
-        backgroundColor: green[400],
-        color: green[50],
+        icon: <FontAwesomeIcon icon={faPhoneAlt} size="xs" />,
+        backgroundColor: green[600],
+        color: common.white,
         path: "/phone",
         Route: () => <Route path="/phone" component={DialerApp} />,
       },
       {
         id: "MESSAGES",
         nameLocale: "APPS_MESSAGES",
-        icon: <MessageIcon />,
-        backgroundColor: amber[400],
-        color: amber[50],
+        icon: <MessageIcon fontSize="default" />,
+        backgroundColor: amber[700],
+        color: common.white,
         path: "/messages",
         Route: () => <Route path="/messages" component={MessagesApp} />,
       },
@@ -60,7 +56,7 @@ const appsState = atom({
         nameLocale: "APPS_CONTACTS",
         icon: <ContactsIcon />,
         backgroundColor: blue[500],
-        color: blue[50],
+        color: common.white,
         path: "/contacts",
         Route: () => <Route path="/contacts" component={ContactsApp} />,
       },
@@ -85,16 +81,16 @@ const appsState = atom({
       {
         id: "BANK",
         nameLocale: "APPS_BANK",
-        icon: <AccountBalanceIcon />,
-        backgroundColor: orange[600],
-        color: orange[50],
+        icon: <FontAwesomeIcon icon={faLandmark} size="xs" />,
+        backgroundColor: blue[900],
+        color: common.white,
         path: "/bank",
         Route: () => <Route path="/bank" component={BankApp} />,
       },
       {
         id: "TWITTER",
         nameLocale: "APPS_TWITTER",
-        icon: <TwitterIcon />,
+        icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size="xs"/>,
         backgroundColor: blue[600],
         color: common.white,
         path: "/twitter",
@@ -112,7 +108,7 @@ const appsState = atom({
       {
         id: "EXAMPLE",
         nameLocale: "APPS_EXAMPLE",
-        icon: <CalendarTodayIcon />,
+        icon: <FontAwesomeIcon icon={faPlaneArrival} size="sm" />,
         backgroundColor: blue[500],
         color: blue[50],
         path: "/example",
