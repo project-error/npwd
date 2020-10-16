@@ -8,11 +8,8 @@ import { useApp } from "../../../os/apps/hooks/useApps";
 import { AddContactModal } from "./ContactModal";
 import { useModal } from '../hooks/useModal';
 import { SearchContacts } from "./List/SearchContacts";
-import { ContactTitle } from "./ContactTitle";
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
 
-import './Contact.css';
-
-import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
 
@@ -56,7 +53,7 @@ export const ContactsApp = () => {
       <AppContent>
         <ContactList />
         <Fab onClick={openModal} style={{backgroundColor: '#2196f3', color: '#fff'}} className={classes.absolute}>
-          <AddIcon />
+          <PersonAddIcon />
         </Fab>
       </AppContent>
     </AppWrapper>
