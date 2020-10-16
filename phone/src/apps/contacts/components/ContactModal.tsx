@@ -6,8 +6,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Modal from '../../../ui/components/Modal';
 import { useModal } from '../hooks/useModal';
+import ClearIcon from '@material-ui/icons/Clear';
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import '../components/Contact.css'
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -22,12 +25,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: "-4em",
     height: "20%",
   },
+  clearButton: {
+    width: '10%',
+    position: 'absolute',
+    right: 0
+  },
   textInputField: {
     fontSize: 20,
     borderBottomColor: 'red'
   },
   addBtn: {
     margin: 'auto',
+    fontSize: 16,
     width: 150,
     background: "#2196f3",
     marginBottom: 10,
@@ -39,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: "#232323",
     marginBottom: 20,
     padding: 8
+  },
+  icons: {
+    marginRight: 5
   }
 }));
 
@@ -69,43 +81,45 @@ export const AddContactModal = () => {
 
   return (
     <Modal visible={showModal} handleClose={_handleClose}>
-      <List style={{ marginTop: 10 }}>
+      <Button onClick={_handleClose} className={classes.clearButton}><ClearIcon /></Button>
+      <List style={{ marginTop: 30 }}>
         <ListItem>
+          <PersonIcon className={classes.icons} />
           <TextField
             value={name}
             inputProps={{ className: classes.textInputField}}
             onChange={(e) => setName(e.target.value)}
-            style={{ fontSize: "18px" }}
             fullWidth
-            variant="outlined"
+            variant="standard"
             placeholder="Name"
           />
         </ListItem>
         <ListItem>
+          <PhoneIcon className={classes.icons} />
           <TextField
             value={number}
             inputProps={{ className: classes.textInputField}}
             onChange={(e) => setNumber(e.target.value)}
             fullWidth
             placeholder="Number"
-            variant="outlined"
+            variant="standard"
             type="number"
           />
         </ListItem>
         <ListItem>
+          <AccountCircleIcon className={classes.icons} />
           <TextField
             value={avatar}
             inputProps={{ className: classes.textInputField}}
             onChange={(e) => setAvatar(e.target.value)}
             fullWidth
-            placeholder="Picture link"
+            placeholder="Avatar URL"
             variant="standard"
             type="text"
           />
         </ListItem>
         </List>
         <Button className={classes.addBtn} onClick={addContact}>Add Contact</Button>
-        <Button className={classes.cancelBtn} onClick={_handleClose}>Cancel</Button>
     </Modal>
   );
 };
