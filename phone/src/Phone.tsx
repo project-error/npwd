@@ -43,12 +43,20 @@ setTimeout(() => {
           {
             id: 1,
             number: "345-4366",
-            display: "Kevin",
+            display: "Gjelten",
+            img: 'https://i.imgur.com/Qpw6j8D.png'
           },
           {
             id: 2,
-            number: "345-4366",
-            display: "Kevin",
+            number: "456-4366",
+            display: "Loyd",
+            img: ''
+          },
+          {
+            id: 3,
+            number: "123-4366",
+            display: "Fabian",
+            img: 'https://i.imgur.com/B8ta5Aa.jpeg'
           },
         ],
       },
