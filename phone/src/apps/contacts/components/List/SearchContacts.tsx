@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 18
     },
     inputInput: {
-      padding: theme.spacing(1, 2, 1, 2),
+      padding: theme.spacing(1, 4, 1, 4),
       // vertical padding + font size from searchIcon
       transition: theme.transitions.create('width'),
       width: '100%',
@@ -49,6 +49,15 @@ const useStyles = makeStyles((theme: Theme) =>
         width: 'auto',
       },
     },
+    searchIcon: {
+      padding: theme.spacing(0, 0.5),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   })
 );
 
@@ -68,6 +77,9 @@ export const SearchContacts = () => {
   return (
     <div className={classes.bg}>
       <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon style={{ color: '#fff' }} />
+        </div>
         <InputBase
           onChange={handleChange}
           placeholder="Search contacts..."
