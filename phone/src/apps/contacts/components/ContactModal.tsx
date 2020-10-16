@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Paper } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { Button, TextField } from "@material-ui/core";
 import Nui from "../../../os/nui-events/utils/Nui";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Modal from '../../../ui/components/Modal';
+import { useModal } from '../hooks/useModal';
 
-const useStyles = makeStyles((theme) => ({
+import '../components/Contact.css'
+
+const useStyles = makeStyles((theme: Theme) => ({
   button: {
     margin: 5,
     marginTop: 20,
@@ -18,23 +22,33 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "-4em",
     height: "20%",
   },
-
-  displayBlock: {
-    /*Sets modal to center*/
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  textInputField: {
+    fontSize: 20,
+    borderBottomColor: 'red'
   },
-  displayNone: {
-    display: "none",
+  addBtn: {
+    margin: 'auto',
+    width: 150,
+    background: "#2196f3",
+    marginBottom: 10,
+    padding: 8
   },
+  cancelBtn: {
+    margin: 'auto',
+    width: 150,
+    background: "#232323",
+    marginBottom: 20,
+    padding: 8
+  }
 }));
 
-export const AddContactModal = ({ handleClose, show }) => {
+export const AddContactModal = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const [avatar, setAvatar] = useState("");
   const classes = useStyles();
-  const showHideClassName = show ? classes.displayBlock : classes.displayNone;
+
+  const { showModal, setShowModal } = useModal();
 
   const addContact = () => {
     if (name === "" || number === "") {
@@ -43,37 +57,55 @@ export const AddContactModal = ({ handleClose, show }) => {
       Nui.send("contacts:add", {
         name,
         number,
+        avatar
       });
-      console.log(name, number);
+      console.log(name, number, avatar);
     }
   };
 
+  const _handleClose = () => {
+    setShowModal(false)
+  }
+
   return (
-    <div className={showHideClassName}>
-      <Paper className={classes.root}>
-        <List>
-          <ListItem>
-            <TextField
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={{ fontSize: "18px" }}
-              fullWidth
-              placeholder="Name"
-            />
-          </ListItem>
-          <ListItem>
-            <TextField
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-              fullWidth
-              placeholder="Number"
-              type="number"
-            />
-          </ListItem>
+    <Modal visible={showModal} handleClose={_handleClose}>
+      <List style={{ marginTop: 10 }}>
+        <ListItem>
+          <TextField
+            value={name}
+            inputProps={{ className: classes.textInputField}}
+            onChange={(e) => setName(e.target.value)}
+            style={{ fontSize: "18px" }}
+            fullWidth
+            variant="outlined"
+            placeholder="Name"
+          />
+        </ListItem>
+        <ListItem>
+          <TextField
+            value={number}
+            inputProps={{ className: classes.textInputField}}
+            onChange={(e) => setNumber(e.target.value)}
+            fullWidth
+            placeholder="Number"
+            variant="outlined"
+            type="number"
+          />
+        </ListItem>
+        <ListItem>
+          <TextField
+            value={avatar}
+            inputProps={{ className: classes.textInputField}}
+            onChange={(e) => setAvatar(e.target.value)}
+            fullWidth
+            placeholder="Picture link"
+            variant="standard"
+            type="text"
+          />
+        </ListItem>
         </List>
-        <Button onClick={addContact}>Add</Button>
-        <Button onClick={handleClose}>Close</Button>
-      </Paper>
-    </div>
+        <Button className={classes.addBtn} onClick={addContact}>Add Contact</Button>
+        <Button className={classes.cancelBtn} onClick={_handleClose}>Cancel</Button>
+    </Modal>
   );
 };
