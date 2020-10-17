@@ -90,36 +90,21 @@ async function loadAnimDict(dict: any) {
   }
 }
 
-async function phoneOpenAnim() {
-  //Phone Open Animation
-  const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
-  deletePhone(); //Deleting  before creating a new phone where itll be deleted again.
-  if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
-    //-- true refers to at get in.
-    const dict = "anim@cellphone@in_car@ps";
-    const kek = "pepein";
+async function phoneOpenAnim() { //Phone Open Animation
+    console.log("phoneOpenAnim") //Left for testing purposes.
+    const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
+    deletePhone() //Deleting  before creating a new phone where itll be deleted again.
+    if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //-- true refers to at get in.
+        const dict = 'anim@cellphone@in_car@ps'
 
-    ClearPedTasks(GetPlayerPed(-1));
-    await loadAnimDict(dict);
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      "cellphone_text_in",
-      8.0,
-      -1,
-      -1,
-      flag,
-      0,
-      false,
-      false,
-      false
-    );
-    await Delay(300); //Gives time for animation starts before creating the phone
-    await newPhoneProp(); //Creates the phone and attaches it.
-  } else {
-    //While not in a vehicle it will use this dict.
-    const dict = "cellphone@";
-    const kek = "pepeout";
+        ClearPedTasks(GetPlayerPed(-1))
+        await loadAnimDict(dict)
+        TaskPlayAnim(GetPlayerPed(-1), dict, 'cellphone_text_in', 8.0, -1, -1, flag, 0, false, false, false) 
+        await Delay(300) //Gives time for animation starts before creating the phone
+        await newPhoneProp() //Creates the phone and attaches it.
+    }
+    else { //While not in a vehicle it will use this dict.
+        const dict = 'cellphone@'
 
     ClearPedTasks(GetPlayerPed(-1));
     await loadAnimDict(dict);
@@ -141,59 +126,32 @@ async function phoneOpenAnim() {
   }
 }
 
-async function phoneCloseAnim() {
-  //Phone Close Animation
-  const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
-  const anim = "cellphone_text_out";
-  if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
-    //true refers to at get in.
-    const dict = "anim@cellphone@in_car@ps";
-    const kek = "pepein";
+async function phoneCloseAnim() { //Phone Close Animation
+    console.log("phoneCloseAnim") //Left for testing purposes.
+    const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
+    const anim = 'cellphone_text_out'
+    if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //true refers to at get in.
+        const dict = 'anim@cellphone@in_car@ps'
+        
+        StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
+        deletePhone() //Deletes the prop early incase they get out of the vehicle.
+        await Delay(250) //lets it get to a certain point
+        loadAnimDict(dict) //loads the new animation
+        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 0, false, false, false) //puts phone into pocket
+        await Delay(200) //waits until the phone is in the pocket
+        StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
+    }
+    else { //While not in a vehicle it will use this dict.
+        const dict = 'cellphone@'
 
-    StopAnimTask(GetPlayerPed(-1), dict, "cellphone_text_in", 1.0); //Stop the pull out animation
-    deletePhone(); //Deletes the prop early incase they get out of the vehicle.
-    await Delay(250); //lets it get to a certain point
-    loadAnimDict(dict); //loads the new animation
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      anim,
-      8.0,
-      -1,
-      -1,
-      flag,
-      1,
-      false,
-      false,
-      false
-    ); //puts phone into pocket
-    await Delay(200); //waits until the phone is in the pocket
-    StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0); //clears the animation
-  } else {
-    //While not in a vehicle it will use this dict.
-    const dict = "cellphone@";
-    const kek = "pepeout";
-
-    StopAnimTask(GetPlayerPed(-1), dict, "cellphone_text_in", 1.0); //Stop the pull out animation
-    await Delay(100); //lets it get to a certain point
-    loadAnimDict(dict); //loads the new animation
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      anim,
-      8.0,
-      -1,
-      -1,
-      flag,
-      1,
-      false,
-      false,
-      false
-    ); //puts phone into pocket
-    await Delay(200); //waits until the phone is in the pocket
-    StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0); //clears the animation
-    deletePhone(); //Deletes the prop.
-  }
+        StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
+        await Delay(100) //lets it get to a certain point
+        loadAnimDict(dict) //loads the new animation
+        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 0, false, false, false) //puts phone into pocket
+        await Delay(200) //waits until the phone is in the pocket
+        StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
+        deletePhone() //Deletes the prop.
+    }
 }
 
 async function carryingPhone(cb: any) {
@@ -230,12 +188,12 @@ setTick(() => {
 
 async function Phone() {
   if (config.PhoneAsItem) {
+    console.log("CONFIG ON") 
     carryingPhone(async (carryingPhone: any) => {
       if (carryingPhone) {
         if (!isPhoneOpen) {
-          isPhoneOpen = true;
-          await phoneOpenAnim();
-          console.log("phone is now open"); //Left for testing purposes.
+          isPhoneOpen = true 
+          await phoneOpenAnim()
           emitNet(events.CONTACTS_GET_CONTACTS);
           emitNet("phone:getCredentials"); // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.936, 0.922); //Experimental
@@ -246,32 +204,32 @@ async function Phone() {
               method: "setVisibility",
               data: true,
             })
-          );
-          sendPhoneConfig();
-          SetNuiFocus(true, true);
-        } else {
-          isPhoneOpen = false;
-          console.log("phone is now closed"); //Left for testing purposes.
-          SendNuiMessage(
-            //Hides phone
+          )
+          sendPhoneConfig()
+          SetNuiFocus(true, true)
+        }
+        else {
+          isPhoneOpen = false
+          await phoneCloseAnim()
+          SendNuiMessage( //Hides phone
             JSON.stringify({
               app: "PHONE",
               method: "setVisibility",
               data: false,
             })
-          );
-          SetNuiFocus(false, false);
-          phoneCloseAnim();
+          )
+          SetNuiFocus(false, false)
         }
       } else {
         noPhone();
       }
-    });
-  } else if (!config.PhoneAsItem) {
-    if (!isPhoneOpen) {
-      isPhoneOpen = true;
-      await phoneOpenAnim();
-      console.log("phone is now open"); //Left for testing purposes.
+    })
+  }
+  else if (!config.PhoneAsItem) {   
+    console.log("CONFIG OFF") 
+    if (!isPhoneOpen) { 
+      isPhoneOpen = true 
+      await phoneOpenAnim()
       emitNet(events.CONTACTS_GET_CONTACTS);
       emitNet("phone:getCredentials");
       SetCursorLocation(0.936, 0.922); //Experimental
@@ -282,22 +240,21 @@ async function Phone() {
           method: "setVisibility",
           data: true,
         })
-      );
-      sendPhoneConfig();
-      SetNuiFocus(true, true);
-    } else {
-      isPhoneOpen = false;
-      console.log("phone is now closed"); //Left for testing purposes.
-      SendNuiMessage(
-        //Hides phone
+      )
+      sendPhoneConfig()
+      SetNuiFocus(true, true)
+    }
+    else {
+      isPhoneOpen = false
+      await phoneCloseAnim()
+      SendNuiMessage( //Hides phone
         JSON.stringify({
           app: "PHONE",
           method: "setVisibility",
           data: false,
         })
-      );
-      SetNuiFocus(false, false);
-      await phoneCloseAnim();
+      )
+      SetNuiFocus(false, false)
     }
   }
 }

@@ -1,13 +1,13 @@
 import mysql from "mysql2/promise";
 import { ConnectionStringParser } from "connection-string-parser";
 import {
-    CONNECTION_STRING,
-    DEFAULT_PORT,
-    parseSemiColonFormat,
-    getServerHost,
-    getUserId,
-    getPassword,
-} from './db_utils';
+  CONNECTION_STRING,
+  DEFAULT_PORT,
+  parseSemiColonFormat,
+  getServerHost,
+  getUserId,
+  getPassword,
+} from "./db_utils";
 
 // we require set mysql_connection_string  to be set in the config
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, null);
