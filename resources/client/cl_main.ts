@@ -67,7 +67,6 @@ async function phoneOpenAnim() { //Phone Open Animation
     deletePhone() //Deleting  before creating a new phone where itll be deleted again.
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //-- true refers to at get in.
         const dict = 'anim@cellphone@in_car@ps'
-        const kek = "pepein"
 
         ClearPedTasks(GetPlayerPed(-1))
         await loadAnimDict(dict)
@@ -77,7 +76,6 @@ async function phoneOpenAnim() { //Phone Open Animation
     }
     else { //While not in a vehicle it will use this dict.
         const dict = 'cellphone@'
-        const kek = "pepeout"
 
         ClearPedTasks(GetPlayerPed(-1))
         await loadAnimDict(dict)
@@ -93,7 +91,6 @@ async function phoneCloseAnim() { //Phone Close Animation
     const anim = 'cellphone_text_out'
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //true refers to at get in.
         const dict = 'anim@cellphone@in_car@ps'
-        const kek = "pepein"
         
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
         deletePhone() //Deletes the prop early incase they get out of the vehicle.
@@ -105,7 +102,6 @@ async function phoneCloseAnim() { //Phone Close Animation
     }
     else { //While not in a vehicle it will use this dict.
         const dict = 'cellphone@'
-        const kek = "pepeout"
 
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
         await Delay(100) //lets it get to a certain point
