@@ -10,7 +10,7 @@
     "target": "es6",
     "allowJs": true,
     "lib": ["es2017"],
-    "types": ["@citizenfx/client", "@types/node"],
+    "types": ["@citizenfx/client", "@types/node", "jest"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true
