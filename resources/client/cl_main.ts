@@ -96,7 +96,7 @@ async function phoneCloseAnim() { //Phone Close Animation
         deletePhone() //Deletes the prop early incase they get out of the vehicle.
         await Delay(250) //lets it get to a certain point
         loadAnimDict(dict) //loads the new animation
-        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 1, false, false, false) //puts phone into pocket
+        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 0, false, false, false) //puts phone into pocket
         await Delay(200) //waits until the phone is in the pocket
         StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
     }
@@ -106,7 +106,7 @@ async function phoneCloseAnim() { //Phone Close Animation
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
         await Delay(100) //lets it get to a certain point
         loadAnimDict(dict) //loads the new animation
-        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 1, false, false, false) //puts phone into pocket
+        TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, -1, -1, flag, 0, false, false, false) //puts phone into pocket
         await Delay(200) //waits until the phone is in the pocket
         StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0) //clears the animation
         deletePhone() //Deletes the prop.
