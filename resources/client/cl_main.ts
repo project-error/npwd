@@ -62,6 +62,7 @@ async function loadAnimDict(dict: any) { //-- Loads the animation dict. Used in 
 }
 
 async function phoneOpenAnim() { //Phone Open Animation
+    console.log("phoneOpenAnim") //Left for testing purposes.
     const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
     deletePhone() //Deleting  before creating a new phone where itll be deleted again.
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //-- true refers to at get in.
@@ -87,12 +88,13 @@ async function phoneOpenAnim() { //Phone Open Animation
 }
 
 async function phoneCloseAnim() { //Phone Close Animation
+    console.log("phoneCloseAnim") //Left for testing purposes.
     const flag = 50 //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
     const anim = 'cellphone_text_out'
     if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) { //true refers to at get in.
         const dict = 'anim@cellphone@in_car@ps'
         const kek = "pepein"
-
+        
         StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0) //Stop the pull out animation
         deletePhone() //Deletes the prop early incase they get out of the vehicle.
         await Delay(250) //lets it get to a certain point
@@ -146,12 +148,12 @@ setTick(() => {
 
 async function Phone() {
   if (config.PhoneAsItem) {
+    console.log("CONFIG ON") 
     carryingPhone(async (carryingPhone: any) => {
       if (carryingPhone) {
         if (!isPhoneOpen) {
           isPhoneOpen = true 
           await phoneOpenAnim()
-          console.log("phone is now open") //Left for testing purposes. 
           emitNet(events.CONTACTS_GET_CONTACTS);
           emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.936, 0.922) //Experimental
@@ -168,7 +170,7 @@ async function Phone() {
         }
         else {
           isPhoneOpen = false
-          console.log("phone is now closed") //Left for testing purposes. 
+          await phoneCloseAnim()
           SendNuiMessage( //Hides phone
             JSON.stringify({
               app: "PHONE",
@@ -177,7 +179,6 @@ async function Phone() {
             })
           )
           SetNuiFocus(false, false)
-          phoneCloseAnim()
         }
       }
       else {
@@ -186,10 +187,10 @@ async function Phone() {
     })
   }
   else if (!config.PhoneAsItem) {   
+    console.log("CONFIG OFF") 
     if (!isPhoneOpen) { 
       isPhoneOpen = true 
       await phoneOpenAnim()
-      console.log("phone is now open") //Left for testing purposes.
       emitNet(events.CONTACTS_GET_CONTACTS);
       emitNet('phone:getCredentials') 
       SetCursorLocation(0.936, 0.922) //Experimental
@@ -206,7 +207,7 @@ async function Phone() {
     }
     else {
       isPhoneOpen = false
-      console.log("phone is now closed") //Left for testing purposes. 
+      await phoneCloseAnim()
       SendNuiMessage( //Hides phone
         JSON.stringify({
           app: "PHONE",
@@ -215,7 +216,6 @@ async function Phone() {
         })
       )
       SetNuiFocus(false, false)
-      await phoneCloseAnim()
     }
   }
 }
