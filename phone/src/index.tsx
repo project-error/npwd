@@ -7,7 +7,7 @@ import { RecoilRoot } from "recoil";
 import "./main.css";
 import Phone from "./Phone";
 import * as serviceWorker from "./serviceWorker";
-import TwitterNotification from './apps/twitter/components/notification/TwitterNotification';
+import TwitterNotification from "./apps/twitter/components/notification/TwitterNotification";
 
 ReactDOM.render(
   <HashRouter>

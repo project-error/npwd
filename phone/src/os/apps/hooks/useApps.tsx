@@ -10,8 +10,13 @@ import {
   amber,
 } from "@material-ui/core/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAd, faPlaneArrival, faPhoneAlt, faLandmark } from "@fortawesome/free-solid-svg-icons";
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
+import {
+  faAd,
+  faPlaneArrival,
+  faPhoneAlt,
+  faLandmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 import ContactsIcon from "@material-ui/icons/Contacts";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -90,7 +95,7 @@ const appsState = atom({
       {
         id: "TWITTER",
         nameLocale: "APPS_TWITTER",
-        icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size="xs"/>,
+        icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size="xs" />,
         backgroundColor: blue[600],
         color: common.white,
         path: "/twitter",

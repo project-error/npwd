@@ -6,11 +6,11 @@ export const contactsState = {
     default: [],
   }),
   showModal: atom({
-    key: 'showModal',
-    default: false
+    key: "showModal",
+    default: false,
   }),
   filterContacts: atom({
-    key: 'filterContacts',
-    default: ""
-  })
+    key: "filterContacts",
+    default: "",
+  }),
 };

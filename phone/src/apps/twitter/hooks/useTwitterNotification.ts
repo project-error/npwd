@@ -4,7 +4,7 @@ import { Tweet } from "../interfaces";
 import { twitterState } from "./state";
 
 interface ITwitterNotification {
-    notification: Tweet | null;
+  notification: Tweet | null;
 }
 
 export const useTwitterNotification = (): ITwitterNotification => {

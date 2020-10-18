@@ -10,8 +10,8 @@ interface TwitterConfig {
 }
 
 interface NotificationConfig {
-  horizontal: 'left' | 'center' | 'right';
-  vertical: 'bottom' | 'top';
+  horizontal: "left" | "center" | "right";
+  vertical: "bottom" | "top";
 }
 
 export interface ServerConfig {
