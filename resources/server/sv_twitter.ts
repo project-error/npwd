@@ -89,7 +89,7 @@ async function fetchTweetsFiltered(
 }
 
 /**
- * Creates a tweet in the database
+ * Creates a tweet in the database and then retrieves the tweet
  * @param identifier - player identifier
  * @param tweet - tweet to be created
  */
@@ -286,15 +286,15 @@ onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
 });
 
 onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
-  // try {
-  const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
-  const createdTweet = await createTweet(identifier, tweet);
+  try {
+    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const createdTweet = await createTweet(identifier, tweet);
 
-  emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
-  emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
-  // } catch (e) {
-  //   emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
-  // }
+    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
+    emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
+  } catch (e) {
+    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
+  }
 });
 
 onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
