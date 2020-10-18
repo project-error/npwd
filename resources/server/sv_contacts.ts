@@ -40,7 +40,7 @@ onNet(events.CONTACTS_ADD_CONTACT, (number: string, display: string, avatar: str
     const xPlayer = ESX.GetPlayerFromId(_source);
     const _identifier = xPlayer.getIdentifier()
     addContact(_identifier, number, display, avatar);
-    emit(events.CONTACTS_GET_CONTACTS);
+    //emit(events.CONTACTS_GET_CONTACTS);
 
   } catch(error) {
     console.log("Failed to add contact: ", error);
