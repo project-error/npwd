@@ -33,11 +33,6 @@ export const Navigation = () => {
       onChange={(_e, value) => value()}
     >
       <BottomNavigationAction
-        label="Phone"
-        value={() => history.push("/phone")}
-        icon={<PhoneIcon />}
-      />
-      <BottomNavigationAction
         label="Home"
         value={() => history.push("/")}
         icon={<AppsIcon />}
