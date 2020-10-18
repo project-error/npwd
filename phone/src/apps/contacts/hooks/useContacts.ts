@@ -5,7 +5,7 @@ interface Contact {
   id: string;
   display: string;
   number: string;
-  img?: string;
+  avatar?: string
 }
 
 interface IUseContacts {

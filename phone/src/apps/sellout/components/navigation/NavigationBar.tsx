@@ -5,7 +5,6 @@ import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import FaceIcon from "@material-ui/icons/Face";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,11 +35,6 @@ export const NavigationBar = () => {
       <BottomNavigationAction
         component={Link}
         icon={<AddCircleIcon />}
-        to="/sellout/new"
-      />
-      <BottomNavigationAction
-        component={Link}
-        icon={<FaceIcon />}
         to="/sellout/new"
       />
     </BottomNavigation>

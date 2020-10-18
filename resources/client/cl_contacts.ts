@@ -19,6 +19,7 @@ on(`__cfx_nui:${events.CONTACTS_ADD_CONTACT}`, (data: any) => {
   emitNet(events.CONTACTS_ADD_CONTACT, number, display, avatar);
 
   setTimeout(() => {
-    emitNet(events.CONTACTS_GET_CONTACTS);
-  }, 1000);
+    emitNet(events.CONTACTS_GET_CONTACTS)
+  }, 500)
 });
+

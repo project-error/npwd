@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Button, TextField } from "@material-ui/core";
+import Nui from "../../../../os/nui-events/utils/Nui";
+
+import "../Sellout.css"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +30,25 @@ const useStyles = makeStyles((theme) => ({
 
 export const ListingForm = () => {
   const classes = useStyles();
+
+  const [ title, setTitle ] = useState('');
+  const [ url, setUrl ] = useState('');
+  const [ desc, setDesc ] = useState('');
+
+  const addListing = () => {
+    Nui.send('phone:addListing', {
+      title,
+      url,
+      desc
+    })
+  }
+
   return (
     <div className={classes.root}>
       <h1>New Listing</h1>
       <TextField
         className={classes.input}
+        onChange={e => setTitle(e.target.value)}
         placeholder="Title on listing.."
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: "80%" }}
@@ -41,6 +58,7 @@ export const ListingForm = () => {
       <TextField
         className={classes.input}
         placeholder="Image URL"
+        onChange={e => setUrl(e.target.value)}
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: "80%" }}
         size="medium"
@@ -49,6 +67,7 @@ export const ListingForm = () => {
 
       <TextField
         className={classes.input}
+        onChange={e => setDesc(e.target.value)}
         placeholder="Description"
         inputProps={{ className: classes.multilineFieldInput }}
         style={{ width: "80%" }}
@@ -58,7 +77,7 @@ export const ListingForm = () => {
         variant="outlined"
       />
 
-      <Button className={classes.postButton}>Post</Button>
+      <Button onClick={addListing} className={classes.postButton}>Post</Button>
     </div>
   );
 };

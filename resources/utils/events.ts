@@ -22,9 +22,14 @@ export default {
   TWITTER_TOGGLE_LIKE_FAILURE: "toggleLikeFailed",
 
   // Contacts
-  CONTACTS_SEND_CONTACTS: "phone:sendContacts",
-  CONTACTS_GET_CONTACTS: "phone:getContacts",
-  CONTACTS_ADD_CONTACT_NUI: "contacts:add",
-  CONTACTS_ADD_CONTACT: "contacts:add",
-  CONTACTS_UPDATE_CONTACTS: "phone:updateContacts",
-};
+  CONTACTS_SEND_CONTACTS: 'phone:sendContacts',
+  CONTACTS_GET_CONTACTS: 'phone:getContacts',
+  CONTACTS_ADD_CONTACT_NUI: 'contacts:add',
+  CONTACTS_ADD_CONTACT: 'contacts:add',
+  CONTACTS_UPDATE_CONTACTS: 'phone:updateContacts',
+
+  // Sellout
+  SELLOUT_ADD_LISTING: 'phone:addListing',
+  SELLOUT_FETCH_LISTING: 'phone:fetchAllListing',
+  SELLOUT_SEND_LISTING: 'phone:sendAllListings'
+}

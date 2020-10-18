@@ -37,19 +37,17 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
   } catch (error) {
     console.log("Failed to fetch contacts: ", error);
   }
+})
+
+onNet(events.CONTACTS_ADD_CONTACT, (number: string, display: string, avatar: string) => {
+  try {
+    const _source = (global as any).source;
+    const xPlayer = ESX.GetPlayerFromId(_source);
+    const _identifier = xPlayer.getIdentifier()
+    addContact(_identifier, number, display, avatar);
+    //emit(events.CONTACTS_GET_CONTACTS);
+
+  } catch(error) {
+    console.log("Failed to add contact: ", error);
 });
 
-onNet(
-  events.CONTACTS_ADD_CONTACT,
-  (number: string, display: string, avatar: string) => {
-    try {
-      const _source = (global as any).source;
-      const xPlayer = ESX.GetPlayerFromId(_source);
-      const _identifier = xPlayer.getIdentifier();
-      addContact(_identifier, number, display, avatar);
-      emit(events.CONTACTS_GET_CONTACTS);
-    } catch (error) {
-      console.log("Failed to add contact: ", error);
-    }
-  }
-);

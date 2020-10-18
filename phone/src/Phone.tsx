@@ -37,26 +37,26 @@ setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
       data: {
-        app: "BANK",
+        app: "CONTACTS",
         method: "setContacts",
         data: [
           {
             id: 1,
             number: "345-4366",
-            display: "Gjelten",
-            avatar: "https://i.imgur.com/Qpw6j8D.png",
+            display: "chip",
+            avatar: 'https://i.imgur.com/Qpw6j8D.png'
           },
           {
             id: 2,
             number: "456-4366",
-            display: "Loyd",
-            avatar: "",
+            display: "shit",
+            avatar: ''
           },
           {
             id: 3,
             number: "123-4366",
-            display: "Fabian",
-            avatar: "https://i.imgur.com/B8ta5Aa.jpeg",
+            display: "rocky",
+            avatar: 'https://i.imgur.com/B8ta5Aa.jpeg'
           },
         ],
       },
@@ -85,24 +85,24 @@ setTimeout(() => {
         data: [
           {
             id: 1,
-            name: "Donald Trump",
+            name: "Some guy",
             number: "123-4567",
             description:
-              "This is me just selling the whole country, because like why not dude",
-            img: "some shady link?",
+              "Selling this cool car",
+            url: "",
           },
           {
             id: 2,
-            name: "Joe Biden",
+            name: "Some other dude",
             number: "666-6666",
-            description: "I think I might buy it Trump!",
-            img: "even shadier link?",
+            description: "Selling my wife",
+            url: "",
           },
         ],
       },
     })
   );
-});
+}, 1000);
 
 function Phone() {
   useNuiService();

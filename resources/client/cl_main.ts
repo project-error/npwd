@@ -235,9 +235,10 @@ async function Phone() {
           isPhoneOpen = true;
           await phoneOpenAnim();
           emitNet(events.CONTACTS_GET_CONTACTS);
-          emitNet("phone:getCredentials"); // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
-          SetCursorLocation(0.936, 0.922); //Experimental
-          let res = GetActiveScreenResolution();
+          emitNet(events.SELLOUT_FETCH_LISTING);
+          emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
+          SetCursorLocation(0.936, 0.922) //Experimental
+          let res = GetActiveScreenResolution()
           SendNuiMessage(
             JSON.stringify({
               app: "PHONE",
@@ -270,9 +271,10 @@ async function Phone() {
       isPhoneOpen = true;
       await phoneOpenAnim();
       emitNet(events.CONTACTS_GET_CONTACTS);
-      emitNet("phone:getCredentials");
-      SetCursorLocation(0.936, 0.922); //Experimental
-      let res = GetActiveScreenResolution();
+      emitNet(events.SELLOUT_FETCH_LISTING);
+      emitNet('phone:getCredentials') 
+      SetCursorLocation(0.936, 0.922) //Experimental
+      let res = GetActiveScreenResolution()
       SendNuiMessage(
         JSON.stringify({
           app: "PHONE",
