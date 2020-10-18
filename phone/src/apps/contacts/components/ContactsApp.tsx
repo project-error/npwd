@@ -6,14 +6,13 @@ import { AppContent } from "../../../ui/components/AppContent";
 import { ContactList } from "./List/ContactList";
 import { useApp } from "../../../os/apps/hooks/useApps";
 import { AddContactModal } from "./ContactModal";
-import { useModal } from '../hooks/useModal';
+import { useModal } from "../hooks/useModal";
 import { SearchContacts } from "./List/SearchContacts";
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import Fab from '@material-ui/core/Fab';
 import { useContactModal } from '../hooks/useContactModal';
 
-
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backgroundModal: {
       background: "black",
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 5,
     },
     absolute: {
-      position: 'sticky',
+      position: "sticky",
       bottom: theme.spacing(2),
       left: theme.spacing(3),
     },
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ContactsApp = () => {
-
   const classes = useStyles();
   const { showModal, setShowModal } = useModal();
   const contacts = useApp("CONTACTS");
@@ -44,16 +42,19 @@ export const ContactsApp = () => {
     setShowModal(true);
   };
 
-
   return (
     <AppWrapper id="contact-app">
       <AppTitle app={contacts}></AppTitle>
       <SearchContacts />
-      <AddContactModal/>
+      <AddContactModal />
       <div className={showModal ? classes.backgroundModal : undefined} />
       <AppContent>
         <ContactList />
-        <Fab onClick={openModal} style={{backgroundColor: '#2196f3', color: '#fff'}} className={classes.absolute}>
+        <Fab
+          onClick={openModal}
+          style={{ backgroundColor: "#2196f3", color: "#fff" }}
+          className={classes.absolute}
+        >
           <PersonAddIcon />
         </Fab>
       </AppContent>

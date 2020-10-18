@@ -1,4 +1,5 @@
 interface TwitterConfig {
+  showNotifications: boolean;
   generateProfileNameFromUsers: boolean;
   characterLimit: number;
   allowEdtiableProfileName: boolean;
@@ -6,6 +7,11 @@ interface TwitterConfig {
   enableEmojis: boolean;
   enableImages: boolean;
   maxImages: number;
+}
+
+interface NotificationConfig {
+  horizontal: "left" | "center" | "right";
+  vertical: "bottom" | "top";
 }
 
 export interface ServerConfig {
@@ -18,4 +24,5 @@ export interface ServerConfig {
   DestoryChance: number;
   DestroyPhoneReCheck: number;
   twitter: TwitterConfig;
+  notificationPosition: NotificationConfig;
 }

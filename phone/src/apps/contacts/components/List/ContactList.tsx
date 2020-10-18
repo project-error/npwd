@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 
-import { useFilteredContacts } from '../../hooks/useFilteredContacts';
+import { useFilteredContacts } from "../../hooks/useFilteredContacts";
 
 import PhoneIcon from "@material-ui/icons/Phone";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -42,9 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export const ContactList = () => {
-
   const classes = useStyles()
-
   const { filteredContacts } = useFilteredContacts();
   const { showContactModal, setShowContactModal } = useContactModal();
 

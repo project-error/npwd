@@ -8,6 +8,6 @@ import './sv_sellout';
 
 export let ESX: ESXServer = null;
 
-emit('esx:getSharedObject', (obj: ESXServer) => ESX = obj);
+emit("esx:getSharedObject", (obj: ESXServer) => (ESX = obj));
 
 export const getSource = () => parseInt(source);
