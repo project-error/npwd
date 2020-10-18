@@ -51,14 +51,16 @@ export const SelloutItem = (listing) => {
             <Typography className={classes.headerTypo} variant="h5">
               {listing.name}
             </Typography>
-            <Typography
+            {/*<Typography
               className={classes.headerTypo}
               style={{ borderBottom: "1px solid #f44336" }}
             >
               {listing.number}
-            </Typography>
+            </Typography>*/}
           </div>
-          <ImageDisplay imgURL={listing.img} />
+          {listing.url ? (
+            <ImageDisplay imgURL={listing.url} />
+          ): null }
           <Typography variant="h6" className={classes.desc}>
             {listing.description}
           </Typography>
