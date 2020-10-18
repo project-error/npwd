@@ -49,5 +49,6 @@ onNet(events.CONTACTS_ADD_CONTACT, (number: string, display: string, avatar: str
 
   } catch(error) {
     console.log("Failed to add contact: ", error);
+  }
 });
 
