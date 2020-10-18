@@ -12,6 +12,7 @@ export default {
 
   // twitter app
   twitter: {
+    showNotifications: true,
     generateProfileNameFromUsers: true,
     characterLimit: 240,
     allowEdtiableProfileName: true,

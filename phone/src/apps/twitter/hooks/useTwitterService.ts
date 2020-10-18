@@ -6,7 +6,6 @@ import { IMAGE_DELIMITER } from "../utils/images";
 import { APP_TWITTER } from "../utils/constants";
 import { twitterState } from "./state";
 
-const NOTIFICATION_TIMEOUT = 5000;
 
 /**
  * Perform all necessary processing/transforms from the raw database

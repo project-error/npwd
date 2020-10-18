@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { useTwitterNotification } from '../../hooks/useTwitterNotification';
 import Notification from '../../../../ui/components/Notification';
+import { usePhone } from "../../../../os/phone/hooks/usePhone";
 
 const useStyles = makeStyles({
   content: {
@@ -48,12 +49,13 @@ function TwitterNotification() {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const { notification } = useTwitterNotification();
+  const { config } = usePhone();
 
   useEffect(() => {
     setVisible(true);
   }, [notification?.id])
 
-  if (!notification) return null;
+  if (!config?.twitter.showNotifications || !notification) return null;
 
   return (
     <Notification key={notification.id} open={visible} handleClose={() => setVisible(false)}>

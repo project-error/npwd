@@ -1,4 +1,5 @@
 interface TwitterConfig {
+  showNotifications: boolean;
   generateProfileNameFromUsers: boolean;
   characterLimit: number;
   allowEdtiableProfileName: boolean;
