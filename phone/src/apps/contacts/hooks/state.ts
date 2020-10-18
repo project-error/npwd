@@ -12,5 +12,9 @@ export const contactsState = {
   filterContacts: atom({
     key: 'filterContacts',
     default: ""
+  }),
+  showContactsModal: atom({
+    key: 'showContactModal',
+    default: false
   })
 };
