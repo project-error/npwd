@@ -15,6 +15,7 @@ export default {
   TWITTER_CREATE_TWEET: "phone:createTweet",
   TWITTER_CREATE_TWEET_LOADING: "createTweetLoading",
   TWITTER_CREATE_TWEET_RESULT: "createTweetResult",
+  TWITTER_CREATE_TWEET_BROADCAST: "createTweetBroadcast",
   TWITTER_CREATE_TWEET_FAILURE: "createTweetResultFailed",
   TWITTER_TOGGLE_LIKE: "phone:toggleLike",
   TWITTER_TOGGLE_LIKE_SUCCESS: "toggleLikeSuccess",

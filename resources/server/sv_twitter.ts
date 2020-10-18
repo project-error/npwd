@@ -93,12 +93,32 @@ async function fetchTweetsFiltered(
  * @param identifier - player identifier
  * @param tweet - tweet to be created
  */
-async function createTweet(identifier: string, tweet: Tweet): Promise<any> {
+async function createTweet(identifier: string, tweet: Tweet): Promise<Tweet> {
   const query = `
     INSERT INTO npwd_twitter_tweets (identifier, message, images)
     VALUES (?, ?, ?)
     `;
-  await pool.query(query, [identifier, tweet.message, tweet.images]);
+  const [results] = await pool.query(query, [
+    identifier,
+    tweet.message,
+    tweet.images,
+  ]);
+  const insertData = <any>results;
+  const insertId = insertData.insertId;
+
+  const resultQuery = `
+      SELECT
+      npwd_twitter_profiles.profile_name,
+      npwd_twitter_profiles.avatar_url,
+      npwd_twitter_tweets.* 
+      FROM npwd_twitter_tweets
+      LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+      WHERE npwd_twitter_tweets.id = ?
+   `;
+  const [createResults] = await pool.query(resultQuery, [insertId]);
+  const tweets = <Tweet[]>createResults;
+
+  return tweets[0];
 }
 
 /**
@@ -266,13 +286,15 @@ onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
 });
 
 onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
-  try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
-    await createTweet(identifier, tweet);
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
-  } catch (e) {
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
-  }
+  // try {
+  const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+  const createdTweet = await createTweet(identifier, tweet);
+
+  emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
+  emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
+  // } catch (e) {
+  //   emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
+  // }
 });
 
 onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {

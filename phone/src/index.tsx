@@ -1,16 +1,18 @@
 import "@babel/polyfill";
-
 import React from "react";
 import ReactDOM from "react-dom";
+import { HashRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+
 import "./main.css";
 import Phone from "./Phone";
 import * as serviceWorker from "./serviceWorker";
-import { HashRouter } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+import TwitterNotification from './apps/twitter/components/notification/TwitterNotification';
 
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
+      <TwitterNotification />
       <Phone />
     </RecoilRoot>
   </HashRouter>,

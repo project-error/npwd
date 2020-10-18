@@ -6,6 +6,8 @@ import { IMAGE_DELIMITER } from "../utils/images";
 import { APP_TWITTER } from "../utils/constants";
 import { twitterState } from "./state";
 
+const NOTIFICATION_TIMEOUT = 5000;
+
 /**
  * Perform all necessary processing/transforms from the raw database
  * data to what the frontend expects
@@ -41,6 +43,7 @@ export const useTwitterService = () => {
   const setCreateSuccess = useSetRecoilState(
     twitterState.createTweetSuccessful
   );
+  const setNotification = useSetRecoilState(twitterState.notification);
 
   const _setProfile = (profile) => {
     setProfile(profile);
@@ -54,6 +57,10 @@ export const useTwitterService = () => {
     setCreateSuccess(isSuccessful);
     setCreateLoading(false);
   };
+
+  const _setNotification = (tweet) => {
+    setNotification(tweet);
+  }
 
   const _setTweets = (tweets) => {
     setTweets(tweets.map(processTweet));
@@ -69,4 +76,5 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, "fetchTweetsFiltered", _setFilteredTweets);
   useNuiEvent(APP_TWITTER, "createTweetLoading", setCreateLoading);
   useNuiEvent(APP_TWITTER, "createTweetResult", _setCreateSuccess);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', _setNotification)
 };
