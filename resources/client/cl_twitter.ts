@@ -84,6 +84,10 @@ onNet(events.TWITTER_CREATE_TWEET_FAILURE, () => {
   sendTwitterMessage(events.TWITTER_CREATE_TWEET_FAILURE);
 });
 
+onNet(events.TWITTER_CREATE_TWEET_BROADCAST, (tweet: any) => {
+  sendTwitterMessage(events.TWITTER_CREATE_TWEET_BROADCAST, tweet);
+});
+
 /**
  * Twitter likes
  */

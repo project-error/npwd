@@ -41,6 +41,7 @@ export const useTwitterService = () => {
   const setCreateSuccess = useSetRecoilState(
     twitterState.createTweetSuccessful
   );
+  const setNotification = useSetRecoilState(twitterState.notification);
 
   const _setProfile = (profile) => {
     setProfile(profile);
@@ -53,6 +54,10 @@ export const useTwitterService = () => {
   const _setCreateSuccess = (isSuccessful) => {
     setCreateSuccess(isSuccessful);
     setCreateLoading(false);
+  };
+
+  const _setNotification = (tweet) => {
+    setNotification(tweet);
   };
 
   const _setTweets = (tweets) => {
@@ -69,4 +74,5 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, "fetchTweetsFiltered", _setFilteredTweets);
   useNuiEvent(APP_TWITTER, "createTweetLoading", setCreateLoading);
   useNuiEvent(APP_TWITTER, "createTweetResult", _setCreateSuccess);
+  useNuiEvent(APP_TWITTER, "createTweetBroadcast", _setNotification);
 };

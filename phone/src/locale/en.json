@@ -20,6 +20,7 @@
     "APPS_TWITTER_SUBMIT_IMAGE": "Add Media",
     "APPS_TWITTER_CLOSE_IMAGE": "Close",
     "APPS_TWITTER_CLOSE": "Close",
+    "APPS_TWITTER_JUST_NOW": "Just now",
     "APPS_TWITTER_SEARCH_TWEETS": "Search for tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Message is over the character limit",
