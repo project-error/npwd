@@ -9,6 +9,11 @@ interface TwitterConfig {
   maxImages: number;
 }
 
+interface NotificationConfig {
+  horizontal: 'left' | 'center' | 'right';
+  vertical: 'bottom' | 'top';
+}
+
 export interface ServerConfig {
   Locale: string;
   KeyTogglePhone: number;
@@ -19,4 +24,5 @@ export interface ServerConfig {
   DestoryChance: number;
   DestroyPhoneReCheck: number;
   twitter: TwitterConfig;
+  notificationPosition: NotificationConfig;
 }

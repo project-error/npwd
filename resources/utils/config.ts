@@ -10,6 +10,12 @@ export default {
   DestoryChance: 100,
   DestroyPhoneReCheck: 3,
 
+  // notification settings
+  notificationPosition: {
+    horizontal: 'right',  // left, center, right
+    vertical: 'bottom', // bottom, top
+  },
+
   // twitter app
   twitter: {
     showNotifications: true,
