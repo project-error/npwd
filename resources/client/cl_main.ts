@@ -233,11 +233,11 @@ async function Phone() {
       if (carryingPhone) {
         if (!isPhoneOpen) {
           isPhoneOpen = true;
-          await phoneOpenAnim();
+          await phoneOpenAnim(); // Animation starts before the phone is open
           emitNet(events.CONTACTS_GET_CONTACTS);
           emitNet(events.SELLOUT_FETCH_LISTING);
           emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
-          SetCursorLocation(0.936, 0.922) //Experimental
+          SetCursorLocation(0.90, 0.922) //Experimental
           let res = GetActiveScreenResolution()
           SendNuiMessage(
             JSON.stringify({
@@ -250,7 +250,6 @@ async function Phone() {
           SetNuiFocus(true, true);
         } else {
           isPhoneOpen = false;
-          await phoneCloseAnim();
           SendNuiMessage(
             //Hides phone
             JSON.stringify({
@@ -260,6 +259,7 @@ async function Phone() {
             })
           );
           SetNuiFocus(false, false);
+          await phoneCloseAnim(); // Animation starts after the UI is closed.
         }
       } else {
         noPhone();
@@ -269,7 +269,7 @@ async function Phone() {
     console.log("CONFIG OFF");
     if (!isPhoneOpen) {
       isPhoneOpen = true;
-      await phoneOpenAnim();
+      await phoneOpenAnim(); // Animation starts before the phone is open
       emitNet(events.CONTACTS_GET_CONTACTS);
       emitNet(events.SELLOUT_FETCH_LISTING);
       emitNet('phone:getCredentials') 
@@ -286,7 +286,6 @@ async function Phone() {
       SetNuiFocus(true, true);
     } else {
       isPhoneOpen = false;
-      await phoneCloseAnim();
       SendNuiMessage(
         //Hides phone
         JSON.stringify({
@@ -296,6 +295,7 @@ async function Phone() {
         })
       );
       SetNuiFocus(false, false);
+      await phoneCloseAnim(); // Animation starts after the UI is closed.
     }
   }
 }
