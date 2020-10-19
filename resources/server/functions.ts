@@ -1,9 +1,12 @@
 import  { pool } from './db';
-import { ESX, getSource } from './server';
 
-export const usePhoneNumber = async (identifier: string) => {
+interface IPhoneNumber {
+  phone_number: string;
+}
+
+export async function usePhoneNumber(identifier: string): Promise<string> {
   const query = "SELECT phone_number FROM users WHERE identifier = ?"
-  const result = await pool.query(query, [identifier]);
-
-  return result
+  const [results] = await pool.query(query, [identifier]);
+  const phoneNumber = <IPhoneNumber[]>results;
+  return phoneNumber[0].phone_number;
 }

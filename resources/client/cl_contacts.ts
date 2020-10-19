@@ -1,4 +1,3 @@
-import { ESX } from "../client/client";
 import events from "../utils/events";
 
 onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {

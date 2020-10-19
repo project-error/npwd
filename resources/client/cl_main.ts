@@ -234,9 +234,10 @@ async function Phone() {
         if (!isPhoneOpen) {
           isPhoneOpen = true;
           await phoneOpenAnim(); // Animation starts before the phone is open
+          emitNet('phone:getCredentials') 
           emitNet(events.CONTACTS_GET_CONTACTS);
-          emitNet(events.SELLOUT_FETCH_LISTING);
-          emitNet('phone:getCredentials') // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
+          emitNet(events.SELLOUT_FETCH_LISTING); 
+          console.log("Sellout fetched from client side")// Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.90, 0.922) //Experimental
           let res = GetActiveScreenResolution()
           SendNuiMessage(
@@ -270,9 +271,10 @@ async function Phone() {
     if (!isPhoneOpen) {
       isPhoneOpen = true;
       await phoneOpenAnim(); // Animation starts before the phone is open
+      emitNet('phone:getCredentials') 
       emitNet(events.CONTACTS_GET_CONTACTS);
       emitNet(events.SELLOUT_FETCH_LISTING);
-      emitNet('phone:getCredentials') 
+      console.log("Sellout fetched from client side")
       SetCursorLocation(0.936, 0.922) //Experimental
       let res = GetActiveScreenResolution()
       SendNuiMessage(

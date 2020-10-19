@@ -87,14 +87,16 @@ setTimeout(() => {
             id: 1,
             name: "Some guy",
             number: "123-4567",
+            title: "Car",
             description:
               "Selling this cool car",
-            url: "",
+            url: "https://i.imgur.com/ROmGTwi.jpeg",
           },
           {
             id: 2,
             name: "Some other dude",
             number: "666-6666",
+            title: "Material",
             description: "Selling my wife",
             url: "",
           },

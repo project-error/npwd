@@ -1,51 +1,59 @@
+
 import events from '../utils/events';
 import { ESX, getSource } from './server';
 import { pool } from './db';
+import { usePhoneNumber } from './functions';
 
 
-interface IListing {
+interface Listing {
   title: string;
   name: string;
-  url: string;
+  url?: string;
   description: string;
 }
 
-async function addListing(identifier: string, name: string, title: string, url: string, description: string): Promise<any> {
-  const query = "INSERT INTO npwd_sellout_listings (identifier, name, title, url, description) VALUES (?, ?, ?, ?, ?)"
-  console.log("hallllllollooooo");
-  await pool.query(query, [identifier, name, title, url, description])
-} 
 
-async function fetchAllListings(): Promise<IListing[]> {
+async function fetchAllListings(): Promise<Listing[]> {
   const query = "SELECT * FROM npwd_sellout_listings ORDER BY id DESC";
 
   const [ results ] = await pool.query(query);
-  const listings = <IListing[]>results;
+  const listings = <Listing[]>results;
 
   return listings;
 }
 
-onNet(events.SELLOUT_ADD_LISTING, (data: any) => {
+async function addListing(identifier: string, name: string, number: any, listing: Listing): Promise<any> {
+  const query = "INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)"
+  await pool.query(query, [
+    identifier, 
+    name,
+    number,
+    listing.title, 
+    listing.url, 
+    listing.description,
+  ])
+} 
+
+onNet(events.SELLOUT_FETCH_LISTING, async () => {
+  try {
+    const _source = (global as any).source;
+    const listings = await fetchAllListings();
+    emitNet(events.SELLOUT_SEND_LISTING, _source, listings)
+
+  } catch(error) {
+    console.log(error)
+  }
+})
+
+onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
   try {
     const xPlayer = ESX.GetPlayerFromId(getSource())
     const _identifier = xPlayer.getIdentifier()
     const name = xPlayer.getName()
-    console.log("ADDED")
   
-    addListing(_identifier, name, data.title, data.url, data.desc) 
+    const phoneNumber = await usePhoneNumber(_identifier)
+    addListing(_identifier, name, phoneNumber, listing)
   } catch (error) {
-   console.log(error) 
-  }
-})
-
-onNet(events.SELLOUT_FETCH_LISTING, async () => {
-  try {
-    console.log("Fetching all listings")
-    const listings = await fetchAllListings();
-    console.log("ADDED")
-    emitNet(events.SELLOUT_SEND_LISTING, getSource(), listings)
-
-  } catch(error) {
-    console.log(error)
+   console.log("Failed to add contact: ", error) 
   }
 })
