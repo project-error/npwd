@@ -36,8 +36,6 @@ async function addListing(identifier: string, name: string, number: any, listing
 
 onNet(events.SELLOUT_FETCH_LISTING, async () => {
   try {
-    console.log("Fetching all listings")
-
     const _source = (global as any).source;
     const listings = await fetchAllListings();
     emitNet(events.SELLOUT_SEND_LISTING, _source, listings)
@@ -54,8 +52,6 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
     const name = xPlayer.getName()
   
     const phoneNumber = await usePhoneNumber(_identifier)
-    console.log(phoneNumber)
-    const number = "3333333"
     addListing(_identifier, name, phoneNumber, listing)
   } catch (error) {
    console.log("Failed to add contact: ", error) 
