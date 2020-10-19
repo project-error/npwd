@@ -1,7 +1,12 @@
 import  { pool } from './db';
 
-export const usePhoneNumber = async (identifier: string) => {
+interface IPhoneNumber {
+  phone_number: string;
+}
+
+export async function usePhoneNumber(identifier: string): Promise<string> {
   const query = "SELECT phone_number FROM users WHERE identifier = ?"
-  const phoneNumber = await pool.query(query, [identifier]);
-  return phoneNumber;
+  const [results] = await pool.query(query, [identifier]);
+  const phoneNumber = <IPhoneNumber[]>results;
+  return phoneNumber[0].phone_number;
 }
