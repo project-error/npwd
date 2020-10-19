@@ -30,6 +30,6 @@ export default {
 
   // Sellout
   SELLOUT_ADD_LISTING: 'phone:addListing',
-  SELLOUT_FETCH_LISTING: 'phone:fetchAllListing',
+  SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings'
 }
