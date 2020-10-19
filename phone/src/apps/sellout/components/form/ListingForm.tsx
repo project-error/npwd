@@ -33,13 +33,13 @@ export const ListingForm = () => {
 
   const [ title, setTitle ] = useState('');
   const [ url, setUrl ] = useState('');
-  const [ desc, setDesc ] = useState('');
+  const [ description, setDescription ] = useState('');
 
   const addListing = () => {
     Nui.send('phone:addListing', {
       title,
       url,
-      desc
+      description
     })
   }
 
@@ -67,7 +67,7 @@ export const ListingForm = () => {
 
       <TextField
         className={classes.input}
-        onChange={e => setDesc(e.target.value)}
+        onChange={e => setDescription(e.target.value)}
         placeholder="Description"
         inputProps={{ className: classes.multilineFieldInput }}
         style={{ width: "80%" }}
