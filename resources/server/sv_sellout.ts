@@ -8,7 +8,7 @@ import { usePhoneNumber } from './functions';
 interface Listing {
   title: string;
   name: string;
-  url: string;
+  url?: string;
   description: string;
 }
 
@@ -47,14 +47,16 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
   }
 })
 
-onNet(events.SELLOUT_ADD_LISTING, (listing: Listing) => {
+onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
   try {
     const xPlayer = ESX.GetPlayerFromId(getSource())
     const _identifier = xPlayer.getIdentifier()
     const name = xPlayer.getName()
   
-    const number = "3333333" //usePhoneNumber(_identifier)
-    addListing(_identifier, name, number, listing)
+    const phoneNumber = await usePhoneNumber(_identifier)
+    console.log(phoneNumber)
+    const number = "3333333"
+    addListing(_identifier, name, phoneNumber, listing)
   } catch (error) {
    console.log("Failed to add contact: ", error) 
   }
