@@ -44,13 +44,19 @@ setTimeout(() => {
           {
             id: 1, 
             amount: 200,
-            type: 'transfer'
-          }
+            type: 'transfer',
+            message: "HEHEHEHEHEHEfdklgjfdkdklgfkgjkgfdjg"
+          },{
+            id: 1, 
+            amount: 200,
+            type: 'transfer',
+            message: "HEHEHEHEHEHEfdklgjfdkdklgfkgjkgfdjg"
+          },
         ]
       }
     })
   )
-})
+}, 1000)
 
 setTimeout(() => {
   window.dispatchEvent(
