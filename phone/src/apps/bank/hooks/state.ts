@@ -8,5 +8,9 @@ export const bankState = {
   bankModal: atom({
     key: 'modalVisibility',
     default: false,
+  }),
+  bankAlert: atom({
+    key: 'bankAlert',
+    default: false
   })
 } 
