@@ -1,14 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { AppTitle } from "../../../ui/components/AppTitle";
+import { BankTitle } from './BankTitle';
 import { AppWrapper } from "../../../ui/components";
 import { AppContent } from "../../../ui/components/AppContent";
 import { Button } from "../../../ui/components/Button";
 import { useTranslation } from "react-i18next";
-import { useBank } from "../hooks/useBank";
-import { TransactionList } from "./transactionList";
+import { useTransactions } from "../hooks/useTransactions";
+import { TransactionList } from './transactions/TransactionList';
 import "./BankApp.css";
 import { useApp } from "../../../os/apps/hooks/useApps";
+import { TransferModal } from './transfers/TransferModal';
+
+import { useBankModal } from '../hooks/useBankModal';
+import { useModal } from "../../twitter/hooks/useModal";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,23 +28,41 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: 50,
   },
+  backgroundModal: {
+    background: "black",
+    opacity: "0.6",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5,
+  },
 }));
 
 export const BankApp = () => {
-  const { transactionList } = useBank();
+
+  const { showBankModal, setShowBankModal } = useBankModal()
+
+  const { transactionList } = useTransactions();
   const { t } = useTranslation();
   const classes = useStyles();
-  const bank = useApp("BANK");
+
+
+  const openTransactionsModal = () => {
+    setShowBankModal(true)
+  }
+
   return (
     <AppWrapper>
-      <AppTitle app={bank} className={classes.root} />
+      <BankTitle />
+      <TransferModal />
+      <div className={showBankModal ? classes.backgroundModal : undefined} />
       <AppContent>
         <div>
-          <Button fullWidth>{t("APPS_BANK_DEPOSIT")}</Button>
-          <Button fullWidth>{t("APPS_BANK_WITHDRAW")}</Button>
-          <Button fullWidth>{t("APPS_BANK_TRANSFER")}</Button>
+          <Button onClick={openTransactionsModal} fullWidth>{t("APPS_BANK_TRANSFER")}</Button>
         </div>
-        <TransactionList transactions={transactionList} />
+        <TransactionList transactions={transactionList}/>
       </AppContent>
     </AppWrapper>
   );

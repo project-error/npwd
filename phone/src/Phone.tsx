@@ -19,6 +19,7 @@ import { useApps } from "./os/apps/hooks/useApps";
 import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
+import { useBankService } from './apps/bank/hooks/useBankService';
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -32,6 +33,24 @@ setTimeout(() => {
     })
   );
 }, 1000);
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: 'BANK',
+        method: 'setTransaction',
+        data: [
+          {
+            id: 1, 
+            amount: 200,
+            type: 'transfer'
+          }
+        ]
+      }
+    })
+  )
+})
 
 setTimeout(() => {
   window.dispatchEvent(
@@ -116,6 +135,7 @@ function Phone() {
   useTwitterService();
   useInitKeyboard();
   useSelloutService();
+  useBankService();
 
   if (visibility === false) {
     return null;
