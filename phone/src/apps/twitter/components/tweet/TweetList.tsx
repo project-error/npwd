@@ -23,7 +23,6 @@ export function TweetList({ tweets }) {
 
 
   if (!hasLoaded) return <TweetSkeletonList />;
-  console.log(tweets.length);
   return (
     <List>
       {tweets.map((tweet) => (
