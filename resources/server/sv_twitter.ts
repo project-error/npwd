@@ -21,6 +21,7 @@ interface ProfileName {
 
 interface Tweet {
   id: number;
+  profile_id?: number;
   profile_name?: string;
   avatar_url?: string;
   message: string;
@@ -37,6 +38,7 @@ interface Tweet {
 async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
   const query = `
         SELECT
+        npwd_twitter_profiles.id AS profile_id,
         npwd_twitter_profiles.profile_name,
         npwd_twitter_profiles.avatar_url,
         npwd_twitter_tweets.*,
@@ -51,7 +53,7 @@ async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
     `;
   const [results] = await pool.query(query, [profileId]);
   const tweets = <Tweet[]>results;
-  return tweets;
+  return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
 }
 
 /**
@@ -67,6 +69,7 @@ async function fetchTweetsFiltered(
   const parameterizedSearchValue = `%${searchValue}%`;
   const query = `
     SELECT
+      npwd_twitter_profiles.id AS profile_id,
         npwd_twitter_profiles.profile_name,
         npwd_twitter_profiles.avatar_url,
         npwd_twitter_tweets.*,
@@ -85,7 +88,7 @@ async function fetchTweetsFiltered(
     parameterizedSearchValue,
   ]);
   const tweets = <Tweet[]>results;
-  return tweets;
+  return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
 }
 
 /**
@@ -153,7 +156,7 @@ async function generateProfileName(identifier: string): Promise<string> {
   const profileNames = <ProfileName[]>results;
 
   if (profileNames.length === 0) return defaultProfileName;
-  return profileNames[0].profile_name;
+  return profileNames[0].profile_name || defaultProfileName;
 }
 
 /**
@@ -222,6 +225,21 @@ async function deleteLike(profileId: number, tweetId: number): Promise<void> {
     WHERE profile_id = ? AND tweet_id = ?
     `;
   await pool.execute(query, [profileId, tweetId]);
+}
+
+/**
+ * Delete a tweet from the database
+ * @param identifier - identifier of the source user
+ * @param tweetId - primary key of the tweet to remove the like from
+ */
+async function deleteTweet(identifier: string, tweetId: number): Promise<void> {
+  if (!config.twitter.allowDeleteTweets) return;
+
+  const query = `
+    DELETE FROM npwd_twitter_tweets
+    WHERE identifier = ? AND id = ?
+  `;
+  const [ result ] = await pool.execute(query, [identifier, tweetId]);
 }
 
 /**
@@ -294,6 +312,17 @@ onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
     emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
+  }
+});
+
+onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
+  try {
+    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    await deleteTweet(identifier, tweetId);
+
+    emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, getSource());
+  } catch (e) {
+    emitNet(events.TWITTER_DELETE_TWEET_FAILURE, getSource());
   }
 });
 

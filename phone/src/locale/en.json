@@ -20,6 +20,8 @@
     "APPS_TWITTER_SUBMIT_IMAGE": "Add Media",
     "APPS_TWITTER_CLOSE_IMAGE": "Close",
     "APPS_TWITTER_CLOSE": "Close",
+    "APPS_TWITTER_DELETE": "Delete",
+    "APPS_TWITTER_REPORT": "Report",
     "APPS_TWITTER_JUST_NOW": "Just now",
     "APPS_TWITTER_SEARCH_TWEETS": "Search for tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",

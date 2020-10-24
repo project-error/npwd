@@ -3,6 +3,7 @@ interface TwitterConfig {
   generateProfileNameFromUsers: boolean;
   characterLimit: number;
   allowEdtiableProfileName: boolean;
+  allowDeleteTweets: boolean;
   enableAvatars: boolean;
   enableEmojis: boolean;
   enableImages: boolean;
