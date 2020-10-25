@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 
 import { List } from "../../../../ui/components/List";
 import Tweet from "./Tweet";
@@ -21,6 +21,7 @@ export function TweetList({ tweets }) {
   // another flash to the tweets screen.
   const hasLoaded = tweets && minimumLoadPassed;
 
+
   if (!hasLoaded) return <TweetSkeletonList />;
   return (
     <List>
@@ -31,4 +32,4 @@ export function TweetList({ tweets }) {
   );
 }
 
-export default TweetList;
+export default memo(TweetList); // only re-render if our tweets change
