@@ -1,0 +1,43 @@
+import React, { useState } from 'react'
+
+import { Link } from "react-router-dom";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+  },
+  icon: {
+    color: "#f44336",
+  },
+}))
+
+export const NavigationBar = () => {
+  const classes = useStyles();
+  const [activePage, setActivePage] = useState(0)
+  return (
+    <BottomNavigation
+      value={activePage}
+      onChange={(event, newPage) => {
+        setActivePage(newPage);
+      }}
+      showLabels
+      className={classes.root}
+    >
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faHome} />}
+        to="/bank"
+      />
+      <BottomNavigationAction
+        component={Link}
+        icon={<AddCircleIcon />}
+        to="/bank/account"
+      />
+    </BottomNavigation>
+  )
+}
