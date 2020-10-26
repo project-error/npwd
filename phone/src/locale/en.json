@@ -34,6 +34,11 @@
     "APPS_TWITTER_TIME_JUST_NOW": "Just now",
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
-    "APPS_TWITTER_TIME_DAYS": "d"
+    "APPS_TWITTER_TIME_DAYS": "d",
+
+    "APPS_BANK_HOME_TITLE": "Welcome, ",
+    "APPS_BANK_ACCOUNT_TITLE": "Account Summary",
+    "APPS_BANK_ACCOUNT_TRANSACTIONS": "Transactions",
+    "APPS_BANK_ACCOUNT_SEE_TRANSACTION": "See all"
   }
 }
