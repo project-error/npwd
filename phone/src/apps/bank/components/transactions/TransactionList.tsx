@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 350,
   },
   list: {
-    marginTop: "13em"
+    marginTop: "8.5em"
   }
 }))
 
@@ -69,7 +69,7 @@ export const TransactionList = ({ transactions }) => {
   return (
     <>
     <Paper className={classes.list}>
-      <TableContainer>
+      <TableContainer style={{ minHeight: 280, maxHeight: 280 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
