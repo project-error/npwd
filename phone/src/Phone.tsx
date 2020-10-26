@@ -34,6 +34,23 @@ setTimeout(() => {
   );
 }, 1000);
 
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "BANK",
+        method: "setCredentials",
+        data: 
+          {
+            name: "Unknown Forever",
+            balance: 2000
+          }
+      },
+    })
+  );
+}, 1000);
+
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
@@ -44,14 +61,20 @@ setTimeout(() => {
           {
             id: 1, 
             amount: 200,
-            type: 'transfer',
-            message: "HEHEHEHEHEHEfdklgjfdkdklgfkgjkgfdjg"
+            type: 'Deposit',
+            source: "chip"
           },{
             id: 1, 
             amount: 200,
-            type: 'transfer',
-            message: "HEHEHEHEHEHEfdklgjfdkdklgfkgjkgfdjg"
+            type: 'Withdraw',
+            source: "chip"
           },
+          {
+            id: 1, 
+            amount: 200,
+            type: 'Withdraw',
+            source: "chip"
+          }
         ]
       }
     })
