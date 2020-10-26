@@ -1,6 +1,7 @@
 import events from '../utils/events';
 import { ESX, getSource } from './server';
 import { pool } from './db';
+import { resourceLimits } from 'worker_threads';
 
 interface Transfer {
   targetID: string;
@@ -8,17 +9,33 @@ interface Transfer {
   message: string;
 }
 
+interface Credentials {
+  name: string;
+  balance: number;
+}
+
+
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   const query = "SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC"
   const [ results ] = await pool.query(query, [identifier])
   const transactions = <Transfer[]>results;
 
   return transactions;
-
 }
 
+function fetchCredentials(): Credentials {
+  const name = ESX.GetPlayerFromId(getSource()).getName();
+  const balance = ESX.GetPlayerFromId(getSource()).getAccount('bank').money
 
+  const result = {
+    name,
+    balance
+  }
 
+  console.log(result.name, result.balance);
+
+  return result;
+}
 
 
 async function addTransfer(identifier: string, transfer: Transfer): Promise<any> {
@@ -63,5 +80,15 @@ onNet(events.BANK_ADD_TRANSFER, (transfer: Transfer) => {
     addTransfer(_identifier, transfer)
   } catch (error) {
     console.log('Failed to add transfer', error)
+  }
+})
+
+onNet(events.BANK_GET_CREDENTIALS, () => {
+  try {
+    const credentials = fetchCredentials()
+    console.log("New log: ", credentials.balance, credentials.name)
+    emitNet(events.BANK_SEND_CREDENTIALS, getSource(), credentials)
+  } catch (error) {
+    console.log(error)
   }
 })
