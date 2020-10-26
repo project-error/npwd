@@ -11,8 +11,6 @@ export const BankNotification = ({ alert }) => {
   }
 
   return (
-    <Notification handleClose={onClose}>
-      <Alert onClose={handleClose}></Alert>
-    </Notification>
+    <div></div>
   )
 }
