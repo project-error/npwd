@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
   title: {
-    color: "#fff",
     padding: 7,
     borderRadius: "10px",
     display: "flex",
@@ -26,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
   seeAll: {
     fontFamily: "Bahnschrift Regular",
     fontWeight: "bold",
+    height: 'auto'
   },
   transcationDiv: {
-    marginTop: '-30px'
+    marginTop: '-30px',
   },
   transactions: {
     marginLeft: "32px",
@@ -83,7 +83,7 @@ export const AccountTransactions = (): any => {
       </div>
 
       <div className={classes.transcationDiv}>
-        {transactionList.map((transaction: any) => (
+        {transactionList.slice(0, 3).map((transaction: any) => (
           <div className={classes.transactions}>
             <div>
               <h1 className={classes.tranSource}>{transaction.source}</h1>
