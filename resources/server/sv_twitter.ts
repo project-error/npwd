@@ -1,33 +1,12 @@
 import { pool } from "./db";
 import { ESX, getSource } from "./server";
+import { Tweet, Profile } from '../../phone/src/common/interfaces/twitter';
 import events from "../utils/events";
 import config from "../utils/config";
 
-interface Profile {
-  id: number;
-  profile_name: string;
-  identifier: string;
-  avatar_url?: string;
-  bio?: string;
-  location?: string;
-  job?: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface ProfileName {
   profile_name: string;
-}
-
-interface Tweet {
-  id: number;
-  profile_name?: string;
-  avatar_url?: string;
-  message: string;
-  createdAt?: string;
-  updatedAt?: string;
-  images?: string;
-  likes?: number;
 }
 
 /**

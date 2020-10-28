@@ -14,7 +14,7 @@ import {
   faAd,
   faPlaneArrival,
   faPhoneAlt,
-  faLandmark,
+  faWonSign
 } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
@@ -86,7 +86,7 @@ const appsState = atom({
       {
         id: "BANK",
         nameLocale: "APPS_BANK",
-        icon: <FontAwesomeIcon icon={faLandmark} size="xs" />,
+        icon: <FontAwesomeIcon icon={faWonSign} size="xs" />,
         backgroundColor: blue[900],
         color: common.white,
         path: "/bank",

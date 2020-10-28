@@ -34,6 +34,23 @@ setTimeout(() => {
   );
 }, 1000);
 
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "BANK",
+        method: "setCredentials",
+        data: 
+          {
+            name: "Firstname Lastname",
+            balance: 2000
+          }
+      },
+    })
+  );
+}, 1000);
+
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
@@ -44,13 +61,43 @@ setTimeout(() => {
           {
             id: 1, 
             amount: 200,
-            type: 'transfer'
+            type: 'Deposit',
+            source: "chip"
+          },{
+            id: 2, 
+            amount: 200,
+            type: 'Withdraw',
+            source: "chip"
+          },
+          {
+            id: 3, 
+            amount: 200,
+            type: 'Withdraw',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
+            source: "chip"
           }
         ]
       }
     })
   )
-})
+}, 1000)
 
 setTimeout(() => {
   window.dispatchEvent(

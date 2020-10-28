@@ -4,7 +4,33 @@ TODO
 
 ## Production Server Installation
 
-TODO
+### Configuration
+
+This resource is highly configurable through the [config.json](./config.json). This JSON file holds configuration for the phone itself, for the apps running on it and peripheral information.
+
+Below is the list of configuration options:
+
+| Option                               | Default  | Description                                                                                                                    |
+|--------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
+| Locale                               | en       | The language locale used by the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options   |
+| KeyTogglePhone                       | 288 (F1) | The keybind to open and close the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options |
+| PhoneAsItem                          | false    | whether or not the phone is an item in game                                                                                    |
+| SwimDestroy                          | false    | whether or not the phone will have a chance to be destroyed while swimming                                                     |
+| RunRate                              | 10       | interval in seconds to check phone destruction                                                                                 |
+| DestoryChance                        | 100      | Percent chance that phone destruction will occur                                                                               |
+| DestroyPhoneReCheck                  | 3        | Time in minutes before another phone destruction attempt will happen                                                           |
+| notificationPosition.horizontal      | right    | Horizontal position of phone notifications. `left`, `center` or `right`                                                         |
+| notificationPosition.vertical        | bottom   | Vertical positon of phone notifications. `top` or `bottom`                                                           |
+| twitter.showNotifications            | true     | Whether or not to show twitter notifications                                                                                   |
+| twitter.generateProfileNameFromUsers | true     | Whether or not the server should automtically generate a player's profile name from their user in the database                 |
+| twitter.allowEdtiableProfileName     | true     | Whether or not players can edit their profile name                                                                             |
+| twitter.characterLimit               | 240      | Limit on how many characters tweets can contain                                                                                |
+| twitter.enableAvatars                | true     | Whether or not player's can select avatars for their twitter profile                                                           |
+| twitter.enableEmojis                 | true     | Whether or not player's can use emojis in tweets                                                                               |
+| twitter.enableImages                 | true     | Whether or not player's can add images to tweets (external URLs)                                                               |
+| twitter.maxImages                    | 3        | The maximum amount of images allowed in a tweet                                                                                |
+
+
 
 ## Development
 
