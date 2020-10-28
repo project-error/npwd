@@ -35,7 +35,6 @@ export const GridMenu = ({ items, Component = AppIcon }) => {
               key={item.id}
               item
               className={classes.item}
-              tabIndex="-1"
               component={Link}
               to={item.path}
             >
