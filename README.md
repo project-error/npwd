@@ -19,11 +19,12 @@ Below is the list of configuration options:
 | RunRate                              | 10       | interval in seconds to check phone destruction                                                                                 |
 | DestoryChance                        | 100      | Percent chance that phone destruction will occur                                                                               |
 | DestroyPhoneReCheck                  | 3        | Time in minutes before another phone destruction attempt will happen                                                           |
-| notificationPosition.horizontal      | right    | Horizontal position of phone notifications. `left`, `center` or `right`                                                         |
-| notificationPosition.vertical        | bottom   | Vertical positon of phone notifications. `top` or `bottom`                                                           |
+| notificationPosition.horizontal      | right    | Horizontal position of phone notifications. `left`, `center` or `right`                                                        |
+| notificationPosition.vertical        | bottom   | Vertical positon of phone notifications. `top` or `bottom`                                                                     |
 | twitter.showNotifications            | true     | Whether or not to show twitter notifications                                                                                   |
 | twitter.generateProfileNameFromUsers | true     | Whether or not the server should automtically generate a player's profile name from their user in the database                 |
 | twitter.allowEdtiableProfileName     | true     | Whether or not players can edit their profile name                                                                             |
+| twitter.allowDeleteTweets            | true     | Whether or not players can delete their own tweets                                                                             |
 | twitter.characterLimit               | 240      | Limit on how many characters tweets can contain                                                                                |
 | twitter.enableAvatars                | true     | Whether or not player's can select avatars for their twitter profile                                                           |
 | twitter.enableEmojis                 | true     | Whether or not player's can use emojis in tweets                                                                               |

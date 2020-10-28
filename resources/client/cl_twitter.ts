@@ -89,6 +89,23 @@ onNet(events.TWITTER_CREATE_TWEET_BROADCAST, (tweet: any) => {
 });
 
 /**
+ * Twitter delete tweet
+ */
+RegisterNuiCallbackType(events.TWITTER_DELETE_TWEET);
+on(`__cfx_nui:${events.TWITTER_DELETE_TWEET}`, (tweetId: number) => {
+  emitNet(events.TWITTER_DELETE_TWEET, tweetId);
+});
+
+onNet(events.TWITTER_DELETE_TWEET_SUCCESS, () => {
+  sendTwitterMessage(events.TWITTER_DELETE_TWEET_SUCCESS);
+  emitNet(events.TWITTER_FETCH_TWEETS);
+});
+
+onNet(events.TWITTER_DELETE_TWEET_FAILURE, () => {
+  sendTwitterMessage(events.TWITTER_DELETE_TWEET_FAILURE);
+});
+
+/**
  * Twitter likes
  */
 RegisterNuiCallbackType(events.TWITTER_TOGGLE_LIKE);
