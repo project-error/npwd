@@ -43,7 +43,7 @@ setTimeout(() => {
         method: "setCredentials",
         data: 
           {
-            name: "Unknown Forever",
+            name: "Firstname Lastname",
             balance: 2000
           }
       },
@@ -64,15 +64,33 @@ setTimeout(() => {
             type: 'Deposit',
             source: "chip"
           },{
-            id: 1, 
+            id: 2, 
             amount: 200,
             type: 'Withdraw',
             source: "chip"
           },
           {
-            id: 1, 
+            id: 3, 
             amount: 200,
             type: 'Withdraw',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
+            source: "chip"
+          },
+          {
+            id: 4, 
+            amount: 50,
+            type: 'Deposit',
             source: "chip"
           }
         ]
