@@ -20,6 +20,7 @@ import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
+import { useNotesService } from "./apps/notes/hooks/useNotesService";
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -33,6 +34,30 @@ setTimeout(() => {
     })
   );
 }, 1000);
+
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: 'NOTES',
+        method: 'setNotes',
+        data: [
+          {
+            id: 1,
+            title: 'First note',
+            content: 'Hello, this is my shitty note'
+          },
+          {
+            id: 2,
+            title: 'Second note',
+            content: 'Hello, this is another shitty note'
+          }
+        ]
+      }
+    })
+  )
+}, 1000)
 
 
 setTimeout(() => {
@@ -183,6 +208,7 @@ function Phone() {
   useInitKeyboard();
   useSelloutService();
   useBankService();
+  useNotesService();
 
   if (visibility === false) {
     return null;
