@@ -20,6 +20,7 @@ import { NavigationBar } from "./navigation/NavigationBar";
 
 import { BankHome } from './home/BankHome'; 
 import { BankAccount } from './account/BankAccount';
+import { TransactionList } from "./transactions/TransactionList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const BankApp = () => {
   const { showBankModal, setShowBankModal } = useBankModal();
-  const { credentials } = useCredentials();
-  const { transactionList } = useTransactions();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -66,6 +65,7 @@ export const BankApp = () => {
         <Switch>
           <Route path="/bank" exact component={BankHome} />
           <Route path="/bank/account" exact component={BankAccount} />
+          <Route path="/bank/transactions" exact component={TransactionList} />
         </Switch>
       </AppContent>
       <NavigationBar />
