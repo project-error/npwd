@@ -12,12 +12,7 @@ import { useCredentials } from "../../hooks/useCredentials";
 
 // image
 import CreditCard from '../img/credit-card.png'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%"
-  }
-}));
+import useStyles from './home.styles';
 
 export const BankHome = () => {
   const { showBankModal, setShowBankModal } = useBankModal();
@@ -32,7 +27,7 @@ export const BankHome = () => {
 
   return (
     <div className={classes.root} >
-
+      <h1>Coming soon</h1>
     </div>
   );
 };
