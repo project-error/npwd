@@ -69,6 +69,7 @@ export const AccountTransactions = (): any => {
   const TransactionTypes = {
     Deposit: classes.depositType,
     Withdraw: classes.withdrawType,
+    Transfer: classes.depositType
   };
 
   const { transactionList } = useTransactions();
@@ -91,7 +92,7 @@ export const AccountTransactions = (): any => {
             </div>
             <div>
               <p className={TransactionTypes[transaction.type]}>
-                {transaction.type == "Deposit" ? "+" : "-"}
+                {transaction.type == "Withdraw" ? "-" : "+"}
                 {transaction.amount}
               </p>
             </div>

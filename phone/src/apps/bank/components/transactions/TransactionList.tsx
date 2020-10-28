@@ -34,6 +34,7 @@ export const TransactionList = () => {
   const TransactionTypes = {
     Deposit: classes.depositType,
     Withdraw: classes.withdrawType,
+    Transfer: classes.depositType
   };
 
 
@@ -63,7 +64,7 @@ export const TransactionList = () => {
               </div>
               <div>
                 <p className={TransactionTypes[transaction.type]}>
-                  {transaction.type == "Deposit" ? "+" : "-"}
+                  {transaction.type == "Withdraw" ? "-" : "+"}
                   {transaction.amount}
                 </p>
               </div>
