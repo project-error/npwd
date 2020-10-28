@@ -3,11 +3,13 @@ import Paper from "@material-ui/core/Paper";
 import { Typography ,makeStyles } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import './BankApp.css'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "90px",
     width: "100%",
-    display: "block",
+    display: "flex",
     margin: 0,
     justifyContent: "center",
     alignItems: "center",
@@ -24,10 +26,7 @@ export const BankTitle = () => {
   const classes = useStyles();
   return (
     <Paper className={classes.root} square variant="outlined" elevation={24}>
-      <Typography style={{ margin: 0}} variant="h4">WhoDis Banking</Typography>
-
-
-      <Typography variant="subtitle2">Some player name</Typography>
+      <Typography id="bank-title" style={{ margin: 0}} variant="h4">WhoDis Banking</Typography>
     </Paper>
   );
 };
