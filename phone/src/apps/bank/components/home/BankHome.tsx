@@ -9,6 +9,7 @@ import { TransferModal } from "../transfers/TransferModal";
 
 import { useBankModal } from "../../hooks/useBankModal";
 import { useCredentials } from "../../hooks/useCredentials";
+import { NavLink } from 'react-router-dom';
 
 // image
 import CreditCard from '../img/credit-card.png'
@@ -26,8 +27,16 @@ export const BankHome = () => {
   };
 
   return (
-    <div className={classes.root} >
-      <h1>Coming soon</h1>
+    <div  className={classes.root} >
+      <Typography className={classes.headTitle}><span style={{ fontWeight: 'bold' }}>{t("APPS_BANK_HOME_TITLE")}</span>, {credentials.name}</Typography>
+      <div className={classes.accounts}>
+        <h2 className={classes.accountsType}>Checking:</h2>
+        <p className={classes.accountBalance}>${credentials.balance}</p>
+      </div>
+      <div className={classes.actions}>
+        <Button id="actionButton" className={classes.actionButton}><NavLink to="/bank/account">{t("APPS_BANK_ACCOUNT_LINK")}</NavLink></Button>
+        <Button onClick={openTransactionsModal} className={classes.actionButton}>{t("APPS_BANK_ACTIONS_TRANSFER")}</Button>
+      </div>
     </div>
   );
 };
