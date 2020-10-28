@@ -39,3 +39,7 @@
 .card-name {
   font-size: 20px;
 }
+
+#actionButton a {
+  color: #fff;
+}
