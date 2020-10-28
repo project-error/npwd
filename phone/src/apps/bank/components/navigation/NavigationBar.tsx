@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import { faHome, faList, faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +21,9 @@ export const NavigationBar = () => {
   const [activePage, setActivePage] = useState(0)
   return (
     <BottomNavigation
+      style={{
+        background: '#262525'
+      }}
       value={activePage}
       onChange={(event, newPage) => {
         setActivePage(newPage);
@@ -35,8 +38,13 @@ export const NavigationBar = () => {
       />
       <BottomNavigationAction
         component={Link}
-        icon={<AddCircleIcon />}
+        icon={<FontAwesomeIcon icon={faMoneyCheck} />}
         to="/bank/account"
+      />
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faList} />}
+        to="/bank/transactions"
       />
     </BottomNavigation>
   )
