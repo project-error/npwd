@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   cardName: {
     margin: 10,
     paddingTop: 15,
-    fontSize: '4.3vw',
+    fontSize: '24px',
   },
   cardAccount: {
     margin: '10px',
