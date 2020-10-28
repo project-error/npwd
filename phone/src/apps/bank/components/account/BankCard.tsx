@@ -2,6 +2,14 @@ import React from 'react'
 import { makeStyles, Box, Typography } from "@material-ui/core";
 import { shadows } from '@material-ui/system';
 
+ /*
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: block;
+  line-height: 1em;
+  max-height: 2em;  */
+
 const useStyles = makeStyles((theme) => ({
   root: {
     background: '#388CF8',
@@ -10,10 +18,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     borderRadius: '15px',
     fontFamily: 'Bahnschrift Regular'
-  },
+  },  
   cardName: {
     margin: 10,
-    paddingTop: 15
+    paddingTop: 15,
+    fontSize: '4.3vw',
   },
   cardAccount: {
     margin: '10px',
