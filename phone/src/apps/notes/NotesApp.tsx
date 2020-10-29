@@ -6,8 +6,8 @@ import NoteList from './list/NoteList';
 
 
 import { useNotes } from './hooks/useNotes';
-import { AddNoteModal } from './modal/AddNoteModal';
-import { Button, Fab } from '@material-ui/core';
+import { NoteModal } from './modal/NoteModal';
+import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 import { useNoteModal } from './hooks/useNoteModal';
@@ -27,11 +27,11 @@ export const NotesApp = () => {
   return (
     <AppWrapper id="notes-app">
       <NotesTitle />
-      <AddNoteModal />
-      <div className={ noteModal ? classes.backgroundModal : undefined} />
+      <NoteModal />
       <AppContent>
         <NoteList notes={notes}/>
         <Fab 
+          className={classes.absolute}
           onClick={handleModal}
           style={{
             background: '#f9a825',
