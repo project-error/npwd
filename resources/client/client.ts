@@ -4,6 +4,7 @@ import './cl_twitter';
 import './cl_contacts';
 import './cl_sellout';
 import './cl_bank';
+import './cl_notes';
 
 export let ESX: ESXClient = null;
 
