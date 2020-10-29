@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    height: '60px'
+    height: '60px',
   },
   backgroundModal: {
     background: "black",
@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     zIndex: 5,
+  },
+  absolute: {
+    position: "sticky",
+    bottom: theme.spacing(2),
+    left: theme.spacing(3),
   },
 }))
 
