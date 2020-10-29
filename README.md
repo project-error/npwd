@@ -35,7 +35,7 @@ Below is the list of configuration options:
 
 ## Development
 
-This phone is a [React](https://reactjs.org/) project with a LUA client/server environment.
+This phone is a [React](https://reactjs.org/) project with a TypeScript client/server environment.
 
 ### Prerequisites
 
@@ -60,6 +60,6 @@ The development environment assumes you have the following prerequisites:
 
 #### Development iteration cycle:
 
-- If iterating on client/server LUA make your change and then `restart new-phone-who-dis` in the fivem server terminal
-- If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then `restart new-phone-who-dis` after making your change
+- If iterating on client/server Lua make your change and then `ensure new-phone-who-dis` in the fivem server terminal
+- If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then `ensure new-phone-who-dis` after making your change
 - Avoid commiting `index.html` as the development version overrides the production version
