@@ -1,3 +1,7 @@
-#notes-app.Mui-Selected:focus {
-  border-bottom: 2px solid #f9a825;
+#notes-app .Mui-focused::after {
+  border-bottom: 3px solid #f9a825;
+}
+
+#notes-app .MuiOutlinedInput-root {
+  border: 2px soild #f9a825;
 }
