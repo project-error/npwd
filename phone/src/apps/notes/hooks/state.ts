@@ -7,6 +7,10 @@ export const noteStates = {
   }),
   noteModal: atom({
     key: 'noteModal',
-    default: true
+    default: false
+  }),
+  noteDetail: atom({
+    key: 'noteDetail',
+    default: null
   })
 }
