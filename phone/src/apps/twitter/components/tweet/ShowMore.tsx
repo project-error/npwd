@@ -8,6 +8,8 @@ import {
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { usePhone } from "../../../../os/phone/hooks/usePhone";
 import Nui from "../../../../os/nui-events/utils/Nui";
+import ReportButton from '../buttons/ReportButton';
+import { Tweet } from "./Tweet";
 
 
 /**
@@ -31,7 +33,7 @@ function calculateVerticalOffset(top: number): number {
   return top * 0.20 - 38;
 }
 
-export const ShowMore = ({ id, isMine }) => {
+export const ShowMore = ({ id, isReported, isMine }) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const [verticalOffset, setVerticalOffset] = useState(0);
   const { t } = useTranslation();
@@ -58,10 +60,15 @@ export const ShowMore = ({ id, isMine }) => {
   }
 
   const allowedToDelete = config.twitter.allowDeleteTweets && isMine;
+  const allowedToReport = config.twitter.allowReportTweets && !isMine;
+
+  // if the user cannot perform any actions in show more then don't
+  // allow them to interact with it
+  let _handleClick = allowedToDelete || allowedToReport ? handleClick : () => null;
 
   return (
       <>
-        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} >
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={_handleClick} >
             <MoreIcon />
         </Button>
         <Menu
@@ -76,7 +83,7 @@ export const ShowMore = ({ id, isMine }) => {
             }}
         >
             {allowedToDelete && <MenuItem  onClick={handleDeleteTweet}>{t('APPS_TWITTER_DELETE')}</MenuItem >}
-            <MenuItem onClick={handleClose}>{t('APPS_TWITTER_REPORT')}</MenuItem >
+            {allowedToReport && <ReportButton handleClose={handleClose} isReported={isReported} tweetId={id}/>}
         </Menu>
     </>
   );

@@ -3,6 +3,7 @@ import { ESX, getSource } from "./server";
 import { Tweet, Profile } from '../../phone/src/common/interfaces/twitter';
 import events from "../utils/events";
 import config from "../utils/config";
+import { reportTweetToDiscord } from './discord';
 
 
 interface ProfileName {
@@ -15,21 +16,23 @@ interface ProfileName {
  */
 async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
   const query = `
-        SELECT
-        npwd_twitter_profiles.id AS profile_id,
-        npwd_twitter_profiles.profile_name,
-        npwd_twitter_profiles.avatar_url,
-        npwd_twitter_tweets.*,
-        npwd_twitter_likes.id IS NOT NULL AS isLiked,
-        TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
+    SELECT
+      npwd_twitter_profiles.id AS profile_id,
+      npwd_twitter_profiles.profile_name,
+      npwd_twitter_profiles.avatar_url,
+      npwd_twitter_tweets.*,
+      npwd_twitter_likes.id IS NOT NULL AS isLiked,
+      npwd_twitter_reports.id IS NOT NULL AS isReported,
+      TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
     FROM npwd_twitter_tweets
     LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
     LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = ?
+    LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id  AND npwd_twitter_reports.profile_id = ?
     WHERE visible = 1
     ORDER BY npwd_twitter_tweets.createdAt DESC 
     LIMIT 100
     `;
-  const [results] = await pool.query(query, [profileId]);
+  const [results] = await pool.query(query, [profileId, profileId]);
   const tweets = <Tweet[]>results;
   return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
 }
@@ -48,19 +51,22 @@ async function fetchTweetsFiltered(
   const query = `
     SELECT
       npwd_twitter_profiles.id AS profile_id,
-        npwd_twitter_profiles.profile_name,
-        npwd_twitter_profiles.avatar_url,
-        npwd_twitter_tweets.*,
-        npwd_twitter_likes.id IS NOT NULL AS isLiked,
-        TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
+      npwd_twitter_profiles.profile_name,
+      npwd_twitter_profiles.avatar_url,
+      npwd_twitter_tweets.*,
+      npwd_twitter_likes.id IS NOT NULL AS isLiked,
+      npwd_twitter_reports.id IS NOT NULL AS isReported,
+      TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
     FROM npwd_twitter_tweets
     LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
     LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = ?
+    LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id  AND npwd_twitter_reports.profile_id = ?
     WHERE visible = 1 AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
     ORDER BY npwd_twitter_tweets.createdAt DESC 
     LIMIT 100
     `;
   const [results] = await pool.query(query, [
+    profileId,
     profileId,
     parameterizedSearchValue,
     parameterizedSearchValue,
@@ -69,12 +75,35 @@ async function fetchTweetsFiltered(
   return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
 }
 
+
+/**
+ * Retrieve a Tweet by ID
+ * @param tweetId - primary key of the tweet ID
+ */
+async function getTweet(profileId: number, tweetId: number): Promise<Tweet> {
+  const query = `
+  SELECT
+    npwd_twitter_profiles.id AS profile_id,
+    npwd_twitter_profiles.profile_name,
+    npwd_twitter_profiles.avatar_url,
+    npwd_twitter_tweets.* 
+  FROM npwd_twitter_tweets
+  LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+  WHERE npwd_twitter_tweets.id = ?
+  `
+  const [results] = await pool.query(query, [tweetId]);
+  const tweets = <Tweet[]>results;
+  const tweet = tweets[0];
+  return { ...tweet, isMine: tweet.profile_id === profileId};
+}
+
 /**
  * Creates a tweet in the database and then retrieves the tweet
  * @param identifier - player identifier
  * @param tweet - tweet to be created
  */
 async function createTweet(identifier: string, tweet: Tweet): Promise<Tweet> {
+  const profile = await getProfile(identifier);
   const query = `
     INSERT INTO npwd_twitter_tweets (identifier, message, images)
     VALUES (?, ?, ?)
@@ -85,21 +114,15 @@ async function createTweet(identifier: string, tweet: Tweet): Promise<Tweet> {
     tweet.images,
   ]);
   const insertData = <any>results;
-  const insertId = insertData.insertId;
+  return await getTweet(profile.id, insertData.insertId);
+}
 
-  const resultQuery = `
-      SELECT
-      npwd_twitter_profiles.profile_name,
-      npwd_twitter_profiles.avatar_url,
-      npwd_twitter_tweets.* 
-      FROM npwd_twitter_tweets
-      LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
-      WHERE npwd_twitter_tweets.id = ?
-   `;
-  const [createResults] = await pool.query(resultQuery, [insertId]);
-  const tweets = <Tweet[]>createResults;
-
-  return tweets[0];
+async function createTweetReport(tweetId: number, profileId: number): Promise<void> {
+  const query = `
+    INSERT INTO npwd_twitter_reports (tweet_id, profile_id)
+    VALUES (?, ?)
+    `;
+  await pool.execute(query, [tweetId, profileId]);
 }
 
 /**
@@ -239,6 +262,25 @@ async function doesLikeExist(
   return likes.length > 0;
 }
 
+/**
+ * Check if a tweet has been reported by this profile already
+ * @param tweetId - primary key of the tweet to check
+ * @param profileId - primary key of the profile to check
+ */
+async function doesReportExist(
+  tweetId: number,
+  profileId: number
+): Promise<boolean> {
+  const query = `
+    SELECT * FROM npwd_twitter_reports
+    WHERE tweet_id = ? AND profile_id = ?
+    LIMIT 1
+    `;
+  const [results] = await pool.query(query, [tweetId, profileId]);
+  const reports = <any[]>results;
+  return reports.length > 0;
+}
+
 onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
   try {
     const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
@@ -317,5 +359,25 @@ onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
     emitNet(events.TWITTER_TOGGLE_LIKE_SUCCESS, getSource());
   } catch (e) {
     emitNet(events.TWITTER_TOGGLE_LIKE_FAILURE, getSource());
+  }
+});
+
+onNet(events.TWITTER_REPORT, async (tweetId: number) => {
+  try {
+    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const profile = await getProfile(identifier);
+    const tweet = await getTweet(profile.id, tweetId);
+
+    const reportExists = await doesReportExist(tweet.id, profile.id);
+    if (reportExists) {
+      console.warn('This profile has already reported this tweet');
+    } else {
+      await createTweetReport(tweet.id, profile.id);
+      await reportTweetToDiscord(tweet, profile);
+    }
+
+    emitNet(events.TWITTER_REPORT_SUCCESS, getSource());
+  } catch (e) {
+    emitNet(events.TWITTER_REPORT_FAILURE, getSource());
   }
 });

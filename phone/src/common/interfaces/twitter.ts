@@ -2,6 +2,8 @@ export interface Tweet {
   id: number;
   profile_name?: string;
   profile_id: number;
+  isMine: boolean;
+  isReported: boolean;
   avatar_url?: string;
   message: string;
   createdAt?: string;

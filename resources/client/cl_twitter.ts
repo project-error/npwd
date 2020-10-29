@@ -112,3 +112,15 @@ RegisterNuiCallbackType(events.TWITTER_TOGGLE_LIKE);
 on(`__cfx_nui:${events.TWITTER_TOGGLE_LIKE}`, (tweetId: number) => {
   emitNet(events.TWITTER_TOGGLE_LIKE, tweetId);
 });
+
+/**
+ * Twitter reporting tweets
+ */
+RegisterNuiCallbackType(events.TWITTER_REPORT);
+on(`__cfx_nui:${events.TWITTER_REPORT}`, (tweetId: number) => {
+  emitNet(events.TWITTER_REPORT, tweetId);
+});
+
+onNet(events.TWITTER_REPORT_SUCCESS, () => {
+  emitNet(events.TWITTER_FETCH_TWEETS);
+});
