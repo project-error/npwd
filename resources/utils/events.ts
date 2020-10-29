@@ -39,5 +39,11 @@ export default {
   BANK_SEND_TRANSFERS: 'phone:sendTransfers',
   BANK_TRANSACTION_ALERT: 'phone:transactionAlert',
   BANK_SEND_CREDENTIALS: 'phone:sendBankCredentials',
-  BANK_GET_CREDENTIALS: 'phone:getBankCredentials'
+  BANK_GET_CREDENTIALS: 'phone:getBankCredentials',
+
+  // Notes 
+  NOTE_ADD_NOTE: 'phone:addNote',
+  NOTE_FETCH_ALL_NOTES: 'phone:fetchAllNotes',
+  NOTE_SEND_NOTE: 'phone:sendNote',
+  NOTE_DELETE_NOTE: 'phone:deleteNote'
 }
