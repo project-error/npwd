@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { yellow } from "@material-ui/core/colors";
+
 import useStyles from './notes.styles';
 
 import { Paper } from "@material-ui/core";
@@ -10,7 +12,7 @@ const NotesTitle = () => {
   const classes = useStyles()
   return (
     <Paper elevation={24} square variant="outlined" className={classes.header}>
-      <FontAwesomeIcon icon={faStickyNote} style={{  }} size="lg" />
+      <FontAwesomeIcon icon={faStickyNote} color={yellow[800]} size="lg" />
     </Paper>
   )
 }
