@@ -45,5 +45,6 @@ export default {
   NOTE_ADD_NOTE: 'phone:addNote',
   NOTE_FETCH_ALL_NOTES: 'phone:fetchAllNotes',
   NOTE_SEND_NOTE: 'phone:sendNote',
-  NOTE_DELETE_NOTE: 'phone:deleteNote'
+  NOTE_DELETE_NOTE: 'phone:deleteNote',
+  NOTE_UPDATE_NOTE: 'phone:updateNote'
 }
