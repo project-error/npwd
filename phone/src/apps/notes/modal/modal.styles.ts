@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px 30px'
   },
   deleteButton: {
-    marginLeft: 20,
     background: '#c62828',
     padding: '10px 30px'
   }
