@@ -17,9 +17,15 @@ export default {
   TWITTER_CREATE_TWEET_RESULT: "createTweetResult",
   TWITTER_CREATE_TWEET_BROADCAST: "createTweetBroadcast",
   TWITTER_CREATE_TWEET_FAILURE: "createTweetResultFailed",
+  TWITTER_DELETE_TWEET: "phone:deleteTweet",
+  TWITTER_DELETE_TWEET_SUCCESS: "deleteTweetSuccess",
+  TWITTER_DELETE_TWEET_FAILURE: "deleteTweetFailed",
   TWITTER_TOGGLE_LIKE: "phone:toggleLike",
   TWITTER_TOGGLE_LIKE_SUCCESS: "toggleLikeSuccess",
   TWITTER_TOGGLE_LIKE_FAILURE: "toggleLikeFailed",
+  TWITTER_REPORT: "phone:reportTweet",
+  TWITTER_REPORT_SUCCESS: "reportTweetSuccess",
+  TWITTER_REPORT_FAILURE: "reportTweetFailed",
 
   // Contacts
   CONTACTS_SEND_CONTACTS: 'phone:sendContacts',

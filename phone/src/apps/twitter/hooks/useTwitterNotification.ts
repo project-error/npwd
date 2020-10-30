@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
-import { Tweet } from "../interfaces";
 
+import { Tweet } from "../../../common/interfaces/twitter";
 import { twitterState } from "./state";
 
 interface ITwitterNotification {

@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   ListItemAvatar,
   Avatar as MuiAvatar,
   Button,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
   Typography,
 } from "@material-ui/core";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
-import { ListItem } from "../../../../ui/components/ListItem";
 import { secondsToHumanReadable } from "../../utils/time";
 import LikeButton from "../buttons/LikeButton";
 import ReplyButton from "../buttons/ReplyButton";
 import ImageDisplay from "../images/ImageDisplay";
 import Avatar from "../Avatar";
+import ShowMore from './ShowMore';
 import { QuoteButton } from "../buttons/QuoteButton";
 import { usePhone } from "../../../../os/phone/hooks/usePhone";
+import Nui from "../../../../os/nui-events/utils/Nui";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -58,7 +63,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     marginLeft: "-20px", // easier to do this here than override the MUI styles
     marginTop: "3px",
-  },
+  }
 }));
 
 export const Tweet = (tweet) => {
@@ -70,6 +75,8 @@ export const Tweet = (tweet) => {
     profile_name,
     seconds_since_tweet,
     isLiked,
+    isMine,
+    isReported,
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -81,7 +88,6 @@ export const Tweet = (tweet) => {
   // this is a workaround to transfer string new lines and returns that
   // are stored into the database into html for the UI to render
   const formattedMessage = message.replace(/\n\r?/g, "<br />");
-
   const profileName = profile_name ? `@${profile_name}` : "";
 
   return (
@@ -114,13 +120,11 @@ export const Tweet = (tweet) => {
           <ReplyButton profile_name={profile_name} />
           <LikeButton tweetId={id} isLiked={isLiked} />
           <QuoteButton message={message} />
-          <Button>
-            <MoreIcon />
-          </Button>
+          <ShowMore isMine={isMine} isReported={isReported} id={id} />
         </div>
       </div>
     </ListItem>
   );
 };
 
-export default Tweet;
+export default memo(Tweet);
