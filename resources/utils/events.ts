@@ -23,6 +23,9 @@ export default {
   TWITTER_TOGGLE_LIKE: "phone:toggleLike",
   TWITTER_TOGGLE_LIKE_SUCCESS: "toggleLikeSuccess",
   TWITTER_TOGGLE_LIKE_FAILURE: "toggleLikeFailed",
+  TWITTER_REPORT: "phone:reportTweet",
+  TWITTER_REPORT_SUCCESS: "reportTweetSuccess",
+  TWITTER_REPORT_FAILURE: "reportTweetFailed",
 
   // Contacts
   CONTACTS_SEND_CONTACTS: 'phone:sendContacts',

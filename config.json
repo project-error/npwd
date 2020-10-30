@@ -16,6 +16,7 @@
         "generateProfileNameFromUsers": true,
         "allowEdtiableProfileName": true,
         "allowDeleteTweets": true,
+        "allowReportTweets": true,
         "characterLimit": 240,
         "enableAvatars": true,
         "enableEmojis": true,

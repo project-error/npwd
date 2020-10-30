@@ -10,7 +10,7 @@ export const IMAGE_DELIMITER = "||!||";
  * @param {string} link - a URL we are trying to validate
  * @param {func} onSuccess - callback if the link is valid
  */
-export function withValidImage(link, onSuccess) {
+export function withValidImage(link: string, onSuccess: any): void {
   const image = new Image();
   image.onload = onSuccess;
   image.onerror = () => {

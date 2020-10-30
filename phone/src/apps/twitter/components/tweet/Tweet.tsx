@@ -76,6 +76,7 @@ export const Tweet = (tweet) => {
     seconds_since_tweet,
     isLiked,
     isMine,
+    isReported,
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -119,7 +120,7 @@ export const Tweet = (tweet) => {
           <ReplyButton profile_name={profile_name} />
           <LikeButton tweetId={id} isLiked={isLiked} />
           <QuoteButton message={message} />
-          <ShowMore isMine={isMine} id={id} />
+          <ShowMore isMine={isMine} isReported={isReported} id={id} />
         </div>
       </div>
     </ListItem>
