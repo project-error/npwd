@@ -52,7 +52,7 @@ setTimeout(() => {
             id: 2,
             title: 'Second note',
             content: 'Hello, this is another shitty note'
-          }
+          },
         ]
       }
     })
