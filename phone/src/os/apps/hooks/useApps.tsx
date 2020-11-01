@@ -6,6 +6,7 @@ import {
   grey,
   green,
   purple,
+  yellow,
   red,
   amber,
 } from "@material-ui/core/colors";
@@ -14,7 +15,8 @@ import {
   faAd,
   faPlaneArrival,
   faPhoneAlt,
-  faWonSign
+  faWonSign,
+  faStickyNote
 } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
@@ -33,6 +35,7 @@ import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
 import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
 import { ExampleApp } from "../../../apps/example/components/ExampleApp";
 import { SelloutApp } from "../../../apps/sellout/components/SelloutApp";
+import { NotesApp } from "../../../apps/notes/NotesApp";
 
 const appsState = atom({
   key: "apps",
@@ -109,6 +112,15 @@ const appsState = atom({
         color: common.white,
         path: "/sellout",
         Route: () => <Route path="/sellout" component={SelloutApp} />,
+      },
+      {
+        id: 'NOTES',
+        name: 'APPS_NOTES',
+        icon: <FontAwesomeIcon icon={faStickyNote} fixedWidth />,
+        backgroundColor: yellow[800],
+        color: common.white,
+        path: "/notes",
+        Route: () => <Route path="/notes" component={NotesApp}/>
       },
       {
         id: "EXAMPLE",
