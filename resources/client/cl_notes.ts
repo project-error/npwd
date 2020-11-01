@@ -33,14 +33,12 @@ on(`__cfx_nui:${events.NOTE_DELETE_NOTE}`, (data: any) => {
 
 
 // coming soon tm
-
-/*RegisterNuiCallbackType(events.NOTE_UPDATE_NOTE);
+RegisterNuiCallbackType(events.NOTE_UPDATE_NOTE);
 on(`__cfx_nui:${events.NOTE_UPDATE_NOTE}`, (data: any) => {
   const note = data;
   emitNet(events.NOTE_UPDATE_NOTE, note)
+})
 
-  
-  setTimeout(() => {
-    emitNet(events.NOTE_FETCH_ALL_NOTES)
-  }, 500);
-})*/
+onNet(events.NOTE_UPDATE_NOTE_SUCCESS, () => {
+  emitNet(events.NOTE_FETCH_ALL_NOTES)
+});

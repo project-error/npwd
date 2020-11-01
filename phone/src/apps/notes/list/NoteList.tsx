@@ -6,14 +6,12 @@ import { useNoteDetail } from '../hooks/useNoteDetail';
 
 // add search bar later
 const NoteList = ({notes}) => {
-
-  const { noteModal, setNoteModal } = useNoteModal();
-  const { detail, setDetail } = useNoteDetail();
+  const { setNoteModal } = useNoteModal();
+  const { setDetail } = useNoteDetail();
 
   const handleNoteModal = (note) => {
     setNoteModal(true)
     setDetail(note)
-    console.log(note.id)
   }
 
   return (

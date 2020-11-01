@@ -4,18 +4,13 @@ import { pool } from './db';
 import { useIdentifier } from './functions';
 
 interface Note {
+  id?: number;
   title: string;
   content: string;
 }
 
 interface NoteId {
   id: number
-}
-
-interface UpdateNote {
-  id: number;
-  title: string;
-  content: string;
 }
 
 async function addNote(identifier: string, note: Note): Promise<any> {
@@ -41,7 +36,7 @@ async function deleteNote(noteId: number, identifier: string) {
   await pool.query(query, [noteId, identifier])
 }
 
-/*async function updateNote(note: UpdateNote, identifier: string): Promise<any> {
+async function updateNote(note: Note, identifier: string): Promise<any> {
   const query = "UPDATE npwd_notes SET title = ?, content = ? WHERE id = ? AND identifier = ?"
   await pool.query(query, [
     note.title,
@@ -49,7 +44,7 @@ async function deleteNote(noteId: number, identifier: string) {
     note.id,
     identifier
   ])
-}*/
+}
 
 onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
   try {
@@ -84,13 +79,13 @@ onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
   }
 })
 
-// coming soon tm
-
-/*onNet(events.NOTE_UPDATE_NOTE, async (note: UpdateNote) => {
+onNet(events.NOTE_UPDATE_NOTE, async (note: Note) => {
+  const _source = (global as any).source;
   try {
     const _identifier = await useIdentifier();
     updateNote(note, _identifier)
+    emitNet(events.NOTE_UPDATE_NOTE_SUCCESS, _source)
   } catch (error) {
-    console.log("NOTE ERROR:", error)
+    emitNet(events.NOTE_UPDATE_NOTE_FAILURE, _source)
   }
-})*/
+})

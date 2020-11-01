@@ -16,10 +16,9 @@ import Nui from '../../../os/nui-events/utils/Nui';
 export const NoteModal = (note): any => {
   const { noteModal, setNoteModal } = useNoteModal();
   const { detail, setDetail } = useNoteDetail();
-
-  const notes = useNotes();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  console.log(detail);
+  const [title, setTitle] = useState(detail ? detail.title : "");
+  const [content, setContent] = useState(detail ? detail.content: "");
 
   const classes = useStyles();
 
@@ -51,20 +50,15 @@ export const NoteModal = (note): any => {
     setDetail(null)
   }
 
-  //const handleUpdateNote = () => {
-  //  const id = detail.id;
-  //  const detailTitle = detail.title;
-  //  const detailContent = detail.content
-  //  console.log("NOTE", detailTitle, detailContent)
-//
-  //  Nui.send('pone:updateNote', {
-  //    id,
-  //    detailTitle,
-  //    detailContent
-  //  })
-  //  setNoteModal(false);
-  //  setDetail(null)
-  //}
+  const handleUpdateNote = () => {
+   Nui.send('phone:updateNote', {
+     id: detail.id,
+     title,
+     content
+   });
+   setNoteModal(false);
+   setDetail(null)
+  }
 
   return (
     <div className={noteModal ? classes.modalRoot : classes.modalHide}>
@@ -79,8 +73,8 @@ export const NoteModal = (note): any => {
                 className: classes.inputPropsTitle
               }}
               fullWidth
-              value={detail ? detail.title : title}
-              onChange={detail ? e => setDetail(e.target.value) : e => setTitle(e.target.value)}
+              value={title}
+              onChange={e => setTitle(e.target.value)}
             />
             <TextField 
               className={classes.input}
@@ -92,11 +86,12 @@ export const NoteModal = (note): any => {
               fullWidth
               rows={19}
               variant="outlined"
-              value={detail ? detail.content : content}
-              onChange={detail ? e => setDetail(e.target.value) : e => setContent(e.target.value)}
+              value={content}
+              onChange={e => setContent(e.target.value)}
             />
-            {detail ? null : <Button className={classes.saveButton} onClick={handleNoteSave}>Save</Button>}
-            {detail ? <Button className={classes.deleteButton} onClick={handleDeleteNote}>Delete</Button> : null}
+            {!detail && <Button className={classes.saveButton} onClick={handleNoteSave}>Save</Button>}
+            {detail && <Button className={classes.updateButton} onClick={handleUpdateNote}>Update</Button>}
+            {detail && <Button className={classes.deleteButton} onClick={handleDeleteNote}>Delete</Button>}
           </div>
         </div>
       </Slide>

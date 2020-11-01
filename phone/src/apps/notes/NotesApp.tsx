@@ -11,23 +11,26 @@ import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 import { useNoteModal } from './hooks/useNoteModal';
+import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
 
 export const NotesApp = () => {
-  const { noteModal, setNoteModal } = useNoteModal();
+  const { setNoteModal } = useNoteModal();
+  const { detail, setDetail } = useNoteDetail();
   const notes = useNotes();
 
   const classes = useStyles();
 
   const handleModal = () => {
     setNoteModal(true)
+    setDetail(null);
   }
 
   return (
     <AppWrapper id="notes-app">
       <NotesTitle />
-      <NoteModal />
+      <NoteModal key={detail?.id} />
       <AppContent>
         <NoteList notes={notes}/>
         <Fab 

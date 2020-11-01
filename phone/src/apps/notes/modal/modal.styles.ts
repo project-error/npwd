@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     background: '#f9a825',
     padding: '10px 30px'
   },
+  updateButton: {
+    background: '#f9a825',
+    padding: '10px 30px',
+    marginRight: '8px'
+  },
   deleteButton: {
     background: '#c62828',
     padding: '10px 30px'
