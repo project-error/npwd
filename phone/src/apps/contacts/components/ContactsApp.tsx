@@ -8,9 +8,11 @@ import { useApp } from "../../../os/apps/hooks/useApps";
 import { AddContactModal } from "./ContactModal";
 import { useModal } from "../hooks/useModal";
 import { SearchContacts } from "./List/SearchContacts";
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import Fab from '@material-ui/core/Fab';
-import { useContactModal } from '../hooks/useContactModal';
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Fab from "@material-ui/core/Fab";
+import { useContactModal } from "../hooks/useContactModal";
+import { InfoModal } from "./modal/InfoModal";
+import { useContactDetail } from "../hooks/useContactDetail";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,7 +38,7 @@ export const ContactsApp = () => {
   const classes = useStyles();
   const { showModal, setShowModal } = useModal();
   const contacts = useApp("CONTACTS");
-  const { showContactModal } = useContactModal();
+  const { contactDetail } = useContactDetail();
 
   const openModal = () => {
     setShowModal(true);
@@ -47,6 +49,7 @@ export const ContactsApp = () => {
       <AppTitle app={contacts}></AppTitle>
       <SearchContacts />
       <AddContactModal />
+      <InfoModal key={contactDetail?.id} />
       <div className={showModal ? classes.backgroundModal : undefined} />
       <AppContent>
         <ContactList />
