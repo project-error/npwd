@@ -32,7 +32,11 @@ export default {
   CONTACTS_GET_CONTACTS: 'phone:getContacts',
   CONTACTS_ADD_CONTACT_NUI: 'contacts:add',
   CONTACTS_ADD_CONTACT: 'contacts:add',
-  CONTACTS_UPDATE_CONTACTS: 'phone:updateContacts',
+  CONTACTS_ADD_CONTACT_SUCCESS: 'contacts:addSuccess',
+  CONTACTS_UPDATE_CONTACT: 'phone:updateContact',
+  CONTACTS_DELETE_CONTACT: 'phone:deleteContact',
+  CONTACTS_DELETE_CONTACT_SUCCESS: 'contacts:deleteSuccess',
+  CONTACTS_UPDATE_CONTACT_SUCCESS: 'phone:updateContactSuccess',
 
   // Sellout
   SELLOUT_ADD_LISTING: 'phone:addListing',

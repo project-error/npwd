@@ -135,7 +135,7 @@ setTimeout(() => {
             id: 1,
             number: "345-4366",
             display: "chip",
-            avatar: 'https://i.imgur.com/Qpw6j8D.png'
+            avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Rotating_earth_%28large%29.gif/200px-Rotating_earth_%28large%29.gif'
           },
           {
             id: 2,
