@@ -91,7 +91,6 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
 })
 
 onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
-  console.log("ID", contact)
   try {
     const _identifier = await useIdentifier()
     deleteContact(contact, _identifier)
