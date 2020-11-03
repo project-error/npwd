@@ -11,10 +11,10 @@ export const bankState = {
   }),
   bankAlert: atom({
     key: 'bankAlert',
-    default: false
+    default: null
   }),
   bankCredentials: atom({
     key: 'bankCredentails',
     default: null
-  })
+  }),
 } 
