@@ -1,18 +1,7 @@
 import events from '../utils/events';
 import { ESX, getSource } from './server';
 import { pool } from './db';
-import { resourceLimits } from 'worker_threads';
-
-interface Transfer {
-  targetID: string;
-  amount: number;
-  message: string;
-}
-
-interface Credentials {
-  name: string;
-  balance: number;
-}
+import { Transfer, Credentials } from '../../phone/src/common/interfaces/bank';
 
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
@@ -37,11 +26,13 @@ function fetchCredentials(): Credentials {
   return result;
 }
 
-
 async function addTransfer(identifier: string, transfer: Transfer): Promise<any> {
-
   const xPlayer = ESX.GetPlayerFromId(getSource())
   const bankBalance = xPlayer.getAccount('bank').money;
+
+
+  const xTarget = ESX.GetPlayerFromId(transfer.targetID)
+
   console.log(bankBalance)
   if (transfer.amount > bankBalance) {
     console.log("poor man")
@@ -49,6 +40,7 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   } 
   else if (transfer.amount <= bankBalance) {
     const query = "INSERT INTO npwd_bank_transfers (identifier, target, amount, message) VALUES (?, ?, ?, ?)"
+    // emit alert to target iD
   
     await pool.query(query, [
       identifier, 
@@ -56,7 +48,12 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
       transfer.amount,
       transfer.message
     ])
+
     emitNet(events.BANK_TRANSACTION_ALERT, getSource, 'You succesfully transferred money to someone', 'success')
+  
+    xTarget.addAccountMoney('bank', transfer.amount)
+
+
   }
 }
 

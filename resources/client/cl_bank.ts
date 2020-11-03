@@ -31,3 +31,13 @@ on(`__cfx_nui:${events.BANK_ADD_TRANSFER}`, (data: any) => {
     emitNet(events.BANK_FETCH_TRANSACTIONS);
   }, 500)
 })
+
+onNet(events.BANK_TRANSACTION_ALERT, (message: string, alert: string) => {
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'BANK',
+      method: 'setAlert',
+      data: { message, alert }
+    })
+  )
+})
