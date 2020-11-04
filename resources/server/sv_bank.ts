@@ -21,8 +21,6 @@ function fetchCredentials(): Credentials {
     balance
   }
 
-  console.log(result.name, result.balance);
-
   return result;
 }
 
@@ -31,17 +29,15 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   const bankBalance = xPlayer.getAccount('bank').money;
   const sourceName = xPlayer.getName()
 
+  const xTarget = ESX.GetPlayerFromId(transfer.targetID);
+  
+
   if (transfer.amount > bankBalance) {
-    console.log("poor man")
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)
   } 
   else if (transfer.amount < bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true)
-
-
     const query = "INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)"
-    // emit alert to target iD
-    console.log("rich man")
   
     const [results] = await pool.query(query, [
       identifier, 
@@ -52,9 +48,7 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
       sourceName,
     ])
     const insertData = <any>results;
-    console.log("ID: ", insertData.insertId)
     return await getTransfer(insertData.insertId)
-    //xTarget.addAccountMoney('bank', transfer.amount)
   }
 }
 
@@ -79,7 +73,7 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer)
 
   } catch (error) {
-    console.log('Failed to fetch transactions', error)
+    console.log(error)
   }
 })
 
@@ -87,10 +81,10 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
   try {
     const _identifier = ESX.GetPlayerFromId(getSource()).getIdentifier()
     const transferNotify = await addTransfer(_identifier, transfer)
-    console.log(transferNotify.id)
     emitNet(events.BANK_TRANSACTION_NOTIFICATION, getSource(), transferNotify)
+    emitNet(events.BANK_ADD_TRANSFER_SUCCESS);
   } catch (error) {
-    console.log('Failed to add transfer', error)
+    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)
   }
 })
 

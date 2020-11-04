@@ -45,6 +45,7 @@ export default {
 
   // Bank
   BANK_ADD_TRANSFER: 'phone:addTransfer',
+  BANK_ADD_TRANSFER_SUCCESS: 'phone:addTransferSuccess',
   BANK_FETCH_TRANSACTIONS: 'phone:fetchAllTransactions',
   BANK_SEND_TRANSFERS: 'phone:sendTransfers',
   BANK_TRANSACTION_ALERT: 'phone:bankTransactionAlert',
