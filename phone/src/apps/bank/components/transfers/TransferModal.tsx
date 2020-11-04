@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import { useBankModal} from '../../hooks/useBankModal';
+import { Message } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -55,10 +56,7 @@ export const TransferModal = () => {
       amount, 
       message
     })
-    setTimeout(() => {
-      setShowBankModal(false)
-    }, 200)
-
+    setShowBankModal(false)
   }
 
   return (
