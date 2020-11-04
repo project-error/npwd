@@ -9,7 +9,7 @@
     "DestroyPhoneReCheck": 3,
     "notificationPosition": {
         "horizontal": "right",
-        "vertical": "bottom"
+        "vertical": "top"
     },
     "twitter": {
         "showNotifications": true,
@@ -22,5 +22,8 @@
         "enableEmojis": true,
         "enableImages": true,
         "maxImages": 3
+    },
+    "bank": {
+      "showNotifications": true
     }
   }
