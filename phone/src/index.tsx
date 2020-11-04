@@ -8,11 +8,13 @@ import "./main.css";
 import Phone from "./Phone";
 import * as serviceWorker from "./serviceWorker";
 import TwitterNotification from "./apps/twitter/components/notification/TwitterNotification";
+import { BankNotification } from "./apps/bank/components/notification/BankNotification";
 
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
       <TwitterNotification />
+      <BankNotification />
       <Phone />
     </RecoilRoot>
   </HashRouter>,
