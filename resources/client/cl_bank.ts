@@ -32,12 +32,22 @@ on(`__cfx_nui:${events.BANK_ADD_TRANSFER}`, (data: any) => {
   }, 500)
 })
 
-onNet(events.BANK_TRANSACTION_ALERT, (message: string, alert: string) => {
+onNet(events.BANK_TRANSACTION_ALERT, (bool: boolean) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
       method: 'setAlert',
-      data: { message, alert }
+      data: bool
+    })
+  )
+})
+
+onNet(events.BANK_TRANSACTION_NOTIFICATION, (transfer: any) => {
+  SendNuiMessage(
+    JSON.stringify({
+      app: "BANK",
+      method: 'setNotification',
+      data: transfer
     })
   )
 })
