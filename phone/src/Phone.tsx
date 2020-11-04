@@ -59,6 +59,31 @@ setTimeout(() => {
   )
 }, 1000)
 
+setTimeout(() => {
+  new MessageEvent("messsage", {
+    data: {
+      app: "BANK",
+      method: "setNotification",
+      data: {
+        id: 1,
+        message: "ahhaha"
+      }
+    }
+  })
+}, 1000)
+
+setTimeout(() => {
+  new MessageEvent("messsage", {
+    data: {
+      app: "TWITTER",
+      method: "setNotification",
+      data: {
+        id: 1,
+        message: "ahhaha"
+      }
+    }
+  })
+}, 1000)
 
 setTimeout(() => {
   window.dispatchEvent(
