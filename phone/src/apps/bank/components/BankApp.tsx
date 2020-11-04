@@ -21,7 +21,7 @@ import { NavigationBar } from "./navigation/NavigationBar";
 import { BankHome } from './home/BankHome'; 
 import { BankAccount } from './account/BankAccount';
 import { TransactionList } from "./transactions/TransactionList";
-import { BankAlert } from "./notification/BankAlert";
+import { BankAlert } from "./alert/BankAlert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
