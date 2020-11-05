@@ -39,8 +39,8 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   else if (transfer.amount < bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true)
 
-    //xTarget.addAccountMoney('bank', transfer.amount);//
-    //xPlayer.removeAccountMoney('bank', transfer.amount);
+    xTarget.addAccountMoney('bank', transfer.amount);
+    xPlayer.removeAccountMoney('bank', transfer.amount);
 
     const query = "INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)"
   
