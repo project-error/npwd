@@ -49,7 +49,7 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
       transfer.targetID,
       transfer.amount,
       transfer.message,
-      "Transaction",
+      "Transfer",
       sourceName,
     ])
     const insertData = <any>results;
