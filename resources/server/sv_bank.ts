@@ -2,6 +2,7 @@ import events from '../utils/events';
 import { ESX, getSource } from './server';
 import { pool } from './db';
 import { Transfer, Credentials } from '../../phone/src/common/interfaces/bank';
+import { useIdentifier } from './functions';
 
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
@@ -37,6 +38,10 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   } 
   else if (transfer.amount < bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true)
+
+    //xTarget.addAccountMoney('bank', transfer.amount);//
+    //xPlayer.removeAccountMoney('bank', transfer.amount);
+
     const query = "INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)"
   
     const [results] = await pool.query(query, [
@@ -67,22 +72,22 @@ async function getTransfer(transferId: number): Promise<Transfer> {
 onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
   try {
     const _source = (global as any).source;
-    const _identifier = ESX.GetPlayerFromId(getSource()).getIdentifier()
+    const _identifier = await useIdentifier()
     const transfer = await fetchAllTransactions(_identifier);
 
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer)
 
   } catch (error) {
-    console.log(error)
+    console.log("Failed to fetch transactions");
   }
 })
 
 onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
   try {
-    const _identifier = ESX.GetPlayerFromId(getSource()).getIdentifier()
+    const _identifier = await useIdentifier()
     const transferNotify = await addTransfer(_identifier, transfer)
     emitNet(events.BANK_TRANSACTION_NOTIFICATION, getSource(), transferNotify)
-    emitNet(events.BANK_ADD_TRANSFER_SUCCESS);
+    emitNet(events.BANK_ADD_TRANSFER_SUCCESS, getSource());
   } catch (error) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)
   }
@@ -91,9 +96,8 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
 onNet(events.BANK_GET_CREDENTIALS, () => {
   try {
     const credentials = fetchCredentials()
-    console.log("New log: ", credentials.balance, credentials.name)
     emitNet(events.BANK_SEND_CREDENTIALS, getSource(), credentials)
   } catch (error) {
-    console.log(error)
+    console.log("Failed to fetch credentials");
   }
 })
