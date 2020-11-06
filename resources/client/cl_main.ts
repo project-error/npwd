@@ -235,11 +235,6 @@ async function Phone() {
           isPhoneOpen = true;
           await phoneOpenAnim(); // Animation starts before the phone is open
           emitNet('phone:getCredentials') 
-          emitNet(events.CONTACTS_GET_CONTACTS);
-          emitNet(events.SELLOUT_FETCH_LISTING); 
-          emitNet(events.BANK_FETCH_TRANSACTIONS);
-          emitNet(events.BANK_GET_CREDENTIALS);
-          emitNet(events.NOTE_FETCH_ALL_NOTES);
           console.log("Sellout fetched from client side")// Gets the credentials. Will eventually most likely only get the phone number and name, idk.
           SetCursorLocation(0.90, 0.922) //Experimental
           let res = GetActiveScreenResolution()
@@ -275,11 +270,6 @@ async function Phone() {
       isPhoneOpen = true;
       await phoneOpenAnim(); // Animation starts before the phone is open
       emitNet('phone:getCredentials') 
-      emitNet(events.CONTACTS_GET_CONTACTS);
-      emitNet(events.SELLOUT_FETCH_LISTING);
-      emitNet(events.BANK_FETCH_TRANSACTIONS);
-      emitNet(events.BANK_GET_CREDENTIALS);
-      emitNet(events.NOTE_FETCH_ALL_NOTES);
       console.log("Sellout fetched from client side")
       SetCursorLocation(0.936, 0.922) //Experimental
       let res = GetActiveScreenResolution()
@@ -307,6 +297,30 @@ async function Phone() {
     }
   }
 }
+
+// DO NOT CHANGE THIS EITHER, PLEASE - CHIP
+
+// contacts app
+RegisterNuiCallbackType(events.OPEN_APP_CONTACTS);
+on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, () => {
+  emitNet(events.CONTACTS_GET_CONTACTS);
+})
+
+RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
+on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, () => {
+  emitNet(events.SELLOUT_FETCH_LISTING);
+})
+
+RegisterNuiCallbackType(events.OPEN_APP_NOTES);
+on(`__cfx_nui:${events.OPEN_APP_NOTES}`, () => {
+  emitNet(events.NOTE_FETCH_ALL_NOTES);
+})
+
+RegisterNuiCallbackType(events.OPEN_APP_BANK);
+on(`__cfx_nui:${events.OPEN_APP_BANK}`, () => {
+  emitNet(events.BANK_FETCH_TRANSACTIONS);
+  emitNet(events.BANK_GET_CREDENTIALS);
+})
 
 RegisterCommand(
   "phone",
