@@ -3,6 +3,7 @@ import { ESX, getSource } from './server';
 import { pool } from './db';
 import { Transfer, Credentials } from '../../phone/src/common/interfaces/bank';
 import { useIdentifier } from './functions';
+import { type } from 'os';
 
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
@@ -33,21 +34,21 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
   
 
-  if (transfer.amount > bankBalance) {
+  if (transfer.transferAmount > bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)
   } 
-  else if (transfer.amount < bankBalance) {
-    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true)
+  else if (transfer.transferAmount < bankBalance) {
+    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true);
 
-    xTarget.addAccountMoney('bank', transfer.amount);
-    xPlayer.removeAccountMoney('bank', transfer.amount);
+    xTarget.addAccountMoney('bank', transfer.transferAmount);
+    xPlayer.removeAccountMoney('bank', transfer.transferAmount);
 
     const query = "INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)"
   
     const [results] = await pool.query(query, [
       identifier, 
       transfer.targetID,
-      transfer.amount,
+      transfer.transferAmount,
       transfer.message,
       "Transfer",
       sourceName,
@@ -83,10 +84,12 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
 })
 
 onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
+  const xTarget = ESX.GetPlayerFromId(transfer.targetID);
+  const targetSource = xTarget.source;
   try {
     const _identifier = await useIdentifier()
     const transferNotify = await addTransfer(_identifier, transfer)
-    emitNet(events.BANK_TRANSACTION_NOTIFICATION, getSource(), transferNotify)
+    emitNet(events.BANK_TRANSACTION_NOTIFICATION, targetSource, transferNotify)
     emitNet(events.BANK_ADD_TRANSFER_SUCCESS, getSource());
   } catch (error) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)
