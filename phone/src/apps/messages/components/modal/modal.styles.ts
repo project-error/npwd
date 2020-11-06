@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   modalRoot: {
-    zIndex: 30,
+    zIndex: 10,
     position: 'absolute',
     height: '100%',
     width: '100%'

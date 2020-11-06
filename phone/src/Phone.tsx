@@ -20,6 +20,7 @@ import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
+import { useMessagesService } from "./apps/messages/hooks/useMessageService";
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -30,6 +31,26 @@ setTimeout(() => {
         method: "setNumber",
         data: "111-1134",
       },
+    })
+  );
+}, 1000);
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "MESSAGES",
+        method: "setMessages",
+        data: [
+          {
+            id: 1,
+            sender: 'chip',
+            receiver: 'rocky',
+            sms: 'Hello there',
+            owner: 1
+          }
+        ]
+      }
     })
   );
 }, 1000);
@@ -183,6 +204,7 @@ function Phone() {
   useInitKeyboard();
   useSelloutService();
   useBankService();
+  useMessagesService()
 
   if (visibility === false) {
     return null;

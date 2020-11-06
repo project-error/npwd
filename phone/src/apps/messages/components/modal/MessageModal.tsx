@@ -19,10 +19,10 @@ export const MessageModal = () => {
         <Button onClick={() => setMessageModal(false)}><ArrowBackIcon /></Button>
         {message.map((message) => (
           <>
-          <Paper>{message.name}</Paper>
+          <Paper style={{ textAlign: 'center' }}>{message.name}</Paper>
             {message.messages.map((sms) => (
               <div className={classes.messageContainer}>
-                <Paper className={sms.source == 'chip' ? classes.sourceSms : classes.sms} variant="elevation">
+                <Paper className={sms.source == 'chip' ? classes.sourceSms : classes.sms} variant="outlined">
                   <p>{sms.sms}</p>
                 </Paper>
               </div>
