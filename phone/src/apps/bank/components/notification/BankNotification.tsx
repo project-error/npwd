@@ -38,7 +38,7 @@ export const BankNotification = () => {
           </div>
           <div className={classes.justNow}>{t("APPS_BANK_TIME_JUST_NOW")}</div>
         </div>
-        <div className={classes.message}>{notification.source} sent you ${notification.amount}. <br></br> {notification.message}</div>
+        <div className={classes.message}>{notification.source} sent you ${notification.transferAmount}. <br></br> {notification.message}</div>
       </div>
     </Notification>
   ) 
