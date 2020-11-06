@@ -59,6 +59,31 @@ setTimeout(() => {
   )
 }, 1000)
 
+setTimeout(() => {
+  new MessageEvent("messsage", {
+    data: {
+      app: "BANK",
+      method: "setNotification",
+      data: {
+        id: 1,
+        message: "ahhaha"
+      }
+    }
+  })
+}, 1000)
+
+setTimeout(() => {
+  new MessageEvent("messsage", {
+    data: {
+      app: "TWITTER",
+      method: "setNotification",
+      data: {
+        id: 1,
+        message: "ahhaha"
+      }
+    }
+  })
+}, 1000)
 
 setTimeout(() => {
   window.dispatchEvent(
@@ -150,18 +175,6 @@ setTimeout(() => {
             avatar: 'https://i.imgur.com/B8ta5Aa.jpeg'
           },
         ],
-      },
-    })
-  );
-}, 1000);
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "PHONE",
-        method: "setVisibility",
-        data: true,
       },
     })
   );

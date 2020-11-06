@@ -16,6 +16,10 @@ interface NotificationConfig {
   vertical: "bottom" | "top";
 }
 
+interface BankConfig {
+  showNotifications: boolean;
+}
+
 export interface ServerConfig {
   Locale: string;
   KeyTogglePhone: number;
@@ -26,5 +30,6 @@ export interface ServerConfig {
   DestoryChance: number;
   DestroyPhoneReCheck: number;
   twitter: TwitterConfig;
+  bank: BankConfig;
   notificationPosition: NotificationConfig;
 }

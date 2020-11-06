@@ -41,10 +41,13 @@
 
     "APPS_BANK_HOME_TITLE": "Welcome",
     "APPS_BANK_ACCOUNT_LINK": "Account",
+    "APPS_BANK_TIME_JUST_NOW": "Just now",
     "APPS_BANK_ACCOUNT_TITLE": "Account Summary",
     "APPS_BANK_ACCOUNT_TRANSACTIONS": "Transactions",
     "APPS_BANK_ACCOUNT_SEE_TRANSACTION": "See all",
     "APPS_BANK_ACTIONS_TRANSFER": "Transfer",
+    "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transfer done successfully!",
+    "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transfer failed!",
 
     "APPS_CONTACT_FORM_NAME": "Name",
     "APPS_CONTACT_FORM_NUMBER": "Number",

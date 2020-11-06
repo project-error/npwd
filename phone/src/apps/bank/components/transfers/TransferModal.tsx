@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import { useBankModal} from '../../hooks/useBankModal';
+import { Message } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -50,15 +51,13 @@ export const TransferModal = () => {
   }
 
   const addTransfer = () => {
+    const transferAmount = parseInt(amount);
     Nui.send('phone:addTransfer', {
       targetID, 
-      amount, 
+      transferAmount, 
       message
     })
-    setTimeout(() => {
-      setShowBankModal(false)
-    }, 200)
-
+    setShowBankModal(false)
   }
 
   return (
