@@ -51,9 +51,10 @@ export const TransferModal = () => {
   }
 
   const addTransfer = () => {
+    const transferAmount = parseInt(amount);
     Nui.send('phone:addTransfer', {
       targetID, 
-      amount, 
+      transferAmount, 
       message
     })
     setShowBankModal(false)
