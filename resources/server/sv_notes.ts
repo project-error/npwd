@@ -33,6 +33,7 @@ onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
   try {
     const _identifier = await useIdentifier();
     addNote(_identifier, note);
+    emitNet(events.NOTE_SEND_NOTE_SUCCESS, getSource());
   } catch (error) {
     console.log("NOTES ERROR: ", error);
   }
@@ -44,7 +45,6 @@ onNet(events.NOTE_FETCH_ALL_NOTES, async () => {
     const _identifier = await useIdentifier();
     const notes = await fetchAllNotes(_identifier);
     emitNet(events.NOTE_SEND_NOTE, _source, notes);
-    emitNet(events.NOTE_SEND_NOTE_SUCCESS, _source);
   } catch (error) {
     console.log("NOTE ERROR: ", error);
   }

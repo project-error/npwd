@@ -28,7 +28,6 @@ on(`__cfx_nui:${events.NOTE_DELETE_NOTE}`, (data: any) => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
 });
 
-// coming soon tm
 RegisterNuiCallbackType(events.NOTE_UPDATE_NOTE);
 on(`__cfx_nui:${events.NOTE_UPDATE_NOTE}`, (data: any) => {
   const note = data;
