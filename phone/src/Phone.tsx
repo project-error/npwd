@@ -35,6 +35,17 @@ setTimeout(() => {
   );
 }, 1000);
 
+setTimeout(() => {	
+  window.dispatchEvent(	
+    new MessageEvent("message", {	
+      data: {	
+        app: "PHONE",	
+        method: "setVisibility",	
+        data: true,	
+      },	
+    })	
+  );	
+}, 1000);
 
 setTimeout(() => {
   window.dispatchEvent(
