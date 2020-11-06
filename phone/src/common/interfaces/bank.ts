@@ -8,7 +8,7 @@ export interface Transfer {
   targetID: number;
   source: string;
   type: string;
-  amount: number;
+  transferAmount: number;
   message: string;
 }
 
