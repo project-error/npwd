@@ -59,5 +59,12 @@ export default {
   NOTE_DELETE_NOTE: 'phone:deleteNote',
   NOTE_UPDATE_NOTE: 'phone:updateNote',
   NOTE_UPDATE_NOTE_SUCCESS: 'phone:updateNoteSuccess',
-  NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure'
+  NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure',
+
+  // DO NOT CHANGE WHATS BELOW, PLEASE - CHIP
+  OPEN_APP_CONTACTS: 'phone:app:CONTACTS',
+  OPEN_APP_BANK: 'phone:app:BANK',
+  OPEN_APP_NOTES: 'phone:app:NOTES',
+  OPEN_APP_LISTINGS: 'phone:app:SELLOUT'
+
 }
