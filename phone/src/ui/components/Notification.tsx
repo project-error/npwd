@@ -32,7 +32,7 @@ function Notification({ children, handleClose, open }) {
       <Snackbar
         className={classes.snackBar}
         anchorOrigin={{ horizontal, vertical }}
-        //ClickAwayListenerProps={{ onClickAway: () => null }}
+        ClickAwayListenerProps={{ onClickAway: () => setTimeout(() => { handleClose() }, 5000) }}
         onClose={handleClose}
         open={open}
         TransitionComponent={Fade}
