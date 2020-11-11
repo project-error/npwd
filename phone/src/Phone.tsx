@@ -48,6 +48,20 @@ setTimeout(() => {
             receiver: 'rocky',
             sms: 'Hello there',
             owner: 1
+          },
+          {
+            id: 2,
+            sender: 'chip',
+            receiver: 'depo',
+            sms: 'Hello man',
+            owner: 1
+          },
+          {
+            id: 2,
+            sender: 'rocky',
+            receiver: 'kire',
+            sms: 'Hello dude',
+            owner: 1
           }
         ]
       }

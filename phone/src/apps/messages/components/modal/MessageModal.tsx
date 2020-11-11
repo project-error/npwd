@@ -9,27 +9,28 @@ import { useMessageModal } from '../../hooks/useMessageModal';
 
 export const MessageModal = () => {
   const classes = useStyles();
-  const message = useMessages();
+  const {messages, setMessages} = useMessages();
 
   const {messageModal, setMessageModal} = useMessageModal()
+
+  const closeModal = () => {
+    setMessageModal(false)
+  }
   
   return (
     <Slide direction="left" in={messageModal}>
       <Paper className={messageModal ? classes.modalRoot : classes.modalHide}>
-        <Button onClick={() => setMessageModal(false)}><ArrowBackIcon /></Button>
-        {message.map((message) => (
+        <Button onClick={closeModal}><ArrowBackIcon /></Button>
+        {/*{messages.map((message) => (
           <>
-          <Paper style={{ textAlign: 'center' }}>{message.name}</Paper>
-            {message.messages.map((sms) => (
-              <div className={classes.messageContainer}>
-                <Paper className={sms.source == 'chip' ? classes.sourceSms : classes.sms} variant="outlined">
-                  <p>{sms.sms}</p>
-                </Paper>
-              </div>
-            ))}
+            <div className={classes.messageContainer}>
+              <Paper className={message.sender == 'chip' ? classes.sourceSms : classes.sms} variant="outlined">
+                <p>{message.sms}</p>
+              </Paper>
+            </div>
           </>
-        ))}
-        <MessageInput key={message.id} {...message}/>
+        ))}*/}
+        <MessageInput key={messages.id} {...messages}/>
       </Paper>
     </Slide>
   )

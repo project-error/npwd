@@ -1,7 +1,7 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { messageState } from './state';
 
 export const useMessages = (): any => {
-  const message = useRecoilValue(messageState.messageList);
-  return message;
+  const [messages, setMessages] = useRecoilState(messageState.messageList);
+  return { messages, setMessages };
 }

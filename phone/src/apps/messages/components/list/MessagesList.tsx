@@ -5,17 +5,23 @@ import { useMessageModal } from '../../hooks/useMessageModal';
 import { useMessages } from '../../hooks/useMessages';
 
 const MessagesList = (): any => {
-  const messages = useMessages();
+  const {messages, setMessages} = useMessages();
   const { setMessageModal } = useMessageModal()
+
+  const handleConversation = (message) => {
+    setMessageModal(true)
+    setMessages(message)
+  }
+  
   return (
     <List>
       {messages.map((message) => (
-        <ListItem divider onClick={() => setMessageModal(true)} button key={message.id}>
+        <ListItem divider onClick={() => handleConversation(message)} button key={message.receiver}>
           <ListItemAvatar>
             <MuiAvatar />
           </ListItemAvatar>
-          <ListItemText secondary="hello, how are...">
-            {message.name}
+          <ListItemText>
+            {message.receiver}
           </ListItemText>
         </ListItem>
       ))}
