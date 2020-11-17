@@ -38,6 +38,31 @@ setTimeout(() => {
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
+      data: { 
+        app: "MESSAGES",
+        method: "setConversations",
+        data: [
+          {
+            id: 1,
+            name: 'rocky'
+          },
+          {
+            id: 2,
+            name: 'ark'
+          },
+          {
+            id: 3,
+            name: 'kire'
+          }
+        ]
+      }
+    })
+  )
+}, 1000)
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
       data: {
         app: "MESSAGES",
         method: "setMessages",
