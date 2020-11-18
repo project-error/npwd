@@ -16,5 +16,9 @@ export const contactsState = {
   showContactsModal: atom({
     key: 'showContactModal',
     default: false
+  }),
+  contactDetail: atom({
+    key: 'contactDetail',
+    default: null
   })
 };

@@ -31,6 +31,11 @@
   color: #388CF8 !important;
 }
 
+
+#bank-app .MuiSnackbar-root {
+  position: absolute;
+}
+
 #bank-title {
   font-family: 'Bebas Neue', cursive;
   font-size: 50px;

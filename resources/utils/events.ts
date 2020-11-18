@@ -32,7 +32,11 @@ export default {
   CONTACTS_GET_CONTACTS: 'phone:getContacts',
   CONTACTS_ADD_CONTACT_NUI: 'contacts:add',
   CONTACTS_ADD_CONTACT: 'contacts:add',
-  CONTACTS_UPDATE_CONTACTS: 'phone:updateContacts',
+  CONTACTS_ADD_CONTACT_SUCCESS: 'contacts:addSuccess',
+  CONTACTS_UPDATE_CONTACT: 'phone:updateContact',
+  CONTACTS_DELETE_CONTACT: 'phone:deleteContact',
+  CONTACTS_DELETE_CONTACT_SUCCESS: 'contacts:deleteSuccess',
+  CONTACTS_UPDATE_CONTACT_SUCCESS: 'phone:updateContactSuccess',
 
   // Sellout
   SELLOUT_ADD_LISTING: 'phone:addListing',
@@ -41,12 +45,32 @@ export default {
 
 // 
   BANK_ADD_TRANSFER: 'phone:addTransfer',
+  BANK_ADD_TRANSFER_SUCCESS: 'phone:addTransferSuccess',
   BANK_FETCH_TRANSACTIONS: 'phone:fetchAllTransactions',
   BANK_SEND_TRANSFERS: 'phone:sendTransfers',
-  BANK_TRANSACTION_ALERT: 'phone:transactionAlert',
+  BANK_TRANSACTION_ALERT: 'phone:bankTransactionAlert',
+  BANK_TRANSACTION_NOTIFICATION: 'phone:bankTransactionNotification',
   BANK_SEND_CREDENTIALS: 'phone:sendBankCredentials',
   BANK_GET_CREDENTIALS: 'phone:getBankCredentials',
 
   //messages
   MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
+  MESSAGES_GET_MESSAGES: 'phone:getMessage',
+
+  // Notes 
+  NOTE_ADD_NOTE: 'phone:addNote',
+  NOTE_FETCH_ALL_NOTES: 'phone:fetchAllNotes',
+  NOTE_SEND_NOTE: 'phone:sendNote',
+  NOTE_SEND_NOTE_SUCCESS: 'phone:sendNoteSuccess',
+  NOTE_DELETE_NOTE: 'phone:deleteNote',
+  NOTE_UPDATE_NOTE: 'phone:updateNote',
+  NOTE_UPDATE_NOTE_SUCCESS: 'phone:updateNoteSuccess',
+  NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure',
+
+  // DO NOT CHANGE WHATS BELOW, PLEASE - CHIP
+  OPEN_APP_CONTACTS: 'phone:app:CONTACTS',
+  OPEN_APP_BANK: 'phone:app:BANK',
+  OPEN_APP_NOTES: 'phone:app:NOTES',
+  OPEN_APP_LISTINGS: 'phone:app:SELLOUT'
+
 }

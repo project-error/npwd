@@ -57,6 +57,36 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+CREATE TABLE IF NOT EXISTS npwd_notes (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  identifier varchar(255) NOT NULL,
+  title varchar(255) NOT NULL,
+  content varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 5,
+AVG_ROW_LENGTH = 4096,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
+
+CREATE TABLE npwd_sellout_listings (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  identifier varchar(255) DEFAULT NULL,
+  name varchar(50) DEFAULT NULL,
+  number varchar(255) NOT NULL,
+  title varchar(255) DEFAULT NULL,
+  url varchar(255) DEFAULT NULL,
+  description varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 26,
+AVG_ROW_LENGTH = 2048,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
+
 CREATE TABLE IF NOT EXISTS `npwd_twitter_reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `profile_id` int NOT NULL,

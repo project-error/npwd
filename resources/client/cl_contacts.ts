@@ -17,8 +17,29 @@ on(`__cfx_nui:${events.CONTACTS_ADD_CONTACT}`, (data: any) => {
   const avatar = data.avatar;
   emitNet(events.CONTACTS_ADD_CONTACT, number, display, avatar);
 
-  setTimeout(() => {
-    emitNet(events.CONTACTS_GET_CONTACTS)
-  }, 500)
 });
 
+onNet(events.CONTACTS_ADD_CONTACT_SUCCESS, () => {
+  emitNet(events.CONTACTS_GET_CONTACTS)
+})
+
+
+RegisterNuiCallbackType(events.CONTACTS_UPDATE_CONTACT);
+on(`__cfx_nui:${events.CONTACTS_UPDATE_CONTACT}`, (data: any) => {
+  const contact = data;
+  emitNet(events.CONTACTS_UPDATE_CONTACT, contact)
+})
+
+onNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, () => {
+  emitNet(events.CONTACTS_GET_CONTACTS)
+})
+
+RegisterNuiCallbackType(events.CONTACTS_DELETE_CONTACT);
+on(`__cfx_nui:${events.CONTACTS_DELETE_CONTACT}`, (data: any) => {
+  const contact = data;
+  emitNet(events.CONTACTS_DELETE_CONTACT, contact)
+})
+
+onNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, () => {
+  emitNet(events.CONTACTS_GET_CONTACTS)
+})

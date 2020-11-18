@@ -6,6 +6,7 @@ import './sv_main';
 import './sv_contacts';
 import './sv_sellout';
 import './sv_bank';
+import './sv_notes';
 
 export let ESX: ESXServer = null;
 

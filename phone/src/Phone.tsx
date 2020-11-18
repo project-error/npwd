@@ -21,6 +21,7 @@ import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from "./apps/messages/hooks/useMessageService";
+import { useNotesService } from "./apps/notes/hooks/useNotesService";
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -35,25 +36,35 @@ setTimeout(() => {
   );
 }, 1000);
 
+setTimeout(() => {	
+  window.dispatchEvent(	
+    new MessageEvent("message", {	
+      data: {	
+        app: "PHONE",	
+        method: "setVisibility",	
+        data: true,	
+      },	
+    })	
+  );	
+}, 1000);
+
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
-      data: { 
-        app: "MESSAGES",
-        method: "setConversations",
+      data: {
+        app: 'NOTES',
+        method: 'setNotes',
         data: [
           {
             id: 1,
-            name: 'rocky'
+            title: 'First note',
+            content: 'Hello, this is my shitty note'
           },
           {
             id: 2,
-            name: 'ark'
+            title: 'Second note',
+            content: 'Hello, this is another shitty note'
           },
-          {
-            id: 3,
-            name: 'kire'
-          }
         ]
       }
     })
@@ -61,39 +72,30 @@ setTimeout(() => {
 }, 1000)
 
 setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
+  new MessageEvent("messsage", {
+    data: {
+      app: "BANK",
+      method: "setNotification",
       data: {
-        app: "MESSAGES",
-        method: "setMessages",
-        data: [
-          {
-            id: 1,
-            sender: 'chip',
-            receiver: 'rocky',
-            sms: 'Hello there',
-            owner: 1
-          },
-          {
-            id: 2,
-            sender: 'chip',
-            receiver: 'depo',
-            sms: 'Hello man',
-            owner: 1
-          },
-          {
-            id: 2,
-            sender: 'rocky',
-            receiver: 'kire',
-            sms: 'Hello dude',
-            owner: 1
-          }
-        ]
+        id: 1,
+        message: "ahhaha"
       }
-    })
-  );
-}, 1000);
+    }
+  })
+}, 1000)
 
+setTimeout(() => {
+  new MessageEvent("messsage", {
+    data: {
+      app: "TWITTER",
+      method: "setNotification",
+      data: {
+        id: 1,
+        message: "ahhaha"
+      }
+    }
+  })
+}, 1000)
 
 setTimeout(() => {
   window.dispatchEvent(
@@ -170,7 +172,7 @@ setTimeout(() => {
             id: 1,
             number: "345-4366",
             display: "chip",
-            avatar: 'https://i.imgur.com/Qpw6j8D.png'
+            avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Rotating_earth_%28large%29.gif/200px-Rotating_earth_%28large%29.gif'
           },
           {
             id: 2,
@@ -185,18 +187,6 @@ setTimeout(() => {
             avatar: 'https://i.imgur.com/B8ta5Aa.jpeg'
           },
         ],
-      },
-    })
-  );
-}, 1000);
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "PHONE",
-        method: "setVisibility",
-        data: true,
       },
     })
   );
@@ -244,6 +234,7 @@ function Phone() {
   useSelloutService();
   useBankService();
   useMessagesService()
+  useNotesService();
 
   if (visibility === false) {
     return null;
