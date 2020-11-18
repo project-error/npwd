@@ -21,7 +21,7 @@ export const MessageModal = () => {
     <Slide direction="left" in={messageModal}>
       <Paper className={messageModal ? classes.modalRoot : classes.modalHide}>
         <Button onClick={closeModal}><ArrowBackIcon /></Button>
-        {/*{messages.map((message) => (
+          {messages.map((message) => (
           <>
             <div className={classes.messageContainer}>
               <Paper className={message.sender == 'chip' ? classes.sourceSms : classes.sms} variant="outlined">
@@ -29,7 +29,7 @@ export const MessageModal = () => {
               </Paper>
             </div>
           </>
-        ))}*/}
+        ))}
         <MessageInput key={messages.id} {...messages}/>
       </Paper>
     </Slide>
