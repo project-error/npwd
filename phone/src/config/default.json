@@ -1,5 +1,5 @@
 {
-  "4gNetowrk": "AT&T",
+  "cellProvider": "AT&T",
   "language": "en_US",
   "wallpapers": ["default.png", "dragon.jpg", "legacy.jpg"],
   "frames": ["default.png", "s10.png"],

@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles, Typography, Grid, IconButton } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SignalIcon from "@material-ui/icons/SignalCellular3Bar";
+import Battery90Icon from "@material-ui/icons/Battery90";
+import Default from "../../../config/default.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,13 +12,15 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     color: theme.palette.text.primary,
     zIndex: 2,
+    paddingLeft: "10px",
+    paddingRight: "10px",
   },
   item: {
     margin: "0 6px",
   },
   text: {
     position: "relative",
-    bottom: "2px",
+    bottom: "4px",
     color: theme.palette.text.primary,
   },
   icon: {
@@ -60,10 +64,12 @@ export const NotificationBar = ({ notifications = [] }: IProps) => {
           <SignalIcon fontSize="small" />
         </Grid>
         <Grid item className={classes.item}>
-          <Typography
-            className={classes.text}
-            variant="button"
-          >{`AT&T`}</Typography>
+          <Typography className={classes.text} variant="button">
+            {Default.cellProvider}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Battery90Icon style={{ transform: "rotate(90deg)" }} />
         </Grid>
       </Grid>
     </Grid>
