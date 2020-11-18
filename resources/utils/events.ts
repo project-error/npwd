@@ -39,11 +39,14 @@ export default {
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
 
-  // Bank
+// 
   BANK_ADD_TRANSFER: 'phone:addTransfer',
   BANK_FETCH_TRANSACTIONS: 'phone:fetchAllTransactions',
   BANK_SEND_TRANSFERS: 'phone:sendTransfers',
   BANK_TRANSACTION_ALERT: 'phone:transactionAlert',
   BANK_SEND_CREDENTIALS: 'phone:sendBankCredentials',
-  BANK_GET_CREDENTIALS: 'phone:getBankCredentials'
+  BANK_GET_CREDENTIALS: 'phone:getBankCredentials',
+
+  //messages
+  MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
 }

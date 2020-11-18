@@ -1,6 +1,7 @@
 
 import events from '../utils/events';
-import { ESX, getSource } from './server';
+import { ESX } from './server';
+import { getSource } from "./functions";
 import { pool } from './db';
 import { usePhoneNumber } from './functions';
 
