@@ -55,7 +55,9 @@ export default {
 
   //messages
   MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
-  MESSAGES_GET_MESSAGES: 'phone:getMessage',
+  MESSAGES_FETCH_MESSAGES: 'phone:fetchMessages',
+  MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
+  MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
 
   // Notes 
   NOTE_ADD_NOTE: 'phone:addNote',

@@ -1,24 +1,21 @@
 export interface Message {
   id?: number;
   content: string;
-  user_id: number;
-  user_name?: string;
-  conversation_id: number;
+  user_identifier: string;
+  channel_id: number;
   isRead: boolean;
+  isMine: boolean;
+  avatar?: string;
+  phone_number?: string;
+  display?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface ConversationParticpant {
-  id?: number;
-  user_id: number;
-  conversation_id: number;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export interface Conversation {
-  participants: ConversationParticpant[];
+export interface MessageGroup {
+  channelId: string;
+  messages: Message[];
+  channelDisplay: string;
   createdAt?: string;
   updatedAt?: string;
 }

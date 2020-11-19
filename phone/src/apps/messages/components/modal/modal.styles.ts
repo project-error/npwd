@@ -10,27 +10,31 @@ const useStyles = makeStyles((theme) => ({
   modalHide: {
     display: 'none'
   },
+  messageList: {
+    height: '90%',
+    overflowY: 'auto',
+    paddingBottom: '25px',
+  },
   messageContainer: {
     marginTop: 25,
     width: '100%'
   },
   sourceSms: {
     float: 'right',
-    marginBottom: 20,
     margin: 10,
-    width: 200,
+    padding: '6px 12px',
+    width: '80%',
     background: '#0288d1',
-    paddingLeft: 5
+    borderRadius: '20px'
   },
   sms: {
     float: 'left',
-    marginBottom: 20,
     margin: 10,
-    minWidth: 200,
-    maxWidth: 400,
+    padding: '6px 12px',
+    width: '80%',
     background: '#ddd',
     color: '#232323',
-    paddingLeft: 5
+    borderRadius: '15px'
   }
 }))
 

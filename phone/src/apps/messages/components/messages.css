@@ -1,0 +1,4 @@
+/* override the FAB (action buttons) background when selected */
+#messages-app .MuiFab-primary {
+  background: #ffa000 !important;
+}

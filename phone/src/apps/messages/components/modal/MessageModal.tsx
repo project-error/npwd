@@ -1,36 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Slide, Paper, Button } from '@material-ui/core'
 import useStyles from './modal.styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { useMessages } from '../../hooks/useMessages';
 import { MessageInput } from '../form/MessageInput';
-import { useMessageModal } from '../../hooks/useMessageModal';
+
+const LIST_ID = 'message-modal-list';
 
 export const MessageModal = () => {
   const classes = useStyles();
-  const {messages, setMessages} = useMessages();
+  const { messages, activeMessageGroupId, setActiveMessageGroupId } = useMessages();
 
-  const {messageModal, setMessageModal} = useMessageModal()
+  useEffect(() => {
+    // when we get a new message group we should scroll to the
+    // bottom to show the latest messages
+    if (activeMessageGroupId) {
+      const element = document.getElementById(LIST_ID);
+      if (element) {
+        element.scrollTop = element.scrollHeight;
+      }
+    }
+  }, [activeMessageGroupId]);
 
-  const closeModal = () => {
-    setMessageModal(false)
-  }
+  const closeModal = () => setActiveMessageGroupId(null);
+  const isOpen = activeMessageGroupId !== null;
+  const activeMessageGroup = messages.find(messageGroup => messageGroup.channelId === activeMessageGroupId);
+  const activeMessages = activeMessageGroup ? activeMessageGroup.messages : [];
   
   return (
-    <Slide direction="left" in={messageModal}>
-      <Paper className={messageModal ? classes.modalRoot : classes.modalHide}>
+    <Slide direction="left" in={isOpen}>
+      <Paper className={activeMessageGroupId ? classes.modalRoot : classes.modalHide}>
         <Button onClick={closeModal}><ArrowBackIcon /></Button>
-          {messages.map((message) => (
-          <>
-            <div className={classes.messageContainer}>
-              <Paper className={message.sender == 'chip' ? classes.sourceSms : classes.sms} variant="outlined">
-                <p>{message.sms}</p>
-              </Paper>
-            </div>
-          </>
-        ))}
-        <MessageInput key={messages.id} {...messages}/>
+          <div id={LIST_ID} className={classes.messageList}>
+            {activeMessages.map((message) => (
+              <>
+                <div className={classes.messageContainer}>
+                  <Paper className={message.isMine ? classes.sourceSms : classes.sms} variant="outlined">
+                    {message.content}
+                  </Paper>
+                </div>
+              </>
+            ))}
+          </div>
+        <MessageInput messageGroup={activeMessageGroupId} />
       </Paper>
     </Slide>
   )

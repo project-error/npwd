@@ -1,7 +1,7 @@
-import { ESX, getSource } from "./server";
+import { ESX } from "./server";
 import { pool } from "./db";
 import events from "../utils/events";
-import { useIdentifier } from './functions'
+import { useIdentifier, getSource } from './functions'
 
 interface Contacts {
   id?: number;
@@ -31,7 +31,8 @@ async function addContact(
   const query =
     "INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)";
 
-  await pool.query(query, [identifier, number, display, avatar]);
+  const [result] = await pool.query(query, [identifier, number, display, avatar]);
+  console.log(result);
 }
 
 async function updateContact(contact: Contacts, identifier: string): Promise<any> {
@@ -70,6 +71,7 @@ onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avata
   try {
     const _source = (global as any).source;
     const _identifier = await useIdentifier()
+    console.log(number, display);
     addContact(_identifier, number, display, avatar);
     emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source)
 

@@ -1,17 +1,13 @@
 import { atom } from 'recoil';
 
 export const messageState = {
-  conversation: atom({
-    key: 'messageConversations',
+  messages: atom({
+    key: 'messages',
     default: null
   }),
-  messageList: atom({
-    key: 'messageList',
-    default: []
-  }),
-  modal: atom({
-    key: 'messageModal',
-    default: true
+  activeMessageGroup: atom({
+    key: 'activeMessageGroup',
+    default: null
   }),
   filter: atom({
     key: 'messageFilter',

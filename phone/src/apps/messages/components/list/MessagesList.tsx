@@ -1,32 +1,27 @@
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 import React from 'react'
-import { useConversation } from '../../hooks/useConversation';
-import { useFilter } from '../../hooks/useFilter';
-import { useMessageModal } from '../../hooks/useMessageModal';
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 
 import { useMessages } from '../../hooks/useMessages';
+import useStyles from './list.styles';
 
 const MessagesList = (): any => {
-  const { setMessageModal } = useMessageModal()
-  const { conversation } = useConversation();
-  const { setMessageFilter } = useFilter();
-
-  const handleConversation = (convo) => {
-    setMessageModal(true)
-    setMessageFilter(convo)
-  }
-  
-  if (!conversation) return <p>loading</p>
+  const classes = useStyles();
+  const { messages, setActiveMessageGroupId } = useMessages();
 
   return (
-    <List>
-      {conversation.map((convo) => (
-        <ListItem divider button key={convo.name} onClick={() => handleConversation(convo)}> 
+    <List className={classes.root}>
+      {messages.map((messageGroup) => (
+        <ListItem
+          key={messageGroup.channelId}
+          onClick={() => setActiveMessageGroupId(messageGroup.channelId)}
+          divider
+          button
+        >
           <ListItemAvatar>
             <MuiAvatar />
           </ListItemAvatar>
           <ListItemText>
-            {convo.name}
+            {messageGroup.channelDisplay}
           </ListItemText>
         </ListItem>
       ))}

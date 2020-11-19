@@ -1,7 +1,16 @@
 import { useRecoilState } from 'recoil';
+import { MessageGroup } from '../../../common/interfaces/messages';
 import { messageState } from './state';
 
-export const useMessages = (): any => {
-  const [messages, setMessages] = useRecoilState(messageState.messageList);
-  return { messages, setMessages };
+interface IUseMessages {
+  messages: MessageGroup[];
+  setMessages: any;
+  setActiveMessageGroupId: (id: string | null) => void;
+  activeMessageGroupId: null | string;
+}
+
+export const useMessages = (): IUseMessages => {
+  const [ activeMessageGroupId, setActiveMessageGroupId ] = useRecoilState<any>(messageState.activeMessageGroup)
+  const [messages, setMessages] = useRecoilState<any>(messageState.messages);
+  return { messages, setMessages, activeMessageGroupId, setActiveMessageGroupId };
 }

@@ -5,6 +5,7 @@ ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) NULL DEFAULT NULL;
 CREATE TABLE IF NOT EXISTS npwd_phone_contacts (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(60) DEFAULT NULL,
+  avatar varchar(512) DEFAULT NULL,
   number varchar(10) DEFAULT NULL,
   display varchar(60) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
@@ -13,7 +14,7 @@ ENGINE = INNODB,
 AUTO_INCREMENT = 6,
 AVG_ROW_LENGTH = 4096,
 CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+COLLATE utf8mb4_0900_ai_ci;
 
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('phone', 'Phone', 1, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('dphone', 'Destroyed Phone', 1, 0, 1);
