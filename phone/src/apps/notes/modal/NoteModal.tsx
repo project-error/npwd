@@ -1,25 +1,22 @@
-import {
-  Button,
-  TextField,
-  Slide,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Button, TextField, Slide } from '@material-ui/core';
+import React, { useState } from 'react';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { useNoteModal } from "../hooks/useNoteModal";
-import { useNoteDetail } from "../hooks/useNoteDetail";
+import { useNoteModal } from '../hooks/useNoteModal';
+import { useNoteDetail } from '../hooks/useNoteDetail';
 
-import useStyles from "./modal.styles";
+import useStyles from './modal.styles';
 
-import "../NotesApp.css";
-import Nui from "../../../os/nui-events/utils/Nui";
+import '../NotesApp.css';
+import Nui from '../../../os/nui-events/utils/Nui';
 
+// TODO: Fix input focus color
 export const NoteModal = () => {
   const { noteModal, setNoteModal } = useNoteModal();
   const { detail, setDetail } = useNoteDetail();
   console.log(detail);
-  const [title, setTitle] = useState(detail ? detail.title : "");
-  const [content, setContent] = useState(detail ? detail.content : "");
+  const [title, setTitle] = useState(detail ? detail.title : '');
+  const [content, setContent] = useState(detail ? detail.content : '');
 
   const classes = useStyles();
 
@@ -31,7 +28,7 @@ export const NoteModal = () => {
   const handleNoteSave = () => {
     setNoteModal(false);
     setDetail(null);
-    Nui.send("phone:addNote", {
+    Nui.send('phone:addNote', {
       title,
       content,
     });
@@ -40,14 +37,14 @@ export const NoteModal = () => {
   const handleDeleteNote = () => {
     const id = detail.id;
     setNoteModal(false);
-    Nui.send("phone:deleteNote", {
+    Nui.send('phone:deleteNote', {
       id,
     });
     setDetail(null);
   };
 
   const handleUpdateNote = () => {
-    Nui.send("phone:updateNote", {
+    Nui.send('phone:updateNote', {
       id: detail.id,
       title,
       content,
@@ -58,15 +55,15 @@ export const NoteModal = () => {
 
   return (
     <div className={noteModal ? classes.modalRoot : classes.modalHide}>
-      <Slide direction="left" in={noteModal} mountOnEnter unmountOnExit>
+      <Slide direction='left' in={noteModal} mountOnEnter unmountOnExit>
         <div>
           <Button className={classes.closeButton} onClick={_handleClose}>
             <ArrowBackIcon />
           </Button>
-          <div id="notes-modal" className={classes.noteContainer}>
+          <div id='notes-modal' className={classes.noteContainer}>
             <TextField
               className={classes.input}
-              placeholder="Title"
+              placeholder='Title'
               inputProps={{
                 className: classes.inputPropsTitle,
               }}
@@ -79,11 +76,11 @@ export const NoteModal = () => {
               inputProps={{
                 className: classes.inputPropsContent,
               }}
-              placeholder="Content"
+              placeholder='Content'
               multiline
               fullWidth
               rows={19}
-              variant="outlined"
+              variant='outlined'
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />

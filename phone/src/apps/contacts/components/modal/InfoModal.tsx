@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Paper,
   Slide,
   Button,
   TextField,
   Avatar as MuiAvatar,
-} from "@material-ui/core";
-import useStyles from "./modal.styles";
-import { useContactModal } from "../../hooks/useContactModal";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+} from '@material-ui/core';
+import useStyles from './modal.styles';
+import { useContactModal } from '../../hooks/useContactModal';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { useTranslation } from "react-i18next";
-import { useContactDetail } from "../../hooks/useContactDetail";
-import Nui from "../../../../os/nui-events/utils/Nui";
+import { useTranslation } from 'react-i18next';
+import { useContactDetail } from '../../hooks/useContactDetail';
+import Nui from '../../../../os/nui-events/utils/Nui';
 
 export const InfoModal = () => {
   const classes = useStyles();
@@ -21,14 +21,14 @@ export const InfoModal = () => {
   const { contactDetail, setContactDetail } = useContactDetail();
 
   const [display, setDisplay] = useState(
-    contactDetail ? contactDetail.display : ""
+    contactDetail ? contactDetail.display : ''
   );
   console.log(contactDetail);
   const [number, setNumber] = useState(
-    contactDetail ? contactDetail.number : ""
+    contactDetail ? contactDetail.number : ''
   );
   const [avatar, setAvatar] = useState(
-    contactDetail ? contactDetail.avatar : ""
+    contactDetail ? contactDetail.avatar : ''
   );
 
   const closeModal = () => {
@@ -37,7 +37,7 @@ export const InfoModal = () => {
   };
 
   const updateContact = () => {
-    Nui.send("phone:updateContact", {
+    Nui.send('phone:updateContact', {
       id: contactDetail.id,
       display,
       number,
@@ -48,7 +48,7 @@ export const InfoModal = () => {
   };
 
   const deleteContact = () => {
-    Nui.send("phone:deleteContact", {
+    Nui.send('phone:deleteContact', {
       id: contactDetail.id,
     });
     setContactDetail(null);
@@ -56,9 +56,10 @@ export const InfoModal = () => {
   };
 
   return (
-    <Slide direction="up" in={showContactModal}>
+    <Slide direction='up' in={showContactModal}>
       <Paper
         className={showContactModal ? classes.modalRoot : classes.modalHide}
+        square
       >
         <Button style={{ margin: 10 }} onClick={closeModal}>
           <ArrowBackIcon />
@@ -69,7 +70,7 @@ export const InfoModal = () => {
             className={classes.input}
             value={display}
             onChange={(e) => setDisplay(e.target.value)}
-            placeholder={t("APPS_CONTACT_FORM_NAME")}
+            placeholder={t('APPS_CONTACT_FORM_NAME')}
             fullWidth
             inputProps={{
               className: classes.inputProps,
@@ -79,7 +80,7 @@ export const InfoModal = () => {
             className={classes.input}
             value={number}
             onChange={(e) => setNumber(e.target.value)}
-            placeholder={t("APPS_CONTACT_FORM_NUMBER")}
+            placeholder={t('APPS_CONTACT_FORM_NUMBER')}
             fullWidth
             inputProps={{
               className: classes.inputProps,
@@ -87,7 +88,7 @@ export const InfoModal = () => {
           />
           <TextField
             className={classes.input}
-            placeholder={t("APPS_CONTACT_FORM_AVATAR")}
+            placeholder={t('APPS_CONTACT_FORM_AVATAR')}
             fullWidth
             value={avatar}
             onChange={(e) => setAvatar(e.target.value)}
@@ -96,7 +97,7 @@ export const InfoModal = () => {
             }}
           />
 
-          <div style={{ display: "block" }}>
+          <div style={{ display: 'block' }}>
             <Button onClick={updateContact} className={classes.updateButton}>
               Update
             </Button>

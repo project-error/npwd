@@ -1,8 +1,16 @@
 {
   "cellProvider": "AT&T",
   "language": "en_US",
-  "wallpapers": ["default.png", "dragon.jpg", "legacy.jpg"],
-  "frames": ["default.png", "s10.png"],
+  "wallpapers": [
+    "default.png",
+    "dragon.jpg",
+    "legacy.jpg",
+    "minimal.jpg",
+    "waves.jpg",
+    "surf.jpg",
+    "beach.jpg"
+  ],
+  "frames": ["default.png", "s10.png", "tw.png", "samsung.png"],
   "themes": {
     "default-dark": {
       "palette": {

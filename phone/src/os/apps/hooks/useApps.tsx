@@ -115,7 +115,7 @@ const appsState = atom({
       },
       {
         id: 'NOTES',
-        name: 'APPS_NOTES',
+        nameLocale: 'APPS_NOTES',
         icon: <FontAwesomeIcon icon={faStickyNote} fixedWidth />,
         backgroundColor: yellow[800],
         color: common.white,
