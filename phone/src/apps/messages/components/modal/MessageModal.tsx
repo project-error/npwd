@@ -25,7 +25,7 @@ export const MessageModal = () => {
 
   const closeModal = () => setActiveMessageGroupId(null);
   const isOpen = activeMessageGroupId !== null;
-  const activeMessageGroup = messages.find(messageGroup => messageGroup.channelId === activeMessageGroupId);
+  const activeMessageGroup = messages.find(messageGroup => messageGroup.groupId === activeMessageGroupId);
   const activeMessages = activeMessageGroup ? activeMessageGroup.messages : [];
   
   return (

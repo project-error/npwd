@@ -2,7 +2,7 @@ export interface Message {
   id?: number;
   content: string;
   user_identifier: string;
-  channel_id: number;
+  group_id: number;
   isRead: boolean;
   isMine: boolean;
   avatar?: string;
@@ -13,9 +13,9 @@ export interface Message {
 }
 
 export interface MessageGroup {
-  channelId: string;
+  groupId: string;
   messages: Message[];
-  channelDisplay: string;
+  groupDisplay: string;
   createdAt?: string;
   updatedAt?: string;
 }

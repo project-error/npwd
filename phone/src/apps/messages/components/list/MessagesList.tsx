@@ -12,8 +12,8 @@ const MessagesList = (): any => {
     <List className={classes.root}>
       {messages.map((messageGroup) => (
         <ListItem
-          key={messageGroup.channelId}
-          onClick={() => setActiveMessageGroupId(messageGroup.channelId)}
+          key={messageGroup.groupId}
+          onClick={() => setActiveMessageGroupId(messageGroup.groupId)}
           divider
           button
         >
@@ -21,7 +21,7 @@ const MessagesList = (): any => {
             <MuiAvatar />
           </ListItemAvatar>
           <ListItemText>
-            {messageGroup.channelDisplay}
+            {messageGroup.groupDisplay}
           </ListItemText>
         </ListItem>
       ))}

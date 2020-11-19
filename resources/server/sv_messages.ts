@@ -26,11 +26,11 @@ async function getMessages(userIdentifier: string): Promise<Message[]> {
     npwd_phone_contacts.display,
     npwd_phone_contacts.avatar
   FROM (
-    SELECT channel_id
+    SELECT group_id
       FROM npwd_messages_groups
       WHERE user_identifier = ?
   ) as t
-  LEFT OUTER JOIN npwd_messages on t.channel_id = npwd_messages.channel_id
+  LEFT OUTER JOIN npwd_messages on t.group_id = npwd_messages.group_id
   LEFT OUTER JOIN users on users.identifier = npwd_messages.user_identifier
   LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
   WHERE (users.phone_number IS NOT NULL OR npwd_phone_contacts.display IS NOT NULL)
@@ -46,17 +46,17 @@ async function getMessages(userIdentifier: string): Promise<Message[]> {
   }));
 }
 
-async function groupMessagesByChannel(useIdentifier: string): Promise<GroupMapping> {
+async function groupMessagesByGroup(useIdentifier: string): Promise<GroupMapping> {
   const messages = await getMessages(useIdentifier);
   return messages.reduce((mapping: GroupMapping, message: Message) => {
-    const channelId = message.channel_id;
-    if (channelId in mapping) {
+    const groupId = message.group_id;
+    if (groupId in mapping) {
       // we sort by updatedAt ASCENDING in the SQL query so we can always assume the
       // first participant added has the lastest updatedAt. Therefore we don't
       // need to updatedAt here
-      mapping[channelId].messages = mapping[channelId].messages.concat(message);
+      mapping[groupId].messages = mapping[groupId].messages.concat(message);
     } else {
-      mapping[channelId] = {
+      mapping[groupId] = {
         messages: [message],
         updatedAt: message.updatedAt,
         createdAt: message.createdAt,
@@ -66,7 +66,7 @@ async function groupMessagesByChannel(useIdentifier: string): Promise<GroupMappi
   }, {});
 }
 
-function getChannelDisplayName(userIdentifier: string, messages: Message[]): string {
+function getGroupDisplayName(userIdentifier: string, messages: Message[]): string {
   return messages.reduce((displayTerms, message) => {
     if (message.user_identifier === userIdentifier) return displayTerms; // don't display our name
 
@@ -76,14 +76,13 @@ function getChannelDisplayName(userIdentifier: string, messages: Message[]): str
 }
 
 async function getFormattedMessages(userIdentifier: string): Promise<MessageGroup[]> {
-  const channelMapping = await groupMessagesByChannel(userIdentifier);
-  const channels = Object.keys(channelMapping);
-  return channels.map(channel => {
-    console.log(getChannelDisplayName(userIdentifier, channelMapping[channel].messages))
+  const groupMapping = await groupMessagesByGroup(userIdentifier);
+  const groups = Object.keys(groupMapping);
+  return groups.map(group => {
     return {
-      ...channelMapping[channel],
-      channelId: channel,
-      channelDisplay: getChannelDisplayName(userIdentifier, channelMapping[channel].messages)
+      ...groupMapping[group],
+      groupId: group,
+      groupDisplay: getGroupDisplayName(userIdentifier, groupMapping[group].messages)
     }
   });
 }
