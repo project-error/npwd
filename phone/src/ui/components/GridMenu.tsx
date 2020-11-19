@@ -35,22 +35,25 @@ export const GridMenu = ({ items, Component = AppIcon }) => {
         {items &&
           items.length &&
           items.map((item) => (
-            <Tooltip
-              title={item.id}
-              placement='top'
-              arrow
-              classes={{ tooltip: classes.tooltip }}
+            // <Tooltip
+            //   title={item.id}
+            //   placement='top'
+            //   arrow
+            //   classes={{ tooltip: classes.tooltip }}
+            //   PopperProps={{
+            //     anchorEl={}
+            //   }}
+            // >
+            <Grid
+              key={item.id}
+              item
+              className={classes.item}
+              component={Link}
+              to={item.path}
             >
-              <Grid
-                key={item.id}
-                item
-                className={classes.item}
-                component={Link}
-                to={item.path}
-              >
-                <Component {...item} />
-              </Grid>
-            </Tooltip>
+              <Component {...item} />
+            </Grid>
+            // </Tooltip>
           ))}
       </Grid>
     </Grid>
