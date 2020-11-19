@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles, Typography, Grid, IconButton } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
 import Battery90Icon from '@material-ui/icons/Battery90';
 import Default from '../../../config/default.json';
@@ -8,11 +7,11 @@ import Default from '../../../config/default.json';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    height: '25px',
+    height: '30px',
     width: '100%',
     color: theme.palette.text.primary,
     zIndex: 2,
-    paddingLeft: '10px',
+    paddingLeft: '15px',
     paddingRight: '10px',
   },
   item: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     position: 'relative',
-    bottom: '4px',
+    lineHeight: '30px',
     color: theme.palette.text.primary,
   },
   icon: {
@@ -59,7 +58,7 @@ export const NotificationBar = ({ notifications = [] }: IProps) => {
           </Grid>
         ))}
       </Grid>
-      <Grid container item wrap='nowrap' justify='flex-end'>
+      <Grid container item wrap='nowrap' justify='flex-end' alignItems='center'>
         <Grid item>
           <SignalIcon fontSize='small' />
         </Grid>
@@ -69,7 +68,9 @@ export const NotificationBar = ({ notifications = [] }: IProps) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Battery90Icon style={{ transform: 'rotate(90deg)' }} />
+          <Battery90Icon
+            style={{ transform: 'rotate(90deg)', display: 'block' }}
+          />
         </Grid>
       </Grid>
     </Grid>
