@@ -11,6 +11,8 @@
     "beach.jpg"
   ],
   "frames": ["default.png", "s10.png", "tw.png", "samsung.png"],
+  "zoomOptions": ["120%", "100%", "80%", "60%", "40%"],
+  "ringtones": ["marimba", "pixel"],
   "themes": {
     "default-dark": {
       "palette": {

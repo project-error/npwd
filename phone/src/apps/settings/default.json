@@ -1,5 +1,8 @@
 {
   "wallpaper": "default.png",
   "frame": "s10.png",
-  "theme": "taso-dark"
+  "theme": "taso-dark",
+  "zoom": "100%",
+  "ringtone": "pixel",
+  "ringtoneVol": 100
 }
