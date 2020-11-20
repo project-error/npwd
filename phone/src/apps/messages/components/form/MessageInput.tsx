@@ -4,9 +4,17 @@ import useStyles from './form.styles';
 import SendIcon from '@material-ui/icons/Send';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
-export const MessageInput = ({ messageGroup }) => {
+export const MessageInput = ({ messageGroupId }) => {
   const classes = useStyles();
   const [ message, setMessage ] = useState('')
+
+  const handleSubmit = () => {
+    Nui.send('phone:sendMessage', {
+      groupId: messageGroupId, 
+      message
+    });
+    setMessage('');
+  }
 
   return (
     <Paper 
@@ -22,7 +30,7 @@ export const MessageInput = ({ messageGroup }) => {
           className: classes.messagesInput
         }}
       />
-      <Button className={classes.sendButton}><SendIcon /></Button>
+      <Button className={classes.sendButton} onClick={handleSubmit}><SendIcon /></Button>
     </Paper>
   )
 }

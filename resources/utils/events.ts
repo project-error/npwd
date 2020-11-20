@@ -55,6 +55,8 @@ export default {
 
   //messages
   MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
+  MESSAGES_SEND_MESSAGE_SUCCESS: 'phone:sendMessageSuccess',
+  MESSAGES_SEND_MESSAGE_FAILED: 'phone:sendMessageFailed',
   MESSAGES_FETCH_MESSAGES: 'phone:fetchMessages',
   MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
   MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',

@@ -18,6 +18,20 @@ interface GroupMessages {
   createdAt: string;
 }
 
+async function createMessage(userIdentifier: string, groupId: string, message: string): Promise<any> {
+  const query = `
+  INSERT INTO npwd_messages
+  (user_identifier, message, group_id)
+  VALUES (?, ?, ?)
+  `;
+  const [results] = await pool.query(query, [
+    userIdentifier,
+    message,
+    groupId,
+  ]);
+  return results;
+}
+
 async function getMessages(userIdentifier: string): Promise<Message[]> {
   const query = `
   SELECT
@@ -94,5 +108,15 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async () => {
     emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, getSource(), messages);
   } catch (e) {
     emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, getSource());
+  }
+});
+
+onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string) => {
+  try {
+    const _identifier = await useIdentifier();
+    const result = await createMessage(_identifier, groupId, message)
+    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), result);
+  } catch (e) {
+    emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
   }
 });

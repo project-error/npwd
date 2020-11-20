@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Slide, Paper, Button } from '@material-ui/core'
 import useStyles from './modal.styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -10,6 +10,7 @@ const LIST_ID = 'message-modal-list';
 
 export const MessageModal = () => {
   const classes = useStyles();
+  const [, updateState] = React.useState();
   const { messages, activeMessageGroupId, setActiveMessageGroupId } = useMessages();
 
   useEffect(() => {
@@ -21,7 +22,9 @@ export const MessageModal = () => {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [activeMessageGroupId]);
+  }, [activeMessageGroupId, messages]);
+
+  const forceRerender = () => useCallback(() => updateState({}), []);
 
   const closeModal = () => setActiveMessageGroupId(null);
   const isOpen = activeMessageGroupId !== null;
@@ -34,16 +37,14 @@ export const MessageModal = () => {
         <Button onClick={closeModal}><ArrowBackIcon /></Button>
           <div id={LIST_ID} className={classes.messageList}>
             {activeMessages.map((message) => (
-              <>
-                <div className={classes.messageContainer}>
+                <div key={message.id} className={classes.messageContainer}>
                   <Paper className={message.isMine ? classes.sourceSms : classes.sms} variant="outlined">
-                    {message.content}
+                    {message.message}
                   </Paper>
                 </div>
-              </>
             ))}
           </div>
-        <MessageInput messageGroup={activeMessageGroupId} />
+        <MessageInput messageGroupId={activeMessageGroupId} />
       </Paper>
     </Slide>
   )

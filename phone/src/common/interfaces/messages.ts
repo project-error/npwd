@@ -1,6 +1,6 @@
 export interface Message {
   id?: number;
-  content: string;
+  message: string;
   user_identifier: string;
   group_id: number;
   isRead: boolean;
