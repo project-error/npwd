@@ -16,11 +16,13 @@ const MessageInput = ({ messageGroupId }: IProps) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    Nui.send('phone:sendMessage', {
-      groupId: messageGroupId, 
-      message
-    });
-    setMessage('');
+    if (message.trim()) { // don't allow the user to submit white space
+      Nui.send('phone:sendMessage', {
+        groupId: messageGroupId, 
+        message
+      });
+      setMessage('');
+    }
   }
 
   if (!messageGroupId) return null;

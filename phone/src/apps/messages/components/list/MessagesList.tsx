@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/interfaces/messages';
@@ -11,6 +11,10 @@ const MessagesList = (): any => {
   const classes = useStyles();
   const { messageGroups } = useMessages();
   const { setActiveMessageGroup } = useModals();
+
+  useEffect(() => {
+    Nui.send('phone:fetchMessageGroups');
+  }, []);
 
   if (!messageGroups) return null;
 

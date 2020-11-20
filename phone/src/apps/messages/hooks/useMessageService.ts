@@ -7,6 +7,6 @@ export const useMessagesService = () => {
   const setMessageGroups = useSetRecoilState(messageState.messageGroups);
   const setMessages = useSetRecoilState(messageState.messages);
 
-  useNuiEvent('MESSAGES', 'phone:getMessageGroupsSuccess', setMessageGroups);
+  useNuiEvent('MESSAGES', 'phone:fetchMessageGroupsSuccess', setMessageGroups);
   useNuiEvent('MESSAGES', 'phone:fetchMessagesSuccess', setMessages);
 }

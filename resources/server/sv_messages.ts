@@ -40,14 +40,11 @@ async function getMessageGroups(userIdentifier: string): Promise<UnformattedMess
     npwd_messages_groups.group_id,
     npwd_messages_groups.participant_identifier,
     users.phone_number,
-    MAX(npwd_messages.updatedAt) AS updatedAt,
     npwd_phone_contacts.display
   FROM npwd_messages_groups
   LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
   LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
-  LEFT OUTER JOIN npwd_messages on npwd_messages.group_id = npwd_messages_groups.group_id
   WHERE npwd_messages_groups.user_identifier = ? AND npwd_messages_groups.participant_identifier != ?
-  ORDER BY updatedAt DESC
   `
   const [results] = await pool.query(query, [ userIdentifier, userIdentifier]);
   return <UnformattedMessageGroup[]>results;
@@ -105,7 +102,7 @@ async function getFormattedMessageGroups(userIdentifier: string): Promise<Messag
     const group = groupMapping[groupId];
     return {
       groupId,
-      groupDisplay: group.participants.join(','),
+      groupDisplay: group.participants.join(', '),
       updatedAt: group.updatedAt,
     }
   });
@@ -164,18 +161,26 @@ async function createMessageGroupsFromPhoneNumbers(userIdentifier: string, phone
   return groupId;
 }
 
-
-
-onNet(events.MESSAGES_GET_MESSAGE_GROUPS, async () => {
+onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   try {
     const _identifier = await useIdentifier();
     const messageGroups = await getFormattedMessageGroups(_identifier);
-    emitNet(events.MESSAGES_GET_MESSAGE_GROUPS_SUCCESS, getSource(), messageGroups);
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, getSource(), messageGroups);
   } catch (e) {
-    emitNet(events.MESSAGES_GET_MESSAGE_GROUPS_FAILED, getSource());
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, getSource());
   }
 });
 
+onNet(events.MESSAGES_CREATE_MESSAGE_GROUP, async (phoneNumbers: string[]) => {
+  try {
+    console.log(phoneNumbers);
+    const _identifier = await useIdentifier();
+    await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers)
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, getSource());
+  } catch (e) {
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
+  }
+});
 
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   try {
@@ -194,16 +199,5 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string) => 
     emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), groupId);
   } catch (e) {
     emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
-  }
-});
-
-onNet(events.MESSAGES_CREATE_MESSAGE_GROUP, async (phoneNumbers: string[]) => {
-  try {
-    console.log(phoneNumbers);
-    const _identifier = await useIdentifier();
-    const groupId = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers)
-    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, getSource(), groupId);
-  } catch (e) {
-    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
   }
 });
