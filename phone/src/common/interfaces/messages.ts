@@ -1,21 +1,17 @@
 export interface Message {
-  id?: number;
+  id: number;
   message: string;
   user_identifier: string;
-  group_id: number;
+  phone_number: string;
+  display?: string;
+  avatar?: string;
   isRead: boolean;
   isMine: boolean;
-  avatar?: string;
-  phone_number?: string;
-  display?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 export interface MessageGroup {
   groupId: string;
-  messages: Message[];
   groupDisplay: string;
-  createdAt?: string;
-  updatedAt?: string;
+  updatedAt: string;
 }

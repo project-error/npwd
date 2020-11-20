@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Fab } from "@material-ui/core";
-import { amber } from "@material-ui/core/colors";
 import AddIcon from "@material-ui/icons/Add";
+import useModals from "../../hooks/useModals";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,10 +14,13 @@ const useStyles = makeStyles(() => ({
 
 export function NewMessageGroupButton() {
   const classes = useStyles();
+  const { setShowNewMessageGroup } = useModals()
+
+  const handleClick = () => setShowNewMessageGroup(true);
 
   return (
     <div className={classes.root}>
-      <Fab color="primary">
+      <Fab color="primary" onClick={handleClick}>
         <AddIcon />
       </Fab>
     </div>

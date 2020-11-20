@@ -64,3 +64,21 @@ export function generateConnectionPool() {
 }
 
 export const pool = generateConnectionPool();
+
+
+export async function withTransaction(queries: Promise<any>[]): Promise<any[]> {
+  const connection = await pool.getConnection()
+  connection.beginTransaction();
+
+  try {
+    const results = await Promise.all(queries)
+    await connection.commit()
+    await connection.release()
+    return results;
+  } catch (err) {
+    console.warn('Error when submitting queries');
+    await connection.rollback()
+    await connection.release()
+    return Promise.reject(err)
+  }
+}

@@ -1,6 +1,10 @@
 import { atom } from 'recoil';
 
 export const messageState = {
+  messageGroups: atom({
+    key: 'messageGroups',
+    default: null
+  }),
   messages: atom({
     key: 'messages',
     default: null
@@ -9,8 +13,8 @@ export const messageState = {
     key: 'activeMessageGroup',
     default: null
   }),
-  filter: atom({
-    key: 'messageFilter',
-    default: null
-  })
+  showNewMessageGroup: atom({
+    key: 'showNewMessageGroup',
+    default: false
+  }),
 }

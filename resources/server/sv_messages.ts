@@ -1,21 +1,23 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import events from '../utils/events';
-import { pool } from "./db";
 import { Message, MessageGroup } from '../../phone/src/common/interfaces/messages';
+import { pool, withTransaction } from "./db";
 import { getSource, useIdentifier } from './functions';
 
-interface GroupMapping {
-  [channelId: string]: {
-    messages: Message[];
-    updatedAt: string;
-    createdAt: string;
-  }
+interface UnformattedMessageGroup {
+  group_id: string;
+  participant_identifier: string;
+  phone_number: string;
+  display: string;
+  updatedAt: string;
 }
 
-interface GroupMessages {
-  channelId: string;
-  messages: Message[];
-  updatedAt: string;
-  createdAt: string;
+interface MessageGroupMapping {
+  [groupId: string]: {
+    participants: string[];
+    updatedAt: string;
+  }
 }
 
 async function createMessage(userIdentifier: string, groupId: string, message: string): Promise<any> {
@@ -32,79 +34,153 @@ async function createMessage(userIdentifier: string, groupId: string, message: s
   return results;
 }
 
-async function getMessages(userIdentifier: string): Promise<Message[]> {
+async function getMessageGroups(userIdentifier: string): Promise<UnformattedMessageGroup[]> {
   const query = `
   SELECT
-    npwd_messages.*,
+    npwd_messages_groups.group_id,
+    npwd_messages_groups.participant_identifier,
+    users.phone_number,
+    MAX(npwd_messages.updatedAt) AS updatedAt,
+    npwd_phone_contacts.display
+  FROM npwd_messages_groups
+  LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
+  LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
+  LEFT OUTER JOIN npwd_messages on npwd_messages.group_id = npwd_messages_groups.group_id
+  WHERE npwd_messages_groups.user_identifier = ? AND npwd_messages_groups.participant_identifier != ?
+  ORDER BY updatedAt DESC
+  `
+  const [results] = await pool.query(query, [ userIdentifier, userIdentifier]);
+  return <UnformattedMessageGroup[]>results;
+}
+
+async function getMessages(userIdentifier: string, groupId: string): Promise<Message[]> {
+  const query = `
+  SELECT
+	  npwd_messages.id,
+    npwd_messages.message,
+    npwd_messages.user_identifier,
+    npwd_messages.isRead,
+    npwd_messages.updatedAt,
     users.phone_number,
     npwd_phone_contacts.display,
     npwd_phone_contacts.avatar
-  FROM (
-    SELECT group_id
-      FROM npwd_messages_groups
-      WHERE user_identifier = ?
-  ) as t
-  LEFT OUTER JOIN npwd_messages on t.group_id = npwd_messages.group_id
+  FROM npwd_messages
   LEFT OUTER JOIN users on users.identifier = npwd_messages.user_identifier
   LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
-  WHERE (users.phone_number IS NOT NULL OR npwd_phone_contacts.display IS NOT NULL)
+  WHERE npwd_messages.group_id = ?
   ORDER BY updatedAt ASC;
   `;
-  const [results] = await pool.query(query, [ userIdentifier]);
+  const [results] = await pool.query(query, [ groupId]);
   const messages = <Message[]>results;
   return messages.map(message => ({
     ...message,
     isMine: message.user_identifier === userIdentifier,
-    createdAt: message.createdAt.toString(),
     updatedAt: message.updatedAt.toString(),
   }));
 }
 
-async function groupMessagesByGroup(useIdentifier: string): Promise<GroupMapping> {
-  const messages = await getMessages(useIdentifier);
-  return messages.reduce((mapping: GroupMapping, message: Message) => {
-    const groupId = message.group_id;
+async function getConsolidatedMessageGroups(useIdentifier: string): Promise<MessageGroupMapping> {
+  const messageGroups = await getMessageGroups(useIdentifier);
+  return messageGroups.reduce((mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
+    const groupId = messageGroup.group_id;
+    const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
+
     if (groupId in mapping) {
-      // we sort by updatedAt ASCENDING in the SQL query so we can always assume the
-      // first participant added has the lastest updatedAt. Therefore we don't
-      // need to updatedAt here
-      mapping[groupId].messages = mapping[groupId].messages.concat(message);
+      mapping[groupId].participants =  mapping[groupId].participants.concat(displayTerm)
     } else {
       mapping[groupId] = {
-        messages: [message],
-        updatedAt: message.updatedAt,
-        createdAt: message.createdAt,
+        participants: [displayTerm],
+        updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null
       }
     }
     return mapping;
   }, {});
 }
 
-function getGroupDisplayName(userIdentifier: string, messages: Message[]): string {
-  return messages.reduce((displayTerms, message) => {
-    if (message.user_identifier === userIdentifier) return displayTerms; // don't display our name
 
-    const display = message.display || message.phone_number;
-    return displayTerms.includes(display) ? [] : displayTerms.concat(display)
-  }, []).join(', ');
-}
-
-async function getFormattedMessages(userIdentifier: string): Promise<MessageGroup[]> {
-  const groupMapping = await groupMessagesByGroup(userIdentifier);
-  const groups = Object.keys(groupMapping);
-  return groups.map(group => {
+async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
+  const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
+  const groupIds = Object.keys(groupMapping);
+  return groupIds.map(groupId => {
+    const group = groupMapping[groupId];
     return {
-      ...groupMapping[group],
-      groupId: group,
-      groupDisplay: getGroupDisplayName(userIdentifier, groupMapping[group].messages)
+      groupId,
+      groupDisplay: group.participants.join(','),
+      updatedAt: group.updatedAt,
     }
   });
 }
 
-onNet(events.MESSAGES_FETCH_MESSAGES, async () => {
+async function createMessageGroup(userIdentifier: string, groupId: string, participantIdentifier: string): Promise<any> {
+  const query = `
+  INSERT INTO npwd_messages_groups
+  (user_identifier, group_id, participant_identifier)
+  VALUES (?, ?, ?)
+  `;
+  const [results] = await pool.query(query, [
+    userIdentifier,
+    groupId,
+    participantIdentifier
+  ]);
+}
+
+async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
+  const query = `
+    SELECT identifier
+    FROM users
+    WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+    LIMIT 1
+  `;
+  const [results] = await pool.query(query, [ phoneNumber]);
+  const identifiers = <any>results;
+  return identifiers[0]['identifier']
+}
+
+async function createMessageGroupsFromPhoneNumbers(userIdentifier: string, phoneNumbers: string[]): Promise<string> {
+  const groupId = uuidv4();
+
+  // we check that each phoneNumber exists before we create the group
+  const identifiers: string[] = [];
+  for (const phoneNumber of phoneNumbers) {
+    const identifier = await getIdentifierFromPhoneNumber(phoneNumber)
+    identifiers.push(identifier);
+  }
+
+  const connection = await pool.getConnection()
+  connection.beginTransaction();
+
+  const queryPromises = [
+    // create a row that contains ourselves so others can reference it
+    createMessageGroup(userIdentifier, groupId, userIdentifier),
+    ...identifiers.map(identifier => createMessageGroup(userIdentifier, groupId, identifier))
+  ]
+
+  // wrap this in a transaction to make sure ALL of these INSERTs succeed
+  //so we are not left in a situation where only some of the member of the
+  // group exist while other are left off.
+  const results = withTransaction(queryPromises);
+  console.log(results);
+
+  return groupId;
+}
+
+
+
+onNet(events.MESSAGES_GET_MESSAGE_GROUPS, async () => {
   try {
     const _identifier = await useIdentifier();
-    const messages = await getFormattedMessages(_identifier);
+    const messageGroups = await getFormattedMessageGroups(_identifier);
+    emitNet(events.MESSAGES_GET_MESSAGE_GROUPS_SUCCESS, getSource(), messageGroups);
+  } catch (e) {
+    emitNet(events.MESSAGES_GET_MESSAGE_GROUPS_FAILED, getSource());
+  }
+});
+
+
+onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
+  try {
+    const _identifier = await useIdentifier();
+    const messages = await getMessages(_identifier, groupId);
     emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, getSource(), messages);
   } catch (e) {
     emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, getSource());
@@ -114,9 +190,20 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async () => {
 onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string) => {
   try {
     const _identifier = await useIdentifier();
-    const result = await createMessage(_identifier, groupId, message)
-    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), result);
+    await createMessage(_identifier, groupId, message)
+    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), groupId);
   } catch (e) {
     emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
+  }
+});
+
+onNet(events.MESSAGES_CREATE_MESSAGE_GROUP, async (phoneNumbers: string[]) => {
+  try {
+    console.log(phoneNumbers);
+    const _identifier = await useIdentifier();
+    const groupId = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers)
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, getSource(), groupId);
+  } catch (e) {
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
   }
 });

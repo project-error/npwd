@@ -54,6 +54,12 @@ export default {
   BANK_GET_CREDENTIALS: 'phone:getBankCredentials',
 
   //messages
+  MESSAGES_GET_MESSAGE_GROUPS: 'phone:getMessageGroups',
+  MESSAGES_GET_MESSAGE_GROUPS_SUCCESS: 'phone:getMessageGroupsSuccess',
+  MESSAGES_GET_MESSAGE_GROUPS_FAILED: 'phone:getMessageGroupsFailed',
+  MESSAGES_CREATE_MESSAGE_GROUP: 'phone:createMessageGroup',
+  MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS: 'phone:createMessageGroupSuccess',
+  MESSAGES_CREATE_MESSAGE_GROUP_FAILED: 'phone:createMessageGroupFailed',
   MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
   MESSAGES_SEND_MESSAGE_SUCCESS: 'phone:sendMessageSuccess',
   MESSAGES_SEND_MESSAGE_FAILED: 'phone:sendMessageFailed',

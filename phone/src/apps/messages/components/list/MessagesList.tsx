@@ -1,19 +1,30 @@
 import React from 'react'
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 
-import { useMessages } from '../../hooks/useMessages';
+import { MessageGroup } from '../../../../common/interfaces/messages';
+import Nui from '../../../../os/nui-events/utils/Nui';
+import useMessages from '../../hooks/useMessages';
+import useModals from '../../hooks/useModals';
 import useStyles from './list.styles';
 
 const MessagesList = (): any => {
   const classes = useStyles();
-  const { messages, setActiveMessageGroupId } = useMessages();
+  const { messageGroups } = useMessages();
+  const { setActiveMessageGroup } = useModals();
 
+  if (!messageGroups) return null;
+
+  const handleClick = (messageGroup: MessageGroup) => () => {
+    setActiveMessageGroup(messageGroup);
+    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
+  }
+  
   return (
     <List className={classes.root}>
-      {messages.map((messageGroup) => (
+      {messageGroups.map((messageGroup) => (
         <ListItem
           key={messageGroup.groupId}
-          onClick={() => setActiveMessageGroupId(messageGroup.groupId)}
+          onClick={handleClick(messageGroup)}
           divider
           button
         >

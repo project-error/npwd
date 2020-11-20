@@ -10,10 +10,23 @@ const useStyles = makeStyles((theme) => ({
   modalHide: {
     display: 'none'
   },
+  topContainer: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    padding: '3px 0px',
+  },
+  groupdisplay: {
+    width: '300px',
+    paddingTop: '8px',
+    fontSize: '24px',
+    whiteSpace: 'nowrap',
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
+  },
   messageList: {
     height: '90%',
     overflowY: 'auto',
-    paddingBottom: '25px',
+    paddingBottom: '40px',
   },
   messageContainer: {
     marginTop: 25,

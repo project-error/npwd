@@ -4,10 +4,9 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 
 
 export const useMessagesService = () => {
+  const setMessageGroups = useSetRecoilState(messageState.messageGroups);
   const setMessages = useSetRecoilState(messageState.messages);
 
-  const test = result => console.log(result);
-
+  useNuiEvent('MESSAGES', 'phone:getMessageGroupsSuccess', setMessageGroups);
   useNuiEvent('MESSAGES', 'phone:fetchMessagesSuccess', setMessages);
-  useNuiEvent('MESSAGES', 'phone:sendMessageSuccess', test);
 }

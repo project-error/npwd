@@ -1,50 +1,50 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Slide, Paper, Button } from '@material-ui/core'
-import useStyles from './modal.styles';
+import React, { useEffect } from 'react'
+import { Slide, Paper, Button, Typography } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { useMessages } from '../../hooks/useMessages';
-import { MessageInput } from '../form/MessageInput';
-
-const LIST_ID = 'message-modal-list';
+import useStyles from './modal.styles';
+import useMessages from '../../hooks/useMessages';
+import useModals from '../../hooks/useModals';
+import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 
 export const MessageModal = () => {
   const classes = useStyles();
-  const [, updateState] = React.useState();
-  const { messages, activeMessageGroupId, setActiveMessageGroupId } = useMessages();
+  const { messages, setMessages } = useMessages();
+  const { activeMessageGroup, setActiveMessageGroup } = useModals();
+
+  const closeModal = () => {
+    setActiveMessageGroup(null);
+    setMessages(null);
+  }
 
   useEffect(() => {
     // when we get a new message group we should scroll to the
     // bottom to show the latest messages
-    if (activeMessageGroupId) {
-      const element = document.getElementById(LIST_ID);
+    if (activeMessageGroup) {
+      const element = document.getElementById(CONVERSATION_ELEMENT_ID);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [activeMessageGroupId, messages]);
+  }, [ messages?.length]);
 
-  const forceRerender = () => useCallback(() => updateState({}), []);
-
-  const closeModal = () => setActiveMessageGroupId(null);
-  const isOpen = activeMessageGroupId !== null;
-  const activeMessageGroup = messages.find(messageGroup => messageGroup.groupId === activeMessageGroupId);
-  const activeMessages = activeMessageGroup ? activeMessageGroup.messages : [];
+  const isOpen = activeMessageGroup !== null;
   
   return (
     <Slide direction="left" in={isOpen}>
-      <Paper className={activeMessageGroupId ? classes.modalRoot : classes.modalHide}>
-        <Button onClick={closeModal}><ArrowBackIcon /></Button>
-          <div id={LIST_ID} className={classes.messageList}>
-            {activeMessages.map((message) => (
-                <div key={message.id} className={classes.messageContainer}>
-                  <Paper className={message.isMine ? classes.sourceSms : classes.sms} variant="outlined">
-                    {message.message}
-                  </Paper>
-                </div>
-            ))}
-          </div>
-        <MessageInput messageGroupId={activeMessageGroupId} />
+      <Paper className={isOpen ? classes.modalRoot : classes.modalHide}>
+        <Paper className={classes.topContainer}>
+          <Button onClick={closeModal}><ArrowBackIcon fontSize="large" /></Button>
+          <Typography variant="h5" className={classes.groupdisplay} >
+            {activeMessageGroup ? activeMessageGroup.groupDisplay : ''}
+          </Typography>
+        </Paper>
+        {messages ? (
+          <Conversation
+            messages={messages}
+            activeMessageGroupId={activeMessageGroup?.groupId}
+          />
+          ) : <h1>LOADING</h1>}
       </Paper>
     </Slide>
   )

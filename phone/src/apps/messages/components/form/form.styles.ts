@@ -4,9 +4,17 @@ const useStyles = makeStyles((theme) => ({
   sendButton: {
     float: 'right'
   },
-  form: {
+  paper: {
     position: 'absolute',
     bottom: 0,
+    width: '100%',
+  },
+  form: {
+    display: 'flex',
+  },
+  formTop: {
+    position: 'absolute',
+    top: 65,
     display: 'flex',
     width: '100%',
   },
