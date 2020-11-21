@@ -1,8 +1,7 @@
-import React from 'react'
-import { makeStyles, Box, Typography } from "@material-ui/core";
-import { shadows } from '@material-ui/system';
+import React from 'react';
+import { makeStyles, Box } from '@material-ui/core';
 
- /*
+/*
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
@@ -17,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     width: '350px',
     margin: 'auto',
     borderRadius: '15px',
-    fontFamily: 'Bahnschrift Regular'
-  },  
+    fontFamily: 'Bahnschrift Regular',
+  },
   cardName: {
     margin: 10,
     paddingTop: 15,
@@ -30,17 +29,17 @@ const useStyles = makeStyles((theme) => ({
     color: '#DFDFDF',
     fontWeight: 'bold',
     borderBottom: '2px solid #D8D1D1',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   balance: {
-    position: "absolute",
+    position: 'absolute',
     bottom: '53%',
-    left: '10%'
+    left: '10%',
   },
   balanceFont: {
-    fontSize: '29px'
-  }
-}))
+    fontSize: '29px',
+  },
+}));
 
 export const BankCard = (props) => {
   const classes = useStyles();
@@ -51,8 +50,11 @@ export const BankCard = (props) => {
         <p className={classes.cardAccount}>{props.account}</p>
       </div>
       <div className={classes.balance}>
-        <h3 className={classes.balanceFont}><span style={{ fontSize: '30px'}}>$</span>{props.balance}</h3>
+        <h3 className={classes.balanceFont}>
+          <span style={{ fontSize: '30px' }}>$</span>
+          {props.balance}
+        </h3>
       </div>
     </Box>
-  )
-}
+  );
+};

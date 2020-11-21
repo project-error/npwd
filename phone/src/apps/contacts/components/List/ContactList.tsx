@@ -1,49 +1,27 @@
-import React from "react";
-import ListItemText from "@material-ui/core/ListItemText";
+import React from 'react';
+import ListItemText from '@material-ui/core/ListItemText';
 import {
   Button,
   ListItemAvatar,
   Avatar as MuiAvatar,
   List,
   ListItem,
-  TextField,
-  Collapse,
-  makeStyles,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 
-import { useFilteredContacts } from "../../hooks/useFilteredContacts";
+import PhoneIcon from '@material-ui/icons/Phone';
+import ChatIcon from '@material-ui/icons/Chat';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useContacts } from '../../hooks/useContacts';
+import { useContactModal } from '../../hooks/useContactModal';
+import { useContactDetail } from '../../hooks/useContactDetail';
 
-import PhoneIcon from "@material-ui/icons/Phone";
-import ChatIcon from "@material-ui/icons/Chat";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { useContacts } from "../../hooks/useContacts";
-import { useContactModal } from "../../hooks/useContactModal";
-import { useContactDetail } from "../../hooks/useContactDetail";
+import Nui from '../../../../os/nui-events/utils/Nui';
 
-import Nui from "../../../../os/nui-events/utils/Nui";
-
-import "../Contact.css";
-
-const useStyles = makeStyles((theme) => ({
-  updateButton: {
-    margin: "auto",
-    fontSize: 14,
-    width: 150,
-    background: "#2196f3",
-    marginBottom: 10,
-    padding: 8,
-  },
-  collapseItem: {
-    margin: "auto",
-    width: "50%",
-  },
-}));
+import '../Contact.css';
 
 export const ContactList = () => {
-  const classes = useStyles();
   const { filteredContacts } = useFilteredContacts();
   const { setShowContactModal } = useContactModal();
   const { contactDetail, setContactDetail } = useContactDetail();
@@ -53,11 +31,11 @@ export const ContactList = () => {
   const openContactInfo = (contact) => {
     setShowContactModal(true);
     setContactDetail(contact);
-    console.log("CONTACT", contactDetail);
+    console.log('CONTACT', contactDetail);
   };
   const startCall = (number) => {
     console.log(number);
-    Nui.send("phone:startCall", {
+    Nui.send('phone:startCall', {
       number,
     });
   };
@@ -91,7 +69,7 @@ export const ContactList = () => {
               </Button>
               <Button
                 onClick={() =>
-                  console.log("Message: " + contact.display, contact.number)
+                  console.log('Message: ' + contact.display, contact.number)
                 }
               >
                 <ChatIcon />
