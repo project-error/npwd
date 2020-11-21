@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
+import { List } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/interfaces/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
 import useModals from '../../hooks/useModals';
 import MessageSearch from './MessageSearch';
+import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
-import { format } from 'path';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -40,19 +40,11 @@ const MessagesList = (): any => {
       <MessageSearch value={searchValue} handleChange={e => setSearchValue(e.target.value)} />
       <List className={classes.root}>
         {filteredGroups.map((messageGroup) => (
-          <ListItem
+          <MessageGroupItem
             key={messageGroup.groupId}
-            onClick={handleClick(messageGroup)}
-            divider
-            button
-          >
-            <ListItemAvatar>
-              <MuiAvatar src={messageGroup?.avatar} />
-            </ListItemAvatar>
-            <ListItemText>
-              {messageGroup.label || messageGroup.groupDisplay}
-            </ListItemText>
-          </ListItem>
+            messageGroup={messageGroup}
+            handleClick={handleClick}
+          />
         ))}
       </List>
     </>

@@ -33,13 +33,13 @@ on(`__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`, ({ phoneNumbers, label }
   emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
 });
 
-onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, (): void => {
-  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS);
+onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, (result: any): void => {
+  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, result);
   emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
 });
 
-onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, (): void => {
-  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED);
+onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, (result: any): void => {
+  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, result);
 });
 
 /**

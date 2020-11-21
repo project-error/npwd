@@ -41,7 +41,7 @@ const NewMessageGroupForm = () => {
         onChange={e => setParticipants(e.target.value)}
         placeholder={t("APPS_MESSAGES_NEW_MESSAGE_GROUP")}
         className={classes.newGroupinput}
-        inputRef={(input) => input && input.focus()}
+        autoFocus
         inputProps={{
           className: classes.messagesInput
         }}

@@ -17,4 +17,8 @@ export const messageState = {
     key: 'showNewMessageGroup',
     default: false
   }),
+  createMessageGroupResult: atom({
+    key: 'createMessageGroupResult',
+    default: null
+  }),
 }

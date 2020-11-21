@@ -5,6 +5,9 @@ import { Message, MessageGroup } from '../../phone/src/common/interfaces/message
 import { pool, withTransaction } from "./db";
 import { getSource, useIdentifier } from './functions';
 
+/**
+ * Used for the raw npwd_messages_groups row responses
+ */
 interface UnformattedMessageGroup {
   group_id: string;
   participant_identifier: string;
@@ -15,6 +18,10 @@ interface UnformattedMessageGroup {
   updatedAt: string;
 }
 
+/**
+ * Used to help consolidate raw npwd_messages_groups rows into
+ * a mapping of a single message group
+ */
 interface MessageGroupMapping {
   [groupId: string]: {
     participants: string[];
@@ -24,6 +31,12 @@ interface MessageGroupMapping {
   }
 }
 
+/**
+ * Create a message in the database
+ * @param userIdentifier - identifier of the user creating this message
+ * @param groupId - the message group ID to attach this message to
+ * @param message - content of the message
+ */
 async function createMessage(userIdentifier: string, groupId: string, message: string): Promise<any> {
   const query = `
   INSERT INTO npwd_messages
@@ -38,6 +51,11 @@ async function createMessage(userIdentifier: string, groupId: string, message: s
   return results;
 }
 
+/**
+ * Retrieve all message groups associated with a user. This will
+ * populate the list of message groups on the UI
+ * @param userIdentifier - identifier of the user to get message groups for
+ */
 async function getMessageGroups(userIdentifier: string): Promise<UnformattedMessageGroup[]> {
   const query = `
   SELECT
@@ -58,6 +76,13 @@ async function getMessageGroups(userIdentifier: string): Promise<UnformattedMess
   return <UnformattedMessageGroup[]>results;
 }
 
+/**
+ * Retrieve all messages associated with a group and add a field
+ * "isMine" which determines if the message belongs to the user
+ * making the request
+ * @param userIdentifier - user to get messages for
+ * @param groupId - the group to get messages from
+ */
 async function getMessages(userIdentifier: string, groupId: string): Promise<Message[]> {
   const query = `
   SELECT
@@ -84,6 +109,63 @@ async function getMessages(userIdentifier: string, groupId: string): Promise<Mes
   }));
 }
 
+/**
+ * Create a message group label
+ * @param userIdentifier - user who is creating the message group
+ * @param groupId - groupId this label is attached to
+ * @param label - the label itself
+ */
+async function createLabel(userIdentifier: string, groupId: string, label: string): Promise<any> {
+  const query = `
+  INSERT INTO npwd_messages_labels
+  (user_identifier, group_id, label)
+  VALUES (?, ?, ?)
+  `;
+  await pool.query(query, [ userIdentifier, groupId, label ]);
+}
+
+/**
+ * Create a message group
+ * @param userIdentifier - the user creating the message group
+ * @param groupId - the unique group ID this corresponds to
+ * @param participantIdentifier - the participant user identifier. This identifier is what attaches
+ * other players to the message group
+ */
+async function createMessageGroup(userIdentifier: string, groupId: string, participantIdentifier: string): Promise<any> {
+  const query = `
+  INSERT INTO npwd_messages_groups
+  (user_identifier, group_id, participant_identifier)
+  VALUES (?, ?, ?)
+  `;
+  const [results] = await pool.query(query, [
+    userIdentifier,
+    groupId,
+    participantIdentifier
+  ]);
+}
+
+/**
+ * Find a players identifier from their phone number
+ * @param phoneNumber - the phone number to search for
+ */
+async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
+  const query = `
+    SELECT identifier
+    FROM users
+    WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+    LIMIT 1
+  `;
+  const [results] = await pool.query(query, [ phoneNumber]);
+  const identifiers = <any>results;
+  return identifiers[0]['identifier']
+}
+
+/**
+ * Consolidate raw message groups into a mapping that groups participants
+ * by the message group. The goal of this is to reduce the rows of message
+ * groups into a single MessageGroup object.
+ * @param useIdentifier - the user identifier to get message groups for
+ */
 async function getConsolidatedMessageGroups(useIdentifier: string): Promise<MessageGroupMapping> {
   const messageGroups = await getMessageGroups(useIdentifier);
   return messageGroups.reduce((mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
@@ -104,7 +186,11 @@ async function getConsolidatedMessageGroups(useIdentifier: string): Promise<Mess
   }, {});
 }
 
-
+/**
+ * Given the mapping of groupId: fields contents reduce it into a list
+ * of MessageGroup objects ready for the UI to consume
+ * @param userIdentifier - user to generate the MessageGroups for
+ */
 async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
   const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
   const groupIds = Object.keys(groupMapping);
@@ -118,58 +204,42 @@ async function getFormattedMessageGroups(userIdentifier: string): Promise<Messag
   });
 }
 
-async function createLabel(userIdentifier: string, groupId: string, label: string): Promise<any> {
-  const query = `
-  INSERT INTO npwd_messages_labels
-  (user_identifier, group_id, label)
-  VALUES (?, ?, ?)
-  `;
-  await pool.query(query, [ userIdentifier, groupId, label ]);
-}
-
-async function createMessageGroup(userIdentifier: string, groupId: string, participantIdentifier: string): Promise<any> {
-  const query = `
-  INSERT INTO npwd_messages_groups
-  (user_identifier, group_id, participant_identifier)
-  VALUES (?, ?, ?)
-  `;
-  const [results] = await pool.query(query, [
-    userIdentifier,
-    groupId,
-    participantIdentifier
-  ]);
-}
-
-async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
-  const query = `
-    SELECT identifier
-    FROM users
-    WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
-    LIMIT 1
-  `;
-  const [results] = await pool.query(query, [ phoneNumber]);
-  const identifiers = <any>results;
-  return identifiers[0]['identifier']
-}
-
+/**
+ * Main method to handle creation of new message groups. First
+ * we retrieve identifiers for each submitted phone number and
+ * then rows in npwd_messages_groups are created for each of them
+ * bound to a unique groupId. The groupId is any unique string - we
+ * use UUIDs here.
+ * 
+ * These queries are batched with a transaction so that if any of
+ * them fail the queries are not committed to the database. This helps
+ * avoid situations where some participants get added to the group but
+ * one fails resulting in a partial group which would be very confusing
+ * to the player.
+ * @param userIdentifier - user who is creating the group 
+ * @param phoneNumbers - list of phone numbers to add to the grup
+ * @param groupLabel - optional group label to give the group
+ */
 async function createMessageGroupsFromPhoneNumbers(
   userIdentifier: string,
   phoneNumbers: string[],
-  groupLabel: string): Promise<string> {
+  groupLabel: string): Promise<any> {
   const groupId = uuidv4();
 
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
   for (const phoneNumber of phoneNumbers) {
-    const identifier = await getIdentifierFromPhoneNumber(phoneNumber)
-    identifiers.push(identifier);
+    try {
+      const identifier = await getIdentifierFromPhoneNumber(phoneNumber)
+      identifiers.push(identifier);
+    } catch (err) {
+      return { error: true, phoneNumber };
+    }
   }
 
-  const connection = await pool.getConnection()
-  connection.beginTransaction();
-
   const queryPromises = [
-    // create a row that contains ourselves so others can reference it
+    // create a row that contains ourselves so reverse accessing from
+    // other players works as expected
     createMessageGroup(userIdentifier, groupId, userIdentifier),
     ...identifiers.map(identifier => createMessageGroup(userIdentifier, groupId, identifier))
   ]
@@ -180,12 +250,15 @@ async function createMessageGroupsFromPhoneNumbers(
   }
 
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
-  //so we are not left in a situation where only some of the member of the
+  // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
-  const results = withTransaction(queryPromises);
-  console.log(results);
+  try {
+    await withTransaction(queryPromises);
+  } catch (err) {
+    return { error: true };
+  }
 
-  return groupId;
+  return { error: false, groupId };
 }
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
@@ -200,10 +273,14 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
 
 onNet(events.MESSAGES_CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: string = null) => {
   try {
-    console.log(phoneNumbers);
     const _identifier = await useIdentifier();
-    await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label)
-    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, getSource());
+    const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label)
+
+    if (result.error) {
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource(), result);
+    } else {
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, getSource(), result);
+    }
   } catch (e) {
     emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
   }
