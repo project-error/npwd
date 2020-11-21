@@ -1,6 +1,6 @@
-import React from "react";
-import { useCalculator, CalcButton } from "../hooks/useCalculator";
-import { Grid, makeStyles, Box, Paper } from "@material-ui/core";
+import React from 'react';
+import { useCalculator, CalcButton } from '../hooks/useCalculator';
+import { Grid, makeStyles, Box, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -9,7 +9,9 @@ const useStyles = makeStyles((theme) => ({
   },
   result: {
     fontSize: theme.typography.h2.fontSize,
-    textAlign: "right",
+    textAlign: 'right',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 }));
 
@@ -37,12 +39,15 @@ export const Calculator = ({ ...props }) => {
   } = useCalculator();
   const classes = useStyles();
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display='flex' flexDirection='column'>
       <Box flexGrow={1} component={Paper} p={4} className={classes.result}>
-        {result()}
+        {result().toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 4,
+        })}
       </Box>
       <Box>
-        <Grid container justify="space-around">
+        <Grid container justify='space-around'>
           <CalcButton button={clear} className={classes.button} />
           <CalcButton button={clearAll} className={classes.button} />
           <CalcButton button={divider} className={classes.button} />

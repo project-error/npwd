@@ -1,19 +1,19 @@
-import React, { useReducer } from "react";
-import { Grid, Button } from "@material-ui/core";
+import React, { useReducer } from 'react';
+import { Grid, Button } from '@material-ui/core';
 
 const initialState = {
   value: 0,
-  op: "",
+  op: '',
   num1: 0,
-  num2: "",
-  num3: "",
+  num2: '',
+  num3: '',
 };
 
 const Reducer = (state, action) => {
   switch (action.type) {
-    case "2":
+    case '2':
       if (!state.num1) {
-        return { ...state, num1: state.num2, op: action.payload, num2: "" };
+        return { ...state, num1: state.num2, op: action.payload, num2: '' };
       }
       if (!state.num2) {
         return { ...state, op: action.payload };
@@ -28,30 +28,30 @@ const Reducer = (state, action) => {
       return {
         ...state,
         value: state.op(state.num1, state.num2),
-        num2: "",
+        num2: '',
         op: action.payload,
         num1: state.op(state.num1, state.num2),
       };
 
-    case "1":
-      if (state.num2 === "" && action.payload === ".") {
-        return { ...state, num2: "0" + action.payload };
+    case '1':
+      if (state.num2 === '' && action.payload === '.') {
+        return { ...state, num2: '0' + action.payload };
       }
-      if (state.num2 === "") {
+      if (state.num2 === '') {
         return { ...state, num2: action.payload };
       }
-      if (action.payload === "." && state.num2.includes(".")) {
+      if (action.payload === '.' && state.num2.includes('.')) {
         return state;
       } else {
         return { ...state, num2: state.num2 + action.payload };
       }
 
-    case "3":
+    case '3':
       if (state.op && state.num2) {
         return {
           ...state,
           value: state.op(state.num1, state.num2),
-          num2: "",
+          num2: '',
           num1: state.op(state.num1, state.num2),
           num3: state.num2,
         };
@@ -61,22 +61,22 @@ const Reducer = (state, action) => {
       }
       return state;
 
-    case "c":
-      if (state.num2.length === 2 && state.num2.includes("0.")) {
-        return { ...state, num2: "" };
+    case 'c':
+      if (state.num2.length === 2 && state.num2.includes('0.')) {
+        return { ...state, num2: '' };
       }
       if (state.num2.length > 1) {
         return { ...state, num2: state.num2.slice(0, -1) };
       }
-      return { ...state, num2: "" };
+      return { ...state, num2: '' };
 
-    case "ac":
+    case 'ac':
       return {
         value: 0,
-        op: "",
+        op: '',
         num1: 0,
-        num2: "",
-        num3: "",
+        num2: '',
+        num3: '',
       };
 
     default:
@@ -96,17 +96,17 @@ export const useCalculator = () => {
   const [state, dispatch] = useReducer(Reducer, initialState);
 
   const getPayload = (label, type) => {
-    if (type !== "2") {
+    if (type !== '2') {
       return `${label}`;
     }
     switch (label) {
-      case "/":
+      case '/':
         return (a, b) => Number(a) / Number(b);
-      case "*":
+      case '*':
         return (a, b) => Number(a) * Number(b);
-      case "+":
+      case '+':
         return (a, b) => Number(a) + Number(b);
-      case "-":
+      case '-':
         return (a, b) => Number(a) - Number(b);
       default:
         break;
@@ -122,17 +122,17 @@ export const useCalculator = () => {
       }),
   });
 
-  const number = (n) => buttonProps(n, "1");
-  const operator = (sym) => buttonProps(sym, "2");
-  const clear = buttonProps("C", "c");
-  const clearAll = buttonProps("AC", "ac");
-  const equals = buttonProps("=", "3");
+  const number = (n) => buttonProps(n, '1');
+  const operator = (sym) => buttonProps(sym, '2');
+  const clear = buttonProps('C', 'c');
+  const clearAll = buttonProps('AC', 'ac');
+  const equals = buttonProps('=', '3');
   const zero = number(0);
-  const dot = number(".");
-  const divider = operator("/");
-  const multiplier = operator("*");
-  const adder = operator("+");
-  const substractor = operator("-");
+  const dot = number('.');
+  const divider = operator('/');
+  const multiplier = operator('*');
+  const adder = operator('+');
+  const substractor = operator('-');
   const one = number(1);
   const two = number(2);
   const three = number(3);
@@ -142,7 +142,7 @@ export const useCalculator = () => {
   const seven = number(7);
   const eight = number(8);
   const nine = number(9);
-  const result = () => (!state.num2 ? state.value : state.num2);
+  const result = (): number => (!state.num2 ? state.value : state.num2);
 
   return {
     result,
