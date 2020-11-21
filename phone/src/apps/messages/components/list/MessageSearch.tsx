@@ -4,7 +4,12 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import useStyles from './list.styles';
 
-export const MessageSearch = () => {
+interface IProps {
+  value: string;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+}
+
+const MessageSearch = ({ value, handleChange }: IProps) => {
   const classes = useStyles();
   return (
     <Paper elevation={24} variant="outlined" className={classes.bg}>
@@ -13,7 +18,8 @@ export const MessageSearch = () => {
           <SearchIcon />
         </div>
         <InputBase
-          //onChange={handleChange}
+          value={value}
+          onChange={handleChange}
           placeholder="Search contacts..."
           classes={{
             root: classes.inputRoot,
@@ -25,3 +31,5 @@ export const MessageSearch = () => {
     </Paper>
   )
 }
+
+export default MessageSearch;

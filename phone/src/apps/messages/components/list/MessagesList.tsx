@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/interfaces/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
 import useModals from '../../hooks/useModals';
+import MessageSearch from './MessageSearch';
 import useStyles from './list.styles';
+import { format } from 'path';
 
 const MessagesList = (): any => {
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState('');
   const { messageGroups } = useMessages();
   const { setActiveMessageGroup } = useModals();
 
@@ -22,25 +25,37 @@ const MessagesList = (): any => {
     setActiveMessageGroup(messageGroup);
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
   }
+
+  const formattedSearch = searchValue.toLowerCase().trim();
+  const filteredGroups = formattedSearch ? messageGroups.filter(group => {
+    const groupDisplay = group.groupDisplay.toLowerCase();
+    const displayIncludes = groupDisplay.includes(formattedSearch);
+
+    const label = group.label?.toLowerCase();
+    return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
+  }) : messageGroups;
   
   return (
-    <List className={classes.root}>
-      {messageGroups.map((messageGroup) => (
-        <ListItem
-          key={messageGroup.groupId}
-          onClick={handleClick(messageGroup)}
-          divider
-          button
-        >
-          <ListItemAvatar>
-            <MuiAvatar src={messageGroup?.avatar} />
-          </ListItemAvatar>
-          <ListItemText>
-            {messageGroup.label || messageGroup.groupDisplay}
-          </ListItemText>
-        </ListItem>
-      ))}
-    </List>
+    <>
+      <MessageSearch value={searchValue} handleChange={e => setSearchValue(e.target.value)} />
+      <List className={classes.root}>
+        {filteredGroups.map((messageGroup) => (
+          <ListItem
+            key={messageGroup.groupId}
+            onClick={handleClick(messageGroup)}
+            divider
+            button
+          >
+            <ListItemAvatar>
+              <MuiAvatar src={messageGroup?.avatar} />
+            </ListItemAvatar>
+            <ListItemText>
+              {messageGroup.label || messageGroup.groupDisplay}
+            </ListItemText>
+          </ListItem>
+        ))}
+      </List>
+    </>
   )
 }
 
