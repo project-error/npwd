@@ -180,17 +180,6 @@ async function checkIfMessageGroupExists(groupId: string): Promise<boolean> {
   return count > 0;
 }
 
-async function getParticipantsByGroup(groupId: string): Promise<string[]> {
-  const query = `
-    SELECT participant_identifier as identifier
-    FROM npwd_messages_groups
-    WHERE group_id = ?;
-  `;
-  const [results] = await pool.query(query, [ groupId]);
-  const rows = (<any>results);
-  return rows.map((row: any) => row.identifier);
-}
-
 /**
  * Consolidate raw message groups into a mapping that groups participants
  * by the message group. The goal of this is to reduce the rows of message
@@ -265,6 +254,11 @@ async function createMessageGroupsFromPhoneNumbers(
     } catch (err) {
       return { error: true, phoneNumber };
     }
+  }
+
+  // don't allow explicitly adding yourself
+  if (identifiers.some(identifier => identifier === userIdentifier)) {
+    return { error: true, mine: true };
   }
 
   // make sure we are always in a consistent order. It is very important

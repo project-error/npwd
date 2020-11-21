@@ -35,7 +35,7 @@ export default function AlertBar() {
   useEffect(() => {
     if (!createMessageGroupResult) return;
 
-    const { error, phoneNumber, duplicate } = createMessageGroupResult;
+    const { error, phoneNumber, duplicate, mine } = createMessageGroupResult;
     if (error && phoneNumber) {
       const error = `${t("APPS_MESSAGES_INVALID_PHONE_NUMBER")}${phoneNumber}`;
       setOpen(true);
@@ -45,6 +45,10 @@ export default function AlertBar() {
       setOpen(true);
       setSeverity("error");
       setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE"));
+    } else if (error && mine) {
+      setOpen(true);
+      setSeverity("error");
+      setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE"));
     } else if (error) {
       setOpen(true);
       setSeverity("error");

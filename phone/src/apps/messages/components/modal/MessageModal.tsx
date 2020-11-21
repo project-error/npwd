@@ -27,11 +27,24 @@ export const MessageModal = () => {
   };
 
   useEffect(() => {
+    if (!activeMessageGroup?.groupId) return;
+
     const timeout = window.setTimeout(() => {
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
-    return () => window.clearTimeout(timeout);
-  });
+
+    const interval = window.setInterval(() => {
+      if (!activeMessageGroup) return;
+      Nui.send("phone:fetchMessages", {
+        groupId: activeMessageGroup.groupId,
+      });
+    }, MESSAGES_REFRESH_RATE);
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(timeout);
+    };
+  }, [activeMessageGroup?.groupId]);
 
   useEffect(() => {
     // when we get a new message group we should scroll to the
@@ -43,14 +56,6 @@ export const MessageModal = () => {
       }
     }
   }, [minimumLoadPassed, messages?.length]);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      if (!activeMessageGroup) return;
-      Nui.send("phone:fetchMessages", { groupId: activeMessageGroup.groupId });
-    }, MESSAGES_REFRESH_RATE);
-    return () => window.clearInterval(interval);
-  });
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately

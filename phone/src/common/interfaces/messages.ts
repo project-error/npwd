@@ -23,4 +23,5 @@ export interface CreateMessageGroupResult {
   phoneNumber?: string;
   duplicate?: boolean;
   groupId?: string;
+  mine?: boolean;
 }
