@@ -53,6 +53,7 @@
     "APPS_CONTACT_FORM_NUMBER": "Number",
     "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
 
+    "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Search messages...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",

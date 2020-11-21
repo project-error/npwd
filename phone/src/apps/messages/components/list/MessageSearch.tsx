@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { InputBase, Paper } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 const MessageSearch = ({ value, handleChange }: IProps) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   return (
     <Paper elevation={24} variant="outlined" className={classes.bg}>
@@ -22,7 +24,7 @@ const MessageSearch = ({ value, handleChange }: IProps) => {
         <InputBase
           value={value}
           onChange={handleChange}
-          placeholder="Search contacts..."
+          placeholder={t("APPS_MESSAGES_SEARCH_PLACEHOLDER")}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
