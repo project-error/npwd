@@ -13,5 +13,7 @@ export interface Message {
 export interface MessageGroup {
   groupId: string;
   groupDisplay: string;
+  avatar?: string;
+  label?: string;
   updatedAt: string;
 }

@@ -29,8 +29,8 @@ emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
  * Messages create message group
  */
 RegisterNuiCallbackType(events.MESSAGES_CREATE_MESSAGE_GROUP);
-on(`__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`, ({ phoneNumbers }: any): void => {
-  emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers);
+on(`__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`, ({ phoneNumbers, label }: any): void => {
+  emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
 });
 
 onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, (): void => {

@@ -33,10 +33,10 @@ const MessagesList = (): any => {
           button
         >
           <ListItemAvatar>
-            <MuiAvatar />
+            <MuiAvatar src={messageGroup?.avatar} />
           </ListItemAvatar>
           <ListItemText>
-            {messageGroup.groupDisplay}
+            {messageGroup.label || messageGroup.groupDisplay}
           </ListItemText>
         </ListItem>
       ))}

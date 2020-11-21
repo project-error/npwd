@@ -12,15 +12,23 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
   },
-  formTop: {
-    position: 'absolute',
-    top: 65,
-    display: 'flex',
-    width: '100%',
-  },
   input: {
     width: '100%',
     margin: 10
+  },
+  newGroupForm: {
+    position: 'absolute',
+    top: 65,
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  newGroupSubmitButton: {
+    margin: '15px 8px 0px 8px',
+  },
+  newGroupinput: {
+    margin: '0px 8px 15px 8px',
   },
   messagesInput: {
     fontSize: 20

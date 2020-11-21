@@ -7,3 +7,8 @@
 #messages-app .Mui-focused:after {
   border-bottom-color: #ffa000 !important;
 }
+
+/* override form submit button */
+#messages-app .MuiButton-containedPrimary {
+  background-color: #ffa000 !important;
+}

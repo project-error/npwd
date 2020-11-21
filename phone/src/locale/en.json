@@ -54,6 +54,8 @@
     "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
 
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
-    "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers..."
+    "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
+    "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
+    "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Submit"
   }
 }
