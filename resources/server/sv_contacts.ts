@@ -32,7 +32,6 @@ async function addContact(
     "INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)";
 
   const [result] = await pool.query(query, [identifier, number, display, avatar]);
-  console.log(result);
 }
 
 async function updateContact(contact: Contacts, identifier: string): Promise<any> {
@@ -71,7 +70,6 @@ onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avata
   try {
     const _source = (global as any).source;
     const _identifier = await useIdentifier()
-    console.log(number, display);
     addContact(_identifier, number, display, avatar);
     emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source)
 

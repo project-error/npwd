@@ -263,7 +263,7 @@ async function getFormattedMessageGroups(userIdentifier: string): Promise<Messag
  * we retrieve identifiers for each submitted phone number and
  * then rows in npwd_messages_groups are created for each of them
  * bound to a unique groupId. The groupId is any unique string - we
- * use UUIDs here.
+ * use hashes here.
  * 
  * These queries are batched with a transaction so that if any of
  * them fail the queries are not committed to the database. This helps
