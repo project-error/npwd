@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
   },
+  largeGroupDisplay: {
+    width: '300px',
+    paddingTop: '8px',
+    fontSize: '20px',
+  },
   messageList: {
     height: '90%',
     overflowY: 'auto',

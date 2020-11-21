@@ -25,7 +25,7 @@ const Conversation = ({ activeMessageGroupId, messages }: IProps) => {
               <div key={message.id} className={classes.messageContainer}>
                 <Paper className={message.isMine ? classes.sourceSms : classes.sms} variant="outlined">
                   <div>{message.message}</div>
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle1" color="secondary" >
                     {isGroupChat && !message.isMine ? message.display || message.phone_number : null}
                   </Typography>
                 </Paper>
