@@ -1,7 +1,12 @@
-import React from 'react'
-import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
+import React from "react";
+import {
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar as MuiAvatar,
+} from "@material-ui/core";
 
-import { MessageGroup } from '../../../../common/interfaces/messages';
+import { MessageGroup } from "../../../../common/interfaces/messages";
 
 interface IProps {
   messageGroup: MessageGroup;
@@ -16,14 +21,14 @@ const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
       divider
       button
     >
-    <ListItemAvatar>
+      <ListItemAvatar>
         <MuiAvatar src={messageGroup?.avatar} />
-    </ListItemAvatar>
-    <ListItemText>
+      </ListItemAvatar>
+      <ListItemText>
         {messageGroup.label || messageGroup.groupDisplay}
-    </ListItemText>
+      </ListItemText>
     </ListItem>
-  )
-}
+  );
+};
 
 export default MessageGroupItem;

@@ -1,9 +1,9 @@
-import { makeStyles, fade } from '@material-ui/core';
+import { makeStyles, fade } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%',
-    overflowY: 'auto',
+    height: "100%",
+    overflowY: "auto",
   },
   bg: {
     display: "flex",
@@ -54,6 +54,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-}))
+}));
 
 export default useStyles;

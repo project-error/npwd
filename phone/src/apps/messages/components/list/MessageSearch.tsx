@@ -1,12 +1,14 @@
-import React from 'react'
-import { InputBase, Paper } from '@material-ui/core';
+import React from "react";
+import { InputBase, Paper } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
-import useStyles from './list.styles';
+import useStyles from "./list.styles";
 
 interface IProps {
   value: string;
-  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  handleChange: (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void;
 }
 
 const MessageSearch = ({ value, handleChange }: IProps) => {
@@ -29,7 +31,7 @@ const MessageSearch = ({ value, handleChange }: IProps) => {
         />
       </div>
     </Paper>
-  )
-}
+  );
+};
 
 export default MessageSearch;

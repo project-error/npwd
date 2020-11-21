@@ -8,7 +8,7 @@ export function MessageSkeletonList() {
     <List>
       <MessageSkeleton height={75} />
       <MessageSkeleton height={60} />
-      <MessageSkeleton height={90} isMine/>
+      <MessageSkeleton height={90} isMine />
       <MessageSkeleton height={60} />
       <MessageSkeleton height={60} isMine />
       <MessageSkeleton height={100} />

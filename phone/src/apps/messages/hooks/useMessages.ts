@@ -1,6 +1,6 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { Message, MessageGroup } from '../../../common/interfaces/messages';
-import { messageState } from './state';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Message, MessageGroup } from "../../../common/interfaces/messages";
+import { messageState } from "./state";
 
 interface IUseMessages {
   messages?: Message[] | null;
@@ -9,7 +9,11 @@ interface IUseMessages {
 }
 
 export default (): IUseMessages => {
-  const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
-  const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups)
+  const [messages, setMessages] = useRecoilState<Message[] | null>(
+    messageState.messages
+  );
+  const messageGroups = useRecoilValue<MessageGroup[] | null>(
+    messageState.messageGroups
+  );
   return { messages, setMessages, messageGroups };
-}
+};

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Slide, Paper, Button, Typography } from '@material-ui/core'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import React, { useEffect, useState } from "react";
+import { Slide, Paper, Button, Typography } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-import useStyles from './modal.styles';
-import useMessages from '../../hooks/useMessages';
-import useModals from '../../hooks/useModals';
-import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
-import MessageSkeletonList from './MessageSkeletonList';
+import useStyles from "./modal.styles";
+import useMessages from "../../hooks/useMessages";
+import useModals from "../../hooks/useModals";
+import Conversation, { CONVERSATION_ELEMENT_ID } from "./Conversation";
+import MessageSkeletonList from "./MessageSkeletonList";
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -22,7 +22,7 @@ export const MessageModal = () => {
     setActiveMessageGroup(null);
     setMessages(null);
     setMimimumLoadPassed(false);
-  }
+  };
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -42,26 +42,33 @@ export const MessageModal = () => {
     }
   }, [minimumLoadPassed, messages?.length]);
 
-
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately
   // another flash to the tweets screen.
   const hasLoaded = messages && minimumLoadPassed;
   const isOpen = activeMessageGroup !== null;
-  
-   // don't allow too many characters, it takes too much room
-  let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';
-  const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
-  header = header.length > MAX_HEADER_CHARS ? activeMessageGroup?.label || truncatedHeader : header;
 
-  const headerClass = header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
-  
+  // don't allow too many characters, it takes too much room
+  let header = activeMessageGroup ? activeMessageGroup.groupDisplay : "";
+  const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
+  header =
+    header.length > MAX_HEADER_CHARS
+      ? activeMessageGroup?.label || truncatedHeader
+      : header;
+
+  const headerClass =
+    header.length > LARGE_HEADER_CHARS
+      ? classes.largeGroupDisplay
+      : classes.groupdisplay;
+
   return (
     <Slide direction="left" in={isOpen}>
       <Paper className={isOpen ? classes.modalRoot : classes.modalHide}>
         <Paper className={classes.topContainer}>
-          <Button onClick={closeModal}><ArrowBackIcon fontSize="large" /></Button>
-          <Typography variant="h5" className={headerClass} >
+          <Button onClick={closeModal}>
+            <ArrowBackIcon fontSize="large" />
+          </Button>
+          <Typography variant="h5" className={headerClass}>
             {header}
           </Typography>
         </Paper>
@@ -70,8 +77,10 @@ export const MessageModal = () => {
             messages={messages}
             activeMessageGroupId={activeMessageGroup?.groupId}
           />
-          ) : <MessageSkeletonList />}
+        ) : (
+          <MessageSkeletonList />
+        )}
       </Paper>
     </Slide>
-  )
-}
+  );
+};

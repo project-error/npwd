@@ -9,12 +9,12 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     bottom: "25px",
     right: "15px",
-  }
+  },
 }));
 
 export function NewMessageGroupButton() {
   const classes = useStyles();
-  const { setShowNewMessageGroup } = useModals()
+  const { setShowNewMessageGroup } = useModals();
 
   const handleClick = () => setShowNewMessageGroup(true);
 
