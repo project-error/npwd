@@ -69,7 +69,7 @@ async function getMessageGroups(userIdentifier: string): Promise<UnformattedMess
   LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
   LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
   LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
-  WHERE npwd_messages_groups.user_identifier = ? AND npwd_messages_groups.participant_identifier != ?
+  WHERE npwd_messages_groups.participant_identifier = ?
   ORDER BY npwd_messages_groups.createdAt DESC
   `
   const [results] = await pool.query(query, [ userIdentifier, userIdentifier]);
@@ -178,6 +178,17 @@ async function checkIfMessageGroupExists(groupId: string): Promise<boolean> {
   const result = <any>results;
   const count = result[0].count;
   return count > 0;
+}
+
+async function getParticipantsByGroup(groupId: string): Promise<string[]> {
+  const query = `
+    SELECT participant_identifier as identifier
+    FROM npwd_messages_groups
+    WHERE group_id = ?;
+  `;
+  const [results] = await pool.query(query, [ groupId]);
+  const rows = (<any>results);
+  return rows.map((row: any) => row.identifier);
 }
 
 /**

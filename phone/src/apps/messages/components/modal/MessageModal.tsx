@@ -7,10 +7,12 @@ import useMessages from "../../hooks/useMessages";
 import useModals from "../../hooks/useModals";
 import Conversation, { CONVERSATION_ELEMENT_ID } from "./Conversation";
 import MessageSkeletonList from "./MessageSkeletonList";
+import Nui from "../../../../os/nui-events/utils/Nui";
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 750;
+const MESSAGES_REFRESH_RATE = 5000;
 
 export const MessageModal = () => {
   const classes = useStyles();
@@ -41,6 +43,14 @@ export const MessageModal = () => {
       }
     }
   }, [minimumLoadPassed, messages?.length]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      if (!activeMessageGroup) return;
+      Nui.send("phone:fetchMessages", { groupId: activeMessageGroup.groupId });
+    }, MESSAGES_REFRESH_RATE);
+    return () => window.clearInterval(interval);
+  });
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately
