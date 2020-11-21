@@ -71,7 +71,7 @@ async function getMessages(userIdentifier: string, groupId: string): Promise<Mes
     npwd_phone_contacts.avatar
   FROM npwd_messages
   LEFT OUTER JOIN users on users.identifier = npwd_messages.user_identifier
-  LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
+  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '')
   WHERE npwd_messages.group_id = ?
   ORDER BY createdAt ASC;
   `;
