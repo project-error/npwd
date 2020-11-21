@@ -1,24 +1,19 @@
 import React from "react";
 import { Paper, Typography } from "@material-ui/core";
 
-import { Message } from "../../../../common/interfaces/messages";
+import { Message, MessageGroup } from "../../../../common/interfaces/messages";
 import MessageInput from "../form/MessageInput";
 import useStyles from "./modal.styles";
 
 interface IProps {
-  activeMessageGroupId: string | undefined;
+  activeMessageGroup: MessageGroup;
   messages: Message[];
 }
 
 export const CONVERSATION_ELEMENT_ID = "message-modal-conversation";
 
-const Conversation = ({ activeMessageGroupId, messages }: IProps) => {
+const Conversation = ({ activeMessageGroup, messages }: IProps) => {
   const classes = useStyles();
-
-  const uniqueAuthors = Array.from(
-    new Set(messages.map((message) => message.display))
-  );
-  const isGroupChat = uniqueAuthors.length > 2;
 
   return (
     <>
@@ -31,7 +26,7 @@ const Conversation = ({ activeMessageGroupId, messages }: IProps) => {
             >
               <div>{message.message}</div>
               <Typography variant="subtitle1" color="secondary">
-                {isGroupChat && !message.isMine
+                {activeMessageGroup.isGroupChat && !message.isMine
                   ? message.display || message.phone_number
                   : null}
               </Typography>
@@ -39,7 +34,7 @@ const Conversation = ({ activeMessageGroupId, messages }: IProps) => {
           </div>
         ))}
       </div>
-      <MessageInput messageGroupId={activeMessageGroupId} />
+      <MessageInput messageGroupId={activeMessageGroup.groupId} />
     </>
   );
 };

@@ -13,6 +13,7 @@ export interface Message {
 export interface MessageGroup {
   groupId: string;
   groupDisplay: string;
+  isGroupChat: boolean;
   avatar?: string;
   label?: string;
   updatedAt: string;

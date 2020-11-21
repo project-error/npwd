@@ -90,7 +90,7 @@ export const MessageModal = () => {
         {messages && hasLoaded ? (
           <Conversation
             messages={messages}
-            activeMessageGroupId={activeMessageGroup?.groupId}
+            activeMessageGroup={activeMessageGroup}
           />
         ) : (
           <MessageSkeletonList />

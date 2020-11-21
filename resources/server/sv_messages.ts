@@ -10,6 +10,7 @@ import { getSource, useIdentifier } from './functions';
  */
 interface UnformattedMessageGroup {
   group_id: string;
+  user_identifier: string;
   participant_identifier: string;
   phone_number: string;
   label?: string;
@@ -24,6 +25,7 @@ interface UnformattedMessageGroup {
  */
 interface MessageGroupMapping {
   [groupId: string]: {
+    user_identifier: string;
     participants: string[];
     label?: string;
     avatar?: string;
@@ -61,18 +63,24 @@ async function getMessageGroups(userIdentifier: string): Promise<UnformattedMess
   SELECT
     npwd_messages_groups.group_id,
     npwd_messages_groups.participant_identifier,
+    npwd_messages_groups.user_identifier,
     npwd_messages_labels.label,
     users.phone_number,
     npwd_phone_contacts.avatar,
     npwd_phone_contacts.display
-  FROM npwd_messages_groups
+  FROM (
+	  SELECT group_id
+    FROM npwd_messages_groups
+    WHERE npwd_messages_groups.participant_identifier = ?
+  ) as t
+  LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
   LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
   LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
-  LEFT OUTER JOIN npwd_phone_contacts on npwd_phone_contacts.number = users.phone_number
-  WHERE npwd_messages_groups.participant_identifier = ?
+  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+  WHERE npwd_messages_groups.participant_identifier != ?
   ORDER BY npwd_messages_groups.createdAt DESC
   `
-  const [results] = await pool.query(query, [ userIdentifier, userIdentifier]);
+  const [results] = await pool.query(query, [ userIdentifier, userIdentifier, userIdentifier ]);
   return <UnformattedMessageGroup[]>results;
 }
 
@@ -96,11 +104,11 @@ async function getMessages(userIdentifier: string, groupId: string): Promise<Mes
     npwd_phone_contacts.avatar
   FROM npwd_messages
   LEFT OUTER JOIN users on users.identifier = npwd_messages.user_identifier
-  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '')
+  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
   WHERE npwd_messages.group_id = ?
   ORDER BY createdAt ASC;
   `;
-  const [results] = await pool.query(query, [ groupId]);
+  const [results] = await pool.query(query, [ userIdentifier, groupId ]);
   const messages = <Message[]>results;
   return messages.map(message => ({
     ...message,
@@ -180,14 +188,25 @@ async function checkIfMessageGroupExists(groupId: string): Promise<boolean> {
   return count > 0;
 }
 
+async function getMessageCountByGroup(groupId: string): Promise<number> {
+  const query = `
+    SELECT COUNT(*) as count
+    FROM npwd_messages
+    WHERE group_id = ?;
+  `;
+  const [results] = await pool.query(query, [ groupId]);
+  const result = <any>results;
+  return result[0].count;
+}
+
 /**
  * Consolidate raw message groups into a mapping that groups participants
  * by the message group. The goal of this is to reduce the rows of message
  * groups into a single MessageGroup object.
- * @param useIdentifier - the user identifier to get message groups for
+ * @param userIdentifier - the user identifier to get message groups for
  */
-async function getConsolidatedMessageGroups(useIdentifier: string): Promise<MessageGroupMapping> {
-  const messageGroups = await getMessageGroups(useIdentifier);
+async function getConsolidatedMessageGroups(userIdentifier: string): Promise<MessageGroupMapping> {
+  const messageGroups = await getMessageGroups(userIdentifier);
   return messageGroups.reduce((mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
     const groupId = messageGroup.group_id;
     const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
@@ -196,14 +215,26 @@ async function getConsolidatedMessageGroups(useIdentifier: string): Promise<Mess
       mapping[groupId].participants =  mapping[groupId].participants.concat(displayTerm)
     } else {
       mapping[groupId] = {
+        user_identifier: messageGroup.user_identifier,
+        avatar: messageGroup.avatar,
         label: messageGroup.label,
         participants: [displayTerm],
-        avatar: messageGroup.avatar,
         updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null
       }
     }
     return mapping;
   }, {});
+}
+
+async function getGroupIds(userIdentifier: string, groupMapping: MessageGroupMapping): Promise<string[]> {
+  const groupIds: string[] = [];
+  for (const groupId of Object.keys(groupMapping)) {
+    const isMine = groupMapping[groupId].user_identifier === userIdentifier
+    if (isMine || await getMessageCountByGroup(groupId) > 0) {
+      groupIds.push(groupId)
+    }
+  }
+  return groupIds;
 }
 
 /**
@@ -213,13 +244,16 @@ async function getConsolidatedMessageGroups(useIdentifier: string): Promise<Mess
  */
 async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
   const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
-  const groupIds = Object.keys(groupMapping);
+  const groupIds = await getGroupIds(userIdentifier, groupMapping);
+
   return groupIds.map(groupId => {
     const group = groupMapping[groupId];
     return {
       ...group,
       groupId,
       groupDisplay: group.participants.join(', '),
+      // note that 1 here references how many participants besides the user
+      isGroupChat: group.participants.length > 1,
     }
   });
 }
