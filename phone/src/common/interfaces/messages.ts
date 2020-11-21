@@ -17,3 +17,10 @@ export interface MessageGroup {
   label?: string;
   updatedAt: string;
 }
+
+export interface CreateMessageGroupResult {
+  error?: boolean;
+  phoneNumber?: string;
+  duplicate?: boolean;
+  groupId?: string;
+}

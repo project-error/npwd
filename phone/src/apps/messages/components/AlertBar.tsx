@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     bottom: "60px",
-    position: 'absolute',
+    position: "absolute",
   },
 }));
 
@@ -19,25 +19,32 @@ const ALERT_TIMEOUT = 6000;
 export default function AlertBar() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { createMessageGroupResult, setCreateMessageGroupResult } = useAlerts();
+  const {
+    createMessageGroupResult,
+    clearCreateMessageGroupResult,
+  } = useAlerts();
   const [severity, setSeverity] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
   const handleClose = () => {
     setOpen(false);
-    setCreateMessageGroupResult(null);
+    clearCreateMessageGroupResult();
   };
 
   useEffect(() => {
     if (!createMessageGroupResult) return;
 
-    const { error, phoneNumber } = createMessageGroupResult
+    const { error, phoneNumber, duplicate } = createMessageGroupResult;
     if (error && phoneNumber) {
       const error = `${t("APPS_MESSAGES_INVALID_PHONE_NUMBER")}${phoneNumber}`;
       setOpen(true);
       setSeverity("error");
       setMessage(error);
+    } else if (error && duplicate) {
+      setOpen(true);
+      setSeverity("error");
+      setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE"));
     } else if (error) {
       setOpen(true);
       setSeverity("error");

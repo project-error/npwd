@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
+import md5 from 'md5';
 
 import events from '../utils/events';
-import { Message, MessageGroup } from '../../phone/src/common/interfaces/messages';
+import { Message, MessageGroup, CreateMessageGroupResult } from '../../phone/src/common/interfaces/messages';
 import { pool, withTransaction } from "./db";
 import { getSource, useIdentifier } from './functions';
 
@@ -160,6 +160,26 @@ async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string
   return identifiers[0]['identifier']
 }
 
+
+/**
+ * This method checks if the input groupId already exists in 
+ * the database. As long as the groupId is derived from the input
+ * identifiers this means that the user is trying to create a
+ * duplicate!
+ * @param groupId - group Id to check that it exists
+ */
+async function checkIfMessageGroupExists(groupId: string): Promise<boolean> {
+  const query = `
+    SELECT COUNT(*) as count
+    FROM npwd_messages_groups
+    WHERE group_id = ?;
+  `;
+  const [results] = await pool.query(query, [ groupId]);
+  const result = <any>results;
+  const count = result[0].count;
+  return count > 0;
+}
+
 /**
  * Consolidate raw message groups into a mapping that groups participants
  * by the message group. The goal of this is to reduce the rows of message
@@ -223,8 +243,7 @@ async function getFormattedMessageGroups(userIdentifier: string): Promise<Messag
 async function createMessageGroupsFromPhoneNumbers(
   userIdentifier: string,
   phoneNumbers: string[],
-  groupLabel: string): Promise<any> {
-  const groupId = uuidv4();
+  groupLabel: string): Promise<CreateMessageGroupResult> {
 
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
@@ -235,6 +254,20 @@ async function createMessageGroupsFromPhoneNumbers(
     } catch (err) {
       return { error: true, phoneNumber };
     }
+  }
+
+  // make sure we are always in a consistent order. It is very important
+  // that this not change! Changing this order can result in the ability
+  // of duplicate message groups being created.
+  identifiers.sort(); 
+  const mergedIdentifiers = identifiers.join('-');
+  // we don't need this to be secure. Its purpose is to create a unique
+  // string derived from the identifiers. In this way we can check
+  // that this groupId isn't used before. If it has then it means
+  // we are trying to create a duplicate message group!
+  const groupId = md5(mergedIdentifiers);
+  if (await checkIfMessageGroupExists(groupId)) {
+    return { error: true, duplicate: true };
   }
 
   const queryPromises = [

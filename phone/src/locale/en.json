@@ -58,6 +58,7 @@
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Submit",
     "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number: ",
+    "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group"
   }
 }

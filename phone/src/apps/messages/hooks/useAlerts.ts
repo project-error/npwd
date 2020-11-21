@@ -1,13 +1,21 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState } from "recoil";
+import { CreateMessageGroupResult } from "../../../common/interfaces/messages";
 
-import { messageState } from './state';
+import { messageState } from "./state";
 
 interface IUseAlerts {
-  createMessageGroupResult: any;
-  setCreateMessageGroupResult: any;
+  createMessageGroupResult: CreateMessageGroupResult | null;
+  clearCreateMessageGroupResult: () => void;
 }
 
 export default (): IUseAlerts => {
-  const [createMessageGroupResult, setCreateMessageGroupResult] = useRecoilState<any>(messageState.createMessageGroupResult)
-  return { createMessageGroupResult, setCreateMessageGroupResult };
-}
+  const [
+    createMessageGroupResult,
+    setCreateMessageGroupResult,
+  ] = useRecoilState<CreateMessageGroupResult | null>(
+    messageState.createMessageGroupResult
+  );
+
+  const clearCreateMessageGroupResult = () => setCreateMessageGroupResult(null);
+  return { createMessageGroupResult, clearCreateMessageGroupResult };
+};
