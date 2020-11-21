@@ -35,6 +35,7 @@ const MessageInput = ({ messageGroupId }: IProps) => {
           onChange={e => setMessage(e.target.value)}
           placeholder={t("APPS_MESSAGES_NEW_MESSAGE")}
           className={classes.input}
+          inputRef={(input) => input && input.focus()}
           inputProps={{
             className: classes.messagesInput
           }}
