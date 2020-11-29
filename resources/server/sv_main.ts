@@ -1,5 +1,7 @@
 import { ESX } from "./server";
 import { pool } from "./db";
+import config from "../utils/config";
+import { getIdentifierByPhoneNumber, usePhoneNumber } from "./functions"; 
 
 //db = DatabaseConfig  //helper variable for use in server function
 
@@ -12,6 +14,50 @@ import { pool } from "./db";
 interface Credentials {
   phone_number: string;
 }
+
+
+// Generate phone number
+async function getRandomPhoneNumber() {
+  let randomNumber: string = null;
+
+  if (!config.general.useDashNumber) {
+    randomNumber = Math.floor(Math.random() * 10000000).toString(); // 10000000 creates a number with 7 characters. 
+  } else {
+    randomNumber = Math.floor(Math.random() * 10000000).toString().replace(/(\d{3})(\d{4})/, "$1-$2"); // ;
+    // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
+    // Example: 123-4567
+  }
+
+  return randomNumber;
+}
+
+async function generatePhoneNumber(identifier: string) {
+  const _identifier = identifier;
+  let phoneNumber = await usePhoneNumber(_identifier);
+  let randomNumber;
+
+  if (!phoneNumber) {
+    let id;
+    do {
+      randomNumber = await getRandomPhoneNumber();
+      console.log(randomNumber)
+      id = await getIdentifierByPhoneNumber(randomNumber);
+    } while (id)
+
+    const query = "UPDATE users SET phone_number = ? WHERE identifier = ?";
+    await pool.query(query, [randomNumber, _identifier])
+  } else {
+    console.log("Phone number already exists");
+  }
+}
+
+onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
+  const identifier = xPlayer.identifier;
+  await generatePhoneNumber(identifier)
+  console.log("hello motherfucker")
+  console.log(identifier)
+})
+
 
 async function getCredentials(identifier: string): Promise<string> {
   const query = "SELECT phone_number FROM users WHERE identifier = ?";
