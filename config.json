@@ -11,6 +11,9 @@
         "horizontal": "right",
         "vertical": "top"
     },
+    "general": {
+      "useDashNumber": false
+    },
     "twitter": {
         "showNotifications": true,
         "generateProfileNameFromUsers": true,
