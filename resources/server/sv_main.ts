@@ -17,7 +17,11 @@ interface Credentials {
 
 
 // Generate phone number
-async function getRandomPhoneNumber() {
+
+let dash = true
+// for testing ^
+
+function getRandomPhoneNumber() {
   let randomNumber: string = null;
 
   if (!config.general.useDashNumber) {
@@ -34,29 +38,18 @@ async function getRandomPhoneNumber() {
 async function generatePhoneNumber(identifier: string) {
   const _identifier = identifier;
   let phoneNumber = await usePhoneNumber(_identifier);
-  let randomNumber;
+  let id = await getIdentifierByPhoneNumber(phoneNumber)
 
-  if (!phoneNumber) {
-    let id;
-    do {
-      randomNumber = await getRandomPhoneNumber();
-      console.log(randomNumber)
-      id = await getIdentifierByPhoneNumber(randomNumber);
-    } while (id)
-
-    const query = "UPDATE users SET phone_number = ? WHERE identifier = ?";
-    await pool.query(query, [randomNumber, _identifier])
-  } else {
-    console.log("Phone number already exists");
-  }
+  do {
+    if (!phoneNumber) {
+      phoneNumber = await getRandomPhoneNumber();
+      const query = "UPDATE users SET phone_number = ? WHERE identifier = ?";
+      await pool.query(query, [phoneNumber, _identifier])
+    } else {
+      break;
+    }
+  } while (id)
 }
-
-onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
-  const identifier = xPlayer.identifier;
-  await generatePhoneNumber(identifier)
-  console.log("hello motherfucker")
-  console.log(identifier)
-})
 
 
 async function getCredentials(identifier: string): Promise<string> {
@@ -66,6 +59,11 @@ async function getCredentials(identifier: string): Promise<string> {
   if (number.length === 0) return "###-####";
   return number[0].phone_number;
 }
+
+onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
+  const identifier = xPlayer.identifier;
+  await generatePhoneNumber(identifier)
+})
 
 onNet("phone:getCredentials", async () => {
   try {
