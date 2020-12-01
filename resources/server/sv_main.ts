@@ -18,9 +18,6 @@ interface Credentials {
 
 // Generate phone number
 
-let dash = true
-// for testing ^
-
 function getRandomPhoneNumber() {
   let randomNumber: string = null;
 
