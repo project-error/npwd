@@ -11,6 +11,10 @@ interface TwitterConfig {
   maxImages: number;
 }
 
+interface General {
+  useDashNumber: boolean;
+}
+
 interface NotificationConfig {
   horizontal: "left" | "center" | "right";
   vertical: "bottom" | "top";
@@ -32,4 +36,5 @@ export interface ServerConfig {
   twitter: TwitterConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
+  general: General;
 }

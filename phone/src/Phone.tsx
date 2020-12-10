@@ -22,6 +22,7 @@ import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from "./apps/messages/hooks/useMessageService";
 import { useNotesService } from "./apps/notes/hooks/useNotesService";
+import Nui from "./os/nui-events/utils/Nui";
 
 //These events are just for testing. Comment it out before building.
 setTimeout(() => {
@@ -241,6 +242,12 @@ function Phone() {
   }
 
   const calling = false;
+
+  document.onkeyup = function(data) {
+    if (data.which == 27) {
+      Nui.send("phone:close");
+    }
+  }
 
   return (
     <ThemeProvider theme={currentTheme()}>
