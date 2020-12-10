@@ -51,7 +51,16 @@
 
     "APPS_CONTACT_FORM_NAME": "Name",
     "APPS_CONTACT_FORM_NUMBER": "Number",
-    "APPS_CONTACT_FORM_AVATAR": "Avatar URL"
+    "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
 
+    "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Search messages...",
+    "APPS_MESSAGES_NEW_MESSAGE": "Message...",
+    "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
+    "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
+    "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Submit",
+    "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number: ",
+    "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
+    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
+    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!"
   }
 }

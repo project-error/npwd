@@ -6,6 +6,7 @@ import './cl_sellout';
 import './cl_bank';
 import './cl_notes';
 import './cl_photo';
+import './cl_messages';
 
 export let ESX: ESXClient = null;
 

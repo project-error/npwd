@@ -61,7 +61,7 @@ export const InfoModal = () => {
         className={showContactModal ? classes.modalRoot : classes.modalHide}
       >
         <Button style={{ margin: 10 }} onClick={closeModal}>
-          <ArrowBackIcon />
+          <ArrowBackIcon fontSize="large" />
         </Button>
         <div className={classes.listContainer}>
           <MuiAvatar className={classes.avatar} src={avatar} />
