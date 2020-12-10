@@ -1,0 +1,23 @@
+#messages-app {
+  position: relative;
+}
+
+/* override the FAB (action buttons) background when selected */
+#messages-app .MuiFab-primary {
+  background: #ffa000 !important;
+}
+
+/* override the underlines of text fields */
+#messages-app .Mui-focused:after {
+  border-bottom-color: #ffa000 !important;
+}
+
+/* override form submit button */
+#messages-app .MuiButton-containedPrimary {
+  background-color: #ffa000 !important;
+}
+
+#messages-app .MuiSkeleton-text {
+  border-radius: 20px !important;
+  transform: none;
+}

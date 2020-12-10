@@ -1,7 +1,6 @@
 import events from "../utils/events";
-import { ESX, getSource } from "./server";
 import { pool } from "./db";
-import { useIdentifier } from "./functions";
+import { useIdentifier, getSource } from "./functions";
 import { Note, NoteId } from "../../phone/src/common/interfaces/notes";
 
 async function addNote(identifier: string, note: Note): Promise<any> {

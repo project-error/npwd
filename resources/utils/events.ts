@@ -43,7 +43,7 @@ export default {
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
 
-  // Bank
+// 
   BANK_ADD_TRANSFER: 'phone:addTransfer',
   BANK_ADD_TRANSFER_SUCCESS: 'phone:addTransferSuccess',
   BANK_FETCH_TRANSACTIONS: 'phone:fetchAllTransactions',
@@ -52,6 +52,20 @@ export default {
   BANK_TRANSACTION_NOTIFICATION: 'phone:bankTransactionNotification',
   BANK_SEND_CREDENTIALS: 'phone:sendBankCredentials',
   BANK_GET_CREDENTIALS: 'phone:getBankCredentials',
+
+  //messages
+  MESSAGES_FETCH_MESSAGE_GROUPS: 'phone:fetchMessageGroups',
+  MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS: 'phone:fetchMessageGroupsSuccess',
+  MESSAGES_FETCH_MESSAGE_GROUPS_FAILED: 'phone:fetchMessageGroupsFailed',
+  MESSAGES_CREATE_MESSAGE_GROUP: 'phone:createMessageGroup',
+  MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS: 'phone:createMessageGroupSuccess',
+  MESSAGES_CREATE_MESSAGE_GROUP_FAILED: 'phone:createMessageGroupFailed',
+  MESSAGES_SEND_MESSAGE: 'phone:sendMessage',
+  MESSAGES_SEND_MESSAGE_SUCCESS: 'phone:sendMessageSuccess',
+  MESSAGES_SEND_MESSAGE_FAILED: 'phone:sendMessageFailed',
+  MESSAGES_FETCH_MESSAGES: 'phone:fetchMessages',
+  MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
+  MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
 
   // Notes 
   NOTE_ADD_NOTE: 'phone:addNote',

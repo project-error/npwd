@@ -20,6 +20,7 @@ import { useContactsService } from "./apps/contacts/hooks/useContactsService";
 import { useTwitterService } from "./apps/twitter/hooks/useTwitterService";
 import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
+import { useMessagesService } from "./apps/messages/hooks/useMessageService";
 import { useNotesService } from "./apps/notes/hooks/useNotesService";
 import Nui from "./os/nui-events/utils/Nui";
 
@@ -233,6 +234,7 @@ function Phone() {
   useInitKeyboard();
   useSelloutService();
   useBankService();
+  useMessagesService()
   useNotesService();
 
   if (visibility === false) {

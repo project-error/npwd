@@ -13,3 +13,7 @@ function sendMessage(app: string, method: string, data: any) {
 export function sendTwitterMessage(method: string, data: any = {}) {
   return sendMessage(apps.TWITTER, method, data);
 }
+
+export function sendMessageEvent(method: string, data: any = {}) {
+  return sendMessage(apps.MESSAGES, method, data);
+}

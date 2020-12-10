@@ -1,5 +1,6 @@
 import events from '../utils/events';
-import { ESX, getSource } from './server';
+import { ESX } from './server';
+import { getSource } from "./functions";
 import { pool } from './db';
 import { Transfer, Credentials } from '../../phone/src/common/interfaces/bank';
 import { useIdentifier } from './functions';

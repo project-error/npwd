@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { eventNameFactory } from "../utils/nuiUtils";
 
@@ -7,7 +8,7 @@ interface IOptions {
   once?: boolean;
 }
 
-export const useNuiEvent = (app, method, handler, options: IOptions = {}) => {
+export const useNuiEvent = (app: any, method: any, handler: any, options: IOptions = {}) => {
   const savedHandler: any = useRef();
   const { capture, passive, once } = options;
 
@@ -17,7 +18,7 @@ export const useNuiEvent = (app, method, handler, options: IOptions = {}) => {
 
   useEffect(() => {
     const eventName = eventNameFactory(app, method);
-    const eventListener = (event) => {
+    const eventListener = (event: any ) => {
       if (savedHandler.current && savedHandler.current.call) {
         const { data } = event;
         console.log(eventName, data);

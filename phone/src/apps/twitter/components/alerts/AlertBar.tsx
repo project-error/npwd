@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useProfile } from "../../hooks/useProfile";
 import { useTweetStatus } from "../../hooks/useTweetStatus";
-import Alert from "./Alert";
+import Alert from "../../../../ui/components/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {

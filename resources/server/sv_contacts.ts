@@ -1,7 +1,7 @@
-import { ESX, getSource } from "./server";
+import { ESX } from "./server";
 import { pool } from "./db";
 import events from "../utils/events";
-import { useIdentifier } from './functions'
+import { useIdentifier, getSource } from './functions'
 
 interface Contacts {
   id?: number;
@@ -31,7 +31,7 @@ async function addContact(
   const query =
     "INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)";
 
-  await pool.query(query, [identifier, number, display, avatar]);
+  const [result] = await pool.query(query, [identifier, number, display, avatar]);
 }
 
 async function updateContact(contact: Contacts, identifier: string): Promise<any> {
