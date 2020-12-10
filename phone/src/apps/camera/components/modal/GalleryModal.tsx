@@ -9,7 +9,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { useImagePrompt } from '../../../twitter/hooks/useImagePrompt';
 import { useShareModal } from '../../hooks/useShareModal';
 import { ShareModal } from './ShareModal';
 import { useShareLink } from '../../hooks/useShareLink';
@@ -23,12 +22,10 @@ export const GalleryModal = () => {
   const { shareModal ,setShareModal } = useShareModal();
   const { setShareLink } = useShareLink();
 
-  let history = useHistory();
 
   const _handleClose = () => {
     setModal(false)
     setMeta(null);
-    //history.goBack();
   }
 
   const handleDeletePhoto = () => {
@@ -48,7 +45,7 @@ export const GalleryModal = () => {
 
   return (
     <Paper className={modal ? classes.modal : classes.modalHide}>
-      <ShareModal />
+      <ShareModal key={meta.id} {...meta}/>
       <div className={shareModal ? classes.backgroundModal : undefined} />
       <Button onClick={_handleClose}><ArrowBackIcon /></Button>
       <div className={classes.image} style={{ backgroundImage: `url(${meta.image})`}} />

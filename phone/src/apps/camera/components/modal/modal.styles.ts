@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 15,
     display: 'flex',
     justifyContent: 'space-evenly'
+  },
+
+  // share modal
+  shareModal: {
+    marginBottom: 50
+  },
+  innerShareModal: {
+    marginTop: 40,
+    textAlign: 'center'
   }
 }))
 

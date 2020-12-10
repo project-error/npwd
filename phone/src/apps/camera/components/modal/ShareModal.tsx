@@ -3,15 +3,16 @@ import Modal from '../../../../ui/components/Modal'
 import { useShareLink } from '../../hooks/useShareLink';
 import { useShareModal } from '../../hooks/useShareModal'
 import { Button } from '@material-ui/core';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import MessageIcon from '@material-ui/icons/Message';
 import { useHistory } from 'react-router-dom';
 import { useModal } from '../../../twitter/hooks/useModal';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAd } from "@fortawesome/free-solid-svg-icons";
+import useStyles from './modal.styles';
 
-export const ShareModal = () => {
+
+export const ShareModal = (meta) => {
+  const classes = useStyles();
   const { shareModal, setShareModal } = useShareModal();
   const { shareLink, setShareLink } = useShareLink();
   const { setModalVisible } = useModal();
@@ -26,16 +27,15 @@ export const ShareModal = () => {
 
   return (
     <Modal visible={shareModal} handleClose={_handleClose}>
-      <div style={{ marginBottom: 50 }}>
+      <div className={classes.shareModal}>
         <Button style={{ position: 'absolute', right: 0, width: '10%' }} onClick={_handleClose}><CloseIcon /></Button>
-        <div style={{ marginTop: 40 }}>
+        <div className={classes.innerShareModal}>
           <h4 style={{ textAlign: 'center', marginTop: 20 }}>Where do you want to share the photo?</h4>
           <Button>
-            {<TwitterIcon />} Twitter
+            {<MessageIcon />} Message
           </Button>
-          <Button>
-          {<FontAwesomeIcon icon={faAd} fixedWidth size="2x"/>} Advert
-          </Button>
+          <h4>Or just copy the image here:</h4>
+          <p>{meta.image}</p>
         </div>
       </div>
     </Modal>
