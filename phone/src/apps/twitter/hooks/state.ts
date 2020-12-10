@@ -40,5 +40,5 @@ export const twitterState = {
   notification: atom({
     key: "notification",
     default: null,
-  }),
+  })
 };

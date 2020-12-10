@@ -226,6 +226,25 @@ setTick(() => {
   }
 });
 
+
+// setTick(() => {
+//   if (isPhoneOpen) {
+//     DisableControlAction(0, 1, true) 
+//     DisableControlAction(0, 2, true) 
+//     DisableControlAction(0, 24, true)
+//     DisableControlAction(0, 257, true)
+//     DisableControlAction(0, 25, true)
+//     DisableControlAction(0, 263, true)
+//   } else {
+//     EnableControlAction(0, 1, true) 
+//     EnableControlAction(0, 2, true) 
+//     EnableControlAction(0, 24, true)
+//     EnableControlAction(0, 257, true)
+//     EnableControlAction(0, 25, true)
+//     EnableControlAction(0, 263, true)
+//   }
+// })
+
 async function Phone() {
   if (config.PhoneAsItem) {
     console.log("CONFIG ON");
@@ -247,6 +266,8 @@ async function Phone() {
           );
           sendPhoneConfig();
           SetNuiFocus(true, true);
+          //SetNuiFocusKeepInput(true)
+
         } else {
           isPhoneOpen = false;
           SendNuiMessage(
@@ -258,6 +279,8 @@ async function Phone() {
             })
           );
           SetNuiFocus(false, false);
+          //SetNuiFocusKeepInput(false)
+          
           await phoneCloseAnim(); // Animation starts after the UI is closed.
         }
       } else {
@@ -282,6 +305,8 @@ async function Phone() {
       );
       sendPhoneConfig();
       SetNuiFocus(true, true);
+      //SetNuiFocusKeepInput(true)
+        
     } else {
       isPhoneOpen = false;
       SendNuiMessage(
@@ -293,6 +318,8 @@ async function Phone() {
         })
       );
       SetNuiFocus(false, false);
+      //SetNuiFocusKeepInput(false)
+
       await phoneCloseAnim(); // Animation starts after the UI is closed.
     }
   }
@@ -320,6 +347,11 @@ RegisterNuiCallbackType(events.OPEN_APP_BANK);
 on(`__cfx_nui:${events.OPEN_APP_BANK}`, () => {
   emitNet(events.BANK_FETCH_TRANSACTIONS);
   emitNet(events.BANK_GET_CREDENTIALS);
+})
+
+RegisterNuiCallbackType(events.OPEN_APP_CAMERA);
+on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
+  emitNet(events.CAMERA_FETCH_PHOTOS);
 })
 
 RegisterCommand(
@@ -367,25 +399,25 @@ function countPhone(cb: any) {
 
 let destroyedPhone = false;
 
-setTick(async () => {
-  while (config.SwimDestroy) {
-    await Delay(config.RunRate * 1000);
-    if (IsPedSwimming(PlayerPedId())) {
-      let chance = Math.floor(Math.random() * 100 + 1);
-      if (chance <= config.DestoryChance) {
-        countPhone((countPhone: boolean) => {
-          if (countPhone) {
-            ESX.ShowNotification("Your phone is ruined from the water!");
-            destroyedPhone = true;
-          }
-        });
-      }
-      if (destroyedPhone) {
-        await Delay(config.DestroyPhoneReCheck * 60000);
-      }
-    }
-  }
-});
+// setTick(async () => {
+//   while (config.SwimDestroy) {
+//     await Delay(config.RunRate * 1000);
+//     if (IsPedSwimming(PlayerPedId())) {
+//       let chance = Math.floor(Math.random() * 100 + 1);
+//       if (chance <= config.DestoryChance) {
+//         countPhone((countPhone: boolean) => {
+//           if (countPhone) {
+//             ESX.ShowNotification("Your phone is ruined from the water!");
+//             destroyedPhone = true;
+//           }
+//         });
+//       }
+//       if (destroyedPhone) {
+//         await Delay(config.DestroyPhoneReCheck * 60000);
+//       }
+//     }
+//   }
+// });
 
 onNet("phone:sendCredentials", (number: string) => {
   SendNuiMessage(

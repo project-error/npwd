@@ -16,7 +16,7 @@ import {
   faPlaneArrival,
   faPhoneAlt,
   faWonSign,
-  faStickyNote
+  faStickyNote,
 } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
@@ -25,6 +25,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import MessageIcon from "@material-ui/icons/Message";
 import { atom } from "recoil";
 import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { Route } from "react-router-dom";
 import { DialerApp } from "../../../apps/dialer/components/DialerApp";
 import { ContactsApp } from "../../../apps/contacts/components/ContactsApp";
@@ -36,6 +37,7 @@ import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
 import { ExampleApp } from "../../../apps/example/components/ExampleApp";
 import { SelloutApp } from "../../../apps/sellout/components/SelloutApp";
 import { NotesApp } from "../../../apps/notes/NotesApp";
+import CameraApp from "../../../apps/camera/components/CameraApp";
 
 const appsState = atom({
   key: "apps",
@@ -121,6 +123,15 @@ const appsState = atom({
         color: common.white,
         path: "/notes",
         Route: () => <Route path="/notes" component={NotesApp}/>
+      },
+      {
+        id: "CAMERA",
+        name: 'APPS_CAMERA',
+        icon: <CameraAltIcon fontSize="large"/>,
+        backgroundColor: grey['A400'],
+        color: common.white,
+        path: "/camera",
+        Route: () => <Route path="/camera" component={CameraApp} />
       },
       {
         id: "EXAMPLE",

@@ -81,6 +81,14 @@ export default {
   OPEN_APP_CONTACTS: 'phone:app:CONTACTS',
   OPEN_APP_BANK: 'phone:app:BANK',
   OPEN_APP_NOTES: 'phone:app:NOTES',
-  OPEN_APP_LISTINGS: 'phone:app:SELLOUT'
+  OPEN_APP_LISTINGS: 'phone:app:SELLOUT',
+  OPEN_APP_CAMERA: 'phone:app:CAMERA',
 
+  // camera
+  CAMERA_TAKE_PHOTO: 'phone:TakePhoto',
+  CAMERA_UPLOAD_PHOTO: 'phone:UploadPhoto',
+  CAMERA_FETCH_PHOTOS: 'phone:FetchPhotos',
+  CAMERA_SEND_PHOTOS: 'phone:SendPhotos',
+  CAMERA_DELETE_PHOTO: 'photo:deletePhoto',
+  CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess'
 }

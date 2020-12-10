@@ -22,9 +22,31 @@ import { useSelloutService } from "./apps/sellout/hooks/useSelloutService";
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from "./apps/messages/hooks/useMessageService";
 import { useNotesService } from "./apps/notes/hooks/useNotesService";
+import { usePhotoService } from "./apps/camera/hooks/usePhotoService";
 import Nui from "./os/nui-events/utils/Nui";
 
 //These events are just for testing. Comment it out before building.
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent("message", {
+      data: {
+        app: "CAMERA",
+        method: "setPhotos",
+        data: [
+          {
+            id: 1,
+            image: 'https://i.imgur.com/OO8wx6Z.jpg',
+          },
+          {
+            id: 1,
+            image: 'https://i.imgur.com/pqGBiST.jpg'
+          }
+        ],
+      },
+    })
+  );
+}, 1000);
+
 setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
@@ -36,6 +58,8 @@ setTimeout(() => {
     })
   );
 }, 1000);
+
+
 
 setTimeout(() => {	
   window.dispatchEvent(	
@@ -166,37 +190,6 @@ setTimeout(() => {
   window.dispatchEvent(
     new MessageEvent("message", {
       data: {
-        app: "CONTACTS",
-        method: "setContacts",
-        data: [
-          {
-            id: 1,
-            number: "345-4366",
-            display: "chip",
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Rotating_earth_%28large%29.gif/200px-Rotating_earth_%28large%29.gif'
-          },
-          {
-            id: 2,
-            number: "456-4366",
-            display: "shit",
-            avatar: ''
-          },
-          {
-            id: 3,
-            number: "123-4366",
-            display: "rocky",
-            avatar: 'https://i.imgur.com/B8ta5Aa.jpeg'
-          },
-        ],
-      },
-    })
-  );
-}, 1000);
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
         app: "SELLOUT",
         method: "setListings",
         data: [
@@ -236,6 +229,7 @@ function Phone() {
   useBankService();
   useMessagesService()
   useNotesService();
+  usePhotoService();
 
   if (visibility === false) {
     return null;
