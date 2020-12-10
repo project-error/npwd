@@ -21,4 +21,8 @@ export const messageState = {
     key: "createMessageGroupResult",
     default: null,
   }),
+  imageModal: atom({
+    key: 'useImageModal',
+    default: false
+  })
 };

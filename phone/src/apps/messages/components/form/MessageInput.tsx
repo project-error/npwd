@@ -3,13 +3,16 @@ import { useTranslation } from "react-i18next";
 import { Paper, TextField, Button } from "@material-ui/core";
 import useStyles from "./form.styles";
 import SendIcon from "@material-ui/icons/Send";
+import ImageIcon from '@material-ui/icons/Image';
 import Nui from "../../../../os/nui-events/utils/Nui";
+import { useImageModal } from "../../hooks/useImageModal";
 
 interface IProps {
   messageGroupId: string | undefined;
 }
 
 const MessageInput = ({ messageGroupId }: IProps) => {
+  const { setImageModal } = useImageModal();
   const classes = useStyles();
   const { t } = useTranslation();
   const [message, setMessage] = useState("");
@@ -26,6 +29,10 @@ const MessageInput = ({ messageGroupId }: IProps) => {
     }
   };
 
+  const openImageModal = () => {
+    setImageModal(true);
+  }
+
   if (!messageGroupId) return null;
 
   return (
@@ -41,7 +48,10 @@ const MessageInput = ({ messageGroupId }: IProps) => {
             className: classes.messagesInput,
           }}
         />
-        <Button className={classes.sendButton} type="submit">
+        <Button className={classes.sendButton} onClick={openImageModal}>
+          <ImageIcon />
+        </Button>
+        <Button className={classes.sendButton}  type="submit">
           <SendIcon />
         </Button>
       </form>
