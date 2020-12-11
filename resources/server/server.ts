@@ -1,4 +1,4 @@
-import { ESXServer } from "fivem-esx-js/server/esx_server";
+import { Server } from 'esx.js';
 
 import './db';
 import './sv_twitter';
@@ -10,7 +10,11 @@ import './sv_notes';
 import './sv_photo';
 import './sv_messages';
 
-export let ESX: ESXServer = null;
+export let ESX: Server = null;
 
-emit("esx:getSharedObject", (obj: ESXServer) => (ESX = obj));
+export const getSource = () => (global as any).source;
 
+emit("esx:getSharedObject", (obj: Server) => (ESX = obj));
+
+
+// i llke t-notify
