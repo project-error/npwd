@@ -1,12 +1,12 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const phoneState = {
   visibility: atom({
-    key: "phoneVisibility",
+    key: 'phoneVisibility',
     default: false,
   }),
   phoneConfig: atom({
-    key: "phoneConfig",
+    key: 'phoneConfig',
     default: undefined,
   }),
 };

@@ -207,7 +207,7 @@ async function carryingPhone(cb: any) {
 
 function noPhone() {
   if (ESX === null) return;
-  ESX.ShowNotification("Oi Mate, No El Telephono");
+  ESX.ShowNotification("Oi Mate, No El Telephono", false, false, 1);
 }
 
 function sendPhoneConfig() {

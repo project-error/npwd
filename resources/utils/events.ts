@@ -90,5 +90,8 @@ export default {
   CAMERA_FETCH_PHOTOS: 'phone:FetchPhotos',
   CAMERA_SEND_PHOTOS: 'phone:SendPhotos',
   CAMERA_DELETE_PHOTO: 'photo:deletePhoto',
-  CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess'
+  CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess',
+
+  // copy
+  PHONE_USE_CLIPBOARD: 'phone:useClipboard'
 }
