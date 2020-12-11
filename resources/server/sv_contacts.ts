@@ -72,9 +72,10 @@ onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avata
     const _identifier = await useIdentifier()
     addContact(_identifier, number, display, avatar);
     emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source)
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_ADD_SUCCESS')
 
   } catch(error) {
-    console.log("Failed to add contact: ", error);
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_ADD_FAILED')
   }
 });
 
@@ -84,9 +85,9 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
     const _identifier = await useIdentifier()
     updateContact(contact, _identifier)
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source)
-    
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_UPDATE_SUCCESS')
   } catch (error) {
-    console.log(error)
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_UPDATE_FAILED')
   }
 })
 
@@ -95,7 +96,8 @@ onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
     const _identifier = await useIdentifier()
     deleteContact(contact, _identifier)
     emitNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, getSource())
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_DELETE_SUCCESS')
   } catch (error) {
-    console.log("DELETE CONTACT ERROR", error)
+    emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_DELETE_FAILED')
   }
 })
