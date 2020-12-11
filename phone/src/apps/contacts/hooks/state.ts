@@ -1,24 +1,28 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const contactsState = {
   contacts: atom({
-    key: "contactsList",
+    key: 'contactsList',
     default: [],
   }),
   showModal: atom({
-    key: "showModal",
+    key: 'showModal',
     default: false,
   }),
   filterContacts: atom({
     key: 'filterContacts',
-    default: ""
+    default: '',
   }),
   showContactsModal: atom({
     key: 'showContactModal',
-    default: false
+    default: false,
   }),
   contactDetail: atom({
     key: 'contactDetail',
-    default: null
-  })
+    default: null,
+  }),
+  contactAlert: atom({
+    key: 'contactAlert',
+    default: null,
+  }),
 };

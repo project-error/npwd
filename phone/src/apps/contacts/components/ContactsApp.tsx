@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppWrapper } from '../../../ui/components';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { ContactList } from './List/ContactList';
@@ -10,30 +9,11 @@ import { useModal } from '../hooks/useModal';
 import { SearchContacts } from './List/SearchContacts';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Fab from '@material-ui/core/Fab';
-import { useContactModal } from '../hooks/useContactModal';
 import { InfoModal } from './modal/InfoModal';
 import { useContactDetail } from '../hooks/useContactDetail';
 import { ContactAlert } from './alert/ContactAlert';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    backgroundModal: {
-      background: 'black',
-      opacity: '0.6',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 5,
-    },
-    absolute: {
-      position: 'sticky',
-      bottom: theme.spacing(2),
-      left: theme.spacing(3),
-    },
-  })
-);
+import useStyles from './styles.contacts';
 
 export const ContactsApp = () => {
   const classes = useStyles();
