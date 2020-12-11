@@ -25,196 +25,198 @@ import { useNotesService } from "./apps/notes/hooks/useNotesService";
 import { usePhotoService } from "./apps/camera/hooks/usePhotoService";
 import Nui from "./os/nui-events/utils/Nui";
 
-//These events are just for testing. Comment it out before building.
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "CAMERA",
-        method: "setPhotos",
-        data: [
-          {
-            id: 1,
-            image: 'https://i.imgur.com/OO8wx6Z.jpg',
-          },
-          {
-            id: 1,
-            image: 'https://i.imgur.com/pqGBiST.jpg'
-          }
-        ],
-      },
-    })
-  );
-}, 1000);
+// Inject mock data when in development env.
+if (process.env.NODE_ENV === 'development') {
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: "CAMERA",
+          method: "setPhotos",
+          data: [
+            {
+              id: 1,
+              image: 'https://i.imgur.com/OO8wx6Z.jpg',
+            },
+            {
+              id: 1,
+              image: 'https://i.imgur.com/pqGBiST.jpg'
+            }
+          ],
+        },
+      })
+    );
+  }, 1000);
 
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: "SIMCARD",
-        method: "setNumber",
-        data: "111-1134",
-      },
-    })
-  );
-}, 1000);
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: "SIMCARD",
+          method: "setNumber",
+          data: "111-1134",
+        },
+      })
+    );
+  }, 1000);
 
 
 
-setTimeout(() => {	
-  window.dispatchEvent(	
-    new MessageEvent("message", {	
-      data: {	
-        app: "PHONE",	
-        method: "setVisibility",	
-        data: true,	
-      },	
-    })	
-  );	
-}, 1000);
+  setTimeout(() => {	
+    window.dispatchEvent(	
+      new MessageEvent("message", {	
+        data: {	
+          app: "PHONE",	
+          method: "setVisibility",	
+          data: true,	
+        },	
+      })	
+    );	
+  }, 1000);
 
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: 'NOTES',
-        method: 'setNotes',
-        data: [
-          {
-            id: 1,
-            title: 'First note',
-            content: 'Hello, this is my shitty note'
-          },
-          {
-            id: 2,
-            title: 'Second note',
-            content: 'Hello, this is another shitty note'
-          },
-        ]
-      }
-    })
-  )
-}, 1000)
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: 'NOTES',
+          method: 'setNotes',
+          data: [
+            {
+              id: 1,
+              title: 'First note',
+              content: 'Hello, this is my shitty note'
+            },
+            {
+              id: 2,
+              title: 'Second note',
+              content: 'Hello, this is another shitty note'
+            },
+          ]
+        }
+      })
+    )
+  }, 1000)
 
-setTimeout(() => {
-  new MessageEvent("messsage", {
-    data: {
-      app: "BANK",
-      method: "setNotification",
-      data: {
-        id: 1,
-        message: "ahhaha"
-      }
-    }
-  })
-}, 1000)
-
-setTimeout(() => {
-  new MessageEvent("messsage", {
-    data: {
-      app: "TWITTER",
-      method: "setNotification",
-      data: {
-        id: 1,
-        message: "ahhaha"
-      }
-    }
-  })
-}, 1000)
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
+  setTimeout(() => {
+    new MessageEvent("messsage", {
       data: {
         app: "BANK",
-        method: "setCredentials",
-        data: 
-          {
-            name: "Firstname Lastname",
-            balance: 2000
-          }
-      },
-    })
-  );
-}, 1000);
-
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
-      data: {
-        app: 'BANK',
-        method: 'setTransaction',
-        data: [
-          {
-            id: 1, 
-            amount: 200,
-            type: 'Deposit',
-            source: "chip"
-          },{
-            id: 2, 
-            amount: 200,
-            type: 'Withdraw',
-            source: "chip"
-          },
-          {
-            id: 3, 
-            amount: 200,
-            type: 'Withdraw',
-            source: "chip"
-          },
-          {
-            id: 4, 
-            amount: 50,
-            type: 'Deposit',
-            source: "chip"
-          },
-          {
-            id: 4, 
-            amount: 50,
-            type: 'Deposit',
-            source: "chip"
-          },
-          {
-            id: 4, 
-            amount: 50,
-            type: 'Deposit',
-            source: "chip"
-          }
-        ]
+        method: "setNotification",
+        data: {
+          id: 1,
+          message: "ahhaha"
+        }
       }
     })
-  )
-}, 1000)
+  }, 1000)
 
-setTimeout(() => {
-  window.dispatchEvent(
-    new MessageEvent("message", {
+  setTimeout(() => {
+    new MessageEvent("messsage", {
       data: {
-        app: "SELLOUT",
-        method: "setListings",
-        data: [
-          {
-            id: 1,
-            name: "Some guy",
-            number: "123-4567",
-            title: "Car",
-            description:
-              "Selling this cool car",
-            url: "https://i.imgur.com/ROmGTwi.jpeg",
-          },
-          {
-            id: 2,
-            name: "Some other dude",
-            number: "666-6666",
-            title: "Material",
-            description: "Selling my wife",
-            url: "",
-          },
-        ],
-      },
+        app: "TWITTER",
+        method: "setNotification",
+        data: {
+          id: 1,
+          message: "ahhaha"
+        }
+      }
     })
-  );
-}, 1000);
+  }, 1000)
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: "BANK",
+          method: "setCredentials",
+          data: 
+            {
+              name: "Firstname Lastname",
+              balance: 2000
+            }
+        },
+      })
+    );
+  }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: 'BANK',
+          method: 'setTransaction',
+          data: [
+            {
+              id: 1, 
+              amount: 200,
+              type: 'Deposit',
+              source: "chip"
+            },{
+              id: 2, 
+              amount: 200,
+              type: 'Withdraw',
+              source: "chip"
+            },
+            {
+              id: 3, 
+              amount: 200,
+              type: 'Withdraw',
+              source: "chip"
+            },
+            {
+              id: 4, 
+              amount: 50,
+              type: 'Deposit',
+              source: "chip"
+            },
+            {
+              id: 4, 
+              amount: 50,
+              type: 'Deposit',
+              source: "chip"
+            },
+            {
+              id: 4, 
+              amount: 50,
+              type: 'Deposit',
+              source: "chip"
+            }
+          ]
+        }
+      })
+    )
+  }, 1000)
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: {
+          app: "SELLOUT",
+          method: "setListings",
+          data: [
+            {
+              id: 1,
+              name: "Some guy",
+              number: "123-4567",
+              title: "Car",
+              description:
+                "Selling this cool car",
+              url: "https://i.imgur.com/ROmGTwi.jpeg",
+            },
+            {
+              id: 2,
+              name: "Some other dude",
+              number: "666-6666",
+              title: "Material",
+              description: "Selling my wife",
+              url: "",
+            },
+          ],
+        },
+      })
+    );
+  }, 1000);
+}
 
 function Phone() {
   useNuiService();
