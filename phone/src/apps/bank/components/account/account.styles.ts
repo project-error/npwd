@@ -1,27 +1,6 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    width: '50%',
-    backgroundColor: '#2d3436',
-    margin: 20,
-    color: '#fff',
-  },
-  table: {
-    width: '100%',
-    color: '#fff',
-  },
-  cell: {
-    color: '#fff',
-  },
-  container: {
-    maxHeight: 350,
-  },
-  list: {
-    marginTop: '8.5em',
-  },
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
   },
@@ -38,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyItems: 'center',
     justifyContent: 'center',
-    fontSize: '30px',
+    fontSize: '24px',
   },
   seeAll: {
     fontFamily: 'Bahnschrift Regular',
@@ -47,8 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   transcationDiv: {
     marginTop: '-30px',
-    minHeight: 200,
-    maxHeight: 240,
   },
   transactions: {
     marginLeft: '32px',
@@ -80,15 +57,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '32px',
     fontSize: '22px',
     fontWeight: 'bold',
-  },
-  pagination: {
-    background: '#262525',
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    maxWidth: '100%',
-    overflow: 'hidden',
-    borderBottom: '2px solid #707070',
   },
 }));
 

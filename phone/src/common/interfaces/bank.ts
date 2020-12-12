@@ -1,4 +1,4 @@
-export interface Credentials {
+export interface IBankCredentials {
   name: string;
   balance: number;
 }
@@ -11,4 +11,3 @@ export interface Transfer {
   transferAmount: number;
   message: string;
 }
-
