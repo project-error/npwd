@@ -1,28 +1,8 @@
-import React, { useState } from "react";
-import { List } from "../../../../ui/components/List";
-import { ListItem } from "../../../../ui/components/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Typography, makeStyles, Button } from "@material-ui/core";
-
+import React, { useState } from 'react';
 import useStyles from '../bank.styles';
-
-import { useTranslation } from "react-i18next";
-
+import { useTranslation } from 'react-i18next';
 import TablePagination from '@material-ui/core/TablePagination';
-
-import { useTransactions } from "../../hooks/useTransactions";
-
-const columns = [
-  { id: "type", label: "Type", minWidth: 100 },
-  { id: "amount", label: "Amount", minWidth: 100 },
-  {
-    id: "message",
-    label: "Message",
-    minWidth: 170,
-    align: "left",
-    format: (value: number) => value.toLocaleString("en-US"),
-  },
-];
+import { useTransactions } from '../../hooks/useTransactions';
 
 export const TransactionList = () => {
   const { transactionList } = useTransactions();
@@ -34,9 +14,8 @@ export const TransactionList = () => {
   const TransactionTypes = {
     Deposit: classes.depositType,
     Withdraw: classes.withdrawType,
-    Transfer: classes.depositType
+    Transfer: classes.depositType,
   };
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -48,9 +27,9 @@ export const TransactionList = () => {
   };
 
   return (
-    <div id="transaction-section">
+    <div id='transaction-section'>
       <div className={classes.header}>
-        <h2 className={classes.title}>{t("APPS_BANK_ACCOUNT_TRANSACTIONS")}</h2>
+        <h2 className={classes.title}>{t('APPS_BANK_ACCOUNT_TRANSACTIONS')}</h2>
       </div>
 
       <div className={classes.transcationDiv}>
@@ -64,22 +43,22 @@ export const TransactionList = () => {
               </div>
               <div>
                 <p className={TransactionTypes[transaction.type]}>
-                  {transaction.type == "Withdraw" ? "-" : "+"}
+                  {transaction.type == 'Withdraw' ? '-' : '+'}
                   {transaction.amount}
                 </p>
               </div>
             </div>
           ))}
-          <TablePagination
+        <TablePagination
           rowsPerPageOptions={[3, 5]}
           className={classes.pagination}
-          component="div"
+          component='div'
           count={transactionList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+        />
       </div>
     </div>
   );
