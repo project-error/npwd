@@ -53,6 +53,44 @@ if (process.env.NODE_ENV === 'development') {
     window.dispatchEvent(
       new MessageEvent('message', {
         data: {
+          app: 'BANK',
+          method: 'setCredentials',
+          data: {
+            name: 'Firstname Lastname',
+            balance: 2000,
+          },
+        },
+      })
+    );
+  }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'CONTACTS',
+          method: 'setContacts',
+          data: [
+            {
+              id: 1,
+              display: 'Ruqen',
+              number: '43534444',
+            },
+            {
+              id: 1,
+              display: 'Taso',
+              number: '43534444',
+            },
+          ],
+        },
+      })
+    );
+  }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
           app: 'SIMCARD',
           method: 'setNumber',
           data: '111-1134',
@@ -97,16 +135,18 @@ if (process.env.NODE_ENV === 'development') {
   }, 1000);
 
   setTimeout(() => {
-    new MessageEvent('messsage', {
-      data: {
-        app: 'BANK',
-        method: 'setNotification',
+    window.dispatchEvent(
+      new MessageEvent('message', {
         data: {
-          id: 1,
-          message: 'ahhaha',
+          app: 'BANK',
+          method: 'setNotification',
+          data: {
+            id: 1,
+            message: 'ahhaha',
+          },
         },
-      },
-    });
+      })
+    );
   }, 1000);
 
   setTimeout(() => {
@@ -120,21 +160,6 @@ if (process.env.NODE_ENV === 'development') {
         },
       },
     });
-  }, 1000);
-
-  setTimeout(() => {
-    window.dispatchEvent(
-      new MessageEvent('message', {
-        data: {
-          app: 'BANK',
-          method: 'setCredentials',
-          data: {
-            name: 'Firstname Lastname',
-            balance: 2000,
-          },
-        },
-      })
-    );
   }, 1000);
 
   setTimeout(() => {
