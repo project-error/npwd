@@ -4,7 +4,7 @@ import { AppContentTypes } from "../interface/InterfaceUI";
 
 const useStyles = makeStyles(() => ({
   wrapper: {
-    height: "67vh",
+    height: "70vh", // NOTE: Taso: Hacky change temp, this should be done automatically tbh. Will refactor at some point
     overflow: "auto",
   },
   box: {
@@ -32,7 +32,7 @@ export const AppContent = ({
 }: AppContentTypes) => {
   const classes = useStyles();
   return (
-    <Paper className={classes.wrapper}>
+    <Paper className={classes.wrapper} square>
       <Box flexGrow={1} className={classes.box} {...props}>
         <Paper square elevation={0} className={classes.paper}>
           <Backdrop

@@ -59,6 +59,7 @@ export const InfoModal = () => {
     <Slide direction='up' in={showContactModal}>
       <Paper
         className={showContactModal ? classes.modalRoot : classes.modalHide}
+        square
       >
         <Button style={{ margin: 10 }} onClick={closeModal}>
           <ArrowBackIcon fontSize='large' />
