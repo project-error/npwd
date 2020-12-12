@@ -1,9 +1,9 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    fontFamily: 'Bahnschrift Regular'
+    width: '100%',
+    fontFamily: 'Bahnschrift Regular',
   },
   headTitle: {
     textAlign: 'center',
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     width: '50%',
     display: 'block',
     margin: '0 auto',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   actionButton: {
     background: '#388CF8',
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '20px',
     marginBottom: 20,
-    boxShadow: '0px 2px 7px -2px rgba(0,0,0,0.75)'
+    boxShadow: '0px 2px 7px -2px rgba(0,0,0,0.75)',
   },
   accounts: {
     marginTop: 20,
@@ -35,14 +35,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     margin: 30,
-    borderBottom: '1px solid #707070'
+    borderBottom: '1px solid #707070',
   },
-  accountsType: {
-
-  },
-  accountBalance: {
-
-  },
-}))
+  accountsType: {},
+  accountBalance: {},
+}));
 
 export default useStyles;
