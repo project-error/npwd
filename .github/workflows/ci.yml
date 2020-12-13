@@ -1,0 +1,68 @@
+name: Tests and CI
+
+on: [push]
+
+jobs:
+  nui_preformatting_tests:
+    name: NUI Preformatting and Tests
+    runs-on: ubuntu-latest
+    working-directory: phone
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install dependencies NUI
+        run: yarn --frozen-lockfile
+      - name: Prettify Code
+        uses: creyD/prettier_action@v3.1
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,jsx,ts,tsx,json,css,scss,md}
+          only_changed: True
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Enzyme Tests
+        run: yarn test
+        env:
+          CI: true
+
+  game_scripts_test:
+    name: Formatting/Tests for Native Scripts
+    runs-on: ubuntu-latest
+    working-directory: resources
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Install dependencies NUI
+        run: yarn --frozen-lockfile
+      - name: Prettify code
+        uses: creyD/prettier_action@v3.1
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,jsx,ts,tsx,json,css,scss,md}
+          only_changed: True
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Jest Tests
+        run: yarn test
+        env:
+          CI: true
