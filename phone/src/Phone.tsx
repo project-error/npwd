@@ -272,7 +272,7 @@ function Phone() {
   return (
     <ThemeProvider theme={currentTheme()}>
       <div className='PhoneWrapper'>
-        <div style={{ zoom: '80%' }}>
+        <div style={{ zoom: settings.zoom }}>
           <div className='Phone'>
             <div
               className='PhoneFrame'

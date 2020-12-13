@@ -16,8 +16,8 @@ interface General {
 }
 
 interface NotificationConfig {
-  horizontal: "left" | "center" | "right";
-  vertical: "bottom" | "top";
+  horizontal: 'left' | 'center' | 'right';
+  vertical: 'bottom' | 'top';
 }
 
 interface BankConfig {

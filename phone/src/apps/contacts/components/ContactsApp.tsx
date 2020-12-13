@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppWrapper } from '../../../ui/components';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { ContactList } from './List/ContactList';
@@ -27,7 +28,7 @@ export const ContactsApp = () => {
 
   return (
     <AppWrapper id='contact-app'>
-      <AppTitle app={contacts}></AppTitle>
+      <AppTitle app={contacts} />
       <SearchContacts />
       <AddContactModal />
       <InfoModal key={contactDetail?.id} />

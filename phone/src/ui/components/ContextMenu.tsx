@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import {
   ListItemIcon,
   ListItemText,
   Slide,
   makeStyles,
   Paper,
-} from "@material-ui/core";
-import { List } from "./List";
-import { ListItem } from "./ListItem";
+} from '@material-ui/core';
+import { List } from './List';
+import { ListItem } from './ListItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    position: "absolute",
+    width: '100%',
+    position: 'absolute',
     bottom: 0,
     zIndex: 2,
   },
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 export const ContextMenu = ({ open, onClose, options }) => {
   const classes = useStyles();
   return (
-    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+    <Slide direction='up' in={open} mountOnEnter unmountOnExit>
       <Paper square className={classes.root}>
-        <List>
+        <List disablePadding>
           {options.map((option) => (
             <ListItem
               selected={option.selected}
