@@ -28,7 +28,7 @@ export const ContactsApp = () => {
 
   return (
     <AppWrapper id='contact-app'>
-      <AppTitle app={contacts}></AppTitle>
+      <AppTitle app={contacts} />
       <SearchContacts />
       <AddContactModal />
       <InfoModal key={contactDetail?.id} />
