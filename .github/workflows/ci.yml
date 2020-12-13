@@ -6,9 +6,11 @@ jobs:
   nui_preformatting_tests:
     name: NUI Preformatting and Tests
     runs-on: ubuntu-latest
-    working-directory: ./phone
-
+    
+ 
     steps:
+      - name: Move into NUI Directory
+        run: cd ./phone
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -38,9 +40,10 @@ jobs:
   game_scripts_test:
     name: Formatting/Tests for Native Scripts
     runs-on: ubuntu-latest
-    working-directory: ./resources
 
     steps:
+      - name: Move into Resources directory
+        run: cd ./resources
       - name: Checkout
         uses: actions/checkout@v2
         with:
