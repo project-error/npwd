@@ -56,6 +56,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "ifdef-loader": "^2.1.5",
+    "lint-staged": "^10.5.3",
     "react-test-renderer": "^16.13.1",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
