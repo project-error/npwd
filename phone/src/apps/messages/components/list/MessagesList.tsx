@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { List } from "@material-ui/core";
+import React, { useEffect, useState } from 'react';
+import { List } from '@material-ui/core';
 
-import { MessageGroup } from "../../../../common/interfaces/messages";
-import Nui from "../../../../os/nui-events/utils/Nui";
-import useMessages from "../../hooks/useMessages";
-import useModals from "../../hooks/useModals";
-import MessageSearch from "./MessageSearch";
-import MessageGroupItem from "./MessageGroupItem";
-import useStyles from "./list.styles";
+import { MessageGroup } from '../../../../common/typings/messages';
+import Nui from '../../../../os/nui-events/utils/Nui';
+import useMessages from '../../hooks/useMessages';
+import useModals from '../../hooks/useModals';
+import MessageSearch from './MessageSearch';
+import MessageGroupItem from './MessageGroupItem';
+import useStyles from './list.styles';
 
 const MessagesList = (): any => {
   const classes = useStyles();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const { messageGroups } = useMessages();
   const { setActiveMessageGroup } = useModals();
 
   useEffect(() => {
-    Nui.send("phone:fetchMessageGroups");
+    Nui.send('phone:fetchMessageGroups');
   }, []);
 
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
     setActiveMessageGroup(messageGroup);
-    Nui.send("phone:fetchMessages", { groupId: messageGroup.groupId });
+    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
   };
 
   const formattedSearch = searchValue.toLowerCase().trim();

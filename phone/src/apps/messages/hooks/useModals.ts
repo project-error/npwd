@@ -1,6 +1,6 @@
-import { useRecoilState } from "recoil";
-import { MessageGroup } from "../../../common/interfaces/messages";
-import { messageState } from "./state";
+import { useRecoilState } from 'recoil';
+import { MessageGroup } from '../../../common/typings/messages';
+import { messageState } from './state';
 
 interface IUseModal {
   activeMessageGroup: MessageGroup | null;

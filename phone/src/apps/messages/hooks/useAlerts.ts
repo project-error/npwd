@@ -1,7 +1,7 @@
-import { useRecoilState } from "recoil";
-import { CreateMessageGroupResult } from "../../../common/interfaces/messages";
+import { useRecoilState } from 'recoil';
+import { CreateMessageGroupResult } from '../../../common/typings/messages';
 
-import { messageState } from "./state";
+import { messageState } from './state';
 
 interface IUseAlerts {
   createMessageGroupResult: CreateMessageGroupResult | null;

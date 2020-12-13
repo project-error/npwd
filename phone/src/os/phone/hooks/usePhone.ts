@@ -1,6 +1,6 @@
-import { useRecoilValue } from "recoil";
-import { phoneState } from "./state";
-import { ServerConfig } from "../../../common/interfaces/config";
+import { useRecoilValue } from 'recoil';
+import { phoneState } from './state';
+import { ServerConfig } from '../../../common/typings/config';
 
 interface IUsePhone {
   visibility: boolean;

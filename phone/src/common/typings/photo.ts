@@ -1,4 +1,4 @@
 export interface IPhoto {
   image: string;
-  id: number
+  id: number;
 }

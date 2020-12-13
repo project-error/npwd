@@ -1,6 +1,6 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Message, MessageGroup } from "../../../common/interfaces/messages";
-import { messageState } from "./state";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Message, MessageGroup } from '../../../common/typings/messages';
+import { messageState } from './state';
 
 interface IUseMessages {
   messages?: Message[] | null;
