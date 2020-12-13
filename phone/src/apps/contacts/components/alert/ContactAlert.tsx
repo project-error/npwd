@@ -3,6 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '../../../../ui/components/Alert';
 import { useContactAlert } from '../../hooks/useAlert';
+import { AlertCategory } from '../../../../common/typings/contact';
+
+// Used as a prefix for referencing the locales
+// Needed to make code cleaner
+const LOCALE_PREFIX = 'APPS_';
 
 export const ContactAlert = () => {
   const { t } = useTranslation();
@@ -16,31 +21,31 @@ export const ContactAlert = () => {
     setAlert(null);
   };
 
+  function setMessageAlert(type: AlertCategory, severity: 'success' | 'error') {
+    setMessage(t(LOCALE_PREFIX + type));
+    setSeverity(severity);
+    setOpen(true);
+  }
+
   useEffect(() => {
-    if (alert === 'CONTACT_ADD_SUCCESS') {
-      setMessage(t('APPS_CONTACTS_ADD_SUCCESS'));
-      setSeverity('success');
-      setOpen(true);
-    } else if (alert === 'CONTACT_ADD_FAILED') {
-      setMessage(t('APPS_CONTACTS_ADD_FAILED'));
-      setSeverity('error');
-      setOpen(true);
-    } else if (alert === 'CONTACT_UPDATE_SUCCESS') {
-      setMessage(t('APPS_CONTACTS_UPDATE_SUCCESS'));
-      setSeverity('success');
-      setOpen(true);
-    } else if (alert === 'CONTACT_UPDATE_FAILED') {
-      setMessage(t('APPS_CONTACTS_UPDATE_FAILED'));
-      setSeverity('error');
-      setOpen(true);
-    } else if (alert === 'CONTACT_DELETE_SUCCESS') {
-      setMessage(t('APPS_CONTACTS_DELETE_SUCCESS'));
-      setSeverity('success');
-      setOpen(true);
-    } else if (alert === 'CONTACT_DELETE_FAILED') {
-      setMessage(t('APPS_CONTACTS_DELETE_FAILED'));
-      setSeverity('error');
-      setOpen(true);
+    switch (alert) {
+      case 'CONTACT_ADD_FAILED':
+        setMessageAlert(alert, 'error');
+        break;
+      case 'CONTACT_ADD_SUCCESS':
+        setMessageAlert(alert, 'success');
+        break;
+      case 'CONTACT_DELETE_FAILED':
+        setMessageAlert(alert, 'error');
+        break;
+      case 'CONTACT_DELETE_SUCCESS':
+        setMessageAlert(alert, 'success');
+        break;
+      case 'CONTACT_UPDATE_FAILED':
+        setMessageAlert(alert, 'error');
+        break;
+      case 'CONTACT_UPDATE_SUCCESS':
+        setMessageAlert(alert, 'success');
     }
   }, [alert]);
 
