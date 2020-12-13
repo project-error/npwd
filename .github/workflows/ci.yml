@@ -10,7 +10,7 @@ jobs:
  
     steps:
       - name: Move into NUI Directory
-        run: cd ./phone
+        run: cd phone
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Move into Resources directory
-        run: cd ./resources
+        run: cd resources
       - name: Checkout
         uses: actions/checkout@v2
         with:
