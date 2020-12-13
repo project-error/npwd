@@ -9,7 +9,7 @@ import { useState } from 'react';
  * if there is no savedState
  */
 
-function useLocalStorage<T>(key: string, initialValue: T) {
+function useLocalStorage<T>(key?: string, initialValue?: T) {
   // Serves as a nice identifying prefix for the key
   const UNIQ_PREFIX = 'npwd_phone_';
   const [localVal, setLocalVal] = useState<T>(() => {
@@ -25,8 +25,22 @@ function useLocalStorage<T>(key: string, initialValue: T) {
     }
   });
 
+  const getStorageItem = (localKey: string) => {
+    try {
+      const data = window.localStorage.getItem(UNIQ_PREFIX + localKey);
+      // return stored or initValue if none stored
+      return data ? JSON.parse(data) : initialValue;
+    } catch (e) {
+      // TODO: Integrate debug error state here
+      console.log(e);
+      // We still return initVal if error is thrown
+      return initialValue;
+    }
+  };
+
   // Trying to rep useState setter pretty close just with localStorage
-  const setVal = (value: T | ((val: T) => T)) => {
+  const setVal = (localKey, value: T | ((val: T) => T)) => {
+    console.log(localKey, value);
     try {
       // Same API as useState meaning we can accept a function for value
       const valForStore = value instanceof Function ? value(localVal) : value;
@@ -34,7 +48,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
       setLocalVal(valForStore);
       // Set that localStorage yo
       window.localStorage.setItem(
-        UNIQ_PREFIX + key,
+        UNIQ_PREFIX + localKey,
         JSON.stringify(valForStore)
       );
     } catch (e) {
@@ -43,7 +57,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
     }
   };
 
-  return [localVal, setVal];
+  return [localVal, setVal, getStorageItem] as const;
 }
 
 export default useLocalStorage;

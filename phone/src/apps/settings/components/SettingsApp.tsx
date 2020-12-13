@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -24,6 +24,7 @@ import {
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
+import useLocalStorage from '../../../os/phone/hooks/useLocalStorage';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -35,26 +36,33 @@ export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const { setSettings, settings } = useSettings();
+  const [, setVal, getStorageItem] = useLocalStorage();
   const simcard = useSimcard();
 
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(settings.wallpaper, (val: string) =>
-      setSettings('wallpaper', val)
+    MapStringOptions(getStorageItem('wallpaper'), (val: string) =>
+      setVal('wallpaper', val)
     )
   );
   const frames = config.frames.map(
-    MapStringOptions(settings.frame, (val: string) => setSettings('frame', val))
+    MapStringOptions(getStorageItem('frame'), (val: string) =>
+      setVal('frame', val)
+    )
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(settings.theme, (val: string) => setSettings('theme', val))
+    MapStringOptions(getStorageItem('theme'), (val: string) =>
+      setVal('theme', val)
+    )
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(settings.zoom, (val: string) => setSettings('zoom', val))
+    MapStringOptions(getStorageItem('zoom'), (val: string) =>
+      setVal('zoom', val)
+    )
   );
   // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
-    MapStringOptions(settings.ringtone, (val: string) =>
-      setSettings('ringtone', val)
+    MapStringOptions(getStorageItem('ringtone'), (val: string) =>
+      setVal('ringtone', val)
     )
   );
   // * Probably gonna make this a slider component in the future
@@ -77,7 +85,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label='Ringtone'
-            value={settings.ringtone}
+            value={getStorageItem('ringtone')}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
@@ -97,28 +105,28 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
             label='Theme'
-            value={settings.theme}
+            value={getStorageItem('theme')}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label='Wallpaper'
-            value={settings.wallpaper}
+            value={getStorageItem('wallpaper')}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label='Frame'
-            value={settings.frame}
+            value={getStorageItem('frame')}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label='Zoom'
-            value={settings.zoom}
+            value={getStorageItem('zoom')}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}
