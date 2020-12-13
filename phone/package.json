@@ -21,7 +21,6 @@
     "emoji-mart": "^3.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
-    "husky": "4.2.5",
     "i18next": "^19.7.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
@@ -56,7 +55,6 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "ifdef-loader": "^2.1.5",
-    "lint-staged": "^10.5.3",
     "react-test-renderer": "^16.13.1",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
@@ -72,8 +70,8 @@
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
     "build": "react-scripts build",
     "build:resources": "cross-env NODE_ENV=production webpack --config webpack/webpack.resources.js --color -p --progress --hide-modules --display-optimization-bailout",
-    "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.[jt]s?(x)",
-    "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.[jt]s?(x)",
+    "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
+    "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -90,15 +88,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm run test"
-    }
   }
 }
