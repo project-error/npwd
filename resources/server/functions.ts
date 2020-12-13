@@ -20,8 +20,6 @@ export const getSource = () => parseInt(source);
 
 export async function useIdentifier(): Promise<string> {
   return ESX.GetPlayerFromId(getSource()).getIdentifier();
-  const identifier = await ESX.GetPlayerFromId(getSource()).getIdentifier()
-  return identifier;
 }
 
 export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<string> {
