@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -36,8 +36,13 @@ export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const { setSettings, settings } = useSettings();
-  const [, setVal, getStorageItem] = useLocalStorage();
+  const [localVal, setVal, getStorageItem] = useLocalStorage();
   const simcard = useSimcard();
+
+  useEffect(() => {
+    console.log('new localstorage');
+    // this will be used to trigger a alert that gives feedback when the a setting is changed
+  }, [localVal]);
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(getStorageItem('wallpaper'), (val: string) =>

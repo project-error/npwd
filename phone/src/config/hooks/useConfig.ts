@@ -9,7 +9,7 @@ const configState = atom({
 
 export const useConfig = (state: any = configState): any => {
   const [, setVal] = useLocalStorage();
-  const [config, _setConfig] = useRecoilState(state);
+  const [config] = useRecoilState(state);
 
   const setConfig = (key, value) => {
     console.log(`setConfig: ${key} ${value}`);
