@@ -12,7 +12,7 @@
         "vertical": "top"
     },
     "general": {
-      "useDashNumber": false
+      "useDashNumber": true
     },
     "twitter": {
         "showNotifications": true,
