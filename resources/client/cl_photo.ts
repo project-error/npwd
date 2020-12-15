@@ -1,6 +1,6 @@
 import events from "../utils/events";
 import { Delay } from "../utils/fivem";
-import { tokenData } from '../utils/token';
+const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none')
 
 const exp = (global as any).exports
 
@@ -111,18 +111,20 @@ onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
 
 function takePhoto() {
   const [width, height] = GetActiveScreenResolution();
-  console.log("photo taken")
+  // Return and log error if screenshot basic token not found
+  if (SCREENSHOT_BASIC_TOKEN === 'none') {
+    return console.error('Screenshot basic token not found. Please set in server.cfg');
+  }
   exp["screenshot-basic"].requestScreenshotUpload(
     "https://api.imgur.com/3/image",
     "imgur",
     {
       headers: {
-        'authorization': `Client-ID ${ tokenData.token }`,
+        'authorization': `Client-ID ${ SCREENSHOT_BASIC_TOKEN }`,
         'content-type': 'multipart/form-data'
       }
     },
     (data: string) => {
-      console.log("herrrrroooooooo")
       const imageLink = JSON.parse(data).data.link;
       emitNet(events.CAMERA_UPLOAD_PHOTO, imageLink)
     }
