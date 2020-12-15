@@ -1,7 +1,7 @@
 import events from "../utils/events";
 import { pool } from "./db";
 import { useIdentifier, getSource } from "./functions";
-import { Note, NoteId } from "../../phone/src/common/interfaces/notes";
+import { Note, NoteId } from "../../phone/src/common/typings/notes";
 
 async function addNote(identifier: string, note: Note): Promise<any> {
   const query =

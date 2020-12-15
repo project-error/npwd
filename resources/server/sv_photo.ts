@@ -2,7 +2,7 @@ import events from '../utils/events';
 import { ESX, getSource } from './server';
 import { pool } from './db';
 import { useIdentifier } from './functions';
-import { IPhoto } from '../../phone/src/common/interfaces/photo';
+import { IPhoto } from '../../phone/src/common/typings/photo';
 
 async function uploadPhoto(identifier: string, image: string) {
   const query = 'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';

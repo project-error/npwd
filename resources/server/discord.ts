@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Tweet, Profile } from '../../phone/src/common/interfaces/twitter';
+import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
 
 const DISCORD_TOKEN_ENV_VAR = 'discord_bot_token';

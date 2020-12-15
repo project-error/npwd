@@ -1,7 +1,7 @@
 import { pool } from "./db";
 import { ESX } from "./server";
 import { getSource } from "./functions";
-import { Tweet, Profile } from '../../phone/src/common/interfaces/twitter';
+import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import events from "../utils/events";
 import config from "../utils/config";
 import { reportTweetToDiscord } from './discord';

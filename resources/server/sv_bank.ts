@@ -2,7 +2,7 @@ import events from '../utils/events';
 import { ESX } from './server';
 import { getSource } from "./functions";
 import { pool } from './db';
-import { Transfer, Credentials } from '../../phone/src/common/interfaces/bank';
+import { Transfer, IBankCredentials } from '../../phone/src/common/typings/bank';
 import { useIdentifier } from './functions';
 import { type } from 'os';
 
@@ -15,7 +15,7 @@ async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   return transactions;
 }
 
-function fetchCredentials(): Credentials {
+function fetchCredentials(): IBankCredentials {
   const name = ESX.GetPlayerFromId(getSource()).getName();
   const balance = ESX.GetPlayerFromId(getSource()).getAccount('bank').money
 
@@ -86,11 +86,10 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
 
 onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
-  const targetSource = xTarget.source;
   try {
     const _identifier = await useIdentifier()
     const transferNotify = await addTransfer(_identifier, transfer)
-    emitNet(events.BANK_TRANSACTION_NOTIFICATION, targetSource, transferNotify)
+    emitNet(events.BANK_TRANSACTION_NOTIFICATION, xTarget, transferNotify)
     emitNet(events.BANK_ADD_TRANSFER_SUCCESS, getSource());
   } catch (error) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false)

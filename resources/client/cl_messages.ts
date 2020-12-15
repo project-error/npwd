@@ -1,5 +1,5 @@
 import events from '../utils/events';
-import { Message, MessageGroup } from '../../phone/src/common/interfaces/messages';
+import { Message, MessageGroup } from '../../phone/src/common/typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
 

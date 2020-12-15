@@ -1,7 +1,7 @@
 import md5 from 'md5';
 
 import events from '../utils/events';
-import { Message, MessageGroup, CreateMessageGroupResult } from '../../phone/src/common/interfaces/messages';
+import { Message, MessageGroup, CreateMessageGroupResult } from '../../phone/src/common/typings/messages';
 import { pool, withTransaction } from "./db";
 import { getSource, useIdentifier } from './functions';
 
