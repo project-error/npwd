@@ -91,7 +91,7 @@ export default {
   CAMERA_SEND_PHOTOS: 'phone:SendPhotos',
   CAMERA_DELETE_PHOTO: 'photo:deletePhoto',
   CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess',
-
+  CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
-  PHONE_USE_CLIPBOARD: 'phone:useClipboard'
+  PHONE_USE_CLIPBOARD: 'phone:useClipboard',
 }
