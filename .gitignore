@@ -1,2 +1,5 @@
 # No intellij folder
 .idea
+
+resources/html/main.js
+resources/html/*.woff
