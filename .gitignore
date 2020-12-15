@@ -1,5 +1,20 @@
-# No intellij folder
+# No IDE Folders
 .idea
+package.json
 
+# NUI Built Files
 resources/html/main.js
 resources/html/*.woff
+
+# Node Modules and Built Folders
+node_modules
+build
+dist
+
+# Error Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Mac thing
+.DS_Store
