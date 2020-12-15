@@ -2,9 +2,7 @@
 .idea
 package.json
 
-# NUI Built Files
-resources/html/main.js
-resources/html/*.woff
+resources/html
 
 # Node Modules and Built Folders
 node_modules
