@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useForceUpdate } from '../../../os/phone/hooks/forceUpdate';
 
 // TODO: Integrate debug log to fetch when that branch is merged
 
@@ -10,6 +11,7 @@ import { useState } from 'react';
  */
 
 function useLocalStorage<T>(key?: string, initialValue?: T) {
+  const { update, setUpdate } = useForceUpdate();
   // Serves as a nice identifying prefix for the key
   const UNIQ_PREFIX = 'npwd_phone_';
   const [localVal, setLocalVal] = useState<T>(() => {
@@ -42,6 +44,7 @@ function useLocalStorage<T>(key?: string, initialValue?: T) {
   const setVal = (localKey, value: T | ((val: T) => T)) => {
     console.log(localKey, value);
     try {
+      setUpdate(update + 1);
       // Same API as useState meaning we can accept a function for value
       const valForStore = value instanceof Function ? value(localVal) : value;
       // Save that state so we repli useState

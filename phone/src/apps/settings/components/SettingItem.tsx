@@ -6,6 +6,7 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import { SvgIconProps } from '@material-ui/core';
+
 interface IProps {
   options?: any;
   label: string;

@@ -35,14 +35,8 @@ const SubHeaderComp = (props: { text: string }) => (
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
-  const { setSettings, settings } = useSettings();
   const [localVal, setVal, getStorageItem] = useLocalStorage();
   const simcard = useSimcard();
-
-  useEffect(() => {
-    console.log('new localstorage');
-    // this will be used to trigger a alert that gives feedback when the a setting is changed
-  }, [localVal]);
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(getStorageItem('wallpaper'), (val: string) =>
@@ -76,6 +70,10 @@ export const SettingsApp = () => {
   // )
 
   // TODO: These new settings all work
+
+  useEffect(() => {
+    // this will be used to trigger a alert that gives feedback when the a setting is changed
+  }, [setVal]);
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
