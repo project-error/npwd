@@ -1,14 +1,14 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import en from "./locale/en.json";
-import es from './locale/es.json'
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import en from './locale/en.json';
+import es from './locale/es.json';
 import fr from './locale/fr.json';
 import config from './config/default.json';
 
 const resources = {
   en,
   es,
-  fr
+  fr,
 };
 
 i18n
