@@ -39,7 +39,7 @@
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "d",
-  
+
     "APPS_BANK_HOME_TITLE": "Bienvenido",
     "APPS_BANK_ACCOUNT_LINK": "Cuenta",
     "APPS_BANK_TIME_JUST_NOW": "Justo ahora",
@@ -49,11 +49,11 @@
     "APPS_BANK_ACTIONS_TRANSFER": "Transferir",
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Te ha transferido con exito!",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transferencia fallida!",
-  
+
     "APPS_CONTACT_FORM_NAME": "Nombre",
     "APPS_CONTACT_FORM_NUMBER": "Numero",
     "APPS_CONTACT_FORM_AVATAR": "URL Avatar",
-  
+
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Buscar mensajes...",
     "APPS_MESSAGES_NEW_MESSAGE": "Mensaje...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Numeros de telefonos...",
@@ -63,7 +63,7 @@
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Este grupo de mensajes ya existe",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Error al crear grupo de mensajes",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "No puedes agregarte a ti mismo!",
-  
+
     "APPS_CONTACT_ADD_SUCCESS": "Se ha creado el contacto!",
     "APPS_CONTACT_ADD_FAILED": "Error al crear el contacto!",
     "APPS_CONTACT_UPDATE_SUCCESS": "Se ha actualizado el contacto!",
@@ -72,4 +72,3 @@
     "APPS_CONTACT_DELETE_FAILED": "Error al borrar el contacto!"
   }
 }
-  
