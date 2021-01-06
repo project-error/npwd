@@ -78,10 +78,9 @@ The development environment assumes you have the following prerequisites:
 - If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then `ensure new-phone-who-dis` after making your change
 - Avoid commiting `index.html` as the development version overrides the production version
 
-
 #### Important Note
 
-By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically 
+By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically
 uploads relevant sesssion details and stack traces whenever an exception is thrown. We use these metrics to further
-improve the quality of the phone. To explicitly disable this (we urge you not to as its incredibly useful metrics for us). 
+improve the quality of the phone. To explicitly disable this (we urge you not to as its incredibly useful metrics for us).
 Please change the `SentryErrorMetrics` setting to `false` in `phone/config/default.json` and rebuild the phone.
