@@ -1,9 +1,10 @@
-# New Phone README TITLE
+# New Phone Who Dis
+
+The original repo for NPWD
 
 TODO
 
 ## Production Server Installation
-
 
 ### Configuration
 
@@ -12,7 +13,7 @@ This resource is highly configurable through the [config.json](./config.json). T
 Below is the list of configuration options:
 
 | Option                               | Default  | Description                                                                                                                    |
-|--------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | Locale                               | en       | The language locale used by the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options   |
 | KeyTogglePhone                       | 288 (F1) | The keybind to open and close the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options |
 | PhoneAsItem                          | false    | whether or not the phone is an item in game                                                                                    |
@@ -46,7 +47,6 @@ Current discord integrations with the phone:
 
 - Twitter: reporting tweets
 
-
 ## Development
 
 This phone is a [React](https://reactjs.org/) project with a TypeScript client/server environment.
@@ -68,9 +68,9 @@ The development environment assumes you have the following prerequisites:
 1. Clone the repo into your `server-data/resources/[local]` folder
 1. Go into the react project: `cd phone`
 1. Install node dependencies: `yarn install`
-2. Install `lint-staged` globally `npm i -g lint-staged
-3. Add the `new-phone-who-dis` app to your `server.cfg`
-4. Start your fivem server
+1. Install `lint-staged` globally `npm i -g lint-staged
+1. Add the `new-phone-who-dis` app to your `server.cfg`
+1. Start your fivem server
 
 #### Development iteration cycle:
 
