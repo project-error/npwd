@@ -69,6 +69,14 @@
     "APPS_CONTACT_UPDATE_SUCCESS": "Successfully updated contact!",
     "APPS_CONTACT_UPDATE_FAILED": "Failed to update contact!",
     "APPS_CONTACT_DELETE_SUCCESS": "Successfully deleted contact!",
-    "APPS_CONTACT_DELETE_FAILED": "Failed to delete contact!"
+    "APPS_CONTACT_DELETE_FAILED": "Failed to delete contact!",
+
+    "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
+    "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
+    "APPS_SETTINGS_OPTION_FRAME": "Frame",
+    "APPS_SETTINGS_OPTION_THEME": "Theme",
+    "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
+    "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
+    "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume"
   }
 }
