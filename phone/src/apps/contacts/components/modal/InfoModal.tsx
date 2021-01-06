@@ -99,10 +99,10 @@ export const InfoModal = () => {
 
           <div style={{ display: 'block' }}>
             <Button onClick={updateContact} className={classes.updateButton}>
-              Update
+              {t('GENERIC_UPDATE')}
             </Button>
             <Button onClick={deleteContact} className={classes.deleteButton}>
-              Delete
+              {t('GENERIC_DELETE')}
             </Button>
           </div>
         </div>
