@@ -12,7 +12,7 @@ import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { SettingItem } from './SettingItem';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import {
   Brush,
@@ -38,7 +38,7 @@ export const SettingsApp = () => {
   const { setSettings, settings } = useSettings();
   const simcard = useSimcard();
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(settings.wallpaper, (val: string) =>
