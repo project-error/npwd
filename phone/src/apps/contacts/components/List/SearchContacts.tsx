@@ -8,7 +8,7 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 
@@ -71,7 +71,7 @@ export const SearchContacts = () => {
 
   const classes = useStyles();
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     setFilteredContacts(e.target.value);

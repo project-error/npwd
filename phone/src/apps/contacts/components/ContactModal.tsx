@@ -11,7 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import useStyles from './styles.contactmodal';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 export const AddContactModal = () => {
   const [name, setName] = useState('');
@@ -19,7 +19,7 @@ export const AddContactModal = () => {
   const [avatar, setAvatar] = useState('');
   const classes = useStyles();
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const { showModal, setShowModal } = useModal();
 
