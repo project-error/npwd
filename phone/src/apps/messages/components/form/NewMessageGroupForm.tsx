@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TextField, Button } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 
 import useStyles from "./form.styles";
 import useModals from "../../hooks/useModals";

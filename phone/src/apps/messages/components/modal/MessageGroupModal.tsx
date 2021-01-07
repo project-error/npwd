@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import { Slide, Paper, Button } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import useStyles from "./modal.styles";

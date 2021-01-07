@@ -2,8 +2,6 @@ import { useSetRecoilState } from "recoil";
 import { messageState } from "./state";
 import { useNuiEvent } from "../../../os/nui-events/hooks/useNuiEvent";
 
-const NOTIFICATION_TIMEOUT = 6000;
-
 export const useMessagesService = () => {
   const setMessageGroups = useSetRecoilState(messageState.messageGroups);
   const setMessages = useSetRecoilState(messageState.messages);
