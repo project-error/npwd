@@ -1,9 +1,7 @@
 import React from 'react'
-import Modal from '../../../../ui/components/Modal';
 import { usePhotoMeta } from '../../hooks/usePhotoMeta';
 import { usePhotoModal } from '../../hooks/usePhotoModal';
 import useStyles from './modal.styles';
-import { useHistory } from 'react-router-dom';
 import { Button, Paper } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';

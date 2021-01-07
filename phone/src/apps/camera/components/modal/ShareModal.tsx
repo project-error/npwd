@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Modal from '../../../../ui/components/Modal';
 import { useShareLink } from '../../hooks/useShareLink';
 import { useShareModal } from '../../hooks/useShareModal';
@@ -8,7 +8,6 @@ import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './modal.styles';
-import Nui from '../../../../os/nui-events/utils/Nui';
 
 export const ShareModal = (meta) => {
   const classes = useStyles();
