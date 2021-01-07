@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
 import Nui from '../../../os/nui-events/utils/Nui';
 import List from '@material-ui/core/List';

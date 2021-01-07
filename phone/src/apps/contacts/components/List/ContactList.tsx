@@ -6,13 +6,8 @@ import {
   Avatar as MuiAvatar,
   List,
   ListItem,
-  TextField,
-  Collapse,
   makeStyles,
 } from '@material-ui/core';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 
@@ -26,7 +21,6 @@ import { useContactDetail } from '../../hooks/useContactDetail';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import '../Contact.css';
-import { ContactAlert } from '../alert/ContactAlert';
 
 const useStyles = makeStyles((theme) => ({
   updateButton: {
