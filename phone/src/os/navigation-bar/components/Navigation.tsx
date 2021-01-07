@@ -6,7 +6,6 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import AppsIcon from "@material-ui/icons/Apps";
-import PhoneIcon from "@material-ui/icons/Phone";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import { useHistory } from "react-router-dom";
 
