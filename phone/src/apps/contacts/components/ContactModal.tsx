@@ -10,12 +10,15 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import useStyles from './styles.contactmodal';
+import { useTranslation } from 'react-i18next';
 
 export const AddContactModal = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [avatar, setAvatar] = useState('');
   const classes = useStyles();
+
+  const { t } = useTranslation();
 
   const { showModal, setShowModal } = useModal();
 
@@ -50,7 +53,7 @@ export const AddContactModal = () => {
             onChange={(e) => setName(e.target.value)}
             fullWidth
             variant='standard'
-            placeholder='Name'
+            placeholder={t('APPS_CONTACT_MODAL_PLACEHOLDER_NAME')}
           />
         </ListItem>
         <ListItem>
@@ -60,7 +63,7 @@ export const AddContactModal = () => {
             inputProps={{ className: classes.textInputField }}
             onChange={(e) => setNumber(e.target.value)}
             fullWidth
-            placeholder='Number'
+            placeholder={t('APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER')}
             variant='standard'
             type='text'
           />
@@ -72,14 +75,14 @@ export const AddContactModal = () => {
             inputProps={{ className: classes.textInputField }}
             onChange={(e) => setAvatar(e.target.value)}
             fullWidth
-            placeholder='Avatar URL'
+            placeholder={t('APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR')}
             variant='standard'
             type='text'
           />
         </ListItem>
       </List>
       <Button className={classes.addBtn} onClick={addContact}>
-        Add Contact
+        {t('APPS_CONTACT_MODAL_BUTTON_ADD')}
       </Button>
     </Modal>
   );

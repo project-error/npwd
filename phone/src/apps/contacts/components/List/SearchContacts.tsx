@@ -8,6 +8,8 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 
+import { useTranslation } from 'react-i18next';
+
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,6 +71,8 @@ export const SearchContacts = () => {
 
   const classes = useStyles();
 
+  const { t } = useTranslation();
+
   const handleChange = (e) => {
     setFilteredContacts(e.target.value);
   };
@@ -81,7 +85,7 @@ export const SearchContacts = () => {
         </div>
         <InputBase
           onChange={handleChange}
-          placeholder='Search contacts...'
+          placeholder={t('APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS')}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,

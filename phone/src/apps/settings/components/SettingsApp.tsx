@@ -12,6 +12,7 @@ import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { SettingItem } from './SettingItem';
+import { useTranslation } from 'react-i18next';
 
 import {
   Brush,
@@ -36,6 +37,8 @@ export const SettingsApp = () => {
   const [config] = useConfig();
   const { setSettings, settings } = useSettings();
   const simcard = useSimcard();
+
+  const { t } = useTranslation();
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(settings.wallpaper, (val: string) =>
@@ -71,12 +74,12 @@ export const SettingsApp = () => {
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List disablePadding subheader={<SubHeaderComp text='Phone' />}>
           <SettingItem
-            label='Phone Number'
+            label={t('APPS_SETTINGS_PHONE_NUMBER')}
             value={simcard.number}
             icon={<Phone />}
           />
           <SettingItem
-            label='Ringtone'
+            label={t('APPS_SETTINGS_OPTION_RINGTONE')}
             value={settings.ringtone}
             options={ringtones}
             onClick={openMenu}
@@ -87,7 +90,7 @@ export const SettingsApp = () => {
             // * Probably want to make it a slider in the future. Ignore hardcoded for the meantime
           }
           <SettingItem
-            label='Ringtone Volume'
+            label={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
             value='100%'
             options={['100%', '80%', '70%']}
             onClick={openMenu}
@@ -96,28 +99,28 @@ export const SettingsApp = () => {
         </List>
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
-            label='Theme'
+            label={t('APPS_SETTINGS_OPTION_THEME')}
             value={settings.theme}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
-            label='Wallpaper'
+            label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
             value={settings.wallpaper}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
-            label='Frame'
+            label={t('APPS_SETTINGS_OPTION_FRAME')}
             value={settings.frame}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
-            label='Zoom'
+            label={t('APPS_SETTINGS_OPTION_ZOOM')}
             value={settings.zoom}
             options={zoomOptions}
             onClick={openMenu}
