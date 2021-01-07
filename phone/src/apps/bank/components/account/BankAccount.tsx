@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '../../../../ui/components/Button';
-import { makeStyles, Paper, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { BankCard } from './BankCard';
 import { AccountTransactions } from './AccountTransactions';

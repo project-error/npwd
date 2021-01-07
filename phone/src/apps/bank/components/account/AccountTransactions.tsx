@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Paper, Typography, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useTransactions } from '../../hooks/useTransactions';
 import useStyles from './account.styles';
 
@@ -33,7 +33,7 @@ export const AccountTransactions = (): any => {
             </div>
             <div>
               <p className={TransactionTypes[transaction.type]}>
-                {transaction.type == 'Withdraw' ? '-' : '+'}
+                {transaction.type === 'Withdraw' ? '-' : '+'}
                 {transaction.amount}
               </p>
             </div>

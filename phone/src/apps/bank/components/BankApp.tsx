@@ -1,22 +1,16 @@
 import React from 'react';
-import { makeStyles, Paper, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { BankTitle } from './BankTitle';
 import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
-import { Button } from '../../../ui/components/Button';
-import { useTranslation } from 'react-i18next';
-import { useTransactions } from '../hooks/useTransactions';
 import './BankApp.css';
 import { TransferModal } from './transfers/TransferModal';
 
 import { useBankModal } from '../hooks/useBankModal';
-import { useCredentials } from '../hooks/useCredentials';
 
 import { Switch, Route } from 'react-router-dom';
-
-// image
-import CreditCard from '../img/credit-card.png';
 import { NavigationBar } from './navigation/NavigationBar';
+
 
 import { BankHome } from './home/BankHome';
 import { BankAccount } from './account/BankAccount';
@@ -49,13 +43,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const BankApp = () => {
-  const { showBankModal, setShowBankModal } = useBankModal();
-  const { t } = useTranslation();
+  const { showBankModal } = useBankModal();
   const classes = useStyles();
-
-  const openTransactionsModal = () => {
-    setShowBankModal(true);
-  };
 
   return (
     <AppWrapper id='bank-app'>

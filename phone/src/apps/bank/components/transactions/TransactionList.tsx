@@ -43,7 +43,7 @@ export const TransactionList = () => {
               </div>
               <div>
                 <p className={TransactionTypes[transaction.type]}>
-                  {transaction.type == 'Withdraw' ? '-' : '+'}
+                  {transaction.type === 'Withdraw' ? '-' : '+'}
                   {transaction.amount}
                 </p>
               </div>
