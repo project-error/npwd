@@ -64,7 +64,7 @@ export const SelloutItem = (listing) => {
           {listing.url ? (
             <ImageDisplay imgURL={listing.url} />
           ): (
-            <Typography style={{ margin: 10 }}>No image provided🙁</Typography>
+            <Typography style={{ margin: 10 }}>No image provided <span role="img" aria-label="emoji">🙁</span></Typography>
           ) }
           <Typography variant="h6" className={classes.desc}>
             {listing.description}
