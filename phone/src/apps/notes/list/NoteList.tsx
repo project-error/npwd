@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useNoteModal } from '../hooks/useNoteModal';
 import { useNoteDetail } from '../hooks/useNoteDetail';
