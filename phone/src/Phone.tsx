@@ -264,7 +264,7 @@ function Phone() {
   const calling = false;
 
   document.onkeyup = function (data) {
-    if (data.which == 27) {
+    if (data.which === 27) {
       Nui.send('phone:close');
     }
   };
