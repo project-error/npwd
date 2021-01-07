@@ -1,17 +1,12 @@
-import React, { useState, memo } from "react";
+import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   ListItemAvatar,
   Avatar as MuiAvatar,
-  Button,
-  List,
   ListItem,
-  ListItemText,
-  Paper,
   Typography,
 } from "@material-ui/core";
-import MoreIcon from "@material-ui/icons/MoreVert";
 
 import { secondsToHumanReadable } from "../../utils/time";
 import LikeButton from "../buttons/LikeButton";
@@ -21,7 +16,6 @@ import Avatar from "../Avatar";
 import ShowMore from './ShowMore';
 import { QuoteButton } from "../buttons/QuoteButton";
 import { usePhone } from "../../../../os/phone/hooks/usePhone";
-import Nui from "../../../../os/nui-events/utils/Nui";
 
 const useStyles = makeStyles(() => ({
   root: {

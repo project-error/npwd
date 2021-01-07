@@ -9,7 +9,6 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import { usePhone } from "../../../../os/phone/hooks/usePhone";
 import Nui from "../../../../os/nui-events/utils/Nui";
 import ReportButton from '../buttons/ReportButton';
-import { Tweet } from "./Tweet";
 
 
 /**
