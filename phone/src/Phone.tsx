@@ -25,7 +25,7 @@ import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import Nui from './os/nui-events/utils/Nui';
 import { usePhone } from './os/phone/hooks/usePhone';
-import useLocalStorage from './os/phone/hooks/useLocalStorage';
+import { getStorageItem } from './os/phone/hooks/getLocalStorage';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -246,7 +246,6 @@ function Phone() {
   useNuiService();
   usePhoneService();
   const { visibility } = usePhone();
-  const [, , getStorageItem] = useLocalStorage();
   const { settings, currentTheme } = useSettings();
   const { allApps } = useApps();
   useSimcardService();

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useForceUpdate } from '../../../os/phone/hooks/forceUpdate';
 
 // TODO: Integrate debug log to fetch when that branch is merged
 
@@ -11,7 +10,6 @@ import { useForceUpdate } from '../../../os/phone/hooks/forceUpdate';
  */
 
 function useLocalStorage<T>(key?: string, initialValue?: T) {
-  const { update, setUpdate } = useForceUpdate();
   // Serves as a nice identifying prefix for the key
   const UNIQ_PREFIX = 'npwd_phone_';
   const [localVal, setLocalVal] = useState<T>(() => {
@@ -27,31 +25,16 @@ function useLocalStorage<T>(key?: string, initialValue?: T) {
     }
   });
 
-  const getStorageItem = (localKey: string) => {
-    try {
-      const data = window.localStorage.getItem(UNIQ_PREFIX + localKey);
-      // return stored or initValue if none stored
-      return data ? JSON.parse(data) : initialValue;
-    } catch (e) {
-      // TODO: Integrate debug error state here
-      console.log(e);
-      // We still return initVal if error is thrown
-      return initialValue;
-    }
-  };
-
   // Trying to rep useState setter pretty close just with localStorage
-  const setVal = (localKey, value: T | ((val: T) => T)) => {
-    console.log(localKey, value);
+  const setVal = (value: T | ((val: T) => T)) => {
     try {
-      setUpdate(update + 1);
       // Same API as useState meaning we can accept a function for value
       const valForStore = value instanceof Function ? value(localVal) : value;
       // Save that state so we repli useState
       setLocalVal(valForStore);
       // Set that localStorage yo
       window.localStorage.setItem(
-        UNIQ_PREFIX + localKey,
+        UNIQ_PREFIX + key,
         JSON.stringify(valForStore)
       );
     } catch (e) {
@@ -60,7 +43,7 @@ function useLocalStorage<T>(key?: string, initialValue?: T) {
     }
   };
 
-  return [localVal, setVal, getStorageItem] as const;
+  return [localVal, setVal] as const;
 }
 
 export default useLocalStorage;
