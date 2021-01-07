@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AppIcon } from './AppIcon';
-import { Grid, makeStyles, Tooltip } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useKeyboard } from '../../os/keyboard/hooks/useKeyboard';
 
