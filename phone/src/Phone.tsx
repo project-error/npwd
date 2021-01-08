@@ -25,7 +25,7 @@ import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import Nui from './os/nui-events/utils/Nui';
 import { usePhone } from './os/phone/hooks/usePhone';
-import { getStorageItem } from './os/phone/hooks/getLocalStorage';
+import { getStorage } from './os/phone/hooks/useLocalStorage';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -273,21 +273,19 @@ function Phone() {
   return (
     <ThemeProvider theme={currentTheme()}>
       <div className='PhoneWrapper'>
-        <div style={{ zoom: getStorageItem('zoom') }}>
+        <div style={{ zoom: getStorage('zoom') }}>
           <div className='Phone'>
             <div
               className='PhoneFrame'
               style={{
-                backgroundImage: `url(./media/frames/${getStorageItem(
-                  'frame'
-                )})`,
+                backgroundImage: `url(./media/frames/${getStorage('frame')})`,
               }}
             ></div>
             <div
               id='phone'
               className='PhoneScreen'
               style={{
-                backgroundImage: `url(./media/backgrounds/${getStorageItem(
+                backgroundImage: `url(./media/backgrounds/${getStorage(
                   'wallpaper'
                 )})`,
               }}

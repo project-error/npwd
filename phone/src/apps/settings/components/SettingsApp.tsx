@@ -24,7 +24,10 @@ import {
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
-import useLocalStorage from '../../../os/phone/hooks/useLocalStorage';
+import useLocalStorage, {
+  writeStorage,
+  getStorage,
+} from '../../../os/phone/hooks/useLocalStorage';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -35,33 +38,32 @@ const SubHeaderComp = (props: { text: string }) => (
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
-  const [localVal, setVal, getStorageItem] = useLocalStorage();
   const simcard = useSimcard();
 
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(getStorageItem('wallpaper'), (val: string) =>
-      setVal('wallpaper', val)
+    MapStringOptions(getStorage('wallpaper'), (val: string) =>
+      writeStorage('wallpaper', val)
     )
   );
   const frames = config.frames.map(
-    MapStringOptions(getStorageItem('frame'), (val: string) =>
-      setVal('frame', val)
+    MapStringOptions(getStorage('frame'), (val: string) =>
+      writeStorage('frame', val)
     )
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(getStorageItem('theme'), (val: string) =>
-      setVal('theme', val)
+    MapStringOptions(getStorage('theme'), (val: string) =>
+      writeStorage('theme', val)
     )
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(getStorageItem('zoom'), (val: string) =>
-      setVal('zoom', val)
+    MapStringOptions(getStorage('zoom'), (val: string) =>
+      writeStorage('zoom', val)
     )
   );
   // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
-    MapStringOptions(getStorageItem('ringtone'), (val: string) =>
-      setVal('ringtone', val)
+    MapStringOptions(getStorage('ringtone'), (val: string) =>
+      writeStorage('ringtone', val)
     )
   );
   // * Probably gonna make this a slider component in the future
@@ -71,9 +73,7 @@ export const SettingsApp = () => {
 
   // TODO: These new settings all work
 
-  useEffect(() => {
-    // this will be used to trigger a alert that gives feedback when the a setting is changed
-  }, [setVal]);
+  useEffect(() => {}, [getStorage]);
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
@@ -88,7 +88,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label='Ringtone'
-            value={getStorageItem('ringtone')}
+            value={getStorage('ringtone')}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
@@ -108,28 +108,28 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
             label='Theme'
-            value={getStorageItem('theme')}
+            value={getStorage('theme')}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label='Wallpaper'
-            value={getStorageItem('wallpaper')}
+            value={getStorage('wallpaper')}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label='Frame'
-            value={getStorageItem('frame')}
+            value={getStorage('frame')}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label='Zoom'
-            value={getStorageItem('zoom')}
+            value={getStorage('zoom')}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}

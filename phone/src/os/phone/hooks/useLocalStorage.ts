@@ -9,7 +9,7 @@ import { useState } from 'react';
  * if there is no savedState
  */
 
-function useLocalStorage<T>(key?: string, initialValue?: T) {
+function useLocalStorage<T>(key: string, initialValue: T) {
   // Serves as a nice identifying prefix for the key
   const UNIQ_PREFIX = 'npwd_phone_';
   const [localVal, setLocalVal] = useState<T>(() => {
@@ -43,7 +43,27 @@ function useLocalStorage<T>(key?: string, initialValue?: T) {
     }
   };
 
-  return [localVal, setVal] as const;
+  return [localVal, setVal];
 }
+
+export const writeStorage = <T>(key: string, value: T) => {
+  const UNIQ_PREFIX = 'npwd_phone_';
+
+  try {
+    window.localStorage.setItem(UNIQ_PREFIX + key, JSON.stringify(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getStorage = (key: string) => {
+  const UNIQ_PREFIX = 'npwd_phone_';
+  try {
+    const data = window.localStorage.getItem(UNIQ_PREFIX + key);
+    return JSON.parse(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default useLocalStorage;

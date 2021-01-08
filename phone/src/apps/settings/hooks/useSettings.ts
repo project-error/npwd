@@ -2,8 +2,9 @@ import Default from '../default.json';
 import { useConfig } from '../../../config/hooks/useConfig';
 import { atom } from 'recoil';
 import { createMuiTheme } from '@material-ui/core';
-import useLocalStorage from '../../../os/phone/hooks/useLocalStorage';
-import { getStorageItem } from '../../../os/phone/hooks/getLocalStorage';
+import useLocalStorage, {
+  getStorage,
+} from '../../../os/phone/hooks/useLocalStorage';
 
 const settingsState = atom({
   key: 'settings',
@@ -11,9 +12,8 @@ const settingsState = atom({
 });
 
 export const useSettings = (): any => {
-  const theme = getStorageItem('theme');
-  const [settings, setSettings] = useLocalStorage();
+  const theme = getStorage('theme');
   const [config] = useConfig();
   const currentTheme = () => createMuiTheme(config.themes[theme]);
-  return { settings, setSettings, currentTheme };
+  return { currentTheme };
 };
