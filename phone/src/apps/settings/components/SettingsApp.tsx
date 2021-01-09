@@ -24,10 +24,7 @@ import {
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
-import useLocalStorage, {
-  writeStorage,
-  getStorage,
-} from '../../../os/phone/hooks/useLocalStorage';
+import useLocalStorage from '../../../os/phone/hooks/useLocalStorage';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -72,7 +69,7 @@ export const SettingsApp = () => {
 
   // TODO: These new settings all work
 
-  useEffect(() => {}, [getStorage]);
+  useEffect(() => {}, [theme]);
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
@@ -87,7 +84,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label='Ringtone'
-            value={getStorage('ringtone')}
+            value={ringtone}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
@@ -107,28 +104,28 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
             label='Theme'
-            value={getStorage('theme')}
+            value={theme}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label='Wallpaper'
-            value={getStorage('wallpaper')}
+            value={wallpaper}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label='Frame'
-            value={getStorage('frame')}
+            value={frame}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label='Zoom'
-            value={getStorage('zoom')}
+            value={zoom}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}
