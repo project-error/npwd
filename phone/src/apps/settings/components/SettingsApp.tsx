@@ -40,31 +40,30 @@ export const SettingsApp = () => {
   const [config] = useConfig();
   const simcard = useSimcard();
 
+  const [wallpaper, setWallpaper] = useLocalStorage<any>(
+    'wallpaper',
+    'surf.jpg'
+  );
+  const [frame, setFrame] = useLocalStorage<any>('frame', 's10.png');
+  const [theme, setTheme] = useLocalStorage<any>('theme', 'default-dark');
+  const [zoom, setZoom] = useLocalStorage<any>('zoom', '100%');
+  const [ringtone, setRingtone] = useLocalStorage<any>('ringtone', '');
+
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(getStorage('wallpaper'), (val: string) =>
-      writeStorage('wallpaper', val)
-    )
+    MapStringOptions(wallpaper, (val: string) => setWallpaper(val))
   );
   const frames = config.frames.map(
-    MapStringOptions(getStorage('frame'), (val: string) =>
-      writeStorage('frame', val)
-    )
+    MapStringOptions(frame, (val: string) => setFrame(val))
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(getStorage('theme'), (val: string) =>
-      writeStorage('theme', val)
-    )
+    MapStringOptions(theme, (val: string) => setTheme(val))
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(getStorage('zoom'), (val: string) =>
-      writeStorage('zoom', val)
-    )
+    MapStringOptions(zoom, (val: string) => setZoom(val))
   );
   // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
-    MapStringOptions(getStorage('ringtone'), (val: string) =>
-      writeStorage('ringtone', val)
-    )
+    MapStringOptions(ringtone, (val: string) => setRingtone(val))
   );
   // * Probably gonna make this a slider component in the future
   // const ringtoneVols = config.ringtoneVols.map(
