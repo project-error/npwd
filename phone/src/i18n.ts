@@ -16,6 +16,7 @@ const resources = {
   bh,
   sv,
   tr,
+  ptbr,
 };
 
 i18n
