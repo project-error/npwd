@@ -1,28 +1,28 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const messageState = {
   messageGroups: atom({
-    key: "messageGroups",
+    key: 'messageGroups',
     default: null,
   }),
   messages: atom({
-    key: "messages",
+    key: 'messages',
     default: null,
   }),
   activeMessageGroup: atom({
-    key: "activeMessageGroup",
+    key: 'activeMessageGroup',
     default: null,
   }),
   showNewMessageGroup: atom({
-    key: "showNewMessageGroup",
+    key: 'showNewMessageGroup',
     default: false,
   }),
   createMessageGroupResult: atom({
-    key: "createMessageGroupResult",
+    key: 'createMessageGroupResult',
     default: null,
   }),
   imageModal: atom({
     key: 'useImageModal',
-    default: false
-  })
+    default: false,
+  }),
 };

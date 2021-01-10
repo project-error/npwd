@@ -1,14 +1,14 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Fab } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import useModals from "../../hooks/useModals";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import useModals from '../../hooks/useModals';
 
 const useStyles = makeStyles(() => ({
   root: {
-    position: "absolute",
-    bottom: "25px",
-    right: "15px",
+    position: 'absolute',
+    bottom: '25px',
+    right: '15px',
   },
 }));
 
@@ -20,7 +20,7 @@ export function NewMessageGroupButton() {
 
   return (
     <div className={classes.root}>
-      <Fab color="primary" onClick={handleClick}>
+      <Fab color='primary' onClick={handleClick}>
         <AddIcon />
       </Fab>
     </div>

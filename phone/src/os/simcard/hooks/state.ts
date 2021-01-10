@@ -1,8 +1,8 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const simcardState = {
   number: atom({
-    key: "simcardNumber",
+    key: 'simcardNumber',
     default: null,
   }),
 };

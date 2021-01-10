@@ -3,14 +3,14 @@ import { atom } from 'recoil';
 export const noteStates = {
   noteItems: atom({
     key: 'noteItem',
-    default: []
+    default: [],
   }),
   noteModal: atom({
     key: 'noteModal',
-    default: false
+    default: false,
   }),
   noteDetail: atom({
     key: 'noteDetail',
-    default: null
-  })
-}
+    default: null,
+  }),
+};

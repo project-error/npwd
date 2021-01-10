@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => ({
     height: '60px',
   },
   backgroundModal: {
-    background: "black",
-    opacity: "0.6",
-    position: "absolute",
+    background: 'black',
+    opacity: '0.6',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 5,
   },
   absolute: {
-    position: "absolute",
+    position: 'absolute',
     bottom: theme.spacing(2),
     right: theme.spacing(3),
   },
-}))
+}));
 
 export default useStyles;

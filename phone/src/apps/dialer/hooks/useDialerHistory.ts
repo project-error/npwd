@@ -1,13 +1,13 @@
-import { useRecoilState, atom } from "recoil";
+import { useRecoilState, atom } from 'recoil';
 
 const dialerHistoryState = atom({
-  key: "dialerHistory",
+  key: 'dialerHistory',
   default: [
     {
       id: 1,
-      caller: "ROCKY",
-      phoneNumber: "000-1112",
-      type: "outgoing",
+      caller: 'ROCKY',
+      phoneNumber: '000-1112',
+      type: 'outgoing',
     },
   ],
 });

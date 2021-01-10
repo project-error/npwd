@@ -1,11 +1,11 @@
-import { useRecoilValue } from "recoil";
-import { contactsState } from "./state";
+import { useRecoilValue } from 'recoil';
+import { contactsState } from './state';
 
 interface Contact {
   id: string;
   display: string;
   number: string;
-  avatar?: string
+  avatar?: string;
 }
 
 interface IUseContacts {

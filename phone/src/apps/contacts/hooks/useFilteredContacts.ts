@@ -1,5 +1,5 @@
-import { useRecoilState } from "recoil";
-import { contactsState } from "./state";
+import { useRecoilState } from 'recoil';
+import { contactsState } from './state';
 
 export const useFilteredContacts = () => {
   const [filteredContacts, setFilteredContacts] = useRecoilState(

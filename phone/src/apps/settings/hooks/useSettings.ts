@@ -1,10 +1,10 @@
-import Default from "../default.json";
-import { useConfig } from "../../../config/hooks/useConfig";
-import { atom } from "recoil";
-import { createMuiTheme } from "@material-ui/core";
+import Default from '../default.json';
+import { useConfig } from '../../../config/hooks/useConfig';
+import { atom } from 'recoil';
+import { createMuiTheme } from '@material-ui/core';
 
 const settingsState = atom({
-  key: "settings",
+  key: 'settings',
   default: Default,
 });
 

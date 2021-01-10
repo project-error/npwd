@@ -1,54 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { v4 as uuidv4 } from 'uuid';
 
-import Nui from "../../../os/nui-events/utils/Nui";
-import Modal from "../../../ui/components/Modal";
-import { IMAGE_DELIMITER } from "../utils/images";
-import { withValidImage } from "../utils/images";
-import { useModal } from "../hooks/useModal";
-import EmojiSelect from "./EmojiSelect";
-import ImageDisplay from "./images/ImageDisplay";
-import ImagePrompt from "./images/ImagePrompt";
-import TweetMessage from "./tweet/TweetMessage";
-import ControlButtons from "./buttons/ControlButtons";
-import IconButtons from "./buttons/IconButtons";
-import { usePhone } from "../../../os/phone/hooks/usePhone";
+import Nui from '../../../os/nui-events/utils/Nui';
+import Modal from '../../../ui/components/Modal';
+import { IMAGE_DELIMITER } from '../utils/images';
+import { withValidImage } from '../utils/images';
+import { useModal } from '../hooks/useModal';
+import EmojiSelect from './EmojiSelect';
+import ImageDisplay from './images/ImageDisplay';
+import ImagePrompt from './images/ImagePrompt';
+import TweetMessage from './tweet/TweetMessage';
+import ControlButtons from './buttons/ControlButtons';
+import IconButtons from './buttons/IconButtons';
+import { usePhone } from '../../../os/phone/hooks/usePhone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: 10,
-    background: "#424242",
-    marginTop: "15px",
-    width: "90%",
-    display: "flex",
-    flexFlow: "column nowrap",
-    position: "absolute",
-    top: "80px",
+    background: '#424242',
+    marginTop: '15px',
+    width: '90%',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    position: 'absolute',
+    top: '80px',
   },
   button: {
     margin: 5,
     marginTop: 20,
   },
   close: {
-    position: "absolute",
-    top: "12px",
-    right: "4px",
+    position: 'absolute',
+    top: '12px',
+    right: '4px',
     zIndex: 2,
   },
   buttonsContainer: {
-    paddingBottom: "8px",
-    display: "flex",
-    flexFlow: "row nowrap",
-    justifyContent: "space-between",
-    flex: "1 0 45px",
+    paddingBottom: '8px',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'space-between',
+    flex: '1 0 45px',
   },
   emojiPicker: {
-    background: "none",
-    border: "none",
-    boxShadow: "none",
+    background: 'none',
+    border: 'none',
+    boxShadow: 'none',
   },
 }));
 
@@ -64,7 +64,7 @@ export const AddTweetModal = () => {
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
-  const [link, setLink] = useState("");
+  const [link, setLink] = useState('');
 
   const [images, setImages] = useState<Image[]>([]);
 
@@ -72,9 +72,9 @@ export const AddTweetModal = () => {
     setShowImagePrompt(false);
     setShowEmoji(false);
 
-    setLink("");
+    setLink('');
     setImages([]);
-    setMessage("");
+    setMessage('');
   };
 
   const _handleClose = () => {
@@ -84,15 +84,15 @@ export const AddTweetModal = () => {
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
-    const isEscapeKey = e.key === "Escape" || e.key === "Esc";
+    const isEscapeKey = e.key === 'Escape' || e.key === 'Esc';
     if (isEscapeKey) {
       e.preventDefault();
       _handleClose();
     }
   };
   useEffect(() => {
-    window.addEventListener("keydown", _handleEscape, true);
-    return () => window.removeEventListener("keydown", _handleEscape);
+    window.addEventListener('keydown', _handleEscape, true);
+    return () => window.removeEventListener('keydown', _handleEscape);
   });
 
   if (!config) return null;
@@ -107,10 +107,10 @@ export const AddTweetModal = () => {
       images:
         images && images.length > 0
           ? images.map((image) => image.link).join(IMAGE_DELIMITER)
-          : "",
-      realUser: "testUser",
+          : '',
+      realUser: 'testUser',
     };
-    Nui.send("phone:createTweet", data);
+    Nui.send('phone:createTweet', data);
     _handleClose();
   };
 
@@ -119,7 +119,7 @@ export const AddTweetModal = () => {
   const addImage = () => {
     // strip any whitespace from the link in case the user
     // added some spaces/returns accidentally
-    const cleanedLink = link.replace("/ /g", "");
+    const cleanedLink = link.replace('/ /g', '');
     // because we're only storing strings in the database we need
     // to give this an arbirtrary (but unique) id so that we can
     // correctly filter an array of images when the user wants to
@@ -134,7 +134,7 @@ export const AddTweetModal = () => {
     withValidImage(cleanedLink, () => setImages([...images, image]));
 
     setShowImagePrompt(false);
-    setLink("");
+    setLink('');
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
@@ -161,7 +161,7 @@ export const AddTweetModal = () => {
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
       <Button className={classes.close} onClick={_handleClose}>
-        <CloseIcon color="action" />
+        <CloseIcon color='action' />
       </Button>
       <TweetMessage message={message} handleChange={handleMessageChange} />
       <ImagePrompt

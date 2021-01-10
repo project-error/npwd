@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export const NotificationIcon = ({ Icon }) => {
-  return <Icon fontSize="small" />;
+  return <Icon fontSize='small' />;
 };
