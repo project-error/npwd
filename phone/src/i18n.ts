@@ -7,6 +7,7 @@ import bh from './locale/bh.json';
 import sv from './locale/sv.json';
 import tr from './locale/tr.json';
 import ptbr from './locale/ptbr.json';
+import pt from './locale/pt.json';
 import config from './config/default.json';
 
 const resources = {
@@ -17,6 +18,7 @@ const resources = {
   sv,
   tr,
   ptbr,
+  pt,
 };
 
 i18n
