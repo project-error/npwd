@@ -9,6 +9,7 @@ import './sv_bank';
 import './sv_notes';
 import './sv_photo';
 import './sv_messages';
+import './sv_call'
 
 export let ESX: Server = null;
 
