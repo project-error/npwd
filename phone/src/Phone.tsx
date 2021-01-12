@@ -2,11 +2,10 @@ import React from 'react';
 import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
-import { useSettings } from './apps/settings/hooks/useSettings';
 import MessageIcon from '@material-ui/icons/Email';
 import { CallModal } from './modal/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { ThemeProvider } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
 import { NotificationIcon } from './os/notifications/components/NotificationIcon';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
@@ -25,7 +24,10 @@ import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import Nui from './os/nui-events/utils/Nui';
 import { usePhone } from './os/phone/hooks/usePhone';
-import { getStorage } from './os/phone/hooks/useLocalStorage';
+import { settingsState } from './apps/settings/hooks/useSettings';
+
+import config from './config/default.json';
+import { useRecoilState } from 'recoil';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -246,7 +248,6 @@ function Phone() {
   useNuiService();
   usePhoneService();
   const { visibility } = usePhone();
-  const { settings, currentTheme } = useSettings();
   const { allApps } = useApps();
   useSimcardService();
   useContactsService();
@@ -258,9 +259,13 @@ function Phone() {
   useNotesService();
   usePhotoService();
 
+  const [settings] = useRecoilState(settingsState);
+
   if (visibility === false) {
     return null;
   }
+
+  const currentTheme = () => createMuiTheme(config.themes[settings.theme]);
 
   const calling = false;
 
@@ -273,21 +278,19 @@ function Phone() {
   return (
     <ThemeProvider theme={currentTheme()}>
       <div className='PhoneWrapper'>
-        <div style={{ zoom: getStorage('zoom') }}>
+        <div style={{ zoom: settings.zoom }}>
           <div className='Phone'>
             <div
               className='PhoneFrame'
               style={{
-                backgroundImage: `url(./media/frames/${getStorage('frame')})`,
+                backgroundImage: `url(./media/frames/${settings.frame})`,
               }}
-            ></div>
+            />
             <div
               id='phone'
               className='PhoneScreen'
               style={{
-                backgroundImage: `url(./media/backgrounds/${getStorage(
-                  'wallpaper'
-                )})`,
+                backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
               }}
             >
               <>

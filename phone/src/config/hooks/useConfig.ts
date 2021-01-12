@@ -1,6 +1,5 @@
 import Default from '../default.json';
 import { atom, useRecoilState } from 'recoil';
-import useLocalStorage from '../../os/phone/hooks/useLocalStorage';
 
 const configState = atom({
   key: 'config',

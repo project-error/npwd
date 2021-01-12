@@ -7,7 +7,6 @@ import {
   MapStringOptions,
 } from '../../../ui/hooks/useContextMenu';
 import { useConfig } from '../../../config/hooks/useConfig';
-import { useSettings } from '../hooks/useSettings';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
@@ -24,7 +23,8 @@ import {
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
-import useLocalStorage from '../../../os/phone/hooks/useLocalStorage';
+import { useRecoilState } from 'recoil';
+import { settingsState } from '../hooks/useSettings';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -36,31 +36,37 @@ export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const simcard = useSimcard();
+  const [settings, setSettings] = useRecoilState(settingsState);
 
-  const [wallpaper, setWallpaper] = useLocalStorage<any>(
-    'wallpaper',
-    'surf.jpg'
-  );
-  const [frame, setFrame] = useLocalStorage<any>('frame', 's10.png');
-  const [theme, setTheme] = useLocalStorage<any>('theme', 'default-dark');
-  const [zoom, setZoom] = useLocalStorage<any>('zoom', '100%');
-  const [ringtone, setRingtone] = useLocalStorage<any>('ringtone', '');
+  const handleSettingChange = (key: string | number, value: unknown) => {
+    setSettings({ ...settings, [key]: value });
+  };
 
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(wallpaper, (val: string) => setWallpaper(val))
+    MapStringOptions(settings.wallpaper, (val: string) =>
+      handleSettingChange('wallpaper', val)
+    )
   );
   const frames = config.frames.map(
-    MapStringOptions(frame, (val: string) => setFrame(val))
+    MapStringOptions(settings.frame, (val: string) =>
+      handleSettingChange('frame', val)
+    )
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(theme, (val: string) => setTheme(val))
+    MapStringOptions(settings.theme, (val: string) =>
+      handleSettingChange('theme', val)
+    )
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(zoom, (val: string) => setZoom(val))
+    MapStringOptions(settings.zoom, (val: string) =>
+      handleSettingChange('zoom', val)
+    )
   );
   // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
-    MapStringOptions(ringtone, (val: string) => setRingtone(val))
+    MapStringOptions(settings.ringtone, (val: string) =>
+      handleSettingChange('ringtone', val)
+    )
   );
   // * Probably gonna make this a slider component in the future
   // const ringtoneVols = config.ringtoneVols.map(
@@ -68,8 +74,6 @@ export const SettingsApp = () => {
   // )
 
   // TODO: These new settings all work
-
-  useEffect(() => {}, [theme]);
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
@@ -84,7 +88,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label='Ringtone'
-            value={ringtone}
+            value={settings.ringtone}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
@@ -104,28 +108,28 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
             label='Theme'
-            value={theme}
+            value={settings.theme}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label='Wallpaper'
-            value={wallpaper}
+            value={settings.wallpaper}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label='Frame'
-            value={frame}
+            value={settings.frame}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label='Zoom'
-            value={zoom}
+            value={settings.zoom}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}

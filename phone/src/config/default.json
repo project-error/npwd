@@ -10,6 +10,14 @@
     "surf.jpg",
     "beach.jpg"
   ],
+  "defaultSettings": {
+    "wallpaper": "default.png",
+    "frame": "s10.png",
+    "theme": "taso-dark",
+    "zoom": "100%",
+    "ringtone": "pixel",
+    "ringtoneVol": 100
+  },
   "frames": ["default.png", "s10.png", "tw.png", "samsung.png"],
   "zoomOptions": ["120%", "100%", "80%", "60%", "40%"],
   "ringtones": ["marimba", "pixel"],
