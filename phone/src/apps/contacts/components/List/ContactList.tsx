@@ -51,7 +51,7 @@ export const ContactList = () => {
   };
   const startCall = (number) => {
     console.log(number);
-    Nui.send('phone:startCall', {
+    Nui.send('phone:beginCall', {
       number,
     });
   };
