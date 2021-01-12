@@ -1,5 +1,4 @@
 import React from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
