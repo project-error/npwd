@@ -94,4 +94,8 @@ export default {
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
   PHONE_USE_CLIPBOARD: 'phone:useClipboard',
+
+  // calling
+  PHONE_BEGIN_CALL: 'phone:beginCall',
+  PHONE_START_CALL: 'phone:startCall'
 }
