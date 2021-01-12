@@ -17,27 +17,27 @@ import {
   faPhoneAlt,
   faWonSign,
   faStickyNote,
-} from "@fortawesome/free-solid-svg-icons";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 
-import ContactsIcon from "@material-ui/icons/Contacts";
-import SettingsIcon from "@material-ui/icons/Settings";
-import MessageIcon from "@material-ui/icons/Message";
-import { atom } from "recoil";
-import { CalculatorIcon } from "../../../apps/calculator/components/CalculatorIcon";
+import ContactsIcon from '@material-ui/icons/Contacts';
+import SettingsIcon from '@material-ui/icons/Settings';
+import MessageIcon from '@material-ui/icons/Message';
+import { atom } from 'recoil';
+import { CalculatorIcon } from '../../../apps/calculator/components/CalculatorIcon';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import { Route } from "react-router-dom";
-import { DialerApp } from "../../../apps/dialer/components/DialerApp";
-import { ContactsApp } from "../../../apps/contacts/components/ContactsApp";
-import { CalculatorApp } from "../../../apps/calculator/components/CalculatorApp";
-import { SettingsApp } from "../../../apps/settings/components/SettingsApp";
-import { BankApp } from "../../../apps/bank/components/BankApp";
-import { MessagesApp } from "../../../apps/messages/components/MessagesApp";
-import { TwitterApp } from "../../../apps/twitter/components/TwitterApp";
-import { ExampleApp } from "../../../apps/example/components/ExampleApp";
-import { SelloutApp } from "../../../apps/sellout/components/SelloutApp";
-import { NotesApp } from "../../../apps/notes/NotesApp";
-import CameraApp from "../../../apps/camera/components/CameraApp";
+import { Route } from 'react-router-dom';
+import { DialerApp } from '../../../apps/dialer/components/DialerApp';
+import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
+import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
+import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
+import { BankApp } from '../../../apps/bank/components/BankApp';
+import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
+import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
+import { ExampleApp } from '../../../apps/example/components/ExampleApp';
+import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
+import { NotesApp } from '../../../apps/notes/NotesApp';
+import CameraApp from '../../../apps/camera/components/CameraApp';
 
 const appsState = atom({
   key: 'apps',
@@ -125,18 +125,18 @@ const appsState = atom({
         Route: () => <Route path='/notes' component={NotesApp} />,
       },
       {
-        id: "CAMERA",
+        id: 'CAMERA',
         name: 'APPS_CAMERA',
-        icon: <CameraAltIcon fontSize="large"/>,
+        icon: <CameraAltIcon fontSize='large' />,
         backgroundColor: grey['A400'],
         color: common.white,
-        path: "/camera",
-        Route: () => <Route path="/camera" component={CameraApp} />
+        path: '/camera',
+        Route: () => <Route path='/camera' component={CameraApp} />,
       },
       {
-        id: "EXAMPLE",
-        nameLocale: "APPS_EXAMPLE",
-        icon: <FontAwesomeIcon icon={faPlaneArrival} size="sm" />,
+        id: 'EXAMPLE',
+        nameLocale: 'APPS_EXAMPLE',
+        icon: <FontAwesomeIcon icon={faPlaneArrival} size='sm' />,
         backgroundColor: blue[500],
         color: blue[50],
         path: '/example',

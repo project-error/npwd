@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Snackbar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Snackbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { useProfile } from "../../hooks/useProfile";
-import { useTweetStatus } from "../../hooks/useTweetStatus";
-import Alert from "../../../../ui/components/Alert";
+import { useProfile } from '../../hooks/useProfile';
+import { useTweetStatus } from '../../hooks/useTweetStatus';
+import Alert from '../../../../ui/components/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    bottom: "60px",
+    width: '100%',
+    bottom: '60px',
   },
 }));
 
@@ -34,20 +34,20 @@ export default function AlertBar() {
   useEffect(() => {
     if (createTweetSuccessful === true) {
       setOpen(true);
-      setSeverity("success");
-      setMessage(t("APPS_TWITTER_CREATE_SUCCESS"));
+      setSeverity('success');
+      setMessage(t('APPS_TWITTER_CREATE_SUCCESS'));
     } else if (createTweetSuccessful === false) {
       setOpen(true);
-      setSeverity("error");
-      setMessage(t("APPS_TWITTER_CREATE_FAILED"));
+      setSeverity('error');
+      setMessage(t('APPS_TWITTER_CREATE_FAILED'));
     } else if (updateProfileSuccessful === true) {
       setOpen(true);
-      setSeverity("success");
-      setMessage(t("APPS_TWITTER_EDIT_PROFILE_SUCCESS"));
+      setSeverity('success');
+      setMessage(t('APPS_TWITTER_EDIT_PROFILE_SUCCESS'));
     } else if (updateProfileSuccessful === false) {
       setOpen(true);
-      setSeverity("error");
-      setMessage(t("APPS_TWITTER_EDIT_PROFILE_FAILURE"));
+      setSeverity('error');
+      setMessage(t('APPS_TWITTER_EDIT_PROFILE_FAILURE'));
     }
   }, [updateProfileSuccessful, createTweetSuccessful, t]);
 

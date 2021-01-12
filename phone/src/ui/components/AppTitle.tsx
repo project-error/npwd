@@ -1,7 +1,7 @@
-import React from "react";
-import { Typography, Box, makeStyles } from "@material-ui/core";
-import { useTranslation } from "react-i18next";
-import { Variant } from "@material-ui/core/styles/createTypography";
+import React from 'react';
+import { Typography, Box, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { Variant } from '@material-ui/core/styles/createTypography';
 
 interface IProps {
   app: any;
@@ -17,8 +17,8 @@ interface IUseStyle {
 const useStyle = makeStyles(
   (theme): IUseStyle => ({
     root: ({ backgroundColor }) => ({
-      width: "100%",
-      textAlign: "left",
+      width: '100%',
+      textAlign: 'left',
       backgroundColor: backgroundColor || theme.palette.background.default,
     }),
     text: ({ color }) => ({
@@ -30,7 +30,7 @@ const useStyle = makeStyles(
 // but need to think about the best way to do that for standardization sake.
 export const AppTitle = ({
   app: { backgroundColor, color, nameLocale },
-  variant = "h5",
+  variant = 'h5',
   ...props
 }: IProps) => {
   const classes = useStyle({ color, backgroundColor });

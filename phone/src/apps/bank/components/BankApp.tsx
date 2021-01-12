@@ -11,7 +11,6 @@ import { useBankModal } from '../hooks/useBankModal';
 import { Switch, Route } from 'react-router-dom';
 import { NavigationBar } from './navigation/NavigationBar';
 
-
 import { BankHome } from './home/BankHome';
 import { BankAccount } from './account/BankAccount';
 import { TransactionList } from './transactions/TransactionList';

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import Image from "./Image";
+import Image from './Image';
 
 export const ImageDisplay = ({ visible, images, removeImage, small }) => {
   if (!visible || !images || images.length === 0) return null;
 
-  const styles = { margin: small ? "2px 0px" : "2px 15px" };
+  const styles = { margin: small ? '2px 0px' : '2px 15px' };
 
   return (
     <div style={styles}>

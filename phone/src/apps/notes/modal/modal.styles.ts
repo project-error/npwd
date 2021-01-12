@@ -3,19 +3,19 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   modalRoot: {
     zIndex: 20,
-    position: "absolute",
+    position: 'absolute',
     height: '100%',
     width: '100%',
     background: '#232323',
   },
   modalHide: {
-    display: 'none'
+    display: 'none',
   },
   closeButton: {
     width: '10%',
     position: 'absolute',
     top: 10,
-    left: 0
+    left: 0,
   },
   noteContainer: {
     width: '90%',
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     background: '#f9a825',
-    padding: '10px 30px'
+    padding: '10px 30px',
   },
   updateButton: {
     background: '#f9a825',
     padding: '10px 30px',
-    marginRight: '8px'
+    marginRight: '8px',
   },
   deleteButton: {
     background: '#c62828',
-    padding: '10px 30px'
-  }
-}))
+    padding: '10px 30px',
+  },
+}));
 
 export default useStyles;

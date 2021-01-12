@@ -1,25 +1,25 @@
-import React from "react";
-import { Box, makeStyles, Backdrop, Paper } from "@material-ui/core";
-import { AppContentTypes } from "../interface/InterfaceUI";
+import React from 'react';
+import { Box, makeStyles, Backdrop, Paper } from '@material-ui/core';
+import { AppContentTypes } from '../interface/InterfaceUI';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
-    height: "70vh", // NOTE: Taso: Hacky change temp, this should be done automatically tbh. Will refactor at some point
-    overflow: "auto",
+    height: '70vh', // NOTE: Taso: Hacky change temp, this should be done automatically tbh. Will refactor at some point
+    overflow: 'auto',
   },
   box: {
-    width: "100%",
-    height: "100%", // allow application to fill entireity of space
-    position: "relative",
-    overflow: "auto",
+    width: '100%',
+    height: '100%', // allow application to fill entireity of space
+    position: 'relative',
+    overflow: 'auto',
   },
   backdrop: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
   },
   paper: {
-    width: "100%",
-    height: "100%", // allow application to fill entireity of space
+    width: '100%',
+    height: '100%', // allow application to fill entireity of space
   },
 }));
 

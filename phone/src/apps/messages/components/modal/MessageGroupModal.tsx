@@ -1,10 +1,10 @@
-import React from "react";
-import { Slide, Paper, Button } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import useStyles from "./modal.styles";
+import React from 'react';
+import { Slide, Paper, Button } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import useStyles from './modal.styles';
 
-import useModals from "../../hooks/useModals";
-import NewMessageGroupForm from "../form/NewMessageGroupForm";
+import useModals from '../../hooks/useModals';
+import NewMessageGroupForm from '../form/NewMessageGroupForm';
 
 const MessageGroupModal = () => {
   const classes = useStyles();
@@ -13,12 +13,12 @@ const MessageGroupModal = () => {
   const handleClose = () => setShowNewMessageGroup(false);
 
   return (
-    <Slide direction="left" in={showNewMessageGroup}>
+    <Slide direction='left' in={showNewMessageGroup}>
       <Paper
         className={showNewMessageGroup ? classes.modalRoot : classes.modalHide}
       >
         <Button onClick={handleClose}>
-          <ArrowBackIcon fontSize="large" />
+          <ArrowBackIcon fontSize='large' />
         </Button>
         <NewMessageGroupForm />
       </Paper>

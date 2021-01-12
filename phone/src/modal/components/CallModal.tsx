@@ -1,8 +1,8 @@
-import React from "react";
-import { green } from "@material-ui/core/colors";
-import { AppWrapper } from "../../ui/components/AppWrapper";
-import { AppTitle } from "../../ui/components/AppTitle";
-import { AppContent } from "../../ui/components/AppContent";
+import React from 'react';
+import { green } from '@material-ui/core/colors';
+import { AppWrapper } from '../../ui/components/AppWrapper';
+import { AppTitle } from '../../ui/components/AppTitle';
+import { AppContent } from '../../ui/components/AppContent';
 
 export const CallModal = () => {
   return (
@@ -11,15 +11,15 @@ export const CallModal = () => {
         app={{
           backgroundColor: green[400],
           color: green[50],
-          nameLocale: "Call",
+          nameLocale: 'Call',
         }}
-        variant="h4"
+        variant='h4'
       />
       <AppContent>
         <h1
           style={{
-            display: "flex",
-            justifyContent: "center",
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
           Call

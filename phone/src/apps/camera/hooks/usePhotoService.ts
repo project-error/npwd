@@ -7,4 +7,4 @@ export const usePhotoService = () => {
   const setPhotos = useSetRecoilState(photoState.photos);
   useNuiEvent('CAMERA', 'setPhotos', setPhotos);
   return usePhotos();
-}
+};

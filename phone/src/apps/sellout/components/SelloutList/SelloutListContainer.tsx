@@ -1,6 +1,6 @@
-import React from "react";
-import { useListing } from "../../hooks/useListing";
-import { SelloutList } from "./SelloutList";
+import React from 'react';
+import { useListing } from '../../hooks/useListing';
+import { SelloutList } from './SelloutList';
 
 export const SelloutListContainer = () => {
   const { listing } = useListing();

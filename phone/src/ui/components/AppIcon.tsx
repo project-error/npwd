@@ -1,9 +1,9 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { green } from "@material-ui/core/colors";
-import { Button } from "@material-ui/core";
-import Nui from "../../os/nui-events/utils/Nui";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import { green } from '@material-ui/core/colors';
+import { Button } from '@material-ui/core';
+import Nui from '../../os/nui-events/utils/Nui';
 
 interface IStyles {
   root: any;
@@ -13,8 +13,8 @@ interface IStyles {
 const useStyles = makeStyles(
   (theme): IStyles => ({
     root: {
-      display: "flex",
-      "& > *": {
+      display: 'flex',
+      '& > *': {
         margin: theme.spacing(1),
       },
       padding: 0,
@@ -36,8 +36,8 @@ export const AppIcon = ({ id, name, icon, backgroundColor, color }) => {
   });
 
   const openAppCallback = () => {
-    Nui.send(`phone:app:${id}`)
-  }
+    Nui.send(`phone:app:${id}`);
+  };
 
   return (
     <Button onClick={openAppCallback} className={classes.root}>

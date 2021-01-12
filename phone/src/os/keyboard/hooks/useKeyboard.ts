@@ -1,45 +1,45 @@
-import { useEffect } from "react";
-import { atom, useSetRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from 'react';
+import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 
 const keyboardState = {
   ArrowRight: atom({
-    key: "ArrowRight",
+    key: 'ArrowRight',
     default: null,
   }),
   ArrowLeft: atom({
-    key: "ArrowLeft",
+    key: 'ArrowLeft',
     default: null,
   }),
   ArrowUp: atom({
-    key: "ArrowUp",
+    key: 'ArrowUp',
     default: null,
   }),
   ArrowDown: atom({
-    key: "ArrowDown",
+    key: 'ArrowDown',
     default: null,
   }),
   Backspace: atom({
-    key: "Backspace",
+    key: 'Backspace',
     default: null,
   }),
   Enter: atom({
-    key: "Enter",
+    key: 'Enter',
     default: null,
   }),
   Escape: atom({
-    key: "Escape",
+    key: 'Escape',
     default: null,
   }),
 };
 
 const validKeys = [
-  "ArrowRight",
-  "ArrowLeft",
-  "ArrowUp",
-  "ArrowDown",
-  "Backspace",
-  "Enter",
-  "Escape",
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowUp',
+  'ArrowDown',
+  'Backspace',
+  'Enter',
+  'Escape',
 ];
 
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
@@ -72,15 +72,15 @@ export const useInitKeyboard = () => {
         }
       }
 
-      window.addEventListener("keyup", onKeyUp);
-      return () => window.removeEventListener("keyup", onKeyUp);
+      window.addEventListener('keyup', onKeyUp);
+      return () => window.removeEventListener('keyup', onKeyUp);
     },
     [getters]
   );
 
   useEffect(
     function registerEscapeHandler() {
-      setEscape({ handler: () => console.log("close phone") });
+      setEscape({ handler: () => console.log('close phone') });
     },
     [setEscape]
   );

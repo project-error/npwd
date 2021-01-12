@@ -1,33 +1,33 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Typography, Paper } from "@material-ui/core";
-import { ImageDisplay } from "../images/ImageDisplay";
-import { ListItem } from "../../../../ui/components/ListItem";
-import ChatIcon from "@material-ui/icons/Chat";
-import PhoneIcon from "@material-ui/icons/Phone";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Typography, Paper } from '@material-ui/core';
+import { ImageDisplay } from '../images/ImageDisplay';
+import { ListItem } from '../../../../ui/components/ListItem';
+import ChatIcon from '@material-ui/icons/Chat';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    overflowX: "hidden",
-    display: "flex",
-    flexFlow: "row nowrap",
-    alignItems: "flex-start",
-    width: "100%",
-    marginTop: "3px",
+    overflowX: 'hidden',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginTop: '3px',
   },
   content: {
-    display: "flex",
-    marginTop: "-10px",
-    flexFlow: "column nowrap",
-    width: "100%",
+    display: 'flex',
+    marginTop: '-10px',
+    flexFlow: 'column nowrap',
+    width: '100%',
   },
   paper: {
-    overflow: "auto",
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "flex",
-    height: "auto",
-    background: "#232323",
+    overflow: 'auto',
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'flex',
+    height: 'auto',
+    background: '#232323',
     marginBottom: 20,
   },
   header: {
@@ -48,33 +48,38 @@ export const SelloutItem = (listing) => {
       <div className={classes.content}>
         <Paper elevation={2} className={classes.paper}>
           <div className={classes.header}>
-            <Typography className={classes.headerTypo} variant="h5">
+            <Typography className={classes.headerTypo} variant='h5'>
               {listing.name}
             </Typography>
             <Typography
               className={classes.headerTypo}
-              style={{ borderBottom: "1px solid #f44336" }}
+              style={{ borderBottom: '1px solid #f44336' }}
             >
               {listing.number}
             </Typography>
-            <Typography variant="h5" style={{ padding: 5}}>
+            <Typography variant='h5' style={{ padding: 5 }}>
               {listing.title}
             </Typography>
           </div>
           {listing.url ? (
             <ImageDisplay imgURL={listing.url} />
-          ): (
-            <Typography style={{ margin: 10 }}>No image provided <span role="img" aria-label="emoji">🙁</span></Typography>
-          ) }
-          <Typography variant="h6" className={classes.desc}>
+          ) : (
+            <Typography style={{ margin: 10 }}>
+              No image provided{' '}
+              <span role='img' aria-label='emoji'>
+                🙁
+              </span>
+            </Typography>
+          )}
+          <Typography variant='h6' className={classes.desc}>
             {listing.description}
           </Typography>
           <div>
             <Button>
-              <ChatIcon style={{ color: "#f44336" }} />
+              <ChatIcon style={{ color: '#f44336' }} />
             </Button>
             <Button>
-              <PhoneIcon style={{ color: "#f44336" }} />
+              <PhoneIcon style={{ color: '#f44336' }} />
             </Button>
           </div>
         </Paper>

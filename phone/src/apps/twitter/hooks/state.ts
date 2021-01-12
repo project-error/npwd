@@ -1,44 +1,44 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const twitterState = {
   profile: atom({
-    key: "profile",
+    key: 'profile',
     default: {},
   }),
   tweets: atom({
-    key: "tweets",
+    key: 'tweets',
     default: null,
   }),
   filteredTweets: atom({
-    key: "filteredTweets",
+    key: 'filteredTweets',
     default: null,
   }),
   showCreateTweetModal: atom({
-    key: "showCreateTweetModal",
+    key: 'showCreateTweetModal',
     default: false,
   }),
   modalMessage: atom({
-    key: "modalMessage",
-    default: "",
+    key: 'modalMessage',
+    default: '',
   }),
   createTweetLoading: atom({
-    key: "createTweetLoading",
+    key: 'createTweetLoading',
     default: false,
   }),
   createTweetSuccessful: atom({
-    key: "createTweetSuccessful",
+    key: 'createTweetSuccessful',
     default: null,
   }),
   updateProfileLoading: atom({
-    key: "updateProfileLoading",
+    key: 'updateProfileLoading',
     default: false,
   }),
   updateProfileSuccess: atom({
-    key: "updateProfileSuccess",
+    key: 'updateProfileSuccess',
     default: null,
   }),
   notification: atom({
-    key: "notification",
+    key: 'notification',
     default: null,
-  })
+  }),
 };
