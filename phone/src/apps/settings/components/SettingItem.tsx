@@ -24,6 +24,17 @@ export const SettingItem = ({
   icon,
   disabled,
 }: IProps) => {
+  if (!onClick)
+    return (
+      <>
+        <ListItem button>
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={label} secondary={value ? value : undefined} />
+        </ListItem>
+        <Divider />
+      </>
+    );
+
   return (
     <>
       <ListItem onClick={() => onClick(options)} button>
