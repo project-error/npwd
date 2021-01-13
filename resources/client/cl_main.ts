@@ -226,18 +226,17 @@ setTick(() => {
   }
 });
 
-
 // setTick(() => {
 //   if (isPhoneOpen) {
-//     DisableControlAction(0, 1, true) 
-//     DisableControlAction(0, 2, true) 
+//     DisableControlAction(0, 1, true)
+//     DisableControlAction(0, 2, true)
 //     DisableControlAction(0, 24, true)
 //     DisableControlAction(0, 257, true)
 //     DisableControlAction(0, 25, true)
 //     DisableControlAction(0, 263, true)
 //   } else {
-//     EnableControlAction(0, 1, true) 
-//     EnableControlAction(0, 2, true) 
+//     EnableControlAction(0, 1, true)
+//     EnableControlAction(0, 2, true)
 //     EnableControlAction(0, 24, true)
 //     EnableControlAction(0, 257, true)
 //     EnableControlAction(0, 25, true)
@@ -253,10 +252,10 @@ async function Phone() {
         if (!isPhoneOpen) {
           isPhoneOpen = true;
           await phoneOpenAnim(); // Animation starts before the phone is open
-          emitNet('phone:getCredentials') 
-          console.log("Sellout fetched from client side")// Gets the credentials. Will eventually most likely only get the phone number and name, idk.
-          SetCursorLocation(0.90, 0.922) //Experimental
-          let res = GetActiveScreenResolution()
+          emitNet("phone:getCredentials");
+          console.log("Sellout fetched from client side"); // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
+          SetCursorLocation(0.9, 0.922); //Experimental
+          let res = GetActiveScreenResolution();
           SendNuiMessage(
             JSON.stringify({
               app: "PHONE",
@@ -267,7 +266,6 @@ async function Phone() {
           sendPhoneConfig();
           SetNuiFocus(true, true);
           //SetNuiFocusKeepInput(true)
-
         } else {
           isPhoneOpen = false;
           SendNuiMessage(
@@ -280,7 +278,7 @@ async function Phone() {
           );
           SetNuiFocus(false, false);
           //SetNuiFocusKeepInput(false)
-          
+
           await phoneCloseAnim(); // Animation starts after the UI is closed.
         }
       } else {
@@ -292,10 +290,10 @@ async function Phone() {
     if (!isPhoneOpen) {
       isPhoneOpen = true;
       await phoneOpenAnim(); // Animation starts before the phone is open
-      emitNet('phone:getCredentials') 
-      console.log("Sellout fetched from client side")
-      SetCursorLocation(0.936, 0.922) //Experimental
-      let res = GetActiveScreenResolution()
+      emitNet("phone:getCredentials");
+      console.log("Sellout fetched from client side");
+      SetCursorLocation(0.936, 0.922); //Experimental
+      let res = GetActiveScreenResolution();
       SendNuiMessage(
         JSON.stringify({
           app: "PHONE",
@@ -306,7 +304,6 @@ async function Phone() {
       sendPhoneConfig();
       SetNuiFocus(true, true);
       //SetNuiFocusKeepInput(true)
-        
     } else {
       isPhoneOpen = false;
       SendNuiMessage(
@@ -331,28 +328,28 @@ async function Phone() {
 RegisterNuiCallbackType(events.OPEN_APP_CONTACTS);
 on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, () => {
   emitNet(events.CONTACTS_GET_CONTACTS);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
 on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, () => {
   emitNet(events.SELLOUT_FETCH_LISTING);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_NOTES);
 on(`__cfx_nui:${events.OPEN_APP_NOTES}`, () => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_BANK);
 on(`__cfx_nui:${events.OPEN_APP_BANK}`, () => {
   emitNet(events.BANK_FETCH_TRANSACTIONS);
   emitNet(events.BANK_GET_CREDENTIALS);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_CAMERA);
 on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
   emitNet(events.CAMERA_FETCH_PHOTOS);
-})
+});
 
 RegisterCommand(
   "phone",

@@ -31,7 +31,11 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
               variant='outlined'
             >
               {isImage(message.message) ? (
-                <img src={message.message} className={classes.imageMessage} alt="image" />
+                <img
+                  src={message.message}
+                  className={classes.imageMessage}
+                  alt='image'
+                />
               ) : (
                 <div>{message.message}</div>
               )}

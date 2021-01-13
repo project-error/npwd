@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   makeStyles,
   BottomNavigation,
   BottomNavigationAction,
-} from "@material-ui/core";
-import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import AppsIcon from "@material-ui/icons/Apps";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import { useHistory } from "react-router-dom";
+} from '@material-ui/core';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import AppsIcon from '@material-ui/icons/Apps';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import { useHistory } from 'react-router-dom';
 
-import Nui from "../../nui-events/utils/Nui";
+import Nui from '../../nui-events/utils/Nui';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const Navigation = () => {
   const closePhone = () => {
-    console.log("Phone closed");
-    Nui.send("phone:close");
+    console.log('Phone closed');
+    Nui.send('phone:close');
   };
 
   const classes = useStyles();
@@ -32,17 +32,17 @@ export const Navigation = () => {
       onChange={(_e, value) => value()}
     >
       <BottomNavigationAction
-        label="Home"
-        value={() => history.push("/")}
+        label='Home'
+        value={() => history.push('/')}
         icon={<AppsIcon />}
       />
       <BottomNavigationAction
-        label="Close"
+        label='Close'
         value={() => closePhone()}
         icon={<RadioButtonUncheckedIcon />}
       />
       <BottomNavigationAction
-        label="Back"
+        label='Back'
         value={() => history.goBack()}
         icon={<KeyboardArrowLeftIcon />}
       />

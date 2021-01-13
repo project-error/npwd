@@ -58,7 +58,7 @@ export const NoteModal = () => {
       <Slide direction='left' in={noteModal} mountOnEnter unmountOnExit>
         <div>
           <Button className={classes.closeButton} onClick={_handleClose}>
-            <ArrowBackIcon fontSize="large" />
+            <ArrowBackIcon fontSize='large' />
           </Button>
           <div id='notes-modal' className={classes.noteContainer}>
             <TextField

@@ -1,6 +1,6 @@
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { twitterState } from "./state";
+import { twitterState } from './state';
 
 export const useTweetStatus = () => {
   const createTweetLoading = useRecoilValue(twitterState.createTweetLoading);

@@ -1,8 +1,8 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const callerState = {
   caller: atom({
-    key: "callerList",
+    key: 'callerList',
     default: [],
   }),
 };

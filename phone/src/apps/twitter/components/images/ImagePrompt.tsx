@@ -1,16 +1,16 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
-    flex: "1 1 100%",
-    padding: "10px 15px",
-    marginTop: "15px",
+    flex: '1 1 100%',
+    padding: '10px 15px',
+    marginTop: '15px',
   },
   textFieldInput: {
-    fontSize: "22px",
+    fontSize: '22px',
   },
 }));
 
@@ -26,8 +26,8 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       className={classes.textField}
       onChange={handleChange}
       multiline
-      size="small"
-      placeholder={t("APPS_TWITTER_IMAGE_PLACEHOLDER")}
+      size='small'
+      placeholder={t('APPS_TWITTER_IMAGE_PLACEHOLDER')}
       inputRef={(input) => input && input.focus()}
     />
   );

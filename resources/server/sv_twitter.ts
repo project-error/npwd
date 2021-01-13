@@ -1,11 +1,10 @@
 import { pool } from "./db";
 import { ESX } from "./server";
 import { getSource } from "./functions";
-import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
+import { Tweet, Profile } from "../../phone/src/common/typings/twitter";
 import events from "../utils/events";
 import config from "../utils/config";
-import { reportTweetToDiscord } from './discord';
-
+import { reportTweetToDiscord } from "./discord";
 
 interface ProfileName {
   profile_name: string;
@@ -35,7 +34,10 @@ async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
     `;
   const [results] = await pool.query(query, [profileId, profileId]);
   const tweets = <Tweet[]>results;
-  return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
+  return tweets.map((tweet) => ({
+    ...tweet,
+    isMine: tweet.profile_id === profileId,
+  }));
 }
 
 /**
@@ -73,9 +75,11 @@ async function fetchTweetsFiltered(
     parameterizedSearchValue,
   ]);
   const tweets = <Tweet[]>results;
-  return tweets.map(tweet => ({ ...tweet, isMine: tweet.profile_id === profileId}));
+  return tweets.map((tweet) => ({
+    ...tweet,
+    isMine: tweet.profile_id === profileId,
+  }));
 }
-
 
 /**
  * Retrieve a Tweet by ID
@@ -91,11 +95,11 @@ async function getTweet(profileId: number, tweetId: number): Promise<Tweet> {
   FROM npwd_twitter_tweets
   LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
   WHERE npwd_twitter_tweets.id = ?
-  `
+  `;
   const [results] = await pool.query(query, [tweetId]);
   const tweets = <Tweet[]>results;
   const tweet = tweets[0];
-  return { ...tweet, isMine: tweet.profile_id === profileId};
+  return { ...tweet, isMine: tweet.profile_id === profileId };
 }
 
 /**
@@ -118,7 +122,10 @@ async function createTweet(identifier: string, tweet: Tweet): Promise<Tweet> {
   return await getTweet(profile.id, insertData.insertId);
 }
 
-async function createTweetReport(tweetId: number, profileId: number): Promise<void> {
+async function createTweetReport(
+  tweetId: number,
+  profileId: number
+): Promise<void> {
   const query = `
     INSERT INTO npwd_twitter_reports (tweet_id, profile_id)
     VALUES (?, ?)
@@ -241,7 +248,7 @@ async function deleteTweet(identifier: string, tweetId: number): Promise<void> {
     DELETE FROM npwd_twitter_tweets
     WHERE identifier = ? AND id = ?
   `;
-  const [ result ] = await pool.execute(query, [identifier, tweetId]);
+  const [result] = await pool.execute(query, [identifier, tweetId]);
 }
 
 /**
@@ -371,7 +378,7 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
 
     const reportExists = await doesReportExist(tweet.id, profile.id);
     if (reportExists) {
-      console.warn('This profile has already reported this tweet');
+      console.warn("This profile has already reported this tweet");
     } else {
       await createTweetReport(tweet.id, profile.id);
       await reportTweetToDiscord(tweet, profile);

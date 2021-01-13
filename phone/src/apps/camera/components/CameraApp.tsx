@@ -1,14 +1,12 @@
-import React from 'react'
-import { AppWrapper } from "../../../ui/components";
-import { AppContent } from "../../../ui/components/AppContent";
+import React from 'react';
+import { AppWrapper } from '../../../ui/components';
+import { AppContent } from '../../../ui/components/AppContent';
 import { usePhotoModal } from '../hooks/usePhotoModal';
 import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
 
-
 const CameraApp = () => {
-
-  const {modal} = usePhotoModal();
+  const { modal } = usePhotoModal();
 
   return (
     <AppWrapper id='camera-app'>
@@ -23,7 +21,7 @@ const CameraApp = () => {
         {!modal ? <GalleryGrid /> : null}
       </AppContent>
     </AppWrapper>
-  )
-}
+  );
+};
 
 export default CameraApp;

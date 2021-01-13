@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   photo: {
     border: '1px inset #fff',
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-  }
-}))
+  },
+}));
 
 export default useStyles;
