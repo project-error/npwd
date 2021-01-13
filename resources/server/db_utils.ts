@@ -15,7 +15,7 @@ export function parseSemiColonFormat(connectionString: string): Map {
   const parts = connectionString.split(";");
   if (parts.length === 1) {
     throw new Error(
-      `Connection string ${connectionString} is in the incorrect format.`
+      `Connection string ${connectionString} is in the incorrect format. Please follow the README.`
     );
   }
 
@@ -59,13 +59,12 @@ export function getUserId(config: Map): string {
 }
 
 /**
+ * Note: We are allowing no password as many FiveM servers love to not use one for an ungodly reason.
  * allowed variable names: password | pwd
  * @param config - database config variables parsed from mysql_connection_string
  */
-export function getPassword(config: Map): string {
+export function getPassword(config: Map): string | undefined {
   const password = config.password || config.pwd;
-  if (!password) {
-    throw new Error("Password is a required field");
-  }
+  if (!password) return undefined;
   return password;
 }
