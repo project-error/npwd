@@ -1,10 +1,10 @@
-import { ESX } from "./client";
-import events from "../utils/events";
+import { ESX } from './client';
+import events from '../utils/events';
 
 const exp = (global as any).exports;
 
 RegisterCommand(
-  "call",
+  'call',
   (source: number, args: string[], raw: any) => {
     emitNet(events.PHONE_BEGIN_CALL, args[0]);
   },
@@ -12,10 +12,10 @@ RegisterCommand(
 );
 
 setImmediate(() => {
-  emit("chat:addSuggestion", "/call", "Call a player", [
+  emit('chat:addSuggestion', '/call', 'Call a player', [
     {
-      name: "Phone Number",
-      help: "The phone number to call",
+      name: 'Phone Number',
+      help: 'The phone number to call',
     },
   ]);
 });
@@ -25,12 +25,13 @@ on(`__cfx_nui:${events.PHONE_BEGIN_CALL}`, (data: any) => {
   emitNet(events.PHONE_BEGIN_CALL, data.number);
 });
 
-onNet(
-  events.PHONE_START_CALL,
-  (target: string, phoneNumber: string, id: any) => {
-    console.log(
-      `You are talking to ${target} who as the number ${phoneNumber}`
-    );
-    exp["mumble-voip"].SetCallChannel(id + 1);
-  }
-);
+onNet(events.PHONE_START_CALL, (target: string, phoneNumber: string) => {
+  console.log(`You are talking to ${target} who has the number ${phoneNumber}`);
+  // Temporary for testing
+  exp['mumble-voip'].SetCallChannel(1);
+});
+
+onNet(events.PHONE_CALL_WAS_ENDED, () => {
+  console.log('Call ended');
+  exp['mumble-voip'].SetCallChannel(0);
+});

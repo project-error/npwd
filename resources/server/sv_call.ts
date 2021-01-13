@@ -1,34 +1,50 @@
 import { ESX } from './server';
 import events from '../utils/events';
-import { getIdentifierByPhoneNumber, usePhoneNumber } from './functions';
+import { getIdentifierByPhoneNumber, getPhoneNumberFromID } from './functions';
+import { XPlayer } from 'esx.js/@types/server';
+/**
+ * Returns the player phoneNumber for a passed identifier
+ * @param identifier The players phone number
+ */
+function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
+  return new Promise((res, rej) => {
+    const xPlayers = ESX.GetPlayers();
 
-
-function getSourceFromIdentifier(identifier: string, cb: Function) {
-  const xPlayers = ESX.GetPlayers();
-
-  for (let i = 0; i < xPlayers; i++) {
-    const xPlayer = ESX.GetPlayerFromId(xPlayers[i]);
-    if (xPlayer.getIdentifier() != null && xPlayer.getIdentifier() == identifier) {
-      cb(xPlayer.source)
-      return;
+    for (const player of xPlayers) {
+      const xPlayer = ESX.GetPlayerFromId(player);
+      if (
+        xPlayer.getIdentifier() != null &&
+        xPlayer.getIdentifier() == identifier
+      ) {
+        res(xPlayer);
+      }
     }
-  }
-  cb(null);
+
+    rej(new Error('Call Target Identifier was not found in xPlayers array'));
+  });
 }
 
 onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
-  const pSource = (global as any).source;
-  const xPlayer = ESX.GetPlayerFromId(pSource);
+  const callSource = (global as any).source;
+  const xPlayer = ESX.GetPlayerFromId(callSource);
 
-  const _identifier = xPlayer.getIdentifier()
-  const callerName = xPlayer.getName()
-  const callerNumber = usePhoneNumber(_identifier);
+  const _identifier = xPlayer.getIdentifier();
+  const callerName = xPlayer.getName();
+  const callerNumber = getPhoneNumberFromID(_identifier);
 
-  const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-  getSourceFromIdentifier(targetIdentifier, (target: any) => {
-    const xTarget = ESX.GetPlayerFromId(target);
-    const targetName = xTarget.getName()
-    emitNet(events.PHONE_START_CALL, target, callerName, callerNumber, pSource);
-    emitNet(events.PHONE_START_CALL, pSource, targetName, phoneNumber, target);
-  })
-})
+  try {
+    const targetPlayer = await getPlayerFromIdentifier(phoneNumber);
+    const targetName = xPlayer.getName();
+
+    emitNet(
+      events.PHONE_START_CALL,
+      targetPlayer.source,
+      callerName,
+      phoneNumber
+    );
+    emitNet(events.PHONE_START_CALL, targetName, callerNumber);
+  } catch (e) {
+    console.error(e);
+    emit(events.PHONE_CALL_ERORR, callSource);
+  }
+});
