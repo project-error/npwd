@@ -1,7 +1,7 @@
-import { ESX } from './server';
-import events from '../utils/events';
-import { getIdentifierByPhoneNumber, getPhoneNumberFromID } from './functions';
-import { XPlayer } from 'esx.js/@types/server';
+import { ESX } from "./server";
+import events from "../utils/events";
+import { getIdentifierByPhoneNumber, getPhoneNumberFromID } from "./functions";
+import { XPlayer } from "esx.js/@types/server";
 /**
  * Returns the player phoneNumber for a passed identifier
  * @param identifier The players phone number
@@ -20,7 +20,7 @@ function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
       }
     }
 
-    rej(new Error('Call Target Identifier was not found in xPlayers array'));
+    rej(new Error("Call Target Identifier was not found in xPlayers array"));
   });
 }
 
