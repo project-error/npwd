@@ -1,9 +1,9 @@
-import React from "react";
-import { useSetRecoilState } from "recoil";
-import { Button } from "@material-ui/core";
-import QuoteIcon from "@material-ui/icons/FormatQuote";
+import React from 'react';
+import { useSetRecoilState } from 'recoil';
+import { Button } from '@material-ui/core';
+import QuoteIcon from '@material-ui/icons/FormatQuote';
 
-import { twitterState } from "../../hooks/state";
+import { twitterState } from '../../hooks/state';
 
 export const QuoteButton = ({ message }) => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);

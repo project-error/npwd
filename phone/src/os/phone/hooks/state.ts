@@ -9,4 +9,8 @@ export const phoneState = {
     key: 'phoneConfig',
     default: undefined,
   }),
+  forceUpdateState: atom({
+    key: 'fuckingupdate',
+    default: 0,
+  }),
 };

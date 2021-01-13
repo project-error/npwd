@@ -69,6 +69,22 @@
     "APPS_CONTACT_UPDATE_SUCCESS": "Se ha actualizado el contacto!",
     "APPS_CONTACT_UPDATE_FAILED": "Error al actualizar el contacto!",
     "APPS_CONTACT_DELETE_SUCCESS": "Se ha borrado el contacto!",
-    "APPS_CONTACT_DELETE_FAILED": "Error al borrar el contacto!"
+    "APPS_CONTACT_DELETE_FAILED": "Error al borrar el contacto!",
+    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Buscar contactos",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_NAME": "Nombre",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Numero",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
+    "APPS_CONTACT_MODAL_BUTTON_ADD": "Agregar contacto",
+
+    "APPS_SETTINGS_PHONE_NUMBER": "Numero de telefono",
+    "APPS_SETTINGS_OPTION_WALLPAPER": "Fondo de pantalla",
+    "APPS_SETTINGS_OPTION_FRAME": "Marco",
+    "APPS_SETTINGS_OPTION_THEME": "Tema",
+    "APPS_SETTINGS_OPTION_ZOOM": "Ampliar",
+    "APPS_SETTINGS_OPTION_RINGTONE": "Tono de llamada",
+    "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volumen del tono de llamada",
+
+    "GENERIC_UPDATE": "Actualizar",
+    "GENERIC_DELETE": "Borrar"
   }
 }

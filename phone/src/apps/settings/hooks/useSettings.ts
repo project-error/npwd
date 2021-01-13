@@ -1,16 +1,28 @@
-import Default from "../default.json";
-import { useConfig } from "../../../config/hooks/useConfig";
-import { atom } from "recoil";
-import { createMuiTheme } from "@material-ui/core";
+import { atom, DefaultValue, useRecoilState } from 'recoil';
+import config from '../../../config/default.json';
 
-const settingsState = atom({
-  key: "settings",
-  default: Default,
+const localStorageEffect = (key) => ({ setSelf, onSet }) => {
+  const savedVal = localStorage.getItem(key);
+  if (savedVal != null) {
+    setSelf(JSON.parse(savedVal));
+  }
+
+  onSet((newValue) => {
+    if (newValue instanceof DefaultValue) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    }
+  });
+};
+
+export const settingsState = atom({
+  key: 'settings',
+  default: config.defaultSettings,
+  effects_UNSTABLE: [localStorageEffect('settings')],
 });
 
-export const useSettings = (): any => {
-  const [settings, setSettings] = useConfig(settingsState);
-  const [config] = useConfig();
-  const currentTheme = () => createMuiTheme(config.themes[settings.theme]);
-  return { settings, setSettings, currentTheme };
+export const useSettings = () => {
+  const [settings, setSettings] = useRecoilState(settingsState);
+  return [settings, setSettings];
 };

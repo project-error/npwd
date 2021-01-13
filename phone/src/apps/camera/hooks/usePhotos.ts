@@ -7,8 +7,7 @@ interface IPhotos {
   map?: any;
 }
 
-
 export const usePhotos = (): IPhotos | null => {
   const photos = useRecoilValue<IPhotos | null>(photoState.photos);
   return photos;
-}
+};

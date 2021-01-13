@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import { useTwitterNotification } from "../../hooks/useTwitterNotification";
-import Notification from "../../../../ui/components/Notification";
-import { usePhone } from "../../../../os/phone/hooks/usePhone";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import { useTwitterNotification } from '../../hooks/useTwitterNotification';
+import Notification from '../../../../ui/components/Notification';
+import { usePhone } from '../../../../os/phone/hooks/usePhone';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       padding: theme.spacing(2),
-      overflowY: "hidden",
+      overflowY: 'hidden',
     },
     title: {
-      display: "flex",
-      flexFlow: "row nowrap",
-      justifyContent: "space-between",
-      alignItems: "center",
+      display: 'flex',
+      flexFlow: 'row nowrap',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     titleLeft: {
-      display: "flex",
-      flexFlow: "row nowrap",
-      justifyContent: "flex-start",
-      alignItems: "center",
+      display: 'flex',
+      flexFlow: 'row nowrap',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
     },
     icon: {
-      marginTop: "3px",
-      marginRight: "5px",
+      marginTop: '3px',
+      marginRight: '5px',
     },
     profileName: {
-      marginBottom: "3px",
+      marginBottom: '3px',
     },
     justNow: {
-      fontSize: "18px",
-      fontStyle: "italic",
-      paddingRight: "3px",
+      fontSize: '18px',
+      fontStyle: 'italic',
+      paddingRight: '3px',
     },
     message: {
-      fontSize: "16px",
-      overflow: "hidden",
-      display: "-webkit-box",
+      fontSize: '16px',
+      overflow: 'hidden',
+      display: '-webkit-box',
       WebkitLineClamp: 2,
-      WebkitBoxOrient: "vertical",
+      WebkitBoxOrient: 'vertical',
     },
   })
 );
@@ -77,7 +77,7 @@ function TwitterNotification() {
             </div>
             <div className={classes.profileName}>{profileName}</div>
           </div>
-          <div className={classes.justNow}>{t("APPS_TWITTER_JUST_NOW")}</div>
+          <div className={classes.justNow}>{t('APPS_TWITTER_JUST_NOW')}</div>
         </div>
         <div className={classes.message}>{notification.message}</div>
       </div>

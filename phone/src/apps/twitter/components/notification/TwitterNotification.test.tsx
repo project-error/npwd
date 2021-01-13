@@ -1,12 +1,12 @@
-import React from "react";
-import { shallow } from "enzyme";
-import TwitterNotification from "./TwitterNotification";
+import React from 'react';
+import { shallow } from 'enzyme';
+import TwitterNotification from './TwitterNotification';
 
-jest.mock("react-i18next", () => ({
+jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key) => key }),
 }));
 
-jest.mock("../../../../os/phone/hooks/usePhone", () => ({
+jest.mock('../../../../os/phone/hooks/usePhone', () => ({
   usePhone: jest.fn().mockReturnValue({
     config: {
       twitter: {
@@ -16,32 +16,32 @@ jest.mock("../../../../os/phone/hooks/usePhone", () => ({
   }),
 }));
 
-jest.mock("../../hooks/useTwitterNotification", () => ({
+jest.mock('../../hooks/useTwitterNotification', () => ({
   useTwitterNotification: jest.fn().mockReturnValue({
     notification: {
-      profile_name: "test",
-      message: "test message",
+      profile_name: 'test',
+      message: 'test message',
     },
   }),
 }));
 
-describe("TwitterNotification", () => {
+describe('TwitterNotification', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallow(<TwitterNotification />);
   });
-  it("renders", () => {
+  it('renders', () => {
     expect(wrapper).toBeDefined();
   });
 
-  it("renders profile name", () => {
-    expect(wrapper.find(".makeStyles-profileName-5").text()).toEqual("@test");
+  it('renders profile name', () => {
+    expect(wrapper.find('.makeStyles-profileName-5').text()).toEqual('@test');
   });
 
-  it("renders message", () => {
-    expect(wrapper.find(".makeStyles-message-7").text()).toEqual(
-      "test message"
+  it('renders message', () => {
+    expect(wrapper.find('.makeStyles-message-7').text()).toEqual(
+      'test message'
     );
   });
 });

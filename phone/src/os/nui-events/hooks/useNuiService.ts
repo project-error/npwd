@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { eventNameFactory } from "../utils/nuiUtils";
+import { useEffect } from 'react';
+import { eventNameFactory } from '../utils/nuiUtils';
 
 interface IOptions {
   capture?: boolean;
@@ -21,7 +21,7 @@ export const useNuiService = (options: IOptions = {}) => {
   };
   useEffect(() => {
     const opts = { capture, passive, once };
-    window.addEventListener("message", eventListener, opts);
-    return () => window.removeEventListener("message", eventListener, opts);
+    window.addEventListener('message', eventListener, opts);
+    return () => window.removeEventListener('message', eventListener, opts);
   }, [capture, passive, once]);
 };

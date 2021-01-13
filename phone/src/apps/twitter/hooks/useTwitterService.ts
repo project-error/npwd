@@ -1,10 +1,10 @@
-import { useSetRecoilState } from "recoil";
-import { v4 as uuidv4 } from "uuid";
+import { useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
-import { useNuiEvent } from "../../../os/nui-events/hooks/useNuiEvent";
-import { IMAGE_DELIMITER } from "../utils/images";
-import { APP_TWITTER } from "../utils/constants";
-import { twitterState } from "./state";
+import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { IMAGE_DELIMITER } from '../utils/images';
+import { APP_TWITTER } from '../utils/constants';
+import { twitterState } from './state';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -67,12 +67,12 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
-  useNuiEvent(APP_TWITTER, "getOrCreateTwitterProfile", _setProfile);
-  useNuiEvent(APP_TWITTER, "updateProfileLoading", setUpdateProfileLoading);
-  useNuiEvent(APP_TWITTER, "updateProfileResult", _setUpdateProfileSuccess);
-  useNuiEvent(APP_TWITTER, "fetchTweets", _setTweets);
-  useNuiEvent(APP_TWITTER, "fetchTweetsFiltered", _setFilteredTweets);
-  useNuiEvent(APP_TWITTER, "createTweetLoading", setCreateLoading);
-  useNuiEvent(APP_TWITTER, "createTweetResult", _setCreateSuccess);
-  useNuiEvent(APP_TWITTER, "createTweetBroadcast", _setNotification);
+  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', _setProfile);
+  useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
+  useNuiEvent(APP_TWITTER, 'updateProfileResult', _setUpdateProfileSuccess);
+  useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);
+  useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
+  useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
+  useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', _setNotification);
 };

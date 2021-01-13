@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -7,7 +7,6 @@ import {
   MapStringOptions,
 } from '../../../ui/hooks/useContextMenu';
 import { useConfig } from '../../../config/hooks/useConfig';
-import { useSettings } from '../hooks/useSettings';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
@@ -25,6 +24,8 @@ import {
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
+import { useRecoilState } from 'recoil';
+import { settingsState } from '../hooks/useSettings';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -35,29 +36,39 @@ const SubHeaderComp = (props: { text: string }) => (
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
-  const { setSettings, settings } = useSettings();
   const simcard = useSimcard();
+  const [settings, setSettings] = useRecoilState(settingsState);
+
+  const handleSettingChange = (key: string | number, value: unknown) => {
+    setSettings({ ...settings, [key]: value });
+  };
 
   const { t } = useTranslation();
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(settings.wallpaper, (val: string) =>
-      setSettings('wallpaper', val)
+      handleSettingChange('wallpaper', val)
     )
   );
   const frames = config.frames.map(
-    MapStringOptions(settings.frame, (val: string) => setSettings('frame', val))
+    MapStringOptions(settings.frame, (val: string) =>
+      handleSettingChange('frame', val)
+    )
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(settings.theme, (val: string) => setSettings('theme', val))
+    MapStringOptions(settings.theme, (val: string) =>
+      handleSettingChange('theme', val)
+    )
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(settings.zoom, (val: string) => setSettings('zoom', val))
+    MapStringOptions(settings.zoom, (val: string) =>
+      handleSettingChange('zoom', val)
+    )
   );
   // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
     MapStringOptions(settings.ringtone, (val: string) =>
-      setSettings('ringtone', val)
+      handleSettingChange('ringtone', val)
     )
   );
   // * Probably gonna make this a slider component in the future

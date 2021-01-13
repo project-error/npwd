@@ -4,7 +4,16 @@ The original repo for NPWD
 
 TODO
 
-## Production Server Installation
+### Production Server Installation
+
+**Database**
+
+NPWD uses its own database driver compatible with `mysql-async` and `ghmattimysql`'s connection string. If you
+don't utilize these resources, ensure you have this set in your console.
+
+```
+set mysql_connection_string "server=127.0.0.1;database=es_extended;userid=user;password=pass"
+```
 
 ### Configuration
 

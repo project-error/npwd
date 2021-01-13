@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Snackbar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Snackbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-import useAlerts from "../hooks/useAlerts";
-import Alert from "../../../ui/components/Alert";
+import useAlerts from '../hooks/useAlerts';
+import Alert from '../../../ui/components/Alert';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: "100%",
-    bottom: "60px",
-    position: "absolute",
+    width: '100%',
+    bottom: '60px',
+    position: 'absolute',
   },
 }));
 
@@ -37,22 +37,22 @@ export default function AlertBar() {
 
     const { error, phoneNumber, duplicate, mine } = createMessageGroupResult;
     if (error && phoneNumber) {
-      const error = `${t("APPS_MESSAGES_INVALID_PHONE_NUMBER")}${phoneNumber}`;
+      const error = `${t('APPS_MESSAGES_INVALID_PHONE_NUMBER')}${phoneNumber}`;
       setOpen(true);
-      setSeverity("error");
+      setSeverity('error');
       setMessage(error);
     } else if (error && duplicate) {
       setOpen(true);
-      setSeverity("error");
-      setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE"));
+      setSeverity('error');
+      setMessage(t('APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE'));
     } else if (error && mine) {
       setOpen(true);
-      setSeverity("error");
-      setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE"));
+      setSeverity('error');
+      setMessage(t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE'));
     } else if (error) {
       setOpen(true);
-      setSeverity("error");
-      setMessage(t("APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED"));
+      setSeverity('error');
+      setMessage(t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED'));
     }
   }, [createMessageGroupResult, t]);
 

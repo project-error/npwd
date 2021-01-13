@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Slide, Paper, Button, Typography } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import React, { useEffect, useState } from 'react';
+import { Slide, Paper, Button, Typography } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import useStyles from "./modal.styles";
-import useMessages from "../../hooks/useMessages";
-import useModals from "../../hooks/useModals";
-import Conversation, { CONVERSATION_ELEMENT_ID } from "./Conversation";
-import MessageSkeletonList from "./MessageSkeletonList";
-import Nui from "../../../../os/nui-events/utils/Nui";
+import useStyles from './modal.styles';
+import useMessages from '../../hooks/useMessages';
+import useModals from '../../hooks/useModals';
+import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
+import MessageSkeletonList from './MessageSkeletonList';
+import Nui from '../../../../os/nui-events/utils/Nui';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -35,7 +35,7 @@ export const MessageModal = () => {
 
     const interval = window.setInterval(() => {
       if (!activeMessageGroup) return;
-      Nui.send("phone:fetchMessages", {
+      Nui.send('phone:fetchMessages', {
         groupId: activeMessageGroup.groupId,
       });
     }, MESSAGES_REFRESH_RATE);
@@ -64,7 +64,7 @@ export const MessageModal = () => {
   const isOpen = activeMessageGroup !== null;
 
   // don't allow too many characters, it takes too much room
-  let header = activeMessageGroup ? activeMessageGroup.groupDisplay : "";
+  let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
   header =
     header.length > MAX_HEADER_CHARS
@@ -77,13 +77,13 @@ export const MessageModal = () => {
       : classes.groupdisplay;
 
   return (
-    <Slide direction="left" in={isOpen}>
+    <Slide direction='left' in={isOpen}>
       <Paper className={isOpen ? classes.modalRoot : classes.modalHide}>
         <Paper className={classes.topContainer}>
           <Button onClick={closeModal}>
-            <ArrowBackIcon fontSize="large" />
+            <ArrowBackIcon fontSize='large' />
           </Button>
-          <Typography variant="h5" className={headerClass}>
+          <Typography variant='h5' className={headerClass}>
             {header}
           </Typography>
         </Paper>

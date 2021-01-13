@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { usePhone } from "../../../os/phone/hooks/usePhone";
-import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from "../utils/constants";
+import { usePhone } from '../../../os/phone/hooks/usePhone';
+import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from '../utils/constants';
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
+    width: '100%',
   },
   img: {
-    borderRadius: "50%",
-    objectFit: "cover",
+    borderRadius: '50%',
+    objectFit: 'cover',
   },
 });
 
@@ -30,17 +30,17 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
         <img
           className={classes.img}
           src={showInvalidImage ? IMG_INVALID_AVATAR : IMG_DEFAULT_AVATAR}
-          alt="Invalid avatar"
+          alt='Invalid avatar'
           style={{ height, width }}
         />
       )}
       <img
         className={classes.img}
         src={avatarUrl || IMG_DEFAULT_AVATAR}
-        alt="Your profile avatar"
+        alt='Your profile avatar'
         onError={handleImageError}
         onLoad={handleImageLoad}
-        style={{ display: showImageError ? "none" : "block", height, width }}
+        style={{ display: showImageError ? 'none' : 'block', height, width }}
       />
     </div>
   );
@@ -49,8 +49,8 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
 Avatar.defaultProps = {
   avatarUrl: null,
   showInvalidImage: false,
-  height: "125px",
-  width: "125px",
+  height: '125px',
+  width: '125px',
 };
 
 export default Avatar;

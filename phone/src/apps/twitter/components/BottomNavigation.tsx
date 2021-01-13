@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import SearchIcon from "@material-ui/icons/Search";
-import ProfileIcon from "@material-ui/icons/Person";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import SearchIcon from '@material-ui/icons/Search';
+import ProfileIcon from '@material-ui/icons/Person';
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
+    width: '100%',
   },
 });
 
@@ -23,17 +23,17 @@ export function TwitterBottomNavigation({ activePage, handleChange }) {
     >
       <BottomNavigationAction
         component={Link}
-        to="/twitter"
+        to='/twitter'
         icon={<HomeIcon />}
       />
       <BottomNavigationAction
         component={Link}
-        to="/twitter/search"
+        to='/twitter/search'
         icon={<SearchIcon />}
       />
       <BottomNavigationAction
         component={Link}
-        to="/twitter/profile"
+        to='/twitter/profile'
         icon={<ProfileIcon />}
       />
     </BottomNavigation>
