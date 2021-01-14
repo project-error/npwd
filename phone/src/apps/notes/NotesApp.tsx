@@ -18,7 +18,7 @@ import useStyles from './notes.styles';
 export const NotesApp = () => {
   const { setNoteModal } = useNoteModal();
   const { detail, setDetail } = useNoteDetail();
-  const notes = useNotes();
+  const { notes } = useNotes();
   const notesApp = useApp('NOTES');
 
   const classes = useStyles();
