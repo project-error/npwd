@@ -1,7 +1,13 @@
 import { useRecoilState } from 'recoil';
+import { Note } from '../../../common/typings/notes';
 import { noteStates } from './state';
 
-export const useNoteDetail = (): any => {
+interface NoteDetailProps {
+  detail: Note;
+  setDetail: (note: object) => void;
+}
+
+export const useNoteDetail = (): NoteDetailProps => {
   const [detail, setDetail] = useRecoilState(noteStates.noteDetail);
   return { detail, setDetail };
 }
