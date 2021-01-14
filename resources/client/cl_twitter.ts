@@ -1,5 +1,5 @@
-import events from "../utils/events";
-import { sendTwitterMessage } from "../utils/messages";
+import events from '../utils/events';
+import { sendTwitterMessage } from '../utils/messages';
 
 /**
  * Twitter get or create profile

@@ -1,6 +1,6 @@
-import events from "../utils/events";
-import { Delay } from "../utils/fivem";
-const SCREENSHOT_BASIC_TOKEN = GetConvar("SCREENSHOT_BASIC_TOKEN", "none");
+import events from '../utils/events';
+import { Delay } from '../utils/fivem';
+const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
 
@@ -8,8 +8,8 @@ function closePhoneTemp() {
   SendNuiMessage(
     //Hides phone
     JSON.stringify({
-      app: "PHONE",
-      method: "setVisibility",
+      app: 'PHONE',
+      method: 'setVisibility',
       data: false,
     })
   );
@@ -19,8 +19,8 @@ function openPhoneTemp() {
   SendNuiMessage(
     //Opens phone
     JSON.stringify({
-      app: "PHONE",
-      method: "setVisibility",
+      app: 'PHONE',
+      method: 'setVisibility',
       data: true,
     })
   );
@@ -29,7 +29,7 @@ function openPhoneTemp() {
 let takingPhoto = false;
 
 function CellFrontCamActivate(activate: any) {
-  return Citizen.invokeNative("0x2491A93618B7D838", activate);
+  return Citizen.invokeNative('0x2491A93618B7D838', activate);
 }
 
 RegisterNuiCallbackType(events.CAMERA_TAKE_PHOTO);
@@ -57,7 +57,7 @@ on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async () => {
     } else if (IsControlJustPressed(1, 176)) {
       takePhoto();
       await Delay(200);
-      console.log("phone closing");
+      console.log('phone closing');
       DestroyMobilePhone();
       CellCamActivate(false, false);
 
@@ -96,8 +96,8 @@ onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
   console.log(photos);
   SendNuiMessage(
     JSON.stringify({
-      app: "CAMERA",
-      method: "setPhotos",
+      app: 'CAMERA',
+      method: 'setPhotos',
       data: photos,
     })
   );
@@ -106,18 +106,18 @@ onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
 function takePhoto() {
   const [width, height] = GetActiveScreenResolution();
   // Return and log error if screenshot basic token not found
-  if (SCREENSHOT_BASIC_TOKEN === "none") {
+  if (SCREENSHOT_BASIC_TOKEN === 'none') {
     return console.error(
-      "Screenshot basic token not found. Please set in server.cfg"
+      'Screenshot basic token not found. Please set in server.cfg'
     );
   }
-  exp["screenshot-basic"].requestScreenshotUpload(
-    "https://api.imgur.com/3/image",
-    "imgur",
+  exp['screenshot-basic'].requestScreenshotUpload(
+    'https://api.imgur.com/3/image',
+    'imgur',
     {
       headers: {
         authorization: `Client-ID ${SCREENSHOT_BASIC_TOKEN}`,
-        "content-type": "multipart/form-data",
+        'content-type': 'multipart/form-data',
       },
     },
     (data: string) => {

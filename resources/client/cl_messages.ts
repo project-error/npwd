@@ -1,6 +1,6 @@
-import events from "../utils/events";
-import { Message, MessageGroup } from "../../phone/src/common/typings/messages";
-import { sendMessageEvent } from "../utils/messages";
+import events from '../utils/events';
+import { Message, MessageGroup } from '../../phone/src/common/typings/messages';
+import { sendMessageEvent } from '../utils/messages';
 
 /**
  * Messages get message groups

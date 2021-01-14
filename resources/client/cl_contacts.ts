@@ -1,10 +1,10 @@
-import events from "../utils/events";
+import events from '../utils/events';
 
 onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "CONTACTS",
-      method: "setContacts",
+      app: 'CONTACTS',
+      method: 'setContacts',
       data: contacts,
     })
   );
@@ -45,8 +45,8 @@ onNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, () => {
 onNet(events.CONTACTS_ACTION_RESULT, (result: string) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "CONTACTS",
-      method: "setAlert",
+      app: 'CONTACTS',
+      method: 'setAlert',
       data: result,
     })
   );

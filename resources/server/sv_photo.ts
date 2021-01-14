@@ -1,18 +1,18 @@
-import events from "../utils/events";
-import { ESX, getSource } from "./server";
-import { pool } from "./db";
-import { useIdentifier } from "./functions";
-import { IPhoto } from "../../phone/src/common/typings/photo";
+import events from '../utils/events';
+import { ESX, getSource } from './server';
+import { pool } from './db';
+import { useIdentifier } from './functions';
+import { IPhoto } from '../../phone/src/common/typings/photo';
 
 async function uploadPhoto(identifier: string, image: string) {
   const query =
-    "INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)";
+    'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';
   await pool.query(query, [identifier, image]);
 }
 
 async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
   const query =
-    "SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC";
+    'SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
   const photos = <IPhoto[]>results;
   return photos;
@@ -20,7 +20,7 @@ async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
 
 async function deletePhoto(photo: IPhoto, identifier: string) {
   const query =
-    "DELETE FROM npwd_phone_gallery WHERE id = ? AND identifier = ?";
+    'DELETE FROM npwd_phone_gallery WHERE id = ? AND identifier = ?';
   await pool.query(query, [photo.id, identifier]);
   console.log(photo.id);
 }

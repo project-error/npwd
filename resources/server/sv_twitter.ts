@@ -1,10 +1,10 @@
-import { pool } from "./db";
-import { ESX } from "./server";
-import { getSource } from "./functions";
-import { Tweet, Profile } from "../../phone/src/common/typings/twitter";
-import events from "../utils/events";
-import config from "../utils/config";
-import { reportTweetToDiscord } from "./discord";
+import { pool } from './db';
+import { ESX } from './server';
+import { getSource } from './functions';
+import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
+import events from '../utils/events';
+import config from '../utils/config';
+import { reportTweetToDiscord } from './discord';
 
 interface ProfileName {
   profile_name: string;
@@ -153,7 +153,7 @@ async function getProfile(identifier: string): Promise<Profile | null> {
  * @param identifier - player's identifier
  */
 async function generateProfileName(identifier: string): Promise<string> {
-  const defaultProfileName = "";
+  const defaultProfileName = '';
   if (!config.twitter.generateProfileNameFromUsers) return defaultProfileName;
 
   const query = `
@@ -378,7 +378,7 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
 
     const reportExists = await doesReportExist(tweet.id, profile.id);
     if (reportExists) {
-      console.warn("This profile has already reported this tweet");
+      console.warn('This profile has already reported this tweet');
     } else {
       await createTweetReport(tweet.id, profile.id);
       await reportTweetToDiscord(tweet, profile);

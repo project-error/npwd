@@ -1,17 +1,17 @@
-import events from "../utils/events";
-import { ESX } from "./server";
-import { getSource } from "./functions";
-import { pool } from "./db";
+import events from '../utils/events';
+import { ESX } from './server';
+import { getSource } from './functions';
+import { pool } from './db';
 import {
   Transfer,
   IBankCredentials,
-} from "../../phone/src/common/typings/bank";
-import { useIdentifier } from "./functions";
-import { type } from "os";
+} from '../../phone/src/common/typings/bank';
+import { useIdentifier } from './functions';
+import { type } from 'os';
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   const query =
-    "SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC";
+    'SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
   const transactions = <Transfer[]>results;
 
@@ -20,7 +20,7 @@ async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
 
 function fetchCredentials(): IBankCredentials {
   const name = ESX.GetPlayerFromId(getSource()).getName();
-  const balance = ESX.GetPlayerFromId(getSource()).getAccount("bank").money;
+  const balance = ESX.GetPlayerFromId(getSource()).getAccount('bank').money;
 
   const result = {
     name,
@@ -35,7 +35,7 @@ async function addTransfer(
   transfer: Transfer
 ): Promise<any> {
   const xPlayer = ESX.GetPlayerFromId(getSource());
-  const bankBalance = xPlayer.getAccount("bank").money;
+  const bankBalance = xPlayer.getAccount('bank').money;
   const sourceName = xPlayer.getName();
 
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
@@ -45,18 +45,18 @@ async function addTransfer(
   } else if (transfer.transferAmount < bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true);
 
-    xTarget.addAccountMoney("bank", transfer.transferAmount);
-    xPlayer.removeAccountMoney("bank", transfer.transferAmount);
+    xTarget.addAccountMoney('bank', transfer.transferAmount);
+    xPlayer.removeAccountMoney('bank', transfer.transferAmount);
 
     const query =
-      "INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)";
+      'INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)';
 
     const [results] = await pool.query(query, [
       identifier,
       transfer.targetID,
       transfer.transferAmount,
       transfer.message,
-      "Transfer",
+      'Transfer',
       sourceName,
     ]);
     const insertData = <any>results;
@@ -69,7 +69,7 @@ async function addTransfer(
  * @param transferId - transfer id
  */
 async function getTransfer(transferId: number): Promise<Transfer> {
-  const query = "SELECT * FROM npwd_bank_transfers WHERE id = ?";
+  const query = 'SELECT * FROM npwd_bank_transfers WHERE id = ?';
   const [results] = await pool.query(query, [transferId]);
   const transfers = <Transfer[]>results;
   const transfer = transfers[0];
@@ -84,7 +84,7 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
 
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer);
   } catch (error) {
-    console.log("Failed to fetch transactions");
+    console.log('Failed to fetch transactions');
   }
 });
 
@@ -105,6 +105,6 @@ onNet(events.BANK_GET_CREDENTIALS, () => {
     const credentials = fetchCredentials();
     emitNet(events.BANK_SEND_CREDENTIALS, getSource(), credentials);
   } catch (error) {
-    console.log("Failed to fetch credentials");
+    console.log('Failed to fetch credentials');
   }
 });

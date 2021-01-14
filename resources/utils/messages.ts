@@ -1,4 +1,4 @@
-import apps from "./apps";
+import apps from './apps';
 
 function sendMessage(app: string, method: string, data: any) {
   return SendNuiMessage(

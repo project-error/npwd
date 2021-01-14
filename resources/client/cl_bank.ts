@@ -1,10 +1,10 @@
-import events from "../utils/events";
+import events from '../utils/events';
 
 onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "BANK",
-      method: "setTransaction",
+      app: 'BANK',
+      method: 'setTransaction',
       data: transfer,
     })
   );
@@ -13,8 +13,8 @@ onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
 onNet(events.BANK_SEND_CREDENTIALS, (credentials: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "BANK",
-      method: "setCredentials",
+      app: 'BANK',
+      method: 'setCredentials',
       data: credentials,
     })
   );
@@ -33,8 +33,8 @@ onNet(events.BANK_ADD_TRANSFER_SUCCESS, () => {
 onNet(events.BANK_TRANSACTION_ALERT, (bool: boolean) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "BANK",
-      method: "setAlert",
+      app: 'BANK',
+      method: 'setAlert',
       data: bool,
     })
   );
@@ -43,8 +43,8 @@ onNet(events.BANK_TRANSACTION_ALERT, (bool: boolean) => {
 onNet(events.BANK_TRANSACTION_NOTIFICATION, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "BANK",
-      method: "setNotification",
+      app: 'BANK',
+      method: 'setNotification',
       data: transfer,
     })
   );

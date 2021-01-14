@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { Tweet, Profile } from "../../phone/src/common/typings/twitter";
-import { IMAGE_DELIMITER } from "../../phone/src/apps/twitter/utils/images";
+import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
+import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
 
-const DISCORD_TOKEN_ENV_VAR = "discord_bot_token";
-const DISCORD_TOKEN = GetConvar(DISCORD_TOKEN_ENV_VAR, "");
-const DISCORD_CHANNEL_ENV_VAR = "discord_channel_id";
-const DISCORD_CHANNEL_ID = GetConvar(DISCORD_CHANNEL_ENV_VAR, "");
+const DISCORD_TOKEN_ENV_VAR = 'discord_bot_token';
+const DISCORD_TOKEN = GetConvar(DISCORD_TOKEN_ENV_VAR, '');
+const DISCORD_CHANNEL_ENV_VAR = 'discord_channel_id';
+const DISCORD_CHANNEL_ID = GetConvar(DISCORD_CHANNEL_ENV_VAR, '');
 const DISCORD_HEADERS = { authorization: `Bot ${DISCORD_TOKEN}` };
 
-const BASE_URL = "https://discord.com/api";
+const BASE_URL = 'https://discord.com/api';
 const POST_CHANNEL_URL = `${BASE_URL}/channels/${DISCORD_CHANNEL_ID}/messages`;
 
 export async function reportTweetToDiscord(
@@ -34,7 +34,7 @@ export async function reportTweetToDiscord(
     ${tweet.message}
 
     **Reported Images**:
-    ${tweet.images.split(IMAGE_DELIMITER).join("\n")}
+    ${tweet.images.split(IMAGE_DELIMITER).join('\n')}
     `;
 
   return await axios.post(

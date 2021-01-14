@@ -1,10 +1,10 @@
-import events from "../utils/events";
+import events from '../utils/events';
 
 onNet(events.SELLOUT_SEND_LISTING, (listing: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "SELLOUT",
-      method: "setListings",
+      app: 'SELLOUT',
+      method: 'setListings',
       data: listing,
     })
   );
@@ -17,6 +17,6 @@ on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: any) => {
 
   setTimeout(() => {
     emitNet(events.SELLOUT_FETCH_LISTING);
-    console.log("Fetched");
+    console.log('Fetched');
   }, 500);
 });

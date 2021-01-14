@@ -1,13 +1,13 @@
-import md5 from "md5";
+import md5 from 'md5';
 
-import events from "../utils/events";
+import events from '../utils/events';
 import {
   Message,
   MessageGroup,
   CreateMessageGroupResult,
-} from "../../phone/src/common/typings/messages";
-import { pool, withTransaction } from "./db";
-import { getSource, useIdentifier } from "./functions";
+} from '../../phone/src/common/typings/messages';
+import { pool, withTransaction } from './db';
+import { getSource, useIdentifier } from './functions';
 
 /**
  * Used for the raw npwd_messages_groups row responses
@@ -188,7 +188,7 @@ async function getIdentifierFromPhoneNumber(
   `;
   const [results] = await pool.query(query, [phoneNumber]);
   const identifiers = <any>results;
-  return identifiers[0]["identifier"];
+  return identifiers[0]['identifier'];
 }
 
 /**
@@ -235,7 +235,7 @@ async function getConsolidatedMessageGroups(
     (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
       const groupId = messageGroup.group_id;
       const displayTerm =
-        messageGroup.display || messageGroup.phone_number || "???";
+        messageGroup.display || messageGroup.phone_number || '???';
 
       if (groupId in mapping) {
         mapping[groupId].participants = mapping[groupId].participants.concat(
@@ -288,7 +288,7 @@ async function getFormattedMessageGroups(
     return {
       ...group,
       groupId,
-      groupDisplay: group.participants.join(", "),
+      groupDisplay: group.participants.join(', '),
       // note that 1 here references how many participants besides the user
       isGroupChat: group.participants.length > 1,
     };
@@ -336,7 +336,7 @@ async function createMessageGroupsFromPhoneNumbers(
   // that this not change! Changing this order can result in the ability
   // of duplicate message groups being created.
   identifiers.sort();
-  const mergedIdentifiers = identifiers.join("-");
+  const mergedIdentifiers = identifiers.join('-');
   // we don't need this to be secure. Its purpose is to create a unique
   // string derived from the identifiers. In this way we can check
   // that this groupId isn't used before. If it has then it means

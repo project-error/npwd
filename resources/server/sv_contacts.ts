@@ -1,7 +1,7 @@
-import { ESX } from "./server";
-import { pool } from "./db";
-import events from "../utils/events";
-import { useIdentifier, getSource } from "./functions";
+import { ESX } from './server';
+import { pool } from './db';
+import events from '../utils/events';
+import { useIdentifier, getSource } from './functions';
 
 interface Contacts {
   id?: number;
@@ -15,7 +15,7 @@ interface ContactId {
 }
 
 async function fetchAllContacts(identifier: string): Promise<Contacts[]> {
-  const query = "SELECT * FROM npwd_phone_contacts WHERE identifier = ?";
+  const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ?';
   const [results] = await pool.query(query, [identifier]);
   const contacts = <Contacts[]>results;
   return contacts;
@@ -28,7 +28,7 @@ async function addContact(
   avatar: string
 ): Promise<any> {
   const query =
-    "INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)";
+    'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
 
   const [result] = await pool.query(query, [
     identifier,
@@ -43,7 +43,7 @@ async function updateContact(
   identifier: string
 ): Promise<any> {
   const query =
-    "UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?";
+    'UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
   await pool.query(query, [
     contact.number,
     contact.display,
@@ -58,7 +58,7 @@ async function deleteContact(
   identifier: string
 ): Promise<any> {
   const query =
-    "DELETE FROM npwd_phone_contacts WHERE id = ? AND identifier = ?";
+    'DELETE FROM npwd_phone_contacts WHERE id = ? AND identifier = ?';
   await pool.query(query, [contact.id, identifier]);
 }
 
@@ -71,7 +71,7 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
     const contacts = await fetchAllContacts(_identifier);
     emitNet(events.CONTACTS_SEND_CONTACTS, _source, contacts);
   } catch (error) {
-    console.log("Failed to fetch contacts: ", error);
+    console.log('Failed to fetch contacts: ', error);
   }
 });
 
@@ -86,10 +86,10 @@ onNet(
       emitNet(
         events.CONTACTS_ACTION_RESULT,
         getSource(),
-        "CONTACT_ADD_SUCCESS"
+        'CONTACT_ADD_SUCCESS'
       );
     } catch (error) {
-      emitNet(events.CONTACTS_ACTION_RESULT, getSource(), "CONTACT_ADD_FAILED");
+      emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_ADD_FAILED');
     }
   }
 );
@@ -103,13 +103,13 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
     emitNet(
       events.CONTACTS_ACTION_RESULT,
       getSource(),
-      "CONTACT_UPDATE_SUCCESS"
+      'CONTACT_UPDATE_SUCCESS'
     );
   } catch (error) {
     emitNet(
       events.CONTACTS_ACTION_RESULT,
       getSource(),
-      "CONTACT_UPDATE_FAILED"
+      'CONTACT_UPDATE_FAILED'
     );
   }
 });
@@ -122,13 +122,13 @@ onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
     emitNet(
       events.CONTACTS_ACTION_RESULT,
       getSource(),
-      "CONTACT_DELETE_SUCCESS"
+      'CONTACT_DELETE_SUCCESS'
     );
   } catch (error) {
     emitNet(
       events.CONTACTS_ACTION_RESULT,
       getSource(),
-      "CONTACT_DELETE_FAILED"
+      'CONTACT_DELETE_FAILED'
     );
   }
 });

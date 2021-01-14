@@ -1,8 +1,8 @@
-import events from "../utils/events";
-import { ESX } from "./server";
-import { getSource } from "./functions";
-import { pool } from "./db";
-import { usePhoneNumber } from "./functions";
+import events from '../utils/events';
+import { ESX } from './server';
+import { getSource } from './functions';
+import { pool } from './db';
+import { usePhoneNumber } from './functions';
 
 interface Listing {
   title: string;
@@ -12,7 +12,7 @@ interface Listing {
 }
 
 async function fetchAllListings(): Promise<Listing[]> {
-  const query = "SELECT * FROM npwd_sellout_listings ORDER BY id DESC";
+  const query = 'SELECT * FROM npwd_sellout_listings ORDER BY id DESC';
 
   const [results] = await pool.query(query);
   const listings = <Listing[]>results;
@@ -27,7 +27,7 @@ async function addListing(
   listing: Listing
 ): Promise<any> {
   const query =
-    "INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)";
+    'INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)';
   await pool.query(query, [
     identifier,
     name,
@@ -57,6 +57,6 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
     const phoneNumber = await usePhoneNumber(_identifier);
     addListing(_identifier, name, phoneNumber, listing);
   } catch (error) {
-    console.log("Failed to add contact: ", error);
+    console.log('Failed to add contact: ', error);
   }
 });

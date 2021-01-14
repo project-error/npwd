@@ -1,4 +1,4 @@
 export default {
-  TWITTER: "TWITTER",
-  MESSAGES: "MESSAGES",
+  TWITTER: 'TWITTER',
+  MESSAGES: 'MESSAGES',
 };
