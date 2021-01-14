@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { contactsState } from './state';
 
 interface ModalProps {
-  showContactModal: boolean:
+  showContactModal: boolean;
   setShowContactModal: (show: boolean) => void;
 }
 
