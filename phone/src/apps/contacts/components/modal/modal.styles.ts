@@ -5,10 +5,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
     position: 'absolute',
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   modalHide: {
-    display: 'none'
+    display: 'none',
   },
   listContainer: {
     marginTop: 30,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     height: '125px',
     width: '124px',
-    marginBottom: 29
+    marginBottom: 29,
   },
   input: {
     marginBottom: 20,
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   inputProps: {
-    fontSize: 22
+    fontSize: 22,
   },
   updateButton: {
     background: '#2196f3',
@@ -36,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
     height: 45,
     fontSize: 16,
     marginTop: 29,
-    marginBottom: 29
+    marginBottom: 29,
   },
   deleteButton: {
     background: '#d32f2f',
     width: 150,
     height: 40,
-    fontSize: 16
-  }
-}))
+    fontSize: 16,
+  },
+}));
 
 export default useStyles;

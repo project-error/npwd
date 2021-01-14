@@ -1,5 +1,5 @@
-import { useRecoilState } from "recoil";
-import { contactsState } from "./state";
+import { useRecoilState } from 'recoil';
+import { contactsState } from './state';
 
 interface FilterdContactsProps {
   filteredContacts: string;

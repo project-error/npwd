@@ -5,6 +5,8 @@ import {
   Divider,
   ListItemIcon,
 } from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
+
 interface IProps {
   options?: any;
   label: string;
@@ -22,6 +24,17 @@ export const SettingItem = ({
   icon,
   disabled,
 }: IProps) => {
+  if (!onClick)
+    return (
+      <>
+        <ListItem button>
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={label} secondary={value ? value : undefined} />
+        </ListItem>
+        <Divider />
+      </>
+    );
+
   return (
     <>
       <ListItem onClick={() => onClick(options)} button>

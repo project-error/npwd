@@ -10,4 +10,4 @@ interface NoteDetailProps {
 export const useNoteDetail = (): NoteDetailProps => {
   const [detail, setDetail] = useRecoilState(noteStates.noteDetail);
   return { detail, setDetail };
-}
+};

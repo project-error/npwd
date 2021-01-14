@@ -3,22 +3,22 @@ import { atom } from 'recoil';
 export const photoState = {
   photos: atom({
     key: 'galleryPhotos',
-    default: null
+    default: null,
   }),
   modal: atom({
     key: 'photoModal',
-    default: false
+    default: false,
   }),
   photoMeta: atom({
     key: 'photoMeta',
-    default: null
+    default: null,
   }),
   shareModal: atom({
     key: 'phoneShareModal',
-    default: false
+    default: false,
   }),
   shareLink: atom({
     key: 'photoShareLink',
-    default: null
-  })
-}
+    default: null,
+  }),
+};

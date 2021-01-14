@@ -1,17 +1,17 @@
-import { ESX } from "../client/client";
-import config from "../utils/config";
-import { Delay } from "../utils/fivem";
-import events from "../utils/events";
+import { ESX } from '../client/client';
+import config from '../utils/config';
+import { Delay } from '../utils/fivem';
+import events from '../utils/events';
 
 RegisterCommand(
-  "phone:close",
+  'phone:close',
   (source: any, args: string[], raw: any) => {
     phoneCloseAnim();
     SetNuiFocus(false, false);
     SendNuiMessage(
       JSON.stringify({
-        app: "PHONE",
-        method: "setVisibility",
+        app: 'PHONE',
+        method: 'setVisibility',
         data: false,
       })
     );
@@ -22,7 +22,7 @@ RegisterCommand(
 let prop = 0;
 let isPhoneOpen = false;
 let propCreated = false;
-let phoneModel = "prop_amb_phone"; // Refered to in newphoneProp function. Requires custom phone being streamed.
+let phoneModel = 'prop_amb_phone'; // Refered to in newphoneProp function. Requires custom phone being streamed.
 
 const newPhoneProp = async () => {
   //Function for creating the phone prop
@@ -31,7 +31,7 @@ const newPhoneProp = async () => {
     RequestModel(phoneModel);
     while (!HasModelLoaded(phoneModel)) {
       await Delay(1);
-      console.log("MODEL HASNT LOADED");
+      console.log('MODEL HASNT LOADED');
     }
 
     const playerPed = PlayerPedId();
@@ -65,9 +65,9 @@ const newPhoneProp = async () => {
       true
     ); //-- Attaches the phone to the player.
     propCreated = true;
-    console.log("prop created");
+    console.log('prop created');
   } else if (propCreated) {
-    console.log("prop already created");
+    console.log('prop already created');
   }
 };
 
@@ -78,7 +78,7 @@ function deletePhone() {
     DeleteEntity(prop);
     prop = 0;
     propCreated = false;
-    console.log("prop destroyed");
+    console.log('prop destroyed');
   }
 }
 
@@ -92,19 +92,19 @@ async function loadAnimDict(dict: any) {
 
 async function phoneOpenAnim() {
   //Phone Open Animation
-  console.log("phoneOpenAnim"); //Left for testing purposes.
+  console.log('phoneOpenAnim'); //Left for testing purposes.
   const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
   deletePhone(); //Deleting  before creating a new phone where itll be deleted again.
   if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
     //-- true refers to at get in.
-    const dict = "anim@cellphone@in_car@ps";
+    const dict = 'anim@cellphone@in_car@ps';
 
     ClearPedTasks(GetPlayerPed(-1));
     await loadAnimDict(dict);
     TaskPlayAnim(
       GetPlayerPed(-1),
       dict,
-      "cellphone_text_in",
+      'cellphone_text_in',
       8.0,
       -1,
       -1,
@@ -118,14 +118,14 @@ async function phoneOpenAnim() {
     await newPhoneProp(); //Creates the phone and attaches it.
   } else {
     //While not in a vehicle it will use this dict.
-    const dict = "cellphone@";
+    const dict = 'cellphone@';
 
     ClearPedTasks(GetPlayerPed(-1));
     await loadAnimDict(dict);
     TaskPlayAnim(
       GetPlayerPed(-1),
       dict,
-      "cellphone_text_in",
+      'cellphone_text_in',
       8.0,
       -1,
       -1,
@@ -142,14 +142,14 @@ async function phoneOpenAnim() {
 
 async function phoneCloseAnim() {
   //Phone Close Animation
-  console.log("phoneCloseAnim"); //Left for testing purposes.
+  console.log('phoneCloseAnim'); //Left for testing purposes.
   const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
-  const anim = "cellphone_text_out";
+  const anim = 'cellphone_text_out';
   if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
     //true refers to at get in.
-    const dict = "anim@cellphone@in_car@ps";
+    const dict = 'anim@cellphone@in_car@ps';
 
-    StopAnimTask(GetPlayerPed(-1), dict, "cellphone_text_in", 1.0); //Stop the pull out animation
+    StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0); //Stop the pull out animation
     deletePhone(); //Deletes the prop early incase they get out of the vehicle.
     await Delay(250); //lets it get to a certain point
     loadAnimDict(dict); //loads the new animation
@@ -170,9 +170,9 @@ async function phoneCloseAnim() {
     StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0); //clears the animation
   } else {
     //While not in a vehicle it will use this dict.
-    const dict = "cellphone@";
+    const dict = 'cellphone@';
 
-    StopAnimTask(GetPlayerPed(-1), dict, "cellphone_text_in", 1.0); //Stop the pull out animation
+    StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0); //Stop the pull out animation
     await Delay(100); //lets it get to a certain point
     loadAnimDict(dict); //loads the new animation
     TaskPlayAnim(
@@ -197,24 +197,24 @@ async function phoneCloseAnim() {
 async function carryingPhone(cb: any) {
   if (ESX === null) return cb(0);
   ESX.TriggerServerCallback(
-    "phone:getItemAmount",
+    'phone:getItemAmount',
     (qtty: number) => {
       cb(qtty > 0);
     },
-    "phone"
+    'phone'
   );
 }
 
 function noPhone() {
   if (ESX === null) return;
-  ESX.ShowNotification("Oi Mate, No El Telephono", false, false, 1);
+  ESX.ShowNotification('Oi Mate, No El Telephono', false, false, 1);
 }
 
 function sendPhoneConfig() {
   SendNuiMessage(
     JSON.stringify({
-      app: "PHONE",
-      method: "phoneConfig",
+      app: 'PHONE',
+      method: 'phoneConfig',
       data: config,
     })
   );
@@ -226,18 +226,17 @@ setTick(() => {
   }
 });
 
-
 // setTick(() => {
 //   if (isPhoneOpen) {
-//     DisableControlAction(0, 1, true) 
-//     DisableControlAction(0, 2, true) 
+//     DisableControlAction(0, 1, true)
+//     DisableControlAction(0, 2, true)
 //     DisableControlAction(0, 24, true)
 //     DisableControlAction(0, 257, true)
 //     DisableControlAction(0, 25, true)
 //     DisableControlAction(0, 263, true)
 //   } else {
-//     EnableControlAction(0, 1, true) 
-//     EnableControlAction(0, 2, true) 
+//     EnableControlAction(0, 1, true)
+//     EnableControlAction(0, 2, true)
 //     EnableControlAction(0, 24, true)
 //     EnableControlAction(0, 257, true)
 //     EnableControlAction(0, 25, true)
@@ -247,40 +246,39 @@ setTick(() => {
 
 async function Phone() {
   if (config.PhoneAsItem) {
-    console.log("CONFIG ON");
+    console.log('CONFIG ON');
     carryingPhone(async (carryingPhone: any) => {
       if (carryingPhone) {
         if (!isPhoneOpen) {
           isPhoneOpen = true;
           await phoneOpenAnim(); // Animation starts before the phone is open
-          emitNet('phone:getCredentials') 
-          console.log("Sellout fetched from client side")// Gets the credentials. Will eventually most likely only get the phone number and name, idk.
-          SetCursorLocation(0.90, 0.922) //Experimental
-          let res = GetActiveScreenResolution()
+          emitNet('phone:getCredentials');
+          console.log('Sellout fetched from client side'); // Gets the credentials. Will eventually most likely only get the phone number and name, idk.
+          SetCursorLocation(0.9, 0.922); //Experimental
+          let res = GetActiveScreenResolution();
           SendNuiMessage(
             JSON.stringify({
-              app: "PHONE",
-              method: "setVisibility",
+              app: 'PHONE',
+              method: 'setVisibility',
               data: true,
             })
           );
           sendPhoneConfig();
           SetNuiFocus(true, true);
           //SetNuiFocusKeepInput(true)
-
         } else {
           isPhoneOpen = false;
           SendNuiMessage(
             //Hides phone
             JSON.stringify({
-              app: "PHONE",
-              method: "setVisibility",
+              app: 'PHONE',
+              method: 'setVisibility',
               data: false,
             })
           );
           SetNuiFocus(false, false);
           //SetNuiFocusKeepInput(false)
-          
+
           await phoneCloseAnim(); // Animation starts after the UI is closed.
         }
       } else {
@@ -288,32 +286,31 @@ async function Phone() {
       }
     });
   } else if (!config.PhoneAsItem) {
-    console.log("CONFIG OFF");
+    console.log('CONFIG OFF');
     if (!isPhoneOpen) {
       isPhoneOpen = true;
       await phoneOpenAnim(); // Animation starts before the phone is open
-      emitNet('phone:getCredentials') 
-      console.log("Sellout fetched from client side")
-      SetCursorLocation(0.936, 0.922) //Experimental
-      let res = GetActiveScreenResolution()
+      emitNet('phone:getCredentials');
+      console.log('Sellout fetched from client side');
+      SetCursorLocation(0.936, 0.922); //Experimental
+      let res = GetActiveScreenResolution();
       SendNuiMessage(
         JSON.stringify({
-          app: "PHONE",
-          method: "setVisibility",
+          app: 'PHONE',
+          method: 'setVisibility',
           data: true,
         })
       );
       sendPhoneConfig();
       SetNuiFocus(true, true);
       //SetNuiFocusKeepInput(true)
-        
     } else {
       isPhoneOpen = false;
       SendNuiMessage(
         //Hides phone
         JSON.stringify({
-          app: "PHONE",
-          method: "setVisibility",
+          app: 'PHONE',
+          method: 'setVisibility',
           data: false,
         })
       );
@@ -331,31 +328,31 @@ async function Phone() {
 RegisterNuiCallbackType(events.OPEN_APP_CONTACTS);
 on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, () => {
   emitNet(events.CONTACTS_GET_CONTACTS);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
 on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, () => {
   emitNet(events.SELLOUT_FETCH_LISTING);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_NOTES);
 on(`__cfx_nui:${events.OPEN_APP_NOTES}`, () => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_BANK);
 on(`__cfx_nui:${events.OPEN_APP_BANK}`, () => {
   emitNet(events.BANK_FETCH_TRANSACTIONS);
   emitNet(events.BANK_GET_CREDENTIALS);
-})
+});
 
 RegisterNuiCallbackType(events.OPEN_APP_CAMERA);
 on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
   emitNet(events.CAMERA_FETCH_PHOTOS);
-})
+});
 
 RegisterCommand(
-  "phone",
+  'phone',
   () => {
     //-- Toggles Phone
     Phone();
@@ -363,17 +360,17 @@ RegisterCommand(
   false
 );
 
-RegisterNuiCallbackType("phone:close");
+RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, () => {
   Phone();
 }); // Called for when the phone is closed via the UI.
 
-AddEventHandler("onResourceStop", function (resource: string) {
+AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
     SendNuiMessage(
       JSON.stringify({
-        app: "PHONE",
-        method: "setVisibility",
+        app: 'PHONE',
+        method: 'setVisibility',
         data: false,
       })
     );
@@ -389,11 +386,11 @@ AddEventHandler("onResourceStop", function (resource: string) {
 function countPhone(cb: any) {
   if (ESX === null) return cb(0);
   ESX.TriggerServerCallback(
-    "phone:getItemAmount",
+    'phone:getItemAmount',
     (qtty: number) => {
       cb(qtty > 0);
     },
-    "phone"
+    'phone'
   );
 }
 
@@ -419,11 +416,11 @@ let destroyedPhone = false;
 //   }
 // });
 
-onNet("phone:sendCredentials", (number: string) => {
+onNet('phone:sendCredentials', (number: string) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "SIMCARD",
-      method: "setNumber",
+      app: 'SIMCARD',
+      method: 'setNumber',
       data: number,
     })
   );

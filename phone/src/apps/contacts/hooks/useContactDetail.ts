@@ -12,4 +12,4 @@ interface ContactDetailProps {
 export const useContactDetail = (): ContactDetailProps => {
   const [ contactDetail, setContactDetail ] = useRecoilState(contactsState.contactDetail);
   return { contactDetail, setContactDetail };
-}
+};

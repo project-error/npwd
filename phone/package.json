@@ -32,7 +32,7 @@
     "react-popper": "^2.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "recoil": "^0.0.10",
+    "recoil": "^0.1.2",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
@@ -50,6 +50,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "copy-webpack-plugin": "6.2.1",
     "cra-build-watch": "^3.2.0",
     "cross-env": "^7.0.2",
     "css-loader": "^2.1.1",
@@ -70,8 +71,7 @@
     "start": "react-scripts start",
     "watch": "cra-build-watch --disable-chunks --build-path ../resources/html --output-filename dev.js",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "build": "react-scripts build",
-    "build:resources": "cross-env NODE_ENV=production webpack --config webpack/webpack.resources.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.resources.js --color -p --progress --hide-modules --display-optimization-bailout",
     "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject"

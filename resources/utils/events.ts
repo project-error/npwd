@@ -1,31 +1,31 @@
 export default {
   // Twitter
-  TWITTER_FETCH_TWEETS: "phone:fetchTweets",
-  TWITTER_FETCH_TWEETS_SUCCESS: "fetchTweets",
-  TWITTER_FETCH_TWEETS_FAILURE: "fetchTweetsFailed",
-  TWITTER_FETCH_TWEETS_FILTERED: "phone:fetchTweetsFiltered",
-  TWITTER_FETCH_TWEETS_FILTERED_SUCCESS: "fetchTweetsFiltered",
-  TWITTER_FETCH_TWEETS_FILTERED_FAILURE: "fetchTweetsFilteredFailed",
-  TWITTER_GET_OR_CREATE_PROFILE: "phone:getOrCreateTwitterProfile",
-  TWITTER_GET_OR_CREATE_PROFILE_SUCCESS: "getOrCreateTwitterProfile",
-  TWITTER_GET_OR_CREATE_PROFILE_FAILURE: "getOrCreateTwitterProfileFailed",
-  TWITTER_UPDATE_PROFILE: "phone:updateTwitterProfile",
-  TWITTER_UPDATE_PROFILE_LOADING: "updateProfileLoading",
-  TWITTER_UPDATE_PROFILE_RESULT: "updateProfileResult",
-  TWITTER_CREATE_TWEET: "phone:createTweet",
-  TWITTER_CREATE_TWEET_LOADING: "createTweetLoading",
-  TWITTER_CREATE_TWEET_RESULT: "createTweetResult",
-  TWITTER_CREATE_TWEET_BROADCAST: "createTweetBroadcast",
-  TWITTER_CREATE_TWEET_FAILURE: "createTweetResultFailed",
-  TWITTER_DELETE_TWEET: "phone:deleteTweet",
-  TWITTER_DELETE_TWEET_SUCCESS: "deleteTweetSuccess",
-  TWITTER_DELETE_TWEET_FAILURE: "deleteTweetFailed",
-  TWITTER_TOGGLE_LIKE: "phone:toggleLike",
-  TWITTER_TOGGLE_LIKE_SUCCESS: "toggleLikeSuccess",
-  TWITTER_TOGGLE_LIKE_FAILURE: "toggleLikeFailed",
-  TWITTER_REPORT: "phone:reportTweet",
-  TWITTER_REPORT_SUCCESS: "reportTweetSuccess",
-  TWITTER_REPORT_FAILURE: "reportTweetFailed",
+  TWITTER_FETCH_TWEETS: 'phone:fetchTweets',
+  TWITTER_FETCH_TWEETS_SUCCESS: 'fetchTweets',
+  TWITTER_FETCH_TWEETS_FAILURE: 'fetchTweetsFailed',
+  TWITTER_FETCH_TWEETS_FILTERED: 'phone:fetchTweetsFiltered',
+  TWITTER_FETCH_TWEETS_FILTERED_SUCCESS: 'fetchTweetsFiltered',
+  TWITTER_FETCH_TWEETS_FILTERED_FAILURE: 'fetchTweetsFilteredFailed',
+  TWITTER_GET_OR_CREATE_PROFILE: 'phone:getOrCreateTwitterProfile',
+  TWITTER_GET_OR_CREATE_PROFILE_SUCCESS: 'getOrCreateTwitterProfile',
+  TWITTER_GET_OR_CREATE_PROFILE_FAILURE: 'getOrCreateTwitterProfileFailed',
+  TWITTER_UPDATE_PROFILE: 'phone:updateTwitterProfile',
+  TWITTER_UPDATE_PROFILE_LOADING: 'updateProfileLoading',
+  TWITTER_UPDATE_PROFILE_RESULT: 'updateProfileResult',
+  TWITTER_CREATE_TWEET: 'phone:createTweet',
+  TWITTER_CREATE_TWEET_LOADING: 'createTweetLoading',
+  TWITTER_CREATE_TWEET_RESULT: 'createTweetResult',
+  TWITTER_CREATE_TWEET_BROADCAST: 'createTweetBroadcast',
+  TWITTER_CREATE_TWEET_FAILURE: 'createTweetResultFailed',
+  TWITTER_DELETE_TWEET: 'phone:deleteTweet',
+  TWITTER_DELETE_TWEET_SUCCESS: 'deleteTweetSuccess',
+  TWITTER_DELETE_TWEET_FAILURE: 'deleteTweetFailed',
+  TWITTER_TOGGLE_LIKE: 'phone:toggleLike',
+  TWITTER_TOGGLE_LIKE_SUCCESS: 'toggleLikeSuccess',
+  TWITTER_TOGGLE_LIKE_FAILURE: 'toggleLikeFailed',
+  TWITTER_REPORT: 'phone:reportTweet',
+  TWITTER_REPORT_SUCCESS: 'reportTweetSuccess',
+  TWITTER_REPORT_FAILURE: 'reportTweetFailed',
 
   // Contacts
   CONTACTS_SEND_CONTACTS: 'phone:sendContacts',
@@ -43,7 +43,7 @@ export default {
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
 
-// 
+  //
   BANK_ADD_TRANSFER: 'phone:addTransfer',
   BANK_ADD_TRANSFER_SUCCESS: 'phone:addTransferSuccess',
   BANK_FETCH_TRANSACTIONS: 'phone:fetchAllTransactions',
@@ -67,7 +67,7 @@ export default {
   MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
   MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
 
-  // Notes 
+  // Notes
   NOTE_ADD_NOTE: 'phone:addNote',
   NOTE_FETCH_ALL_NOTES: 'phone:fetchAllNotes',
   NOTE_SEND_NOTE: 'phone:sendNote',
@@ -94,4 +94,4 @@ export default {
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
   PHONE_USE_CLIPBOARD: 'phone:useClipboard',
-}
+};

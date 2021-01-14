@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { List } from "../../../../ui/components/List";
-import MessageSkeleton from "./MessageSkeleton";
+import { List } from '../../../../ui/components/List';
+import MessageSkeleton from './MessageSkeleton';
 
 export function MessageSkeletonList() {
   return (

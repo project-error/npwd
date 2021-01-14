@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Box, Button } from '@material-ui/core';
 import useStyles from './grid.styles';
 import { usePhotos } from '../../hooks/usePhotos';
@@ -10,48 +10,70 @@ import { usePhotoMeta } from '../../hooks/usePhotoMeta';
 // isMessage will work as a style handler kinda. If the gallery is rendered in the messages,
 // it will have the value true, which basically means a tweak on the design to fit in a modal
 export const GalleryGrid = (isMessags) => {
-  const classes = useStyles()
-  
+  const classes = useStyles();
+
   const { setMeta } = usePhotoMeta();
   const { setModal } = usePhotoModal();
-  
+
   const photos = usePhotos();
 
-  console.log(photos)
+  console.log(photos);
 
   const handleCamera = () => {
-    Nui.send('phone:TakePhoto', {})
-  }
+    Nui.send('phone:TakePhoto', {});
+  };
 
   const handlePhotoOpen = (photo) => {
-    setModal(true)
-    setMeta(photo)
-  }
+    setModal(true);
+    setMeta(photo);
+  };
 
-  if(!photos) return (
-    <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
+  if (!photos)
+    return (
+      <Box
+        display='flex'
+        flexWrap='wrap'
+        alignContent='flex-start'
+        className={classes.root}
+      >
         <Box>
-          <Button onClick={handleCamera} style={{ borderRadius: 0 }} className={classes.photo}>
-            <AddIcon fontSize="large"/>
+          <Button
+            onClick={handleCamera}
+            style={{ borderRadius: 0 }}
+            className={classes.photo}
+          >
+            <AddIcon fontSize='large' />
           </Button>
         </Box>
       </Box>
-  )
+    );
 
   return (
     <div>
-      <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
+      <Box
+        display='flex'
+        flexWrap='wrap'
+        alignContent='flex-start'
+        className={classes.root}
+      >
         <Box>
-          <Button onClick={handleCamera} style={{ borderRadius: 0 }} className={classes.photo}>
-            <AddIcon fontSize="large"/>
+          <Button
+            onClick={handleCamera}
+            style={{ borderRadius: 0 }}
+            className={classes.photo}
+          >
+            <AddIcon fontSize='large' />
           </Button>
         </Box>
-        {photos.map(photo => (
+        {photos.map((photo) => (
           <Box onClick={() => handlePhotoOpen(photo)}>
-            <div style={{ backgroundImage: `url(${photo.image})` }} className={classes.photo} />
+            <div
+              style={{ backgroundImage: `url(${photo.image})` }}
+              className={classes.photo}
+            />
           </Box>
         ))}
       </Box>
     </div>
-  )
-}
+  );
+};

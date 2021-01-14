@@ -9,4 +9,4 @@ interface ModalProps {
 export const useContactModal = (): ModalProps => {
   const [ showContactModal, setShowContactModal ] = useRecoilState(contactsState.showContactsModal);
   return { showContactModal, setShowContactModal };
-}
+};

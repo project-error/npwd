@@ -1,16 +1,17 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ResourceManifestPlugin = require("./webpack.fxmanifest.plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ResourceManifestPlugin = require('./webpack.fxmanifest.plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
-module.exports = require("./webpack.common")({
-  mode: "production",
+module.exports = require('./webpack.common')({
+  mode: 'production',
 
   // In production, we skip all hot-reloading stuff
-  entry: [path.join(process.cwd(), "src/index.tsx")],
+  entry: [path.join(process.cwd(), 'src/index.tsx')],
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: "public/index.html",
+      template: 'public/index.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -26,6 +27,14 @@ module.exports = require("./webpack.common")({
       inject: true,
     }),
     new ResourceManifestPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public/media',
+          to: path.resolve(process.cwd(), '../resources/html/media'),
+        },
+      ],
+    }),
   ],
 
   performance: {

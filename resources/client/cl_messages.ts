@@ -2,8 +2,6 @@ import events from '../utils/events';
 import { Message, MessageGroup } from '../../phone/src/common/typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
-
-
 /**
  * Messages get message groups
  */
@@ -12,10 +10,16 @@ on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGE_GROUPS}`, (): void => {
   emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
 });
 
-onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, (messageGroups: MessageGroup[]): void => {
-  sendMessageEvent(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, messageGroups);
-  emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS);
-});
+onNet(
+  events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
+  (messageGroups: MessageGroup[]): void => {
+    sendMessageEvent(
+      events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
+      messageGroups
+    );
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS);
+  }
+);
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, () => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED);
@@ -24,14 +28,16 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, () => {
 // fetch message groups on client launch
 emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
 
-
 /**
  * Messages create message group
  */
 RegisterNuiCallbackType(events.MESSAGES_CREATE_MESSAGE_GROUP);
-on(`__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`, ({ phoneNumbers, label }: any): void => {
-  emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
-});
+on(
+  `__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`,
+  ({ phoneNumbers, label }: any): void => {
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
+  }
+);
 
 onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, (result: any): void => {
   sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, result);
@@ -57,7 +63,6 @@ onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {
 onNet(events.MESSAGES_FETCH_MESSAGES_FAILED, (): void => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGES_FAILED);
 });
-
 
 /**
  * Messages send message

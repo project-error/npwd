@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  Button,
-  Menu,
-  MenuItem
-} from "@material-ui/core";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import { usePhone } from "../../../../os/phone/hooks/usePhone";
-import Nui from "../../../../os/nui-events/utils/Nui";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button, Menu, MenuItem } from '@material-ui/core';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import Nui from '../../../../os/nui-events/utils/Nui';
 import ReportButton from '../buttons/ReportButton';
-
 
 /**
  *  Ok this is some bullshit. Due to either scaling issues or the NUI
@@ -29,7 +24,7 @@ import ReportButton from '../buttons/ReportButton';
  * of the anchor element
  */
 function calculateVerticalOffset(top: number): number {
-  return top * 0.20 - 38;
+  return top * 0.2 - 38;
 }
 
 export const ShowMore = ({ id, isReported, isMine }) => {
@@ -41,11 +36,11 @@ export const ShowMore = ({ id, isReported, isMine }) => {
   if (!config) return null;
 
   const handleClick = (event: React.MouseEvent) => {
-    const element = event.currentTarget
+    const element = event.currentTarget;
     setAnchorEl(element);
-  
-    const top  = window.pageYOffset + element.getBoundingClientRect().top
-    setVerticalOffset(calculateVerticalOffset(top)); 
+
+    const top = window.pageYOffset + element.getBoundingClientRect().top;
+    setVerticalOffset(calculateVerticalOffset(top));
   };
 
   const handleClose = () => {
@@ -54,36 +49,51 @@ export const ShowMore = ({ id, isReported, isMine }) => {
   };
 
   const handleDeleteTweet = () => {
-    Nui.send("phone:deleteTweet", id);
+    Nui.send('phone:deleteTweet', id);
     handleClose();
-  }
+  };
 
   const allowedToDelete = config.twitter.allowDeleteTweets && isMine;
   const allowedToReport = config.twitter.allowReportTweets && !isMine;
 
   // if the user cannot perform any actions in show more then don't
   // allow them to interact with it
-  let _handleClick = allowedToDelete || allowedToReport ? handleClick : () => null;
+  let _handleClick =
+    allowedToDelete || allowedToReport ? handleClick : () => null;
 
   return (
-      <>
-        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={_handleClick} >
-            <MoreIcon />
-        </Button>
-        <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            transformOrigin={{
-              vertical: verticalOffset,
-              horizontal: 'left'
-            }}
-        >
-            {allowedToDelete && <MenuItem  onClick={handleDeleteTweet}>{t('APPS_TWITTER_DELETE')}</MenuItem >}
-            {allowedToReport && <ReportButton handleClose={handleClose} isReported={isReported} tweetId={id}/>}
-        </Menu>
+    <>
+      <Button
+        aria-controls='simple-menu'
+        aria-haspopup='true'
+        onClick={_handleClick}
+      >
+        <MoreIcon />
+      </Button>
+      <Menu
+        id='simple-menu'
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        transformOrigin={{
+          vertical: verticalOffset,
+          horizontal: 'left',
+        }}
+      >
+        {allowedToDelete && (
+          <MenuItem onClick={handleDeleteTweet}>
+            {t('APPS_TWITTER_DELETE')}
+          </MenuItem>
+        )}
+        {allowedToReport && (
+          <ReportButton
+            handleClose={handleClose}
+            isReported={isReported}
+            tweetId={id}
+          />
+        )}
+      </Menu>
     </>
   );
 };

@@ -1,5 +1,5 @@
-import mysql from "mysql2/promise";
-import { ConnectionStringParser } from "connection-string-parser";
+import mysql from 'mysql2/promise';
+import { ConnectionStringParser } from 'connection-string-parser';
 import {
   CONNECTION_STRING,
   DEFAULT_PORT,
@@ -7,7 +7,7 @@ import {
   getServerHost,
   getUserId,
   getPassword,
-} from "./db_utils";
+} from './db_utils';
 
 // we require set mysql_connection_string  to be set in the config
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, null);
@@ -26,7 +26,7 @@ if (mysqlConnectionString === null) {
  * https://brouznouf.github.io/fivem-mysql-async/config/ and we need to handle both of them.
  */
 export function generateConnectionPool() {
-  if (mysqlConnectionString.includes("database=")) {
+  if (mysqlConnectionString.includes('database=')) {
     // This is checking for this format:
     // set mysql_connection_string "server=127.0.0.1;database=es_extended;userid=user;password=pass"
     const config = parseSemiColonFormat(mysqlConnectionString);
@@ -44,7 +44,7 @@ export function generateConnectionPool() {
     // This is checking for this format:
     // set mysql_connection_string "mysql://root:pass@127.0.0.1/es_extended?charset=utf8mb4"
     const connectionStringParser = new ConnectionStringParser({
-      scheme: "mysql",
+      scheme: 'mysql',
       hosts: [],
     });
     const connectionOjbect = connectionStringParser.parse(
@@ -65,20 +65,19 @@ export function generateConnectionPool() {
 
 export const pool = generateConnectionPool();
 
-
 export async function withTransaction(queries: Promise<any>[]): Promise<any[]> {
-  const connection = await pool.getConnection()
+  const connection = await pool.getConnection();
   connection.beginTransaction();
 
   try {
-    const results = await Promise.all(queries)
-    await connection.commit()
-    await connection.release()
+    const results = await Promise.all(queries);
+    await connection.commit();
+    await connection.release();
     return results;
   } catch (err) {
     console.warn('Error when submitting queries');
-    await connection.rollback()
-    await connection.release()
-    return Promise.reject(err)
+    await connection.rollback();
+    await connection.release();
+    return Promise.reject(err);
   }
 }

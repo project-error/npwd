@@ -14,7 +14,6 @@ export let ESX: Server = null;
 
 export const getSource = () => (global as any).source;
 
-emit("esx:getSharedObject", (obj: Server) => (ESX = obj));
-
+emit('esx:getSharedObject', (obj: Server) => (ESX = obj));
 
 // i llke t-notify

@@ -1,5 +1,5 @@
-import { useRecoilValue } from "recoil";
-import { selloutState } from "./state";
+import { useRecoilValue } from 'recoil';
+import { selloutState } from './state';
 
 export const useListing = () => {
   const listing = useRecoilValue(selloutState.listing);

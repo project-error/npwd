@@ -3032,10 +3032,10 @@ esutils@^2.0.2:
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
-esx.js@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/esx.js/-/esx.js-1.1.5.tgz#a6a9abb1b5ef6b6bdf73f1969eb917f667a438eb"
-  integrity sha512-6QJgvFvbr/d+eM6AhX7Tzz4lJjJnBnRUcomgzoRW9Jnok7nxmmDEtkGVWZijoSVenxfoUrY8wrf2C1Tg5OYNLg==
+esx.js@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/esx.js/-/esx.js-1.1.6.tgz#e5e61afe70b5ac63dcac63de09c1b7451a3d4971"
+  integrity sha512-vS41PgxinKhQsJ8Hc5iqu+GqfS0Srxfkf51RnpDlWlaN1m4qfGzHz1IE2lw61QouSL/RqzrdJPyJxm6fJ6jPFg==
 
 events@^3.0.0:
   version "3.2.0"

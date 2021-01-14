@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { Picker } from "emoji-mart";
+import React, { memo } from 'react';
+import { Picker } from 'emoji-mart';
 
 export const EmojiSelect = ({ visible, onEmojiClick }) => {
   if (!visible) return null;
@@ -7,8 +7,8 @@ export const EmojiSelect = ({ visible, onEmojiClick }) => {
   return (
     <Picker
       onClick={onEmojiClick}
-      set="google"
-      theme="dark"
+      set='google'
+      theme='dark'
       showPreview={false}
     />
   );

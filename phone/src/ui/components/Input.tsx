@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Input = styled("input")`
+const Input = styled('input')`
   text-align: center;
   padding: 10px;
   border: none;

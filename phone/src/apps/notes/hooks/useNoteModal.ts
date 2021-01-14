@@ -8,5 +8,5 @@ interface NoteModalProps {
 
 export const useNoteModal = (): NoteModalProps => {
   const [noteModal, setNoteModal] = useRecoilState(noteStates.noteModal);
-  return { noteModal, setNoteModal }; 
-}
+  return { noteModal, setNoteModal };
+};

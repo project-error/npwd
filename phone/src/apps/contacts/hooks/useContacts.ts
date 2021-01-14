@@ -1,5 +1,5 @@
-import { useRecoilValue } from "recoil";
-import { contactsState } from "./state";
+import { useRecoilValue } from 'recoil';
+import { contactsState } from './state';
 
 import { ContactProps } from '../../../common/typings/contact';
 

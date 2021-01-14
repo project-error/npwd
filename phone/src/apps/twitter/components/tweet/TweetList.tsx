@@ -1,8 +1,8 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo } from 'react';
 
-import { List } from "../../../../ui/components/List";
-import Tweet from "./Tweet";
-import TweetSkeletonList from "./TweetSkeletonList";
+import { List } from '../../../../ui/components/List';
+import Tweet from './Tweet';
+import TweetSkeletonList from './TweetSkeletonList';
 
 const MINIMUM_LOAD_TIME = 700;
 
@@ -20,7 +20,6 @@ export function TweetList({ tweets }) {
   // there isn't a quick flash of loading and immediately
   // another flash to the tweets screen.
   const hasLoaded = tweets && minimumLoadPassed;
-
 
   if (!hasLoaded) return <TweetSkeletonList />;
   return (

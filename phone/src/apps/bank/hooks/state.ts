@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 export const bankState = {
   transactions: atom({
     key: 'transactionList',
-    default: []
+    default: [],
   }),
   bankModal: atom({
     key: 'modalVisibility',
@@ -11,14 +11,14 @@ export const bankState = {
   }),
   transferSuccessful: atom({
     key: 'bankAlert',
-    default: null
+    default: null,
   }),
   bankCredentials: atom({
     key: 'bankCredentails',
-    default: null
+    default: null,
   }),
   notification: atom({
     key: 'bankNotification',
-    default: null
-  })
-} 
+    default: null,
+  }),
+};

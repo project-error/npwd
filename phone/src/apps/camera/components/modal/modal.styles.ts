@@ -2,9 +2,9 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   backgroundModal: {
-    background: "black",
-    opacity: "0.6",
-    position: "absolute",
+    background: 'black',
+    opacity: '0.6',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   modalHide: {
-    display: 'none'
+    display: 'none',
   },
   image: {
     width: 'auto',
@@ -27,22 +27,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    marginTop: '4em'
+    marginTop: '4em',
   },
   actionDiv: {
     marginTop: 15,
     display: 'flex',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
 
   // share modal
   shareModal: {
-    marginBottom: 50
+    marginBottom: 50,
   },
   innerShareModal: {
     marginTop: 40,
-    textAlign: 'center'
-  }
-}))
+    textAlign: 'center',
+  },
+}));
 
 export default useStyles;

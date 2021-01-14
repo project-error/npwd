@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ContextMenu } from "../components/ContextMenu";
+import React, { useState } from 'react';
+import { ContextMenu } from '../components/ContextMenu';
 
 type UseContextMenu = [any, any, () => JSX.Element, boolean];
 

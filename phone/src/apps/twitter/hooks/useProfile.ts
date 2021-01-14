@@ -1,5 +1,5 @@
-import { useRecoilValue, useRecoilState } from "recoil";
-import { twitterState } from "./state";
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { twitterState } from './state';
 
 interface IProfile {
   profile_name?: string;

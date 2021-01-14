@@ -1,7 +1,7 @@
-export const CONNECTION_STRING = "mysql_connection_string";
+export const CONNECTION_STRING = 'mysql_connection_string';
 export const DEFAULT_PORT = 3306;
-export const DEFAULT_HOST = "localhost";
-export const DEFAULT_USER = "root";
+export const DEFAULT_HOST = 'localhost';
+export const DEFAULT_USER = 'root';
 
 interface Map {
   [key: string]: string;
@@ -12,15 +12,15 @@ interface Map {
  * @param connectionString - mysql_connection_string value
  */
 export function parseSemiColonFormat(connectionString: string): Map {
-  const parts = connectionString.split(";");
+  const parts = connectionString.split(';');
   if (parts.length === 1) {
     throw new Error(
-      `Connection string ${connectionString} is in the incorrect format.`
+      `Connection string ${connectionString} is in the incorrect format. Please follow the README.`
     );
   }
 
   return parts.reduce((connectionInfo: Map, part) => {
-    const [key, value] = part.split("=");
+    const [key, value] = part.split('=');
     connectionInfo[key] = value;
     return connectionInfo;
   }, {});
@@ -34,7 +34,7 @@ export function getServerHost(config: Map): string {
   return (
     config.host ||
     config.server ||
-    config["data source"] ||
+    config['data source'] ||
     config.datasource ||
     config.addr ||
     config.address ||
@@ -49,9 +49,9 @@ export function getServerHost(config: Map): string {
 export function getUserId(config: Map): string {
   return (
     config.user ||
-    config["user id"] ||
+    config['user id'] ||
     config.userid ||
-    config["user name"] ||
+    config['user name'] ||
     config.username ||
     config.uid ||
     DEFAULT_USER
@@ -59,13 +59,12 @@ export function getUserId(config: Map): string {
 }
 
 /**
+ * Note: We are allowing no password as many FiveM servers love to not use one for an ungodly reason.
  * allowed variable names: password | pwd
  * @param config - database config variables parsed from mysql_connection_string
  */
-export function getPassword(config: Map): string {
+export function getPassword(config: Map): string | undefined {
   const password = config.password || config.pwd;
-  if (!password) {
-    throw new Error("Password is a required field");
-  }
+  if (!password) return undefined;
   return password;
 }

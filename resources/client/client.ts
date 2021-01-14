@@ -13,6 +13,6 @@ export let ESX: Client = null;
 
 setTick(() => {
   while (ESX === null) {
-    emit("esx:getSharedObject", (obj: Client) => (ESX = obj));
+    emit('esx:getSharedObject', (obj: Client) => (ESX = obj));
   }
 });

@@ -1,5 +1,5 @@
-import { useRecoilState } from "recoil";
-import { contactsState } from "./state";
+import { useRecoilState } from 'recoil';
+import { contactsState } from './state';
 
 interface ModalProps {
   showModal: boolean;

@@ -1,10 +1,10 @@
-import events from "../utils/events";
+import events from '../utils/events';
 
 onNet(events.NOTE_SEND_NOTE, (notes: any) => {
   SendNuiMessage(
     JSON.stringify({
-      app: "NOTES",
-      method: "setNotes",
+      app: 'NOTES',
+      method: 'setNotes',
       data: notes,
     })
   );
