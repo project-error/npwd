@@ -1,7 +1,12 @@
 import { useRecoilState } from 'recoil';
 import { contactsState } from './state';
 
-export const useContactModal = () => {
+interface ModalProps {
+  showContactModal: boolean:
+  setShowContactModal: (show: boolean) => void;
+}
+
+export const useContactModal = (): ModalProps => {
   const [ showContactModal, setShowContactModal ] = useRecoilState(contactsState.showContactsModal);
   return { showContactModal, setShowContactModal };
 }
