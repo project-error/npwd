@@ -10,3 +10,10 @@ export interface IContactAlert {
   alert: AlertCategory;
   setAlert: (type: string) => void;
 }
+
+export interface ContactProps {
+  id: string;
+  display: string;
+  number: string;
+  avatar?: string
+}

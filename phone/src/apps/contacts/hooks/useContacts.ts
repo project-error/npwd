@@ -1,15 +1,11 @@
 import { useRecoilValue } from "recoil";
 import { contactsState } from "./state";
 
-interface Contact {
-  id: string;
-  display: string;
-  number: string;
-  avatar?: string
-}
+import { ContactProps } from '../../../common/typings/contact';
 
 interface IUseContacts {
-  contacts: Contact[];
+  contacts: ContactProps[]
+
 }
 
 export const useContacts = (): IUseContacts => {
