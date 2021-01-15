@@ -83,11 +83,7 @@ onNet(
       const _identifier = await useIdentifier();
       addContact(_identifier, number, display, avatar);
       emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
-      emitNet(
-        events.CONTACTS_ACTION_RESULT,
-        _source,
-        "CONTACT_ADD_SUCCESS"
-      );
+      emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_ADD_SUCCESS");
     } catch (error) {
       const _source = (global as any).source;
       emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_ADD_FAILED");
@@ -96,30 +92,22 @@ onNet(
 );
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
-  console.log('let me just log the contact first', contact);
+  console.log("let me just log the contact first", contact);
   try {
     const _source = (global as any).source;
     const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
-    console.log('nice identifier bro', _identifier);
+    console.log("nice identifier bro", _identifier);
     await updateContact(contact, _identifier);
-    console.log('i updated the contact server side!');
-    
+    console.log("i updated the contact server side!");
+
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
-    console.log('ffs, didd it return successful');
-    
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      _source,
-      "CONTACT_UPDATE_SUCCESS"
-    );
+    console.log("ffs, didd it return successful");
+
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_UPDATE_SUCCESS");
     console.log("UPDATED CONTACT: ", contact);
   } catch (error) {
     const _source = (global as any).source;
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      _source,
-      "CONTACT_UPDATE_FAILED"
-    );
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_UPDATE_FAILED");
   }
 });
 
