@@ -30,6 +30,7 @@ on(`__cfx_nui:${events.CONTACTS_UPDATE_CONTACT}`, (data: any) => {
 
 onNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, () => {
   emitNet(events.CONTACTS_GET_CONTACTS);
+  console.log("did you update the contact??????????????????");
 });
 
 RegisterNuiCallbackType(events.CONTACTS_DELETE_CONTACT);
