@@ -46,6 +46,7 @@ export const ContactAlert = () => {
         break;
       case 'CONTACT_UPDATE_SUCCESS':
         setMessageAlert(alert, 'success');
+        break;
     }
   }, [alert]);
 
