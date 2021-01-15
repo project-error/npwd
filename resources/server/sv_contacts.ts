@@ -109,26 +109,16 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
     
     emitNet(
       events.CONTACTS_ACTION_RESULT,
-<<<<<<< HEAD
-      getSource(),
-      'CONTACT_UPDATE_SUCCESS'
-=======
       _source,
       "CONTACT_UPDATE_SUCCESS"
->>>>>>> 76aee07 (fix(contacts/client|server): fixed source for updating contacts)
     );
     console.log("UPDATED CONTACT: ", contact);
   } catch (error) {
     const _source = (global as any).source;
     emitNet(
       events.CONTACTS_ACTION_RESULT,
-<<<<<<< HEAD
-      getSource(),
-      'CONTACT_UPDATE_FAILED'
-=======
       _source,
       "CONTACT_UPDATE_FAILED"
->>>>>>> 76aee07 (fix(contacts/client|server): fixed source for updating contacts)
     );
   }
 });
