@@ -5,39 +5,38 @@ import { AppTitle } from '../../ui/components/AppTitle';
 import { AppContent } from '../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import CallIcon from '@material-ui/icons/Call';
-import PhoneDisabledIcon from '@material-ui/icons/PhoneDisabled';
 import CallEndIcon from '@material-ui/icons/CallEnd';
 import useStyles from './modal.styles';
 import { useModal } from '../hooks/useModal';
+import Nui from '../../os/nui-events/utils/Nui';
 
 export const CallModal = () => {
-  const { call, setCall } = useCall();
+  const { call } = useCall();
   const { setModal }  = useModal()
-  const [accepted, setAccepted] = useState(false)
 
   const classes = useStyles()
 
   const handleAcceptCall = () => {
-    setAccepted(true)
+    Nui.send('phone:acceptCall', {
+      phoneNumber: call.phone_number
+    })
   }
 
   const handleRejectCall = () => {
     setModal(false)
-    setCall(null)
   }
 
   const handleEndCall = () => {
     setModal(false)
-    setCall(null)
   }
 
   return (
     <AppWrapper>
       <AppContent>
-        <h1 style={{ textAlign: 'center' }}>{call.target}</h1>
+        <h1 style={{ textAlign: 'center' }}>{call.transmitter ? call.target : call.caller}</h1>
 
         <div className={classes.actions}>
-          {!accepted ? (
+          {!call.accepted ? (
             <>
               <Fab 
                 onClick={handleRejectCall} 

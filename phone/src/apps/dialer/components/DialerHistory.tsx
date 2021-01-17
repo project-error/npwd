@@ -14,7 +14,7 @@ export const DialerHistory = ({ calls }) => {
   return (
     <List disablePadding>
       {calls.map((call) => (
-        <ListItem key={call.id} divider>
+        <ListItem key={call.id} divider button>
           <ListItemText primary={call.caller} secondary={call.phoneNumber} />
           {CallTypeIcon[call.type]}
         </ListItem>

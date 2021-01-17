@@ -5,7 +5,7 @@ interface IPhoneNumber {
   phone_number: string;
 }
 
-interface Iidentifier {
+interface Identifier {
   identifier: string;
 }
 
@@ -27,6 +27,6 @@ export async function getIdentifierByPhoneNumber(
 ): Promise<string> {
   const query = 'SELECT identifier FROM users WHERE phone_number = ?';
   const [results] = await pool.query(query, [phoneNumber]);
-  const identifier = <Iidentifier[]>results;
+  const identifier = <Identifier[]>results;
   return identifier[0].identifier;
 }

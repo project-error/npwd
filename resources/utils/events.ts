@@ -93,5 +93,11 @@ export default {
   CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess',
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
-  PHONE_USE_CLIPBOARD: 'phone:useClipboard',
+  PHONE_USE_CLIPBOARD: "phone:useClipboard",
+
+  // calling
+  PHONE_BEGIN_CALL: "phone:beginCall",
+  PHONE_START_CALL: "phone:startCall",
+  PHONE_ACCEPT_CALL: 'phone:acceptCall',
+  PHONE_END_CALL: 'phone:endCall'
 };

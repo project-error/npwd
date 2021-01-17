@@ -28,6 +28,8 @@ import { settingsState } from './apps/settings/hooks/useSettings';
 
 import config from './config/default.json';
 import { useRecoilState } from 'recoil';
+import { useCallService } from './modal/hooks/useCallService';
+import { useModal } from './modal/hooks/useModal';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -47,6 +49,24 @@ if (process.env.NODE_ENV === 'development') {
               image: 'https://i.imgur.com/pqGBiST.jpg',
             },
           ],
+        },
+      })
+    );
+  }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'CALL',
+          method: 'setCaller',
+          data: {
+            accepted: false,
+            transmitter: false,
+            caller: 'Chip',
+            target: 'Christian',
+            phone_number: '860-4504',
+          }
         },
       })
     );
@@ -258,6 +278,9 @@ function Phone() {
   useMessagesService();
   useNotesService();
   usePhotoService();
+  useCallService();
+
+  const { modal } = useModal(); // the calling modal 
 
   const [settings] = useRecoilState(settingsState);
 
@@ -266,8 +289,6 @@ function Phone() {
   }
 
   const currentTheme = () => createMuiTheme(config.themes[settings.theme]);
-
-  const calling = false;
 
   document.onkeyup = function (data) {
     if (data.which === 27) {
@@ -303,7 +324,7 @@ function Phone() {
                   ]}
                 />
                 <div className='PhoneAppContainer'>
-                  {calling ? (
+                  {modal ? (
                     <CallModal />
                   ) : (
                     <>
