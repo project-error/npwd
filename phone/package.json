@@ -58,6 +58,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "ifdef-loader": "^2.1.5",
+    "lint-staged": "^10.5.3",
     "react-test-renderer": "^16.13.1",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
@@ -75,7 +76,7 @@
     "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject",
-    "precommit": "npm run format && npm run test"
+    "precommit": "npm run test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -90,6 +91,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+      "git add"
     ]
   }
 }
