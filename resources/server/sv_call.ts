@@ -85,6 +85,6 @@ onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
     // client that is being called
     emitNet('phone:callAccepted', targetPlayer.source, channelId);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 });
