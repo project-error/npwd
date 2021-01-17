@@ -39,6 +39,8 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     const targetName = targetPlayer.getName();
     console.log('got the target name: ', targetName);
 
+    const channelId = pSource + targetPlayer.source;
+
     // target
     // Sends information to the client: sourec, playerName, number, isTransmitter
     emitNet(
@@ -47,7 +49,7 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
       callerName,
       phoneNumber,
       false,
-      pSource
+      channelId
     );
 
     // source
@@ -58,7 +60,7 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
       targetName,
       callerNumber,
       true,
-      targetPlayer.source
+      channelId
     );
   } catch (e) {
     console.error(e);
