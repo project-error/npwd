@@ -12,50 +12,53 @@ import Nui from '../../os/nui-events/utils/Nui';
 
 export const CallModal = () => {
   const { call } = useCall();
-  const { setModal }  = useModal()
+  const { setModal } = useModal();
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   const handleAcceptCall = () => {
     Nui.send('phone:acceptCall', {
-      phoneNumber: call.phone_number
-    })
-  }
+      phoneNumber: call.phone_number,
+    });
+  };
 
   const handleRejectCall = () => {
-    setModal(false)
-  }
+    setModal(false);
+  };
 
   const handleEndCall = () => {
-    setModal(false)
-  }
+    setModal(false);
+  };
 
   return (
     <AppWrapper>
       <AppContent>
-        <h1 style={{ textAlign: 'center' }}>{call.transmitter ? call.target : call.caller}</h1>
+        <h1 style={{ textAlign: 'center' }}>
+          {call.transmitter ? call.target : call.caller}
+        </h1>
 
         <div className={classes.actions}>
           {!call.accepted ? (
             <>
-              <Fab 
-                onClick={handleRejectCall} 
-                style={{ backgroundColor: '#e74c3c', color: '#fff' }} 
-                className={classes.actionButton}>
+              <Fab
+                onClick={handleRejectCall}
+                style={{ backgroundColor: '#e74c3c', color: '#fff' }}
+                className={classes.actionButton}
+              >
                 <CallEndIcon />
               </Fab>
-              <Fab 
-                onClick={handleAcceptCall} 
-                style={{ backgroundColor: '#27ae60', color: '#fff' }} 
+              <Fab
+                onClick={handleAcceptCall}
+                style={{ backgroundColor: '#27ae60', color: '#fff' }}
                 className={classes.actionButton}
               >
                 <CallIcon />
               </Fab>
             </>
           ) : (
-            <Fab 
-              onClick={handleEndCall} 
-              style={{ backgroundColor: '#e74c3c', color: '#fff' }} 
+            <Fab
+              onClick={handleEndCall}
+              style={{ backgroundColor: '#e74c3c', color: '#fff' }}
               className={classes.actionButton}
             >
               <CallEndIcon />
