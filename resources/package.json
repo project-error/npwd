@@ -10,7 +10,7 @@
     "format": "prettier --write \"./**/*.ts\"",
     "watch": "webpack --mode development --watch true",
     "test": "jest",
-    "precommit": "npm run test"
+    "precommit": "npm run test && lint-staged"
   },
   "license": "MIT",
   "private": false,

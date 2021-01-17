@@ -76,7 +76,7 @@
     "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject",
-    "precommit": "npm run test"
+    "precommit": "npm run test && lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
