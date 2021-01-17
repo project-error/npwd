@@ -18,7 +18,7 @@ export const CallModal = () => {
 
   const handleAcceptCall = () => {
     Nui.send('phone:acceptCall', {
-      phoneNumber: call.phone_number,
+      phoneNumber: call.phone_number
     });
   };
 

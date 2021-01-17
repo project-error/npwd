@@ -11,7 +11,7 @@ on(`__cfx_nui:${events.PHONE_BEGIN_CALL}`, (data: any) => {
 
 onNet(events.PHONE_START_CALL, (target: string, phoneNumber: string, isTransmitter: boolean, id: any) => {
   console.log(`You are talking to ${target} who has the number ${phoneNumber}`);
-  exp["mumble-voip"].SetCallChannel(id+1);
+  //exp["mumble-voip"].SetCallChannel(id+1);
   SendNuiMessage(
     JSON.stringify({
       app: "CALL",
@@ -40,7 +40,7 @@ on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
 })
 
 onNet('phone:callAccepted', (id: number) => {
-  exp["mumble-voip"].SetRadioChannel(id);
+  exp["mumble-voip"].SetCallChannel(id);
 })
 
 

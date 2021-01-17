@@ -77,10 +77,14 @@ onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
 
+    const channelId = pSource + targetPlayer.source;
+
     // client that is calling
-    emitNet('phone:callAccepted', pSource, targetPlayer.source);
+    emitNet('phone:callAccepted', pSource, channelId);
 
     // client that is being called
-    emitNet('phone:callAccepted', targetPlayer.source, pSource);
-  } catch (error) {}
+    emitNet('phone:callAccepted', targetPlayer.source, channelId);
+  } catch (error) {
+    console.error(error)
+  }
 });
