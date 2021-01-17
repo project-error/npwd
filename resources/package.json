@@ -9,7 +9,8 @@
     "build": "webpack --mode production",
     "format": "prettier --write \"./**/*.ts\"",
     "watch": "webpack --mode development --watch true",
-    "test": "jest"
+    "test": "jest",
+    "precommit": "npm run format && npm run test"
   },
   "license": "MIT",
   "private": false,
