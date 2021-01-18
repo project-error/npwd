@@ -2,8 +2,8 @@ import React from 'react';
 import ListItemText from '@material-ui/core/ListItemText';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
-import { List } from '../../../ui/components/List';
-import { ListItem } from '../../../ui/components/ListItem';
+import { List } from '../../../../ui/components/List';
+import { ListItem } from '../../../../ui/components/ListItem';
 
 const CallTypeIcon = {
   incoming: <PhoneCallbackIcon />,
