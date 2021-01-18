@@ -9,7 +9,8 @@
     "build": "webpack --mode production",
     "format": "prettier --write \"./**/*.ts\"",
     "watch": "webpack --mode development --watch true",
-    "test": "jest"
+    "test": "jest",
+    "precommit": "npm run test && lint-staged"
   },
   "license": "MIT",
   "private": false,
@@ -37,6 +38,7 @@
     "eslint-loader": "^4.0.2",
     "husky": "^4.3.0",
     "jest": "^26.5.3",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.0.5",
     "remove-files-webpack-plugin": "^1.4.3",
     "ts-jest": "^26.4.1",
@@ -44,5 +46,10 @@
     "typescript": "^3.9.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write \"./**/*.ts\""
+    ]
   }
 }
