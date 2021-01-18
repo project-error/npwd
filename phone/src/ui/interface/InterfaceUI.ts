@@ -1,13 +1,15 @@
+import { CSSProperties } from 'react';
+
 export interface AppContentTypes {
-  children: any;
-  style?: any;
-  backdrop?: any;
-  onClickBackdrop?: any;
+  children?: JSX.Element | JSX.Element[];
+  style?: CSSProperties;
+  backdrop?: boolean;
+  onClickBackdrop?: (...args: any[]) => void;
 }
 
 export interface AppWrapperTypes {
   id?: string;
-  children: any;
-  style?: any;
-  handleClickAway?: any;
+  children?: JSX.Element | JSX.Element[];
+  style?: CSSProperties;
+  handleClickAway?: (...args: any[]) => void;
 }
