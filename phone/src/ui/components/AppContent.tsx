@@ -4,7 +4,7 @@ import { AppContentTypes } from '../interface/InterfaceUI';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
-    height: '70vh', // NOTE: Taso: Hacky change temp, this should be done automatically tbh. Will refactor at some point
+    flex: 1,
     overflow: 'auto',
   },
   box: {
@@ -39,7 +39,7 @@ export const AppContent = ({
             className={classes.backdrop}
             open={backdrop || false}
             onClick={onClickBackdrop}
-          ></Backdrop>
+          />
           {children}
         </Paper>
       </Box>
