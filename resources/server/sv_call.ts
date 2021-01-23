@@ -39,7 +39,9 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     const targetName = targetPlayer.getName();
     console.log('got the target name: ', targetName);
 
-    const channelId = pSource + targetPlayer.source;
+    const channelId = pSource
+
+
 
     // target
     // Sends information to the client: sourec, playerName, number, isTransmitter
