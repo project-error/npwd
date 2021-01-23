@@ -26,7 +26,7 @@ export const BankAlert = () => {
       setMessage(t('APPS_BANK_ALERT_TRANSFER_FAILURE'));
       setSeverity('error');
     }
-  }, [bankAlert]);
+  }, [bankAlert, t]);
 
   return (
     <Snackbar

@@ -34,7 +34,7 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
                 <img
                   src={message.message}
                   className={classes.imageMessage}
-                  alt='image'
+                  alt='multimedia'
                 />
               ) : (
                 <div>{message.message}</div>

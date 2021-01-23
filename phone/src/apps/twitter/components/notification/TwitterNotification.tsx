@@ -54,10 +54,10 @@ function TwitterNotification() {
   const { config } = usePhone();
 
   useEffect(() => {
-    if (notification) {
+    if (notification && notification.id) {
       setVisible(true);
     }
-  }, [notification?.id]);
+  }, [notification]);
 
   if (!config?.twitter.showNotifications || !notification) return null;
 

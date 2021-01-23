@@ -44,7 +44,7 @@ export const MessageModal = () => {
       window.clearInterval(interval);
       window.clearTimeout(timeout);
     };
-  }, [activeMessageGroup?.groupId]);
+  }, [activeMessageGroup]);
 
   useEffect(() => {
     // when we get a new message group we should scroll to the
@@ -55,7 +55,7 @@ export const MessageModal = () => {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [minimumLoadPassed, messages?.length]);
+  }, [activeMessageGroup, minimumLoadPassed]);
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately

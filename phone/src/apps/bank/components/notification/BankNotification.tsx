@@ -15,10 +15,10 @@ export const BankNotification = () => {
   const { config } = usePhone();
 
   useEffect(() => {
-    if (notification) {
+    if (notification && notification.id) {
       setVisible(true);
     }
-  }, [notification?.id]);
+  }, [notification]);
 
   if (!config?.bank.showNotifications || !notification) return null;
 
