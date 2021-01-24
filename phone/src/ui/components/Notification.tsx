@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSettings } from '../../apps/settings/hooks/useSettings';
 import { usePhone } from '../../os/phone/hooks/usePhone';
 
 const useStyles = makeStyles({
@@ -19,7 +18,6 @@ const useStyles = makeStyles({
 
 function Notification({ children, handleClose, open }) {
   const classes = useStyles();
-  const [settings] = useSettings();
   const { config } = usePhone();
 
   if (!config) return null;
