@@ -1,7 +1,7 @@
 fx_version "adamant"
 game "gta5"
 description 'new-phone-who-dis'
-authors { "itschip",  "erik-sn", "TasoOneAsia", "jfrader", "RockySouthpaw"}
+authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
 client_script {
     'resources/dist/client/*.client.js'
