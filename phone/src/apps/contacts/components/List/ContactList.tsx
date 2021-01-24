@@ -6,7 +6,6 @@ import {
   Avatar as MuiAvatar,
   List,
   ListItem,
-  makeStyles,
 } from '@material-ui/core';
 
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
@@ -21,21 +20,6 @@ import { useContactDetail } from '../../hooks/useContactDetail';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import '../Contact.css';
-
-const useStyles = makeStyles((theme) => ({
-  updateButton: {
-    margin: 'auto',
-    fontSize: 14,
-    width: 150,
-    background: '#2196f3',
-    marginBottom: 10,
-    padding: 8,
-  },
-  collapseItem: {
-    margin: 'auto',
-    width: '50%',
-  },
-}));
 
 export const ContactList = () => {
   const { filteredContacts } = useFilteredContacts();

@@ -1,5 +1,5 @@
 import { Snackbar } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '../../../../ui/components/Alert';
 import { useContactAlert } from '../../hooks/useAlert';
@@ -21,11 +21,11 @@ export const ContactAlert = () => {
     setAlert(null);
   };
 
-  function setMessageAlert(type: AlertCategory, severity: 'success' | 'error') {
+  const setMessageAlert = useCallback((type: AlertCategory, severity: 'success' | 'error') => {
     setMessage(t(LOCALE_PREFIX + type));
     setSeverity(severity);
     setOpen(true);
-  }
+  }, [t]);
 
   useEffect(() => {
     switch (alert) {
@@ -47,7 +47,7 @@ export const ContactAlert = () => {
       case 'CONTACT_UPDATE_SUCCESS':
         setMessageAlert(alert, 'success');
     }
-  }, [alert]);
+  }, [alert, setMessageAlert]);
 
   return (
     <Snackbar
