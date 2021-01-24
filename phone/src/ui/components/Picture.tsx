@@ -15,7 +15,7 @@ export const Picture = ({ src, alt, size }: IProps) => {
   return (
     <>
       <Button onClick={() => setVisible(true)}>
-        <PictureThumbnail src={src} alt={alt} />
+        <PictureThumbnail size={size} src={src} alt={alt} />
       </Button>
       <Modal visible={visible} handleClose={() => setVisible(false)}>
         <PictureResponsive src={src} alt={alt} />
