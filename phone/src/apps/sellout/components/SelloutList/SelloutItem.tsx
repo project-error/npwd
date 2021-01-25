@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Paper } from '@material-ui/core';
-import { ImageDisplay } from '../images/ImageDisplay';
 import { ListItem } from '../../../../ui/components/ListItem';
 import ChatIcon from '@material-ui/icons/Chat';
 import PhoneIcon from '@material-ui/icons/Phone';
+import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +62,10 @@ export const SelloutItem = (listing) => {
             </Typography>
           </div>
           {listing.url ? (
-            <ImageDisplay imgURL={listing.url} />
+            <PictureResponsive
+              src={listing.url}
+              alt={`${listing.name} image`}
+            />
           ) : (
             <Typography style={{ margin: 10 }}>
               No image provided{' '}
