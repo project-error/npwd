@@ -99,5 +99,9 @@ export default {
   PHONE_BEGIN_CALL: "phone:beginCall",
   PHONE_START_CALL: "phone:startCall",
   PHONE_ACCEPT_CALL: 'phone:acceptCall',
-  PHONE_END_CALL: 'phone:endCall'
+  PHONE_END_CALL: 'phone:endCall',
+  PHONE_CALL_WAS_ENDED: 'phone:callEnded',
+  PHONE_CALL_WAS_ACCEPTED: 'phone:callAccepted',
+  PHONE_CALL_REJECTED: 'phone:rejectCall',
+  PHONE_CALL_WAS_REJECTED: 'phone:callRejected'
 };
