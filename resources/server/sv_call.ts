@@ -99,10 +99,10 @@ onNet(events.PHONE_END_CALL, async (phoneNumber: string) => {
     const channelId = pSource;
   
     // client that is calling
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId);
+    emitNet(events.PHONE_CALL_WAS_ENDED, pSource, channelId);
 
     // client that is being called
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, targetPlayer.source, channelId);
+    emitNet(events.PHONE_CALL_WAS_ENDED, targetPlayer.source, channelId);
   } catch (error) {
     console.error(error);
   }
@@ -118,10 +118,10 @@ onNet(events.PHONE_CALL_REJECTED, async (phoneNumber: string) => {
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
   
     // client that is calling
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource);
+    emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
 
     // client that is being called
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, targetPlayer.source);
+    emitNet(events.PHONE_CALL_WAS_REJECTED, targetPlayer.source);
   } catch (error) {
     console.error(error);
   }
