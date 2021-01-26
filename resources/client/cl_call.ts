@@ -40,7 +40,7 @@ onNet(
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
-  console.log(data)
+  console.log(data);
   emitNet(events.PHONE_ACCEPT_CALL, data.phoneNumber);
 });
 
@@ -48,16 +48,15 @@ onNet('phone:callAccepted', (id: number) => {
   exp['mumble-voip'].SetCallChannel(id);
 });
 
-
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
-  console.log("BIG DICK FOR LISA ANN")
+  console.log('BIG DICK FOR LISA ANN');
   emitNet(events.PHONE_END_CALL, data.phoneNumber);
-})
+});
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {
-  console.log("Call ended");
-  exp["mumble-voip"].SetCallChannel(0);
+  console.log('Call ended');
+  exp['mumble-voip'].SetCallChannel(0);
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
@@ -79,11 +78,10 @@ onNet(events.PHONE_CALL_WAS_ENDED, () => {
   );
 });
 
-
-RegisterNuiCallbackType(events.PHONE_CALL_REJECTED)
+RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
-  emit(events.PHONE_CALL_REJECTED, data.phoneNumber)
-})
+  emit(events.PHONE_CALL_REJECTED, data.phoneNumber);
+});
 
 onNet(events.PHONE_CALL_WAS_REJECTED, () => {
   SendNuiMessage(
@@ -105,4 +103,4 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
       },
     })
   );
-})
+});

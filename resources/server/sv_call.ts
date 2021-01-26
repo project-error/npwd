@@ -32,7 +32,7 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     const _identifier = xPlayer.getIdentifier();
     const callerName = xPlayer.getName();
     const callerNumber = await usePhoneNumber(_identifier);
-    console.log(callerName, callerNumber)
+    console.log(callerName, callerNumber);
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
 
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
@@ -52,13 +52,7 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
 
     // source
     // Sends information to the client: sourec, playerName, number, isTransmitter
-    emitNet(
-      events.PHONE_START_CALL,
-      pSource,
-      phoneNumber,
-      callerNumber,
-      true
-    );
+    emitNet(events.PHONE_START_CALL, pSource, phoneNumber, callerNumber, true);
   } catch (e) {
     console.error(e);
     console.log('Failed to call monkaS');
@@ -70,13 +64,13 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
 onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
   try {
     const pSource = (global as any).source;
-    console.log("got the source of accepting", pSource);
-    
+    console.log('got the source of accepting', pSource);
+
     // target
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
     const channelId = pSource;
-    
+
     // client that is calling
     emitNet('phone:callAccepted', pSource, channelId);
 
@@ -87,39 +81,37 @@ onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
   }
 });
 
-
 onNet(events.PHONE_END_CALL, async (phoneNumber: string) => {
   try {
     const pSource = (global as any).source;
-    console.log("got the source of ending", pSource);
-    
+    console.log('got the source of ending', pSource);
+
     // target
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-    console.log("ENDED WTF DUDE")
+    console.log('ENDED WTF DUDE');
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-    console.log("holy shit he ended the call")
-  
+    console.log('holy shit he ended the call');
+
     // client that is calling
     emitNet(events.PHONE_CALL_WAS_ENDED, pSource);
-    console.log("she ended the call wtf dude fucking bitch");
-    
+    console.log('she ended the call wtf dude fucking bitch');
 
     // client that is being called
     emitNet(events.PHONE_CALL_WAS_ENDED, targetPlayer.source);
   } catch (error) {
     console.error(error);
   }
-})
+});
 
 onNet(events.PHONE_CALL_REJECTED, async (phoneNumber: string) => {
   try {
     const pSource = (global as any).source;
-    console.log("got the source of accepting", pSource);
-    
+    console.log('got the source of accepting', pSource);
+
     // target
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-  
+
     // client that is calling
     emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
 
@@ -128,4 +120,4 @@ onNet(events.PHONE_CALL_REJECTED, async (phoneNumber: string) => {
   } catch (error) {
     console.error(error);
   }
-})
+});
