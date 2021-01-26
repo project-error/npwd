@@ -32,6 +32,7 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     const _identifier = xPlayer.getIdentifier();
     const callerName = xPlayer.getName();
     const callerNumber = await usePhoneNumber(_identifier);
+    console.log(callerName, callerNumber)
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
 
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
@@ -39,17 +40,14 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     const targetName = targetPlayer.getName();
     console.log('got the target name: ', targetName);
 
-    const channelId = pSource;
-
     // target
     // Sends information to the client: sourec, playerName, number, isTransmitter
     emitNet(
       events.PHONE_START_CALL,
       targetPlayer.source,
-      callerName,
+      callerNumber,
       phoneNumber,
-      false,
-      channelId
+      false
     );
 
     // source
@@ -57,10 +55,9 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
     emitNet(
       events.PHONE_START_CALL,
       pSource,
-      targetName,
+      phoneNumber,
       callerNumber,
-      true,
-      channelId
+      true
     );
   } catch (e) {
     console.error(e);
@@ -73,12 +70,13 @@ onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
 onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
   try {
     const pSource = (global as any).source;
+    console.log("got the source of accepting", pSource);
+    
     // target
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-
-    const channelId = pSource + targetPlayer.source;
-
+    const channelId = pSource;
+    
     // client that is calling
     emitNet('phone:callAccepted', pSource, channelId);
 
@@ -88,3 +86,43 @@ onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
     console.error(error);
   }
 });
+
+
+onNet(events.PHONE_END_CALL, async (phoneNumber: string) => {
+  try {
+    const pSource = (global as any).source;
+    console.log("got the source of accepting", pSource);
+    
+    // target
+    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
+    const channelId = pSource;
+  
+    // client that is calling
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId);
+
+    // client that is being called
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, targetPlayer.source, channelId);
+  } catch (error) {
+    console.error(error);
+  }
+})
+
+onNet(events.PHONE_CALL_REJECTED, async (phoneNumber: string) => {
+  try {
+    const pSource = (global as any).source;
+    console.log("got the source of accepting", pSource);
+    
+    // target
+    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
+  
+    // client that is calling
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource);
+
+    // client that is being called
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, targetPlayer.source);
+  } catch (error) {
+    console.error(error);
+  }
+})
