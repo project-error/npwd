@@ -17,24 +17,53 @@ export const CallModal = () => {
   const classes = useStyles();
 
   const handleAcceptCall = () => {
+    console.log("NUI CALL: ", call.phone_number)
     Nui.send('phone:acceptCall', {
-      phoneNumber: call.phone_number,
+      phoneNumber: call.target,
     });
   };
 
   const handleRejectCall = () => {
     setModal(false);
+    Nui.send('phone:rejectCall', {
+      phoneNumber: call.target
+    })
   };
 
   const handleEndCall = () => {
     setModal(false);
+    Nui.send('phone:endCall', {
+      phoneNumber: call.target
+    })
   };
+
+  if (call.transmitter) {
+    return (
+      <AppWrapper>
+        <AppContent>
+        <h1 style={{ textAlign: 'center' }}>
+          {call.target}
+        </h1>
+        <div className={classes.actions}>
+          <Fab
+            onClick={handleEndCall}
+            style={{ backgroundColor: '#e74c3c', color: '#fff' }}
+            className={classes.actionButton}
+          >
+            <CallEndIcon />
+          </Fab>
+        </div>
+        
+        </AppContent>
+      </AppWrapper>
+    )
+  }
 
   return (
     <AppWrapper>
       <AppContent>
         <h1 style={{ textAlign: 'center' }}>
-          {call.transmitter ? call.target : call.caller}
+          {call.caller}
         </h1>
 
         <div className={classes.actions}>

@@ -4,13 +4,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   actions: {
     width: '100%',
     margin: 'auto',
+    position: 'absolute',
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    marginTop: '5em'
+    bottom: '10%'
   },
   actionButton: {
-    margin: 20
+    margin: 20,
   }
 }))
 
