@@ -360,6 +360,7 @@ RegisterCommand(
   false
 );
 
+
 RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, () => {
   Phone();

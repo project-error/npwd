@@ -11,7 +11,7 @@ on(`__cfx_nui:${events.PHONE_BEGIN_CALL}`, (data: any) => {
 
 onNet(
   events.PHONE_START_CALL,
-  (target: string, phoneNumber: string, isTransmitter: boolean, id: any) => {
+  (target: string, phoneNumber: string, isTransmitter: boolean) => {
     console.log(
       `You are talking to ${target} who has the number ${phoneNumber}`
     );
@@ -40,6 +40,7 @@ onNet(
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
+  console.log(data)
   emitNet(events.PHONE_ACCEPT_CALL, data.phoneNumber);
 });
 
@@ -47,7 +48,41 @@ onNet('phone:callAccepted', (id: number) => {
   exp['mumble-voip'].SetCallChannel(id);
 });
 
-/* onNet(events.PHONE_CALL_WAS_ENDED, () => {
+
+RegisterNuiCallbackType(events.PHONE_END_CALL);
+on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
+  emitNet(events.PHONE_END_CALL, data.phoneNumber);
+})
+
+onNet(events.PHONE_CALL_WAS_ENDED, () => {
   console.log("Call ended");
   exp["mumble-voip"].SetCallChannel(0);
-}); */
+});
+
+
+RegisterNuiCallbackType(events.PHONE_CALL_REJECTED)
+on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
+  emit(events.PHONE_CALL_REJECTED, data.phoneNumber)
+})
+
+onNet(events.PHONE_CALL_WAS_REJECTED, () => {
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'callModal',
+      data: false,
+    })
+  );
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'setCaller',
+      data: {
+        target: null,
+        caller: null,
+        transmitter: null,
+        accepted: false,
+      },
+    })
+  );
+})
