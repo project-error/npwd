@@ -51,12 +51,32 @@ onNet('phone:callAccepted', (id: number) => {
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
+  console.log("BIG DICK FOR LISA ANN")
   emitNet(events.PHONE_END_CALL, data.phoneNumber);
 })
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {
   console.log("Call ended");
   exp["mumble-voip"].SetCallChannel(0);
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'callModal',
+      data: false,
+    })
+  );
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'setCaller',
+      data: {
+        target: null,
+        caller: null,
+        transmitter: null,
+        accepted: false,
+      },
+    })
+  );
 });
 
 

@@ -91,18 +91,21 @@ onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
 onNet(events.PHONE_END_CALL, async (phoneNumber: string) => {
   try {
     const pSource = (global as any).source;
-    console.log("got the source of accepting", pSource);
+    console.log("got the source of ending", pSource);
     
     // target
     const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+    console.log("ENDED WTF DUDE")
     const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-    const channelId = pSource;
+    console.log("holy shit he ended the call")
   
     // client that is calling
-    emitNet(events.PHONE_CALL_WAS_ENDED, pSource, channelId);
+    emitNet(events.PHONE_CALL_WAS_ENDED, pSource);
+    console.log("she ended the call wtf dude fucking bitch");
+    
 
     // client that is being called
-    emitNet(events.PHONE_CALL_WAS_ENDED, targetPlayer.source, channelId);
+    emitNet(events.PHONE_CALL_WAS_ENDED, targetPlayer.source);
   } catch (error) {
     console.error(error);
   }
