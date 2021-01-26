@@ -8,12 +8,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    bottom: '10%'
+    bottom: '10%',
   },
   actionButton: {
     margin: 20,
-  }
-}))
-
+  },
+}));
 
 export default useStyles;
