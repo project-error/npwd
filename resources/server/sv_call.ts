@@ -2,6 +2,9 @@ import { ESX } from './server';
 import events from '../utils/events';
 import { getIdentifierByPhoneNumber, usePhoneNumber } from './functions';
 import { XPlayer } from 'esx.js/@types/server';
+import { ICall } from '../../phone/src/common/typings/call'
+import { constants } from 'buffer';
+
 /**
  * Returns the player phoneNumber for a passed identifier
  * @param identifier The players phone number
@@ -24,108 +27,100 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
   });
 }
 
-onNet(events.PHONE_BEGIN_CALL, async (phoneNumber: string) => {
-  try {
-    const pSource = (global as any).source;
-    const xPlayer = ESX.GetPlayerFromId(pSource);
+let calls: Map<string, ICall> = new Map()
 
-    const _identifier = xPlayer.getIdentifier();
-    const callerName = xPlayer.getName();
-    const callerNumber = await usePhoneNumber(_identifier);
-    console.log(callerName, callerNumber)
-    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
+  const _source = (global as any).source;
 
-    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-    console.log('got the targetPlayer');
-    const targetName = targetPlayer.getName();
-    console.log('got the target name: ', targetName);
+  console.log("BIG DICK FOR LISA ANN")
 
-    // target
-    // Sends information to the client: sourec, playerName, number, isTransmitter
-    emitNet(
-      events.PHONE_START_CALL,
-      targetPlayer.source,
-      callerNumber,
-      phoneNumber,
-      false
-    );
+  // the client that is calling
+  const xTransmitter = ESX.GetPlayerFromId(_source);
+  const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
 
-    // source
-    // Sends information to the client: sourec, playerName, number, isTransmitter
-    emitNet(
-      events.PHONE_START_CALL,
-      pSource,
-      phoneNumber,
-      callerNumber,
-      true
-    );
-  } catch (e) {
-    console.error(e);
-    console.log('Failed to call monkaS');
-    //emit(events.PHONE_CALL_ERROR, callSource);
-  }
-});
+  // player who is being called
+  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+  const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
+  const receiverNumber = phoneNumber
 
-// phoneNumber is the number you're calling
-onNet(events.PHONE_ACCEPT_CALL, async (phoneNumber: string) => {
-  try {
-    const pSource = (global as any).source;
-    console.log("got the source of accepting", pSource);
-    
-    // target
-    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-    const channelId = pSource;
-    
-    // client that is calling
-    emitNet('phone:callAccepted', pSource, channelId);
-
-    // client that is being called
-    emitNet('phone:callAccepted', targetPlayer.source, channelId);
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-
-onNet(events.PHONE_END_CALL, async (phoneNumber: string) => {
-  try {
-    const pSource = (global as any).source;
-    console.log("got the source of ending", pSource);
-    
-    // target
-    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-    console.log("ENDED WTF DUDE")
-    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-    console.log("holy shit he ended the call")
+  calls.set(transmitterNumber, {
+    transmitter: transmitterNumber, 
+    transmitterSource: _source,
+    receiver: receiverNumber,
+    receiverSource: xReceiver.source
+  })
   
-    // client that is calling
-    emitNet(events.PHONE_CALL_WAS_ENDED, pSource);
-    console.log("she ended the call wtf dude fucking bitch");
-    
 
-    // client that is being called
-    emitNet(events.PHONE_CALL_WAS_ENDED, targetPlayer.source);
+  // events
+  // client that is calling
+  emitNet(events.PHONE_START_CALL, _source, transmitterNumber, receiverNumber, true);
+
+  // client that is being called
+  emitNet(events.PHONE_START_CALL, xReceiver.source, transmitterNumber, receiverNumber, false);
+
+})
+
+onNet(events.PHONE_ACCEPT_CALL, (transmitterNumber: string) => {
+  try {
+    const pSource = (global as any).source
+
+    const currentCall = calls.get(transmitterNumber)
+    const channelId = pSource
+
+    // player who is being called
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId, currentCall, false)
+
+    // player who is calling
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, currentCall.transmitterSource, channelId, currentCall, true)
+
   } catch (error) {
-    console.error(error);
+    console.log(error, error.message)
   }
 })
 
-onNet(events.PHONE_CALL_REJECTED, async (phoneNumber: string) => {
+onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
   try {
     const pSource = (global as any).source;
-    console.log("got the source of accepting", pSource);
-    
-    // target
-    const targetIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-    const targetPlayer = await getPlayerFromIdentifier(targetIdentifier);
-  
-    // client that is calling
-    emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
+    const currentCall = calls.get(transmitterNumber);
 
-    // client that is being called
-    emitNet(events.PHONE_CALL_WAS_REJECTED, targetPlayer.source);
+    // player who is being called
+    emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
+    
+    // player who is calling
+    emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
+
   } catch (error) {
-    console.error(error);
+    console.log(error, error.message)
+  }
+})
+
+onNet(events.PHONE_END_CALL, (transmitterNumber: string) => {
+  console.log("TRANSMITTER NUMBER:", transmitterNumber)
+  try {
+    const pSource = (global as any).source
+    const currentCall = calls.get(transmitterNumber)
+
+    console.log("CURRENT CALL", currentCall)
+
+    console.log("SOURCE:", pSource)
+    console.log("TRANSMITTER:", currentCall.transmitterSource)
+    console.log("RECEIVER:", currentCall.receiverSource)
+
+    // player who is being called
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource)
+    emitNet(events.PHONE_CALL_WAS_ENDED, pSource)
+
+    // player who is calling
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource)
+    if (pSource === currentCall.transmitterSource) {
+      console.log("I am the transmitter")
+    }
+
+
+    //calls.delete(transmitterNumber)
+  
+
+  } catch (error) {
+    console.log(error, error.message)
   }
 })
