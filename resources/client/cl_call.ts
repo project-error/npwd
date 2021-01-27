@@ -6,7 +6,6 @@ const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
-  console.log('PHONE NUMBER YOU ARE TRYING TO CALL', data.number);
   emitNet(events.PHONE_INITIALIZE_CALL, data.number);
 });
 
@@ -29,7 +28,6 @@ onNet(events.PHONE_START_CALL, (transmitter: string, receiver: string, isTransmi
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
-  console.log('PHONE NUMBER YOU ARE TRYING TO CALL', data.transmitterNumber);
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
 });
 
@@ -52,7 +50,6 @@ onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, is
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
-  console.log('PHONE NUMBER YOU ARE TRYING TO CALL', data.transmitterNumber);
   emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber);
 });
 
@@ -75,8 +72,6 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
-  console.log('PHONE NUMBER YOU ARE TRYING TO CALL', data.transmitterNumber);
-  console.log
   emitNet(events.PHONE_END_CALL, data.transmitterNumber);
 });
 

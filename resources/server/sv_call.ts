@@ -32,8 +32,6 @@ let calls: Map<string, ICall> = new Map()
 onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   const _source = (global as any).source;
 
-  console.log("BIG DICK FOR LISA ANN")
-
   // the client that is calling
   const xTransmitter = ESX.GetPlayerFromId(_source);
   const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
@@ -95,29 +93,16 @@ onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
 })
 
 onNet(events.PHONE_END_CALL, (transmitterNumber: string) => {
-  console.log("TRANSMITTER NUMBER:", transmitterNumber)
   try {
     const pSource = (global as any).source
     const currentCall = calls.get(transmitterNumber)
 
-    console.log("CURRENT CALL", currentCall)
-
-    console.log("SOURCE:", pSource)
-    console.log("TRANSMITTER:", currentCall.transmitterSource)
-    console.log("RECEIVER:", currentCall.receiverSource)
-
     // player who is being called
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource)
-    emitNet(events.PHONE_CALL_WAS_ENDED, pSource)
-
     // player who is calling
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource)
-    if (pSource === currentCall.transmitterSource) {
-      console.log("I am the transmitter")
-    }
-
-
-    //calls.delete(transmitterNumber)
+    
+    calls.delete(transmitterNumber)
   
 
   } catch (error) {
