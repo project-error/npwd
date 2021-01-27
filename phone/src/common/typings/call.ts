@@ -1,7 +1,14 @@
 export interface CallProps {
   accepted: boolean;
-  transmitter: boolean;
-  caller: string;
-  target: string;
+  isTransmitter: boolean;
+  transmitter: string;
+  receiver: string;
   phone_number: string;
+}
+
+export interface ICall {
+  transmitter: string;
+  transmitterSource: number;
+  receiver: string;
+  receiverSource: number;
 }
