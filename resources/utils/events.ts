@@ -96,7 +96,7 @@ export default {
   PHONE_USE_CLIPBOARD: "phone:useClipboard",
 
   // calling
-  PHONE_BEGIN_CALL: "phone:beginCall",
+  PHONE_INITIALIZE_CALL: "phone:beginCall",
   PHONE_START_CALL: "phone:startCall",
   PHONE_ACCEPT_CALL: 'phone:acceptCall',
   PHONE_END_CALL: 'phone:endCall',
