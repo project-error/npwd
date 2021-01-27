@@ -2,7 +2,7 @@ import { ESX } from './server';
 import events from '../utils/events';
 import { getIdentifierByPhoneNumber, usePhoneNumber } from './functions';
 import { XPlayer } from 'esx.js/@types/server';
-import { ICall } from '../../phone/src/common/typings/call'
+import { ICall } from '../../phone/src/common/typings/call';
 import { constants } from 'buffer';
 
 /**
@@ -27,7 +27,7 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
   });
 }
 
-let calls: Map<string, ICall> = new Map()
+let calls: Map<string, ICall> = new Map();
 
 onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   const _source = (global as any).source;
@@ -39,42 +39,63 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   // player who is being called
   const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
   const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
-  const receiverNumber = phoneNumber
+  const receiverNumber = phoneNumber;
 
   calls.set(transmitterNumber, {
-    transmitter: transmitterNumber, 
+    transmitter: transmitterNumber,
     transmitterSource: _source,
     receiver: receiverNumber,
-    receiverSource: xReceiver.source
-  })
-  
+    receiverSource: xReceiver.source,
+  });
 
   // events
   // client that is calling
-  emitNet(events.PHONE_START_CALL, _source, transmitterNumber, receiverNumber, true);
+  emitNet(
+    events.PHONE_START_CALL,
+    _source,
+    transmitterNumber,
+    receiverNumber,
+    true
+  );
 
   // client that is being called
-  emitNet(events.PHONE_START_CALL, xReceiver.source, transmitterNumber, receiverNumber, false);
-
-})
+  emitNet(
+    events.PHONE_START_CALL,
+    xReceiver.source,
+    transmitterNumber,
+    receiverNumber,
+    false
+  );
+});
 
 onNet(events.PHONE_ACCEPT_CALL, (transmitterNumber: string) => {
   try {
-    const pSource = (global as any).source
+    const pSource = (global as any).source;
 
-    const currentCall = calls.get(transmitterNumber)
-    const channelId = pSource
+    const currentCall = calls.get(transmitterNumber);
+    const channelId = pSource;
 
     // player who is being called
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId, currentCall, false)
+    emitNet(
+      events.PHONE_CALL_WAS_ACCEPTED,
+      pSource,
+      channelId,
+      currentCall,
+      false
+    );
 
     // player who is calling
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, currentCall.transmitterSource, channelId, currentCall, true)
-
+    emitNet(
+      events.PHONE_CALL_WAS_ACCEPTED,
+      currentCall.transmitterSource,
+      channelId,
+      currentCall,
+      true
+    );
   } catch (error) {
-    console.log(error, error.message)
+    console.log(error, error.message);
   }
-})
+});
 
 onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
   try {
@@ -83,29 +104,26 @@ onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
 
     // player who is being called
     emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
-    
+
     // player who is calling
     emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
-
   } catch (error) {
-    console.log(error, error.message)
+    console.log(error, error.message);
   }
-})
+});
 
 onNet(events.PHONE_END_CALL, (transmitterNumber: string) => {
   try {
-    const pSource = (global as any).source
-    const currentCall = calls.get(transmitterNumber)
+    const pSource = (global as any).source;
+    const currentCall = calls.get(transmitterNumber);
 
     // player who is being called
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource)
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
     // player who is calling
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource)
-    
-    calls.delete(transmitterNumber)
-  
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
 
+    calls.delete(transmitterNumber);
   } catch (error) {
-    console.log(error, error.message)
+    console.log(error, error.message);
   }
-})
+});
