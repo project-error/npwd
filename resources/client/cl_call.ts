@@ -1,6 +1,6 @@
 import { ESX } from './client';
 import events from '../utils/events';
-import { ICall } from '../../phone/src/common/typings/call'
+import { ICall, ICallUI } from '../../phone/src/common/typings/call'
 
 const exp = (global as any).exports;
 
@@ -32,6 +32,7 @@ on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
 });
 
 onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
+
   exp['mumble-voip'].SetCallChannel(channelId);
 
   SendNuiMessage(
@@ -103,3 +104,13 @@ function openCallModal(show: boolean) {
     })
   );
 }
+
+onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'DAILER',
+      method: 'setHistory',
+      data: calls
+    })
+  )
+})
