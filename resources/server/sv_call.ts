@@ -1,8 +1,12 @@
 import { ESX } from './server';
 import events from '../utils/events';
-import { getIdentifierByPhoneNumber, usePhoneNumber, useIdentifier} from './functions';
+import {
+  getIdentifierByPhoneNumber,
+  usePhoneNumber,
+  useIdentifier,
+} from './functions';
 import { XPlayer } from 'esx.js/@types/server';
-import { ICall, ICallUI } from '../../phone/src/common/typings/call'
+import { ICall, ICallUI } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
 
@@ -28,26 +32,26 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
   });
 }
 
-
 async function saveCall(call: ICall, isAccepted: boolean) {
-  const query = "INSERT INTO npwd_calls (transmitter, receiver, accepted, is_caller) VALUES (?, ?)"
-  await pool.query(query, [call.transmitter, call.receiver, isAccepted])
+  const query =
+    'INSERT INTO npwd_calls (transmitter, receiver, accepted, is_caller) VALUES (?, ?)';
+  await pool.query(query, [call.transmitter, call.receiver, isAccepted]);
 }
 
 async function updateCall(call: ICall, isAccepted: boolean) {
-  const query = "UPDATE npwd_calls SET is_accepted (?) WHERE trasmitter = ?";
-  await pool.query(query, [isAccepted, call.transmitter])
+  const query = 'UPDATE npwd_calls SET is_accepted (?) WHERE trasmitter = ?';
+  await pool.query(query, [isAccepted, call.transmitter]);
 }
 
 async function fetchCalls(phoneNumber: string): Promise<ICallUI[]> {
-  const query = "SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ?"
-  const [result] = await pool.query(query, [phoneNumber, phoneNumber])
-  const calls = <ICallUI[]>result
+  const query =
+    'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ?';
+  const [result] = await pool.query(query, [phoneNumber, phoneNumber]);
+  const calls = <ICallUI[]>result;
   return calls;
 }
 
-let calls: Map<string, ICall> = new Map()
-
+let calls: Map<string, ICall> = new Map();
 
 onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   const _source = (global as any).source;
@@ -65,7 +69,7 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
     transmitter: transmitterNumber,
     transmitterSource: _source,
     receiver: receiverNumber,
-    receiverSource: xReceiver.source
+    receiverSource: xReceiver.source,
   });
 
   // events
@@ -87,7 +91,6 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
     false
   );
 });
-
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   try {
@@ -121,7 +124,6 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   }
 });
 
-
 onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
   try {
     const pSource = (global as any).source;
@@ -137,7 +139,6 @@ onNet(events.PHONE_CALL_REJECTED, (transmitterNumber: string) => {
   }
 });
 
-
 onNet(events.PHONE_END_CALL, async (transmitterNumber: string) => {
   try {
     const pSource = (global as any).source;
@@ -146,25 +147,22 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string) => {
     // player who is being called
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
     // player who is calling
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource)
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
 
-    await updateCall(currentCall, true)
-    
-    calls.delete(transmitterNumber)
-  
+    await updateCall(currentCall, true);
+
+    calls.delete(transmitterNumber);
   } catch (error) {
     console.log(error, error.message);
   }
-})
-
+});
 
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = (global as any).source;
-  const identifier = await useIdentifier()
-  const phoneNumber = await usePhoneNumber(identifier)
+  const identifier = await useIdentifier();
+  const phoneNumber = await usePhoneNumber(identifier);
 
-  const calls = await fetchCalls(phoneNumber)
+  const calls = await fetchCalls(phoneNumber);
 
-  
-  emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls)
-})
+  emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
+});

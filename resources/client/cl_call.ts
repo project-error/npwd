@@ -1,6 +1,6 @@
 import { ESX } from './client';
 import events from '../utils/events';
-import { ICall, ICallUI } from '../../phone/src/common/typings/call'
+import { ICall, ICallUI } from '../../phone/src/common/typings/call';
 
 const exp = (global as any).exports;
 
@@ -34,7 +34,9 @@ on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
 });
 
-onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
+onNet(
+  events.PHONE_CALL_WAS_ACCEPTED,
+  (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
 
     SendNuiMessage(
@@ -113,7 +115,7 @@ onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
     JSON.stringify({
       app: 'DAILER',
       method: 'setHistory',
-      data: calls
+      data: calls,
     })
-  )
-})
+  );
+});
