@@ -9,45 +9,56 @@ on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
   emitNet(events.PHONE_INITIALIZE_CALL, data.number);
 });
 
-onNet(events.PHONE_START_CALL, (transmitter: string, receiver: string, isTransmitter: boolean) => {
-  openCallModal(true);
+onNet(
+  events.PHONE_START_CALL,
+  (transmitter: string, receiver: string, isTransmitter: boolean) => {
+    openCallModal(true);
 
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CALL',
-      method: 'setCaller',
-      data: {
-        transmitter: transmitter,
-        receiver: receiver,
-        isTransmitter: isTransmitter,
-        accepted: false,
-      },
-    })
-  );
-})
+    SendNuiMessage(
+      JSON.stringify({
+        app: 'CALL',
+        method: 'setCaller',
+        data: {
+          transmitter: transmitter,
+          receiver: receiver,
+          isTransmitter: isTransmitter,
+          accepted: false,
+        },
+      })
+    );
+  }
+);
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
 });
 
+<<<<<<< HEAD
 onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
 
   exp['mumble-voip'].SetCallChannel(channelId);
+=======
+onNet(
+  events.PHONE_CALL_WAS_ACCEPTED,
+  (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
+    exp['mumble-voip'].SetCallChannel(channelId);
+>>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
 
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CALL',
-      method: 'setCaller',
-      data: {
-        transmitter: currentCall.transmitter,
-        receiver: currentCall.receiver,
-        isTransmitter: isTransmitter,
-        accepted: true,
-      },
-    })
-  );
-})
+    SendNuiMessage(
+      JSON.stringify({
+        app: 'CALL',
+        method: 'setCaller',
+        data: {
+          transmitter: currentCall.transmitter,
+          receiver: currentCall.receiver,
+          isTransmitter: isTransmitter,
+          accepted: true,
+        },
+      })
+    );
+  }
+);
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
@@ -69,7 +80,7 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
       },
     })
   );
-})
+});
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
@@ -93,7 +104,7 @@ onNet(events.PHONE_CALL_WAS_ENDED, () => {
       },
     })
   );
-})
+});
 
 function openCallModal(show: boolean) {
   SendNuiMessage(
@@ -104,6 +115,7 @@ function openCallModal(show: boolean) {
     })
   );
 }
+<<<<<<< HEAD
 
 onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
   SendNuiMessage(
@@ -114,3 +126,5 @@ onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
     })
   )
 })
+=======
+>>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2

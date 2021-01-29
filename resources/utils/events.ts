@@ -83,6 +83,7 @@ export default {
   OPEN_APP_NOTES: 'phone:app:NOTES',
   OPEN_APP_LISTINGS: 'phone:app:SELLOUT',
   OPEN_APP_CAMERA: 'phone:app:CAMERA',
+  OPEN_APP_DAILER: 'phone:app:DIALER',
 
   // camera
   CAMERA_TAKE_PHOTO: 'phone:TakePhoto',
@@ -103,5 +104,7 @@ export default {
   PHONE_CALL_WAS_ENDED: 'phone:callEnded',
   PHONE_CALL_WAS_ACCEPTED: 'phone:callAccepted',
   PHONE_CALL_REJECTED: 'phone:rejectCall',
-  PHONE_CALL_WAS_REJECTED: 'phone:callRejected'
+  PHONE_CALL_WAS_REJECTED: 'phone:callRejected',
+  PHONE_CALL_FETCH_CALLS: 'phone:fetchCalls',
+  PHONE_CALL_SEND_HISTORY: 'phone:sendCallHistory'
 };
