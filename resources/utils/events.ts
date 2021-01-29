@@ -94,11 +94,11 @@ export default {
   CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess',
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
-  PHONE_USE_CLIPBOARD: "phone:useClipboard",
+  PHONE_USE_CLIPBOARD: 'phone:useClipboard',
 
   // calling
-  PHONE_INITIALIZE_CALL: "phone:beginCall",
-  PHONE_START_CALL: "phone:startCall",
+  PHONE_INITIALIZE_CALL: 'phone:beginCall',
+  PHONE_START_CALL: 'phone:startCall',
   PHONE_ACCEPT_CALL: 'phone:acceptCall',
   PHONE_END_CALL: 'phone:endCall',
   PHONE_CALL_WAS_ENDED: 'phone:callEnded',
@@ -106,5 +106,5 @@ export default {
   PHONE_CALL_REJECTED: 'phone:rejectCall',
   PHONE_CALL_WAS_REJECTED: 'phone:callRejected',
   PHONE_CALL_FETCH_CALLS: 'phone:fetchCalls',
-  PHONE_CALL_SEND_HISTORY: 'phone:sendCallHistory'
+  PHONE_CALL_SEND_HISTORY: 'phone:sendCallHistory',
 };

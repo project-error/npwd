@@ -354,7 +354,7 @@ on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
 RegisterNuiCallbackType(events.OPEN_APP_DAILER);
 on(`__cfx_nui:${events.OPEN_APP_DAILER}`, () => {
   emitNet(events.PHONE_CALL_FETCH_CALLS);
-})
+});
 
 RegisterCommand(
   'phone',
@@ -364,7 +364,6 @@ RegisterCommand(
   },
   false
 );
-
 
 RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, () => {
