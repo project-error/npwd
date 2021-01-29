@@ -2,15 +2,9 @@ import { ESX } from './server';
 import events from '../utils/events';
 import { getIdentifierByPhoneNumber, usePhoneNumber, useIdentifier} from './functions';
 import { XPlayer } from 'esx.js/@types/server';
-<<<<<<< HEAD
 import { ICall, ICallUI } from '../../phone/src/common/typings/call'
 
 import { pool } from './db';
-import { reverse } from 'dns';
-=======
-import { ICall } from '../../phone/src/common/typings/call';
-import { constants } from 'buffer';
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
 
 /**
  * Returns the player phoneNumber for a passed identifier
@@ -70,17 +64,10 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   calls.set(transmitterNumber, {
     transmitter: transmitterNumber,
     transmitterSource: _source,
-    transmitterIdentifier: xTransmitter.getIdentifier(),
     receiver: receiverNumber,
-    receiverSource: xReceiver.source,
-<<<<<<< HEAD
-    receiverIdentifier: receiverIdentifier
-  }) 
-  
-=======
+    receiverSource: xReceiver.source
   });
 
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
   // events
   // client that is calling
   emitNet(
@@ -92,15 +79,6 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   );
 
   // client that is being called
-<<<<<<< HEAD
-  emitNet(events.PHONE_START_CALL, xReceiver.source, transmitterNumber, receiverNumber, false);
-
-  const currentCall = calls.get(transmitterNumber)
-
-  await saveCall(currentCall, false)
-
-})
-=======
   emitNet(
     events.PHONE_START_CALL,
     xReceiver.source,
@@ -109,7 +87,6 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
     false
   );
 });
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
 
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
@@ -129,12 +106,9 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     );
 
     // player who is calling
-<<<<<<< HEAD
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, currentCall.transmitterSource, channelId, currentCall, true)
 
     await updateCall(currentCall, true);
 
-=======
     emitNet(
       events.PHONE_CALL_WAS_ACCEPTED,
       currentCall.transmitterSource,
@@ -142,7 +116,6 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
       currentCall,
       true
     );
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
   } catch (error) {
     console.log(error, error.message);
   }
@@ -173,22 +146,15 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string) => {
     // player who is being called
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
     // player who is calling
-<<<<<<< HEAD
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource)
 
     await updateCall(currentCall, true)
     
     calls.delete(transmitterNumber)
   
-=======
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
-
-    calls.delete(transmitterNumber);
   } catch (error) {
     console.log(error, error.message);
   }
-<<<<<<< HEAD
 })
 
 
@@ -202,6 +168,3 @@ onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   
   emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls)
 })
-=======
-});
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2

@@ -34,16 +34,8 @@ on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
 });
 
-<<<<<<< HEAD
 onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
-
-  exp['mumble-voip'].SetCallChannel(channelId);
-=======
-onNet(
-  events.PHONE_CALL_WAS_ACCEPTED,
-  (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2
 
     SendNuiMessage(
       JSON.stringify({
@@ -115,7 +107,6 @@ function openCallModal(show: boolean) {
     })
   );
 }
-<<<<<<< HEAD
 
 onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
   SendNuiMessage(
@@ -126,5 +117,3 @@ onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
     })
   )
 })
-=======
->>>>>>> 762fb237c34c2385e8c5e4005c3f3cba39ca40b2

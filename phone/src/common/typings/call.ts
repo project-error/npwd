@@ -9,10 +9,8 @@ export interface CallProps {
 export interface ICall {
   transmitter: string;
   transmitterSource: number;
-  transmitterIdentifier: string;
   receiver: string;
   receiverSource: number;
-  receiverIdentifier: string;
 }
 
 export interface ICallUI {
