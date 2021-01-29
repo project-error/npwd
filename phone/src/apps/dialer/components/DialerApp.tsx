@@ -3,14 +3,16 @@ import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { DialerHistory } from './views/DialerHistory';
-import { useDialerHistory } from '../hooks/useDialerHistory';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { Switch, Route } from 'react-router-dom';
 import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
+import { useDailHistory } from '../hooks/useDailHistory';
 
 export const DialerApp = () => {
-  const { history } = useDialerHistory();
+
+  const history = useDailHistory()
+
   const dialer = useApp('DIALER');
   return (
     <AppWrapper>

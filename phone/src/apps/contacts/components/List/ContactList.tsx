@@ -56,13 +56,14 @@ export const ContactList = () => {
     });
   };
 
+  const filteredRegEx = new RegExp(filteredContacts, "gi")
+
   return (
     <List>
       {contacts.contacts
         .filter(
           (contact) =>
-            contact.display.includes(filteredContacts.toLowerCase()) ||
-            contact.number.includes(filteredContacts.toLowerCase())
+            contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx)
         )
         .map((contact) => (
           <>

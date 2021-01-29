@@ -31,7 +31,7 @@ export const AddContactModal = () => {
         number,
         avatar,
       });
-      console.log(name, number, avatar);
+      setShowModal(false)
     }
   };
 

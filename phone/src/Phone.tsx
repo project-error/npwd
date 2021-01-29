@@ -30,6 +30,7 @@ import config from './config/default.json';
 import { useRecoilState } from 'recoil';
 import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
+import { useDailService } from './apps/dialer/hooks/useDailService';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -47,6 +48,31 @@ if (process.env.NODE_ENV === 'development') {
             {
               id: 1,
               image: 'https://i.imgur.com/pqGBiST.jpg',
+            },
+          ],
+        },
+      })
+    );
+  }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'DAILER',
+          method: 'setHistory',
+          data: [
+            {
+              id: 1,
+              transmitter: '636-6496',
+              transmitterName: 'Taso Weeb',
+              type: 'incoming'
+            },
+            {
+              id: 2,
+              transmitter: '777-7777',
+              transmitterName: 'Taso Weeb',
+              type: 'outgoing'
             },
           ],
         },
@@ -102,7 +128,7 @@ if (process.env.NODE_ENV === 'development') {
             {
               id: 1,
               display: 'Taso',
-              number: '43534444',
+              number: '456466',
             },
           ],
         },
@@ -279,6 +305,7 @@ function Phone() {
   useNotesService();
   usePhotoService();
   useCallService();
+  useDailService();
 
   const { modal } = useModal(); // the calling modal 
 

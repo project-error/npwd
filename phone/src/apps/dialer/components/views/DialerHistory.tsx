@@ -4,19 +4,36 @@ import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
+import Nui from '../../../../os/nui-events/utils/Nui'
+import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
+import { useContacts } from '../../../contacts/hooks/useContacts';
 
-const CallTypeIcon = {
-  incoming: <PhoneCallbackIcon />,
-  outgoing: <PhoneForwardedIcon />,
-};
 
 export const DialerHistory = ({ calls }) => {
+  const { number } = useSimcard();
+  const { getDisplayByNumber } = useContacts();
+
+  const handleCall = (phoneNumber) => {
+    Nui.send('phone:beginCall', {
+       number: phoneNumber
+    })
+  }
+
+  if (!calls) {
+    return <p>Things are loading or arent here at all</p>
+  } 
+
   return (
     <List disablePadding>
-      {calls.map((call) => (
-        <ListItem key={call.id} divider button>
-          <ListItemText primary={call.caller} secondary={call.phoneNumber} />
-          {CallTypeIcon[call.type]}
+      {calls.map((call) => call.transmitter === number ? (
+        <ListItem key={call.id} divider button onClick={() => handleCall(call.receiver)}>
+          <ListItemText primary={getDisplayByNumber(call.receiver)} />
+          {<PhoneForwardedIcon />}
+        </ListItem>
+      ): (
+        <ListItem key={call.id} divider button onClick={() => handleCall(call.transmitter)}>
+          <ListItemText primary={getDisplayByNumber(call.transmitter)} />
+          {<PhoneCallbackIcon />}
         </ListItem>
       ))}
     </List>
