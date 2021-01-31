@@ -6,7 +6,7 @@ import {
   useIdentifier,
 } from './functions';
 import { XPlayer } from 'esx.js/@types/server';
-import { ICall, ICallUI } from '../../phone/src/common/typings/call';
+import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
 
@@ -43,11 +43,11 @@ async function updateCall(call: ICall, isAccepted: boolean) {
   await pool.query(query, [isAccepted, call.transmitter]);
 }
 
-async function fetchCalls(phoneNumber: string): Promise<ICallUI[]> {
+async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
   const query =
     'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ?';
   const [result] = await pool.query(query, [phoneNumber, phoneNumber]);
-  const calls = <ICallUI[]>result;
+  const calls = <ICall[]>result;
   return calls;
 }
 

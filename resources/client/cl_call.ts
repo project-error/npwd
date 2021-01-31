@@ -1,6 +1,6 @@
 import { ESX } from './client';
 import events from '../utils/events';
-import { ICall, ICallUI } from '../../phone/src/common/typings/call';
+import { ICall } from '../../phone/src/common/typings/call';
 import config from '../utils/config'
 import dayjs from 'dayjs';
 
@@ -113,7 +113,7 @@ function openCallModal(show: boolean) {
   );
 }
 
-onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICallUI) => {
+onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICall) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'DAILER',
