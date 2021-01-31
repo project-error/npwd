@@ -7,6 +7,7 @@ import { ListItem } from '../../../../ui/components/ListItem';
 import Nui from '../../../../os/nui-events/utils/Nui'
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContacts } from '../../../contacts/hooks/useContacts';
+import { ICall } from '../../../../common/typings/call';
 
 
 export const DialerHistory = ({ calls }) => {
@@ -25,7 +26,7 @@ export const DialerHistory = ({ calls }) => {
 
   return (
     <List disablePadding>
-      {calls.map((call) => call.transmitter === number ? (
+      {calls.map((call: ICall) => call.transmitter === number ? (
         <ListItem key={call.id} divider button onClick={() => handleCall(call.receiver)}>
           <ListItemText primary={getDisplayByNumber(call.receiver)} secondary={call.timestamp} />
           {<PhoneForwardedIcon />}

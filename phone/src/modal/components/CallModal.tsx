@@ -17,7 +17,6 @@ export const CallModal = () => {
   const classes = useStyles();
 
   const handleAcceptCall = () => {
-    console.log('NUI CALL: ', call.phone_number);
     Nui.send('phone:acceptCall', {
       transmitterNumber: call.transmitter,
     });

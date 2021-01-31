@@ -7,7 +7,7 @@ import { useApp } from '../../../os/apps/hooks/useApps';
 import { Switch, Route } from 'react-router-dom';
 import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
-import { useDailHistory } from '../hooks/useDailHistory';
+import { useDailHistory } from '../hooks/useDialHistory';
 
 export const DialerApp = () => {
 
