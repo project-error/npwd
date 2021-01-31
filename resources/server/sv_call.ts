@@ -9,6 +9,7 @@ import { XPlayer } from 'esx.js/@types/server';
 import { ICall, ICallUI } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
+import { time } from 'console';
 
 /**
  * Returns the player phoneNumber for a passed identifier
@@ -32,14 +33,14 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
   });
 }
 
-async function saveCall(call: ICall, isAccepted: boolean) {
+async function saveCall(call: ICall) {
   const query =
-    'INSERT INTO npwd_calls (transmitter, receiver, accepted, is_caller) VALUES (?, ?)';
-  await pool.query(query, [call.transmitter, call.receiver, isAccepted]);
+    'INSERT INTO npwd_calls (transmitter, receiver, timestamp) VALUES (?, ?, ?)';
+  await pool.query(query, [call.transmitter, call.receiver, call.timestamp]);
 }
 
 async function updateCall(call: ICall, isAccepted: boolean) {
-  const query = 'UPDATE npwd_calls SET is_accepted (?) WHERE trasmitter = ?';
+  const query = 'UPDATE npwd_calls SET is_accepted (?) WHERE transmitter = ?';
   await pool.query(query, [isAccepted, call.transmitter]);
 }
 
@@ -53,7 +54,7 @@ async function fetchCalls(phoneNumber: string): Promise<ICallUI[]> {
 
 let calls: Map<string, ICall> = new Map();
 
-onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
+onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: string) => {
   const _source = (global as any).source;
 
   // the client that is calling
@@ -70,7 +71,12 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
     transmitterSource: _source,
     receiver: receiverNumber,
     receiverSource: xReceiver.source,
+    timestamp: timestamp
   });
+
+  const currentCall = calls.get(transmitterNumber);
+  await saveCall(currentCall)
+
 
   // events
   // client that is calling
@@ -92,6 +98,7 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   );
 });
 
+
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   try {
     const pSource = (global as any).source;
@@ -109,9 +116,7 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     );
 
     // player who is calling
-
-    await updateCall(currentCall, true);
-
+ 
     emitNet(
       events.PHONE_CALL_WAS_ACCEPTED,
       currentCall.transmitterSource,

@@ -1,12 +1,15 @@
 import { ESX } from './client';
 import events from '../utils/events';
 import { ICall, ICallUI } from '../../phone/src/common/typings/call';
+import config from '../utils/config'
+import dayjs from 'dayjs';
 
 const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
-  emitNet(events.PHONE_INITIALIZE_CALL, data.number);
+  const timestamp = dayjs().locale(config.Locale).format('HH:mm')  
+  emitNet(events.PHONE_INITIALIZE_CALL, data.number, timestamp);
 });
 
 onNet(
