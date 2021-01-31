@@ -29,23 +29,23 @@ export const DialerInput = () => {
 
   const handleCall = (number: string) => {
     Nui.send('phone:beginCall', {
-      number
-    })
-  }
+      number,
+    });
+  };
 
   return (
     <DialInputCtx.Consumer>
       {({ inputVal, add }) => (
         <Box component={Paper} className={classes.root}>
-        <InputBase 
-          placeholder='Enter a number' 
-          className={classes.input} 
-          value={inputVal}
-        />
-        <IconButton className={classes.iconBtn}>
-          <PhoneIcon onClick={() => handleCall(inputVal)} />
-        </IconButton>
-      </Box>
+          <InputBase
+            placeholder='Enter a number'
+            className={classes.input}
+            value={inputVal}
+          />
+          <IconButton className={classes.iconBtn}>
+            <PhoneIcon onClick={() => handleCall(inputVal)} />
+          </IconButton>
+        </Box>
       )}
     </DialInputCtx.Consumer>
   );
