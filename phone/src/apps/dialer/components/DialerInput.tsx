@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, IconButton, InputBase, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
+import { DialInputCtx } from '../context/InputContext';
+import Nui from '../../../os/nui-events/utils/Nui';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -25,12 +27,26 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DialerInput = () => {
   const classes = useStyles();
 
+  const handleCall = (number: string) => {
+    Nui.send('phone:beginCall', {
+      number
+    })
+  }
+
   return (
-    <Box component={Paper} className={classes.root}>
-      <InputBase placeholder='Enter a number' className={classes.input} />
-      <IconButton className={classes.iconBtn}>
-        <PhoneIcon />
-      </IconButton>
-    </Box>
+    <DialInputCtx.Consumer>
+      {({ inputVal, add }) => (
+        <Box component={Paper} className={classes.root}>
+        <InputBase 
+          placeholder='Enter a number' 
+          className={classes.input} 
+          value={inputVal}
+        />
+        <IconButton className={classes.iconBtn}>
+          <PhoneIcon onClick={() => handleCall(inputVal)} />
+        </IconButton>
+      </Box>
+      )}
+    </DialInputCtx.Consumer>
   );
 };
