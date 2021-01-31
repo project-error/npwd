@@ -4,6 +4,7 @@ export interface CallProps {
   transmitter: string;
   receiver: string;
   phone_number: string;
+  timestamp: string;
 }
 
 export interface ICall {
@@ -11,10 +12,11 @@ export interface ICall {
   transmitterSource: number;
   receiver: string;
   receiverSource: number;
+  timestamp: string;
 }
 
 export interface ICallUI {
-  tranmitter: string;
+  transmitter: string;
   receiver: string;
-  type: string;
+  timestamp: string;
 }
