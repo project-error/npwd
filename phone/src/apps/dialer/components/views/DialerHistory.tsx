@@ -27,12 +27,12 @@ export const DialerHistory = ({ calls }) => {
     <List disablePadding>
       {calls.map((call) => call.transmitter === number ? (
         <ListItem key={call.id} divider button onClick={() => handleCall(call.receiver)}>
-          <ListItemText primary={getDisplayByNumber(call.receiver)} />
+          <ListItemText primary={getDisplayByNumber(call.receiver)} secondary={call.timestamp} />
           {<PhoneForwardedIcon />}
         </ListItem>
       ): (
         <ListItem key={call.id} divider button onClick={() => handleCall(call.transmitter)}>
-          <ListItemText primary={getDisplayByNumber(call.transmitter)} />
+          <ListItemText primary={getDisplayByNumber(call.transmitter)} secondary={call.timestamp} />
           {<PhoneCallbackIcon />}
         </ListItem>
       ))}
