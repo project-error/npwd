@@ -10,8 +10,7 @@ import DialerNavBar from './DialerNavBar';
 import { useDialHistory } from '../hooks/useDialHistory';
 
 export const DialerApp = () => {
-
-  const history = useDialHistory()
+  const history = useDialHistory();
 
   const dialer = useApp('DIALER');
   return (
