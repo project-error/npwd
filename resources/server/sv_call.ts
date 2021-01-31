@@ -9,7 +9,6 @@ import { XPlayer } from 'esx.js/@types/server';
 import { ICall, ICallUI } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
-import { time } from 'console';
 
 /**
  * Returns the player phoneNumber for a passed identifier
@@ -77,7 +76,6 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: strin
   const currentCall = calls.get(transmitterNumber);
   await saveCall(currentCall)
 
-
   // events
   // client that is calling
   emitNet(
@@ -106,6 +104,8 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     const currentCall = calls.get(transmitterNumber);
     const channelId = pSource;
 
+    await updateCall(currentCall, true);
+
     // player who is being called
     emitNet(
       events.PHONE_CALL_WAS_ACCEPTED,
@@ -116,7 +116,6 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     );
 
     // player who is calling
- 
     emitNet(
       events.PHONE_CALL_WAS_ACCEPTED,
       currentCall.transmitterSource,
@@ -153,8 +152,6 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string) => {
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
     // player who is calling
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
-
-    await updateCall(currentCall, true);
 
     calls.delete(transmitterNumber);
   } catch (error) {
