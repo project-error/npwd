@@ -30,7 +30,7 @@ import config from './config/default.json';
 import { useRecoilState } from 'recoil';
 import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
-import { useDailService } from './apps/dialer/hooks/useDialService';
+import { useDialService } from './apps/dialer/hooks/useDialService';
 
 // Inject mock data when in development env.
 if (process.env.NODE_ENV === 'development') {
@@ -303,7 +303,7 @@ function Phone() {
   useNotesService();
   usePhotoService();
   useCallService();
-  useDailService();
+  useDialService();
 
   const { modal } = useModal(); // the calling modal
 

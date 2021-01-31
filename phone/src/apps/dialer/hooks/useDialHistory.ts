@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { ICall } from '../../../common/typings/call';
-import { dailerState } from './state';
+import { dialState } from './state';
 interface ICallUI {
   history: ICall[]
 }
 
-export const useDailHistory = (): ICallUI => {
-  const history = useRecoilValue(dailerState.history);
+export const useDialHistory = (): ICallUI => {
+  const history = useRecoilValue(dialState.history);
   return history;
 };
