@@ -90,7 +90,7 @@ if (process.env.NODE_ENV === 'development') {
             caller: 'Chip',
             target: 'Christian',
             phone_number: '860-4504',
-          }
+          },
         },
       })
     );
@@ -127,7 +127,7 @@ if (process.env.NODE_ENV === 'development') {
               id: 1,
               display: 'Taso',
               number: '456466',
-            }
+            },
           ],
         },
       })
@@ -305,7 +305,7 @@ function Phone() {
   useCallService();
   useDailService();
 
-  const { modal } = useModal(); // the calling modal 
+  const { modal } = useModal(); // the calling modal
 
   const [settings] = useRecoilState(settingsState);
 
