@@ -353,6 +353,7 @@ on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
 
 RegisterNuiCallbackType(events.OPEN_APP_DAILER);
 on(`__cfx_nui:${events.OPEN_APP_DAILER}`, () => {
+  emitNet(events.CONTACTS_GET_CONTACTS);
   emitNet(events.PHONE_CALL_FETCH_CALLS);
 });
 
