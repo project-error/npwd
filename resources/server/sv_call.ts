@@ -53,49 +53,53 @@ async function fetchCalls(phoneNumber: string): Promise<ICallUI[]> {
 
 let calls: Map<string, ICall> = new Map();
 
-onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: string) => {
-  const _source = (global as any).source;
+onNet(
+  events.PHONE_INITIALIZE_CALL,
+  async (phoneNumber: string, timestamp: string) => {
+    const _source = (global as any).source;
 
-  // the client that is calling
-  const xTransmitter = ESX.GetPlayerFromId(_source);
-  const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
+    // the client that is calling
+    const xTransmitter = ESX.GetPlayerFromId(_source);
+    const transmitterNumber = await usePhoneNumber(
+      xTransmitter.getIdentifier()
+    );
 
-  // player who is being called
-  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-  const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
-  const receiverNumber = phoneNumber;
+    // player who is being called
+    const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+    const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
+    const receiverNumber = phoneNumber;
 
-  calls.set(transmitterNumber, {
-    transmitter: transmitterNumber,
-    transmitterSource: _source,
-    receiver: receiverNumber,
-    receiverSource: xReceiver.source,
-    timestamp: timestamp
-  });
+    calls.set(transmitterNumber, {
+      transmitter: transmitterNumber,
+      transmitterSource: _source,
+      receiver: receiverNumber,
+      receiverSource: xReceiver.source,
+      timestamp: timestamp,
+    });
 
-  const currentCall = calls.get(transmitterNumber);
-  await saveCall(currentCall)
+    const currentCall = calls.get(transmitterNumber);
+    await saveCall(currentCall);
 
-  // events
-  // client that is calling
-  emitNet(
-    events.PHONE_START_CALL,
-    _source,
-    transmitterNumber,
-    receiverNumber,
-    true
-  );
+    // events
+    // client that is calling
+    emitNet(
+      events.PHONE_START_CALL,
+      _source,
+      transmitterNumber,
+      receiverNumber,
+      true
+    );
 
-  // client that is being called
-  emitNet(
-    events.PHONE_START_CALL,
-    xReceiver.source,
-    transmitterNumber,
-    receiverNumber,
-    false
-  );
-});
-
+    // client that is being called
+    emitNet(
+      events.PHONE_START_CALL,
+      xReceiver.source,
+      transmitterNumber,
+      receiverNumber,
+      false
+    );
+  }
+);
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   try {
