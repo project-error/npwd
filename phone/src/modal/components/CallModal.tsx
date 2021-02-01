@@ -9,6 +9,7 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 import useStyles from './modal.styles';
 import { useModal } from '../hooks/useModal';
 import Nui from '../../os/nui-events/utils/Nui';
+import CallTimer from './CallTimer';
 
 export const CallModal = () => {
   const { call } = useCall();
@@ -20,7 +21,6 @@ export const CallModal = () => {
     Nui.send('phone:acceptCall', {
       transmitterNumber: call.transmitter,
     });
-    console.log("NOW BEING TRANSMITTER", call.transmitter)
   };
 
   const handleRejectCall = () => {
@@ -41,7 +41,9 @@ export const CallModal = () => {
     return (
       <AppWrapper>
         <AppContent>
+
           <h1 style={{ textAlign: 'center' }}>{call.receiver}</h1>
+          <CallTimer isAccepted={call.accepted}/>
           <div className={classes.actions}>
             <Fab
               onClick={handleEndCall}
@@ -60,7 +62,7 @@ export const CallModal = () => {
     <AppWrapper>
       <AppContent>
         <h1 style={{ textAlign: 'center' }}>{call.transmitter}</h1>
-
+        <CallTimer isAccepted={call.accepted}/>
         <div className={classes.actions}>
           {!call.accepted ? (
             <>

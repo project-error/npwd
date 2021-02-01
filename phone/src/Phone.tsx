@@ -86,9 +86,9 @@ if (process.env.NODE_ENV === 'development') {
           method: 'setCaller',
           data: {
             accepted: false,
-            transmitter: false,
-            caller: 'Chip',
-            target: 'Christian',
+            isTransmitter: false,
+            transmitter: 'Chip',
+            receiver: 'Taso',
             phone_number: '860-4504',
           },
         },
