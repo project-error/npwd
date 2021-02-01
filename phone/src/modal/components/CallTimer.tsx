@@ -24,14 +24,14 @@ function CallTimer({ isAccepted }) {
     if (updatedM === 60) {
       updatedH++;
       updatedM = 0;
-    } 
+    }
     if (updatedS === 60) {
       updatedM++;
       updatedS = 0;
-    } 
+    }
     if (updatedMs === 100) {
       updatedS++;
-      updatedMs = 0
+      updatedMs = 0;
     }
     updatedMs++;
     return setDuration({ ms: updatedMs, s: updatedS, m: updatedM, h: updatedH })
@@ -48,7 +48,7 @@ function CallTimer({ isAccepted }) {
       <span>{(duration.m >= 10) ? duration.m : '0'+duration.m}</span>&nbsp;:&nbsp;
       <span>{(duration.s >= 10) ? duration.s : '0'+duration.s}</span>&nbsp;
     </div>
-  )
+  );
 }
 
-export default CallTimer
+export default CallTimer;

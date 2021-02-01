@@ -31,7 +31,7 @@ export const CallModal = () => {
   };
 
   const handleEndCall = () => {
-    setModal(false)
+    setModal(false);
     Nui.send('phone:endCall', {
       transmitterNumber: call.transmitter,
     });
@@ -41,9 +41,8 @@ export const CallModal = () => {
     return (
       <AppWrapper>
         <AppContent>
-
           <h1 style={{ textAlign: 'center' }}>{call.receiver}</h1>
-          <CallTimer isAccepted={call.accepted}/>
+          <CallTimer isAccepted={call.accepted} />
           <div className={classes.actions}>
             <Fab
               onClick={handleEndCall}
@@ -62,7 +61,7 @@ export const CallModal = () => {
     <AppWrapper>
       <AppContent>
         <h1 style={{ textAlign: 'center' }}>{call.transmitter}</h1>
-        <CallTimer isAccepted={call.accepted}/>
+        <CallTimer isAccepted={call.accepted} />
         <div className={classes.actions}>
           {!call.accepted ? (
             <>
