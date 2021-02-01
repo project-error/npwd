@@ -13,3 +13,10 @@ export interface ICall {
   receiverSource?: number;
   timestamp: string;
 }
+
+export interface ICallDuration {
+  ms: number;
+  s: number;
+  m: number;
+  h: number;
+}

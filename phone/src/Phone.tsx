@@ -85,8 +85,8 @@ if (process.env.NODE_ENV === 'development') {
           app: 'CALL',
           method: 'setCaller',
           data: {
-            accepted: false,
-            isTransmitter: false,
+            accepted: true,
+            isTransmitter: true,
             transmitter: 'Chip',
             receiver: 'Taso',
             phone_number: '860-4504',

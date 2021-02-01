@@ -7,6 +7,10 @@ export const callerState = {
   }),
   callModal: atom({
     key: 'callingModal',
-    default: false
+    default: true
+  }),
+  callDuration: atom({
+    key: 'callDuration',
+    default: {ms: 0, s: 0, m: 0, h: 0}
   })
 };
