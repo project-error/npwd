@@ -7,11 +7,13 @@ export interface CallProps {
 
 export interface ICall {
   id?: number;
+  identifier: string;
   transmitter: string;
   transmitterSource?: number;
   receiver: string;
   receiverSource?: number;
-  timestamp: string;
+  start: number;
+  end?: number;
 }
 
 export interface ICallDuration {

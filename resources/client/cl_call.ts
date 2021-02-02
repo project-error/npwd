@@ -1,17 +1,13 @@
-import { ESX } from './client';
 import events from '../utils/events';
 import { ICall } from '../../phone/src/common/typings/call';
-import config from '../utils/config';
-import dayjs from 'dayjs';
 
 const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
-  const timestamp = dayjs().locale(config.Locale).format('HH:mm');
-  const start = Date.now();
+  const start = Date.now()
 
-  emitNet(events.PHONE_INITIALIZE_CALL, data.number, timestamp, start);
+  emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
 });
 
 onNet(
@@ -61,7 +57,8 @@ onNet(
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
-  emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber);
+  const end = Date.now()
+  emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber, end);
 });
 
 onNet(events.PHONE_CALL_WAS_REJECTED, () => {
@@ -83,7 +80,8 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
-  emitNet(events.PHONE_END_CALL, data.transmitterNumber);
+  const end = Date.now()
+  emitNet(events.PHONE_END_CALL, data.transmitterNumber, end);
 });
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {

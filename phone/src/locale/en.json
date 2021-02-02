@@ -1,5 +1,8 @@
 {
   "translation": {
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+
     "COMING_SOON": "Coming soon...",
     "APPS_DIALER": "Phone",
     "APPS_CONTACTS": "Contacts",

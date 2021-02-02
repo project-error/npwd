@@ -65,12 +65,12 @@ if (process.env.NODE_ENV === 'development') {
             {
               id: 1,
               transmitter: '636-6496',
-              transmitterName: 'Taso Weeb',
+              start: 1612301545782
             },
             {
               id: 2,
               transmitter: '777-7777',
-              transmitterName: 'Taso Weeb',
+              start: 1612301545782
             },
           ],
         },
