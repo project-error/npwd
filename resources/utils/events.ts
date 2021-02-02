@@ -83,6 +83,7 @@ export default {
   OPEN_APP_NOTES: 'phone:app:NOTES',
   OPEN_APP_LISTINGS: 'phone:app:SELLOUT',
   OPEN_APP_CAMERA: 'phone:app:CAMERA',
+  OPEN_APP_DAILER: 'phone:app:DIALER',
 
   // camera
   CAMERA_TAKE_PHOTO: 'phone:TakePhoto',
@@ -94,4 +95,16 @@ export default {
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
   PHONE_USE_CLIPBOARD: 'phone:useClipboard',
+
+  // calling
+  PHONE_INITIALIZE_CALL: 'phone:beginCall',
+  PHONE_START_CALL: 'phone:startCall',
+  PHONE_ACCEPT_CALL: 'phone:acceptCall',
+  PHONE_END_CALL: 'phone:endCall',
+  PHONE_CALL_WAS_ENDED: 'phone:callEnded',
+  PHONE_CALL_WAS_ACCEPTED: 'phone:callAccepted',
+  PHONE_CALL_REJECTED: 'phone:rejectCall',
+  PHONE_CALL_WAS_REJECTED: 'phone:callRejected',
+  PHONE_CALL_FETCH_CALLS: 'phone:fetchCalls',
+  PHONE_CALL_SEND_HISTORY: 'phone:sendCallHistory',
 };

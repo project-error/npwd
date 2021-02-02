@@ -20,7 +20,8 @@ export const useNuiEvent = (
   app: string,
   method: string,
   handler: Function,
-  options: IOptions = {}
+  options: IOptions = {},
+  currentState?: Record<string, unknown>
 ) => {
   const savedHandler: MutableRefObject<any> = useRef();
   // Destructure passed options
@@ -42,7 +43,8 @@ export const useNuiEvent = (
           data: event.data,
           level: 1,
         });
-        savedHandler.current(data);
+        const newData = currentState ? { ...currentState, ...data } : data
+        savedHandler.current(newData)
       }
     };
     // Why are destructing then restructuring option data?

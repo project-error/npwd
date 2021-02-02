@@ -68,14 +68,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SearchContacts = () => {
   const { setFilteredContacts } = useFilteredContacts();
-
   const classes = useStyles();
-
   const { t } = useTranslation();
-
-  const handleChange = (e) => {
-    setFilteredContacts(e.target.value);
-  };
 
   return (
     <div className={classes.bg}>
@@ -84,13 +78,13 @@ export const SearchContacts = () => {
           <SearchIcon style={{ color: '#fff' }} />
         </div>
         <InputBase
-          onChange={handleChange}
+          onChange={e => setFilteredContacts(e.target.value)}
           placeholder={t('APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS')}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search' }}
+          inputProps={{ 'aria-label': 'search', 'autoFocus': true }}
         />
       </div>
     </div>

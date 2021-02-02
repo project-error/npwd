@@ -85,31 +85,40 @@ onNet(
       emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
       emitNet(
         events.CONTACTS_ACTION_RESULT,
-        getSource(),
-        'CONTACT_ADD_SUCCESS'
+        _source,
+        "CONTACT_ADD_SUCCESS"
       );
     } catch (error) {
-      emitNet(events.CONTACTS_ACTION_RESULT, getSource(), 'CONTACT_ADD_FAILED');
+      const _source = (global as any).source;
+      emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_ADD_FAILED");
     }
   }
 );
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
+  console.log('let me just log the contact first', contact);
   try {
-    const _source = (global as any)._source;
-    const _identifier = await useIdentifier();
-    updateContact(contact, _identifier);
+    const _source = (global as any).source;
+    const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
+    console.log('nice identifier bro', _identifier);
+    await updateContact(contact, _identifier);
+    console.log('i updated the contact server side!');
+    
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
+    console.log('ffs, didd it return successful');
+    
     emitNet(
       events.CONTACTS_ACTION_RESULT,
-      getSource(),
-      'CONTACT_UPDATE_SUCCESS'
+      _source,
+      "CONTACT_UPDATE_SUCCESS"
     );
+    console.log("UPDATED CONTACT: ", contact);
   } catch (error) {
+    const _source = (global as any).source;
     emitNet(
       events.CONTACTS_ACTION_RESULT,
-      getSource(),
-      'CONTACT_UPDATE_FAILED'
+      _source,
+      "CONTACT_UPDATE_FAILED"
     );
   }
 });

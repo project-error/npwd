@@ -8,6 +8,7 @@ import './cl_bank';
 import './cl_notes';
 import './cl_photo';
 import './cl_messages';
+import './cl_call';
 
 export let ESX: Client = null;
 
