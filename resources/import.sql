@@ -142,3 +142,18 @@ CREATE TABLE IF NOT EXISTS `npwd_messages` (
   CONSTRAINT `npwd_messages_group_id` FOREIGN KEY (`group_id`) REFERENCES `npwd_messages_groups` (`group_id`),
   CONSTRAINT `npwd_messages_user_identifier` FOREIGN KEY (`user_identifier`) REFERENCES `users` (`identifier`)
 );
+
+CREATE TABLE npwd_calls (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  identifier varchar(255) DEFAULT NULL,
+  transmitter varchar(255) NOT NULL,
+  receiver varchar(255) NOT NULL,
+  is_accepted tinyint(4) DEFAULT 0,
+  start varchar(255) DEFAULT NULL,
+  end varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 8,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
