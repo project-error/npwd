@@ -9,7 +9,7 @@ import { XPlayer } from 'esx.js/@types/server';
 import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
-import { v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { ConnectionStringParser } from 'connection-string-parser';
 import { time } from 'console';
 
@@ -35,19 +35,17 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
   });
 }
 
-
 async function saveCall(call: ICall) {
   const query =
     'INSERT INTO npwd_calls (transmitter, receiver, start) VALUES (?, ?, ?)';
   await pool.query(query, [call.transmitter, call.receiver, call.start]);
 }
 
-
 async function updateCall(call: ICall, isAccepted: boolean, end?: number) {
-  const query = 'UPDATE npwd_calls SET is_accepted, end (?, ?) WHERE identifier = ?';
+  const query =
+    'UPDATE npwd_calls SET is_accepted, end (?, ?) WHERE identifier = ?';
   await pool.query(query, [isAccepted, end, call.identifier]);
 }
-
 
 async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
   const query =
@@ -57,14 +55,12 @@ async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
   return calls;
 }
 
-
 let calls: Map<string, ICall> = new Map();
 
 onNet(
   events.PHONE_INITIALIZE_CALL,
   async (phoneNumber: string, timestamp: number) => {
     const _source = (global as any).source;
-
 
     const callIdentifier = uuidv4();
 
@@ -143,41 +139,47 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   }
 });
 
-onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: number) => {
-  try {
-    const pSource = (global as any).source;
-    const currentCall = calls.get(transmitterNumber);
+onNet(
+  events.PHONE_CALL_REJECTED,
+  async (transmitterNumber: string, timestamp: number) => {
+    try {
+      const pSource = (global as any).source;
+      const currentCall = calls.get(transmitterNumber);
 
-    await updateCall(currentCall, false, timestamp)
-    // player who is being called
-    emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
+      await updateCall(currentCall, false, timestamp);
+      // player who is being called
+      emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
 
-    // player who is calling
-    emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
-  } catch (error) {
-    console.log(error, error.message);
+      // player who is calling
+      emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
+    } catch (error) {
+      console.log(error, error.message);
+    }
   }
-});
+);
 
-onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number) => {
-  try {
-    const pSource = (global as any).source;
-    const currentCall = calls.get(transmitterNumber);
+onNet(
+  events.PHONE_END_CALL,
+  async (transmitterNumber: string, timestamp: number) => {
+    try {
+      const pSource = (global as any).source;
+      const currentCall = calls.get(transmitterNumber);
 
-    const endTime = timestamp / 1000;
+      const endTime = timestamp / 1000;
 
-    await updateCall(currentCall, false, endTime)
+      await updateCall(currentCall, false, endTime);
 
-    // player who is being called
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
-    // player who is calling
-    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
+      // player who is being called
+      emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
+      // player who is calling
+      emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
 
-    calls.delete(transmitterNumber);
-  } catch (error) {
-    console.log(error, error.message);
+      calls.delete(transmitterNumber);
+    } catch (error) {
+      console.log(error, error.message);
+    }
   }
-});
+);
 
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = (global as any).source;

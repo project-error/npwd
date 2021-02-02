@@ -5,7 +5,7 @@ const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
-  const start = Date.now()
+  const start = Date.now();
 
   emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
 });
@@ -57,7 +57,7 @@ onNet(
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
-  const end = Date.now()
+  const end = Date.now();
   emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber, end);
 });
 
@@ -80,7 +80,7 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
-  const end = Date.now()
+  const end = Date.now();
   emitNet(events.PHONE_END_CALL, data.transmitterNumber, end);
 });
 
