@@ -65,12 +65,12 @@ if (process.env.NODE_ENV === 'development') {
             {
               id: 1,
               transmitter: '636-6496',
-              start: 1612301545782
+              start: 1612301545782,
             },
             {
               id: 2,
               transmitter: '777-7777',
-              start: 1612301545782
+              start: 1612301545782,
             },
           ],
         },
