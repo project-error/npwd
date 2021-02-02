@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 export const dialState = {
   history: atom({
-    key: 'dailerHistory',
+    key: 'dialHistory',
     default: null,
   }),
 };
