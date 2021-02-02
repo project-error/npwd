@@ -8,8 +8,11 @@ const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
-  const timestamp = dayjs().locale(config.Locale).format('HH:mm')  
-  emitNet(events.PHONE_INITIALIZE_CALL, data.number, timestamp);
+  const timestamp = dayjs().locale(config.Locale).format('HH:mm');
+  const start = Date.now()
+
+
+  emitNet(events.PHONE_INITIALIZE_CALL, data.number, timestamp, start);
 });
 
 onNet(
