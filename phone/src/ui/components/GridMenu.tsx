@@ -4,6 +4,7 @@ import { AppIcon } from './AppIcon';
 import { Grid, makeStyles, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useKeyboard } from '../../os/keyboard/hooks/useKeyboard';
+import { AppConfiguration } from '../../os/apps/hooks/useApps';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const GridMenu = ({ items, Component = AppIcon }) => {
+interface IProps {
+  items: AppConfiguration[];
+  Component: (...AppConfiguration) => JSX.Element;
+}
+
+export const GridMenu = ({ items, Component = AppIcon }: IProps) => {
   const { t } = useTranslation();
   const setKey = useKeyboard();
   const classes = useStyles();
