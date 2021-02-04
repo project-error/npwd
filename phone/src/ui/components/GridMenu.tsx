@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AppIcon } from './AppIcon';
-import { Grid, makeStyles, Tooltip } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useKeyboard } from '../../os/keyboard/hooks/useKeyboard';
-import { AppConfiguration } from '../../os/apps/hooks/useApps';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,18 +13,12 @@ const useStyles = makeStyles((theme) => ({
     width: '20%',
   },
   tooltip: {
-    bottom: -12,
+    bottom: -8,
     fontSize: 12,
   },
 }));
 
-interface IProps {
-  items: AppConfiguration[];
-  Component: (...AppConfiguration) => JSX.Element;
-}
-
-export const GridMenu = ({ items, Component = AppIcon }: IProps) => {
-  const { t } = useTranslation();
+export const GridMenu = ({ items, Component = AppIcon }) => {
   const setKey = useKeyboard();
   const classes = useStyles();
 
@@ -43,23 +35,25 @@ export const GridMenu = ({ items, Component = AppIcon }: IProps) => {
         {items &&
           items.length &&
           items.map((item) => (
-            <Tooltip
+            // <Tooltip
+            //   title={item.id}
+            //   placement='top'
+            //   arrow
+            //   classes={{ tooltip: classes.tooltip }}
+            //   PopperProps={{
+            //     anchorEl={}
+            //   }}
+            // >
+            <Grid
               key={item.id}
-              title={t(item.nameLocale)}
-              placement="top-start"
-              classes={{ tooltip: classes.tooltip }}
-              arrow
+              item
+              className={classes.item}
+              component={Link}
+              to={item.path}
             >
-              <Grid
-                key={item.id}
-                item
-                className={classes.item}
-                component={Link}
-                to={item.path}
-              >
-                <Component {...item} />
-              </Grid>
-            </Tooltip>
+              <Component {...item} />
+            </Grid>
+            // </Tooltip>
           ))}
       </Grid>
     </Grid>
