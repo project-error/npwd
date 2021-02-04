@@ -2,12 +2,10 @@
   "cellProvider": "AT&T",
   "language": "en",
   "wallpapers": [
-    "minimal.jpg",
-    "waves.jpg",
-    "surf.jpg",
     "beach.jpg",
-    "weeb.png",
-    "weeb2.gif"
+    "minimal.jpg",
+    "surf.jpg",
+    "waves.jpg"
   ],
   "defaultSettings": {
     "wallpaper": "minimal.png",
