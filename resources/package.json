@@ -8,7 +8,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "format": "prettier --write \"./**/*.ts\"",
-    "watch": "webpack --mode development --watch true",
+    "watch": "webpack --mode development --watch",
     "test": "jest",
     "precommit": "npm run test && lint-staged"
   },
