@@ -39,6 +39,16 @@ import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 
+export interface AppConfiguration {
+  id: string;
+  nameLocale: string;
+  icon: JSX.Element;
+  backgroundColor: string;
+  color: string;
+  path: string;
+  Route: () => JSX.Element;
+}
+
 const appsState = atom({
   key: 'apps',
   default: {
@@ -148,7 +158,7 @@ const appsState = atom({
 
 export const useApps = () => {
   const [apps, setApps] = useConfig(appsState);
-  const allApps = [...apps.preinstalled];
+  const allApps: AppConfiguration[] = [...apps.preinstalled];
 
   const getApp = (id) => allApps.find((a) => a.id === id) || null;
 
