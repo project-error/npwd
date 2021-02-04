@@ -9,7 +9,7 @@ import {
 interface IProps {
   options?: any;
   label: string;
-  value?: string | null;
+  value?: string | number | null;
   onClick?: any;
   icon: JSX.Element;
 }
