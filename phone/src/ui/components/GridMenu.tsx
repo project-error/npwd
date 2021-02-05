@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AppIcon } from './AppIcon';
-import { Grid, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { Grid, makeStyles, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useKeyboard } from '../../os/keyboard/hooks/useKeyboard';
 
@@ -13,21 +14,20 @@ const useStyles = makeStyles((theme) => ({
     width: '20%',
   },
   tooltip: {
-    bottom: -8,
+    bottom: 0,
     fontSize: 12,
   },
 }));
 
 export const GridMenu = ({ items, Component = AppIcon }) => {
+  const { t } = useTranslation();
   const setKey = useKeyboard();
   const classes = useStyles();
-
   useEffect(function registerKeyHandlers() {
     setKey('ArrowLeft', () => {
       console.log(':v');
     });
-    // eslint-disable-next-line
-  }, []);
+  }, [setKey]);
 
   return (
     <Grid container justify='center'>
@@ -35,25 +35,22 @@ export const GridMenu = ({ items, Component = AppIcon }) => {
         {items &&
           items.length &&
           items.map((item) => (
-            // <Tooltip
-            //   title={item.id}
-            //   placement='top'
-            //   arrow
-            //   classes={{ tooltip: classes.tooltip }}
-            //   PopperProps={{
-            //     anchorEl={}
-            //   }}
-            // >
-            <Grid
+            <Tooltip
               key={item.id}
-              item
-              className={classes.item}
-              component={Link}
-              to={item.path}
+              title={t(item.nameLocale)}
+              placement='bottom'
+              classes={{ tooltip: classes.tooltip }}
             >
-              <Component {...item} />
-            </Grid>
-            // </Tooltip>
+              <Grid
+                key={item.id}
+                item
+                className={classes.item}
+                component={Link}
+                to={item.path}
+              >
+                <Component {...item} />
+              </Grid>
+            </Tooltip>
           ))}
       </Grid>
     </Grid>

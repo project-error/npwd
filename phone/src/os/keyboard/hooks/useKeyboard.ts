@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 
 const keyboardState = {
@@ -87,16 +87,29 @@ export const useInitKeyboard = () => {
 };
 
 export const useKeyboard = () => {
-  const setters = {
-    ArrowRight: useSetRecoilState(keyboardState.ArrowRight),
-    ArrowLeft: useSetRecoilState(keyboardState.ArrowLeft),
-    ArrowUp: useSetRecoilState(keyboardState.ArrowUp),
-    ArrowDown: useSetRecoilState(keyboardState.ArrowDown),
-    Backspace: useSetRecoilState(keyboardState.Backspace),
-    Enter: useSetRecoilState(keyboardState.Enter),
-  };
+  const ArrowRight = useSetRecoilState(keyboardState.ArrowRight);
+  const ArrowLeft = useSetRecoilState(keyboardState.ArrowLeft);
+  const ArrowUp = useSetRecoilState(keyboardState.ArrowUp);
+  const ArrowDown = useSetRecoilState(keyboardState.ArrowDown);
+  const Backspace = useSetRecoilState(keyboardState.Backspace);
+  const Enter = useSetRecoilState(keyboardState.Enter);
 
-  return (key, handler) => {
-    setters[key]({ handler });
-  };
+  const setters = useMemo(
+    () => ({
+      ArrowRight,
+      ArrowLeft,
+      ArrowUp,
+      ArrowDown,
+      Backspace,
+      Enter,
+    }),
+    [ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Backspace, Enter]
+  );
+
+  return useCallback(
+    (key, handler) => {
+      setters[key]({ handler });
+    },
+    [setters]
+  );
 };

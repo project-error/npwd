@@ -1,8 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDuration } from '../hooks/useDuration';
 
 function CallTimer({ isAccepted }) {
   const { duration, setDuration } = useDuration();
+  const updatedTime = useRef({ ms: 0, s: 0, m: 0, h: 0 });
+
+  const run = useCallback(() => {
+    let newTime = { ...updatedTime.current };
+    if (newTime.m >= 60) {
+      newTime = { ...newTime, h: newTime.h + 1, m: 0 };
+    }
+    if (newTime.s >= 60) {
+      newTime = { ...newTime, m: newTime.m + 1, s: 0 };
+    }
+    if (newTime.ms >= 100) {
+      newTime = { ...newTime, s: newTime.s + 1, ms: 0 };
+    }
+
+    newTime = { ...newTime, ms: newTime.ms + 1 };
+    updatedTime.current = newTime;
+    setDuration(newTime);
+  }, [setDuration]);
 
   useEffect(() => {
     let timer;
@@ -12,36 +30,9 @@ function CallTimer({ isAccepted }) {
     } else {
       clearInterval(timer);
     }
-  }, []);
-
-  let updatedMs = duration.ms,
-    updatedS = duration.s,
-    updatedM = duration.m,
-    updatedH = duration.h;
+  }, [isAccepted, run]);
 
   if (!duration) return null;
-
-  const run = () => {
-    if (updatedM === 60) {
-      updatedH++;
-      updatedM = 0;
-    }
-    if (updatedS === 60) {
-      updatedM++;
-      updatedS = 0;
-    }
-    if (updatedMs === 100) {
-      updatedS++;
-      updatedMs = 0;
-    }
-    updatedMs++;
-    return setDuration({
-      ms: updatedMs,
-      s: updatedS,
-      m: updatedM,
-      h: updatedH,
-    });
-  };
 
   return (
     <div

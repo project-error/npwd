@@ -58,3 +58,8 @@
 *::-webkit-scrollbar-thumb {
   background-color: #666;
 }
+
+
+.zoomProp {
+  transform: scale(10);
+}

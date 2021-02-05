@@ -43,8 +43,8 @@ export const useNuiEvent = (
           data: event.data,
           level: 1,
         });
-        const newData = currentState ? { ...currentState, ...data } : data
-        savedHandler.current(newData)
+        const newData = currentState ? { ...currentState, ...data } : data;
+        savedHandler.current(newData);
       }
     };
     // Why are destructing then restructuring option data?
@@ -53,5 +53,5 @@ export const useNuiEvent = (
     window.addEventListener(eventName, eventListener, opts);
     // Remove Event Listener on component cleanup
     return () => window.removeEventListener(eventName, eventListener, opts);
-  }, [app, method, capture, passive, once]);
+  }, [app, capture, currentState, method, once, passive]);
 };
