@@ -53,5 +53,5 @@ export const useNuiEvent = (
     window.addEventListener(eventName, eventListener, opts);
     // Remove Event Listener on component cleanup
     return () => window.removeEventListener(eventName, eventListener, opts);
-  }, [app, method, capture, passive, once]);
+  }, [app, method, capture, passive, once, currentState]);
 };

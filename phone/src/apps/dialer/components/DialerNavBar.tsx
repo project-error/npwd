@@ -1,11 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Link } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import PhoneIcon from '@material-ui/icons/Phone';
 import { History } from '@material-ui/icons';
 

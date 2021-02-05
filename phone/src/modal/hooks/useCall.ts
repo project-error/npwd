@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { CallProps, ICallDuration } from '../../common/typings/call';
+import { CallProps } from '../../common/typings/call';
 import { callerState } from './state';
 
 interface CallHook {
