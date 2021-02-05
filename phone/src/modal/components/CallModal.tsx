@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Fab } from '@material-ui/core';
+import React from 'react';
+import { Fab } from '@material-ui/core';
 import { AppWrapper } from '../../ui/components/AppWrapper';
-import { AppTitle } from '../../ui/components/AppTitle';
 import { AppContent } from '../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import CallIcon from '@material-ui/icons/Call';
