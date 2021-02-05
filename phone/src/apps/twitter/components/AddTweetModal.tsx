@@ -16,6 +16,7 @@ import TweetMessage from './tweet/TweetMessage';
 import ControlButtons from './buttons/ControlButtons';
 import IconButtons from './buttons/IconButtons';
 import { usePhone } from '../../../os/phone/hooks/usePhone';
+import { getNewLineCount } from '../utils/message';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,7 @@ export const AddTweetModal = () => {
   const [link, setLink] = useState('');
 
   const [images, setImages] = useState<Image[]>([]);
+  const { characterLimit, newLineLimit } = config.twitter;
 
   const reset = () => {
     setShowImagePrompt(false);
@@ -97,10 +99,16 @@ export const AddTweetModal = () => {
 
   if (!config) return null;
 
+  const isValidMessage = message => {
+    if (message.length > characterLimit) return false;
+    if (getNewLineCount(message) > newLineLimit) return false;
+    return true;
+  }
+
   const submitTweet = () => {
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
-    if (cleanedMessage.length > config.twitter.characterLimit) return;
+    if (!isValidMessage(cleanedMessage)) return;
 
     const data = {
       message,
@@ -114,11 +122,7 @@ export const AddTweetModal = () => {
     _handleClose();
   };
 
-  const handleMessageChange = (e: StandardInputProps['onChange']) => {
-    const message = e.target.value;
-    if (message.length > config.twitter.characterLimit) return;
-    setMessage(message)
-  }
+  const handleMessageChange = (message) => setMessage(message);
 
   const addImage = () => {
     // strip any whitespace from the link in case the user

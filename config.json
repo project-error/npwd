@@ -21,6 +21,7 @@
         "allowDeleteTweets": true,
         "allowReportTweets": true,
         "characterLimit": 160,
+        "newLineLimit": 10,
         "enableAvatars": true,
         "enableEmojis": true,
         "enableImages": true,
