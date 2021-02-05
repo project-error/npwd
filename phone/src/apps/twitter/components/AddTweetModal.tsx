@@ -114,7 +114,11 @@ export const AddTweetModal = () => {
     _handleClose();
   };
 
-  const handleMessageChange = (e) => setMessage(e.target.value);
+  const handleMessageChange = (e: StandardInputProps['onChange']) => {
+    const message = e.target.value;
+    if (message.length > config.twitter.characterLimit) return;
+    setMessage(message)
+  }
 
   const addImage = () => {
     // strip any whitespace from the link in case the user

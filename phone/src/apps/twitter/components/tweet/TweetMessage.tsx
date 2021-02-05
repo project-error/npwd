@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
     padding: '10px 15px',
     marginTop: '15px',
+    overflowY: 'auto',
+    maxHeight: '300px',
   },
   textFieldInput: {
     fontSize: '22px',

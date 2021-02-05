@@ -20,7 +20,7 @@
         "allowEdtiableProfileName": true,
         "allowDeleteTweets": true,
         "allowReportTweets": true,
-        "characterLimit": 240,
+        "characterLimit": 160,
         "enableAvatars": true,
         "enableEmojis": true,
         "enableImages": true,
