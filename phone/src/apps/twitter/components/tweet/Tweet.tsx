@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
     flexFlow: 'row nowrap',
     alignItems: 'flex-start',
     width: '100%',
-    marginTop: '3px',
+    marginTop: '6px',
   },
   content: {
     display: 'flex',
@@ -48,7 +48,6 @@ const useStyles = makeStyles(() => ({
   },
   message: {
     fontSize: '18px',
-    color: 'rgba(255, 255, 255, 0.7)',
   },
   buttonContainer: {
     display: 'flex',
