@@ -1,12 +1,13 @@
 .PhoneWrapper {
   width: 100vw;
   height: 100vh;
+  position: relative;
 }
 
 .Phone {
   position: absolute;
-  bottom: 0vh;
-  right: 0vh;
+  bottom: 0;
+  right: 0;
   width: 500px;
   height: 1000px;
   background-size: cover;
