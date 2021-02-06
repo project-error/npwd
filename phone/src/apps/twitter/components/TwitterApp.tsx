@@ -19,6 +19,7 @@ import './twitter.css';
 import 'emoji-mart/css/emoji-mart.css';
 import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
+import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {

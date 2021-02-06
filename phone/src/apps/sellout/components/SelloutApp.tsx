@@ -8,6 +8,32 @@ import { Switch, Route } from 'react-router-dom';
 
 import './Sellout.css';
 import { ListingFormContainer } from './form/ListingFormContainer';
+import InjectDebugData from '../../../os/debug/InjectDebugData';
+
+InjectDebugData([
+  {
+    app: 'SELLOUT',
+    method: 'setListings',
+    data: [
+      {
+        id: 1,
+        name: 'Some guy',
+        number: '123-4567',
+        title: 'Car',
+        description: 'Selling this cool car',
+        url: 'https://i.imgur.com/ROmGTwi.jpeg',
+      },
+      {
+        id: 2,
+        name: 'Some other dude',
+        number: '666-6666',
+        title: 'Material',
+        description: 'Selling my wife',
+        url: '',
+      },
+    ],
+  },
+]);
 
 export const SelloutApp = () => {
   return (
