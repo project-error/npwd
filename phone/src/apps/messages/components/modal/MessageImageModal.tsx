@@ -6,12 +6,10 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import {
   Box,
   Button,
-  IconButton,
   TextField,
   Typography,
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import CloseIcon from '@material-ui/icons/Close';
 import useStyles from './modal.styles';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
