@@ -14,6 +14,26 @@ import { useNoteModal } from './hooks/useNoteModal';
 import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
+import InjectDebugData from '../../os/debug/InjectDebugData';
+
+InjectDebugData([
+  {
+    app: 'NOTES',
+    method: 'setNotes',
+    data: [
+      {
+        id: 1,
+        title: 'First note',
+        content: 'Hello, this is my shitty note',
+      },
+      {
+        id: 2,
+        title: 'Second note',
+        content: 'Hello, this is another shitty note',
+      },
+    ],
+  },
+]);
 
 export const NotesApp = () => {
   const { setNoteModal } = useNoteModal();

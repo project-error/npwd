@@ -10,6 +10,21 @@ import useStyles from './modal.styles';
 import { useModal } from '../hooks/useModal';
 import Nui from '../../os/nui-events/utils/Nui';
 import CallTimer from './CallTimer';
+import InjectDebugData from '../../os/debug/InjectDebugData';
+
+InjectDebugData([
+  {
+    app: 'CALL',
+    method: 'setCaller',
+    data: {
+      accepted: true,
+      isTransmitter: true,
+      transmitter: 'Chip',
+      receiver: 'Taso',
+      phone_number: '860-4504',
+    },
+  },
+]);
 
 export const CallModal = () => {
   const { call } = useCall();

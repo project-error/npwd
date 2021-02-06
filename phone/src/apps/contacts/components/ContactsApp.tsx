@@ -14,6 +14,26 @@ import { useContactDetail } from '../hooks/useContactDetail';
 import { ContactAlert } from './alert/ContactAlert';
 
 import useStyles from './styles.contacts';
+import InjectDebugData from '../../../os/debug/InjectDebugData';
+
+InjectDebugData([
+  {
+    app: 'CONTACTS',
+    method: 'setContacts',
+    data: [
+      {
+        id: 1,
+        display: 'Ruqen',
+        number: '43534444',
+      },
+      {
+        id: 1,
+        display: 'Taso',
+        number: '456466',
+      },
+    ],
+  },
+]);
 
 export const ContactsApp = () => {
   const classes = useStyles();

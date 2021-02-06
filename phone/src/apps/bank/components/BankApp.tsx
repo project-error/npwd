@@ -15,6 +15,7 @@ import { BankHome } from './home/BankHome';
 import { BankAccount } from './account/BankAccount';
 import { TransactionList } from './transactions/TransactionList';
 import { BankAlert } from './alert/BankAlert';
+import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,67 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 5,
   },
 }));
+
+InjectDebugData([
+  {
+    app: 'BANK',
+    method: 'setCredentials',
+    data: {
+      name: 'Firstname Lastname',
+      balance: 2000,
+    },
+  },
+  {
+    app: 'BANK',
+    method: 'setNotification',
+    data: {
+      id: 1,
+      message: 'ahhaha',
+    },
+  },
+  {
+    app: 'BANK',
+    method: 'setTransaction',
+    data: [
+      {
+        id: 1,
+        amount: 200,
+        type: 'Deposit',
+        source: 'chip',
+      },
+      {
+        id: 2,
+        amount: 200,
+        type: 'Withdraw',
+        source: 'chip',
+      },
+      {
+        id: 3,
+        amount: 200,
+        type: 'Withdraw',
+        source: 'chip',
+      },
+      {
+        id: 4,
+        amount: 50,
+        type: 'Deposit',
+        source: 'chip',
+      },
+      {
+        id: 4,
+        amount: 50,
+        type: 'Deposit',
+        source: 'chip',
+      },
+      {
+        id: 4,
+        amount: 50,
+        type: 'Deposit',
+        source: 'chip',
+      },
+    ],
+  },
+]);
 
 export const BankApp = () => {
   const { showBankModal } = useBankModal();

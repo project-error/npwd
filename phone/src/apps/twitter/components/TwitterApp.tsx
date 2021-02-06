@@ -19,6 +19,7 @@ import './twitter.css';
 import 'emoji-mart/css/emoji-mart.css';
 import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
+import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -34,6 +35,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 const TWEETS_REFRESH_RATE = 15000; // TODO move this to twitter config
+
+InjectDebugData([
+  {
+    app: 'TWITTER',
+    method: 'setNotification',
+    data: {
+      id: 1,
+      message: 'ahhaha',
+    },
+  },
+]);
 
 export const TwitterApp = () => {
   const classes = useStyles();
