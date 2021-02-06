@@ -4,8 +4,8 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import { useQueryParams } from '../../../common/hooks/useQueryParams';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import { ICameraPhoto } from '../hooks/usePhotos';
 
 InjectDebugData([
   {
@@ -25,10 +25,11 @@ InjectDebugData([
 ]);
 
 const CameraApp = () => {
-  const query = useQueryParams();
+  const history = useHistory<{ referal?: string; image?: ICameraPhoto }>();
+  const referal = history?.location?.state?.referal || '/camera';
 
-  const referal = (query.referal as string) || '/camera';
-
+  console.log('referal', referal);
+  
   return (
     <AppWrapper id='camera-app'>
       <AppContent>

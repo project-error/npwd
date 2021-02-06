@@ -6,10 +6,17 @@ import AddIcon from '@material-ui/icons/Add';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import * as qs from 'qs';
+import url from 'parse-url';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 
-export const GalleryGrid = ({ referal = '/camera/image' }) => {
+export const GalleryGrid = () => {
   const classes = useStyles();
   const history = useHistory();
+  const query = useQueryParams();
+
+  const referal = query.referal
+    ? decodeURIComponent(query.referal)
+    : '/camera/image';
 
   const photos = usePhotos();
 
@@ -18,7 +25,8 @@ export const GalleryGrid = ({ referal = '/camera/image' }) => {
   };
 
   const handlePhotoOpen = (photo) => {
-    history.push(`${referal}?${qs.stringify(photo)}`);
+    const { pathname, query } = url(referal);
+    history.push(`${pathname}?${qs.stringify({ image: photo.image, ...query })}`);
   };
 
   if (!photos)
@@ -59,7 +67,7 @@ export const GalleryGrid = ({ referal = '/camera/image' }) => {
           </Button>
         </Box>
         {photos.map((photo) => (
-          <Box onClick={() => handlePhotoOpen(photo)}>
+          <Box key={photo.id} onClick={() => handlePhotoOpen(photo)}>
             <div
               style={{ backgroundImage: `url(${photo.image})` }}
               className={classes.photo}

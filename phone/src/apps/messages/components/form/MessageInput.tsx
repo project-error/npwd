@@ -5,14 +5,13 @@ import useStyles from './form.styles';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { useImageModal } from '../../hooks/useImageModal';
 
 interface IProps {
+  onAddImageClick(): void;
   messageGroupId: string | undefined;
 }
 
-const MessageInput = ({ messageGroupId }: IProps) => {
-  const { setImageModal } = useImageModal();
+const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
@@ -27,10 +26,6 @@ const MessageInput = ({ messageGroupId }: IProps) => {
       });
       setMessage('');
     }
-  };
-
-  const openImageModal = () => {
-    setImageModal(true);
   };
 
   if (!messageGroupId) return null;
@@ -48,7 +43,7 @@ const MessageInput = ({ messageGroupId }: IProps) => {
             className: classes.messagesInput,
           }}
         />
-        <Button className={classes.sendButton} onClick={openImageModal}>
+        <Button className={classes.sendButton} onClick={onAddImageClick}>
           <ImageIcon />
         </Button>
         <Button className={classes.sendButton} type='submit'>

@@ -1,6 +1,7 @@
 import qs, { ParsedQs } from 'qs';
 import { useLocation } from 'react-router-dom';
 
-export const useQueryParams = (): ParsedQs => {
-  return qs.parse(useLocation().search);
-};
+export function useQueryParams<T = Record<string, string>>() {
+  return qs.parse(useLocation().search, { ignoreQueryPrefix: true }) as T &
+    Partial<ParsedQs>;
+}

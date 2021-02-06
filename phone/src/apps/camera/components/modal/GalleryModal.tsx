@@ -23,7 +23,7 @@ export const GalleryModal = ({ referal = '/camera' }) => {
   );
 
   const _handleClose = () => {
-    history.goBack();
+    history.push(referal);
   };
 
   const handleDeletePhoto = useCallback(() => {

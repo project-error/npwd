@@ -3,7 +3,6 @@ import Modal from '../../../../ui/components/Modal';
 import { Button } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
-import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './modal.styles';
 import { ICameraPhoto } from '../../hooks/usePhotos';
@@ -23,12 +22,6 @@ export const ShareModal = ({ meta, onClose }: IShareModalProps) => {
   return (
     <Modal visible={!!meta} handleClose={onClose}>
       <div className={classes.shareModal}>
-        <Button
-          style={{ position: 'absolute', right: 0, width: '10%' }}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </Button>
         <div className={classes.innerShareModal}>
           <>
             <h4 style={{ textAlign: 'center', marginTop: 20 }}>

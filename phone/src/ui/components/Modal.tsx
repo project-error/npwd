@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
+    padding: '24px',
     zIndex: 10,
     background: '#424242',
     marginTop: '15px',
@@ -23,6 +25,12 @@ const useStyles = makeStyles(() => ({
   },
   displayNone: {
     display: 'none',
+  },
+  imageModalCloseButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: '10%',
   },
 }));
 
@@ -48,7 +56,12 @@ export const Modal = ({ children, visible, handleClose }) => {
 
   return (
     <div className={showHideClassName}>
-      <Paper className={classes.root}>{children}</Paper>
+      <Paper className={classes.root}>
+        <Button onClick={handleClose} className={classes.imageModalCloseButton}>
+          <CloseIcon />
+        </Button>
+        {children}
+      </Paper>
     </div>
   );
 };

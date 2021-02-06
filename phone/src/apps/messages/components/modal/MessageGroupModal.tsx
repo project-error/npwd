@@ -2,21 +2,18 @@ import React from 'react';
 import { Slide, Paper, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import useStyles from './modal.styles';
-
-import useModals from '../../hooks/useModals';
 import NewMessageGroupForm from '../form/NewMessageGroupForm';
+import { useHistory } from 'react-router-dom';
 
 const MessageGroupModal = () => {
   const classes = useStyles();
-  const { showNewMessageGroup, setShowNewMessageGroup } = useModals();
+  const history = useHistory();
 
-  const handleClose = () => setShowNewMessageGroup(false);
+  const handleClose = () => history.push('/messages');
 
   return (
-    <Slide direction='left' in={showNewMessageGroup}>
-      <Paper
-        className={showNewMessageGroup ? classes.modalRoot : classes.modalHide}
-      >
+    <Slide direction='left' in>
+      <Paper className={classes.modalRoot}>
         <Button onClick={handleClose}>
           <ArrowBackIcon fontSize='large' />
         </Button>
