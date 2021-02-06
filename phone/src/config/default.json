@@ -11,7 +11,7 @@
     "wallpaper": "minimal.png",
     "frame": "s10.png",
     "theme": "taso-dark",
-    "zoom": "100%",
+    "zoom": 1,
     "ringtone": "pixel",
     "ringtoneVol": 100
   },
@@ -20,7 +20,7 @@
     "logLevel": 1
   },
   "frames": ["s10.png"],
-  "zoomOptions": ["120%", "100%", "80%", "60%", "40%"],
+  "zoomOptions": [1, 0.9, 0.8],
   "ringtones": ["marimba", "pixel"],
   "themes": {
     "default-dark": {
