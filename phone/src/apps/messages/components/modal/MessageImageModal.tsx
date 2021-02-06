@@ -115,7 +115,7 @@ export const MessageImageModal = ({
           </Button>
         </Box>
       </Modal>
-      <Modal visible={pasteVisible} handleClose={onClose}>
+      <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
         <div>
           <TextField
             placeholder='A link to your image or gif'
@@ -128,9 +128,6 @@ export const MessageImageModal = ({
             inputRef={(input) => input && input.focus()}
             onKeyPress={sendFromClipboard}
           />
-          <IconButton onClick={() => setPasteVisible(false)} color='secondary'>
-            <CloseIcon />
-          </IconButton>
         </div>
       </Modal>
     </>
