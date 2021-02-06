@@ -27,19 +27,19 @@ InjectDebugData([
         isMine: false,
         updatedAt: Date.now(),
       },
+    ],
+  },
+  {
+    app: 'MESSAGES',
+    method: 'phone:fetchMessageGroupsSuccess',
+    data: [
       {
-        app: 'MESSAGES',
-        method: 'phone:fetchMessageGroupsSuccess',
-        data: [
-          {
-            groupId: '2',
-            groupDisplay: 'dev-chat',
-            isGroupChat: true,
-            avatar: null,
-            label: null,
-            updatedAt: Date.now(),
-          },
-        ],
+        groupId: '2',
+        groupDisplay: 'dev-chat',
+        isGroupChat: true,
+        avatar: null,
+        label: null,
+        updatedAt: Date.now(),
       },
     ],
   },
