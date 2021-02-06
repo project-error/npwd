@@ -3,16 +3,16 @@ import url from 'parse-url';
 
 interface IRouterLocation {
   pathname: string;
-  search: any;
+  search: string;
 }
 
 export const addQueryToLocation = (
-  location: Record<string, unknown> & IRouterLocation,
+  { pathname = '', search = '' }: Record<string, unknown> & IRouterLocation,
   key = '',
   value = ''
 ) => {
-  const { query } = url(location.pathname + location.search);
-  return `${location.pathname}/?${qs.stringify({
+  const { query } = url(pathname + search);
+  return `${pathname}?${qs.stringify({
     ...query,
     [key]: value,
   })}`;

@@ -3,12 +3,7 @@ import qs from 'qs';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, TextField, Typography } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import useStyles from './modal.styles';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -52,9 +47,9 @@ export const MessageImageModal = ({
     (image) => {
       setQueryParamImagePreview(null);
       sendImageMessage(image);
-      history.replace(
-        deleteQueryFromLocation({ pathname, search }, 'image')
-      );
+
+      console.log('++++', { pathname, search });
+      history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
     },
     [history, pathname, search, sendImageMessage]
   );
