@@ -6,13 +6,14 @@ interface IRouterLocation {
   search: any;
 }
 
-export const deleteRouterLocationQueryString = (
+export const addQueryToLocation = (
   location: Record<string, unknown> & IRouterLocation,
-  key = ''
+  key = '',
+  value = ''
 ) => {
   const { query } = url(location.pathname + location.search);
   return `${location.pathname}/?${qs.stringify({
     ...query,
-    [key]: undefined,
+    [key]: value,
   })}`;
 };

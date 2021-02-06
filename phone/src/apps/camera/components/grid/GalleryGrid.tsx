@@ -5,9 +5,9 @@ import { usePhotos } from '../../hooks/usePhotos';
 import AddIcon from '@material-ui/icons/Add';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
-import * as qs from 'qs';
-import url from 'parse-url';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
+import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
 
 export const GalleryGrid = () => {
   const classes = useStyles();
@@ -25,8 +25,9 @@ export const GalleryGrid = () => {
   };
 
   const handlePhotoOpen = (photo) => {
-    const { pathname, query } = url(referal);
-    history.push(`${pathname}?${qs.stringify({ image: photo.image, ...query })}`);
+    history.push(
+      addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
+    );
   };
 
   if (!photos)

@@ -13,7 +13,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import useStyles from './modal.styles';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
-import { deleteRouterLocationQueryString } from '../../../../common/utils/deleteRouterLocationQueryString';
+import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 
 interface IProps {
@@ -53,7 +53,7 @@ export const MessageImageModal = ({
       setQueryParamImagePreview(null);
       sendImageMessage(image);
       history.replace(
-        deleteRouterLocationQueryString({ pathname, search }, 'image')
+        deleteQueryFromLocation({ pathname, search }, 'image')
       );
     },
     [history, pathname, search, sendImageMessage]
