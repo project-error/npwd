@@ -17,31 +17,6 @@ import { TransactionList } from './transactions/TransactionList';
 import { BankAlert } from './alert/BankAlert';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '90px',
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: '#fb8c00',
-    alignItems: 'center',
-  },
-  header: {
-    fontFamily: "'Bebas Neue', cursive",
-    textAlign: 'center',
-    fontSize: 50,
-  },
-  backgroundModal: {
-    background: 'black',
-    opacity: '0.6',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 5,
-  },
-}));
-
 InjectDebugData([
   {
     app: 'BANK',
@@ -49,14 +24,6 @@ InjectDebugData([
     data: {
       name: 'Firstname Lastname',
       balance: 2000,
-    },
-  },
-  {
-    app: 'BANK',
-    method: 'setNotification',
-    data: {
-      id: 1,
-      message: 'ahhaha',
     },
   },
   {
@@ -102,6 +69,31 @@ InjectDebugData([
     ],
   },
 ]);
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '90px',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#fb8c00',
+    alignItems: 'center',
+  },
+  header: {
+    fontFamily: "'Bebas Neue', cursive",
+    textAlign: 'center',
+    fontSize: 50,
+  },
+  backgroundModal: {
+    background: 'black',
+    opacity: '0.6',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5,
+  },
+}));
 
 export const BankApp = () => {
   const { showBankModal } = useBankModal();

@@ -36,17 +36,6 @@ const useStyles = makeStyles(() => ({
 
 const TWEETS_REFRESH_RATE = 15000; // TODO move this to twitter config
 
-InjectDebugData([
-  {
-    app: 'TWITTER',
-    method: 'setNotification',
-    data: {
-      id: 1,
-      message: 'ahhaha',
-    },
-  },
-]);
-
 export const TwitterApp = () => {
   const classes = useStyles();
   const { modalVisible, setModalVisible } = useModal();
