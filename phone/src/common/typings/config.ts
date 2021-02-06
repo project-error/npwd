@@ -5,6 +5,7 @@ interface TwitterConfig {
   allowDeleteTweets: boolean;
   allowReportTweets: boolean;
   characterLimit: number;
+  newLineLimit: number;
   enableAvatars: boolean;
   enableEmojis: boolean;
   enableImages: boolean;
