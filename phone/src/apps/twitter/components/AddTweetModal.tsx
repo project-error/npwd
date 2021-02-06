@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuidv4 } from 'uuid';
 
 import Nui from '../../../os/nui-events/utils/Nui';
@@ -31,12 +29,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: 5,
     marginTop: 20,
-  },
-  close: {
-    position: 'absolute',
-    top: '12px',
-    right: '4px',
-    zIndex: 2,
   },
   buttonsContainer: {
     paddingBottom: '8px',
@@ -160,9 +152,6 @@ export const AddTweetModal = () => {
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
-      <Button className={classes.close} onClick={_handleClose}>
-        <CloseIcon color='action' />
-      </Button>
       <TweetMessage message={message} handleChange={handleMessageChange} />
       <ImagePrompt
         visible={showImagePrompt}

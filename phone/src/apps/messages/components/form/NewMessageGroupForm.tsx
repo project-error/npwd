@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
 import useStyles from './form.styles';
-import useModals from '../../hooks/useModals';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { useHistory } from 'react-router-dom';
 
 const NewMessageGroupForm = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { t } = useTranslation();
-  const { setShowNewMessageGroup } = useModals();
   const [participants, setParticipants] = useState('');
   const [label, setLabel] = useState('');
 
@@ -31,7 +31,7 @@ const NewMessageGroupForm = () => {
         label: isGroupChat && labelValue ? labelValue : null,
       });
       setParticipants('');
-      setShowNewMessageGroup(false); // close modal after submission
+      history.push('/messages');
     }
   };
 

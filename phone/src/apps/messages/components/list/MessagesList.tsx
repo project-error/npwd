@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { List } from '@material-ui/core';
-
+import qs from 'qs';
 import { MessageGroup } from '../../../../common/typings/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
-import useModals from '../../hooks/useModals';
 import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
+import { useHistory } from 'react-router-dom';
+import NewMessageGroupButton from '../buttons/NewMessageGroupButton';
 
 const MessagesList = (): any => {
   const classes = useStyles();
-  const [searchValue, setSearchValue] = useState('');
+  const history = useHistory();
+
   const { messageGroups } = useMessages();
-  const { setActiveMessageGroup } = useModals();
+
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     Nui.send('phone:fetchMessageGroups');
@@ -22,8 +25,12 @@ const MessagesList = (): any => {
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
-    setActiveMessageGroup(messageGroup);
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
+    history.push(
+      `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(
+        messageGroup
+      )}`
+    );
   };
 
   const formattedSearch = searchValue.toLowerCase().trim();
@@ -54,6 +61,7 @@ const MessagesList = (): any => {
           />
         ))}
       </List>
+      <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
     </>
   );
 };

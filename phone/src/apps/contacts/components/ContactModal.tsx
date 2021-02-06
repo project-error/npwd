@@ -5,7 +5,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Modal from '../../../ui/components/Modal';
 import { useModal } from '../hooks/useModal';
-import ClearIcon from '@material-ui/icons/Clear';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -41,9 +40,6 @@ export const AddContactModal = () => {
 
   return (
     <Modal visible={showModal} handleClose={_handleClose}>
-      <Button onClick={_handleClose} className={classes.clearButton}>
-        <ClearIcon />
-      </Button>
       <List style={{ marginTop: 30 }}>
         <ListItem>
           <PersonIcon className={classes.icons} />

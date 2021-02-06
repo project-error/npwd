@@ -4,28 +4,30 @@ import useStyles from './grid.styles';
 import { usePhotos } from '../../hooks/usePhotos';
 import AddIcon from '@material-ui/icons/Add';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { usePhotoModal } from '../../hooks/usePhotoModal';
-import { usePhotoMeta } from '../../hooks/usePhotoMeta';
+import { useHistory } from 'react-router-dom';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
+import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
 
-// isMessage will work as a style handler kinda. If the gallery is rendered in the messages,
-// it will have the value true, which basically means a tweak on the design to fit in a modal
-export const GalleryGrid = (isMessags) => {
+export const GalleryGrid = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const query = useQueryParams();
 
-  const { setMeta } = usePhotoMeta();
-  const { setModal } = usePhotoModal();
+  const referal = query.referal
+    ? decodeURIComponent(query.referal)
+    : '/camera/image';
 
   const photos = usePhotos();
-
-  console.log(photos);
 
   const handleCamera = () => {
     Nui.send('phone:TakePhoto', {});
   };
 
   const handlePhotoOpen = (photo) => {
-    setModal(true);
-    setMeta(photo);
+    history.push(
+      addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
+    );
   };
 
   if (!photos)
@@ -66,7 +68,7 @@ export const GalleryGrid = (isMessags) => {
           </Button>
         </Box>
         {photos.map((photo) => (
-          <Box onClick={() => handlePhotoOpen(photo)}>
+          <Box key={photo.id} onClick={() => handlePhotoOpen(photo)}>
             <div
               style={{ backgroundImage: `url(${photo.image})` }}
               className={classes.photo}

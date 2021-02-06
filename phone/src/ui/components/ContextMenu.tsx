@@ -18,7 +18,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ContextMenu = ({ open, onClose, options }) => {
+interface IContextMenuProps {
+  open: boolean;
+  onClose(): void;
+  options: Array<{
+    onClick(e, option): void;
+    label: string;
+    selected?: boolean;
+    icon?: React.ReactNode;
+    key?: string;
+  }>;
+}
+
+export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
   const classes = useStyles();
   return (
     <Slide direction='up' in={open} mountOnEnter unmountOnExit>

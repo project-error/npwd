@@ -59,6 +59,7 @@ const appsState = atom({
         backgroundColor: amber[700],
         color: common.white,
         path: '/messages',
+        sharePath: '/messages/new',
         Route: () => <Route path='/messages' component={MessagesApp} />,
       },
       {

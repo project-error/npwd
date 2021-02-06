@@ -7,7 +7,6 @@ import {
   TextField,
   makeStyles,
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
 
@@ -32,11 +31,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     fontSize: 16,
     marginBottom: 30,
-  },
-  closeButton: {
-    position: 'absolute',
-    right: 0,
-    width: '10%',
   },
 }));
 
@@ -65,9 +59,6 @@ export const TransferModal = () => {
 
   return (
     <Modal visible={showBankModal} handleClose={_handleClose}>
-      <Button className={classes.closeButton} onClick={_handleClose}>
-        <CloseIcon />
-      </Button>
       <List style={{ marginTop: 20 }}>
         <ListItem>
           <TextField

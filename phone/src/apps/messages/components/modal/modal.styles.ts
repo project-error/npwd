@@ -71,11 +71,6 @@ const useStyles = makeStyles((theme) => ({
     height: '80%',
     maxHeight: '80%',
   },
-  imageModalCloseButton: {
-    position: 'absolute',
-    right: 0,
-    width: '10%',
-  },
 }));
 
 export default useStyles;

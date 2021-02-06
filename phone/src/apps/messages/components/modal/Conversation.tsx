@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Typography } from '@material-ui/core';
 
 import { Message, MessageGroup } from '../../../../common/typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 
 interface IProps {
   activeMessageGroup: MessageGroup;
@@ -15,6 +16,9 @@ export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
 const Conversation = ({ activeMessageGroup, messages }: IProps) => {
   const classes = useStyles();
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const query = useQueryParams();
+  const referalImage = query?.image || null;
 
   const isImage = (url) => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -22,7 +26,12 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
 
   return (
     <>
-      <MessageImageModal messageGroupId={activeMessageGroup.groupId} />
+      <MessageImageModal
+        image={referalImage}
+        onClose={() => setImageModalOpen(false)}
+        isOpen={imageModalOpen}
+        messageGroupId={activeMessageGroup.groupId}
+      />
       <div id={CONVERSATION_ELEMENT_ID} className={classes.messageList}>
         {messages.map((message) => (
           <div key={message.id} className={classes.messageContainer}>
@@ -48,7 +57,10 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
           </div>
         ))}
       </div>
-      <MessageInput messageGroupId={activeMessageGroup.groupId} />
+      <MessageInput
+        messageGroupId={activeMessageGroup.groupId}
+        onAddImageClick={() => setImageModalOpen(true)}
+      />
     </>
   );
 };
