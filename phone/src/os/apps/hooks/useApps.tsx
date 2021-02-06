@@ -126,7 +126,7 @@ const appsState = atom({
       },
       {
         id: 'CAMERA',
-        name: 'APPS_CAMERA',
+        nameLocale: 'APPS_CAMERA',
         icon: <CameraAltIcon fontSize='large' />,
         backgroundColor: grey['A400'],
         color: common.white,

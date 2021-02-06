@@ -4,6 +4,7 @@
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
 
     "COMING_SOON": "Coming soon...",
+
     "APPS_DIALER": "Phone",
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",
@@ -12,10 +13,13 @@
     "APPS_BANK": "WhoDis Banking",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "Example app",
+    "APPS_TWITTER": "Twitter",
+    "APPS_SELLOUT": "Market",
+    "APPS_CAMERA": "Camera",
+
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTIONS_FRAME": "Frame",
-    "APPS_TWITTER": "Twitter",
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "A link to your image or gif",
