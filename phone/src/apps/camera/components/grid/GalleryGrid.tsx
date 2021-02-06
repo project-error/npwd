@@ -4,28 +4,21 @@ import useStyles from './grid.styles';
 import { usePhotos } from '../../hooks/usePhotos';
 import AddIcon from '@material-ui/icons/Add';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { usePhotoModal } from '../../hooks/usePhotoModal';
-import { usePhotoMeta } from '../../hooks/usePhotoMeta';
+import { useHistory } from 'react-router-dom';
+import * as qs from 'qs';
 
-// isMessage will work as a style handler kinda. If the gallery is rendered in the messages,
-// it will have the value true, which basically means a tweak on the design to fit in a modal
-export const GalleryGrid = (isMessags) => {
+export const GalleryGrid = ({ referal = '/camera/image' }) => {
   const classes = useStyles();
-
-  const { setMeta } = usePhotoMeta();
-  const { setModal } = usePhotoModal();
+  const history = useHistory();
 
   const photos = usePhotos();
-
-  console.log(photos);
 
   const handleCamera = () => {
     Nui.send('phone:TakePhoto', {});
   };
 
   const handlePhotoOpen = (photo) => {
-    setModal(true);
-    setMeta(photo);
+    history.push(`${referal}?${qs.stringify(photo)}`);
   };
 
   if (!photos)
