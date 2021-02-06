@@ -7,10 +7,8 @@ import useMessages from '../../hooks/useMessages';
 import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
-import { Route, Switch, useHistory } from 'react-router-dom';
-import { MessageModal } from '../modal/MessageModal';
+import { useHistory } from 'react-router-dom';
 import NewMessageGroupButton from '../buttons/NewMessageGroupButton';
-import MessageGroupModal from '../modal/MessageGroupModal';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -50,14 +48,6 @@ const MessagesList = (): any => {
 
   return (
     <>
-      <Switch>
-        <Route
-          exact
-          path='/messages/conversations/:groupId'
-          component={MessageModal}
-        />
-        <Route exact path='/messages/new' component={MessageGroupModal} />
-      </Switch>
       <MessageSearch
         value={searchValue}
         handleChange={(e) => setSearchValue(e.target.value)}

@@ -10,10 +10,11 @@ import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ICameraPhoto } from '../../hooks/usePhotos';
 import { ShareModal } from './ShareModal';
 
-export const GalleryModal = ({ referal = '/camera' }) => {
+export const GalleryModal = () => {
   const classes = useStyles();
   const history = useHistory();
   const query = useQueryParams();
+  const referal = query.referal || '/camera';
 
   const [shareOpen, setShareOpen] = useState(null);
 
@@ -41,7 +42,7 @@ export const GalleryModal = ({ referal = '/camera' }) => {
 
   return (
     <>
-      <ShareModal meta={shareOpen} onClose={() => setShareOpen(null)} />
+      <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
       <Paper className={classes.modal}>
         <div className={shareOpen ? classes.backgroundModal : null} />
         <Button onClick={_handleClose}>

@@ -6,17 +6,21 @@ import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 
 import useStyles from './modal.styles';
 import { ICameraPhoto } from '../../hooks/usePhotos';
+import { useHistory } from 'react-router-dom';
 
 interface IShareModalProps {
   meta: ICameraPhoto;
+  referal: string;
   onClose(): void;
 }
 
-export const ShareModal = ({ meta, onClose }: IShareModalProps) => {
+export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const handleCopyImage = () => {
     setClipboard(meta.image);
+    history.push(referal);
   };
 
   return (

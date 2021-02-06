@@ -8,6 +8,7 @@ import AlertBar from './AlertBar';
 import MessageGroupModal from './modal/MessageGroupModal';
 import MessagesList from './list/MessagesList';
 import { Route, Switch } from 'react-router-dom';
+import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 InjectDebugData([
@@ -50,6 +51,13 @@ export const MessagesApp = () => {
     <AppWrapper id='messages-app'>
       <AppTitle app={messages} />
       <AppContent>
+        <Switch>
+          <Route
+            exact
+            path='/messages/conversations/:groupId'
+            component={MessageModal}
+          />
+        </Switch>
         <Switch>
           <Route path='/messages' component={MessagesList} />
           <Route exact path='/messages/new' component={MessageGroupModal} />
