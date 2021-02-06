@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useCalculator, CalcButton } from '../hooks/useCalculator';
-import { Grid, makeStyles, Box, Paper } from '@material-ui/core';
+import { Grid, makeStyles, Box, Paper, Fab } from '@material-ui/core';
+import { setClipboard } from '../../../os/phone/hooks/useClipboard';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -12,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    position: 'relative',
+  },
+  copyFab: {
+    position: 'absolute',
+    top: '16px',
+    left: '16px',
   },
 }));
 
@@ -38,13 +46,22 @@ export const Calculator = ({ ...props }) => {
     nine,
   } = useCalculator();
   const classes = useStyles();
+  const resultStr = useMemo(
+    () =>
+      result().toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 4,
+      }),
+    [result]
+  );
+
   return (
     <Box display='flex' flexDirection='column'>
       <Box flexGrow={1} component={Paper} p={4} className={classes.result}>
-        {result().toLocaleString(undefined, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 4,
-        })}
+        <Fab size="small" onClick={() => setClipboard(resultStr)} className={classes.copyFab}>
+          <FileCopyIcon />
+        </Fab>
+        {resultStr}
       </Box>
       <Box>
         <Grid container justify='space-around'>
