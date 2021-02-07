@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box, Button } from '@material-ui/core';
 import useStyles from './grid.styles';
 import { usePhotos } from '../../hooks/usePhotos';

@@ -26,8 +26,14 @@ async function deletePhoto(photo: IPhoto, identifier: string) {
 }
 
 onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
-  const identifier = await useIdentifier();
-  await uploadPhoto(identifier, image);
+  try {
+    const pSource = (global as any).source;
+    const identifier = await useIdentifier();
+    await uploadPhoto(identifier, image);
+    emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, pSource);
+  } catch (error) {
+    console.dir(error)
+  }
 });
 
 onNet(events.CAMERA_FETCH_PHOTOS, async () => {

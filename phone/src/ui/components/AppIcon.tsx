@@ -35,12 +35,8 @@ export const AppIcon = ({ id, name, icon, backgroundColor, color }) => {
     color: color || green[400],
   });
 
-  const openAppCallback = () => {
-    Nui.send(`phone:app:${id}`);
-  };
-
   return (
-    <Button onClick={openAppCallback} className={classes.root}>
+    <Button className={classes.root}>
       <Avatar className={classes.avatar}>
         {icon || name[0].toUpperCase()}
       </Avatar>

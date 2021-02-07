@@ -8,7 +8,6 @@ import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
-import NewMessageGroupButton from '../buttons/NewMessageGroupButton';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -61,7 +60,6 @@ const MessagesList = (): any => {
           />
         ))}
       </List>
-      <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
     </>
   );
 };

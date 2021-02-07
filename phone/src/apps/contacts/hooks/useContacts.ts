@@ -2,7 +2,6 @@ import { useRecoilValue } from 'recoil';
 import { contactsState } from './state';
 
 import { ContactProps } from '../../../common/typings/contact';
-import { useCall } from '../../../modal/hooks/useCall';
 import { useCallback } from 'react';
 
 interface IUseContacts {

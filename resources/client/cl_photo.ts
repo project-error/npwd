@@ -127,6 +127,10 @@ function takePhoto() {
   );
 }
 
+onNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, () => {
+  emitNet(events.CAMERA_FETCH_PHOTOS);
+})
+
 // delete photo
 
 RegisterNuiCallbackType(events.CAMERA_DELETE_PHOTO);
