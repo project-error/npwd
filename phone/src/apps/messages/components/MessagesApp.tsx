@@ -7,9 +7,10 @@ import { useApp } from '../../../os/apps/hooks/useApps';
 import AlertBar from './AlertBar';
 import MessageGroupModal from './modal/MessageGroupModal';
 import MessagesList from './list/MessagesList';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
+import NewMessageGroupButton from './buttons/NewMessageGroupButton';
 
 InjectDebugData([
   {
@@ -47,6 +48,7 @@ InjectDebugData([
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
+  const history = useHistory();
   return (
     <AppWrapper id='messages-app'>
       <AppTitle app={messages} />
@@ -59,7 +61,17 @@ export const MessagesApp = () => {
           />
         </Switch>
         <Switch>
-          <Route path='/messages' component={MessagesList} />
+          <Route
+            path='/messages'
+            render={() => (
+              <>
+                <MessagesList />
+                <NewMessageGroupButton
+                  onClick={() => history.push('/messages/new')}
+                />
+              </>
+            )}
+          />
           <Route exact path='/messages/new' component={MessageGroupModal} />
         </Switch>
       </AppContent>
