@@ -88,6 +88,7 @@ export default {
   // camera
   CAMERA_TAKE_PHOTO: 'phone:TakePhoto',
   CAMERA_UPLOAD_PHOTO: 'phone:UploadPhoto',
+  CAMERA_UPLOAD_PHOTO_SUCCESS: 'phone:UploadPhotoSuccess',
   CAMERA_FETCH_PHOTOS: 'phone:FetchPhotos',
   CAMERA_SEND_PHOTOS: 'phone:SendPhotos',
   CAMERA_DELETE_PHOTO: 'photo:deletePhoto',
