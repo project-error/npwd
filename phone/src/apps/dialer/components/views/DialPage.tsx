@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DialGrid from '../DialPadGrid';
 import { DialerInput } from '../DialerInput';
-import ContactSearch from '../ContactSearch';
 import { DialInputCtx } from '../../context/InputContext';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const DialPage = () => {
   const classes = useStyles();
-
-  const [inputVal, setInputVal] = useState('');
+  const query = useQueryParams();
+  const queryNumber = query.number;
+  const [inputVal, setInputVal] = useState(queryNumber || '');
 
   return (
     <div className={classes.root}>
@@ -29,7 +30,6 @@ const DialPage = () => {
           clear: () => setInputVal(''),
         }}
       >
-        <ContactSearch />
         <DialerInput />
         <DialGrid />
       </DialInputCtx.Provider>

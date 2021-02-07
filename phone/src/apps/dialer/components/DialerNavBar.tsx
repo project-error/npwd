@@ -1,9 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
-import { History } from '@material-ui/icons';
+import PersonIcon from '@material-ui/icons/Person';
+import HistoryIcon from '@material-ui/icons/History';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -17,10 +18,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const DialerNavBar = () => {
   const classes = useStyles();
+  const { pathname } = useLocation();
+  const [page, setPage] = useState(pathname);
 
-  const [page, setPage] = useState(0);
-
-  const handleChange = (event: ChangeEvent<{}>, newPage) => {
+  const handleChange = (_e, newPage) => {
     setPage(newPage);
   };
 
@@ -33,15 +34,26 @@ const DialerNavBar = () => {
     >
       <BottomNavigationAction
         label='History'
-        component={Link}
-        icon={<History />}
+        value='/phone'
+        component={NavLink}
+        icon={<HistoryIcon />}
         to='/phone'
       />
       <BottomNavigationAction
-        component={Link}
+        label='Dial'
+        value='/phone/dial'
+        color="secondary"
+        component={NavLink}
         icon={<PhoneIcon />}
         to='/phone/dial'
-        label='Call'
+      />
+      <BottomNavigationAction
+        label='Contacts'
+        value='/phone/contacts'
+        color="secondary"
+        component={NavLink}
+        icon={<PersonIcon />}
+        to='/phone/contacts'
       />
     </BottomNavigation>
   );

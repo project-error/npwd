@@ -31,8 +31,6 @@ const useStyles = makeStyles((theme: Theme) =>
     inputInput: {
       padding: theme.spacing(1, 4, 1, 4),
       transition: theme.transitions.create('width'),
-      width: '100%',
-
       [theme.breakpoints.up('sm')]: {
         width: '13ch',
         '&:focus': {
@@ -78,13 +76,14 @@ export const SearchContacts = () => {
           <SearchIcon style={{ color: '#fff' }} />
         </div>
         <InputBase
-          onChange={e => setFilteredContacts(e.target.value)}
+          fullWidth
+          onChange={(e) => setFilteredContacts(e.target.value)}
           placeholder={t('APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS')}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search', 'autoFocus': true }}
+          inputProps={{ 'aria-label': 'search', autoFocus: true }}
         />
       </div>
     </div>
