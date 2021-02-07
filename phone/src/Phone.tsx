@@ -33,8 +33,6 @@ import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
 
-import DefaultPhoneConfig from './config.autogen.json';
-
 function Phone() {
   const quickAccess = useQuickAccess();
   useNuiService();
