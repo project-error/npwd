@@ -74,7 +74,7 @@ The development environment assumes you have the following prerequisites:
 1. Clone the repo into your `server-data/resources/` folder. The path will be `server-data\resources\new-phone-who-dis`. **Don't clone the repo into a sub folder.**
 1. Ensure the resource folder is named `new-phone-who-dis`.
 1. Import the [sql file](https://github.com/project-error/new-phone-who-dis/blob/master/resources/import.sql) into your database.
-1. Add `new-phone-who-dis` to your `server.cfg`.
+1. Add `ensure new-phone-who-dis` to your `server.cfg`.
 1. Make your configurations in the [config.json](https://github.com/project-error/new-phone-who-dis/blob/master/config.json) **before** building the phone.
 1. Open **Windows Powershell** or a terminal in **Visual Studio Code**
 1. Change your directiory into `new-phone-who-dis\phone` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\phone`
