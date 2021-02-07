@@ -1,14 +1,10 @@
 # New Phone Who Dis
 
-The original repo for NPWD
-
-TODO
-
-### Production Server Installation
+### Production Server Installation **(WIP)**
 
 **Database**
 
-NPWD uses its own database driver compatible with `mysql-async` and `ghmattimysql`'s connection string. If you
+*New Phone Who Dis (NPWD)* uses its own database driver compatible with `mysql-async` and `ghmattimysql`'s connection string. If you
 don't utilize these resources, ensure you have this set in your console.
 
 ```
@@ -19,7 +15,7 @@ set mysql_connection_string "server=127.0.0.1;database=es_extended;userid=user;p
 
 This resource is highly configurable through the [config.json](./config.json). This JSON file holds configuration for the phone itself, for the apps running on it and peripheral information.
 
-Below is the list of configuration options:
+Below is the list of current configuration options **(WIP)**: 
 
 | Option                               | Default  | Description                                                                                                                    |
 | ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -46,46 +42,50 @@ Below is the list of configuration options:
 
 ### Discord
 
-It is possible to perform discord integration with the phone. To configure discord add the following variables to your `server.cfg` file:
+To configure Discord integration; add the following variables to your `server.cfg` file:
 
 ```
 set discord_bot_token "YOUR_DISCORD_BOT_TOKEN"
 set discord_channel_id "YOUR_DISCORD_CHANNEL_ID"
 ```
 
-Current discord integrations with the phone:
+Current Discord integrations with the phone **(WIP)**:
 
 - Twitter: reporting tweets
 
 ## Development
 
-This phone is a [React](https://reactjs.org/) project with a TypeScript client/server environment.
+This resource is a [React](https://reactjs.org/) project with a TypeScript client/server environment.
 
 ### Prerequisites
 
-The development environment assumes you have the following prerequisites:
+The Installation Steps assumes you have the following prerequisites:
 
-1. A windows environment and Powershell as your default terminal
+1. The ability to open a terminal. It's *recomended*, not required, to use [Visual Studio Code](https://code.visualstudio.com/) or Windows Powershell for the sake of this guide to better provide support should issues arise. 
 1. [Git for windows](https://git-scm.com/download/win) installed
 1. [LTS node.js](https://nodejs.org/en/about/releases/) installed
 1. [yarn](https://yarnpkg.com/) package manager installed (`npm install -g yarn`)
-1. A fivem environment that is set up according to the [setting up a server instructions](https://docs.fivem.net/docs/server-manual/setting-up-a-server/) from the fivem documentation
+1. A fivem environment that is set up according to the [setting up a server instructions](https://docs.fivem.net/docs/server-manual/setting-up-a-server/) from the fivem documentation.
 
-### Development Environment
+#### Installation Steps
 
-#### Steps
-
-1. Clone the repo into your `server-data/resources/[local]` folder
-1. Go into the react project: `cd phone`
-1. Install node dependencies: `yarn install`
-1. Install `lint-staged` globally `npm i -g lint-staged
-1. Add the `new-phone-who-dis` app to your `server.cfg`
-1. Start your fivem server
+1. Clone the repo into your `server-data/resources/` folder. The path will be `server-data\resources\new-phone-who-dis`. **Don't clone the repo into a sub folder.**
+1. Ensure the resource folder is named `new-phone-who-dis`.
+1. Import the [sql file](https://github.com/project-error/new-phone-who-dis/blob/master/resources/import.sql) into your database.
+1. Add `ensure new-phone-who-dis` to your `server.cfg`.
+1. Make your configurations in the [config.json](https://github.com/project-error/new-phone-who-dis/blob/master/config.json) **before** building the phone.
+1. Open a terminal with the program of your choice.
+1. Change your directiory into `new-phone-who-dis\phone` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\phone`
+1. Install node dependencies with `yarn install`.
+1. Build in the current directory with `yarn build`.
+1. Change your directiory into `new-phone-who-dis\resources` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\resources`
+1. Install node dependencies with`yarn install`.
+1. Build in the current directory with `yarn build`.
+1. Start your FiveM server
 
 #### Development iteration cycle:
-
-- If iterating on client/server Lua make your change and then `ensure new-phone-who-dis` in the fivem server terminal
-- If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then `ensure new-phone-who-dis` after making your change
+- You must rebuild the resource following any changes by doing `yarn build` in the `resources` and `phone` folder.
+- If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then do `ensure new-phone-who-dis` after making your change.
 - Avoid commiting `index.html` as the development version overrides the production version
 
 #### Important Note
