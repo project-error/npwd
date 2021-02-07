@@ -138,11 +138,3 @@ InjectDebugData([
     data: true,
   },
 ]);
-
-InjectDebugData([
-  {
-    app: 'PHONE',
-    method: 'phoneConfig',
-    data: DefaultPhoneConfig,
-  },
-]);
