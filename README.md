@@ -59,31 +59,29 @@ This resource is a [React](https://reactjs.org/) project with a TypeScript clien
 
 ### Prerequisites
 
-The development environment assumes you have the following prerequisites:
+The Installation Steps assumes you have the following prerequisites:
 
-1. A windows environment and Powershell as your default terminal.
+1. The ability to open a terminal. It's *recomended*, not required, to use [Visual Studio Code](https://code.visualstudio.com/) or Windows Powershell for the sake of this guide to better provide support should issues arise. 
 1. [Git for windows](https://git-scm.com/download/win) installed
 1. [LTS node.js](https://nodejs.org/en/about/releases/) installed
 1. [yarn](https://yarnpkg.com/) package manager installed (`npm install -g yarn`)
 1. A fivem environment that is set up according to the [setting up a server instructions](https://docs.fivem.net/docs/server-manual/setting-up-a-server/) from the fivem documentation.
 
-### Development Environment
-
-#### Steps
+#### Installation Steps
 
 1. Clone the repo into your `server-data/resources/` folder. The path will be `server-data\resources\new-phone-who-dis`. **Don't clone the repo into a sub folder.**
 1. Ensure the resource folder is named `new-phone-who-dis`.
 1. Import the [sql file](https://github.com/project-error/new-phone-who-dis/blob/master/resources/import.sql) into your database.
 1. Add `ensure new-phone-who-dis` to your `server.cfg`.
 1. Make your configurations in the [config.json](https://github.com/project-error/new-phone-who-dis/blob/master/config.json) **before** building the phone.
-1. Open **Windows Powershell** or a terminal in **Visual Studio Code**
+1. Open a terminal with the program of your choice.
 1. Change your directiory into `new-phone-who-dis\phone` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\phone`
 1. Install node dependencies with `yarn install`.
 1. Build in the current directory with `yarn build`.
 1. Change your directiory into `new-phone-who-dis\resources` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\resources`
 1. Install node dependencies with`yarn install`.
 1. Build in the current directory with `yarn build`.
-1. Start your fivem server
+1. Start your FiveM server
 
 #### Development iteration cycle:
 - You must rebuild the resource following any changes by doing `yarn build` in the `resources` and `phone` folder.
