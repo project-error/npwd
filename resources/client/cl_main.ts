@@ -210,16 +210,6 @@ function noPhone() {
   ESX.ShowNotification('Oi Mate, No El Telephono', false, false, 1);
 }
 
-function sendPhoneConfig() {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'phoneConfig',
-      data: config,
-    })
-  );
-}
-
 setTick(() => {
   if (IsControlJustPressed(1, config.KeyTogglePhone)) {
     Phone();
@@ -263,7 +253,6 @@ async function Phone() {
               data: true,
             })
           );
-          sendPhoneConfig();
           SetNuiFocus(true, true);
           //SetNuiFocusKeepInput(true)
         } else {
@@ -301,7 +290,6 @@ async function Phone() {
           data: true,
         })
       );
-      sendPhoneConfig();
       SetNuiFocus(true, true);
       //SetNuiFocusKeepInput(true)
     } else {

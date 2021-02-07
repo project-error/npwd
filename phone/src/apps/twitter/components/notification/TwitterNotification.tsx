@@ -5,6 +5,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import { useTwitterNotification } from '../../hooks/useTwitterNotification';
 import Notification from '../../../../ui/components/Notification';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import InjectDebugData from '../../../../os/debug/InjectDebugData';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -33,50 +33,7 @@ import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
 
-InjectDebugData([
-  {
-    app: 'PHONE',
-    method: 'phoneConfig',
-    data: {
-      Locale: 'en',
-      KeyTogglePhone: 288,
-      KeyTakeCall: 38,
-      PhoneAsItem: false,
-      SwimDestroy: false,
-      RunRate: 10,
-      DestoryChance: 100,
-      DestroyPhoneReCheck: 3,
-      notificationPosition: {
-        horizontal: 'right',
-        vertical: 'top',
-      },
-      general: {
-        useDashNumber: true,
-      },
-      twitter: {
-        showNotifications: true,
-        generateProfileNameFromUsers: true,
-        allowEdtiableProfileName: true,
-        allowDeleteTweets: true,
-        allowReportTweets: true,
-        characterLimit: 160,
-        newLineLimit: 10,
-        enableAvatars: true,
-        enableEmojis: true,
-        enableImages: true,
-        maxImages: 3,
-      },
-      bank: {
-        showNotifications: true,
-      },
-    },
-  },
-  {
-    app: 'PHONE',
-    method: 'setVisibility',
-    data: true,
-  },
-]);
+import DefaultPhoneConfig from './config.autogen.json';
 
 function Phone() {
   const quickAccess = useQuickAccess();
@@ -173,3 +130,19 @@ function Phone() {
 }
 
 export default Phone;
+
+InjectDebugData([
+  {
+    app: 'PHONE',
+    method: 'setVisibility',
+    data: true,
+  },
+]);
+
+InjectDebugData([
+  {
+    app: 'PHONE',
+    method: 'phoneConfig',
+    data: DefaultPhoneConfig,
+  },
+]);
