@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -114,7 +114,7 @@ export const AddTweetModal = () => {
     _handleClose();
   };
 
-  const handleMessageChange = (message) => setMessage(message);
+  const handleMessageChange = useCallback((message) => setMessage(message), []);
 
   const addImage = () => {
     // strip any whitespace from the link in case the user
@@ -138,7 +138,7 @@ export const AddTweetModal = () => {
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
-  const handleimageChange = (e) => setLink(e.target.value);
+  const handleimageChange = useCallback((link) => setLink(link), []);
 
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
@@ -160,7 +160,11 @@ export const AddTweetModal = () => {
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
-      <TweetMessage message={message} handleChange={handleMessageChange} />
+      <TweetMessage
+        modalVisible={modalVisible}
+        message={message}
+        handleChange={handleMessageChange}
+      />
       <ImagePrompt
         visible={showImagePrompt}
         value={link}

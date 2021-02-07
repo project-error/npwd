@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
@@ -15,8 +15,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ImagePrompt = ({ visible, value, handleChange }) => {
+  const textFieldRef = useRef(null);
   const { t } = useTranslation();
   const classes = useStyles();
+
+  useEffect(() => {
+    textFieldRef.current && textFieldRef.current.focus();
+  }, [visible]);
+
+  const handleImageChange = useCallback(e => handleChange(e.target.value), []);
 
   if (!visible) return null;
   return (
@@ -24,13 +31,13 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       value={value}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
-      onChange={handleChange}
+      onChange={handleImageChange}
       multiline
       size='small'
       placeholder={t('APPS_TWITTER_IMAGE_PLACEHOLDER')}
-      inputRef={(input) => input && input.focus()}
+      inputRef={textFieldRef}
     />
   );
 };
 
-export default ImagePrompt;
+export default memo(ImagePrompt);
