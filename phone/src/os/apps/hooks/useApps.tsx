@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useConfig } from '../../../config/hooks/useConfig';
 import {
   blue,
@@ -38,6 +38,23 @@ import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
+import Nui from "../../nui-events/utils/Nui";
+
+const AppWithStartup = ({ children, id }) => {
+  useEffect(() => {
+    Nui.send(`phone:app:${id}`);
+  }, []);
+  return children;
+};
+
+const AppRoute = ({ id, component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={() => <AppWithStartup id={id}><Component /></AppWithStartup>}
+    />
+  );
+};
 
 const appsState = atom({
   key: 'apps',
@@ -50,7 +67,7 @@ const appsState = atom({
         backgroundColor: green[600],
         color: common.white,
         path: '/phone',
-        Route: () => <Route path='/phone' component={DialerApp} />,
+        Route: () => <AppRoute id="DIALER" path='/phone' component={DialerApp} />,
       },
       {
         id: 'MESSAGES',
@@ -60,7 +77,7 @@ const appsState = atom({
         color: common.white,
         path: '/messages',
         sharePath: '/messages/new',
-        Route: () => <Route path='/messages' component={MessagesApp} />,
+        Route: () => <AppRoute id="MESSAGE" path='/messages' component={MessagesApp} />,
       },
       {
         id: 'CONTACTS',
@@ -69,7 +86,7 @@ const appsState = atom({
         backgroundColor: blue[500],
         color: common.white,
         path: '/contacts',
-        Route: () => <Route path='/contacts' component={ContactsApp} />,
+        Route: () => <AppRoute id="CONTACTS" path='/contacts' component={ContactsApp} />,
       },
       {
         id: 'CALCULATOR',
@@ -78,7 +95,7 @@ const appsState = atom({
         backgroundColor: purple[500],
         color: grey[50],
         path: '/calculator',
-        Route: () => <Route path='/calculator' component={CalculatorApp} />,
+        Route: () => <AppRoute id="CALCULATOR" path='/calculator' component={CalculatorApp} />,
       },
       {
         id: 'SETTINGS',
@@ -87,7 +104,7 @@ const appsState = atom({
         backgroundColor: '#383838',
         color: grey[50],
         path: '/settings',
-        Route: () => <Route path='/settings' component={SettingsApp} />,
+        Route: () => <AppRoute id="SETTINGS" path='/settings' component={SettingsApp} />,
       },
       {
         id: 'BANK',
@@ -96,7 +113,7 @@ const appsState = atom({
         backgroundColor: blue[900],
         color: common.white,
         path: '/bank',
-        Route: () => <Route path='/bank' component={BankApp} />,
+        Route: () => <AppRoute id="BANK" path='/bank' component={BankApp} />,
       },
       {
         id: 'TWITTER',
@@ -105,7 +122,7 @@ const appsState = atom({
         backgroundColor: blue[600],
         color: common.white,
         path: '/twitter',
-        Route: () => <Route path='/twitter' component={TwitterApp} />,
+        Route: () => <AppRoute id="TWITTER" path='/twitter' component={TwitterApp} />,
       },
       {
         id: 'SELLOUT',
@@ -114,7 +131,7 @@ const appsState = atom({
         backgroundColor: red[500],
         color: common.white,
         path: '/sellout',
-        Route: () => <Route path='/sellout' component={SelloutApp} />,
+        Route: () => <AppRoute id="SELLOUT" path='/sellout' component={SelloutApp} />,
       },
       {
         id: 'NOTES',
@@ -123,7 +140,7 @@ const appsState = atom({
         backgroundColor: yellow[800],
         color: common.white,
         path: '/notes',
-        Route: () => <Route path='/notes' component={NotesApp} />,
+        Route: () => <AppRoute id="NOTES" path='/notes' component={NotesApp} />,
       },
       {
         id: 'CAMERA',
@@ -132,7 +149,7 @@ const appsState = atom({
         backgroundColor: grey['A400'],
         color: common.white,
         path: '/camera',
-        Route: () => <Route path='/camera' component={CameraApp} />,
+        Route: () => <AppRoute id="CAMERA" path='/camera' component={CameraApp} />,
       },
       {
         id: 'EXAMPLE',
@@ -141,7 +158,7 @@ const appsState = atom({
         backgroundColor: blue[500],
         color: blue[50],
         path: '/example',
-        Route: () => <Route path='/example' component={ExampleApp} />,
+        Route: () => <AppRoute id="EXAMPLE" path='/example' component={ExampleApp}/>,
       },
     ],
   },
@@ -158,5 +175,6 @@ export const useApps = () => {
 
 export const useApp = (id) => {
   const { getApp } = useApps();
+
   return getApp(id);
 };
