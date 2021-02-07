@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
@@ -62,12 +62,14 @@ function Phone() {
 
   const [settings] = useRecoilState(settingsState);
 
+  const currentTheme = useMemo(
+    () => createMuiTheme(config.themes[settings.theme]),
+    [settings.theme]
+  );
+
   if (visibility === false) {
     return null;
   }
-
-  const currentTheme = () => createMuiTheme(config.themes[settings.theme]);
-
   document.onkeyup = function (data) {
     if (data.which === 27) {
       Nui.send('phone:close');
@@ -75,7 +77,7 @@ function Phone() {
   };
 
   return (
-    <ThemeProvider theme={currentTheme()}>
+    <ThemeProvider theme={currentTheme}>
       <div className='PhoneWrapper'>
         <div>
           <div
