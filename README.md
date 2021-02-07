@@ -37,7 +37,8 @@ Below is the list of configuration options:
 | twitter.allowEdtiableProfileName     | true     | Whether or not players can edit their profile name                                                                             |
 | twitter.allowDeleteTweets            | true     | Whether or not players can delete their own tweets                                                                             |
 | twitter.allowReportTweets            | true     | Whether or not players can report tweets. Optional discord integration.                                                        |
-| twitter.characterLimit               | 240      | Limit on how many characters tweets can contain                                                                                |
+| twitter.characterLimit               | 160      | Limit on how many characters tweets can contain                                                                                |
+| twitter.newLineLimit                 | 10       | Limit on how many new lines a message can contain                                                                              |
 | twitter.enableAvatars                | true     | Whether or not player's can select avatars for their twitter profile                                                           |
 | twitter.enableEmojis                 | true     | Whether or not player's can use emojis in tweets                                                                               |
 | twitter.enableImages                 | true     | Whether or not player's can add images to tweets (external URLs)                                                               |

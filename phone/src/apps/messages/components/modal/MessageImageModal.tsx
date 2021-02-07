@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import CloseIcon from '@material-ui/icons/Close';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { Box, Button, TextField, Typography } from '@material-ui/core';
@@ -32,6 +33,11 @@ export const MessageImageModal = ({
   const [pasteVisible, setPasteVisible] = useState(false);
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
 
+  const removeQueryParamImage = useCallback(() => {
+    setQueryParamImagePreview(null);
+    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+  }, [history, pathname, search]);
+
   const sendImageMessage = useCallback(
     (m) => {
       Nui.send('phone:sendMessage', {
@@ -45,13 +51,10 @@ export const MessageImageModal = ({
 
   const sendFromQueryParam = useCallback(
     (image) => {
-      setQueryParamImagePreview(null);
       sendImageMessage(image);
-
-      console.log('++++', { pathname, search });
-      history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+      removeQueryParamImage();
     },
-    [history, pathname, search, sendImageMessage]
+    [removeQueryParamImage, sendImageMessage]
   );
 
   useEffect(() => {
@@ -82,8 +85,13 @@ export const MessageImageModal = ({
             })}`
           ),
       },
+      {
+        label: 'Cancel',
+        icon: <CloseIcon />,
+        onClick: onClose,
+      },
     ],
-    [history, pathname, search]
+    [onClose, history, pathname, search]
   );
 
   return (
@@ -91,7 +99,7 @@ export const MessageImageModal = ({
       <ContextMenu open={isOpen} options={menuOptions} onClose={onClose} />
       <Modal
         visible={queryParamImagePreview}
-        handleClose={() => setQueryParamImagePreview(null)}
+        handleClose={removeQueryParamImage}
       >
         <Box py={1}>
           <Typography paragraph>Do you want to share this image?</Typography>
