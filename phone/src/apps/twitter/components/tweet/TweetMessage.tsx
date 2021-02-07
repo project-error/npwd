@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   textField: {
     flex: '1 1 100%',
     padding: '10px 15px',
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     fontSize: '22px',
     paddingTop: '8px'
   },
-}));
+});
 
 export const TweetMessage = ({ message, handleChange }) => {
   const textFieldRef = useRef(null);
