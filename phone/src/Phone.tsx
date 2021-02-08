@@ -104,17 +104,15 @@ function Phone() {
             >
               <>
                 <NotificationBar
-                  notifications={[
-                    ...quickAccess.map((qa) => ({
-                      key: qa.id,
-                      icon: (
-                        <NotificationIcon
-                          icon={qa.notificationIcon}
-                          onClick={() => history.push(qa.path)}
-                        />
-                      ),
-                    })),
-                  ]}
+                  notifications={quickAccess.map((qa) => ({
+                    key: qa.id,
+                    icon: (
+                      <NotificationIcon
+                        icon={qa.notificationIcon}
+                        onClick={() => history.push(qa.path)}
+                      />
+                    ),
+                  }))}
                 />
                 <div className='PhoneAppContainer'>
                   {modal ? (
