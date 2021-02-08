@@ -22,28 +22,29 @@ export const NoteModal = () => {
   
 
   const _handleClose = () => {
-    setNoteModal(false);
     setDetail(null);
+    setNoteModal(false);
   };
 
   const handleNoteSave = () => {
-
-    setNoteModal(false);
-    setDetail(null);
     Nui.send('phone:addNote', {
       title,
       content,
     });
-    setDetail(null)
+    setDetail(null);
+    setNoteModal(false);
+    
+    setTitle('')
+    setContent('')
   };
 
   const handleDeleteNote = () => {
     const id = detail.id;
-    setNoteModal(false);
     Nui.send('phone:deleteNote', {
       id,
     });
     setDetail(null);
+    setNoteModal(false);
   };
 
   const handleUpdateNote = () => {
@@ -52,8 +53,8 @@ export const NoteModal = () => {
       title,
       content,
     });
-    setNoteModal(false);
     setDetail(null);
+    setNoteModal(false);
   };
 
   return (
