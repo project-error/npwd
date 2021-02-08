@@ -84,6 +84,13 @@
     "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
     "APPS_CONTACT_MODAL_BUTTON_ADD": "Add Contact",
 
+    "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
+    "APPS_NOTES_ADD_FAILED": "Failed to save note.",
+    "APPS_NOTES_UPDATE_SUCCESS": "Successfully updated note.",
+    "APPS_NOTES_UPDATE_FAILED": "Failed to update note.",
+    "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
+    "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
@@ -92,6 +99,7 @@
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
 
+    "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete"
   }
