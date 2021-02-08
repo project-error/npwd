@@ -35,7 +35,7 @@ export const useQuickAccess = () => {
   const listener = useCallback((location) => {
     const newState = [...recentlyUsed];
     allApps.forEach((app) => {
-      if (matchPath(location.pathname, { path: app.path, exact: false })) {
+      if (matchPath(location.pathname, { path: app.path, exact: true })) {
         unshiftApp(newState, app);
       }
     });
