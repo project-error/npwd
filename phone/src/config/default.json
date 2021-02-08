@@ -1,12 +1,7 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": [
-    "beach.jpg",
-    "minimal.jpg",
-    "surf.jpg",
-    "waves.jpg"
-  ],
+  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg"],
   "defaultSettings": {
     "wallpaper": "minimal.png",
     "frame": "s10.png",
@@ -25,7 +20,10 @@
   "themes": {
     "default-dark": {
       "palette": {
-        "type": "dark"
+        "type": "dark",
+        "primary": {
+          "main": "#a6d4fa"
+        }
       }
     },
     "default-light": {
@@ -37,6 +35,9 @@
       "common": {},
       "palette": {
         "type": "dark",
+        "primary": {
+          "main": "#a6d4fa"
+        },
         "background": {
           "paper": "#1c1c1c",
           "default": "#121212",

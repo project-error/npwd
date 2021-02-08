@@ -9,6 +9,7 @@ import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
 import { useDialHistory } from '../hooks/useDialHistory';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
+import { ContactList } from '../../contacts/components/List/ContactList';
 
 InjectDebugData([
   {
@@ -41,10 +42,10 @@ export const DialerApp = () => {
           <Route path='/phone/dial'>
             <DialPage />
           </Route>
-          <Route path='/phone'>
+          <Route exact path='/phone'>
             <DialerHistory calls={history} />
           </Route>
-          {/*<Route path='/phone/contacts'></Route>*/}
+          <Route path='/phone/contacts' component={ContactList}></Route>
         </Switch>
       </AppContent>
       <DialerNavBar />

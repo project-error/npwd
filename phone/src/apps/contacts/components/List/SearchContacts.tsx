@@ -3,7 +3,6 @@ import { InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import {
   createStyles,
-  fade,
   Theme,
   makeStyles,
 } from '@material-ui/core/styles';
@@ -15,7 +14,7 @@ import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     bg: {
-      backgroundColor: '#232323',
+      backgroundColor: theme.palette.background.paper,
       display: 'flex',
       height: 60,
       justifyContent: 'center',
@@ -25,14 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 20,
     },
     inputRoot: {
-      color: '#fff',
       fontSize: 18,
+      border: '1px solid',
+      borderColor: theme.palette.divider,
     },
     inputInput: {
       padding: theme.spacing(1, 4, 1, 4),
       transition: theme.transitions.create('width'),
-      width: '100%',
-
       [theme.breakpoints.up('sm')]: {
         width: '13ch',
         '&:focus': {
@@ -43,10 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
       marginLeft: 0,
       width: '100%',
       [theme.breakpoints.up('sm')]: {
@@ -75,16 +69,17 @@ export const SearchContacts = () => {
     <div className={classes.bg}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
-          <SearchIcon style={{ color: '#fff' }} />
+          <SearchIcon />
         </div>
         <InputBase
-          onChange={e => setFilteredContacts(e.target.value)}
+          fullWidth
+          onChange={(e) => setFilteredContacts(e.target.value)}
           placeholder={t('APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS')}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search', 'autoFocus': true }}
+          inputProps={{ 'aria-label': 'search', autoFocus: true }}
         />
       </div>
     </div>

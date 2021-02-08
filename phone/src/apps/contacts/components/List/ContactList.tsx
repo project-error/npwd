@@ -20,18 +20,18 @@ import { useContactDetail } from '../../hooks/useContactDetail';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import '../Contact.css';
+import { SearchContacts } from './SearchContacts';
 
 export const ContactList = () => {
   const { filteredContacts } = useFilteredContacts();
   const { setShowContactModal } = useContactModal();
-  const { contactDetail, setContactDetail } = useContactDetail();
+  const { setContactDetail } = useContactDetail();
 
   const contacts = useContacts();
 
   const openContactInfo = (contact) => {
     setShowContactModal(true);
     setContactDetail(contact);
-    console.log('CONTACT', contactDetail);
   };
   const startCall = (number) => {
     console.log(number);
@@ -40,50 +40,54 @@ export const ContactList = () => {
     });
   };
 
-  const filteredRegEx = new RegExp(filteredContacts, "gi")
+  const filteredRegEx = new RegExp(filteredContacts, 'gi');
 
   return (
-    <List>
-      {contacts.contacts
-        .filter(
-          (contact) =>
-            contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx)
-        )
-        .map((contact) => (
-          <>
-            <ListItem key={contact.id} divider>
-              <ListItemAvatar>
-                {contact.avatar ? (
-                  <MuiAvatar src={contact.avatar} />
-                ) : (
-                  <MuiAvatar>
-                    {contact.display.slice(0, 1).toUpperCase()}
-                  </MuiAvatar>
-                )}
-              </ListItemAvatar>
-              <ListItemText
-                primary={contact.display}
-                secondary={contact.number}
-              />
-              <Button onClick={() => startCall(contact.number)}>
-                <PhoneIcon />
-              </Button>
-              <Button
-                onClick={() =>
-                  console.log('Message: ' + contact.display, contact.number)
-                }
-              >
-                <ChatIcon />
-              </Button>
-              <Button
-                style={{ margin: -15 }}
-                onClick={() => openContactInfo(contact)}
-              >
-                <MoreVertIcon />
-              </Button>
-            </ListItem>
-          </>
-        ))}
-    </List>
+    <>
+      <SearchContacts />
+      <List>
+        {contacts.contacts
+          .filter(
+            (contact) =>
+              contact.display.match(filteredRegEx) ||
+              contact.number.match(filteredRegEx)
+          )
+          .map((contact) => (
+            <>
+              <ListItem key={contact.id} divider>
+                <ListItemAvatar>
+                  {contact.avatar ? (
+                    <MuiAvatar src={contact.avatar} />
+                  ) : (
+                    <MuiAvatar>
+                      {contact.display.slice(0, 1).toUpperCase()}
+                    </MuiAvatar>
+                  )}
+                </ListItemAvatar>
+                <ListItemText
+                  primary={contact.display}
+                  secondary={contact.number}
+                />
+                <Button onClick={() => startCall(contact.number)}>
+                  <PhoneIcon />
+                </Button>
+                <Button
+                  onClick={() =>
+                    console.log('Message: ' + contact.display, contact.number)
+                  }
+                >
+                  <ChatIcon />
+                </Button>
+                <Button
+                  style={{ margin: -15 }}
+                  onClick={() => openContactInfo(contact)}
+                >
+                  <MoreVertIcon />
+                </Button>
+              </ListItem>
+            </>
+          ))}
+      </List>
+    </>
   );
 };

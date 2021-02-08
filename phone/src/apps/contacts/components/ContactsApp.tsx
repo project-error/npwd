@@ -6,7 +6,6 @@ import { ContactList } from './List/ContactList';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { AddContactModal } from './ContactModal';
 import { useModal } from '../hooks/useModal';
-import { SearchContacts } from './List/SearchContacts';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Fab from '@material-ui/core/Fab';
 import { InfoModal } from './modal/InfoModal';
@@ -48,7 +47,6 @@ export const ContactsApp = () => {
   return (
     <AppWrapper id='contact-app'>
       <AppTitle app={contacts} />
-      <SearchContacts />
       <AddContactModal />
       <InfoModal key={contactDetail?.id} />
       <div className={showModal ? classes.backgroundModal : undefined} />

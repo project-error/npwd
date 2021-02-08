@@ -19,7 +19,7 @@ const ButtonItem = ({ label, onClick }: IBtnItem) => {
   const classes = useStyles();
   return (
     <Grid key={label} item xs={4}>
-      <Button fullWidth className={classes.gridItem} onClick={onClick}>
+      <Button fullWidth size="large" className={classes.gridItem} onClick={onClick}>
         {label}
       </Button>
     </Grid>
@@ -30,7 +30,7 @@ export const DialGrid = () => {
   const { add, removeOne, clear} = useContext(DialInputCtx)
 
   return (
-    <Box>
+    <Box height="100%">
       <Grid container justify='space-around'>
         <ButtonItem label={1} onClick={() => add(1)} />
         <ButtonItem label={2} onClick={() => add(2)} />
