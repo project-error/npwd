@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Slide, Paper, Button, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -22,7 +22,11 @@ export const MessageModal = () => {
   const activeMessageGroup = useQueryParams<MessageGroup>();
   const { groupId } = useParams<{ groupId: string }>();
   const { messages, setMessages } = useMessages();
+
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
+
+  const minLoadTimeoutRef = useRef(null);
+  const fetchInterval = useRef(null);
 
   const closeModal = () => {
     history.push('/messages');
@@ -33,11 +37,11 @@ export const MessageModal = () => {
   useEffect(() => {
     if (!groupId) return;
 
-    const timeout = window.setTimeout(() => {
+    minLoadTimeoutRef.current = setTimeout(() => {
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
 
-    const interval = window.setInterval(() => {
+    fetchInterval.current = setInterval(() => {
       if (!groupId) return;
       Nui.send('phone:fetchMessages', {
         groupId,
@@ -45,8 +49,10 @@ export const MessageModal = () => {
     }, MESSAGES_REFRESH_RATE);
 
     return () => {
-      window.clearInterval(interval);
-      window.clearTimeout(timeout);
+      clearInterval(fetchInterval.current);
+      fetchInterval.current = null;
+      clearTimeout(minLoadTimeoutRef.current);
+      minLoadTimeoutRef.current = null;
     };
   }, [groupId]);
 
