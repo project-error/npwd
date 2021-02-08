@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import { useConfig } from '../../../config/hooks/useConfig';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {
   blue,
   common,
@@ -23,7 +22,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MessageIcon from '@material-ui/icons/Message';
-import { atom } from 'recoil';
+import { atom, useRecoilState } from 'recoil';
 import { CalculatorIcon } from '../../../apps/calculator/components/CalculatorIcon';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { Route } from 'react-router-dom';
@@ -39,6 +38,19 @@ import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import Nui from "../../nui-events/utils/Nui";
+
+export interface IAppConfig {
+  id: string;
+  nameLocale: string;
+  icon: JSX.Element;
+  notificationIcon: JSX.Element;
+  backgroundColor: string;
+  color: string;
+  path: string;
+  Route: React.FC;
+}
+
+type AppsRepository = { preinstalled: IAppConfig[] };
 
 const AppWithStartup = ({ children, id }) => {
   useEffect(() => {
@@ -56,7 +68,7 @@ const AppRoute = ({ id, component: Component, ...rest }) => {
   );
 };
 
-const appsState = atom({
+const appsState = atom<AppsRepository>({
   key: 'apps',
   default: {
     preinstalled: [
@@ -64,6 +76,7 @@ const appsState = atom({
         id: 'DIALER',
         nameLocale: 'APPS_DIALER',
         icon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
+        notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
         backgroundColor: green[600],
         color: common.white,
         path: '/phone',
@@ -73,16 +86,17 @@ const appsState = atom({
         id: 'MESSAGES',
         nameLocale: 'APPS_MESSAGES',
         icon: <MessageIcon fontSize='default' />,
+        notificationIcon: <MessageIcon fontSize='small' />,
         backgroundColor: amber[700],
         color: common.white,
         path: '/messages',
-        sharePath: '/messages/new',
         Route: () => <AppRoute id="MESSAGE" path='/messages' component={MessagesApp} />,
       },
       {
         id: 'CONTACTS',
         nameLocale: 'APPS_CONTACTS',
         icon: <ContactsIcon />,
+        notificationIcon: <ContactsIcon fontSize="small" />,
         backgroundColor: blue[500],
         color: common.white,
         path: '/contacts',
@@ -92,6 +106,7 @@ const appsState = atom({
         id: 'CALCULATOR',
         nameLocale: 'APPS_CALCULATOR',
         icon: <CalculatorIcon />,
+        notificationIcon: <CalculatorIcon fontSize="small"/>,
         backgroundColor: purple[500],
         color: grey[50],
         path: '/calculator',
@@ -101,6 +116,7 @@ const appsState = atom({
         id: 'SETTINGS',
         nameLocale: 'APPS_SETTINGS',
         icon: <SettingsIcon />,
+        notificationIcon: <SettingsIcon fontSize="small"/>,
         backgroundColor: '#383838',
         color: grey[50],
         path: '/settings',
@@ -110,6 +126,7 @@ const appsState = atom({
         id: 'BANK',
         nameLocale: 'APPS_BANK',
         icon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
+        notificationIcon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
         backgroundColor: blue[900],
         color: common.white,
         path: '/bank',
@@ -119,6 +136,7 @@ const appsState = atom({
         id: 'TWITTER',
         nameLocale: 'APPS_TWITTER',
         icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
+        notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
         backgroundColor: blue[600],
         color: common.white,
         path: '/twitter',
@@ -128,6 +146,7 @@ const appsState = atom({
         id: 'SELLOUT',
         nameLocale: 'APPS_SELLOUT',
         icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
+        notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size="xs" />,
         backgroundColor: red[500],
         color: common.white,
         path: '/sellout',
@@ -137,6 +156,7 @@ const appsState = atom({
         id: 'NOTES',
         nameLocale: 'APPS_NOTES',
         icon: <FontAwesomeIcon icon={faStickyNote} fixedWidth />,
+        notificationIcon: <FontAwesomeIcon icon={faStickyNote} fixedWidth size="xs" />,
         backgroundColor: yellow[800],
         color: common.white,
         path: '/notes',
@@ -146,6 +166,7 @@ const appsState = atom({
         id: 'CAMERA',
         nameLocale: 'APPS_CAMERA',
         icon: <CameraAltIcon fontSize='large' />,
+        notificationIcon: <CameraAltIcon fontSize='small' />,
         backgroundColor: grey['A400'],
         color: common.white,
         path: '/camera',
@@ -155,6 +176,7 @@ const appsState = atom({
         id: 'EXAMPLE',
         nameLocale: 'APPS_EXAMPLE',
         icon: <FontAwesomeIcon icon={faPlaneArrival} size='sm' />,
+        notificationIcon: <FontAwesomeIcon icon={faPlaneArrival} size='xs' />,
         backgroundColor: blue[500],
         color: blue[50],
         path: '/example',
@@ -165,16 +187,13 @@ const appsState = atom({
 });
 
 export const useApps = () => {
-  const [apps, setApps] = useConfig(appsState);
-  const allApps = [...apps.preinstalled];
-
-  const getApp = (id) => allApps.find((a) => a.id === id) || null;
-
+  const [apps, setApps] = useRecoilState<AppsRepository>(appsState);
+  const allApps = useMemo(() => [...apps.preinstalled], [apps.preinstalled]);
+  const getApp = useCallback((id: string): IAppConfig => allApps.find((a) => a.id === id) || null, [allApps]);
   return { apps, allApps, setApps, getApp };
 };
 
-export const useApp = (id) => {
+export const useApp = (id: string): IAppConfig => {
   const { getApp } = useApps();
-
   return getApp(id);
 };

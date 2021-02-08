@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
-import { Route } from 'react-router-dom';
-import MessageIcon from '@material-ui/icons/Email';
+import { Route, useHistory } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -32,6 +31,7 @@ import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
+import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
 
 InjectDebugData([
   {
@@ -79,6 +79,7 @@ InjectDebugData([
 ]);
 
 function Phone() {
+  const quickAccess = useQuickAccess();
   useNuiService();
   usePhoneService();
   const { visibility } = usePhone();
@@ -139,12 +140,15 @@ function Phone() {
             >
               <>
                 <NotificationBar
-                  notifications={[
-                    {
-                      key: 'newMessage',
-                      icon: <NotificationIcon Icon={MessageIcon} />,
-                    },
-                  ]}
+                  notifications={quickAccess.map((qa) => ({
+                    key: qa.id,
+                    icon: (
+                      <NotificationIcon
+                        icon={qa.notificationIcon}
+                        to={qa.path}
+                      />
+                    ),
+                  }))}
                 />
                 <div className='PhoneAppContainer'>
                   {modal ? (
@@ -152,7 +156,6 @@ function Phone() {
                   ) : (
                     <>
                       <Route exact path='/' component={HomeApp} />
-
                       {allApps.map((App) => (
                         <App.Route key={App.id} />
                       ))}
