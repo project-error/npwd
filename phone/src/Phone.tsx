@@ -36,6 +36,43 @@ import InjectDebugData from './os/debug/InjectDebugData';
 InjectDebugData([
   {
     app: 'PHONE',
+    method: 'phoneConfig',
+    data: {
+      Locale: 'en',
+      KeyTogglePhone: 288,
+      KeyTakeCall: 38,
+      PhoneAsItem: false,
+      SwimDestroy: false,
+      RunRate: 10,
+      DestoryChance: 100,
+      DestroyPhoneReCheck: 3,
+      notificationPosition: {
+        horizontal: 'right',
+        vertical: 'top',
+      },
+      general: {
+        useDashNumber: true,
+      },
+      twitter: {
+        showNotifications: true,
+        generateProfileNameFromUsers: true,
+        allowEdtiableProfileName: true,
+        allowDeleteTweets: true,
+        allowReportTweets: true,
+        characterLimit: 160,
+        newLineLimit: 10,
+        enableAvatars: true,
+        enableEmojis: true,
+        enableImages: true,
+        maxImages: 3,
+      },
+      bank: {
+        showNotifications: true,
+      },
+    },
+  },
+  {
+    app: 'PHONE',
     method: 'setVisibility',
     data: true,
   },
