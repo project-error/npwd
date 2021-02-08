@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages` (
   CONSTRAINT `npwd_messages_user_identifier` FOREIGN KEY (`user_identifier`) REFERENCES `users` (`identifier`)
 );
 
-CREATE TABLE npwd_calls (
+CREATE TABLE IF NOT EXISTS npwd_calls (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(255) DEFAULT NULL,
   transmitter varchar(255) NOT NULL,
@@ -155,5 +155,17 @@ CREATE TABLE npwd_calls (
 )
 ENGINE = INNODB,
 AUTO_INCREMENT = 8,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS npwd_phone_gallery (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  identifier varchar(255) DEFAULT NULL,
+  image varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 53,
+AVG_ROW_LENGTH = 4096,
 CHARACTER SET utf8mb4,
 COLLATE utf8mb4_general_ci;
