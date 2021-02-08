@@ -1,5 +1,5 @@
 import { Button, TextField, Slide } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { useNoteModal } from '../hooks/useNoteModal';
@@ -14,11 +14,12 @@ import Nui from '../../../os/nui-events/utils/Nui';
 export const NoteModal = () => {
   const { noteModal, setNoteModal } = useNoteModal();
   const { detail, setDetail } = useNoteDetail();
-  console.log(detail);
   const [title, setTitle] = useState(detail ? detail.title : '');
   const [content, setContent] = useState(detail ? detail.content : '');
 
-  const classes = useStyles();
+  const classes = useStyles()
+
+  
 
   const _handleClose = () => {
     setNoteModal(false);
@@ -26,12 +27,14 @@ export const NoteModal = () => {
   };
 
   const handleNoteSave = () => {
+
     setNoteModal(false);
     setDetail(null);
     Nui.send('phone:addNote', {
       title,
       content,
     });
+    setDetail(null)
   };
 
   const handleDeleteNote = () => {
@@ -63,6 +66,7 @@ export const NoteModal = () => {
           <div id='notes-modal' className={classes.noteContainer}>
             <TextField
               className={classes.input}
+              rowsMax={1}
               placeholder='Title'
               inputProps={{
                 className: classes.inputPropsTitle,
@@ -75,6 +79,7 @@ export const NoteModal = () => {
               className={classes.input}
               inputProps={{
                 className: classes.inputPropsContent,
+                maxLength: 250,
               }}
               placeholder='Content'
               multiline
@@ -84,8 +89,9 @@ export const NoteModal = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            {!detail && (
-              <Button className={classes.saveButton} onClick={handleNoteSave}>
+            <p style={{ color: "#fff" }}>{content.length}/250</p>
+            {!detail &&(
+              <Button disabled={title.length > 0 ? false : true} className={classes.saveButton} onClick={handleNoteSave}>
                 Save
               </Button>
             )}

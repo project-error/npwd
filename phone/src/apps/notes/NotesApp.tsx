@@ -15,6 +15,7 @@ import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
+import { NotesAlert } from './alert/NotesAlert';
 
 InjectDebugData([
   {
@@ -32,7 +33,7 @@ InjectDebugData([
         content: 'Hello, this is another shitty note',
       },
     ],
-  },
+  }
 ]);
 
 export const NotesApp = () => {
@@ -65,6 +66,7 @@ export const NotesApp = () => {
           <AddIcon />
         </Fab>
       </AppContent>
+      <NotesAlert />
     </AppWrapper>
   );
 };
