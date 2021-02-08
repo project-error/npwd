@@ -70,7 +70,7 @@ export const NoteModal = () => {
               placeholder='Title'
               inputProps={{
                 className: classes.inputPropsTitle,
-                maxLength: 30
+                maxLength: 25
               }}
               fullWidth
               value={title}
