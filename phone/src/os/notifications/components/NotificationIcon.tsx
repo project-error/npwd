@@ -1,14 +1,15 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 interface INotificationIcon {
   icon: JSX.Element;
-  onClick(e: any): void;
+  to: string;
 }
 
-export const NotificationIcon = ({ icon, onClick }: INotificationIcon) => {
+export const NotificationIcon = ({ icon, to }: INotificationIcon) => {
   return (
-    <IconButton size="small" onClick={onClick}>
+    <IconButton component={NavLink} to={to} size="small">
       {icon}
     </IconButton>
   );

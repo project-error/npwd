@@ -42,7 +42,6 @@ InjectDebugData([
 ]);
 
 function Phone() {
-  const history = useHistory();
   const quickAccess = useQuickAccess();
   useNuiService();
   usePhoneService();
@@ -109,7 +108,7 @@ function Phone() {
                     icon: (
                       <NotificationIcon
                         icon={qa.notificationIcon}
-                        onClick={() => history.push(qa.path)}
+                        to={qa.path}
                       />
                     ),
                   }))}
