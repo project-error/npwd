@@ -19,7 +19,6 @@ import { getNewLineCount } from '../utils/message';
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: 10,
-    background: '#424242',
     marginTop: '15px',
     width: '90%',
     display: 'flex',
