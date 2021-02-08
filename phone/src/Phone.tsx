@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
-import { Route, useHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
