@@ -17,3 +17,7 @@ export function sendTwitterMessage(method: string, data: any = {}) {
 export function sendMessageEvent(method: string, data: any = {}) {
   return sendMessage(apps.MESSAGES, method, data);
 }
+
+export function sendNotesEvent(method: string, data: any = {}) {
+  return sendMessage(apps.NOTES, method, data);
+}
