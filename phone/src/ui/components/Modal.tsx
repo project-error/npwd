@@ -25,6 +25,12 @@ const useStyles = makeStyles({
   displayNone: {
     display: 'none',
   },
+  imageModalCloseButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: '10%',
+  },
 });
 
 export const Modal = ({ children, visible, handleClose }) => {
