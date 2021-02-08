@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -83,19 +83,23 @@ export const AddTweetModal = () => {
       _handleClose();
     }
   };
+
+  const handleimageChange = useCallback((link) => setLink(link), []);
+
+  const handleMessageChange = useCallback((message) => setMessage(message), [
+    setMessage,
+  ]);
+
   useEffect(() => {
     window.addEventListener('keydown', _handleEscape, true);
     return () => window.removeEventListener('keydown', _handleEscape);
   });
-
   if (!config) return null;
 
-  const isValidMessage = message => {
+  const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
-    if (getNewLineCount(message) > newLineLimit) return false;
-    return true;
-  }
-
+    return getNewLineCount(message) > newLineLimit;
+  };
   const submitTweet = () => {
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
@@ -112,8 +116,6 @@ export const AddTweetModal = () => {
     Nui.send('phone:createTweet', data);
     _handleClose();
   };
-
-  const handleMessageChange = (message) => setMessage(message);
 
   const addImage = () => {
     // strip any whitespace from the link in case the user
@@ -137,7 +139,6 @@ export const AddTweetModal = () => {
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
-  const handleimageChange = (e) => setLink(e.target.value);
 
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
@@ -159,7 +160,11 @@ export const AddTweetModal = () => {
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
-      <TweetMessage message={message} handleChange={handleMessageChange} />
+      <TweetMessage
+        modalVisible={modalVisible}
+        message={message}
+        handleChange={handleMessageChange}
+      />
       <ImagePrompt
         visible={showImagePrompt}
         value={link}

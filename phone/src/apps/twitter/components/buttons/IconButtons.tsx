@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import EmojiIcon from '@material-ui/icons/SentimentSatisfied';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   buttons: {
     display: 'flex',
     flexFlow: 'row nowrap',
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'transparent',
     minWidth: '45px', // override default material-ui spacing between buttons
   },
-}));
+});
 
 export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const classes = useStyles();
@@ -41,4 +41,4 @@ export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   );
 };
 
-export default IconButtons;
+export default memo(IconButtons);

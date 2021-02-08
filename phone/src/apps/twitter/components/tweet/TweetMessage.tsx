@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { memo, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
@@ -19,28 +19,38 @@ const useStyles = makeStyles({
   },
 });
 
-export const TweetMessage = ({ message, handleChange }) => {
+export const TweetMessage = ({ modalVisible, message, handleChange }) => {
   const textFieldRef = useRef(null);
+  const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { config } = usePhone();
   const { t } = useTranslation();
 
-  if (!config) return null;
   const { characterLimit, newLineLimit } = config.twitter;
 
-  const _handleChange = (e) => {
-    // when the user types scroll the text field to the bottom
-    // so that we always have the latest line and error message
-    // in view
-    e.preventDefault();
-    textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
-    handleChange(e.target.value);
-  }
-  
+  useEffect(() => {
+    textFieldInputRef.current && textFieldInputRef.current.focus();
+    // we pass in modalVisible to this component so that we can
+    // intelligently decide when to focus the input field.
+  }, [modalVisible]);
+
+  const _handleChange = useCallback(
+    (e) => {
+      // when the user types scroll the text field to the bottom
+      // so that we always have the latest line and error message
+      // in view
+      e.preventDefault();
+      textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
+      handleChange(e.target.value);
+    },
+    [handleChange]
+  );
+
+  if (!config) return null;
+
   let errorMessage = null;
 
-  const overCharacterLimit =
-    message.trim().length > characterLimit;
+  const overCharacterLimit = message.trim().length > characterLimit;
   const characterWarningPrompt = `${t(
     'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT'
   )} (${characterLimit})`;
@@ -64,7 +74,7 @@ export const TweetMessage = ({ message, handleChange }) => {
       onChange={_handleChange}
       multiline
       placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
-      inputRef={(input) => input && input.focus()}
+      inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
       ref={textFieldRef}
@@ -72,4 +82,4 @@ export const TweetMessage = ({ message, handleChange }) => {
   );
 };
 
-export default TweetMessage;
+export default memo(TweetMessage);
