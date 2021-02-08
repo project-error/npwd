@@ -76,6 +76,8 @@ export default {
   NOTE_UPDATE_NOTE: 'phone:updateNote',
   NOTE_UPDATE_NOTE_SUCCESS: 'phone:updateNoteSuccess',
   NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure',
+  NOTE_ACTION_RESULT: 'phone:notesActionResult',
+
 
   // DO NOT CHANGE WHATS BELOW, PLEASE - CHIP
   OPEN_APP_CONTACTS: 'phone:app:CONTACTS',
