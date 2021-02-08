@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useCallback, useRef, useState } from 'react';
+import React, { memo, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
@@ -28,7 +28,6 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
   const { config } = usePhone();
   const { t } = useTranslation();
 
-  if (!config) return null;
   const { characterLimit, newLineLimit } = config.twitter;
 
   useEffect(() => {
@@ -37,19 +36,23 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
     // intelligently decide when to focus the input field.
   }, [modalVisible]);
 
-  const _handleChange = useCallback((e) => {
-    // when the user types scroll the text field to the bottom
-    // so that we always have the latest line and error message
-    // in view
-    e.preventDefault();
-    textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
-    handleChange(e.target.value);
-  }, []);
-  
+  const _handleChange = useCallback(
+    (e) => {
+      // when the user types scroll the text field to the bottom
+      // so that we always have the latest line and error message
+      // in view
+      e.preventDefault();
+      textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
+      handleChange(e.target.value);
+    },
+    [handleChange]
+  );
+
+  if (!config) return null;
+
   let errorMessage = null;
 
-  const overCharacterLimit =
-    message.trim().length > characterLimit;
+  const overCharacterLimit = message.trim().length > characterLimit;
   const characterWarningPrompt = `${t(
     'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT'
   )} (${characterLimit})`;

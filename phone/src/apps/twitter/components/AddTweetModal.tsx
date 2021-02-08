@@ -84,19 +84,23 @@ export const AddTweetModal = () => {
       _handleClose();
     }
   };
+
+  const handleimageChange = useCallback((link) => setLink(link), []);
+
+  const handleMessageChange = useCallback((message) => setMessage(message), [
+    setMessage,
+  ]);
+
   useEffect(() => {
     window.addEventListener('keydown', _handleEscape, true);
     return () => window.removeEventListener('keydown', _handleEscape);
   });
-
   if (!config) return null;
 
-  const isValidMessage = message => {
+  const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
-    if (getNewLineCount(message) > newLineLimit) return false;
-    return true;
-  }
-
+    return getNewLineCount(message) > newLineLimit;
+  };
   const submitTweet = () => {
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
@@ -113,8 +117,6 @@ export const AddTweetModal = () => {
     Nui.send('phone:createTweet', data);
     _handleClose();
   };
-
-  const handleMessageChange = useCallback((message) => setMessage(message), []);
 
   const addImage = () => {
     // strip any whitespace from the link in case the user
@@ -138,7 +140,6 @@ export const AddTweetModal = () => {
   };
   const removeImage = (id) =>
     setImages(images.filter((image) => id !== image.id));
-  const handleimageChange = useCallback((link) => setLink(link), []);
 
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
