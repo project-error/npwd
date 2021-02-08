@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 5,
   },
   absolute: {
-    position: 'sticky',
-    bottom: theme.spacing(3),
-    left: theme.spacing(40),
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3),
   },
 }));
 

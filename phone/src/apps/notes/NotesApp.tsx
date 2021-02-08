@@ -55,7 +55,8 @@ export const NotesApp = () => {
       <NoteModal key={detail?.id} />
       <AppContent>
         <NoteList notes={notes} />
-        <Fab
+      </AppContent>
+      <Fab
           className={classes.absolute}
           onClick={handleModal}
           style={{
@@ -65,7 +66,6 @@ export const NotesApp = () => {
         >
           <AddIcon />
         </Fab>
-      </AppContent>
       <NotesAlert />
     </AppWrapper>
   );
