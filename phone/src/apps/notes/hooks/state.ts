@@ -13,4 +13,8 @@ export const noteStates = {
     key: 'noteDetail',
     default: null,
   }),
+  alert: atom({
+    key: 'notesAlert',
+    default: null
+  })
 };
