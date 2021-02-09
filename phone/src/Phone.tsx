@@ -32,6 +32,7 @@ import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
+import SnackbarProvider from './ui/components/SnackbarProvider';
 
 InjectDebugData([
   {
@@ -151,16 +152,18 @@ function Phone() {
                   }))}
                 />
                 <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {allApps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
+                  <SnackbarProvider>
+                    {modal ? (
+                      <CallModal />
+                    ) : (
+                      <>
+                        <Route exact path='/' component={HomeApp} />
+                        {allApps.map((App) => (
+                          <App.Route key={App.id} />
+                        ))}
+                      </>
+                    )}
+                  </SnackbarProvider>
                 </div>
                 <Navigation />
               </>
