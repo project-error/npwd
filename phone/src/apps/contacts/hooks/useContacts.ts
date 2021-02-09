@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { contactsState } from './state';
 
-import { ContactProps } from '../../../common/typings/contact';
+import { Contact } from '../../../common/typings/contact';
 import { useCallback } from 'react';
 
 interface IUseContacts {
-  contacts: ContactProps[]
+  contacts: Contact[];
   getDisplayByNumber: (number: string) => string;
 }
 
