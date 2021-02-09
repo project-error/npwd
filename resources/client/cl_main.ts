@@ -29,9 +29,9 @@ const newPhoneProp = async () => {
   deletePhone(); //deletes the already existing prop before creating another.
   if (!propCreated) {
     RequestModel(phoneModel);
+
     while (!HasModelLoaded(phoneModel)) {
       await Delay(1);
-      console.log('MODEL HASNT LOADED');
     }
 
     const playerPed = PlayerPedId();
@@ -78,7 +78,6 @@ function deletePhone() {
     DeleteEntity(prop);
     prop = 0;
     propCreated = false;
-    console.log('prop destroyed');
   }
 }
 
@@ -90,108 +89,96 @@ async function loadAnimDict(dict: any) {
   }
 }
 
-async function phoneOpenAnim() {
-  //Phone Open Animation
+const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
+  const dict = 'anim@cellphone@in_car@ps';
+
+  ClearPedTasks(playerPed);
+  await loadAnimDict(dict);
+  TaskPlayAnim(
+    playerPed,
+    dict,
+    'cellphone_text_in',
+    8.0,
+    -1,
+    -1,
+    50,
+    0,
+    false,
+    false,
+    false
+  );
+  await Delay(300); //Gives time for animation starts before creating the phone
+  await newPhoneProp(); //Creates the phone and attaches it.
+};
+
+const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
+  //While not in a vehicle it will use this dict.
+  const dict = 'cellphone@';
+
+  ClearPedTasks(playerPed);
+  await loadAnimDict(dict);
+  TaskPlayAnim(
+    playerPed,
+    dict,
+    'cellphone_text_in',
+    8.0,
+    -1,
+    -1,
+    50,
+    0,
+    false,
+    false,
+    false
+  );
+  await Delay(300); //Gives time for animation starts before creating the phone
+  await newPhoneProp(); //Creates the phone and attaches it.
+};
+
+const handleCloseVehicleAnim = async (playerPed: number): Promise<void> => {
+  //true refers to at get in.
+  const DICT = 'anim@cellphone@in_car@ps';
+  const ANIM = 'cellphone_text_out';
+
+  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); //Stop the pull out animation
+  deletePhone(); //Deletes the prop early incase they get out of the vehicle.
+  await Delay(250); //lets it get to a certain point
+  await loadAnimDict(DICT); //loads the new animation
+  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false); //puts phone into pocket
+  await Delay(200); //waits until the phone is in the pocket
+  StopAnimTask(playerPed, DICT, ANIM, 1.0); //clears the animation
+};
+
+const handleCloseNormalAnim = async (playerPed: number): Promise<void> => {
+  const DICT = 'cellphone@';
+  const ANIM = 'cellphone_text_out';
+  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); //Stop the pull out animation
+  await Delay(100); //lets it get to a certain point
+  await loadAnimDict(DICT); //loads the new animation
+  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false); //puts phone into pocket
+  await Delay(200); //waits until the phone is in the pocket
+  StopAnimTask(playerPed, DICT, ANIM, 1.0); //clears the animation
+  deletePhone(); //Deletes the prop.
+};
+
+// Determines the phoneOpen animation to play
+async function phoneOpenAnim(): Promise<void> {
+  const playerPed = PlayerPedId();
   console.log('phoneOpenAnim'); //Left for testing purposes.
-  const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
   deletePhone(); //Deleting  before creating a new phone where itll be deleted again.
-  if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
-    //-- true refers to at get in.
-    const dict = 'anim@cellphone@in_car@ps';
-
-    ClearPedTasks(GetPlayerPed(-1));
-    await loadAnimDict(dict);
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      'cellphone_text_in',
-      8.0,
-      -1,
-      -1,
-      flag,
-      0,
-      false,
-      false,
-      false
-    );
-    await Delay(300); //Gives time for animation starts before creating the phone
-    await newPhoneProp(); //Creates the phone and attaches it.
-  } else {
-    //While not in a vehicle it will use this dict.
-    const dict = 'cellphone@';
-
-    ClearPedTasks(GetPlayerPed(-1));
-    await loadAnimDict(dict);
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      'cellphone_text_in',
-      8.0,
-      -1,
-      -1,
-      flag,
-      0,
-      false,
-      false,
-      false
-    );
-    await Delay(300); //Gives time for animation starts before creating the phone
-    await newPhoneProp(); //Creates the phone and attaches it.
+  if (IsPedInAnyVehicle(playerPed, true)) {
+    return await handleOpenVehicleAnim(playerPed);
   }
+  return await handleOpenNormalAnim(playerPed);
 }
 
+// Determines the phoneClose animation to play
 async function phoneCloseAnim() {
-  //Phone Close Animation
+  const playerPed = PlayerPedId();
   console.log('phoneCloseAnim'); //Left for testing purposes.
-  const flag = 50; //https://runtime.fivem.net/doc/natives/?_0xEA47FE3719165B94
-  const anim = 'cellphone_text_out';
-  if (IsPedInAnyVehicle(GetPlayerPed(-1), true)) {
-    //true refers to at get in.
-    const dict = 'anim@cellphone@in_car@ps';
-
-    StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0); //Stop the pull out animation
-    deletePhone(); //Deletes the prop early incase they get out of the vehicle.
-    await Delay(250); //lets it get to a certain point
-    loadAnimDict(dict); //loads the new animation
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      anim,
-      8.0,
-      -1,
-      -1,
-      flag,
-      0,
-      false,
-      false,
-      false
-    ); //puts phone into pocket
-    await Delay(200); //waits until the phone is in the pocket
-    StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0); //clears the animation
-  } else {
-    //While not in a vehicle it will use this dict.
-    const dict = 'cellphone@';
-
-    StopAnimTask(GetPlayerPed(-1), dict, 'cellphone_text_in', 1.0); //Stop the pull out animation
-    await Delay(100); //lets it get to a certain point
-    loadAnimDict(dict); //loads the new animation
-    TaskPlayAnim(
-      GetPlayerPed(-1),
-      dict,
-      anim,
-      8.0,
-      -1,
-      -1,
-      flag,
-      0,
-      false,
-      false,
-      false
-    ); //puts phone into pocket
-    await Delay(200); //waits until the phone is in the pocket
-    StopAnimTask(GetPlayerPed(-1), dict, anim, 1.0); //clears the animation
-    deletePhone(); //Deletes the prop.
+  if (IsPedInAnyVehicle(playerPed, true)) {
+    return await handleCloseVehicleAnim(playerPed);
   }
+  await handleCloseNormalAnim(playerPed);
 }
 
 async function carryingPhone(cb: any) {
