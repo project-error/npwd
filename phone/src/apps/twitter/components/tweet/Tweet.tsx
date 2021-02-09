@@ -7,7 +7,6 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
-
 import { secondsToHumanReadable } from '../../utils/time';
 import LikeButton from '../buttons/LikeButton';
 import ReplyButton from '../buttons/ReplyButton';
@@ -16,6 +15,7 @@ import Avatar from '../Avatar';
 import ShowMore from './ShowMore';
 import { QuoteButton } from '../buttons/QuoteButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import DOMPurify from 'dompurify';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -80,7 +80,16 @@ export const Tweet = (tweet) => {
 
   // this is a workaround to transfer string new lines and returns that
   // are stored into the database into html for the UI to render
+
+  // We are replacing with <br /> to eventually render in HTML
   const formattedMessage = message.replace(/\n\r?/g, '<br />');
+
+  // Therefore we need to sanitize this message to protect against XSS
+  const sanitizedMessage = DOMPurify.sanitize(formattedMessage, {
+    // Be as strict as possible, whitelisting <br> tag
+    ALLOWED_TAGS: ['br'],
+  });
+
   const profileName = profile_name ? `@${profile_name}` : '';
 
   return (
@@ -106,7 +115,9 @@ export const Tweet = (tweet) => {
         </div>
         <div
           className={classes.message}
-          dangerouslySetInnerHTML={{ __html: formattedMessage }}
+          dangerouslySetInnerHTML={{
+            __html: sanitizedMessage,
+          }}
         />
         {enableImages && <ImageDisplay visible images={images} small />}
         <div className={classes.buttonContainer}>
