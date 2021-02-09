@@ -326,35 +326,41 @@ async function Phone() {
 
 // contacts app
 RegisterNuiCallbackType(events.OPEN_APP_CONTACTS);
-on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, (data: any, cb: Function) => {
   emitNet(events.CONTACTS_GET_CONTACTS);
+  cb();
 });
 
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
-on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
   emitNet(events.SELLOUT_FETCH_LISTING);
+  cb();
 });
 
 RegisterNuiCallbackType(events.OPEN_APP_NOTES);
-on(`__cfx_nui:${events.OPEN_APP_NOTES}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_NOTES}`, (data: any, cb: Function) => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
+  cb();
 });
 
 RegisterNuiCallbackType(events.OPEN_APP_BANK);
-on(`__cfx_nui:${events.OPEN_APP_BANK}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_BANK}`, (data: any, cb: Function) => {
   emitNet(events.BANK_FETCH_TRANSACTIONS);
   emitNet(events.BANK_GET_CREDENTIALS);
+  cb();
 });
 
 RegisterNuiCallbackType(events.OPEN_APP_CAMERA);
-on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
   emitNet(events.CAMERA_FETCH_PHOTOS);
+  cb();
 });
 
 RegisterNuiCallbackType(events.OPEN_APP_DAILER);
-on(`__cfx_nui:${events.OPEN_APP_DAILER}`, () => {
+on(`__cfx_nui:${events.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
   emitNet(events.CONTACTS_GET_CONTACTS);
   emitNet(events.PHONE_CALL_FETCH_CALLS);
+  cb();
 });
 
 RegisterCommand(
@@ -367,8 +373,9 @@ RegisterCommand(
 );
 
 RegisterNuiCallbackType('phone:close');
-on(`__cfx_nui:phone:close`, () => {
+on(`__cfx_nui:phone:close`, (data: any, cb: Function) => {
   Phone();
+  cb();
 }); // Called for when the phone is closed via the UI.
 
 AddEventHandler('onResourceStop', function (resource: string) {
