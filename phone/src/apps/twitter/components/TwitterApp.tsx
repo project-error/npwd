@@ -152,17 +152,3 @@ export const TwitterApp = () => {
     </AppWrapper>
   );
 };
-
-InjectDebugData([
-  {
-    app: 'TWITTER',
-    method: 'getOrCreateTwitterProfile',
-    data: {
-      id: 1,
-      profile_name: 'Elon Musk',
-      identifier: 'elonmusk',
-      createdAt: Date.now() / 1000,
-      updatedAt: Date.now() / 1000,
-    },
-  },
-]);
