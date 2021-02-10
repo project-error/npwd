@@ -55,7 +55,7 @@ type AppsRepository = { preinstalled: IAppConfig[] };
 const AppWithStartup = ({ children, id }) => {
   useEffect(() => {
     Nui.send(`phone:app:${id}`);
-  }, []);
+  }, [id]);
   return children;
 };
 

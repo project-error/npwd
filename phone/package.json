@@ -75,10 +75,11 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "copy:config": "cp ../config.json ./src/config.autogen.json",
+    "start": "yarn copy:config && react-scripts start",
     "watch": "cra-build-watch --disable-chunks --build-path ../resources/html --output-filename dev.js",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.resources.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "yarn copy:config && cross-env NODE_ENV=production webpack --config webpack/webpack.resources.js --color -p --progress --hide-modules --display-optimization-bailout",
     "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject",
