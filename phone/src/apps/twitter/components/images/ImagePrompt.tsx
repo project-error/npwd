@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   textField: {
     flex: '1 1 100%',
     padding: '10px 15px',
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   textFieldInput: {
     fontSize: '22px',
   },
-}));
+});
 
 export const ImagePrompt = ({ visible, value, handleChange }) => {
   const textFieldRef = useRef(null);
@@ -23,7 +23,10 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
     textFieldRef.current && textFieldRef.current.focus();
   }, [visible]);
 
-  const handleImageChange = useCallback(e => handleChange(e.target.value), []);
+  const handleImageChange = useCallback(
+    (e) => handleChange(e.target.value),
+    [handleChange]
+  );
 
   if (!visible) return null;
   return (

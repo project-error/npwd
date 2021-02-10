@@ -25,7 +25,7 @@ interface BankConfig {
   showNotifications: boolean;
 }
 
-export interface ServerConfig {
+export interface IServerConfig {
   Locale: string;
   KeyTogglePhone: number;
   KeyTakeCall: number;

@@ -43,9 +43,6 @@ export const useTwitterService = () => {
   );
   const setNotification = useSetRecoilState(twitterState.notification);
 
-  const _setProfile = (profile) => {
-    setProfile(profile);
-  };
   const _setUpdateProfileSuccess = (isSuccessful) => {
     setUpdateProfileSuccess(isSuccessful);
     setUpdateProfileLoading(false); // on any result we should set loading to false
@@ -56,10 +53,6 @@ export const useTwitterService = () => {
     setCreateLoading(false);
   };
 
-  const _setNotification = (tweet) => {
-    setNotification(tweet);
-  };
-
   const _setTweets = (tweets) => {
     setTweets(tweets.map(processTweet));
   };
@@ -67,12 +60,12 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
-  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', _setProfile);
+  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', setProfile);
   useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
   useNuiEvent(APP_TWITTER, 'updateProfileResult', _setUpdateProfileSuccess);
   useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', _setNotification);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
 };
