@@ -250,6 +250,7 @@ const hidePhone = async (): Promise<void> => {
       data: false,
     })
   );
+  await phoneCloseAnim();
   SetNuiFocus(false, false);
 };
 
@@ -363,7 +364,7 @@ on(`__cfx_nui:${events.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
 
 RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, async (data: any, cb: Function) => {
-  await hidePhone();
+  await Phone();
   cb();
 }); // Called for when the phone is closed via the UI.
 
