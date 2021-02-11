@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useMemo, useCallback } from 
 import Alert from './Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Snackbar } from '@material-ui/core';
+import { ISnackbar } from '../interface/InterfaceUI';
 
 const useStyles = makeStyles(() => ({
   alert: {
@@ -28,7 +29,7 @@ function SnackbarProvider({ children }) {
     return () => clearTimeout(timer);
   }, [alertIdx])
 
-  const addAlert = useCallback((content) => setAlerts((alerts) => [content, ...alerts]), []);
+  const addAlert = useCallback((message, type) => setAlerts((alerts) => [{message, type}, ...alerts]), []);
 
   const value = useMemo(() => ({ addAlert }), [addAlert]);
 
@@ -36,10 +37,10 @@ function SnackbarProvider({ children }) {
     <SnackbarContext.Provider value={value}>
       <>
         {children}
-        {alerts.map((alert) => (
+        {alerts.map((alert: ISnackbar) => (
           <div className={classes.alert}>
-            <Alert auto key={alert} severity="success" variant="filled">
-              {alert}
+            <Alert auto key={alert} severity="success" variant={alert.type}>
+              {alert.message}
             </Alert>
           </div>
         ))}
