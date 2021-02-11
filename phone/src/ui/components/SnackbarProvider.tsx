@@ -6,17 +6,16 @@ import { ISnackbar } from '../interface/InterfaceUI';
 
 const useStyles = makeStyles(() => ({
   alert: {
-    position: 'absolute', 
-    bottom: '15%', 
-    right: '25%', 
-    margin: '0 auto', 
-    textAlign: 'center'
+    marginTop: '-100px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }))
 
 
 export const SnackbarContext = createContext(null);
-const AUTO_HIDE = 1500;
+const AUTO_HIDE = 2000;
 
 function SnackbarProvider({ children }) {
   const [alerts, setAlerts] = useState([]);
@@ -39,7 +38,7 @@ function SnackbarProvider({ children }) {
         {children}
         {alerts.map((alert: ISnackbar) => (
           <div className={classes.alert}>
-            <Alert auto key={alert} severity="success" variant={alert.type}>
+            <Alert key={alert} severity={alert.type} variant="filled">
               {alert.message}
             </Alert>
           </div>
