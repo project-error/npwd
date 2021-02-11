@@ -34,8 +34,9 @@ emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
 RegisterNuiCallbackType(events.MESSAGES_CREATE_MESSAGE_GROUP);
 on(
   `__cfx_nui:${events.MESSAGES_CREATE_MESSAGE_GROUP}`,
-  ({ phoneNumbers, label }: any): void => {
+  ({ phoneNumbers, label }: any, cb: Function): void => {
     emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
+    cb();
   }
 );
 
@@ -52,9 +53,13 @@ onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, (result: any): void => {
  * Messages fetch messages
  */
 RegisterNuiCallbackType(events.MESSAGES_FETCH_MESSAGES);
-on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGES}`, ({ groupId }: any): void => {
-  emitNet(events.MESSAGES_FETCH_MESSAGES, groupId);
-});
+on(
+  `__cfx_nui:${events.MESSAGES_FETCH_MESSAGES}`,
+  ({ groupId }: any, cb: Function): void => {
+    emitNet(events.MESSAGES_FETCH_MESSAGES, groupId);
+    cb();
+  }
+);
 
 onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGES_SUCCESS, messages);
@@ -68,8 +73,9 @@ onNet(events.MESSAGES_FETCH_MESSAGES_FAILED, (): void => {
  * Messages send message
  */
 RegisterNuiCallbackType(events.MESSAGES_SEND_MESSAGE);
-on(`__cfx_nui:${events.MESSAGES_SEND_MESSAGE}`, (data: any) => {
+on(`__cfx_nui:${events.MESSAGES_SEND_MESSAGE}`, (data: any, cb: Function) => {
   emitNet(events.MESSAGES_SEND_MESSAGE, data.groupId, data.message);
+  cb();
 });
 
 onNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, (groupId: string) => {
