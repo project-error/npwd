@@ -29,5 +29,9 @@
     },
     "bank": {
       "showNotifications": true
+    },
+    "debug": {
+        "level": "debug",
+        "enabled": true
     }
   }

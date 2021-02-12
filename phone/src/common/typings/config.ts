@@ -12,6 +12,11 @@ interface TwitterConfig {
   maxImages: number;
 }
 
+interface Debug {
+  level: 'error' | 'warn' | 'info' | 'verbose' | 'debug';
+  enabled: boolean;
+}
+
 interface General {
   useDashNumber: boolean;
 }
@@ -38,4 +43,5 @@ export interface IServerConfig {
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;
+  debug: Debug;
 }

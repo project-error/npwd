@@ -2,6 +2,9 @@ import { ESX } from './server';
 import { pool } from './db';
 import events from '../utils/events';
 import { useIdentifier, getSource } from './functions';
+import { mainLogger } from './sv_logger';
+
+const contactsLogger = mainLogger.child({ module: 'contact' });
 
 interface Contacts {
   id?: number;
@@ -70,8 +73,8 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
 
     const contacts = await fetchAllContacts(_identifier);
     emitNet(events.CONTACTS_SEND_CONTACTS, _source, contacts);
-  } catch (error) {
-    console.log('Failed to fetch contacts: ', error);
+  } catch (e) {
+    contactsLogger.error(`Failed to fetch contacts, ${e.message}`);
   }
 });
 
@@ -83,43 +86,32 @@ onNet(
       const _identifier = await useIdentifier();
       addContact(_identifier, number, display, avatar);
       emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
-      emitNet(
-        events.CONTACTS_ACTION_RESULT,
-        _source,
-        "CONTACT_ADD_SUCCESS"
-      );
-    } catch (error) {
+      emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_ADD_SUCCESS');
+    } catch (e) {
       const _source = (global as any).source;
-      emitNet(events.CONTACTS_ACTION_RESULT, _source, "CONTACT_ADD_FAILED");
+      emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_ADD_FAILED');
+      contactsLogger.error(`Failed to add contact, ${e.message}`);
     }
   }
 );
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
-  console.log('let me just log the contact first', contact);
   try {
     const _source = (global as any).source;
     const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
-    console.log('nice identifier bro', _identifier);
+    // console.log('nice identifier bro', _identifier);
     await updateContact(contact, _identifier);
-    console.log('i updated the contact server side!');
-    
+    // console.log('i updated the contact server side!');
+
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
-    console.log('ffs, didd it return successful');
-    
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      _source,
-      "CONTACT_UPDATE_SUCCESS"
-    );
-    console.log("UPDATED CONTACT: ", contact);
-  } catch (error) {
+    // console.log('ffs, didd it return successful');
+
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_UPDATE_SUCCESS');
+    // console.log('UPDATED CONTACT: ', contact);
+  } catch (e) {
     const _source = (global as any).source;
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      _source,
-      "CONTACT_UPDATE_FAILED"
-    );
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_UPDATE_FAILED');
+    contactsLogger.error(`Failed to update contact, ${e.message}`);
   }
 });
 
@@ -133,7 +125,8 @@ onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
       getSource(),
       'CONTACT_DELETE_SUCCESS'
     );
-  } catch (error) {
+  } catch (e) {
+    contactsLogger.error(`Failed to delete contact, ${e.message}`);
     emitNet(
       events.CONTACTS_ACTION_RESULT,
       getSource(),

@@ -2,6 +2,9 @@ import axios from 'axios';
 
 import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
+import { mainLogger } from './sv_logger';
+
+const discordLogger = mainLogger.child({ module: 'discord' });
 
 const DISCORD_TOKEN_ENV_VAR = 'discord_bot_token';
 const DISCORD_TOKEN = GetConvar(DISCORD_TOKEN_ENV_VAR, '');
@@ -17,7 +20,7 @@ export async function reportTweetToDiscord(
   reportingProfile: Profile
 ): Promise<any> {
   if (!DISCORD_TOKEN || !DISCORD_CHANNEL_ID) {
-    console.warn(`Got a request to report a tweet but discord is not 
+    discordLogger.warn(`Got a request to report a tweet but discord is not 
         configured. See README on how to configure discord endpoints.`);
     return;
   }

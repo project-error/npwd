@@ -15,3 +15,6 @@ yarn-error.log*
 
 # Mac thing
 .DS_Store
+
+# Debug logs
+sv_npwd.log

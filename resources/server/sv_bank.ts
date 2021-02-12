@@ -7,13 +7,19 @@ import {
   IBankCredentials,
 } from '../../phone/src/common/typings/bank';
 import { useIdentifier } from './functions';
-import { type } from 'os';
+import { mainLogger } from './sv_logger';
+
+const bankLogger = mainLogger.child({ module: 'bank' });
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   const query =
     'SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
   const transactions = <Transfer[]>results;
+
+  bankLogger.verbose(
+    `Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`
+  );
 
   return transactions;
 }
@@ -26,6 +32,8 @@ function fetchCredentials(): IBankCredentials {
     name,
     balance,
   };
+
+  bankLogger.verbose(`Fetching banking credentials - ${name} - ${balance}`);
 
   return result;
 }
@@ -83,8 +91,8 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
     const transfer = await fetchAllTransactions(_identifier);
 
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer);
-  } catch (error) {
-    console.log('Failed to fetch transactions');
+  } catch (e) {
+    bankLogger.error(`Failed to fetch transactions, ${e.message}`);
   }
 });
 
@@ -95,7 +103,8 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
     const transferNotify = await addTransfer(_identifier, transfer);
     emitNet(events.BANK_TRANSACTION_NOTIFICATION, xTarget, transferNotify);
     emitNet(events.BANK_ADD_TRANSFER_SUCCESS, getSource());
-  } catch (error) {
+  } catch (e) {
+    bankLogger.error(`Failed to add transaction, ${e.message}`);
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false);
   }
 });
@@ -104,7 +113,7 @@ onNet(events.BANK_GET_CREDENTIALS, () => {
   try {
     const credentials = fetchCredentials();
     emitNet(events.BANK_SEND_CREDENTIALS, getSource(), credentials);
-  } catch (error) {
-    console.log('Failed to fetch credentials');
+  } catch (e) {
+    bankLogger.error(`Failed to fetch credentials, ${e.message}`);
   }
 });

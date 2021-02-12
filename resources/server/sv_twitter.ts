@@ -5,6 +5,9 @@ import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
+import { mainLogger } from './sv_logger';
+
+const twitterLogger = mainLogger.child({ module: 'twitter' });
 
 interface ProfileName {
   profile_name: string;
@@ -295,6 +298,7 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
     const profile = await getOrCreateProfile(identifier);
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, getSource(), profile);
   } catch (e) {
+    twitterLogger.error(`Failed to get or create profile, ${e.message}`);
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, getSource());
   }
 });
@@ -305,6 +309,7 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
     await updateProfile(identifier, profile);
     emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, getSource(), true);
   } catch (e) {
+    twitterLogger.error(`Failed to update twitter profile: ${e.message}`);
     emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, getSource(), false);
   }
 });
@@ -316,6 +321,7 @@ onNet(events.TWITTER_FETCH_TWEETS, async () => {
     const tweets = await fetchAllTweets(profile.id);
     emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, getSource(), tweets);
   } catch (e) {
+    twitterLogger.error(`Fetching tweets failed, ${e.message}`);
     emitNet(events.TWITTER_FETCH_TWEETS_FAILURE, getSource());
   }
 });
@@ -327,6 +333,7 @@ onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
     const tweets = await fetchTweetsFiltered(profile.id, searchValue);
     emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, getSource(), tweets);
   } catch (e) {
+    twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`);
     emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE, getSource());
   }
 });
@@ -339,6 +346,7 @@ onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
     emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
+    twitterLogger.error(`Create tweet failed, ${e.message}`);
     emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
   }
 });
@@ -350,6 +358,7 @@ onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
 
     emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, getSource());
   } catch (e) {
+    twitterLogger.error(`Delete tweet failed, ${e.message}`);
     emitNet(events.TWITTER_DELETE_TWEET_FAILURE, getSource());
   }
 });
@@ -366,6 +375,7 @@ onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
     }
     emitNet(events.TWITTER_TOGGLE_LIKE_SUCCESS, getSource());
   } catch (e) {
+    twitterLogger.error(`Like failed, ${e.message}`);
     emitNet(events.TWITTER_TOGGLE_LIKE_FAILURE, getSource());
   }
 });
@@ -378,7 +388,7 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
 
     const reportExists = await doesReportExist(tweet.id, profile.id);
     if (reportExists) {
-      console.warn('This profile has already reported this tweet');
+      twitterLogger.warn('This profile has already reported this tweet');
     } else {
       await createTweetReport(tweet.id, profile.id);
       await reportTweetToDiscord(tweet, profile);
@@ -387,5 +397,6 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
     emitNet(events.TWITTER_REPORT_SUCCESS, getSource());
   } catch (e) {
     emitNet(events.TWITTER_REPORT_FAILURE, getSource());
+    twitterLogger.error(`Twitter report failed, ${e.message}`);
   }
 });

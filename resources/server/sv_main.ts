@@ -2,6 +2,7 @@ import { ESX } from './server';
 import { pool } from './db';
 import config from '../utils/config';
 import { getIdentifierByPhoneNumber, usePhoneNumber } from './functions';
+import { mainLogger } from './sv_logger';
 
 //db = DatabaseConfig  //helper variable for use in server function
 
@@ -29,6 +30,8 @@ function getRandomPhoneNumber() {
     // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
     // Example: 123-4567
   }
+
+  mainLogger.verbose(`Getting random number: ${randomNumber}`);
 
   return randomNumber;
 }
@@ -69,7 +72,7 @@ onNet('phone:getCredentials', async () => {
     const _identifier = xPlayer.getIdentifier();
     const number = await getCredentials(_identifier);
     emitNet('phone:sendCredentials', _source, number);
-  } catch (error) {
-    console.log('Failed to get number. ', error);
+  } catch (e) {
+    mainLogger.error(`Failed to get a number, ${e.message}`);
   }
 });

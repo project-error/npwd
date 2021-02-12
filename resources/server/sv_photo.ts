@@ -1,8 +1,11 @@
 import events from '../utils/events';
-import { ESX, getSource } from './server';
+import { getSource } from './server';
 import { pool } from './db';
 import { useIdentifier } from './functions';
 import { IPhoto } from '../../phone/src/common/typings/photo';
+import { mainLogger } from './sv_logger';
+
+const photoLogger = mainLogger.child({ module: 'photo' });
 
 async function uploadPhoto(identifier: string, image: string) {
   const query =
@@ -22,7 +25,6 @@ async function deletePhoto(photo: IPhoto, identifier: string) {
   const query =
     'DELETE FROM npwd_phone_gallery WHERE id = ? AND identifier = ?';
   await pool.query(query, [photo.id, identifier]);
-  console.log(photo.id);
 }
 
 onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
@@ -31,8 +33,8 @@ onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
     const identifier = await useIdentifier();
     await uploadPhoto(identifier, image);
     emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, pSource);
-  } catch (error) {
-    console.dir(error)
+  } catch (e) {
+    photoLogger.error(`Failed to upload photo, ${e.message}`);
   }
 });
 
@@ -47,7 +49,7 @@ onNet(events.CAMERA_DELETE_PHOTO, async (photo: IPhoto) => {
     const identifier = await useIdentifier();
     await deletePhoto(photo, identifier);
     emitNet(events.CAMERA_DELETE_PHOTO_SUCCESS, getSource());
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    photoLogger.error(`Failed to fetch photos, ${e.message}`);
   }
 });
