@@ -1,6 +1,10 @@
 {
   "translation": {
+    "DATE_FORMAT": "DD/MM/AAAA",
+    "DATE_TIME_FORMAT": "DD/MM/AAAA hh:mm A",
+    
     "COMING_SOON": "En cours...",
+    
     "APPS_DIALER": "Téléphone",
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",
@@ -9,6 +13,10 @@
     "APPS_BANK": "WhoDis Banque",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "App test",
+    "APPS_TWITTER": "Twitter",
+    "APPS_SELLOUT": "Marché",
+    "APPS_CAMERA": "Caméra",
+    
     "APPS_BANK_TRANSFER": "Transfert",
     "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fond d'écran",
     "APPS_SETTINGS_OPTIONS_FRAME": "Cadre/Coque",
@@ -75,6 +83,13 @@
     "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Numéro",
     "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Photo",
     "APPS_CONTACT_MODAL_BUTTON_ADD": "Ajouter un contact",
+    
+    "APPS_NOTES_ADD_SUCCESS": "Note sauvegardée avec succès.",
+    "APPS_NOTES_ADD_FAILED": "Erreur lors de la suppression d'une note.",
+    "APPS_NOTES_UPDATE_SUCCESS": "Mise à jour d'une note réalisée avec succès.",
+    "APPS_NOTES_UPDATE_FAILED": "Erreur lors de la mise à jour d'une note.",
+    "APPS_NOTES_DELETE_SUCCESS": "Note supprimée avec succès.",
+    "APPS_NOTES_DELETE_FAILED": "Erreur lors de la suppression d'une note.",
 
     "APPS_SETTINGS_PHONE_NUMBER": "Numéro de téléphone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Fond d'écran",
@@ -84,6 +99,7 @@
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
 
+    "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
     "GENERIC_DELETE": "Supprimer"
   }
