@@ -1,20 +1,5 @@
-import React, { createContext, useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import Alert from './Alert';
-import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+import React, { createContext, useState, useEffect, useRef } from 'react';
 import { IAlert } from '../hooks/useSnackbar';
-
-const useStyles = makeStyles(() => ({
-  alert: {
-    marginTop: '-100px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  hidden: {
-    display: 'none'
-  }
-}))
 
 
 export const SnackbarContext = createContext({ addAlert: (a: IAlert) => {} });
