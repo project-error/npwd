@@ -3,6 +3,7 @@ import './Phone.css';
 import './i18n';
 import { Route, useHistory } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
+import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
@@ -32,7 +33,8 @@ import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
-import SnackbarProvider from './ui/components/SnackbarProvider';
+import { useSnackbar } from './ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 InjectDebugData([
   {
@@ -96,6 +98,9 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+  const { t } = useTranslation()
+
+  const { alert } = useSnackbar();
 
   const { modal } = useModal(); // the calling modal
 
@@ -152,7 +157,6 @@ function Phone() {
                   }))}
                 />
                 <div className='PhoneAppContainer'>
-                  <SnackbarProvider>
                     {modal ? (
                       <CallModal />
                     ) : (
@@ -163,7 +167,18 @@ function Phone() {
                         ))}
                       </>
                     )}
-                  </SnackbarProvider>
+                    {alert ? (
+                      <div style={{
+                        marginTop: '-100px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                       }}>
+                        <Alert severity={alert.type} variant="filled">
+                          {t("APPS_"+alert.message)}
+                        </Alert>
+                      </div>
+                    ) : null}
                 </div>
                 <Navigation />
               </>

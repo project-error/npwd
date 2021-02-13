@@ -13,8 +13,3 @@ export interface AppWrapperTypes {
   style?: CSSProperties;
   handleClickAway?: (...args: any[]) => void;
 }
-
-export interface ISnackbar {
-  message: string;
-  type: 'success' | 'error'
-}

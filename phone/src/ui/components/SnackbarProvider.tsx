@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Alert from './Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import { Snackbar } from '@material-ui/core';
-import { ISnackbar } from '../interface/InterfaceUI';
+import { useTranslation } from 'react-i18next';
+import { IAlert } from '../hooks/useSnackbar';
 
 const useStyles = makeStyles(() => ({
   alert: {
@@ -10,39 +10,40 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  hidden: {
+    display: 'none'
   }
 }))
 
 
-export const SnackbarContext = createContext(null);
-const AUTO_HIDE = 2000;
+export const SnackbarContext = createContext({ addAlert: (a: IAlert) => {} });
 
 function SnackbarProvider({ children }) {
-  const [alerts, setAlerts] = useState([]);
   const classes = useStyles();
-
-  const alertIdx = alerts.join(',');
+  const { t } = useTranslation()
+  const [alert, setAlert] = useState(null);
+  const timer = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setAlerts((alert) => alerts.slice(0, alerts.length - 1)), AUTO_HIDE);
-    return () => clearTimeout(timer);
-  }, [alertIdx])
+    if (alert) {
+      clearTimeout(timer.current)
+      timer.current = setTimeout(() => {
+        setAlert(null)
+      }, 2500);
+    }
+    return () => clearTimeout(timer.current)
+  }, [alert]);
 
-  const addAlert = useCallback((message, type) => setAlerts((alerts) => [{message, type}, ...alerts]), []);
 
-  const value = useMemo(() => ({ addAlert }), [addAlert]);
+  const addAlert = (value) => setAlert(value);
+
+  const value = { addAlert, alert }
 
   return (
     <SnackbarContext.Provider value={value}>
       <>
         {children}
-        {alerts.map((alert: ISnackbar) => (
-          <div className={classes.alert}>
-            <Alert key={alert} severity={alert.type} variant="filled">
-              {alert.message}
-            </Alert>
-          </div>
-        ))}
       </>
     </SnackbarContext.Provider>
   )

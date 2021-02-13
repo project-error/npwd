@@ -23,6 +23,7 @@ export const useNuiEvent = (
   options: IOptions = {},
   currentState?: Record<string, unknown>
 ) => {
+
   const savedHandler: MutableRefObject<any> = useRef();
   // Destructure passed options
   const { capture, passive, once } = options;

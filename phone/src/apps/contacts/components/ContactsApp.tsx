@@ -10,7 +10,6 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Fab from '@material-ui/core/Fab';
 import { InfoModal } from './modal/InfoModal';
 import { useContactDetail } from '../hooks/useContactDetail';
-import { ContactAlert } from './alert/ContactAlert';
 
 import useStyles from './styles.contacts';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
@@ -59,7 +58,6 @@ export const ContactsApp = () => {
         >
           <PersonAddIcon />
         </Fab>
-        <ContactAlert />
       </AppContent>
     </AppWrapper>
   );

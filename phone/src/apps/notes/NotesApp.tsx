@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { AppContent } from '../../ui/components/AppContent';
 import { AppTitle } from '../../ui/components/AppTitle';
@@ -15,7 +15,8 @@ import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
-import { NotesAlert } from './alert/NotesAlert';
+import { useSnackbar } from '../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 InjectDebugData([
   {
@@ -38,9 +39,11 @@ InjectDebugData([
 
 export const NotesApp = () => {
   const { setNoteModal } = useNoteModal();
+  const { t } = useTranslation()
   const { detail, setDetail } = useNoteDetail();
   const { notes } = useNotes();
   const notesApp = useApp('NOTES');
+  const { addAlert } = useSnackbar()
 
   const classes = useStyles();
 
@@ -66,7 +69,6 @@ export const NotesApp = () => {
         >
           <AddIcon />
         </Fab>
-      <NotesAlert />
     </AppWrapper>
   );
 };
