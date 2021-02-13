@@ -33,7 +33,7 @@ onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
     const _identifier = await useIdentifier();
     await addNote(_identifier, note);
     emitNet(events.NOTE_SEND_NOTE_SUCCESS, pSource);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_ADD_SUCCESS')
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_ADD_SUCCESS', type: 'success' })
 
   } catch (error) {
     const pSource = (global as any).source
