@@ -20,8 +20,6 @@ const useStyles = makeStyles(() => ({
 export const SnackbarContext = createContext({ addAlert: (a: IAlert) => {} });
 
 function SnackbarProvider({ children }) {
-  const classes = useStyles();
-  const { t } = useTranslation()
   const [alert, setAlert] = useState(null);
   const timer = useRef(null);
 
