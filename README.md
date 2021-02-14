@@ -91,7 +91,29 @@ The Installation Steps assumes you have the following prerequisites:
 - If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then do `ensure new-phone-who-dis` after making your change.
 - Avoid commiting `index.html` as the development version overrides the production version
 
-#### Important Note
+#### React Devtools
+
+When in development mode, the bundle includes a standalone React DevTools module, that allows access to react-devtools comparable to the browser environment.
+
+First ensure you have react-devtools installed globally by running one of the following commands:
+
+#### Yarn
+```shell
+yarn global add react-devtools
+```
+
+#### NPM
+```shell
+npm install -g react-devtools
+```
+
+Then run this command from your preffered terminal:
+```shell
+react-devtools
+```
+Now start your `ensure NPWD` with the development build, and you should have access to the React DevTools just as you would in the browser!
+
+### Important Note
 
 - By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically
 uploads relevant sesssion details and stack traces whenever an exception is thrown. We use these metrics to further

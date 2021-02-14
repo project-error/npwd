@@ -1,12 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ResourceManifestPlugin = require('./webpack.fxmanifest.plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = require('./webpack.common')({
   mode: 'production',
 
-  // In production, we skip all hot-reloading stuff
   entry: [path.join(process.cwd(), 'src/index.tsx')],
 
   plugins: [
@@ -26,7 +24,6 @@ module.exports = require('./webpack.common')({
       },
       inject: true,
     }),
-    new ResourceManifestPlugin(),
     new CopyPlugin({
       patterns: [
         {
