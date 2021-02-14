@@ -39,11 +39,9 @@ InjectDebugData([
 
 export const NotesApp = () => {
   const { setNoteModal } = useNoteModal();
-  const { t } = useTranslation()
   const { detail, setDetail } = useNoteDetail();
   const { notes } = useNotes();
   const notesApp = useApp('NOTES');
-  const { addAlert } = useSnackbar()
 
   const classes = useStyles();
 
