@@ -1,6 +1,4 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
-import { IAlert } from '../hooks/useSnackbar';
-
 
 export const SnackbarContext = createContext(null);
 
