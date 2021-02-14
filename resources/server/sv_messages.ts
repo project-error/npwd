@@ -8,6 +8,9 @@ import {
 } from '../../phone/src/common/typings/messages';
 import { pool, withTransaction } from './db';
 import { getSource, useIdentifier } from './functions';
+import { mainLogger } from './sv_logger';
+
+const messageLogger = mainLogger.child({ module: 'messages' });
 
 /**
  * Used for the raw npwd_messages_groups row responses
@@ -383,6 +386,7 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
     );
   } catch (e) {
     emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, getSource());
+    messageLogger.error(`Failed to fetch messages groups, ${e.message}`);
   }
 });
 
@@ -412,6 +416,7 @@ onNet(
       }
     } catch (e) {
       emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
+      messageLogger.error(`Failed to create message group, ${e.message}`);
     }
   }
 );
@@ -423,6 +428,7 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
     emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, getSource(), messages);
   } catch (e) {
     emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, getSource());
+    messageLogger.error(`Failed to fetch messages, ${e.message}`);
   }
 });
 
@@ -435,6 +441,7 @@ onNet(
       emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), groupId);
     } catch (e) {
       emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
+      messageLogger.error(`Failed to send message, ${e.message}`);
     }
   }
 );

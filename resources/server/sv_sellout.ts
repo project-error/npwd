@@ -3,6 +3,9 @@ import { ESX } from './server';
 import { getSource } from './functions';
 import { pool } from './db';
 import { usePhoneNumber } from './functions';
+import { mainLogger } from './sv_logger';
+
+const selloutLogger = mainLogger.child({ module: 'sellout' });
 
 interface Listing {
   title: string;
@@ -43,8 +46,8 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
     const _source = (global as any).source;
     const listings = await fetchAllListings();
     emitNet(events.SELLOUT_SEND_LISTING, _source, listings);
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    selloutLogger.error(`Failed to fetch listings, ${e.message}`);
   }
 });
 
@@ -56,7 +59,7 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
 
     const phoneNumber = await usePhoneNumber(_identifier);
     addListing(_identifier, name, phoneNumber, listing);
-  } catch (error) {
-    console.log('Failed to add contact: ', error);
+  } catch (e) {
+    selloutLogger.error(`Failed to add listing ${e.message}`);
   }
 });

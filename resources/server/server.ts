@@ -10,9 +10,16 @@ import './sv_notes';
 import './sv_photo';
 import './sv_messages';
 import './sv_call';
+import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;
 
 export const getSource = () => (global as any).source;
 
 emit('esx:getSharedObject', (obj: Server) => (ESX = obj));
+
+on('onServerResourceStart', (resource: string) => {
+  if (resource === GetCurrentResourceName()) {
+    mainLogger.info('Sucessfully started');
+  }
+});
