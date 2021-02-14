@@ -38,6 +38,18 @@ InjectDebugData([
     method: 'fetchTweets',
     data: [
       {
+        id: 59,
+        message: 'XSS\n<script src="test.js">Test</script>\nBro',
+        avatar_url: 'http://i.tasoagc.dev/jtKL',
+        seconds_since_tweet: 500,
+        isMine: false,
+        updateAt: '2021-02-08 14:37:46',
+        visible: 1,
+        likes: 50000,
+        profile_name: 'jQuery Main',
+        images: 'http://i.tasoagc.dev/0xdp',
+      },
+      {
         id: 2,
         message: 'GCPhone will never die',
         avatar_url: 'http://i.tasoagc.dev/jtKL',

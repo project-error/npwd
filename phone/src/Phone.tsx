@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
-import { Route, useHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
@@ -35,51 +35,6 @@ import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-
-InjectDebugData([
-  {
-    app: 'PHONE',
-    method: 'phoneConfig',
-    data: {
-      Locale: 'en',
-      KeyTogglePhone: 288,
-      KeyTakeCall: 38,
-      PhoneAsItem: false,
-      SwimDestroy: false,
-      RunRate: 10,
-      DestoryChance: 100,
-      DestroyPhoneReCheck: 3,
-      notificationPosition: {
-        horizontal: 'right',
-        vertical: 'top',
-      },
-      general: {
-        useDashNumber: true,
-      },
-      twitter: {
-        showNotifications: true,
-        generateProfileNameFromUsers: true,
-        allowEdtiableProfileName: true,
-        allowDeleteTweets: true,
-        allowReportTweets: true,
-        characterLimit: 160,
-        newLineLimit: 10,
-        enableAvatars: true,
-        enableEmojis: true,
-        enableImages: true,
-        maxImages: 3,
-      },
-      bank: {
-        showNotifications: true,
-      },
-    },
-  },
-  {
-    app: 'PHONE',
-    method: 'setVisibility',
-    data: true,
-  },
-]);
 
 function Phone() {
   const quickAccess = useQuickAccess();
@@ -191,3 +146,11 @@ function Phone() {
 }
 
 export default Phone;
+
+InjectDebugData([
+  {
+    app: 'PHONE',
+    method: 'setVisibility',
+    data: true,
+  },
+]);

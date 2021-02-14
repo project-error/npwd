@@ -14,30 +14,42 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useContacts } from '../../hooks/useContacts';
-import { useContactModal } from '../../hooks/useContactModal';
-import { useContactDetail } from '../../hooks/useContactDetail';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import '../Contact.css';
 import { SearchContacts } from './SearchContacts';
+import { useHistory } from 'react-router-dom';
+import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 
 export const ContactList = () => {
   const { filteredContacts } = useFilteredContacts();
-  const { setShowContactModal } = useContactModal();
-  const { setContactDetail } = useContactDetail();
+  const history = useHistory();
 
-  const contacts = useContacts();
+  const { contacts } = useContacts();
 
-  const openContactInfo = (contact) => {
-    setShowContactModal(true);
-    setContactDetail(contact);
+  const openContactInfo = (contactId: number) => {
+    history.push(`/contacts/${contactId}`);
   };
-  const startCall = (number) => {
-    console.log(number);
+
+  const startCall = (number: string) => {
+    LogDebugEvent({
+      action: 'Emitting `Start Call` to Scripts',
+      level: 2,
+      data: true,
+    });
     Nui.send('phone:beginCall', {
       number,
     });
+  };
+
+  const handleMessage = () => {
+    LogDebugEvent({
+      action: 'Routing to Message',
+      level: 1,
+      data: true,
+    });
+    // TODO: Integrate to send to message event when route becomes available
   };
 
   const filteredRegEx = new RegExp(filteredContacts, 'gi');
@@ -46,46 +58,40 @@ export const ContactList = () => {
     <>
       <SearchContacts />
       <List>
-        {contacts.contacts
+        {contacts
           .filter(
             (contact) =>
               contact.display.match(filteredRegEx) ||
               contact.number.match(filteredRegEx)
           )
           .map((contact) => (
-            <>
-              <ListItem key={contact.id} divider>
-                <ListItemAvatar>
-                  {contact.avatar ? (
-                    <MuiAvatar src={contact.avatar} />
-                  ) : (
-                    <MuiAvatar>
-                      {contact.display.slice(0, 1).toUpperCase()}
-                    </MuiAvatar>
-                  )}
-                </ListItemAvatar>
-                <ListItemText
-                  primary={contact.display}
-                  secondary={contact.number}
-                />
-                <Button onClick={() => startCall(contact.number)}>
-                  <PhoneIcon />
-                </Button>
-                <Button
-                  onClick={() =>
-                    console.log('Message: ' + contact.display, contact.number)
-                  }
-                >
-                  <ChatIcon />
-                </Button>
-                <Button
-                  style={{ margin: -15 }}
-                  onClick={() => openContactInfo(contact)}
-                >
-                  <MoreVertIcon />
-                </Button>
-              </ListItem>
-            </>
+            <ListItem key={contact.id} divider>
+              <ListItemAvatar>
+                {contact.avatar ? (
+                  <MuiAvatar src={contact.avatar} />
+                ) : (
+                  <MuiAvatar>
+                    {contact.display.slice(0, 1).toUpperCase()}
+                  </MuiAvatar>
+                )}
+              </ListItemAvatar>
+              <ListItemText
+                primary={contact.display}
+                secondary={contact.number}
+              />
+              <Button onClick={() => startCall(contact.number)}>
+                <PhoneIcon />
+              </Button>
+              <Button onClick={() => handleMessage()}>
+                <ChatIcon />
+              </Button>
+              <Button
+                style={{ margin: -15 }}
+                onClick={() => openContactInfo(contact.id)}
+              >
+                <MoreVertIcon />
+              </Button>
+            </ListItem>
           ))}
       </List>
     </>

@@ -4,10 +4,10 @@ import { ICall } from '../../phone/src/common/typings/call';
 const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
-on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any) => {
+on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
   const start = Date.now();
-
   emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
+  cb();
 });
 
 onNet(
@@ -31,8 +31,9 @@ onNet(
 );
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
-on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any) => {
+on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
+  cb();
 });
 
 onNet(
@@ -56,9 +57,10 @@ onNet(
 );
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
-on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any) => {
+on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {
   const end = Date.now();
   emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber, end);
+  cb();
 });
 
 onNet(events.PHONE_CALL_WAS_REJECTED, () => {
@@ -79,9 +81,10 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
 });
 
 RegisterNuiCallbackType(events.PHONE_END_CALL);
-on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any) => {
+on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any, cb: Function) => {
   const end = Date.now();
   emitNet(events.PHONE_END_CALL, data.transmitterNumber, end);
+  cb();
 });
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {

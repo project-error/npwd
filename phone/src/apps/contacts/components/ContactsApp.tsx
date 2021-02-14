@@ -2,17 +2,12 @@ import React from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
-import { ContactList } from './List/ContactList';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { AddContactModal } from './ContactModal';
-import { useModal } from '../hooks/useModal';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Fab from '@material-ui/core/Fab';
-import { InfoModal } from './modal/InfoModal';
-import { useContactDetail } from '../hooks/useContactDetail';
-
-import useStyles from './styles.contacts';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
+import { Route } from 'react-router-dom';
+
+import ContactsInfoPage from './views/ContactInfo';
+import { ContactPage } from './views/ContactsPage';
 
 InjectDebugData([
   {
@@ -22,42 +17,32 @@ InjectDebugData([
       {
         id: 1,
         display: 'Ruqen',
-        number: '43534444',
+        number: '555-15196',
       },
       {
-        id: 1,
+        id: 2,
         display: 'Taso',
-        number: '456466',
+        number: '215-8139',
+        avatar: 'http://i.tasoagc.dev/i9Ig',
+      },
+      {
+        id: 3,
+        display: 'Chip',
+        number: '417-8792',
       },
     ],
   },
 ]);
 
 export const ContactsApp = () => {
-  const classes = useStyles();
-  const { showModal, setShowModal } = useModal();
   const contacts = useApp('CONTACTS');
-  const { contactDetail } = useContactDetail();
-
-  const openModal = () => {
-    setShowModal(true);
-  };
 
   return (
     <AppWrapper id='contact-app'>
       <AppTitle app={contacts} />
-      <AddContactModal />
-      <InfoModal key={contactDetail?.id} />
-      <div className={showModal ? classes.backgroundModal : undefined} />
       <AppContent>
-        <ContactList />
-        <Fab
-          onClick={openModal}
-          style={{ backgroundColor: '#2196f3', color: '#fff' }}
-          className={classes.absolute}
-        >
-          <PersonAddIcon />
-        </Fab>
+        <Route path='/contacts/' exact component={ContactPage} />
+        <Route path='/contacts/:id' exact component={ContactsInfoPage} />
       </AppContent>
     </AppWrapper>
   );
