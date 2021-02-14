@@ -1,7 +1,7 @@
 # New Phone Who Dis
 
 ### Project Error Discord
-Join the [Discord](discord.gg/YWJY36EVsm) to follow current development of the project.
+Join the [Discord](discord.gg/HYwBjTbAY5) to follow current development of the project.
 
 ### Production Server Installation **(WIP)**
 
