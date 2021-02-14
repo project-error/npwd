@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { AppContent } from '../../ui/components/AppContent';
 import { AppTitle } from '../../ui/components/AppTitle';
@@ -32,7 +32,7 @@ InjectDebugData([
         content: 'Hello, this is another shitty note',
       },
     ],
-  }
+  },
 ]);
 
 export const NotesApp = () => {
@@ -56,15 +56,15 @@ export const NotesApp = () => {
         <NoteList notes={notes} />
       </AppContent>
       <Fab
-          className={classes.absolute}
-          onClick={handleModal}
-          style={{
-            background: '#f9a825',
-            color: '#fff',
-          }}
-        >
-          <AddIcon />
-        </Fab>
+        className={classes.absolute}
+        onClick={handleModal}
+        style={{
+          background: '#f9a825',
+          color: '#fff',
+        }}
+      >
+        <AddIcon />
+      </Fab>
     </AppWrapper>
   );
 };
