@@ -91,11 +91,12 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send('phone:addContact', {
-      name,
+    Nui.send('phone:addContacts', {
+      display: name,
       number,
       avatar,
     });
+    history.goBack()
   };
 
   const handleContactSave = () => {
@@ -110,6 +111,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
+    history.goBack()
   };
 
   const handleContactDelete = () => {
@@ -121,6 +123,7 @@ const ContactsInfoPage = () => {
     Nui.send('phone:deleteContact', {
       id: contact.id,
     });
+    history.goBack()
   };
 
   return (

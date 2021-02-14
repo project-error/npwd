@@ -12,10 +12,7 @@ onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {
 
 RegisterNuiCallbackType(events.CONTACTS_ADD_CONTACT);
 on(`__cfx_nui:${events.CONTACTS_ADD_CONTACT}`, (data: any, cb: Function) => {
-  const display = data.name;
-  const number = data.number;
-  const avatar = data.avatar;
-  emitNet(events.CONTACTS_ADD_CONTACT, number, display, avatar);
+  emitNet(events.CONTACTS_ADD_CONTACT, data.number, data.display, data.avatar);
   cb();
 });
 
@@ -31,7 +28,6 @@ on(`__cfx_nui:${events.CONTACTS_UPDATE_CONTACT}`, (data: any, cb: Function) => {
 
 onNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, () => {
   emitNet(events.CONTACTS_GET_CONTACTS);
-  console.log('did you update the contact??????????????????');
 });
 
 RegisterNuiCallbackType(events.CONTACTS_DELETE_CONTACT);
