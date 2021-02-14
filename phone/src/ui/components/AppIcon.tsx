@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { green } from '@material-ui/core/colors';
 import { Button } from '@material-ui/core';
-import Nui from '../../os/nui-events/utils/Nui';
 
 interface IStyles {
   root: any;

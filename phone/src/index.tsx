@@ -10,6 +10,7 @@ import Phone from './Phone';
 import TwitterNotification from './apps/twitter/components/notification/TwitterNotification';
 import { BankNotification } from './apps/bank/components/notification/BankNotification';
 import PhoneConfig from './config/default.json';
+import SnackbarProvider from './ui/components/SnackbarProvider';
 
 // Enable Sentry when config setting is true
 if (PhoneConfig.SentryErrorMetrics) {
@@ -29,7 +30,9 @@ ReactDOM.render(
     <RecoilRoot>
       <TwitterNotification />
       <BankNotification />
-      <Phone />
+      <SnackbarProvider>
+        <Phone />
+      </SnackbarProvider>
     </RecoilRoot>
   </HashRouter>,
   document.getElementById('root')

@@ -33,11 +33,11 @@ onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
     const _identifier = await useIdentifier();
     await addNote(_identifier, note);
     emitNet(events.NOTE_SEND_NOTE_SUCCESS, pSource);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_ADD_SUCCESS')
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_ADD_SUCCESS', type: 'success' })
 
   } catch (error) {
     const pSource = (global as any).source
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_ADD_FAILED')
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_ADD_FAILED', type: 'error' })
   }
 });
 
@@ -59,11 +59,11 @@ onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
     const _identifier = await useIdentifier();
     await deleteNote(noteId.id, _identifier);
 
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_DELETE_SUCCESS')
-
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_DELETE_SUCCESS', type: 'success' })
+ 
   } catch (error) {
     const pSource = (global as any).source;
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_DELETE_FAILED')
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_DELETE_FAILED', type: 'error' })
   }
 });
 
@@ -73,11 +73,12 @@ onNet(events.NOTE_UPDATE_NOTE, async (note: Note) => {
     const _identifier = await useIdentifier();
     await updateNote(note, _identifier);
     emitNet(events.NOTE_UPDATE_NOTE_SUCCESS, pSource);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, 'NOTES_UPDATE_SUCCESS')
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_UPDATE_SUCCESS', type: 'success' })
 
   } catch (error) {
     const pSource = (global as any).source;
     emitNet(events.NOTE_UPDATE_NOTE_FAILURE, pSource);
+    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_UPDATE_FAILED', type: 'error' })
   }
 });
 

@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
-import { Route, useHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
+import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
@@ -32,51 +33,8 @@ import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
-
-InjectDebugData([
-  {
-    app: 'PHONE',
-    method: 'phoneConfig',
-    data: {
-      Locale: 'en',
-      KeyTogglePhone: 288,
-      KeyTakeCall: 38,
-      PhoneAsItem: false,
-      SwimDestroy: false,
-      RunRate: 10,
-      DestoryChance: 100,
-      DestroyPhoneReCheck: 3,
-      notificationPosition: {
-        horizontal: 'right',
-        vertical: 'top',
-      },
-      general: {
-        useDashNumber: true,
-      },
-      twitter: {
-        showNotifications: true,
-        generateProfileNameFromUsers: true,
-        allowEdtiableProfileName: true,
-        allowDeleteTweets: true,
-        allowReportTweets: true,
-        characterLimit: 160,
-        newLineLimit: 10,
-        enableAvatars: true,
-        enableEmojis: true,
-        enableImages: true,
-        maxImages: 3,
-      },
-      bank: {
-        showNotifications: true,
-      },
-    },
-  },
-  {
-    app: 'PHONE',
-    method: 'setVisibility',
-    data: true,
-  },
-]);
+import { useSnackbar } from './ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 function Phone() {
   const quickAccess = useQuickAccess();
@@ -95,6 +53,9 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+  const { t } = useTranslation()
+
+  const { alert } = useSnackbar();
 
   const { modal } = useModal(); // the calling modal
 
@@ -151,16 +112,28 @@ function Phone() {
                   }))}
                 />
                 <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {allApps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
+                    {modal ? (
+                      <CallModal />
+                    ) : (
+                      <>
+                        <Route exact path='/' component={HomeApp} />
+                        {allApps.map((App) => (
+                          <App.Route key={App.id} />
+                        ))}
+                      </>
+                    )}
+                    {alert ? (
+                      <div style={{
+                        marginTop: '-100px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                       }}>
+                        <Alert severity={alert.type} variant="filled">
+                          {t("APPS_"+alert.message)}
+                        </Alert>
+                      </div>
+                    ) : null}
                 </div>
                 <Navigation />
               </>
@@ -173,3 +146,11 @@ function Phone() {
 }
 
 export default Phone;
+
+InjectDebugData([
+  {
+    app: 'PHONE',
+    method: 'setVisibility',
+    data: true,
+  },
+]);

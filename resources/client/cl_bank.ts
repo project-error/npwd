@@ -21,9 +21,9 @@ onNet(events.BANK_SEND_CREDENTIALS, (credentials: any) => {
 });
 
 RegisterNuiCallbackType(events.BANK_ADD_TRANSFER);
-on(`__cfx_nui:${events.BANK_ADD_TRANSFER}`, (data: any) => {
-  const transfer = data;
-  emitNet(events.BANK_ADD_TRANSFER, transfer);
+on(`__cfx_nui:${events.BANK_ADD_TRANSFER}`, (data: any, cb: Function) => {
+  emitNet(events.BANK_ADD_TRANSFER, data);
+  cb();
 });
 
 onNet(events.BANK_ADD_TRANSFER_SUCCESS, () => {

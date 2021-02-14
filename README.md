@@ -1,7 +1,7 @@
 # New Phone Who Dis
 
 ### Project Error Discord
-Join the [Discord](discord.gg/YWJY36EVsm) to follow current development of the project.
+Join the [Discord](discord.gg/HYwBjTbAY5) to follow current development of the project.
 
 ### Production Server Installation **(WIP)**
 
@@ -115,7 +115,9 @@ Now start your `ensure NPWD` with the development build, and you should have acc
 
 ### Important Note
 
-By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically
+- By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically
 uploads relevant sesssion details and stack traces whenever an exception is thrown. We use these metrics to further
 improve the quality of the phone. To explicitly disable this (we urge you not to as its incredibly useful metrics for us).
 Please change the `SentryErrorMetrics` setting to `false` in `phone/config/default.json` and rebuild the phone.
+
+- This resource has **NOT** been tested with [esx_kashacter](https://github.com/FiveEYZ/esx_kashacter) so compatability with it is unknown. For best results, use the resource on with no kash.

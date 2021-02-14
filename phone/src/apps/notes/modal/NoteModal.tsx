@@ -1,5 +1,5 @@
 import { Button, TextField, Slide } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { useNoteModal } from '../hooks/useNoteModal';

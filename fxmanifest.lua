@@ -1,6 +1,6 @@
-fx_version "adamant"
+fx_version "cerulean"
 game "gta5"
-description 'new-phone-who-dis'
+description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
 client_script {

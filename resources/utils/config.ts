@@ -1,4 +1,4 @@
 import config from '../../config.json';
-import { ServerConfig } from '../../phone/src/common/typings/config';
+import { IServerConfig } from '../../phone/src/common/typings/config';
 
-export default <ServerConfig>config;
+export default <IServerConfig>config;

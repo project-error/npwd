@@ -11,9 +11,9 @@ export interface IContactAlert {
   setAlert: (type: string) => void;
 }
 
-export interface ContactProps {
-  id: string;
+export interface Contact {
+  id: number;
   display: string;
   number: string;
-  avatar?: string
+  avatar?: string;
 }

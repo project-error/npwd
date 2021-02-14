@@ -1,14 +1,14 @@
 import { useRecoilValue } from 'recoil';
 import { phoneState } from './state';
-import { ServerConfig } from '../../../common/typings/config';
+import { IServerConfig } from '../../../common/typings/config';
+import ServerConfig from '../../../config.autogen.json';
 
 interface IUsePhone {
   visibility: boolean;
-  config?: ServerConfig;
+  config?: IServerConfig;
 }
 
 export const usePhone = (): IUsePhone => {
   const visibility = useRecoilValue(phoneState.visibility);
-  const config = useRecoilValue(phoneState.phoneConfig);
-  return { visibility, config };
+  return { visibility, config: ServerConfig as any };
 };
