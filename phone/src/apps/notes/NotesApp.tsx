@@ -15,8 +15,6 @@ import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
-import { useSnackbar } from '../../ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
 
 InjectDebugData([
   {

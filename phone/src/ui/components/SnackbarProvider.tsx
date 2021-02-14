@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useRef } from 'react';
 import { IAlert } from '../hooks/useSnackbar';
 
 
-export const SnackbarContext = createContext({ addAlert: (a: IAlert) => {} });
+export const SnackbarContext = createContext(null);
 
 function SnackbarProvider({ children }) {
   const [alert, setAlert] = useState(null);
@@ -13,7 +13,7 @@ function SnackbarProvider({ children }) {
       clearTimeout(timer.current)
       timer.current = setTimeout(() => {
         setAlert(null)
-      }, 2500);
+      }, 1000);
     }
     return () => clearTimeout(timer.current)
   }, [alert]);
