@@ -3,6 +3,7 @@ import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
+import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
@@ -32,6 +33,8 @@ import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
+import { useSnackbar } from './ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 function Phone() {
   const quickAccess = useQuickAccess();
@@ -50,6 +53,9 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+  const { t } = useTranslation()
+
+  const { alert } = useSnackbar();
 
   const { modal } = useModal(); // the calling modal
 
@@ -106,16 +112,28 @@ function Phone() {
                   }))}
                 />
                 <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {allApps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
+                    {modal ? (
+                      <CallModal />
+                    ) : (
+                      <>
+                        <Route exact path='/' component={HomeApp} />
+                        {allApps.map((App) => (
+                          <App.Route key={App.id} />
+                        ))}
+                      </>
+                    )}
+                    {alert ? (
+                      <div style={{
+                        marginTop: '-100px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                       }}>
+                        <Alert severity={alert.type} variant="filled">
+                          {t("APPS_"+alert.message)}
+                        </Alert>
+                      </div>
+                    ) : null}
                 </div>
                 <Navigation />
               </>

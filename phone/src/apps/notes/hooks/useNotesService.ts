@@ -2,12 +2,13 @@ import { useSetRecoilState } from 'recoil';
 import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { useNotes } from './useNotes';
 import { noteStates } from './state';
-import { useNotesAlert } from './useNoteAlert';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 export const useNotesService = () => {
+  const { addAlert } = useSnackbar();
   const setNotes = useSetRecoilState(noteStates.noteItems);
-  const setAlert = useSetRecoilState(noteStates.alert);
+
   useNuiEvent('NOTES', 'setNotes', setNotes);
-  useNuiEvent('NOTES', 'setAlert', setAlert)
-  return { useNotes, useNotesAlert };
+  useNuiEvent('NOTES', 'setAlert', addAlert);
+  return useNotes();
 };

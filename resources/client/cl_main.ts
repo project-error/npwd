@@ -30,7 +30,7 @@ RegisterCommand(
 );
 
 RegisterCommand(
-  '+phone',
+  'phone',
   async () => {
     //-- Toggles Phone
     await Phone();
@@ -46,7 +46,7 @@ RegisterCommand(
   false
 );
 
-RegisterKeyMapping('+phone', 'Open Phone', 'keyboard', 'f1');
+RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
 /* * * * * * * * * * * * *
  *
