@@ -31,7 +31,6 @@ onNet(events.NOTE_UPDATE_NOTE_SUCCESS, () => {
 });
 
 
-onNet(events.NOTE_ACTION_RESULT, (type: string) => {
-  console.log(type)
-  sendNotesEvent('setAlert', type)
+onNet(events.NOTE_ACTION_RESULT, (alert: any) => {
+  sendNotesEvent('setAlert', alert)
 })

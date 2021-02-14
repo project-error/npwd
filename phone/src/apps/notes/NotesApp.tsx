@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { AppContent } from '../../ui/components/AppContent';
 import { AppTitle } from '../../ui/components/AppTitle';
@@ -15,7 +15,6 @@ import { useNoteDetail } from './hooks/useNoteDetail';
 
 import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
-import { NotesAlert } from './alert/NotesAlert';
 
 InjectDebugData([
   {
@@ -66,7 +65,6 @@ export const NotesApp = () => {
         >
           <AddIcon />
         </Fab>
-      <NotesAlert />
     </AppWrapper>
   );
 };
