@@ -65,6 +65,7 @@ let calls: Map<string, ICall> = new Map();
 onNet(
   events.PHONE_INITIALIZE_CALL,
   async (phoneNumber: string, timestamp: number) => {
+    console.log("PHONE_INITIALIZE_CALL")
     const _source = (global as any).source;
 
     const callIdentifier = uuidv4();
@@ -119,7 +120,7 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
 
     const currentCall = calls.get(transmitterNumber);
     const channelId = pSource;
-
+    console.log("PHONE_ACCEPT_CALL")
     await updateCall(currentCall, true, null);
 
     // player who is being called
@@ -150,11 +151,11 @@ onNet(
     try {
       const pSource = (global as any).source;
       const currentCall = calls.get(transmitterNumber);
-
+      console.log("PHONE_CALL_REJECTED")
       await updateCall(currentCall, false, timestamp);
+      
       // player who is being called
-      emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
-
+      emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
       // player who is calling
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
     } catch (error) {
@@ -171,7 +172,7 @@ onNet(
       const currentCall = calls.get(transmitterNumber);
 
       const endTime = timestamp / 1000;
-
+      console.log("PHONE_END_CALL")
       await updateCall(currentCall, false, endTime);
 
       // player who is being called
