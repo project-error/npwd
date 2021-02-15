@@ -98,6 +98,48 @@ async function getMessageGroups(
 }
 
 /**
+ * Retrieve message group by id (hashed of phoneNumbers) and userIdentifier
+ * @param groupId - Message Group Hashed ID
+ * @param userIdentifier - identifier of the user to get message groups for
+ */
+async function getMessageGroup(
+  groupId: string
+  userIdentifier: string
+): Promise<UnformattedMessageGroup[]> {
+  const query = `
+  SELECT
+    npwd_messages_groups.group_id,
+    npwd_messages_groups.participant_identifier,
+    npwd_messages_groups.user_identifier,
+    npwd_messages_labels.label,
+    users.phone_number,
+    npwd_phone_contacts.avatar,
+    npwd_phone_contacts.display
+  FROM (
+	  SELECT group_id
+    FROM npwd_messages_groups
+    WHERE npwd_messages_groups.group_id = ?
+    AND (
+      npwd_messages_groups.user_identifier = ?
+      OR npwd_messages_groups.participant_identifier = ?
+    )
+  ) as t
+  LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
+  LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
+  LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
+  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+  WHERE npwd_messages_groups.participant_identifier != ?
+  ORDER BY npwd_messages_groups.createdAt DESC
+  `;
+  const [results] = await pool.query(query, [
+    groupId,
+    userIdentifier,
+    userIdentifier,
+  ]);
+  return <UnformattedMessageGroup[]>results;
+}
+
+/**
  * Retrieve all messages associated with a group and add a field
  * "isMine" which determines if the message belongs to the user
  * making the request
@@ -299,6 +341,24 @@ async function getFormattedMessageGroups(
 }
 
 /**
+ * Create the same unique ID from an identifiers array.
+ * They will be always be sorted to ensure always the same ID.
+ * @param identifiers array of player identifiers
+ */
+function createGroupHashID(identifiers: string[]) {
+  // make sure we are always in a consistent order. It is very important
+  // that this not change! Changing this order can result in the ability
+  // of duplicate message groups being created.
+  identifiers.sort();
+  const mergedIdentifiers = identifiers.join('-');
+  // we don't need this to be secure. Its purpose is to create a unique
+  // string derived from the identifiers. In this way we can check
+  // that this groupId isn't used before. If it has then it means
+  // we are trying to create a duplicate message group!
+  return md5(mergedIdentifiers);
+}
+
+/**
  * Main method to handle creation of new message groups. First
  * we retrieve identifiers for each submitted phone number and
  * then rows in npwd_messages_groups are created for each of them
@@ -335,18 +395,9 @@ async function createMessageGroupsFromPhoneNumbers(
     return { error: true, mine: true };
   }
 
-  // make sure we are always in a consistent order. It is very important
-  // that this not change! Changing this order can result in the ability
-  // of duplicate message groups being created.
-  identifiers.sort();
-  const mergedIdentifiers = identifiers.join('-');
-  // we don't need this to be secure. Its purpose is to create a unique
-  // string derived from the identifiers. In this way we can check
-  // that this groupId isn't used before. If it has then it means
-  // we are trying to create a duplicate message group!
-  const groupId = md5(mergedIdentifiers);
+  const groupId = createGroupHashID(identifiers);
   if (await checkIfMessageGroupExists(groupId)) {
-    return { error: true, duplicate: true };
+    return { error: false, duplicate: true, groupId };
   }
 
   const queryPromises = [

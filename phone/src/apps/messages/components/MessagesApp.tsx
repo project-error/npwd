@@ -1,5 +1,5 @@
 import './messages.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -11,6 +11,50 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './buttons/NewMessageGroupButton';
+import Nui from '../../../os/nui-events/utils/Nui';
+
+export const MessagesApp = () => {
+  const messages = useApp('MESSAGES');
+  const history = useHistory();
+
+  useEffect(() => {
+    Nui.send('phone:fetchMessageGroups');
+  }, []);
+
+  return (
+    <AppWrapper id='messages-app'>
+      <AppTitle app={messages} />
+      <AppContent>
+        <Switch>
+          <Route
+            path='/messages/conversations/:groupId'
+            component={MessageModal}
+          />
+          <Route
+            exact
+            path='/messages'
+            render={() => (
+              <>
+                <MessagesList />
+                <NewMessageGroupButton
+                  onClick={() => history.push('/messages/new')}
+                />
+              </>
+            )}
+          />
+        </Switch>
+        <Switch>
+          <Route
+            exact
+            path={['/messages/new/:phoneNumber', '/messages/new']}
+            render={() => <MessageGroupModal />}
+          />
+        </Switch>
+      </AppContent>
+      <AlertBar />
+    </AppWrapper>
+  );
+};
 
 InjectDebugData([
   {
@@ -45,37 +89,3 @@ InjectDebugData([
     ],
   },
 ]);
-
-export const MessagesApp = () => {
-  const messages = useApp('MESSAGES');
-  const history = useHistory();
-  return (
-    <AppWrapper id='messages-app'>
-      <AppTitle app={messages} />
-      <AppContent>
-        <Switch>
-          <Route
-            exact
-            path='/messages/conversations/:groupId'
-            component={MessageModal}
-          />
-        </Switch>
-        <Switch>
-          <Route
-            path='/messages'
-            render={() => (
-              <>
-                <MessagesList />
-                <NewMessageGroupButton
-                  onClick={() => history.push('/messages/new')}
-                />
-              </>
-            )}
-          />
-          <Route exact path='/messages/new' component={MessageGroupModal} />
-        </Switch>
-      </AppContent>
-      <AlertBar />
-    </AppWrapper>
-  );
-};

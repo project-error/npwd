@@ -43,13 +43,13 @@ export const ContactList = () => {
     });
   };
 
-  const handleMessage = () => {
+  const handleMessage = (phoneNumber: string) => {
     LogDebugEvent({
       action: 'Routing to Message',
       level: 1,
-      data: true,
+      data: { phoneNumber },
     });
-    // TODO: Integrate to send to message event when route becomes available
+    history.push(`/messages/new/${phoneNumber}`);
   };
 
   const filteredRegEx = new RegExp(filteredContacts, 'gi');
@@ -82,7 +82,7 @@ export const ContactList = () => {
               <Button onClick={() => startCall(contact.number)}>
                 <PhoneIcon />
               </Button>
-              <Button onClick={() => handleMessage()}>
+              <Button onClick={() => handleMessage(contact.number)}>
                 <ChatIcon />
               </Button>
               <Button

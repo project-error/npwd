@@ -27,7 +27,7 @@ interface DebugEvent {
  *  }
  * ])
  **/
-const InjectDebugData = (events: DebugEvent[]) => {
+const InjectDebugData = (events: DebugEvent[], timer = 1000) => {
   if (process.env.NODE_ENV === 'development') {
     for (const event of events) {
       setTimeout(() => {
@@ -40,7 +40,7 @@ const InjectDebugData = (events: DebugEvent[]) => {
             },
           })
         );
-      }, 1000);
+      }, timer);
     }
   }
 };
