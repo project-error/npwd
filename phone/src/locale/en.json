@@ -111,6 +111,8 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
+    "APPS_SETTINGS_OPTION_SILENCED": "Silence Phone",
+    "APPS_SETTINGS_OPTION_SILENCED_DESC": "Disable ringing/notification sounds",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",

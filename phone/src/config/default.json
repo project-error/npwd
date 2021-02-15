@@ -37,7 +37,8 @@
       "label": "Pixel",
       "value": "pixel.ogg"
     },
-    "ringtoneVol": 100
+    "ringtoneVol": 100,
+    "phoneSilenced": false
   },
   "debug": {
     "printDebugLogs": true,

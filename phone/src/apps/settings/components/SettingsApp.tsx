@@ -10,7 +10,12 @@ import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { SettingItem } from './SettingItem';
+import {
+  SettingItem,
+  SettingItemIconAction,
+  SettingItemSlider,
+  SettingItemToggle,
+} from './SettingItem';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -20,12 +25,15 @@ import {
   Smartphone,
   ZoomIn,
   LibraryMusic,
-  VolumeUp,
+  VolumeDown,
+  Notifications,
+  FileCopy,
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
 import { useRecoilState } from 'recoil';
 import { settingsState } from '../hooks/useSettings';
+import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader component='div' disableSticky>
@@ -69,24 +77,42 @@ export const SettingsApp = () => {
       handleSettingChange('ringtone', val)
     )
   );
-  // * Probably gonna make this a slider component in the future
-  // const ringtoneVols = config.ringtoneVols.map(
-  //   MapStringOptions(settings.ringtoneVol, (val: number) => setSettings('ringtoneVol', val))
-  // )
 
-  // TODO: These new settings all work
+  const handleRingtoneVol = (event: any, val: number | number[]) => {
+    handleSettingChange('ringtoneVol', val as number);
+  };
+
+  const handleNotiSoundToggle = (event: any, val: boolean) => {
+    handleSettingChange('phoneSilenced', val);
+  };
+
+  const handleCopyPhoneNumber = () => {
+    setClipboard(simcard.number);
+  };
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
+
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
-        <List disablePadding subheader={<SubHeaderComp text='Phone' />}>
-          <SettingItem
-            label={t('APPS_SETTINGS_PHONE_NUMBER')}
-            value={simcard.number}
+        <List disablePadding subheader={<SubHeaderComp text='General' />}>
+          <SettingItemIconAction
             icon={<Phone />}
+            actionIcon={<FileCopy />}
+            label={t('APPS_SETTINGS_PHONE_NUMBER')}
+            labelSecondary={simcard.number}
+            handleAction={handleCopyPhoneNumber}
           />
+          <SettingItemToggle
+            label={t('APPS_SETTINGS_OPTION_SILENCED')}
+            labelSecondary={t('APPS_SETTINGS_OPTION_SILENCED_DESC')}
+            value={settings.phoneSilenced}
+            icon={<Notifications />}
+            handleChange={handleNotiSoundToggle}
+          />
+        </List>
+        <List disablePadding subheader={<SubHeaderComp text='Audio' />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_RINGTONE')}
             value={settings.ringtone.label}
@@ -94,16 +120,13 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          {
-            // * NOTE: This component is most likely temporary
-            // * Probably want to make it a slider in the future. Ignore hardcoded for the meantime
-          }
-          <SettingItem
+          <SettingItemSlider
+            value={100}
+            handleChange={handleRingtoneVol}
             label={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
-            value='100%'
-            options={['100%', '80%', '70%']}
-            onClick={openMenu}
-            icon={<VolumeUp />}
+            icon={<VolumeDown />}
+            min={0}
+            max={200}
           />
         </List>
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
