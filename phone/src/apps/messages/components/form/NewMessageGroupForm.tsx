@@ -17,10 +17,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
-  const [participants, setParticipants] = useState(phoneNumber || '');
+  const [participants, setParticipants] = useState('');
   const [label, setLabel] = useState('');
 
-  useEffect(() => setParticipants(phoneNumber), [phoneNumber]);
+  useEffect(() => phoneNumber && setParticipants(phoneNumber), [phoneNumber]);
 
   // handles phone numbers in a csv format and strips all spaces and
   // external characters out of them:
@@ -53,7 +53,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     <form className={classes.newGroupForm} onSubmit={handleSubmit}>
       <TextField
         value={participants}
-        onChange={(e) => setParticipants(e.target.value)}
+        onChange={(e) => setParticipants(e.target.value || '')}
         placeholder={t('APPS_MESSAGES_NEW_MESSAGE_GROUP')}
         className={classes.newGroupinput}
         autoFocus
