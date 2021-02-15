@@ -79,9 +79,9 @@ const ContactsInfoPage = () => {
   const contact = getContact(parseInt(id));
 
   // Set state after checking if null
-  const [name, setName] = useState(contact ? contact.display : contact);
-  const [number, setNumber] = useState(contact ? contact.number : contact);
-  const [avatar, setAvatar] = useState(contact ? contact.avatar : contact);
+  const [name, setName] = useState(contact ? contact.display : '');
+  const [number, setNumber] = useState(contact ? contact.number : '');
+  const [avatar, setAvatar] = useState(contact ? contact.avatar : '');
 
   const { t } = useTranslation();
 
@@ -91,11 +91,12 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send('phone:addContact', {
-      name,
+    Nui.send('phone:addContacts', {
+      display: name,
       number,
       avatar,
     });
+    history.goBack()
   };
 
   const handleContactSave = () => {
@@ -110,6 +111,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
+    history.goBack()
   };
 
   const handleContactDelete = () => {
@@ -121,6 +123,7 @@ const ContactsInfoPage = () => {
     Nui.send('phone:deleteContact', {
       id: contact.id,
     });
+    history.goBack()
   };
 
   return (
@@ -129,11 +132,7 @@ const ContactsInfoPage = () => {
         <ArrowBackIcon fontSize='large' />
       </Button>
       <div className={classes.listContainer}>
-        {avatar ? (
-          <MuiAvatar className={classes.avatar} src={contact.avatar} />
-        ) : (
-          <MuiAvatar className={classes.avatar} />
-        )}
+        <MuiAvatar className={classes.avatar} src={avatar} />
         <TextField
           className={classes.input}
           value={name}

@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, Slide} from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
 import { NotificationIcon } from './os/notifications/components/NotificationIcon';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
@@ -66,9 +66,7 @@ function Phone() {
     [settings.theme]
   );
 
-  if (visibility === false) {
-    return null;
-  }
+  
   document.onkeyup = function (data) {
     if (data.which === 27) {
       Nui.send('phone:close');
@@ -77,70 +75,72 @@ function Phone() {
 
   return (
     <ThemeProvider theme={currentTheme}>
-      <div className='PhoneWrapper'>
-        <div>
-          <div
-            className='Phone'
-            style={{
-              transformOrigin: 'right bottom',
-              transform: `scale(${settings.zoom}`,
-            }}
-          >
+      <Slide direction='up' in={visibility} mountOnEnter unmountOnExit>
+        <div className='PhoneWrapper'>
+          <div>
             <div
-              className='PhoneFrame'
+              className='Phone'
               style={{
-                backgroundImage: `url(./media/frames/${settings.frame})`,
-              }}
-            />
-            <div
-              id='phone'
-              className='PhoneScreen'
-              style={{
-                backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
+                transformOrigin: 'right bottom',
+                transform: `scale(${settings.zoom}`,
               }}
             >
-              <>
-                <NotificationBar
-                  notifications={quickAccess.map((qa) => ({
-                    key: qa.id,
-                    icon: (
-                      <NotificationIcon
-                        icon={qa.notificationIcon}
-                        to={qa.path}
-                      />
-                    ),
-                  }))}
-                />
-                <div className='PhoneAppContainer'>
-                    {modal ? (
-                      <CallModal />
-                    ) : (
-                      <>
-                        <Route exact path='/' component={HomeApp} />
-                        {allApps.map((App) => (
-                          <App.Route key={App.id} />
-                        ))}
-                      </>
-                    )}
-                    {alert ? (
-                      <div style={{
-                        marginTop: '-100px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                       }}>
-                        <Alert severity={alert.type} variant="filled">
-                          {t("APPS_"+alert.message)}
-                        </Alert>
-                      </div>
-                    ) : null}
-                </div>
-                <Navigation />
-              </>
+              <div
+                className='PhoneFrame'
+                style={{
+                  backgroundImage: `url(./media/frames/${settings.frame})`,
+                }}
+              />
+              <div
+                id='phone'
+                className='PhoneScreen'
+                style={{
+                  backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
+                }}
+              >
+                <>
+                  <NotificationBar
+                    notifications={quickAccess.map((qa) => ({
+                      key: qa.id,
+                      icon: (
+                        <NotificationIcon
+                          icon={qa.notificationIcon}
+                          to={qa.path}
+                        />
+                      ),
+                    }))}
+                  />
+                  <div className='PhoneAppContainer'>
+                      {modal ? (
+                        <CallModal />
+                      ) : (
+                        <>
+                          <Route exact path='/' component={HomeApp} />
+                          {allApps.map((App) => (
+                            <App.Route key={App.id} />
+                          ))}
+                        </>
+                      )}
+                      {alert ? (
+                        <div style={{
+                          marginTop: '-100px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center'
+                        }}>
+                          <Alert severity={alert.type} variant="filled">
+                            {t("APPS_"+alert.message)}
+                          </Alert>
+                        </div>
+                      ) : null}
+                  </div>
+                  <Navigation />
+                </>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Slide>
     </ThemeProvider>
   );
 }

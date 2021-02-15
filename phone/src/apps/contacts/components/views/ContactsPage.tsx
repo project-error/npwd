@@ -26,7 +26,7 @@ export const ContactPage = () => {
     <>
       <ContactList />
       <Fab
-        onClick={() => history.push('/contacts/add')}
+        onClick={() => history.push('/contacts/-1')}
         style={{ backgroundColor: '#2196f3', color: '#fff' }}
         className={classes.absolute}
       >

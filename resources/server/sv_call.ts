@@ -10,8 +10,9 @@ import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
 import { v4 as uuidv4 } from 'uuid';
-import { ConnectionStringParser } from 'connection-string-parser';
-import { time } from 'console';
+import { mainLogger } from './sv_logger';
+
+const callLogger = mainLogger.child({ module: 'calls' });
 
 /**
  * Returns the player phoneNumber for a passed identifier
@@ -138,8 +139,8 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
       currentCall,
       true
     );
-  } catch (error) {
-    console.log(error, error.message);
+  } catch (e) {
+    callLogger.error('Accepting Call Error', e.message);
   }
 });
 
@@ -155,8 +156,8 @@ onNet(
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
       // player who is calling
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
-    } catch (error) {
-      console.log(error, error.message);
+    } catch (e) {
+      callLogger.error(`Phone Call Rejected Event Error ${e.message}`);
     }
   }
 );
@@ -177,8 +178,8 @@ onNet(
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
 
       calls.delete(transmitterNumber);
-    } catch (error) {
-      console.log(error, error.message);
+    } catch (e) {
+      callLogger.error(`Error ending Phone Call, ${e.message}`);
     }
   }
 );
