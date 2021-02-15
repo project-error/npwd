@@ -4,7 +4,7 @@
   "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg"],
   "defaultSettings": {
     "wallpaper": "minimal.png",
-    "frame": "s10.png",
+    "frame": "default.png",
     "theme": "taso-dark",
     "zoom": 1,
     "ringtone": "pixel",
@@ -14,7 +14,7 @@
     "printDebugLogs": true,
     "logLevel": 1
   },
-  "frames": ["s10.png"],
+  "frames": ["default.png"],
   "zoomOptions": [1, 0.9, 0.8],
   "ringtones": ["marimba", "pixel"],
   "themes": {
