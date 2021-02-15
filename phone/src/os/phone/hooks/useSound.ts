@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Howl } from 'howler';
 
 interface ISoundOptions {
@@ -48,7 +48,7 @@ const useSound = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume]);
 
-  const play = () => {
+  const play = useCallback(() => {
     if (!sound) return;
 
     if (interrupt) return sound.stop();
@@ -66,9 +66,9 @@ const useSound = (
     if (isMounted.current) {
       setPlaying(true);
     }
-  };
+  }, [interrupt, sound]);
 
-  const stop = () => {
+  const stop = useCallback(() => {
     if (!sound) return;
 
     sound.stop();
@@ -76,7 +76,7 @@ const useSound = (
     if (isMounted.current) {
       setPlaying(false);
     }
-  };
+  }, [sound]);
 
   return { play, playing, stop };
 };
