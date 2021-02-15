@@ -98,48 +98,6 @@ async function getMessageGroups(
 }
 
 /**
- * Retrieve message group by id (hashed of phoneNumbers) and userIdentifier
- * @param groupId - Message Group Hashed ID
- * @param userIdentifier - identifier of the user to get message groups for
- */
-async function getMessageGroup(
-  groupId: string
-  userIdentifier: string
-): Promise<UnformattedMessageGroup[]> {
-  const query = `
-  SELECT
-    npwd_messages_groups.group_id,
-    npwd_messages_groups.participant_identifier,
-    npwd_messages_groups.user_identifier,
-    npwd_messages_labels.label,
-    users.phone_number,
-    npwd_phone_contacts.avatar,
-    npwd_phone_contacts.display
-  FROM (
-	  SELECT group_id
-    FROM npwd_messages_groups
-    WHERE npwd_messages_groups.group_id = ?
-    AND (
-      npwd_messages_groups.user_identifier = ?
-      OR npwd_messages_groups.participant_identifier = ?
-    )
-  ) as t
-  LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
-  LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
-  LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
-  LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
-  WHERE npwd_messages_groups.participant_identifier != ?
-  ORDER BY npwd_messages_groups.createdAt DESC
-  `;
-  const [results] = await pool.query(query, [
-    groupId,
-    userIdentifier,
-    userIdentifier,
-  ]);
-  return <UnformattedMessageGroup[]>results;
-}
-
-/**
  * Retrieve all messages associated with a group and add a field
  * "isMine" which determines if the message belongs to the user
  * making the request
