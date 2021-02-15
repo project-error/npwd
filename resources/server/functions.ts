@@ -16,10 +16,10 @@ export async function usePhoneNumber(identifier: string): Promise<string> {
   return phoneNumber[0].phone_number;
 }
 
-export const getSource = () => parseInt(source);
+export const getSource = () => (global as any).source;
 
-export async function useIdentifier(): Promise<string> {
-  return ESX.GetPlayerFromId(getSource()).getIdentifier();
+export function getIdentifier(source: number): string {
+  return ESX.GetPlayerFromId(source).getIdentifier();
 }
 
 export async function getIdentifierByPhoneNumber(

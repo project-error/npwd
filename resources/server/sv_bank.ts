@@ -6,7 +6,7 @@ import {
   Transfer,
   IBankCredentials,
 } from '../../phone/src/common/typings/bank';
-import { useIdentifier } from './functions';
+import { getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 
 const bankLogger = mainLogger.child({ module: 'bank' });
@@ -85,35 +85,43 @@ async function getTransfer(transferId: number): Promise<Transfer> {
 }
 
 onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
+  const _source = getSource();
   try {
-    const _source = (global as any).source;
-    const _identifier = await useIdentifier();
+    const _identifier = await getIdentifier(_source);
     const transfer = await fetchAllTransactions(_identifier);
 
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer);
   } catch (e) {
-    bankLogger.error(`Failed to fetch transactions, ${e.message}`);
+    bankLogger.error(`Failed to fetch transactions, ${e.message}`, {
+      source: _source,
+    });
   }
 });
 
 onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
+  const _source = getSource();
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
   try {
-    const _identifier = await useIdentifier();
+    const _identifier = getIdentifier(_source);
     const transferNotify = await addTransfer(_identifier, transfer);
     emitNet(events.BANK_TRANSACTION_NOTIFICATION, xTarget, transferNotify);
-    emitNet(events.BANK_ADD_TRANSFER_SUCCESS, getSource());
+    emitNet(events.BANK_ADD_TRANSFER_SUCCESS, _source);
   } catch (e) {
-    bankLogger.error(`Failed to add transaction, ${e.message}`);
-    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false);
+    bankLogger.error(`Failed to add transaction, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.BANK_TRANSACTION_ALERT, _source, false);
   }
 });
 
 onNet(events.BANK_GET_CREDENTIALS, () => {
+  const _source = getSource();
   try {
     const credentials = fetchCredentials();
-    emitNet(events.BANK_SEND_CREDENTIALS, getSource(), credentials);
+    emitNet(events.BANK_SEND_CREDENTIALS, _source, credentials);
   } catch (e) {
-    bankLogger.error(`Failed to fetch credentials, ${e.message}`);
+    bankLogger.error(`Failed to fetch credentials, ${e.message}`, {
+      source: _source,
+    });
   }
 });

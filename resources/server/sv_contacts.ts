@@ -1,7 +1,7 @@
 import { ESX } from './server';
 import { pool } from './db';
 import events from '../utils/events';
-import { useIdentifier, getSource } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { mainLogger } from './sv_logger';
 
 const contactsLogger = mainLogger.child({ module: 'contact' });
@@ -66,10 +66,9 @@ async function deleteContact(
 }
 
 onNet(events.CONTACTS_GET_CONTACTS, async () => {
+  const _source = getSource();
   try {
-    const _source = (global as any).source;
-    const xPlayer = ESX.GetPlayerFromId(_source);
-    const _identifier = xPlayer.getIdentifier();
+    const _identifier = getIdentifier(_source);
 
     const contacts = await fetchAllContacts(_identifier);
     emitNet(events.CONTACTS_SEND_CONTACTS, _source, contacts);
@@ -81,23 +80,24 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
 onNet(
   events.CONTACTS_ADD_CONTACT,
   async (number: string, display: string, avatar: string) => {
+    const _source = getSource();
     try {
-      const _source = (global as any).source;
-      const _identifier = await useIdentifier();
-      addContact(_identifier, number, display, avatar);
+      const _identifier = getIdentifier(_source);
+      await addContact(_identifier, number, display, avatar);
       emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
       emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_ADD_SUCCESS');
     } catch (e) {
-      const _source = (global as any).source;
       emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_ADD_FAILED');
-      contactsLogger.error(`Failed to add contact, ${e.message}`);
+      contactsLogger.error(`Failed to add contact, ${e.message}`, {
+        source: _source,
+      });
     }
   }
 );
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
+  const _source = getSource();
   try {
-    const _source = (global as any).source;
     const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
     // console.log('nice identifier bro', _identifier);
     await updateContact(contact, _identifier);
@@ -111,26 +111,23 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
   } catch (e) {
     const _source = (global as any).source;
     emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_UPDATE_FAILED');
-    contactsLogger.error(`Failed to update contact, ${e.message}`);
+    contactsLogger.error(`Failed to update contact, ${e.message}`, {
+      source: _source,
+    });
   }
 });
 
 onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
+  const _source = getSource();
   try {
-    const _identifier = await useIdentifier();
-    deleteContact(contact, _identifier);
-    emitNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, getSource());
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      getSource(),
-      'CONTACT_DELETE_SUCCESS'
-    );
+    const _identifier = await getIdentifier(_source);
+    await deleteContact(contact, _identifier);
+    emitNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, _source);
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_DELETE_SUCCESS');
   } catch (e) {
-    contactsLogger.error(`Failed to delete contact, ${e.message}`);
-    emitNet(
-      events.CONTACTS_ACTION_RESULT,
-      getSource(),
-      'CONTACT_DELETE_FAILED'
-    );
+    contactsLogger.error(`Failed to delete contact, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, 'CONTACT_DELETE_FAILED');
   }
 });
