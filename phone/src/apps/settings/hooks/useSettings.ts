@@ -1,4 +1,4 @@
-import { atom, DefaultValue, useRecoilState } from 'recoil';
+import { atom, DefaultValue, useRecoilValue } from 'recoil';
 import config from '../../../config/default.json';
 
 const localStorageEffect = (key) => ({ setSelf, onSet }) => {

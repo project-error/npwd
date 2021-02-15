@@ -7,8 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { usePhone } from '../../os/phone/hooks/usePhone';
 
 import { useRecoilState } from 'recoil';
-import { settingsState } from '../../apps/settings/hooks/useSettings';
-import themeConfig from '../../config/default.json';
+import {
+  settingsState,
+  useSettings,
+} from '../../apps/settings/hooks/useSettings';
+import themeConfig from '../../config/themes.json';
 
 const useStyles = makeStyles({
   paper: {
@@ -25,12 +28,12 @@ function Notification({ children, handleClose, open }) {
   const classes = useStyles();
   const { config } = usePhone();
 
-  const [settings] = useRecoilState(settingsState);
+  const settings = useSettings();
 
   if (!config) return null;
 
   const { horizontal, vertical } = config.notificationPosition;
-  const currentTheme = () => createMuiTheme(themeConfig.themes[settings.theme]);
+  const currentTheme = () => createMuiTheme(themeConfig[settings.theme.value]);
 
   return (
     <ThemeProvider theme={currentTheme()}>

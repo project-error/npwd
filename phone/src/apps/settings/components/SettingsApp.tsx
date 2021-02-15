@@ -4,7 +4,7 @@ import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import {
   useContextMenu,
-  MapStringOptions,
+  MapSettingItem,
 } from '../../../ui/hooks/useContextMenu';
 import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
@@ -46,28 +46,26 @@ export const SettingsApp = () => {
   const { t } = useTranslation();
 
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(settings.wallpaper, (val: string) =>
-      handleSettingChange('wallpaper', val)
+    MapSettingItem(settings.wallpaper, (wallpaper) =>
+      handleSettingChange('wallpaper', wallpaper)
     )
   );
   const frames = config.frames.map(
-    MapStringOptions(settings.frame, (val: string) =>
-      handleSettingChange('frame', val)
+    MapSettingItem(settings.frame, (setting) =>
+      handleSettingChange('frame', setting)
     )
   );
-  const themes = Object.keys(config.themes).map(
-    MapStringOptions(settings.theme, (val: string) =>
+  const themes = config.themes.map(
+    MapSettingItem(settings.theme, (val: string) =>
       handleSettingChange('theme', val)
     )
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(settings.zoom, (val: string) =>
-      handleSettingChange('zoom', val)
-    )
+    MapSettingItem(settings.zoom, (val) => handleSettingChange('zoom', val))
   );
-  // Doesn't actually do anything for the time being
+  // // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
-    MapStringOptions(settings.ringtone, (val: string) =>
+    MapSettingItem(settings.ringtone, (val) =>
       handleSettingChange('ringtone', val)
     )
   );
@@ -91,7 +89,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_RINGTONE')}
-            value={settings.ringtone}
+            value={settings.ringtone.label}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
@@ -111,28 +109,28 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_THEME')}
-            value={settings.theme}
+            value={settings.theme.label}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
-            value={settings.wallpaper}
+            value={settings.wallpaper.label}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_FRAME')}
-            value={settings.frame}
+            value={settings.frame.label}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_ZOOM')}
-            value={settings.zoom}
+            value={settings.zoom.label}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}

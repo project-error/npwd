@@ -4,7 +4,7 @@ import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { Slide } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, Slide } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
@@ -23,6 +23,7 @@ import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from './os/call/hooks/useCallService';
 import { useModal } from './os/call/hooks/useModal';
+import themes from './config/themes.json';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
@@ -50,6 +51,24 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+  const { t } = useTranslation();
+
+  const { alert } = useSnackbar();
+
+  const { modal } = useModal(); // the calling modal
+
+  const settings = useSettings();
+
+  const currentTheme = useMemo(
+    () => createMuiTheme(themes[settings.theme.value]),
+    [settings.theme]
+  );
+
+  document.onkeyup = function (data) {
+    if (data.which === 27) {
+      Nui.send('phone:close');
+    }
+  };
 
   return (
     <Slide direction='up' in={visibility}>
@@ -66,7 +85,8 @@ function Phone() {
             <div
               className='PhoneFrame'
               style={{
-                backgroundImage: `url(./media/frames/${settings.frame})`,
+                transformOrigin: 'right bottom',
+                transform: `scale(${settings.zoom.value}`,
               }}
             />
             <div
@@ -76,24 +96,60 @@ function Phone() {
                 backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
               }}
             >
-              <>
-                <NotificationBar />
-                <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {apps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
-                  <NotificationAlert />
-                  <Snackbar />
-                </div>
-                <Navigation />
-              </>
+              <div
+                className='PhoneFrame'
+                style={{
+                  backgroundImage: `url(./media/frames/${settings.frame.value})`,
+                }}
+              />
+              <div
+                id='phone'
+                className='PhoneScreen'
+                style={{
+                  backgroundImage: `url(./media/backgrounds/${settings.wallpaper.value})`,
+                }}
+              >
+                <>
+                  <NotificationBar
+                    notifications={quickAccess.map((qa) => ({
+                      key: qa.id,
+                      icon: (
+                        <NotificationIcon
+                          icon={qa.notificationIcon}
+                          to={qa.path}
+                        />
+                      ),
+                    }))}
+                  />
+                  <div className='PhoneAppContainer'>
+                    {modal ? (
+                      <CallModal />
+                    ) : (
+                      <>
+                        <Route exact path='/' component={HomeApp} />
+                        {allApps.map((App) => (
+                          <App.Route key={App.id} />
+                        ))}
+                      </>
+                    )}
+                    {alert ? (
+                      <div
+                        style={{
+                          marginTop: '-100px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Alert severity={alert.type} variant='filled'>
+                          {t('APPS_' + alert.message)}
+                        </Alert>
+                      </div>
+                    ) : null}
+                  </div>
+                  <Navigation />
+                </>
+              </div>
             </div>
           </div>
         </div>

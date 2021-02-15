@@ -1,13 +1,42 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg", "projecterror.jpg"],
+  "wallpapers": [
+    {
+      "label": "Beach",
+      "value": "beach.jpg"
+    }, {
+      "label": "Minimal",
+      "value": "minimal.jpg"
+    },
+    {
+      "label": "Surf",
+      "image": "surf.jpg"
+    }, {
+      "label": "Waves",
+      "value": "waves.jpg"
+    }],
   "defaultSettings": {
-    "wallpaper": "projecterror.jpg",
-    "frame": "default.png",
-    "theme": "taso-dark",
-    "zoom": 1,
-    "ringtone": "pixel",
+    "wallpaper": {
+      "label": "Minimal",
+      "value": "minimal.jpg"
+    },
+    "frame": {
+      "label": "Default",
+      "value": "default.png"
+    },
+    "theme": {
+      "label": "Taso Dark",
+      "value": "taso-dark"
+    },
+    "zoom": {
+      "label": "100%",
+      "value": 1
+    },
+    "ringtone": {
+      "label": "Pixel",
+      "value": "pixel.ogg"
+    },
     "ringtoneVol": 100
   },
   "debug": {
@@ -15,53 +44,71 @@
     "logLevel": 1
   },
   "frames": [
-    "default.png",
-    "blue.png",
-    "gold.png",
-    "kawaii.png",
-    "minimal.png",
-    "pink.png",
-    "white.png"
-  ],
-  "zoomOptions": [1, 0.9, 0.8],
-  "ringtones": ["marimba", "pixel"],
-  "themes": {
-    "default-dark": {
-      "palette": {
-        "type": "dark",
-        "primary": {
-          "main": "#a6d4fa"
-        }
-      }
+    {
+      "label": "Default",
+      "value": "default.png"
     },
-    "default-light": {
-      "palette": {
-        "type": "light"
-      }
+    {
+      "label":  "Blue",
+      "value:": "blue.png"
     },
-    "taso-dark": {
-      "common": {},
-      "palette": {
-        "type": "dark",
-        "primary": {
-          "main": "#a6d4fa"
-        },
-        "background": {
-          "paper": "#1c1c1c",
-          "default": "#121212",
-          "dark": "#000000",
-          "light": "#383838"
-        },
-        "text": {
-          "primary": "#fff",
-          "secondary": "rgba(255, 255, 255, 0.7)",
-          "disabled": "rgba(255, 255, 255, 0.5)",
-          "hint": "rgba(255, 255, 255, 0.5)",
-          "icon": "rgba(255, 255, 255, 0.5)"
-        }
-      },
-      "divider": "rgba(255, 255, 255, 0.12)"
+    {
+      "label": "Gold",
+      "value": "gold.png"
+    },
+    {
+      "label": "Kawaii",
+      "value": "kawaii.png"
+    },
+    {
+      "label": "Minimal",
+      "value": "minimal.png"
+    },
+    {
+      "label": "Pink",
+      "value": "pink.png"
+    },
+    {
+      "label": "White",
+      "value": "white.png"
     }
-  },
+  ],
+  "zoomOptions": [
+    {
+      "label": "100%",
+      "value": 1
+    },
+    {
+      "label": "90%",
+      "value": 0.9
+    },
+    {
+      "label": "80%",
+      "value": 0.8
+    }
+  ],
+  "ringtones": [
+    {
+      "label": "Marimba",
+      "value": "marimba.ogg"
+    }, {
+      "label": "Pixel",
+      "value": "pixel.ogg"
+    }
+  ],
+  "themes": [
+    {
+      "label": "Default Dark",
+      "value": "default-dark"
+    },
+    {
+      "label": "Default Light",
+      "value": "default-light"
+    },
+    {
+      "label": "Taso Dark",
+      "value": "taso-dark"
+    }
+  ],
   "SentryErrorMetrics": true
 }

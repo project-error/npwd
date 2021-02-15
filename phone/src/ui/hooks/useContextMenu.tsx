@@ -3,12 +3,19 @@ import { ContextMenu } from '../components/ContextMenu';
 
 type UseContextMenu = [any, any, () => JSX.Element, boolean];
 
-export const MapStringOptions = (current, onClick) => (string) => {
+export interface ISettingItem {
+  label: string;
+  value: string | number;
+}
+
+export const MapSettingItem = (current: ISettingItem, onClick) => (
+  item: ISettingItem
+) => {
   return {
-    selected: current === string,
-    label: string,
-    key: string,
-    onClick: () => onClick(string),
+    selected: current.value === item.value,
+    label: item.label,
+    key: item.value,
+    onClick: () => onClick(item),
   };
 };
 
