@@ -1,6 +1,6 @@
 import events from '../utils/events';
 import { pool } from './db';
-import { useIdentifier } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { Note, NoteId } from '../../phone/src/common/typings/notes';
 import { mainLogger } from './sv_logger';
 
@@ -31,56 +31,79 @@ async function updateNote(note: Note, identifier: string): Promise<any> {
 }
 
 onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
+  const pSource = getSource();
   try {
-    const pSource = (global as any).source;
-    const _identifier = await useIdentifier();
+    const _identifier = getIdentifier(pSource);
     await addNote(_identifier, note);
     emitNet(events.NOTE_SEND_NOTE_SUCCESS, pSource);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_ADD_SUCCESS', type: 'success' })
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_ADD_SUCCESS',
+      type: 'success',
+    });
   } catch (e) {
-    const pSource = (global as any).source;
-    notesLogger.error(`Failed to add note ${e.message}`);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_ADD_FAILED', type: 'error' })
+    notesLogger.error(`Failed to add note ${e.message}`, {
+      source: pSource,
+    });
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_ADD_FAILED',
+      type: 'error',
+    });
   }
 });
 
 onNet(events.NOTE_FETCH_ALL_NOTES, async () => {
+  const pSource = getSource();
   try {
-    const pSource = (global as any).source;
-    const _identifier = await useIdentifier();
+    const _identifier = await getIdentifier(pSource);
     const notes = await fetchAllNotes(_identifier);
     emitNet(events.NOTE_SEND_NOTE, pSource, notes);
   } catch (e) {
-    notesLogger.error(`Failed to fetch notes ${e.message}`);
+    notesLogger.error(`Failed to fetch notes ${e.message}`, {
+      source: pSource,
+    });
   }
 });
 
 onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
+  const pSource = getSource();
   try {
-    const pSource = (global as any).source;
-    const _identifier = await useIdentifier();
+    const _identifier = getIdentifier(pSource);
     await deleteNote(noteId.id, _identifier);
 
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_DELETE_SUCCESS', type: 'success' })
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_DELETE_SUCCESS',
+      type: 'success',
+    });
   } catch (e) {
     const pSource = (global as any).source;
     notesLogger.error(`Failed to delete note, ${e.message}`);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_DELETE_FAILED', type: 'error' })
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_DELETE_FAILED',
+      type: 'error',
+    });
   }
 });
 
 onNet(events.NOTE_UPDATE_NOTE, async (note: Note) => {
+  const pSource = getSource();
   try {
-    const pSource = (global as any).source;
-    const _identifier = await useIdentifier();
+    const _identifier = await getIdentifier(pSource);
     await updateNote(note, _identifier);
     emitNet(events.NOTE_UPDATE_NOTE_SUCCESS, pSource);
-    
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_UPDATE_SUCCESS', type: 'success' })
+
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_UPDATE_SUCCESS',
+      type: 'success',
+    });
   } catch (e) {
     const pSource = (global as any).source;
     emitNet(events.NOTE_UPDATE_NOTE_FAILURE, pSource);
-    notesLogger.error(`Failed to update note, ${e.message}`);
-    emitNet(events.NOTE_ACTION_RESULT, pSource, { message: 'NOTES_UPDATE_FAILED', type: 'error' })
+    notesLogger.error(`Failed to update note, ${e.message}`, {
+      source: pSource,
+    });
+    emitNet(events.NOTE_ACTION_RESULT, pSource, {
+      message: 'NOTES_UPDATE_FAILED',
+      type: 'error',
+    });
   }
 });

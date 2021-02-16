@@ -1,7 +1,12 @@
 import { ESX } from './server';
 import { pool } from './db';
 import config from '../utils/config';
-import { getIdentifierByPhoneNumber, usePhoneNumber } from './functions';
+import {
+  getIdentifier,
+  getIdentifierByPhoneNumber,
+  getSource,
+  usePhoneNumber,
+} from './functions';
 import { mainLogger } from './sv_logger';
 
 //db = DatabaseConfig  //helper variable for use in server function
@@ -66,13 +71,14 @@ onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
 });
 
 onNet('phone:getCredentials', async () => {
+  const _source = getSource();
   try {
-    const _source = (global as any).source;
-    const xPlayer = ESX.GetPlayerFromId(_source);
-    const _identifier = xPlayer.getIdentifier();
-    const number = await getCredentials(_identifier);
+    const identifier = getIdentifier(_source);
+    const number = await getCredentials(identifier);
     emitNet('phone:sendCredentials', _source, number);
   } catch (e) {
-    mainLogger.error(`Failed to get a number, ${e.message}`);
+    mainLogger.error(`Failed to get a number, ${e.message}`, {
+      source: _source,
+    });
   }
 });

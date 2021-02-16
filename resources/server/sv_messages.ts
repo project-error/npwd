@@ -7,7 +7,7 @@ import {
   CreateMessageGroupResult,
 } from '../../phone/src/common/typings/messages';
 import { pool, withTransaction } from './db';
-import { getSource, useIdentifier } from './functions';
+import { getSource, getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
@@ -385,16 +385,17 @@ async function createMessageGroupsFromPhoneNumbers(
 }
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
+  const _source = getSource();
   try {
-    const _identifier = await useIdentifier();
-    const messageGroups = await getFormattedMessageGroups(_identifier);
+    const identifier = getIdentifier(_source);
+    const messageGroups = await getFormattedMessageGroups(identifier);
     emitNet(
       events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
-      getSource(),
+      _source,
       messageGroups
     );
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, getSource());
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, _source);
     messageLogger.error(`Failed to fetch messages groups, ${e.message}`);
   }
 });
@@ -402,9 +403,9 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
 onNet(
   events.MESSAGES_CREATE_MESSAGE_GROUP,
   async (phoneNumbers: string[], label: string = null) => {
-    const pSource = (global as any).source;
+    const _source = getSource();
     try {
-      const _identifier = await useIdentifier();
+      const _identifier = await getIdentifier(_source);
       const result = await createMessageGroupsFromPhoneNumbers(
         _identifier,
         phoneNumbers,
@@ -414,44 +415,52 @@ onNet(
       if (result.error) {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED,
-          pSource,
+          _source,
           result
         );
       } else {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS,
-          pSource,
+          _source,
           result
         );
       }
     } catch (e) {
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, pSource);
-      messageLogger.error(`Failed to create message group, ${e.message}`);
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
+      messageLogger.error(`Failed to create message group, ${e.message}`, {
+        source: _source,
+      });
     }
   }
 );
 
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
+  const _source = getSource();
   try {
-    const _identifier = await useIdentifier();
+    const _identifier = await getIdentifier(_source);
     const messages = await getMessages(_identifier, groupId);
-    emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, getSource(), messages);
+    emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, _source, messages);
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, getSource());
-    messageLogger.error(`Failed to fetch messages, ${e.message}`);
+    emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, _source);
+    messageLogger.error(`Failed to fetch messages, ${e.message}`, {
+      source: _source,
+    });
   }
 });
 
 onNet(
   events.MESSAGES_SEND_MESSAGE,
   async (groupId: string, message: string) => {
+    const _source = getSource();
     try {
-      const _identifier = await useIdentifier();
+      const _identifier = getIdentifier(_source);
       await createMessage(_identifier, groupId, message);
-      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), groupId);
+      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
     } catch (e) {
-      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
-      messageLogger.error(`Failed to send message, ${e.message}`);
+      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+      messageLogger.error(`Failed to send message, ${e.message}`, {
+        source: _source,
+      });
     }
   }
 );

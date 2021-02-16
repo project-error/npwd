@@ -14,8 +14,6 @@ import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;
 
-export const getSource = () => (global as any).source;
-
 emit('esx:getSharedObject', (obj: Server) => (ESX = obj));
 
 on('onServerResourceStart', (resource: string) => {
