@@ -402,6 +402,7 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
 onNet(
   events.MESSAGES_CREATE_MESSAGE_GROUP,
   async (phoneNumbers: string[], label: string = null) => {
+    const pSource = (global as any).source;
     try {
       const _identifier = await useIdentifier();
       const result = await createMessageGroupsFromPhoneNumbers(
@@ -413,18 +414,18 @@ onNet(
       if (result.error) {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED,
-          getSource(),
+          pSource,
           result
         );
       } else {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS,
-          getSource(),
+          pSource,
           result
         );
       }
     } catch (e) {
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, pSource);
       messageLogger.error(`Failed to create message group, ${e.message}`);
     }
   }
