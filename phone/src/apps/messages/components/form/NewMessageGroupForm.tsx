@@ -19,8 +19,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const [participants, setParticipants] = useState('');
   const [label, setLabel] = useState('');
 
-  useEffect(() => phoneNumber && setParticipants(phoneNumber), [phoneNumber]);
-
   // handles phone numbers in a csv format and strips all spaces and
   // external characters out of them:
   // 123-4567, 987-6543, 333-4444
@@ -37,7 +35,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   useEffect(() => {
     if (phoneNumber) {
-      sendNuiCreateMessageGroup({ parts: getGroupParts(phoneNumber), isGroupChat: false, labelValue });
+      sendNuiCreateMessageGroup({ parts: getGroupParts(phoneNumber), isGroupChat: false, labelValue: null });
       history.push('/messages');
     }
   }, [phoneNumber, labelValue, history, getGroupParts]);
