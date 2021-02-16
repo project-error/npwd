@@ -1,7 +1,6 @@
 import events from '../utils/events';
-import { getSource } from './server';
 import { pool } from './db';
-import { useIdentifier } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { IPhoto } from '../../phone/src/common/typings/photo';
 import { mainLogger } from './sv_logger';
 
@@ -28,28 +27,34 @@ async function deletePhoto(photo: IPhoto, identifier: string) {
 }
 
 onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
+  const _source = getSource();
   try {
-    const pSource = (global as any).source;
-    const identifier = await useIdentifier();
+    const identifier = getIdentifier(_source);
     await uploadPhoto(identifier, image);
-    emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, pSource);
+    emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, _source);
   } catch (e) {
-    photoLogger.error(`Failed to upload photo, ${e.message}`);
+    photoLogger.error(`Failed to upload photo, ${e.message}`, {
+      source: _source,
+    });
   }
 });
 
 onNet(events.CAMERA_FETCH_PHOTOS, async () => {
-  const identifier = await useIdentifier();
+  const _source = getSource();
+  const identifier = getIdentifier(_source);
   const photos = await getPhotosByIdentifier(identifier);
-  emitNet(events.CAMERA_SEND_PHOTOS, getSource(), photos);
+  emitNet(events.CAMERA_SEND_PHOTOS, source, photos);
 });
 
 onNet(events.CAMERA_DELETE_PHOTO, async (photo: IPhoto) => {
+  const _source = getSource();
   try {
-    const identifier = await useIdentifier();
+    const identifier = getIdentifier(_source);
     await deletePhoto(photo, identifier);
-    emitNet(events.CAMERA_DELETE_PHOTO_SUCCESS, getSource());
+    emitNet(events.CAMERA_DELETE_PHOTO_SUCCESS, _source);
   } catch (e) {
-    photoLogger.error(`Failed to fetch photos, ${e.message}`);
+    photoLogger.error(`Failed to fetch photos, ${e.message}`, {
+      source: _source,
+    });
   }
 });
