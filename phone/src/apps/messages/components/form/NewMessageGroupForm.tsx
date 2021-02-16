@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 
 const sendNuiCreateMessageGroup = ({ parts, isGroupChat, labelValue }) =>
   Nui.send('phone:createMessageGroup', {
-    asd: true,
     phoneNumbers: parts,
     label: isGroupChat && labelValue ? labelValue : null,
   });
@@ -25,20 +24,23 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   // handles phone numbers in a csv format and strips all spaces and
   // external characters out of them:
   // 123-4567, 987-6543, 333-4444
-  const parts = useMemo(
-    () => participants.split(',').map((part) => part.replace(/[^0-9]/g, '')),
-    [participants]
+  const getGroupParts = useCallback(
+    (numbers) => numbers.split(',').map((part) => part.replace(/[^0-9]/g, '')),
+    []
   );
+
+  const parts = useMemo(() => getGroupParts(participants), [participants, getGroupParts]);
+
   const isGroupChat = parts.length > 1;
 
   const labelValue = label.trim();
 
   useEffect(() => {
-    if (phoneNumber && parts) {
-      sendNuiCreateMessageGroup({ parts, isGroupChat, labelValue });
+    if (phoneNumber) {
+      sendNuiCreateMessageGroup({ parts: getGroupParts(phoneNumber), isGroupChat: false, labelValue });
       history.push('/messages');
     }
-  }, [isGroupChat, parts, phoneNumber, labelValue, history]);
+  }, [phoneNumber, labelValue, history, getGroupParts]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
