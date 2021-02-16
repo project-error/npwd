@@ -15,9 +15,6 @@ ui_page 'resources/html/index.html'
 
 files {
     'resources/html/index.html',
-    'resources/html/*.js',
-    'resources/html/media/frames/*.png',
-    'resources/html/media/backgrounds/*.png',
-    'resources/html/media/backgrounds/*.jpg',
-    'resources/html/media/twitter/*'
+    'resources/html/main.js',
+    'resources/html/media/**/*'
 }
