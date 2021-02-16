@@ -82,7 +82,7 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
   );
 });
 
-onNet(events.PHONE_CALL_SEND_REJECT_ANIM, () => {
+onNet(events.PHONE_CALL_SEND_HANGUP_ANIM, () => {
   phoneCallEndAnim()
 });
 
@@ -95,7 +95,6 @@ on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any, cb: Function) => {
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {
   exp['mumble-voip'].SetCallChannel(0);
-  phoneCallEndAnim()
   openCallModal(false);
 
   SendNuiMessage(
