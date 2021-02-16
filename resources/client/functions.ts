@@ -156,7 +156,7 @@ const handleCloseNormalAnim = async (playerPed: number): Promise<void> => {
 const handleCallStartVehicleAnim = async (playerPed: number): Promise<void> => {
   //true refers to at get in.
   const DICT = 'anim@cellphone@in_car@ps';
-  const ANIM = 'cellphone_text_to_call';
+  const ANIM = 'cellphone_call_listen_base';
 
   StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
   removePhoneProp(); 
@@ -170,7 +170,7 @@ const handleCallEndVehicleAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'anim@cellphone@in_car@ps';
   const ANIM = 'cellphone_call_to_text';
 
-  StopAnimTask(playerPed, DICT, 'cellphone_text_to_call', 1.0);
+  StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
   removePhoneProp();
   console.log(ANIM)
   await loadAnimDict(DICT);
@@ -179,7 +179,7 @@ const handleCallEndVehicleAnim = async (playerPed: number): Promise<void> => {
 
 const handleCallStartNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
-  const ANIM = 'cellphone_text_to_call';
+  const ANIM = 'cellphone_call_listen_base';
   console.log(ANIM)
   await loadAnimDict(DICT); 
   TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
@@ -189,7 +189,7 @@ const handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_to_text';
 
-  StopAnimTask(playerPed, DICT, 'cellphone_text_to_call', 1.0);
+  StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
   console.log(ANIM)
   await loadAnimDict(DICT); 
   TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
