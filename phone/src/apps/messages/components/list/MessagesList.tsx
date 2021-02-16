@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { List } from '@material-ui/core';
 import qs from 'qs';
 import { MessageGroup } from '../../../../common/typings/messages';
@@ -13,13 +13,35 @@ const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { messageGroups } = useMessages();
+  const {
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+  } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
+  const goToConversation = useCallback(
+    (messageGroup) =>
+      history.push(
+        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(
+          messageGroup
+        )}`
+      ),
+    [history]
+  );
+
   useEffect(() => {
-    Nui.send('phone:fetchMessageGroups');
-  }, []);
+    if (createMessageGroupResult?.groupId) {
+      const findGroup = messageGroups.find(
+        (g) => g.groupId === createMessageGroupResult.groupId
+      );
+      clearMessageGroupResult();
+      if (findGroup) {
+        goToConversation(findGroup);
+      }
+    }
+  }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
 
   if (!messageGroups) return null;
 

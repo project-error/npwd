@@ -19,23 +19,27 @@ const ALERT_TIMEOUT = 6000;
 export default function AlertBar() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const {
-    createMessageGroupResult,
-    clearCreateMessageGroupResult,
-  } = useAlerts();
+  const { createMessageGroupResult } = useAlerts();
   const [severity, setSeverity] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [alert, setAlert] = useState(null);
 
   const handleClose = () => {
     setOpen(false);
-    clearCreateMessageGroupResult();
+    setAlert(null);
   };
 
   useEffect(() => {
-    if (!createMessageGroupResult) return;
+    if (createMessageGroupResult) {
+      setAlert(createMessageGroupResult);
+    }
+  }, [createMessageGroupResult]);
 
-    const { error, phoneNumber, duplicate, mine } = createMessageGroupResult;
+  useEffect(() => {
+    if (!alert) return;
+
+    const { error, phoneNumber, duplicate, mine } = alert;
     if (error && phoneNumber) {
       const error = `${t('APPS_MESSAGES_INVALID_PHONE_NUMBER')}${phoneNumber}`;
       setOpen(true);
@@ -54,7 +58,7 @@ export default function AlertBar() {
       setSeverity('error');
       setMessage(t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED'));
     }
-  }, [createMessageGroupResult, t]);
+  }, [alert, t]);
 
   return (
     <Snackbar
