@@ -36,9 +36,6 @@ export const MessagesApp = () => {
             render={() => (
               <>
                 <MessagesList />
-                <NewMessageGroupButton
-                  onClick={() => history.push('/messages/new')}
-                />
               </>
             )}
           />
@@ -51,6 +48,9 @@ export const MessagesApp = () => {
           />
         </Switch>
       </AppContent>
+      <NewMessageGroupButton
+        onClick={() => history.push('/messages/new')}
+      />
       <AlertBar />
     </AppWrapper>
   );
