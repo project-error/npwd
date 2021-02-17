@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: 'row nowrap',
     padding: '3px 0px',
   },
+  overflowAutoY: {
+    overflowY: 'auto',
+  },
   groupdisplay: {
     width: '300px',
     paddingTop: '8px',
@@ -27,15 +30,6 @@ const useStyles = makeStyles((theme) => ({
     width: '300px',
     paddingTop: '8px',
     fontSize: '20px',
-  },
-  messageList: {
-    height: '90%',
-    overflowY: 'auto',
-    paddingBottom: '40px',
-  },
-  messageContainer: {
-    marginTop: 25,
-    width: '100%',
   },
   sourceSms: {
     float: 'right',

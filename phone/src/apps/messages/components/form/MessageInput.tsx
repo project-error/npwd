@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, TextField, Button, Box } from '@material-ui/core';
+import { Paper, TextField, Button, Box, makeStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
@@ -10,8 +10,13 @@ interface IProps {
   messageGroupId: string | undefined;
 }
 
+const useStyles = makeStyles({
+  root: { position: 'absolute', bottom: 0, width: '100%' },
+});
+
 const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const [message, setMessage] = useState('');
 
   const handleSubmit = (event: FormEvent) => {
@@ -29,7 +34,7 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
   if (!messageGroupId) return null;
 
   return (
-    <Paper variant='outlined' style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+    <Paper variant='outlined' className={classes.root}>
       <form onSubmit={handleSubmit}>
         <Box display='flex'>
           <Box pl={1} flexGrow={1}>
