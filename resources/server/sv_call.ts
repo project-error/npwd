@@ -56,7 +56,7 @@ async function updateCall(call: ICall, isAccepted: boolean, end: number) {
 
 async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
   const query =
-    'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ?';
+    'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC';
   const [result] = await pool.query(query, [phoneNumber, phoneNumber]);
   const calls = <ICall[]>result;
   return calls;
