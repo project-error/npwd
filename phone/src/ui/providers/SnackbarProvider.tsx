@@ -8,26 +8,21 @@ function SnackbarProvider({ children }) {
 
   useEffect(() => {
     if (alert) {
-      clearTimeout(timer.current)
+      clearTimeout(timer.current);
       timer.current = setTimeout(() => {
-        setAlert(null)
+        setAlert(null);
       }, 1000);
     }
-    return () => clearTimeout(timer.current)
+    return () => clearTimeout(timer.current);
   }, [alert]);
-
 
   const addAlert = (value) => setAlert(value);
 
-  const value = { addAlert, alert }
-
   return (
-    <SnackbarContext.Provider value={value}>
-      <>
-        {children}
-      </>
+    <SnackbarContext.Provider value={{ addAlert, alert }}>
+      {children}
     </SnackbarContext.Provider>
-  )
+  );
 }
 
 export default SnackbarProvider;

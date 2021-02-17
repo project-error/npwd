@@ -5,9 +5,8 @@ import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
-import { createMuiTheme, ThemeProvider, Slide} from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, Slide } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
-import { NotificationIcon } from './os/notifications/components/NotificationIcon';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useNuiService } from './os/nui-events/hooks/useNuiService';
@@ -32,12 +31,10 @@ import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { useQuickAccess } from './os/notifications/hooks/useQuickAccess';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
 function Phone() {
-  const quickAccess = useQuickAccess();
   useNuiService();
   usePhoneService();
   const { visibility } = usePhone();
@@ -53,7 +50,7 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const { alert } = useSnackbar();
 
@@ -66,7 +63,6 @@ function Phone() {
     [settings.theme]
   );
 
-  
   document.onkeyup = function (data) {
     if (data.which === 27) {
       Nui.send('phone:close');
@@ -99,40 +95,32 @@ function Phone() {
                 }}
               >
                 <>
-                  <NotificationBar
-                    notifications={quickAccess.map((qa) => ({
-                      key: qa.id,
-                      icon: (
-                        <NotificationIcon
-                          icon={qa.notificationIcon}
-                          to={qa.path}
-                        />
-                      ),
-                    }))}
-                  />
+                  <NotificationBar />
                   <div className='PhoneAppContainer'>
-                      {modal ? (
-                        <CallModal />
-                      ) : (
-                        <>
-                          <Route exact path='/' component={HomeApp} />
-                          {allApps.map((App) => (
-                            <App.Route key={App.id} />
-                          ))}
-                        </>
-                      )}
-                      {alert ? (
-                        <div style={{
+                    {modal ? (
+                      <CallModal />
+                    ) : (
+                      <>
+                        <Route exact path='/' component={HomeApp} />
+                        {allApps.map((App) => (
+                          <App.Route key={App.id} />
+                        ))}
+                      </>
+                    )}
+                    {alert ? (
+                      <div
+                        style={{
                           marginTop: '-100px',
                           display: 'flex',
                           justifyContent: 'center',
-                          alignItems: 'center'
-                        }}>
-                          <Alert severity={alert.type} variant="filled">
-                            {t("APPS_"+alert.message)}
-                          </Alert>
-                        </div>
-                      ) : null}
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Alert severity={alert.type} variant='filled'>
+                          {t('APPS_' + alert.message)}
+                        </Alert>
+                      </div>
+                    ) : null}
                   </div>
                   <Navigation />
                 </>

@@ -5,6 +5,9 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';
+import { useNotifications } from '../../../ui/hooks/useNotifications';
+import { useApp } from '../../../os/apps/hooks/useApps';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -28,6 +31,10 @@ function processTweet(tweet) {
  * there and have moved that logic here instead.
  */
 export const useTwitterService = () => {
+  const { t } = useTranslation();
+  const { addNotification } = useNotifications();
+  const { icon, notificationIcon } = useApp('TWITTER');
+
   const setProfile = useSetRecoilState(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(
     twitterState.updateProfileLoading
@@ -41,7 +48,6 @@ export const useTwitterService = () => {
   const setCreateSuccess = useSetRecoilState(
     twitterState.createTweetSuccessful
   );
-  const setNotification = useSetRecoilState(twitterState.notification);
 
   const _setUpdateProfileSuccess = (isSuccessful) => {
     setUpdateProfileSuccess(isSuccessful);
@@ -67,5 +73,14 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', ({ profile_name, message }) =>
+    addNotification({
+      app: 'TWITTER',
+      title: t('APPS_TWITTER_NEW_BROADCAST', { profile_name }),
+      href: '/twitter',
+      content: message,
+      icon,
+      notificationIcon,
+    })
+  );
 };
