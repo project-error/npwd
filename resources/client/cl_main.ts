@@ -269,6 +269,7 @@ const togglePhoneVisible = async (): Promise<void> => {
  * * * * * * * * * * * * */
 
 async function Phone(): Promise<void> {
+  fetchOnInitialize()
   if (config.PhoneAsItem) {
     // TODO: Do promise callback here
     // const hasPhoneItem = await emitNetPromise('phone:hasPhoneItem')
@@ -314,7 +315,6 @@ onNet('phone:sendCredentials', (number: string) => {
 });
 
 
-
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
 
 /* * * * * * * * * * * * *
@@ -323,12 +323,10 @@ onNet('phone:sendCredentials', (number: string) => {
  *
  * * * * * * * * * * * * */
 
-// contacts app
-RegisterNuiCallbackType(events.OPEN_APP_CONTACTS);
-on(`__cfx_nui:${events.OPEN_APP_CONTACTS}`, (data: any, cb: Function) => {
+function fetchOnInitialize() {
   emitNet(events.CONTACTS_GET_CONTACTS);
-  cb();
-});
+}
+
 
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
 on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
@@ -357,7 +355,6 @@ on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
 
 RegisterNuiCallbackType(events.OPEN_APP_DAILER);
 on(`__cfx_nui:${events.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
-  emitNet(events.CONTACTS_GET_CONTACTS);
   emitNet(events.PHONE_CALL_FETCH_CALLS);
   cb();
 });

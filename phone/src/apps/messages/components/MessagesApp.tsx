@@ -36,9 +36,6 @@ export const MessagesApp = () => {
             render={() => (
               <>
                 <MessagesList />
-                <NewMessageGroupButton
-                  onClick={() => history.push('/messages/new')}
-                />
               </>
             )}
           />
@@ -51,6 +48,9 @@ export const MessagesApp = () => {
           />
         </Switch>
       </AppContent>
+      <NewMessageGroupButton
+        onClick={() => history.push('/messages/new')}
+      />
       <AlertBar />
     </AppWrapper>
   );
@@ -70,6 +70,94 @@ InjectDebugData([
         avatar: null,
         isRead: true,
         isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: true,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: false,
+        updatedAt: Date.now(),
+      },
+      {
+        id: 1,
+        message: 'sup!',
+        user_identifier: '1234',
+        phone_number: '444-4444',
+        display: 'kidz',
+        avatar: null,
+        isRead: true,
+        isMine: true,
         updatedAt: Date.now(),
       },
     ],

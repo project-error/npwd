@@ -66,11 +66,12 @@
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
-    "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Submit",
+    "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Send",
     "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number: ",
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
 
     "APPS_CONTACT_ADD_SUCCESS": "Successfully created contact!",
     "APPS_CONTACT_ADD_FAILED": "Failed to created contact!",
