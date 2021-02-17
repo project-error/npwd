@@ -145,6 +145,6 @@ InjectDebugData([
   {
     app: 'PHONE',
     method: 'setVisibility',
-    data: true,
+    data: false,
   },
 ]);

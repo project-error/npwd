@@ -18,6 +18,7 @@ interface INotificationIcon {
 export const NotificationsContext = createContext<{
   notifications: INotification[];
   icons: INotificationIcon[];
+  count: number;
   addNotification(value: INotification): void;
   updateNotification(idx: number, value: INotification): void;
   removeNotification(idx: number): void;
@@ -70,7 +71,8 @@ export function NotificationsProvider({ children }) {
         addNotification,
         updateNotification,
         removeNotification,
-        icons
+        icons,
+        count: notifications.length,
       }}
     >
       {children}
