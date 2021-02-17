@@ -44,8 +44,8 @@ const displayHelperText = () => {
 RegisterNuiCallbackType(events.CAMERA_TAKE_PHOTO);
 on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
-  let frontCam = false;
   // Create Phone Prop
+  let frontCam = false;
   CreateMobilePhone(1);
   // Active Camera Change
   CellCamActivate(true, true);

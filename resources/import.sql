@@ -18,25 +18,25 @@ AVG_ROW_LENGTH = 4096;
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `message` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` varchar(1000) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `likes` int NOT NULL DEFAULT '0',
-  `identifier` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identifier` varchar(40) NOT NULL,
   `visible` tinyint NOT NULL DEFAULT '1',
-  `images` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `images` varchar(1000) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19;
 
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `profile_name` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_name` varchar(90) NOT NULL,
   `identifier` varchar(40) NOT NULL,
-  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bio` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `location` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `job` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar_url` varchar(255) DEFAULT NULL,
+  `bio` varchar(512) DEFAULT NULL,
+  `location` varchar(45) DEFAULT NULL,
+  `job` varchar(45) DEFAULT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

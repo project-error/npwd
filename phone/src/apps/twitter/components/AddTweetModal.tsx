@@ -98,8 +98,9 @@ export const AddTweetModal = () => {
 
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
-    return getNewLineCount(message) > newLineLimit;
+    if (getNewLineCount(message) < newLineLimit) return true;
   };
+
   const submitTweet = () => {
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
