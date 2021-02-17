@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
-    bottom: '25px',
-    right: '15px',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3),
   },
 }));
 
@@ -21,11 +21,13 @@ export function NewMessageGroupButton({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Fab color='primary' onClick={onClick}>
+      <Fab
+        className={classes.root}
+        color='primary'
+        onClick={onClick}
+      >
         <AddIcon />
       </Fab>
-    </div>
   );
 }
 
