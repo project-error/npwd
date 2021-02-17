@@ -35,18 +35,17 @@ function CellFrontCamActivate(activate: boolean) {
 }
 
 const displayHelperText = () => {
-  BeginTextCommandDisplayHelp('THREESTRINGS');
+  BeginTextCommandDisplayHelp('TWOSTRINGS');
   AddTextComponentString('Exit Camera Mode: ~INPUT_CELLPHONE_CANCEL~');
-  AddTextComponentString('Open Front camera: ~INPUT_PHONE~');
-  AddTextComponentString('Open Rear camera: ~INPUT_CELLPHONE_DOWN~');
+  AddTextComponentString('Toggle Front/Back: ~INPUT_PHONE~');
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
 RegisterNuiCallbackType(events.CAMERA_TAKE_PHOTO);
 on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
-  let frontCam = false;
   // Create Phone Prop
+  let frontCam = false;
   CreateMobilePhone(1);
   // Active Camera Change
   CellCamActivate(true, true);
@@ -60,12 +59,9 @@ on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
   while (inCameraMode) {
     await Delay(0);
     displayHelperText();
-    if (IsControlJustReleased(1, 27)) {
-      // selfie
-      CellFrontCamActivate(true);
-    } else if (IsControlJustReleased(1, 173)) {
-      // not selfie, duh
-      CellFrontCamActivate(false);
+    if (IsControlJustPressed(1, 27)) {
+      frontCam = !frontCam;
+      CellFrontCamActivate(frontCam);
     } else if (IsControlJustPressed(1, 176)) {
       await handleTakePicture();
     } else if (IsControlJustPressed(1, 177)) {
