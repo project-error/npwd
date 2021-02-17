@@ -87,5 +87,14 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', ({ profile_name, message }) =>
+    addNotification({
+      app: 'TWITTER',
+      title: t('APPS_TWITTER_NEW_BROADCAST', { profile_name }),
+      href: '/twitter',
+      content: message,
+      icon,
+      notificationIcon,
+    })
+  );
 };
