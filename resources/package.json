@@ -1,10 +1,11 @@
 {
-  "name": "new-phone-who-dis-node",
+  "name": "npdw-game",
   "version": "0.1.0",
   "description": "Resources configuration",
   "main": "index.js",
-  "repository": "https://github.com/Re-Ignited-Development/new-phone-who-dis",
-  "author": "",
+  "license": "CC-BY-NC-SA-4.0",
+  "private": false,
+  "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
     "build": "webpack --mode production",
     "format": "prettier --write \"./**/*.ts\"",
@@ -12,13 +13,7 @@
     "test": "jest",
     "precommit": "npm run test && lint-staged"
   },
-  "license": "MIT",
-  "private": false,
   "dependencies": {
-    "@citizenfx/client": "^1.0.2792-1",
-    "@citizenfx/server": "^1.0.2792-1",
-    "@types/node": "^14.11.10",
-    "@types/uuid": "^8.3.0",
     "axios": "^0.21.0",
     "connection-string-parser": "^1.0.3",
     "dayjs": "^1.10.4",
@@ -31,10 +26,15 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.16",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
+    "@citizenfx/client": "^1.0.3534-1",
+    "@citizenfx/server": "^1.0.3534-1",
     "@types/jest": "^26.0.14",
     "@types/md5": "^2.2.1",
+    "@types/node": "^14.11.10",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^4.4.0",
     "eslint": "^7.6.0",

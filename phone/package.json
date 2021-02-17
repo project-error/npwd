@@ -1,10 +1,11 @@
 {
-  "name": "new-phone",
+  "name": "npwd-nui",
   "version": "0.1.0",
-  "private": true,
+  "repository": "https://github.com/project-error/new-phone-who-dis",
+  "private": false,
+  "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "@fortawesome/fontawesome-free": "^5.15.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -15,11 +16,7 @@
     "@popperjs/core": "^2.5.3",
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^26.0.14",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.3",
     "dayjs": "^1.10.4",
     "dompurify": "^2.2.6",
     "emoji-mart": "^3.0.0",
@@ -28,7 +25,6 @@
     "howler": "^2.2.1",
     "i18next": "^19.7.0",
     "parse-url": "^5.0.2",
-    "prettier": "^2.0.5",
     "qs": "^6.9.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -37,8 +33,7 @@
     "react-popper": "^2.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "recoil": "^0.1.2",
-    "styled-components": "^5.1.1"
+    "recoil": "^0.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -47,8 +42,12 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
     "@types/enzyme": "^3.10.7",
     "@types/howler": "^2.2.1",
+    "@types/jest": "^26.0.14",
     "@types/node": "^14.11.5",
     "@types/qs": "^6.9.5",
     "@types/react": "^16.9.51",
@@ -66,8 +65,8 @@
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
-    "ifdef-loader": "^2.1.5",
     "lint-staged": "^10.5.3",
+    "prettier": "^2.0.5",
     "react-devtools": "^4.10.1",
     "react-test-renderer": "^16.13.1",
     "style-loader": "^0.23.1",
@@ -93,6 +92,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "lint-staged": {
+    "*": [
+      "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -103,11 +107,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "lint-staged": {
-    "*": [
-      "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
     ]
   }
 }
