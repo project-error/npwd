@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+**Is this issue related to the phone still being in development?**
+If so, please consult the [gitkraken](https://app.gitkraken.com/glo/board/X9YZ_x_SVQEcMwpH) to see if it's already being tracked. 
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 

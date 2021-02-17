@@ -3,7 +3,8 @@ import events from '../utils/events';
 import {
   getIdentifierByPhoneNumber,
   usePhoneNumber,
-  useIdentifier,
+  getIdentifier,
+  getSource,
 } from './functions';
 import { XPlayer } from 'esx.js/@types/server';
 import { ICall } from '../../phone/src/common/typings/call';
@@ -66,7 +67,7 @@ let calls: Map<string, ICall> = new Map();
 onNet(
   events.PHONE_INITIALIZE_CALL,
   async (phoneNumber: string, timestamp: number) => {
-    const _source = (global as any).source;
+    const _source = getSource();
 
     const callIdentifier = uuidv4();
     
@@ -116,9 +117,8 @@ onNet(
 );
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
+  const pSource = getSource();
   try {
-    const pSource = (global as any).source;
-
     const currentCall = calls.get(transmitterNumber);
     const channelId = pSource;
 
@@ -144,15 +144,17 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
 
     currentCall.accepted = true;
   } catch (e) {
-    callLogger.error('Accepting Call Error', e.message);
+    callLogger.error('Accepting Call Error', e.message, {
+      source: pSource,
+    });
   }
 });
 
 onNet(
   events.PHONE_CALL_REJECTED,
   async (transmitterNumber: string, timestamp: number) => {
+    const pSource = getSource();
     try {
-      const pSource = (global as any).source;
       const currentCall = calls.get(transmitterNumber);
       await updateCall(currentCall, false, timestamp);
       
@@ -162,7 +164,9 @@ onNet(
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
       emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource);
     } catch (e) {
-      callLogger.error(`Phone Call Rejected Event Error ${e.message}`);
+      callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
+        source: pSource,
+      });
     }
   }
 );
@@ -170,8 +174,8 @@ onNet(
 onNet(
   events.PHONE_END_CALL,
   async (transmitterNumber: string, timestamp: number) => {
+    const pSource = getSource();
     try {
-      const pSource = (global as any).source;
       const currentCall = calls.get(transmitterNumber);
 
       const endTime = timestamp / 1000;
@@ -188,14 +192,16 @@ onNet(
       emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource); // Ends animation
       calls.delete(transmitterNumber);
     } catch (e) {
-      callLogger.error(`Error ending Phone Call, ${e.message}`);
+      callLogger.error(`Error ending Phone Call, ${e.message}`, {
+        source: pSource,
+      });
     }
   }
 );
 
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
-  const _source = (global as any).source;
-  const identifier = await useIdentifier();
+  const _source = getSource();
+  const identifier = await getIdentifier(_source);
   const phoneNumber = await usePhoneNumber(identifier);
 
   const calls = await fetchCalls(phoneNumber);

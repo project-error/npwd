@@ -1,6 +1,6 @@
 import { pool } from './db';
 import { ESX } from './server';
-import { getSource } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import events from '../utils/events';
 import config from '../utils/config';
@@ -293,79 +293,98 @@ async function doesReportExist(
 }
 
 onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
-    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, getSource(), profile);
+    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
   } catch (e) {
-    twitterLogger.error(`Failed to get or create profile, ${e.message}`);
-    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, getSource());
+    twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, _source);
   }
 });
 
 onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     await updateProfile(identifier, profile);
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, getSource(), true);
+    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, true);
   } catch (e) {
-    twitterLogger.error(`Failed to update twitter profile: ${e.message}`);
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, getSource(), false);
+    twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, false);
   }
 });
 
 onNet(events.TWITTER_FETCH_TWEETS, async () => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchAllTweets(profile.id);
-    emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, getSource(), tweets);
+    emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, _source, tweets);
   } catch (e) {
-    twitterLogger.error(`Fetching tweets failed, ${e.message}`);
-    emitNet(events.TWITTER_FETCH_TWEETS_FAILURE, getSource());
+    twitterLogger.error(`Fetching tweets failed, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_FETCH_TWEETS_FAILURE, _source);
   }
 });
 
 onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchTweetsFiltered(profile.id, searchValue);
-    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, getSource(), tweets);
+    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, _source, tweets);
   } catch (e) {
-    twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`);
-    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE, getSource());
+    twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE, _source);
   }
 });
 
 onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const createdTweet = await createTweet(identifier, tweet);
 
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), true);
+    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, true);
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
-    twitterLogger.error(`Create tweet failed, ${e.message}`);
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, getSource(), false);
+    twitterLogger.error(`Create tweet failed, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, false);
   }
 });
 
 onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     await deleteTweet(identifier, tweetId);
 
-    emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, getSource());
+    emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, _source);
   } catch (e) {
-    twitterLogger.error(`Delete tweet failed, ${e.message}`);
-    emitNet(events.TWITTER_DELETE_TWEET_FAILURE, getSource());
+    twitterLogger.error(`Delete tweet failed, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_DELETE_TWEET_FAILURE, _source);
   }
 });
 
 onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
     const likeExists = await doesLikeExist(profile.id, tweetId);
     if (likeExists) {
@@ -373,16 +392,19 @@ onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
     } else {
       await createLike(profile.id, tweetId);
     }
-    emitNet(events.TWITTER_TOGGLE_LIKE_SUCCESS, getSource());
+    emitNet(events.TWITTER_TOGGLE_LIKE_SUCCESS, _source);
   } catch (e) {
-    twitterLogger.error(`Like failed, ${e.message}`);
-    emitNet(events.TWITTER_TOGGLE_LIKE_FAILURE, getSource());
+    twitterLogger.error(`Like failed, ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_TOGGLE_LIKE_FAILURE, _source);
   }
 });
 
 onNet(events.TWITTER_REPORT, async (tweetId: number) => {
+  const _source = getSource();
   try {
-    const identifier = ESX.GetPlayerFromId(getSource()).getIdentifier();
+    const identifier = getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweet = await getTweet(profile.id, tweetId);
 
@@ -394,9 +416,11 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
       await reportTweetToDiscord(tweet, profile);
     }
 
-    emitNet(events.TWITTER_REPORT_SUCCESS, getSource());
+    emitNet(events.TWITTER_REPORT_SUCCESS, _source);
   } catch (e) {
-    emitNet(events.TWITTER_REPORT_FAILURE, getSource());
-    twitterLogger.error(`Twitter report failed, ${e.message}`);
+    emitNet(events.TWITTER_REPORT_FAILURE, _source);
+    twitterLogger.error(`Twitter report failed, ${e.message}`, {
+      source: _source,
+    });
   }
 });

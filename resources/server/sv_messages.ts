@@ -7,7 +7,7 @@ import {
   CreateMessageGroupResult,
 } from '../../phone/src/common/typings/messages';
 import { pool, withTransaction } from './db';
-import { getSource, useIdentifier } from './functions';
+import { getSource, getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
@@ -299,6 +299,24 @@ async function getFormattedMessageGroups(
 }
 
 /**
+ * Create the same unique ID from an identifiers array.
+ * They will be always be sorted to ensure always the same ID.
+ * @param identifiers array of player identifiers
+ */
+function createGroupHashID(identifiers: string[]) {
+  // make sure we are always in a consistent order. It is very important
+  // that this not change! Changing this order can result in the ability
+  // of duplicate message groups being created.
+  identifiers.sort();
+  const mergedIdentifiers = identifiers.join('-');
+  // we don't need this to be secure. Its purpose is to create a unique
+  // string derived from the identifiers. In this way we can check
+  // that this groupId isn't used before. If it has then it means
+  // we are trying to create a duplicate message group!
+  return md5(mergedIdentifiers);
+}
+
+/**
  * Main method to handle creation of new message groups. First
  * we retrieve identifiers for each submitted phone number and
  * then rows in npwd_messages_groups are created for each of them
@@ -335,18 +353,9 @@ async function createMessageGroupsFromPhoneNumbers(
     return { error: true, mine: true };
   }
 
-  // make sure we are always in a consistent order. It is very important
-  // that this not change! Changing this order can result in the ability
-  // of duplicate message groups being created.
-  identifiers.sort();
-  const mergedIdentifiers = identifiers.join('-');
-  // we don't need this to be secure. Its purpose is to create a unique
-  // string derived from the identifiers. In this way we can check
-  // that this groupId isn't used before. If it has then it means
-  // we are trying to create a duplicate message group!
-  const groupId = md5(mergedIdentifiers);
+  const groupId = createGroupHashID(identifiers);
   if (await checkIfMessageGroupExists(groupId)) {
-    return { error: true, duplicate: true };
+    return { error: false, duplicate: true, groupId };
   }
 
   const queryPromises = [
@@ -376,16 +385,17 @@ async function createMessageGroupsFromPhoneNumbers(
 }
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
+  const _source = getSource();
   try {
-    const _identifier = await useIdentifier();
-    const messageGroups = await getFormattedMessageGroups(_identifier);
+    const identifier = getIdentifier(_source);
+    const messageGroups = await getFormattedMessageGroups(identifier);
     emitNet(
       events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
-      getSource(),
+      _source,
       messageGroups
     );
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, getSource());
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, _source);
     messageLogger.error(`Failed to fetch messages groups, ${e.message}`);
   }
 });
@@ -393,8 +403,9 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
 onNet(
   events.MESSAGES_CREATE_MESSAGE_GROUP,
   async (phoneNumbers: string[], label: string = null) => {
+    const _source = getSource();
     try {
-      const _identifier = await useIdentifier();
+      const _identifier = await getIdentifier(_source);
       const result = await createMessageGroupsFromPhoneNumbers(
         _identifier,
         phoneNumbers,
@@ -404,44 +415,52 @@ onNet(
       if (result.error) {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED,
-          getSource(),
+          _source,
           result
         );
       } else {
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS,
-          getSource(),
+          _source,
           result
         );
       }
     } catch (e) {
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, getSource());
-      messageLogger.error(`Failed to create message group, ${e.message}`);
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
+      messageLogger.error(`Failed to create message group, ${e.message}`, {
+        source: _source,
+      });
     }
   }
 );
 
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
+  const _source = getSource();
   try {
-    const _identifier = await useIdentifier();
+    const _identifier = await getIdentifier(_source);
     const messages = await getMessages(_identifier, groupId);
-    emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, getSource(), messages);
+    emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, _source, messages);
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, getSource());
-    messageLogger.error(`Failed to fetch messages, ${e.message}`);
+    emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, _source);
+    messageLogger.error(`Failed to fetch messages, ${e.message}`, {
+      source: _source,
+    });
   }
 });
 
 onNet(
   events.MESSAGES_SEND_MESSAGE,
   async (groupId: string, message: string) => {
+    const _source = getSource();
     try {
-      const _identifier = await useIdentifier();
+      const _identifier = getIdentifier(_source);
       await createMessage(_identifier, groupId, message);
-      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, getSource(), groupId);
+      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
     } catch (e) {
-      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, getSource());
-      messageLogger.error(`Failed to send message, ${e.message}`);
+      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+      messageLogger.error(`Failed to send message, ${e.message}`, {
+        source: _source,
+      });
     }
   }
 );

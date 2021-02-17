@@ -44,6 +44,7 @@ const displayHelperText = () => {
 RegisterNuiCallbackType(events.CAMERA_TAKE_PHOTO);
 on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
+  let frontCam = false;
   // Create Phone Prop
   CreateMobilePhone(1);
   // Active Camera Change
@@ -57,7 +58,6 @@ on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
 
   while (inCameraMode) {
     await Delay(0);
-    let frontCam = false;
     displayHelperText();
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;

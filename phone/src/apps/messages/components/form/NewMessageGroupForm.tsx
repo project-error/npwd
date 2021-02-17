@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
@@ -6,7 +6,13 @@ import useStyles from './form.styles';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 
-const NewMessageGroupForm = () => {
+const sendNuiCreateMessageGroup = ({ parts, isGroupChat, labelValue }) =>
+  Nui.send('phone:createMessageGroup', {
+    phoneNumbers: parts,
+    label: isGroupChat && labelValue ? labelValue : null,
+  });
+
+const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
@@ -16,20 +22,28 @@ const NewMessageGroupForm = () => {
   // handles phone numbers in a csv format and strips all spaces and
   // external characters out of them:
   // 123-4567, 987-6543, 333-4444
-  const parts = participants
-    .split(',')
-    .map((part) => part.replace(/[^0-9]/g, ''));
+  const getGroupParts = useCallback(
+    (numbers) => numbers.split(',').map((part) => part.replace(/[^0-9]/g, '')),
+    []
+  );
+
+  const parts = useMemo(() => getGroupParts(participants), [participants, getGroupParts]);
+
   const isGroupChat = parts.length > 1;
+
+  const labelValue = label.trim();
+
+  useEffect(() => {
+    if (phoneNumber) {
+      sendNuiCreateMessageGroup({ parts: getGroupParts(phoneNumber), isGroupChat: false, labelValue: null });
+      history.push('/messages');
+    }
+  }, [phoneNumber, labelValue, history, getGroupParts]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (parts.length > 0) {
-      const labelValue = label.trim();
-
-      Nui.send('phone:createMessageGroup', {
-        phoneNumbers: parts,
-        label: isGroupChat && labelValue ? labelValue : null,
-      });
+      sendNuiCreateMessageGroup({ parts, isGroupChat, labelValue });
       setParticipants('');
       history.push('/messages');
     }
@@ -39,7 +53,7 @@ const NewMessageGroupForm = () => {
     <form className={classes.newGroupForm} onSubmit={handleSubmit}>
       <TextField
         value={participants}
-        onChange={(e) => setParticipants(e.target.value)}
+        onChange={(e) => setParticipants(e.target.value || '')}
         placeholder={t('APPS_MESSAGES_NEW_MESSAGE_GROUP')}
         className={classes.newGroupinput}
         autoFocus

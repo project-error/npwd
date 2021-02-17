@@ -1,4 +1,5 @@
 import { Client } from 'esx.js';
+import ClientUtils from './cl_utils';
 
 import './cl_main';
 import './cl_twitter';
@@ -18,3 +19,5 @@ setTick(() => {
     emit('esx:getSharedObject', (obj: Client) => (ESX = obj));
   }
 });
+
+export const ClUtils = new ClientUtils();
