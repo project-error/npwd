@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography } from '@material-ui/core';
+import { Box, Paper, Typography } from '@material-ui/core';
 
 import { Message, MessageGroup } from '../../../../common/typings/messages';
 import MessageInput from '../form/MessageInput';
@@ -32,9 +32,16 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         isOpen={imageModalOpen}
         messageGroupId={activeMessageGroup.groupId}
       />
-      <div id={CONVERSATION_ELEMENT_ID} className={classes.messageList}>
+      <Box
+        id={CONVERSATION_ELEMENT_ID}
+        height='90%'
+        display='flex'
+        flexDirection='column'
+        pb={4}
+        className={classes.overflowAutoY}
+      >
         {messages.map((message) => (
-          <div key={message.id} className={classes.messageContainer}>
+          <div key={message.id}>
             <Paper
               className={message.isMine ? classes.sourceSms : classes.sms}
               variant='outlined'
@@ -56,7 +63,7 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
             </Paper>
           </div>
         ))}
-      </div>
+      </Box>
       <MessageInput
         messageGroupId={activeMessageGroup.groupId}
         onAddImageClick={() => setImageModalOpen(true)}
