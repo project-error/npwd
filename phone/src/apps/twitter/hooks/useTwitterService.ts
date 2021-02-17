@@ -8,6 +8,7 @@ import { twitterState } from './state';
 import { useNotifications } from '../../../ui/hooks/useNotifications';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useTranslation } from 'react-i18next';
+import { useCallback } from 'react';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -34,6 +35,19 @@ export const useTwitterService = () => {
   const { t } = useTranslation();
   const { addNotification } = useNotifications();
   const { icon, notificationIcon } = useApp('TWITTER');
+
+  const setNotification = useCallback(
+    ({ profile_name, message }) =>
+      addNotification({
+        app: 'TWITTER',
+        title: t('APPS_TWITTER_NEW_BROADCAST', { profile_name }),
+        href: '/twitter',
+        content: message,
+        icon,
+        notificationIcon,
+      }),
+    [addNotification, icon, notificationIcon, t]
+  );
 
   const setProfile = useSetRecoilState(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(
@@ -73,14 +87,5 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', ({ profile_name, message }) =>
-    addNotification({
-      app: 'TWITTER',
-      title: t('APPS_TWITTER_NEW_BROADCAST', { profile_name }),
-      href: '/twitter',
-      content: message,
-      icon,
-      notificationIcon,
-    })
-  );
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
 };

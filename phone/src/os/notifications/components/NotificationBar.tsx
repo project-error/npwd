@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NotificationBar = () => {
+export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -120,7 +120,7 @@ export const NotificationBar = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction='down' in={uncollapsed}>
+      <Slide direction='down' in={forceUncollapse || uncollapsed}>
         <Paper square className={classes.drawer}>
           <Box p={2}>
             <List>

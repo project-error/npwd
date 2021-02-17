@@ -22,23 +22,34 @@ import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import Nui from './os/nui-events/utils/Nui';
-import { usePhone } from './os/phone/hooks/usePhone';
-import { settingsState } from './apps/settings/hooks/useSettings';
+import { useSettings } from './apps/settings/hooks/useSettings';
 
 import config from './config/default.json';
-import { useRecoilState } from 'recoil';
 import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 
 function Phone() {
+  const { t } = useTranslation();
+  const { alert } = useSnackbar();
+  const { modal } = useModal();
+  const { allApps } = useApps();
+
+  const [settings] = useSettings();
+
+  const {
+    bottom,
+    visibility,
+    uncollapseNotifications,
+    clickEventOverride,
+  } = usePhoneVisibility();
+
   useNuiService();
   usePhoneService();
-  const { visibility } = usePhone();
-  const { allApps } = useApps();
   useSimcardService();
   useContactsService();
   useTwitterService();
@@ -50,13 +61,6 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
-  const { t } = useTranslation();
-
-  const { alert } = useSnackbar();
-
-  const { modal } = useModal(); // the calling modal
-
-  const [settings] = useRecoilState(settingsState);
 
   const currentTheme = useMemo(
     () => createMuiTheme(config.themes[settings.theme]),
@@ -75,10 +79,12 @@ function Phone() {
         <div className='PhoneWrapper'>
           <div>
             <div
+              onClick={clickEventOverride}
               className='Phone'
               style={{
                 transformOrigin: 'right bottom',
                 transform: `scale(${settings.zoom}`,
+                bottom,
               }}
             >
               <div
@@ -95,7 +101,7 @@ function Phone() {
                 }}
               >
                 <>
-                  <NotificationBar />
+                  <NotificationBar forceUncollapse={uncollapseNotifications} />
                   <div className='PhoneAppContainer'>
                     {modal ? (
                       <CallModal />
@@ -139,6 +145,6 @@ InjectDebugData([
   {
     app: 'PHONE',
     method: 'setVisibility',
-    data: true,
+    data: false,
   },
 ]);
