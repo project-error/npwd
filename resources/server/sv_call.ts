@@ -176,11 +176,10 @@ onNet(
     const pSource = getSource();
     try {
       const currentCall = calls.get(transmitterNumber);
-
       const endTime = timestamp / 1000;
       await updateCall(currentCall, false, endTime);
       const accepted = calls.get(pSource);
-      console.log(accepted)
+
       // player who is being called
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
       // player who is calling
