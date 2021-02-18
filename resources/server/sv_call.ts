@@ -162,7 +162,6 @@ onNet(
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
       // player who is calling and recieved the rejection.
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
-      emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource);
     } catch (e) {
       callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
         source: pSource,

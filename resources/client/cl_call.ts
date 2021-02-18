@@ -8,7 +8,6 @@ RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL); // Fires when the call is
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, async (data: any, cb: Function) => {
   const start = Date.now();
   emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
-  phoneCallStartAnim()
   cb();
 });
 
@@ -35,7 +34,6 @@ onNet(
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL); // Fires when the TARGET accepts.
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
-  phoneCallStartAnim()
   cb();
 });
 
@@ -43,7 +41,7 @@ onNet(
   events.PHONE_CALL_WAS_ACCEPTED,
   (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
-
+    phoneCallStartAnim() // Placed her so if no one answers, then no one does call animation.
     SendNuiMessage(
       JSON.stringify({
         app: 'CALL',
