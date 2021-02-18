@@ -41,7 +41,7 @@ onNet(
   events.PHONE_CALL_WAS_ACCEPTED,
   (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
-    phoneCallStartAnim() // Placed her so if no one answers, then no one does call animation.
+    phoneCallStartAnim() // Trigger call animation only if the call was accepted.
     SendNuiMessage(
       JSON.stringify({
         app: 'CALL',
