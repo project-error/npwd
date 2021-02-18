@@ -90,7 +90,7 @@ const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
     playerPed,
     dict,
     'cellphone_text_in',
-    8.0,
+    7.0,
     -1,
     -1,
     50,
@@ -99,8 +99,8 @@ const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
     false,
     false
   );
-  await Delay(300); //Gives time for animation starts before creating the phone
-  await newPhoneProp(); //Creates the phone and attaches it.
+  await Delay(300); 
+  await newPhoneProp(); 
 };
 
 const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
@@ -123,81 +123,65 @@ const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
     false,
     false
   );
-  await Delay(300); //Gives time for animation starts before creating the phone
-  await newPhoneProp(); //Creates the phone and attaches it.
+  await Delay(300); 
+  await newPhoneProp(); 
 };
 
 const handleCloseVehicleAnim = async (playerPed: number): Promise<void> => {
-  //true refers to at get in.
   const DICT = 'anim@cellphone@in_car@ps';
   const ANIM = 'cellphone_text_out';
-
-  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); //Stop the pull out animation
-  removePhoneProp(); //Deletes the prop early incase they get out of the vehicle.
-  await Delay(250); //lets it get to a certain point
-  await loadAnimDict(DICT); //loads the new animation
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false); //puts phone into pocket
-  await Delay(200); //waits until the phone is in the pocket
-  StopAnimTask(playerPed, DICT, ANIM, 1.0); //clears the animation
+  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); // Do both incase they were on the phone.
+  StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
+  removePhoneProp();
 };
 
 const handleCloseNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_text_out';
-  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); //Stop the pull out animation
-  await Delay(100); //lets it get to a certain point
-  await loadAnimDict(DICT); //loads the new animation
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false); //puts phone into pocket
-  await Delay(200); //waits until the phone is in the pocket
-  StopAnimTask(playerPed, DICT, ANIM, 1.0); //clears the animation
-  removePhoneProp(); //Deletes the prop.
+  StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
+  await Delay(100); 
+  await loadAnimDict(DICT); 
+  TaskPlayAnim(playerPed, DICT, ANIM, 7.0, -1, -1, 50, 0, false, false, false);
+  await Delay(200); 
+  StopAnimTask(playerPed, DICT, ANIM, 1.0);
+  removePhoneProp(); 
 };
 
 const handleCallStartVehicleAnim = async (playerPed: number): Promise<void> => {
-  //true refers to at get in.
   const DICT = 'anim@cellphone@in_car@ps';
   const ANIM = 'cellphone_call_listen_base';
 
   StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
-  removePhoneProp(); 
-  console.log(ANIM)
   await loadAnimDict(DICT);
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
+  TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
 };
 
 const handleCallEndVehicleAnim = async (playerPed: number): Promise<void> => {
-  //true refers to at get in.
   const DICT = 'anim@cellphone@in_car@ps';
   const ANIM = 'cellphone_call_to_text';
-
   StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
-  removePhoneProp();
-  console.log(ANIM)
   await loadAnimDict(DICT);
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
+  TaskPlayAnim(playerPed, DICT, ANIM, 1.3, 5.0, -1, 50, 0, false, false, false);
 };
 
 const handleCallStartNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_listen_base';
-  console.log(ANIM)
   await loadAnimDict(DICT); 
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
+  TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
 };
 
 const handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_to_text';
 
-  StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
-  console.log(ANIM)
   await loadAnimDict(DICT); 
-  TaskPlayAnim(playerPed, DICT, ANIM, 8.0, -1, -1, 50, 0, false, false, false);
+  TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
 };
 
 export async function phoneOpenAnim(): Promise<void> {
   const playerPed = PlayerPedId();
-  removePhoneProp(); //Deleting  before creating a new phone where itll be deleted again.
+  removePhoneProp();
   if (IsPedInAnyVehicle(playerPed, true)) {
     return await handleOpenVehicleAnim(playerPed);
   }
@@ -214,7 +198,6 @@ export async function phoneCloseAnim() {
 
 export async function phoneCallStartAnim(): Promise<void> {
   const playerPed = PlayerPedId();
-  console.log("phoneCallStartAnim")
   if (IsPedInAnyVehicle(playerPed, true)) {
     return await handleCallStartVehicleAnim(playerPed);
   }
@@ -223,7 +206,6 @@ export async function phoneCallStartAnim(): Promise<void> {
 
 export async function phoneCallEndAnim(): Promise<void> {
   const playerPed = PlayerPedId();
-  console.log("phoneCallEndAnim")
   if (IsPedInAnyVehicle(playerPed, true)) {
     return await handleCallEndVehicleAnim(playerPed);
   }
