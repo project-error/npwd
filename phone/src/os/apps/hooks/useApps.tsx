@@ -38,7 +38,7 @@ import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import Nui from '../../nui-events/utils/Nui';
-import { useNotifications } from '../../../ui/hooks/useNotifications';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
 
 export interface IAppConfig {
   id: string;

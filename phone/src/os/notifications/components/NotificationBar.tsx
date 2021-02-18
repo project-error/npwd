@@ -18,7 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Battery90Icon from '@material-ui/icons/Battery90';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Default from '../../../config/default.json';
-import { useNotifications } from '../../../ui/hooks/useNotifications';
+import { useNotifications } from '../hooks/useNotifications';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -146,6 +146,9 @@ export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean 
                     size='small'
                     onClick={(e) => {
                       e.stopPropagation();
+                      if (notifications.length === 1) {
+                        setUncollapsed(false);
+                      }
                       removeNotification(idx);
                     }}
                   >

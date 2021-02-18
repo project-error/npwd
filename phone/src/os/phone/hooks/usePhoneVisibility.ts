@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { useNotifications } from '../../../ui/hooks/useNotifications';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { usePhone } from './usePhone';
 
 export const usePhoneVisibility = () => {

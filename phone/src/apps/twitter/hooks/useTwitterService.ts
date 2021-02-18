@@ -5,7 +5,7 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';
-import { useNotifications } from '../../../ui/hooks/useNotifications';
+import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
