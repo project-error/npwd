@@ -183,12 +183,13 @@ onNet(
       console.log(accepted)
       // player who is being called
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
-      if (currentCall.accepted) {
-        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource); // Ends animation if was in call
-      }
       // player who is calling
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
-      emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource); // Ends animation
+      // ends animations if call is active
+      if (currentCall.accepted) {
+        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource); 
+        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource); 
+      }
       calls.delete(transmitterNumber);
     } catch (e) {
       callLogger.error(`Error ending Phone Call, ${e.message}`, {
