@@ -3,7 +3,7 @@ import { Delay } from '../utils/fivem';
 let prop = 0;
 let isPhoneOpen = false;
 let propCreated = false;
-let phoneModel = 'prop_amb_phone'; // Refered to in newphoneProp function. Requires custom phone being streamed.
+const phoneModel = 'prop_amb_phone'
 
 /* * * * * * * * * * * * *
  *

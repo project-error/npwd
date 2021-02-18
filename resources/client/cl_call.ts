@@ -5,7 +5,7 @@ import {phoneCallStartAnim, phoneCallEndAnim} from './functions';
 const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL); // Fires when the call is started.
-on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, async (data: any, cb: Function) => {
+on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
   const start = Date.now();
   emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
   cb();
