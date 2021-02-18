@@ -40,12 +40,12 @@ onNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, () => {
   emitNet(events.CONTACTS_GET_CONTACTS);
 });
 
-onNet(events.CONTACTS_ACTION_RESULT, (result: string) => {
+onNet(events.CONTACTS_ACTION_RESULT, (alert: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'CONTACTS',
       method: 'setAlert',
-      data: result,
+      data: alert
     })
   );
 });
