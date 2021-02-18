@@ -110,4 +110,5 @@ export default {
   PHONE_CALL_WAS_REJECTED: 'phone:callRejected',
   PHONE_CALL_FETCH_CALLS: 'phone:fetchCalls',
   PHONE_CALL_SEND_HISTORY: 'phone:sendCallHistory',
+  PHONE_CALL_SEND_HANGUP_ANIM: 'phone:sendHangupAnim',
 };

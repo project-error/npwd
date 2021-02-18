@@ -70,7 +70,7 @@ onNet(
     const _source = getSource();
 
     const callIdentifier = uuidv4();
-
+    
     // the client that is calling
     const xTransmitter = ESX.GetPlayerFromId(_source);
     const transmitterNumber = await usePhoneNumber(
@@ -89,6 +89,7 @@ onNet(
       receiver: receiverNumber,
       receiverSource: xReceiver.source,
       start: timestamp / 1000,
+      accepted: false,
     });
 
     const currentCall = calls.get(transmitterNumber);
@@ -140,6 +141,8 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
       currentCall,
       true
     );
+
+    currentCall.accepted = true;
   } catch (e) {
     callLogger.error('Accepting Call Error', e.message, {
       source: pSource,
@@ -153,12 +156,11 @@ onNet(
     const pSource = getSource();
     try {
       const currentCall = calls.get(transmitterNumber);
-
       await updateCall(currentCall, false, timestamp);
-      // player who is being called
-      emitNet(events.PHONE_CALL_WAS_REJECTED, pSource);
-
-      // player who is calling
+      
+      // player who is called and initiasted the rejection.
+      emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
+      // player who is calling and recieved the rejection.
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
     } catch (e) {
       callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
@@ -174,16 +176,19 @@ onNet(
     const pSource = getSource();
     try {
       const currentCall = calls.get(transmitterNumber);
-
       const endTime = timestamp / 1000;
-
       await updateCall(currentCall, false, endTime);
+      const accepted = calls.get(pSource);
 
       // player who is being called
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
       // player who is calling
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
-
+      // ends animations if call is active
+      if (currentCall.accepted) {
+        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource); 
+        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource); 
+      }
       calls.delete(transmitterNumber);
     } catch (e) {
       callLogger.error(`Error ending Phone Call, ${e.message}`, {

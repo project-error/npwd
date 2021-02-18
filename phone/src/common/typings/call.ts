@@ -14,6 +14,7 @@ export interface ICall {
   receiverSource?: number;
   start: number;
   end?: number;
+  accepted: boolean;
 }
 
 export interface ICallDuration {

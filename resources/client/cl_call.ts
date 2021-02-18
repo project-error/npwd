@@ -1,9 +1,10 @@
 import events from '../utils/events';
 import { ICall } from '../../phone/src/common/typings/call';
+import {phoneCallStartAnim, phoneCallEndAnim} from './functions';
 
 const exp = (global as any).exports;
 
-RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL);
+RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL); // Fires when the call is started.
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
   const start = Date.now();
   emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
@@ -30,7 +31,7 @@ onNet(
   }
 );
 
-RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL);
+RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL); // Fires when the TARGET accepts.
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
   emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
   cb();
@@ -40,7 +41,7 @@ onNet(
   events.PHONE_CALL_WAS_ACCEPTED,
   (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
-
+    phoneCallStartAnim() // Trigger call animation only if the call was accepted.
     SendNuiMessage(
       JSON.stringify({
         app: 'CALL',
@@ -56,16 +57,15 @@ onNet(
   }
 );
 
-RegisterNuiCallbackType(events.PHONE_CALL_REJECTED);
+RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {
   const end = Date.now();
-  emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber, end);
+  emitNet(events.PHONE_CALL_REJECTED, data.phoneNumber, end);
   cb();
 });
 
 onNet(events.PHONE_CALL_WAS_REJECTED, () => {
   openCallModal(false);
-
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
@@ -80,7 +80,11 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
   );
 });
 
-RegisterNuiCallbackType(events.PHONE_END_CALL);
+onNet(events.PHONE_CALL_SEND_HANGUP_ANIM, () => {
+  phoneCallEndAnim()
+});
+
+RegisterNuiCallbackType(events.PHONE_END_CALL); // Fires when ending an ACTIVE call
 on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any, cb: Function) => {
   const end = Date.now();
   emitNet(events.PHONE_END_CALL, data.transmitterNumber, end);
@@ -89,7 +93,6 @@ on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any, cb: Function) => {
 
 onNet(events.PHONE_CALL_WAS_ENDED, () => {
   exp['mumble-voip'].SetCallChannel(0);
-
   openCallModal(false);
 
   SendNuiMessage(
