@@ -62,7 +62,7 @@ onNet(
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {
   const end = Date.now();
-  emitNet(events.PHONE_CALL_REJECTED, data.transmitterNumber, end);
+  emitNet(events.PHONE_CALL_REJECTED, data.phoneNumber, end);
   cb();
 });
 
