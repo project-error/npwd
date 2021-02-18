@@ -1,9 +1,9 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg"],
+  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg", "projecterror.jpg"],
   "defaultSettings": {
-    "wallpaper": "minimal.png",
+    "wallpaper": "projecterror.jpg",
     "frame": "default.png",
     "theme": "taso-dark",
     "zoom": 1,
