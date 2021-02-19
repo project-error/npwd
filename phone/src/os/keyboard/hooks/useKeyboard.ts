@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 import Nui from '../../nui-events/utils/Nui';
@@ -82,18 +82,22 @@ export const useInitKeyboard = () => {
     [getters]
   );
 
+  const escapeHandler = useCallback(() => Nui.send('phone:close'), []);
+
+  const backspaceHandler = useCallback((event) => {
+    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+      // Dont anything if we are typing something :)
+      return;
+    }
+    history.goBack();
+  }, [history]);
+
   useEffect(
     function registerDefaultHandlers() {
-      setEscape({ handler: () => Nui.send('phone:close') });
-      setBackspace({ handler: event => {
-        if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
-          // Dont anything if we are typing something :)
-          return;
-        }
-        history.goBack();
-      } });
+      setEscape({ handler: escapeHandler });
+      setBackspace({ handler: backspaceHandler });
     },
-    [setEscape, setBackspace, history]
+    [setEscape, setBackspace, history, escapeHandler, backspaceHandler]
   );
 };
 
