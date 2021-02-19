@@ -1,9 +1,9 @@
 import React from 'react';
-import { ContactList } from '../List/ContactList';
 import Fab from '@material-ui/core/Fab';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { ContactList } from '../list/ContactList';
 
 const useStyles = makeStyles((theme: Theme) => ({
   absolute: {
