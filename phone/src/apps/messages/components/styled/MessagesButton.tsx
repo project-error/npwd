@@ -13,5 +13,9 @@ export const MessagesButton = withStyles({
     '&.MuiButton-root:hover:not(.MuiButton-containedPrimary) .MuiButton-label': {
       color: MESSAGES_APP_BG_COLOR,
     },
+    '&.MuiButton-root:hover.MuiButton-containedPrimary': {
+      backgroundColor: MESSAGES_APP_TEXT_COLOR,
+      color: MESSAGES_APP_BG_COLOR,
+    },
   },
 })(Button);

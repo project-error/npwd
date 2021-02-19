@@ -112,6 +112,7 @@ export const MessageImageModal = ({
           <MessagesButton
             fullWidth
             variant='contained'
+            color='primary'
             onClick={() => sendFromQueryParam(queryParamImagePreview)}
           >
             Share
