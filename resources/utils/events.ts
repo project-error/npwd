@@ -37,11 +37,13 @@ export default {
   CONTACTS_DELETE_CONTACT: 'phone:deleteContact',
   CONTACTS_DELETE_CONTACT_SUCCESS: 'contacts:deleteSuccess',
   CONTACTS_UPDATE_CONTACT_SUCCESS: 'phone:updateContactSuccess',
+  CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
 
   // Sellout
   SELLOUT_ADD_LISTING: 'phone:addListing',
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
+  SELLOUT_ACTION_RESULT: 'phone:selloutActionResult',
 
   //
   BANK_ADD_TRANSFER: 'phone:addTransfer',
@@ -66,6 +68,7 @@ export default {
   MESSAGES_FETCH_MESSAGES: 'phone:fetchMessages',
   MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
   MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
+  MESSAGES_ACTION_RESULT: 'phone:messagesActionResult',
 
   // Notes
   NOTE_ADD_NOTE: 'phone:addNote',
@@ -95,7 +98,6 @@ export default {
   CAMERA_SEND_PHOTOS: 'phone:SendPhotos',
   CAMERA_DELETE_PHOTO: 'photo:deletePhoto',
   CAMERA_DELETE_PHOTO_SUCCESS: 'phone:deletePhotoSuccess',
-  CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
   // copy
   PHONE_USE_CLIPBOARD: 'phone:useClipboard',
 

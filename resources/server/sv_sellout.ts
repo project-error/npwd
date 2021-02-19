@@ -62,9 +62,19 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
 
     const phoneNumber = await usePhoneNumber(_identifier);
     await addListing(_identifier, name, phoneNumber, listing);
+
+    emitNet(events.SELLOUT_ACTION_RESULT, _source, {
+      message: 'MARKETPLACE_CREATE_LISTING_SUCCESS',
+      type: 'success'
+    })
   } catch (e) {
     selloutLogger.error(`Failed to add listing ${e.message}`, {
       source: _source,
     });
+    
+    emitNet(events.SELLOUT_ACTION_RESULT, _source, {
+      message: 'MARKETPALCE_CREATE_LISTING_FAILED',
+      type: 'error'
+    })
   }
 });

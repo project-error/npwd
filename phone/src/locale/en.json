@@ -100,6 +100,9 @@
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
 
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete"
