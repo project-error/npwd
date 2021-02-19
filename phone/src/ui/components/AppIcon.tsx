@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { green } from '@material-ui/core/colors';
-import { Button } from '@material-ui/core';
+import { Badge, Button } from '@material-ui/core';
 
 interface IStyles {
   root: any;
@@ -28,7 +28,13 @@ const useStyles = makeStyles(
   })
 );
 
-export const AppIcon = ({ id, name, icon, backgroundColor, color }) => {
+export const AppIcon = ({
+  name,
+  icon,
+  backgroundColor,
+  color,
+  notification,
+}) => {
   const classes = useStyles({
     backgroundColor: backgroundColor || green[50],
     color: color || green[400],
@@ -36,9 +42,15 @@ export const AppIcon = ({ id, name, icon, backgroundColor, color }) => {
 
   return (
     <Button className={classes.root}>
-      <Avatar className={classes.avatar}>
-        {icon || name[0].toUpperCase()}
-      </Avatar>
+      <Badge
+        color="error"
+        badgeContent={notification?.badge}
+        invisible={!notification || notification.badge < 2}
+      >
+        <Avatar className={classes.avatar}>
+          {icon || name[0].toUpperCase()}
+        </Avatar>
+      </Badge>
     </Button>
   );
 };

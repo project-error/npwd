@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SnackbarContext } from '../components/SnackbarProvider';
+import { SnackbarContext } from '../providers/SnackbarProvider';
 
 
 export interface IAlert {

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   blue,
   common,
@@ -37,7 +37,8 @@ import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
-import Nui from "../../nui-events/utils/Nui";
+import Nui from '../../nui-events/utils/Nui';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
 
 export interface IAppConfig {
   id: string;
@@ -63,7 +64,11 @@ const AppRoute = ({ id, component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={() => <AppWithStartup id={id}><Component /></AppWithStartup>}
+      render={() => (
+        <AppWithStartup id={id}>
+          <Component />
+        </AppWithStartup>
+      )}
     />
   );
 };
@@ -80,7 +85,9 @@ const appsState = atom<AppsRepository>({
         backgroundColor: green[600],
         color: common.white,
         path: '/phone',
-        Route: () => <AppRoute id="DIALER" path='/phone' component={DialerApp} />,
+        Route: () => (
+          <AppRoute id='DIALER' path='/phone' component={DialerApp} />
+        ),
       },
       {
         id: 'MESSAGES',
@@ -90,37 +97,49 @@ const appsState = atom<AppsRepository>({
         backgroundColor: amber[700],
         color: common.white,
         path: '/messages',
-        Route: () => <AppRoute id="MESSAGE" path='/messages' component={MessagesApp} />,
+        Route: () => (
+          <AppRoute id='MESSAGE' path='/messages' component={MessagesApp} />
+        ),
       },
       {
         id: 'CONTACTS',
         nameLocale: 'APPS_CONTACTS',
         icon: <ContactsIcon />,
-        notificationIcon: <ContactsIcon fontSize="small" />,
+        notificationIcon: <ContactsIcon fontSize='small' />,
         backgroundColor: blue[500],
         color: common.white,
         path: '/contacts',
-        Route: () => <AppRoute id="CONTACTS" path='/contacts' component={ContactsApp} />,
+        Route: () => (
+          <AppRoute id='CONTACTS' path='/contacts' component={ContactsApp} />
+        ),
       },
       {
         id: 'CALCULATOR',
         nameLocale: 'APPS_CALCULATOR',
         icon: <CalculatorIcon />,
-        notificationIcon: <CalculatorIcon fontSize="small"/>,
+        notificationIcon: <CalculatorIcon fontSize='small' />,
         backgroundColor: purple[500],
         color: grey[50],
         path: '/calculator',
-        Route: () => <AppRoute id="CALCULATOR" path='/calculator' component={CalculatorApp} />,
+        Route: () => (
+          <AppRoute
+            id='CALCULATOR'
+            path='/calculator'
+            component={CalculatorApp}
+          />
+        ),
       },
       {
         id: 'SETTINGS',
         nameLocale: 'APPS_SETTINGS',
         icon: <SettingsIcon />,
-        notificationIcon: <SettingsIcon fontSize="small"/>,
+        notificationIcon: <SettingsIcon fontSize='small' />,
         backgroundColor: '#383838',
         color: grey[50],
         path: '/settings',
-        Route: () => <AppRoute id="SETTINGS" path='/settings' component={SettingsApp} />,
+        Route: () => (
+          <AppRoute id='SETTINGS' path='/settings' component={SettingsApp} />
+        ),
       },
       {
         id: 'BANK',
@@ -130,37 +149,45 @@ const appsState = atom<AppsRepository>({
         backgroundColor: blue[900],
         color: common.white,
         path: '/bank',
-        Route: () => <AppRoute id="BANK" path='/bank' component={BankApp} />,
+        Route: () => <AppRoute id='BANK' path='/bank' component={BankApp} />,
       },
       {
         id: 'TWITTER',
         nameLocale: 'APPS_TWITTER',
         icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
-        notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
+        notificationIcon: (
+          <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />
+        ),
         backgroundColor: blue[600],
         color: common.white,
         path: '/twitter',
-        Route: () => <AppRoute id="TWITTER" path='/twitter' component={TwitterApp} />,
+        Route: () => (
+          <AppRoute id='TWITTER' path='/twitter' component={TwitterApp} />
+        ),
       },
       {
         id: 'SELLOUT',
         nameLocale: 'APPS_SELLOUT',
         icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
-        notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size="xs" />,
+        notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size='xs' />,
         backgroundColor: red[500],
         color: common.white,
         path: '/sellout',
-        Route: () => <AppRoute id="SELLOUT" path='/sellout' component={SelloutApp} />,
+        Route: () => (
+          <AppRoute id='SELLOUT' path='/sellout' component={SelloutApp} />
+        ),
       },
       {
         id: 'NOTES',
         nameLocale: 'APPS_NOTES',
         icon: <FontAwesomeIcon icon={faStickyNote} fixedWidth />,
-        notificationIcon: <FontAwesomeIcon icon={faStickyNote} fixedWidth size="xs" />,
+        notificationIcon: (
+          <FontAwesomeIcon icon={faStickyNote} fixedWidth size='xs' />
+        ),
         backgroundColor: yellow[800],
         color: common.white,
         path: '/notes',
-        Route: () => <AppRoute id="NOTES" path='/notes' component={NotesApp} />,
+        Route: () => <AppRoute id='NOTES' path='/notes' component={NotesApp} />,
       },
       {
         id: 'CAMERA',
@@ -170,7 +197,9 @@ const appsState = atom<AppsRepository>({
         backgroundColor: grey['A400'],
         color: common.white,
         path: '/camera',
-        Route: () => <AppRoute id="CAMERA" path='/camera' component={CameraApp} />,
+        Route: () => (
+          <AppRoute id='CAMERA' path='/camera' component={CameraApp} />
+        ),
       },
       {
         id: 'EXAMPLE',
@@ -180,16 +209,29 @@ const appsState = atom<AppsRepository>({
         backgroundColor: blue[500],
         color: blue[50],
         path: '/example',
-        Route: () => <AppRoute id="EXAMPLE" path='/example' component={ExampleApp}/>,
+        Route: () => (
+          <AppRoute id='EXAMPLE' path='/example' component={ExampleApp} />
+        ),
       },
     ],
   },
 });
 
 export const useApps = () => {
+  const { icons } = useNotifications();
   const [apps, setApps] = useRecoilState<AppsRepository>(appsState);
-  const allApps = useMemo(() => [...apps.preinstalled], [apps.preinstalled]);
-  const getApp = useCallback((id: string): IAppConfig => allApps.find((a) => a.id === id) || null, [allApps]);
+  const allApps = useMemo(
+    () =>
+      [...apps.preinstalled].map((a) => ({
+        ...a,
+        notification: icons.find((i) => i.key === a.id),
+      })),
+    [apps.preinstalled, icons]
+  );
+  const getApp = useCallback(
+    (id: string): IAppConfig => allApps.find((a) => a.id === id) || null,
+    [allApps]
+  );
   return { apps, allApps, setApps, getApp };
 };
 

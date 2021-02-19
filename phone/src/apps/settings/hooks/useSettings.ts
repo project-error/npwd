@@ -22,7 +22,15 @@ export const settingsState = atom({
   effects_UNSTABLE: [localStorageEffect('settings')],
 });
 
+interface IPhoneSettings {
+  wallpaper: string;
+  frame: string;
+  theme: string;
+  zoom: number;
+  ringtone: string;
+  ringtoneVol: number;
+}
+
 export const useSettings = () => {
-  const [settings, setSettings] = useRecoilState(settingsState);
-  return [settings, setSettings];
+  return useRecoilState<IPhoneSettings>(settingsState);
 };
