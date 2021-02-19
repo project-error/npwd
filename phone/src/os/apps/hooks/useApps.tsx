@@ -7,7 +7,6 @@ import {
   purple,
   yellow,
   red,
-  amber,
 } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -39,6 +38,7 @@ import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import Nui from '../../nui-events/utils/Nui';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
+import { MESSAGES_APP_BG_COLOR, MESSAGES_APP_TEXT_COLOR } from '../../../apps/messages/constants';
 
 export interface IAppConfig {
   id: string;
@@ -94,8 +94,8 @@ const appsState = atom<AppsRepository>({
         nameLocale: 'APPS_MESSAGES',
         icon: <MessageIcon fontSize='default' />,
         notificationIcon: <MessageIcon fontSize='small' />,
-        backgroundColor: amber[700],
-        color: common.white,
+        backgroundColor: MESSAGES_APP_BG_COLOR,
+        color: MESSAGES_APP_TEXT_COLOR,
         path: '/messages',
         Route: () => (
           <AppRoute id='MESSAGE' path='/messages' component={MessagesApp} />

@@ -1,4 +1,3 @@
-import './messages.css';
 import React, { useEffect } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
@@ -10,7 +9,7 @@ import MessagesList from './list/MessagesList';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import NewMessageGroupButton from './buttons/NewMessageGroupButton';
+import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
 
 export const MessagesApp = () => {

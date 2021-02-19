@@ -1,12 +1,14 @@
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Button, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { useContacts } from '../../../contacts/hooks/useContacts';
 import { Contact } from '../../../../common/typings/contact';
+import { MessagesButton } from '../styled/MessagesButton';
+import { MessagesTextField } from '../styled/MessagesTextField';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
@@ -61,7 +63,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   const renderAutocompleteInput = useCallback(
     (params) => (
-      <TextField
+      <MessagesTextField
         {...params}
         fullWidth
         label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
@@ -92,7 +94,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       </Box>
       {isGroupChat && (
         <Box px={2} py={3}>
-          <TextField
+          <MessagesTextField
             fullWidth
             value={label}
             onChange={(e) => setLabel(e.target.value)}
@@ -101,9 +103,9 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         </Box>
       )}
       <Box px={2} py={3}>
-        <Button disabled={submitDisabled} variant='contained' fullWidth color='primary' type='submit'>
-          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
-        </Button>
+        <MessagesButton disabled={submitDisabled} variant='contained' fullWidth color='primary' type='submit'>
+          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')} 
+        </MessagesButton>
       </Box>
     </form>
   );
