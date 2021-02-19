@@ -3,7 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { ContactList } from '../list/ContactList';
+import { ContactList } from '../List/ContactList';
 
 const useStyles = makeStyles((theme: Theme) => ({
   absolute: {

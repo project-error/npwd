@@ -9,7 +9,7 @@ import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
 import { useDialHistory } from '../hooks/useDialHistory';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import { ContactList } from '../../contacts/components/list/ContactList';
+import { ContactList } from '../../contacts/components/List/ContactList';
 
 InjectDebugData([
   {
