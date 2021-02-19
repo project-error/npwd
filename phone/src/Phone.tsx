@@ -21,7 +21,6 @@ import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
-import Nui from './os/nui-events/utils/Nui';
 import { useSettings } from './apps/settings/hooks/useSettings';
 
 import config from './config/default.json';
@@ -37,7 +36,7 @@ function Phone() {
   const { t } = useTranslation();
   const { alert } = useSnackbar();
   const { modal } = useModal();
-  const { allApps } = useApps();
+  const { apps } = useApps();
 
   const [settings] = useSettings();
 
@@ -66,12 +65,6 @@ function Phone() {
     () => createMuiTheme(config.themes[settings.theme]),
     [settings.theme]
   );
-
-  document.onkeyup = function (data) {
-    if (data.which === 27) {
-      Nui.send('phone:close');
-    }
-  };
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -108,7 +101,7 @@ function Phone() {
                     ) : (
                       <>
                         <Route exact path='/' component={HomeApp} />
-                        {allApps.map((App) => (
+                        {apps.map((App) => (
                           <App.Route key={App.id} />
                         ))}
                       </>

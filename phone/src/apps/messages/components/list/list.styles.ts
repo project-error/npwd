@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: '13ch',
       '&:focus': {
-        width: '20ch',
+        width: '24ch',
       },
     },
   },

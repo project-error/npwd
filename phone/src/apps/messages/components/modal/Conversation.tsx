@@ -39,6 +39,7 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
       >
         {messages.map((message) => (
           <MessageBubble
+            key={message.id}
             message={message}
             isGroupChat={activeMessageGroup?.isGroupChat}
           />
