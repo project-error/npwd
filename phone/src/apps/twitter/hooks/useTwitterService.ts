@@ -9,6 +9,7 @@ import { useNotifications } from '../../../os/notifications/hooks/useNotificatio
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -34,6 +35,7 @@ function processTweet(tweet) {
 export const useTwitterService = () => {
   const { t } = useTranslation();
   const { addNotification } = useNotifications();
+  const { addAlert } = useSnackbar()
   const { icon, notificationIcon } = useApp('TWITTER');
 
   const setNotification = useCallback(
@@ -53,25 +55,11 @@ export const useTwitterService = () => {
   const setUpdateProfileLoading = useSetRecoilState(
     twitterState.updateProfileLoading
   );
-  const setUpdateProfileSuccess = useSetRecoilState(
-    twitterState.updateProfileSuccess
-  );
+
+  
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
-  const setCreateSuccess = useSetRecoilState(
-    twitterState.createTweetSuccessful
-  );
-
-  const _setUpdateProfileSuccess = (isSuccessful) => {
-    setUpdateProfileSuccess(isSuccessful);
-    setUpdateProfileLoading(false); // on any result we should set loading to false
-  };
-
-  const _setCreateSuccess = (isSuccessful) => {
-    setCreateSuccess(isSuccessful);
-    setCreateLoading(false);
-  };
 
   const _setTweets = (tweets) => {
     setTweets(tweets.map(processTweet));
@@ -82,10 +70,10 @@ export const useTwitterService = () => {
 
   useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', setProfile);
   useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
-  useNuiEvent(APP_TWITTER, 'updateProfileResult', _setUpdateProfileSuccess);
+  useNuiEvent(APP_TWITTER, 'updateProfileResult', addAlert);
   useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
-  useNuiEvent(APP_TWITTER, 'createTweetResult', _setCreateSuccess);
+  useNuiEvent(APP_TWITTER, 'createTweetResult', addAlert);
   useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
 };

@@ -311,12 +311,18 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
   try {
     const identifier = getIdentifier(_source);
     await updateProfile(identifier, profile);
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, true);
+    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
+      message: 'TWITTER_EDIT_PROFILE_SUCCESS',
+      type: 'success'
+    });
   } catch (e) {
     twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, false);
+    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
+      message: 'TWITTER_EDIT_PROFILE_FAILURE',
+      type: 'error'
+    });
   }
 });
 
@@ -355,14 +361,15 @@ onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
   try {
     const identifier = getIdentifier(_source);
     const createdTweet = await createTweet(identifier, tweet);
-
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, true);
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
     twitterLogger.error(`Create tweet failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, false);
+    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, {
+      message: 'TWITTER_CREATE_FAILED',
+      type: 'error'
+    }); 
   }
 });
 
