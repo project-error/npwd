@@ -49,7 +49,7 @@ export const usePhoneVisibility = () => {
 
   return {
     bottom,
-    visibility: notifVisibility,
+    visibility: notifVisibility || visibility,
     uncollapseNotifications: isNotificationVisibleOnly,
     clickEventOverride,
   };
