@@ -1,10 +1,9 @@
 import React from 'react';
-import { Slide, Paper } from '@material-ui/core';
+import { Slide, Paper, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import useStyles from './modal.styles';
 import NewMessageGroupForm from '../form/NewMessageGroupForm';
 import { useHistory, useParams } from 'react-router-dom';
-import { MessagesButton } from '../styled/MessagesButton';
 
 const MessageGroupModal = () => {
   const classes = useStyles();
@@ -17,9 +16,9 @@ const MessageGroupModal = () => {
   return (
     <Slide direction='left' in>
       <Paper className={classes.modalRoot}>
-        <MessagesButton onClick={handleClose}>
+        <Button onClick={handleClose}>
           <ArrowBackIcon fontSize='large' />
-        </MessagesButton>
+        </Button>
         <NewMessageGroupForm phoneNumber={params.phoneNumber} />
       </Paper>
     </Slide>

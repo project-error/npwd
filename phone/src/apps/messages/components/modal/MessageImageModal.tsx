@@ -4,15 +4,13 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import CloseIcon from '@material-ui/icons/Close';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, TextField, Button } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import useStyles from './modal.styles';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { MessagesButton } from '../styled/MessagesButton';
-import { MessagesTextField } from '../styled/MessagesTextField';
 
 interface IProps {
   isOpen: boolean;
@@ -109,19 +107,19 @@ export const MessageImageModal = ({
             src={queryParamImagePreview}
             alt={'Share gallery image preview'}
           />
-          <MessagesButton
+          <Button
             fullWidth
             variant='contained'
             color='primary'
             onClick={() => sendFromQueryParam(queryParamImagePreview)}
           >
             Share
-          </MessagesButton>
+          </Button>
         </Box>
       </Modal>
       <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
         <Box p={1}>
-          <MessagesTextField
+          <TextField
             placeholder='A link to your image or gif'
             onChange={(e) => setMessage(e.target.value)}
             value={message}

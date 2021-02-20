@@ -8,6 +8,23 @@ import { Route } from 'react-router-dom';
 
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
+import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
+
+export const ContactsApp = () => {
+  const contacts = useApp('CONTACTS');
+
+  return (
+    <ContactsThemeProvider>
+      <AppWrapper id='contact-app'>
+        <AppTitle app={contacts} />
+        <AppContent>
+          <Route path='/contacts/' exact component={ContactPage} />
+          <Route path='/contacts/:id' exact component={ContactsInfoPage} />
+        </AppContent>
+      </AppWrapper>
+    </ContactsThemeProvider>
+  );
+};
 
 InjectDebugData([
   {
@@ -33,17 +50,3 @@ InjectDebugData([
     ],
   },
 ]);
-
-export const ContactsApp = () => {
-  const contacts = useApp('CONTACTS');
-
-  return (
-    <AppWrapper id='contact-app'>
-      <AppTitle app={contacts} />
-      <AppContent>
-        <Route path='/contacts/' exact component={ContactPage} />
-        <Route path='/contacts/:id' exact component={ContactsInfoPage} />
-      </AppContent>
-    </AppWrapper>
-  );
-};

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Slide, Paper, Typography } from '@material-ui/core';
+import { Slide, Paper, Typography, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import useStyles from './modal.styles';
@@ -10,7 +10,6 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageGroup } from '../../../../common/typings/messages';
 import { useHistory, useParams } from 'react-router-dom';
-import { MessagesButton } from '../styled/MessagesButton';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -90,9 +89,9 @@ export const MessageModal = () => {
     <Slide direction='left' in={!!activeMessageGroup}>
       <Paper className={classes.modalRoot}>
         <Paper className={classes.topContainer}>
-          <MessagesButton onClick={closeModal}>
+          <Button onClick={closeModal}>
             <ArrowBackIcon fontSize='large' />
-          </MessagesButton>
+          </Button>
           <Typography variant='h5' className={headerClass}>
             {header}
           </Typography>

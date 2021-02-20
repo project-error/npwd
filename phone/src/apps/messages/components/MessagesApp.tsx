@@ -11,6 +11,7 @@ import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -21,37 +22,37 @@ export const MessagesApp = () => {
   }, []);
 
   return (
-    <AppWrapper id='messages-app'>
-      <AppTitle app={messages} />
-      <AppContent>
-        <Switch>
-          <Route
-            path='/messages/conversations/:groupId'
-            component={MessageModal}
-          />
-          <Route
-            exact
-            path='/messages'
-            render={() => (
-              <>
-                <MessagesList />
-              </>
-            )}
-          />
-        </Switch>
-        <Switch>
-          <Route
-            exact
-            path={['/messages/new/:phoneNumber', '/messages/new']}
-            render={() => <MessageGroupModal />}
-          />
-        </Switch>
-      </AppContent>
-      <NewMessageGroupButton
-        onClick={() => history.push('/messages/new')}
-      />
-      <AlertBar />
-    </AppWrapper>
+    <MessagesThemeProvider>
+      <AppWrapper id='messages-app'>
+        <AppTitle app={messages} />
+        <AppContent>
+          <Switch>
+            <Route
+              path='/messages/conversations/:groupId'
+              component={MessageModal}
+            />
+            <Route
+              exact
+              path='/messages'
+              render={() => (
+                <>
+                  <MessagesList />
+                </>
+              )}
+            />
+          </Switch>
+          <Switch>
+            <Route
+              exact
+              path={['/messages/new/:phoneNumber', '/messages/new']}
+              render={() => <MessageGroupModal />}
+            />
+          </Switch>
+        </AppContent>
+        <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+        <AlertBar />
+      </AppWrapper>
+    </MessagesThemeProvider>
   );
 };
 

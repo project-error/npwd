@@ -1,11 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, Box, makeStyles } from '@material-ui/core';
+import { Paper, Box, makeStyles, TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { MessagesButton } from '../styled/MessagesButton';
-import { MessagesTextField } from '../styled/MessagesTextField';
 
 interface IProps {
   onAddImageClick(): void;
@@ -40,7 +38,7 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
       <form onSubmit={handleSubmit}>
         <Box display='flex'>
           <Box pl={1} flexGrow={1}>
-            <MessagesTextField
+            <TextField
               fullWidth
               inputProps={{ style: { fontSize: '1.3em' } }}
               value={message}
@@ -50,12 +48,12 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
             />
           </Box>
           <Box>
-            <MessagesButton onClick={onAddImageClick}>
+            <Button onClick={onAddImageClick}>
               <ImageIcon />
-            </MessagesButton>
-            <MessagesButton type='submit'>
+            </Button>
+            <Button type='submit'>
               <SendIcon />
-            </MessagesButton>
+            </Button>
           </Box>
         </Box>
       </form>

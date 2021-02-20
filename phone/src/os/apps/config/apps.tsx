@@ -34,11 +34,15 @@ import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
-import {
-  MESSAGES_APP_BG_COLOR,
-  MESSAGES_APP_TEXT_COLOR,
-} from '../../../apps/messages/constants';
 import { AppRoute } from '../components/AppRoute';
+import {
+  MESSAGES_APP_PRIMARY_COLOR,
+  MESSAGES_APP_TEXT_COLOR,
+} from '../../../apps/messages/messages.theme';
+import {
+  CONTACTS_APP_PRIMARY_COLOR,
+  CONTACTS_APP_TEXT_COLOR,
+} from '../../../apps/contacts/contacts.theme';
 
 export interface IAppConfig {
   id: string;
@@ -51,7 +55,7 @@ export interface IAppConfig {
   Route: React.FC;
 }
 
-export const APPS = [
+export const APPS: IAppConfig[] = [
   {
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
@@ -67,7 +71,7 @@ export const APPS = [
     nameLocale: 'APPS_MESSAGES',
     icon: <MessageIcon fontSize='default' />,
     notificationIcon: <MessageIcon fontSize='small' />,
-    backgroundColor: MESSAGES_APP_BG_COLOR,
+    backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
     Route: () => (
@@ -79,8 +83,8 @@ export const APPS = [
     nameLocale: 'APPS_CONTACTS',
     icon: <ContactsIcon />,
     notificationIcon: <ContactsIcon fontSize='small' />,
-    backgroundColor: blue[500],
-    color: common.white,
+    backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
+    color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
     Route: () => (
       <AppRoute id='CONTACTS' path='/contacts' component={ContactsApp} />
@@ -166,7 +170,11 @@ export const APPS = [
     path: '/camera',
     Route: () => <AppRoute id='CAMERA' path='/camera' component={CameraApp} />,
   },
-  {
+];
+
+// Example app only in dev
+if (process.env.NODE_ENV === 'development') {
+  APPS.push({
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',
     icon: <FontAwesomeIcon icon={faPlaneArrival} size='sm' />,
@@ -177,5 +185,5 @@ export const APPS = [
     Route: () => (
       <AppRoute id='EXAMPLE' path='/example' component={ExampleApp} />
     ),
-  },
-];
+  });
+}

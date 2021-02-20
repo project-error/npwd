@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
   inputRoot: {
     fontWeight: 400,
     fontSize: 18,
+    border: '1px solid',
+    borderColor: theme.palette.divider,
   },
   inputInput: {
     padding: theme.spacing(1, 4, 1, 4),

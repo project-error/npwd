@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import { MessagesFab } from '../styled/MessagesFab';
+import { Fab } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,13 +21,13 @@ export function NewMessageGroupButton({
   const classes = useStyles();
 
   return (
-      <MessagesFab
+      <Fab
         className={classes.root}
         color='primary'
         onClick={onClick}
       >
         <AddIcon />
-      </MessagesFab>
+      </Fab>
   );
 }
 
