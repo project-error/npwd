@@ -15,6 +15,7 @@ import useStyles from './modal.styles';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { StatusButton } from '../../../ui/components/StatusButton';
 
 export const NoteModal = () => {
   const classes = useStyles();
@@ -99,35 +100,48 @@ export const NoteModal = () => {
                 }
               />
               <Typography paragraph>{detail.content.length}/250</Typography>
-              {!detail.id && (
-                <Button
-                  color='primary'
-                  variant='contained'
-                  disabled={detail.title.length > 0 ? false : true}
-                  className={classes.saveButton}
-                  onClick={handleNoteSave}
-                >
-                  {t('GENERIC_SAVE')}
-                </Button>
-              )}
-              {!!detail.id && (
+              {!detail.id ? (
                 <>
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    className={classes.updateButton}
-                    onClick={handleUpdateNote}
-                  >
-                    {t('GENERIC_UPDATE')}
-                  </Button>
-                  <Button
-                    color='secondary'
-                    variant='contained'
-                    className={classes.deleteButton}
-                    onClick={handleDeleteNote}
-                  >
-                    {t('GENERIC_DELETE')}
-                  </Button>
+                  <Box display="inline" p={1}>
+                    <Button
+                      color='primary'
+                      variant='contained'
+                      disabled={detail.title.length > 0 ? false : true}
+                      onClick={handleNoteSave}
+                    >
+                      {t('GENERIC_SAVE')}
+                    </Button>
+                  </Box>
+                  <Box display="inline" p={1}>
+                    <StatusButton
+                      color='error'
+                      variant='contained'
+                      onClick={_handleClose}
+                    >
+                      {t('GENERIC_CANCEL')}
+                    </StatusButton>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box display="inline" p={1}>
+                    <Button
+                      color='primary'
+                      variant='contained'
+                      onClick={handleUpdateNote}
+                    >
+                      {t('GENERIC_UPDATE')}
+                    </Button>
+                  </Box>
+                  <Box display="inline" p={1}>
+                    <StatusButton
+                      color='error'
+                      variant='contained'
+                      onClick={handleDeleteNote}
+                    >
+                      {t('GENERIC_DELETE')}
+                    </StatusButton>
+                  </Box>
                 </>
               )}
             </Box>

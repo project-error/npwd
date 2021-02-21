@@ -33,6 +33,7 @@ import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
+
 import {
   MESSAGES_APP_PRIMARY_COLOR,
   MESSAGES_APP_TEXT_COLOR,
@@ -41,8 +42,8 @@ import {
   CONTACTS_APP_PRIMARY_COLOR,
   CONTACTS_APP_TEXT_COLOR,
 } from '../../../apps/contacts/contacts.theme';
-import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_TEXT_COLOR } from '../../../apps/sellout/sellout.theme';
-import { NOTES_APP_PRIMARY_COLOR, NOTES_APP_TEXT_COLOR } from '../../../apps/notes/notes.theme';
+import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_ICON_COLOR } from '../../../apps/sellout/sellout.theme';
+import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 
 export interface IAppConfig {
   id: string;
@@ -142,7 +143,7 @@ export const APPS: IAppConfig[] = [
     icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
     notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size='xs' />,
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
-    color: SELLOUT_APP_TEXT_COLOR,
+    color: SELLOUT_APP_ICON_COLOR,
     path: '/sellout',
     Route: () => (
       <AppRoute id='SELLOUT' path='/sellout' component={SelloutApp} />
@@ -156,7 +157,7 @@ export const APPS: IAppConfig[] = [
       <FontAwesomeIcon icon={faStickyNote} fixedWidth size='xs' />
     ),
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
-    color: NOTES_APP_TEXT_COLOR,
+    color: NOTES_APP_ICON_COLOR,
     path: '/notes',
     Route: () => <AppRoute id='NOTES' path='/notes' component={NotesApp} />,
   },

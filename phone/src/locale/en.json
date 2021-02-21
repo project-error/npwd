@@ -107,6 +107,7 @@
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete",
     "GENERIC_CLOSE": "Close",
+    "GENERIC_CANCEL": "Cancel",
     "GENERIC_TITLE": "Title",
     "GENERIC_CONTENT": "Content"
   }
