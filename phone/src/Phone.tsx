@@ -1,11 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
-import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
-import { createMuiTheme, ThemeProvider, Slide } from '@material-ui/core';
+import { ThemeProvider, Slide } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
@@ -21,23 +20,18 @@ import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
-import Nui from './os/nui-events/utils/Nui';
 import { useSettings } from './apps/settings/hooks/useSettings';
-
-import config from './config/default.json';
 import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { useSnackbar } from './ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
+import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
+import { Snackbar } from './ui/components/Snackbar';
 
 function Phone() {
-  const { t } = useTranslation();
-  const { alert } = useSnackbar();
   const { modal } = useModal();
-  const { allApps } = useApps();
+  const { apps } = useApps();
 
   const [settings] = useSettings();
 
@@ -62,16 +56,7 @@ function Phone() {
   useCallService();
   useDialService();
 
-  const currentTheme = useMemo(
-    () => createMuiTheme(config.themes[settings.theme]),
-    [settings.theme]
-  );
-
-  document.onkeyup = function (data) {
-    if (data.which === 27) {
-      Nui.send('phone:close');
-    }
-  };
+  const currentTheme = usePhoneTheme();
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -108,25 +93,12 @@ function Phone() {
                     ) : (
                       <>
                         <Route exact path='/' component={HomeApp} />
-                        {allApps.map((App) => (
+                        {apps.map((App) => (
                           <App.Route key={App.id} />
                         ))}
                       </>
                     )}
-                    {alert ? (
-                      <div
-                        style={{
-                          marginTop: '-100px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Alert severity={alert.type} variant='filled'>
-                          {t('APPS_' + alert.message)}
-                        </Alert>
-                      </div>
-                    ) : null}
+                    <Snackbar />
                   </div>
                   <Navigation />
                 </>

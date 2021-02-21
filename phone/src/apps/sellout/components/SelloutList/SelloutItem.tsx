@@ -27,8 +27,11 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: 'column',
     alignItems: 'flex',
     height: 'auto',
-    background: '#232323',
+    background: theme.palette.background.default,
     marginBottom: 20,
+  },
+  icon: {
+    color: theme.palette.primary.main
   },
   header: {
     margin: 10,
@@ -79,10 +82,10 @@ export const SelloutItem = (listing) => {
           </Typography>
           <div>
             <Button>
-              <ChatIcon style={{ color: '#f44336' }} />
+              <ChatIcon className={classes.icon} />
             </Button>
             <Button>
-              <PhoneIcon style={{ color: '#f44336' }} />
+              <PhoneIcon className={classes.icon} />
             </Button>
           </div>
         </Paper>

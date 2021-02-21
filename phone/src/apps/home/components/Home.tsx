@@ -5,11 +5,11 @@ import { GridMenu } from '../../../ui/components/GridMenu';
 import { useApps } from '../../../os/apps/hooks/useApps';
 
 export const HomeApp = () => {
-  const { allApps } = useApps();
+  const { apps } = useApps();
   return (
     <AppWrapper>
       <Box width='100%' mt={6} px={1}>
-        {allApps && <GridMenu items={allApps} />}
+        {apps && <GridMenu items={apps} />}
       </Box>
     </AppWrapper>
   );

@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
   inputRoot: {
     fontWeight: 400,
     fontSize: 18,
+    border: '1px solid',
+    borderColor: theme.palette.divider,
   },
   inputInput: {
     padding: theme.spacing(1, 4, 1, 4),
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: '13ch',
       '&:focus': {
-        width: '20ch',
+        width: '24ch',
       },
     },
   },

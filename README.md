@@ -1,123 +1,40 @@
-# New Phone Who Dis
+# New-Phone-Who-Dis (NPWD)
+NPWD is our current running project. Our team has been working on the project since Auguest, 2020. This resource isn’t complete yet and currently has no ETA for release. Feel free to test it out in a dev enviorment by following the installation guide.
 
-### Project Error Discord
-Join the [Discord](https://discord.gg/HYwBjTbAY5) to follow current development of the project.
+Written completely by the Project Error Dev Team in [React](https://reactjs.org/) with a [TypeScript](https://www.typescriptlang.org/) client/server environment.
 
-### Production Server Installation **(WIP)**
+## Project Error Discord
+- Join the [Discord](https://discord.gg/HYwBjTbAY5) to follow current development of the project.
 
-**Database**
+## Documentation & Installation 
+- [Project-Error Docs](https://docs.projecterror.dev/#/) contains all the information regarding this resource. Please consult it for installation, dependencies, and other important information.
 
-*New Phone Who Dis (NPWD)* uses its own database driver compatible with `mysql-async` and `ghmattimysql`'s connection string. If you
-don't utilize these resources, ensure you have this set in your console.
+## Support
 
-```
-set mysql_connection_string "server=127.0.0.1;database=es_extended;userid=user;password=pass"
-```
+No support is being provided currently for the resource as it is still in an unfinished state. 
 
-### Configuration
+Should you encounter any issues, please do the following:
 
-This resource is highly configurable through the [config.json](./config.json). This JSON file holds configuration for the phone itself, for the apps running on it and peripheral information.
+- Check the [Git Kraken](https://app.gitkraken.com/glo/board/X9YZ_x_SVQEcMwpH) to see if the issue you're referring to is already tracked.
+- Check the [State of Development](https://docs.projecterror.dev/#/npwd/state-of-dev?id=introduction) to see if the app is still a **WIP**.
+   - If the issue isn't on the Git Kraken and the app is finished, please open an issue.
+   - If the issue isn't on the Git Kraken and the app is **not** finished, please contact us in Discord.
 
-Below is the list of current configuration options **(WIP)**: 
+We do not want issues opened that are due to the phone being **WIP** as this slows down development since we now have to address it more immediately.
 
-| Option                               | Default  | Description                                                                                                                    |
-| ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Locale                               | en       | The language locale used by the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options   |
-| KeyTogglePhone                       | 288 (F1) | The keybind to open and close the app. See [fivem keybinds](https://docs.fivem.net/docs/game-references/controls/) for options |
-| PhoneAsItem                          | false    | whether or not the phone is an item in game                                                                                    |
-| SwimDestroy                          | false    | whether or not the phone will have a chance to be destroyed while swimming                                                     |
-| RunRate                              | 10       | interval in seconds to check phone destruction                                                                                 |
-| DestoryChance                        | 100      | Percent chance that phone destruction will occur                                                                               |
-| DestroyPhoneReCheck                  | 3        | Time in minutes before another phone destruction attempt will happen                                                           |
-| notificationPosition.horizontal      | right    | Horizontal position of phone notifications. `left`, `center` or `right`                                                        |
-| notificationPosition.vertical        | bottom   | Vertical positon of phone notifications. `top` or `bottom`                                                                     |
-| twitter.showNotifications            | true     | Whether or not to show twitter notifications                                                                                   |
-| twitter.generateProfileNameFromUsers | true     | Whether or not the server should automtically generate a player's profile name from their user in the database                 |
-| twitter.allowEdtiableProfileName     | true     | Whether or not players can edit their profile name                                                                             |
-| twitter.allowDeleteTweets            | true     | Whether or not players can delete their own tweets                                                                             |
-| twitter.allowReportTweets            | true     | Whether or not players can report tweets. Optional discord integration.                                                        |
-| twitter.characterLimit               | 160      | Limit on how many characters tweets can contain                                                                                |
-| twitter.newLineLimit                 | 10       | Limit on how many new lines a message can contain                                                                              |
-| twitter.enableAvatars                | true     | Whether or not player's can select avatars for their twitter profile                                                           |
-| twitter.enableEmojis                 | true     | Whether or not player's can use emojis in tweets                                                                               |
-| twitter.enableImages                 | true     | Whether or not player's can add images to tweets (external URLs)                                                               |
-| twitter.maxImages                    | 3        | The maximum amount of images allowed in a tweet                                                                                |
+## Preview
 
-### Discord
+[Latest Teaser Video (October 28th)](https://streamable.com/f1ri9r)
 
-To configure Discord integration; add the following variables to your `server.cfg` file:
-
-```
-set discord_bot_token "YOUR_DISCORD_BOT_TOKEN"
-set discord_channel_id "YOUR_DISCORD_CHANNEL_ID"
-```
-
-Current Discord integrations with the phone **(WIP)**:
-
-- Twitter: reporting tweets
-
-## Development
-
-This resource is a [React](https://reactjs.org/) project with a TypeScript client/server environment.
-
-### Prerequisites
-
-The Installation Steps assumes you have the following prerequisites:
-
-1. The ability to open a terminal. It's *recomended*, not required, to use [Visual Studio Code](https://code.visualstudio.com/) or Windows Powershell for the sake of this guide to better provide support should issues arise. 
-1. [Git for windows](https://git-scm.com/download/win) installed
-1. [LTS node.js](https://nodejs.org/en/about/releases/) installed
-1. [yarn](https://yarnpkg.com/) package manager installed (`npm install -g yarn`)
-1. A fivem environment that is set up according to the [setting up a server instructions](https://docs.fivem.net/docs/server-manual/setting-up-a-server/) from the fivem documentation.
-
-#### Installation Steps
-
-1. Clone the repo into your `server-data/resources/` folder. The path will be `server-data\resources\new-phone-who-dis`. **Don't clone the repo into a sub folder.**
-1. Ensure the resource folder is named `new-phone-who-dis`.
-1. Import the [sql file](https://github.com/project-error/new-phone-who-dis/blob/master/resources/import.sql) into your database.
-1. Add `ensure new-phone-who-dis` to your `server.cfg`.
-1. Make your configurations in the [config.json](https://github.com/project-error/new-phone-who-dis/blob/master/config.json) **before** building the phone.
-1. Open a terminal with the program of your choice.
-1. Change your directiory into `new-phone-who-dis\phone` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\phone`
-1. Install node dependencies with `yarn install`.
-1. Build in the current directory with `yarn build`.
-1. Change your directiory into `new-phone-who-dis\resources` *like so*: `cd A:\FXServer\server-data\resources\new-phone-who-dis\resources`
-1. Install node dependencies with`yarn install`.
-1. Build in the current directory with `yarn build`.
-1. Start your FiveM server
-
-#### Development iteration cycle:
-- You must rebuild the resource following any changes by doing `yarn build` in the `resources` and `phone` folder.
-- If iteration on UI changes run the project with `yarn watch` which will monitor the JavaScript project and rebuild when you make code changes and then do `ensure new-phone-who-dis` after making your change.
-- Avoid commiting `index.html` as the development version overrides the production version
-
-#### React Devtools
-
-When in development mode, the bundle includes a standalone React DevTools module, that allows access to react-devtools comparable to the browser environment.
-
-First ensure you have react-devtools installed globally by running one of the following commands:
-
-#### Yarn
-```shell
-yarn global add react-devtools
-```
-
-#### NPM
-```shell
-npm install -g react-devtools
-```
-
-Then run this command from your preffered terminal:
-```shell
-react-devtools
-```
-Now start your `ensure NPWD` with the development build, and you should have access to the React DevTools just as you would in the browser!
-
-### Important Note
-
-- By installing NPWD you agree to the use of the following diagnostic package, Sentry, (in use within the React portion of NPWD), that automatically
-uploads relevant sesssion details and stack traces whenever an exception is thrown. We use these metrics to further
-improve the quality of the phone. To explicitly disable this (we urge you not to as its incredibly useful metrics for us).
-Please change the `SentryErrorMetrics` setting to `false` in `phone/config/default.json` and rebuild the phone.
-
-- This resource has **NOT** been tested with [esx_kashacter](https://github.com/FiveEYZ/esx_kashacter) so compatability with it is unknown. For best results, use the resource on with no kash.
+#### Apps (February 20th, 2021)
+Most of these apps have UI that does **not** represent the final product and are subject to change.
+- [**Bank**](https://i.imgur.com/P5Dg0Mj.png)
+- [**Calculator**](https://i.imgur.com/96e3bFF.png)
+- [**Camera**](https://i.imgur.com/1aGEV28.png)
+- [**Contacts**](https://i.imgur.com/3Qc1eJB.png)
+- [**Marketplace**](https://i.imgur.com/8hPm6tU.png)
+- [**Messages**](https://i.imgur.com/UYHoVvy.png)
+- [**Notes**](https://i.imgur.com/m0ktIyj.png)
+- [**Phone**](https://i.imgur.com/zuxERmR.png)
+- [**Settings**](https://i.imgur.com/0ggMdij.png)
+- [**Twitter**](https://i.imgur.com/WfjOl1t.png)

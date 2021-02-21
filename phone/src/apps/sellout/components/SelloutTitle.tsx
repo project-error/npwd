@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: 'row nowrap',
     justifyContent: 'center',
     alignItems: 'center',
-    background: '#262525',
+    background: theme.palette.background.default,
   },
   icon: {
-    color: '#f44336',
+    color: theme.palette.primary.main,
     fontSize: 40,
   },
 }));

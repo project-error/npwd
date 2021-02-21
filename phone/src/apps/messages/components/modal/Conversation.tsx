@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Paper, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import { Message, MessageGroup } from '../../../../common/typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { MessageBubble } from './MessageBubble';
 
 interface IProps {
   activeMessageGroup: MessageGroup;
@@ -19,10 +20,6 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const query = useQueryParams();
   const referalImage = query?.image || null;
-
-  const isImage = (url) => {
-    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
-  };
 
   return (
     <>
@@ -41,27 +38,11 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         className={classes.overflowAutoY}
       >
         {messages.map((message) => (
-          <div key={message.id}>
-            <Paper
-              className={message.isMine ? classes.sourceSms : classes.sms}
-              variant='outlined'
-            >
-              {isImage(message.message) ? (
-                <img
-                  src={message.message}
-                  className={classes.imageMessage}
-                  alt='multimedia'
-                />
-              ) : (
-                <div>{message.message}</div>
-              )}
-              <Typography variant='subtitle1' color='secondary'>
-                {activeMessageGroup.isGroupChat && !message.isMine
-                  ? message.display || message.phone_number
-                  : null}
-              </Typography>
-            </Paper>
-          </div>
+          <MessageBubble
+            key={message.id}
+            message={message}
+            isGroupChat={activeMessageGroup?.isGroupChat}
+          />
         ))}
       </Box>
       <MessageInput

@@ -1,6 +1,6 @@
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Button, Box } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
@@ -102,7 +102,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       )}
       <Box px={2} py={3}>
         <Button disabled={submitDisabled} variant='contained' fullWidth color='primary' type='submit'>
-          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
+          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')} 
         </Button>
       </Box>
     </form>

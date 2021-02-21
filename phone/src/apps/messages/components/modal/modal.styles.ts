@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   modalRoot: {
-    zIndex: 10,
+    zIndex: 9,
     position: 'absolute',
     height: '100%',
     width: '100%',
@@ -31,40 +31,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '8px',
     fontSize: '20px',
   },
-  sourceSms: {
-    float: 'right',
-    margin: 10,
-    padding: '6px 12px',
-    height: 'auto',
-    width: '80%',
-    background: '#0288d1',
-    borderRadius: '20px',
-    textOverflow: 'ellipsis',
-  },
-  sms: {
-    float: 'left',
-    margin: 10,
-    padding: '6px 12px',
-    width: '80%',
-    height: 'auto',
-    background: '#ddd',
-    color: '#232323',
-    borderRadius: '15px',
-    textOverflow: 'ellipsis',
-  },
   messagesInput: {
     fontSize: 20,
   },
-  input: {
-    width: '100%',
-    margin: 10,
-  },
-  imageMessage: {
-    width: '80%',
-    maxWidth: '80%',
-    height: '80%',
-    maxHeight: '80%',
-  },
-}));
+});
 
 export default useStyles;

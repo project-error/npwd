@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import { matchPath, useHistory } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
-import { IAppConfig, useApps } from '../../apps/hooks/useApps';
+import { IAppConfig } from '../../apps/config/apps';
+import { useApps } from '../../apps/hooks/useApps';
 
 const state = {
   recentlyUsed: atom({
@@ -23,24 +24,27 @@ const unshiftApp = (arr: IAppConfig[], app) => {
 
 export const useQuickAccess = () => {
   const history = useHistory();
-  const { allApps, getApp } = useApps();
+  const { apps, getApp } = useApps();
   const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(
     state.recentlyUsed
   );
 
   useEffect(() => {
-    setRecentlyUsed([getApp("SETTINGS")])
-  }, [getApp, setRecentlyUsed])
+    setRecentlyUsed([getApp('SETTINGS')]);
+  }, [getApp, setRecentlyUsed]);
 
-  const listener = useCallback((location) => {
-    const newState = [...recentlyUsed];
-    allApps.forEach((app) => {
-      if (matchPath(location.pathname, { path: app.path, exact: true })) {
-        unshiftApp(newState, app);
-      }
-    });
-    setRecentlyUsed(newState.slice(0, MAX_QUICK_ACCESS_ITEMS));
-  }, [allApps, recentlyUsed, setRecentlyUsed]);
+  const listener = useCallback(
+    (location) => {
+      const newState = [...recentlyUsed];
+      apps.forEach((app) => {
+        if (matchPath(location.pathname, { path: app.path, exact: true })) {
+          unshiftApp(newState, app);
+        }
+      });
+      setRecentlyUsed(newState.slice(0, MAX_QUICK_ACCESS_ITEMS));
+    },
+    [apps, recentlyUsed, setRecentlyUsed]
+  );
 
   history.listen(listener);
 

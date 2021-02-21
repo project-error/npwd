@@ -9,10 +9,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    backgroundColor: '#262525',
+    backgroundColor: theme.palette.background.default,
   },
   icon: {
-    color: '#f44336',
+    color: theme.palette.primary.main,
   },
 }));
 

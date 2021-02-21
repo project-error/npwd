@@ -1,7 +1,0 @@
-#sellout-app .Mui-selected {
-  color: #f44336 !important;
-}
-
-#sellout-app .Mui-focused::after {
-  border-bottom: #f44336 solid 3px;
-}
