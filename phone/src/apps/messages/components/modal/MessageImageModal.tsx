@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import CloseIcon from '@material-ui/icons/Close';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { Box, Typography, TextField, Button } from '@material-ui/core';
@@ -85,13 +84,9 @@ export const MessageImageModal = ({
             })}`
           ),
       },
-      {
-        label: 'Cancel',
-        icon: <CloseIcon />,
-        onClick: onClose,
-      },
+      
     ],
-    [onClose, history, pathname, search]
+    [history, pathname, search]
   );
 
   return (
