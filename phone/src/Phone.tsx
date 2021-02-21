@@ -3,7 +3,6 @@ import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
-import { Alert } from './ui/components/Alert';
 import { HomeApp } from './apps/home/components/Home';
 import { ThemeProvider, Slide } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
@@ -26,14 +25,11 @@ import { useCallService } from './modal/hooks/useCallService';
 import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { useSnackbar } from './ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
+import { Snackbar } from './ui/components/Snackbar';
 
 function Phone() {
-  const { t } = useTranslation();
-  const { alert } = useSnackbar();
   const { modal } = useModal();
   const { apps } = useApps();
 
@@ -102,20 +98,7 @@ function Phone() {
                         ))}
                       </>
                     )}
-                    <div
-                      style={{
-                        marginTop: '-100px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {alert ? (
-                        <Alert severity={alert.type} variant='filled'>
-                          {t('APPS_' + alert.message)}
-                        </Alert>
-                      ) : null}
-                    </div>
+                    <Snackbar />
                   </div>
                   <Navigation />
                 </>
