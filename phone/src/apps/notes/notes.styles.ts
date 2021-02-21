@@ -1,15 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  header: {
-    width: '100%',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    height: '60px',
-  },
   backgroundModal: {
     background: 'black',
     opacity: '0.6',

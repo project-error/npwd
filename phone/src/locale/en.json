@@ -106,6 +106,8 @@
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete",
-    "GENERIC_CLOSE": "Close"
+    "GENERIC_CLOSE": "Close",
+    "GENERIC_TITLE": "Title",
+    "GENERIC_CONTENT": "Content"
   }
 }
