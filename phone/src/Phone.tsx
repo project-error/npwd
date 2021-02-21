@@ -102,20 +102,20 @@ function Phone() {
                         ))}
                       </>
                     )}
-                    {alert ? (
-                      <div
-                        style={{
-                          marginTop: '-100px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
+                    <div
+                      style={{
+                        marginTop: '-100px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {alert ? (
                         <Alert severity={alert.type} variant='filled'>
                           {t('APPS_' + alert.message)}
                         </Alert>
-                      </div>
-                    ) : null}
+                      ) : null}
+                    </div>
                   </div>
                   <Navigation />
                 </>

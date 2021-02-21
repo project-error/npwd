@@ -4,7 +4,7 @@ import { SnackbarContext } from '../providers/SnackbarProvider';
 
 export interface IAlert {
   message: string;
-  type: 'success' | 'error'
+  type: 'success' | 'error' | 'info'
 }
 
 interface ISnackBar {
