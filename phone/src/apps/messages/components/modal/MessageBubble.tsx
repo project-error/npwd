@@ -12,9 +12,11 @@ const useStyles = makeStyles((theme) => ({
   mySms: {
     float: 'right',
     margin: theme.spacing(1),
-    padding: '6px 12px',
+    padding: '6px 16px',
     height: 'auto',
-    width: '80%',
+    width: 'auto',
+    minWidth: '60%',
+    maxWidth: '85%',
     background: theme.palette.background.default,
     color: theme.palette.text.primary,
     borderRadius: '20px',
@@ -24,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     margin: theme.spacing(1),
     padding: '6px 12px',
-    width: '80%',
+    width: 'auto',
+    minWidth: '60%',
+    maxWidth: '85%',
     height: 'auto',
     background: theme.palette.primary.light,
     color: theme.palette.getContrastText(theme.palette.primary.light),
@@ -62,7 +66,7 @@ export const MessageBubble = ({
             <div>{message.message}</div>
           )}
         </Box>
-        <Box textAlign='right'>
+        <Box>
           <Typography variant='subtitle1' color='secondary'>
             {isGroupChat && !message.isMine
               ? message.display || message.phone_number
