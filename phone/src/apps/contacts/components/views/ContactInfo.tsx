@@ -116,7 +116,7 @@ const ContactsInfoPage = () => {
           className={classes.input}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={t('APPS_CONTACT_FORM_NAME')}
+          label={t('APPS_CONTACT_FORM_NAME')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -126,7 +126,7 @@ const ContactsInfoPage = () => {
           className={classes.input}
           value={number}
           onChange={(e) => setNumber(e.target.value)}
-          placeholder={t('APPS_CONTACT_FORM_NUMBER')}
+          label={t('APPS_CONTACT_FORM_NUMBER')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -134,7 +134,7 @@ const ContactsInfoPage = () => {
         />
         <TextField
           className={classes.input}
-          placeholder={t('APPS_CONTACT_FORM_AVATAR')}
+          label={t('APPS_CONTACT_FORM_AVATAR')}
           fullWidth
           value={avatar}
           onChange={(e) => setAvatar(e.target.value)}
