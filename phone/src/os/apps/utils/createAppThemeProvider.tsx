@@ -6,15 +6,10 @@ import { usePhoneTheme } from '../../phone/hooks/usePhoneTheme';
 export function createAppThemeProvider(theme: {} = {}) {
   const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const phoneTheme = usePhoneTheme();
-    return (
-      <ThemeProvider
-        theme={useMemo(() => {
-          return createMuiTheme(deepMergeObjects(phoneTheme, theme));
-        }, [phoneTheme])}
-      >
-        {children}
-      </ThemeProvider>
-    );
+    const mergedTheme = useMemo(() => {
+      return createMuiTheme(deepMergeObjects(phoneTheme, theme));
+    }, [phoneTheme]);
+    return <ThemeProvider theme={mergedTheme}>{children}</ThemeProvider>;
   };
 
   return AppThemeProvider;
