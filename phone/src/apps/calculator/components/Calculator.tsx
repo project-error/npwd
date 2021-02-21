@@ -3,6 +3,8 @@ import { useCalculator, CalcButton } from '../hooks/useCalculator';
 import { Grid, makeStyles, Box, Paper, Fab } from '@material-ui/core';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -45,6 +47,10 @@ export const Calculator = ({ ...props }) => {
     eight,
     nine,
   } = useCalculator();
+
+  const { addAlert } = useSnackbar();
+  const { t } = useTranslation();
+
   const classes = useStyles();
   const resultStr = useMemo(
     () =>
@@ -58,7 +64,14 @@ export const Calculator = ({ ...props }) => {
   return (
     <Box display='flex' flexDirection='column'>
       <Box flexGrow={1} component={Paper} p={4} className={classes.result}>
-        <Fab size="small" onClick={() => setClipboard(resultStr)} className={classes.copyFab}>
+        <Fab
+          size='small'
+          onClick={() => {
+            setClipboard(resultStr);
+            addAlert(t('APPS_CALCULATOR_COPIED'));
+          }}
+          className={classes.copyFab}
+        >
           <FileCopyIcon />
         </Fab>
         {resultStr}

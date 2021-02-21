@@ -1,5 +1,4 @@
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
-import { amber, grey } from '@material-ui/core/colors';
 import React from 'react';
 import { Message } from '../../../../common/typings/messages';
 
@@ -27,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 12px',
     width: '80%',
     height: 'auto',
-    background: amber[200],
-    color: grey[900],
+    background: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
@@ -63,7 +62,7 @@ export const MessageBubble = ({
             <div>{message.message}</div>
           )}
         </Box>
-        <Box textAlign="right">
+        <Box textAlign='right'>
           <Typography variant='subtitle1' color='secondary'>
             {isGroupChat && !message.isMine
               ? message.display || message.phone_number
