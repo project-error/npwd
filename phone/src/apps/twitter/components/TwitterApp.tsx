@@ -12,7 +12,6 @@ import TweetButton from './buttons/TweetButton';
 import TwitterTitle from './TwitterTitle';
 import BottomNavigation from './BottomNavigation';
 import TwitterProfile from './profile/Profile';
-import AlertBar from './alerts/AlertBar';
 import TwitterSearch from './TwitterSearch';
 
 import './twitter.css';
@@ -178,7 +177,6 @@ export const TwitterApp = () => {
         )}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
-      <AlertBar />
       {!promptProfileName && (
         <BottomNavigation
           activePage={activePage}
