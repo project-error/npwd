@@ -1,4 +1,3 @@
-import './messages.css';
 import React, { useEffect } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
@@ -10,8 +9,9 @@ import MessagesList from './list/MessagesList';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import NewMessageGroupButton from './buttons/NewMessageGroupButton';
+import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -22,37 +22,37 @@ export const MessagesApp = () => {
   }, []);
 
   return (
-    <AppWrapper id='messages-app'>
-      <AppTitle app={messages} />
-      <AppContent>
-        <Switch>
-          <Route
-            path='/messages/conversations/:groupId'
-            component={MessageModal}
-          />
-          <Route
-            exact
-            path='/messages'
-            render={() => (
-              <>
-                <MessagesList />
-              </>
-            )}
-          />
-        </Switch>
-        <Switch>
-          <Route
-            exact
-            path={['/messages/new/:phoneNumber', '/messages/new']}
-            render={() => <MessageGroupModal />}
-          />
-        </Switch>
-      </AppContent>
-      <NewMessageGroupButton
-        onClick={() => history.push('/messages/new')}
-      />
-      <AlertBar />
-    </AppWrapper>
+    <MessagesThemeProvider>
+      <AppWrapper id='messages-app'>
+        <AppTitle app={messages} />
+        <AppContent>
+          <Switch>
+            <Route
+              path='/messages/conversations/:groupId'
+              component={MessageModal}
+            />
+            <Route
+              exact
+              path='/messages'
+              render={() => (
+                <>
+                  <MessagesList />
+                </>
+              )}
+            />
+          </Switch>
+          <Switch>
+            <Route
+              exact
+              path={['/messages/new/:phoneNumber', '/messages/new']}
+              render={() => <MessageGroupModal />}
+            />
+          </Switch>
+        </AppContent>
+        <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+        <AlertBar />
+      </AppWrapper>
+    </MessagesThemeProvider>
   );
 };
 
@@ -73,7 +73,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 2,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -84,7 +84,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 3,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -95,7 +95,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 4,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -106,7 +106,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 5,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -117,7 +117,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 6,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -128,7 +128,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 7,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -139,7 +139,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 8,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',
@@ -150,7 +150,7 @@ InjectDebugData([
         updatedAt: Date.now(),
       },
       {
-        id: 1,
+        id: 9,
         message: 'sup!',
         user_identifier: '1234',
         phone_number: '444-4444',

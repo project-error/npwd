@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
+import Nui from '../../nui-events/utils/Nui';
 
 const keyboardState = {
   ArrowRight: atom({
@@ -45,6 +47,7 @@ const validKeys = [
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
 export const useInitKeyboard = () => {
+  const history = useHistory();
   const getters = {
     ArrowRight: useRecoilValue(keyboardState.ArrowRight),
     ArrowLeft: useRecoilValue(keyboardState.ArrowLeft),
@@ -56,6 +59,7 @@ export const useInitKeyboard = () => {
   };
 
   const setEscape = useSetRecoilState<any>(keyboardState.Escape);
+  const setBackspace = useSetRecoilState(keyboardState.Backspace);
 
   useEffect(
     function handleNUIKeyboardMessage() {
@@ -68,7 +72,7 @@ export const useInitKeyboard = () => {
           callback.handler &&
           callback.handler.call
         ) {
-          return callback.handler();
+          return callback.handler(event);
         }
       }
 
@@ -78,11 +82,22 @@ export const useInitKeyboard = () => {
     [getters]
   );
 
+  const escapeHandler = useCallback(() => Nui.send('phone:close'), []);
+
+  const backspaceHandler = useCallback((event) => {
+    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+      // Dont anything if we are typing something :)
+      return;
+    }
+    history.goBack();
+  }, [history]);
+
   useEffect(
-    function registerEscapeHandler() {
-      setEscape({ handler: () => console.log('close phone') });
+    function registerDefaultHandlers() {
+      setEscape({ handler: escapeHandler });
+      setBackspace({ handler: backspaceHandler });
     },
-    [setEscape]
+    [setEscape, setBackspace, history, escapeHandler, backspaceHandler]
   );
 };
 
@@ -92,7 +107,6 @@ export const useKeyboard = () => {
     ArrowLeft: useSetRecoilState(keyboardState.ArrowLeft),
     ArrowUp: useSetRecoilState(keyboardState.ArrowUp),
     ArrowDown: useSetRecoilState(keyboardState.ArrowDown),
-    Backspace: useSetRecoilState(keyboardState.Backspace),
     Enter: useSetRecoilState(keyboardState.Enter),
   };
 

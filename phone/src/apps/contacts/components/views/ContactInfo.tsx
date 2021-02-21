@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Avatar as MuiAvatar,
+  Box,
   Button,
   Paper,
   TextField,
@@ -43,28 +44,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputProps: {
     fontSize: 22,
   },
-  updateButton: {
-    background: '#2196f3',
-    width: 150,
-    height: 45,
-    fontSize: 16,
-    marginTop: 29,
-    marginBottom: 29,
-  },
-  deleteButton: {
-    background: '#d32f2f',
-    width: 150,
-    height: 40,
-    fontSize: 16,
-  },
-  saveButton: {
-    background: theme.palette.success.dark,
-    color: '#fff',
-    width: 150,
-    height: 45,
-    fontsize: 22,
-    marginTop: theme.spacing(2),
-  },
 }));
 
 const ContactsInfoPage = () => {
@@ -96,7 +75,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
-    history.goBack()
+    history.goBack();
   };
 
   const handleContactSave = () => {
@@ -111,7 +90,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
-    history.goBack()
+    history.goBack();
   };
 
   const handleContactDelete = () => {
@@ -123,7 +102,7 @@ const ContactsInfoPage = () => {
     Nui.send('phone:deleteContact', {
       id: contact.id,
     });
-    history.goBack()
+    history.goBack();
   };
 
   return (
@@ -137,7 +116,7 @@ const ContactsInfoPage = () => {
           className={classes.input}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={t('APPS_CONTACT_FORM_NAME')}
+          label={t('APPS_CONTACT_FORM_NAME')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -147,7 +126,7 @@ const ContactsInfoPage = () => {
           className={classes.input}
           value={number}
           onChange={(e) => setNumber(e.target.value)}
-          placeholder={t('APPS_CONTACT_FORM_NUMBER')}
+          label={t('APPS_CONTACT_FORM_NUMBER')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -155,7 +134,7 @@ const ContactsInfoPage = () => {
         />
         <TextField
           className={classes.input}
-          placeholder={t('APPS_CONTACT_FORM_AVATAR')}
+          label={t('APPS_CONTACT_FORM_AVATAR')}
           fullWidth
           value={avatar}
           onChange={(e) => setAvatar(e.target.value)}
@@ -165,28 +144,38 @@ const ContactsInfoPage = () => {
         />
         {/* Display if fetched contact */}
         {contact && (
-          <div style={{ display: 'block' }}>
-            <Button
-              onClick={handleContactSave}
-              className={classes.updateButton}
-            >
-              {t('GENERIC_UPDATE')}
-            </Button>
-            <Button
-              onClick={handleContactDelete}
-              className={classes.deleteButton}
-            >
-              {t('GENERIC_DELETE')}
-            </Button>
-          </div>
+          <>
+            <Box py={1} display='block'>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={handleContactSave}
+              >
+                {t('GENERIC_UPDATE')}
+              </Button>
+            </Box>
+            <Box py={1} display='block'>
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={handleContactDelete}
+              >
+                {t('GENERIC_DELETE')}
+              </Button>
+            </Box>
+          </>
         )}
         {/* Display if no fetched contact */}
         {!contact && (
-          <div style={{ display: 'block' }}>
-            <Button onClick={handleContactAdd} className={classes.saveButton}>
+          <Box display='block'>
+            <Button
+              color='primary'
+              variant='contained'
+              onClick={handleContactAdd}
+            >
               {t('APPS_CONTACT_MODAL_BUTTON_ADD')}
             </Button>
-          </div>
+          </Box>
         )}
       </div>
     </Paper>
