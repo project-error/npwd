@@ -93,6 +93,8 @@
     "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
     "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
 
+    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
@@ -106,6 +108,7 @@
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
-    "GENERIC_DELETE": "Delete"
+    "GENERIC_DELETE": "Delete",
+    "GENERIC_CLOSE": "Close"
   }
 }

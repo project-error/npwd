@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import CloseIcon from '@material-ui/icons/Close';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import { Box, Button, TextField, Typography } from '@material-ui/core';
+import { Box, Typography, TextField, Button } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import useStyles from './modal.styles';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -85,13 +84,9 @@ export const MessageImageModal = ({
             })}`
           ),
       },
-      {
-        label: 'Cancel',
-        icon: <CloseIcon />,
-        onClick: onClose,
-      },
+      
     ],
-    [onClose, history, pathname, search]
+    [history, pathname, search]
   );
 
   return (
@@ -110,6 +105,7 @@ export const MessageImageModal = ({
           <Button
             fullWidth
             variant='contained'
+            color='primary'
             onClick={() => sendFromQueryParam(queryParamImagePreview)}
           >
             Share
@@ -117,19 +113,19 @@ export const MessageImageModal = ({
         </Box>
       </Modal>
       <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
-        <div>
+        <Box p={1}>
           <TextField
             placeholder='A link to your image or gif'
             onChange={(e) => setMessage(e.target.value)}
             value={message}
-            className={classes.input}
+            fullWidth
             inputProps={{
               className: classes.messagesInput,
             }}
             inputRef={(input) => input && input.focus()}
             onKeyPress={sendFromClipboard}
           />
-        </div>
+        </Box>
       </Modal>
     </>
   );

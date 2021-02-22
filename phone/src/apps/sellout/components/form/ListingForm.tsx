@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { makeStyles, Button, TextField } from '@material-ui/core';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
-import '../Sellout.css';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -22,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   postButton: {
     display: 'block',
     margin: 'auto',
-    background: '#f44336',
+    background: theme.palette.primary.main,
     width: '80%',
     fontSize: 20,
   },

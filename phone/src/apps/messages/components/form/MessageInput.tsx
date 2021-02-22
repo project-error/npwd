@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, TextField, Button, Box, makeStyles } from '@material-ui/core';
+import { Paper, Box, makeStyles, TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';

@@ -1,4 +1,3 @@
-import { Client } from 'esx.js';
 import ClientUtils from './cl_utils';
 
 import './cl_main';
@@ -11,13 +10,5 @@ import './cl_photo';
 import './cl_messages';
 import './cl_call';
 import './functions';
-
-export let ESX: Client = null;
-
-setTick(() => {
-  while (ESX === null) {
-    emit('esx:getSharedObject', (obj: Client) => (ESX = obj));
-  }
-});
 
 export const ClUtils = new ClientUtils();

@@ -7,17 +7,12 @@ import {
   List,
   ListItem,
 } from '@material-ui/core';
-
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
-
 import PhoneIcon from '@material-ui/icons/Phone';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useContacts } from '../../hooks/useContacts';
-
 import Nui from '../../../../os/nui-events/utils/Nui';
-
-import '../Contact.css';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';

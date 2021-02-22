@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
     width: '100%',
     color: theme.palette.text.primary,
-    zIndex: 10,
+    zIndex: 99,
     paddingLeft: '15px',
     paddingRight: '10px',
     position: 'relative',
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     position: 'absolute',
     top: '30px',
-    zIndex: 9,
+    zIndex: 98,
   },
   closeNotifBtn: {
     position: 'absolute',

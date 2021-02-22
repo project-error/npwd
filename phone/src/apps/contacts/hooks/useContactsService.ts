@@ -7,6 +7,7 @@ import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 export const useContactsService = () => {
   const setContacts = useSetRecoilState(contactsState.contacts);
   const { addAlert } = useSnackbar()
+  
   useNuiEvent('CONTACTS', 'setContacts', setContacts);
   useNuiEvent('CONTACTS', 'setAlert', addAlert);
   return useContacts();
