@@ -50,6 +50,7 @@ export const StatusButton = ({
   const classes = useStyles({ color });
   return (
     <Button
+      variant={variant}
       className={`${classes.root} ${classes[variant] || ''} ${className}`}
       {...props}
     />
