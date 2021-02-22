@@ -35,30 +35,6 @@ InjectDebugData([
   },
   {
     app: 'TWITTER',
-    method: 'createTweetBroadcast',
-    data: {
-      id: 111,
-      profile_id: 111,
-      profile_name: 'Kidz',
-      isMine: false,
-      isReported: false,
-      message: 'I have tweeted this because Im badass'
-    }
-  },
-  {
-    app: 'TWITTER',
-    method: 'createTweetBroadcast',
-    data: {
-      id: 111,
-      profile_id: 111,
-      profile_name: 'ItsChip',
-      isMine: false,
-      isReported: false,
-      message: 'I have tweeted this because Im even more badass'
-    }
-  },
-  {
-    app: 'TWITTER',
     method: 'fetchTweets',
     data: [
       {
@@ -114,6 +90,36 @@ InjectDebugData([
     ],
   },
 ]);
+
+InjectDebugData(
+  [
+    {
+      app: 'TWITTER',
+      method: 'createTweetBroadcast',
+      data: {
+        id: 111,
+        profile_id: 111,
+        profile_name: 'Kidz',
+        isMine: false,
+        isReported: false,
+        message: 'I have tweeted this because Im badass',
+      },
+    },
+    {
+      app: 'TWITTER',
+      method: 'createTweetBroadcast',
+      data: {
+        id: 111,
+        profile_id: 111,
+        profile_name: 'ItsChip',
+        isMine: false,
+        isReported: false,
+        message: 'I have tweeted this because Im even more badass',
+      },
+    },
+  ],
+  2000
+);
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {

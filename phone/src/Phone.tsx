@@ -4,7 +4,7 @@ import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './modal/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { ThemeProvider, Slide } from '@material-ui/core';
+import { Slide } from '@material-ui/core';
 import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
@@ -26,8 +26,8 @@ import { useModal } from './modal/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
-import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
 import { Snackbar } from './ui/components/Snackbar';
+import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 
 function Phone() {
   const { modal } = useModal();
@@ -38,7 +38,6 @@ function Phone() {
   const {
     bottom,
     visibility,
-    uncollapseNotifications,
     clickEventOverride,
   } = usePhoneVisibility();
 
@@ -56,10 +55,7 @@ function Phone() {
   useCallService();
   useDialService();
 
-  const currentTheme = usePhoneTheme();
-
   return (
-    <ThemeProvider theme={currentTheme}>
       <Slide direction='up' in={visibility} mountOnEnter unmountOnExit>
         <div className='PhoneWrapper'>
           <div>
@@ -86,7 +82,7 @@ function Phone() {
                 }}
               >
                 <>
-                  <NotificationBar forceUncollapse={uncollapseNotifications} />
+                  <NotificationBar />
                   <div className='PhoneAppContainer'>
                     {modal ? (
                       <CallModal />
@@ -98,6 +94,7 @@ function Phone() {
                         ))}
                       </>
                     )}
+                    <NotificationAlert />
                     <Snackbar />
                   </div>
                   <Navigation />
@@ -107,7 +104,6 @@ function Phone() {
           </div>
         </div>
       </Slide>
-    </ThemeProvider>
   );
 }
 

@@ -5,14 +5,14 @@ import { usePhone } from './usePhone';
 
 export const usePhoneVisibility = () => {
   const { setVisibility, visibility } = usePhone();
-  const { count } = useNotifications();
+  const { currentAlert, count } = useNotifications();
   const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
   const isNotificationVisibleOnly = useMemo(
-    () => !!(!visibility && count > 0),
-    [visibility, count]
+    () => !!(!visibility && (currentAlert || count)),
+    [visibility, currentAlert, count]
   );
 
   const notificationTimer = useRef<NodeJS.Timeout>();
@@ -20,18 +20,24 @@ export const usePhoneVisibility = () => {
   useEffect(() => {
     if (isNotificationVisibleOnly) {
       setNotifVisibility(true);
-      clearTimeout(notificationTimer.current);
+      if (notificationTimer.current) {
+        clearTimeout(notificationTimer.current);
+        notificationTimer.current = undefined;
+      }
       notificationTimer.current = setTimeout(() => {
         setVisibility(false);
         setNotifVisibility(false);
       }, 5000);
     }
-    return () => clearTimeout(notificationTimer.current);
+    return () => {
+      clearTimeout(notificationTimer.current);
+      notificationTimer.current = undefined;
+    };
   }, [isNotificationVisibleOnly, setVisibility]);
 
   const bottom = useMemo(() => {
     if (isNotificationVisibleOnly) {
-      return `calc(-60% * ${zoom})`;
+      return `calc(-70% * ${zoom})`;
     }
     return 0;
   }, [isNotificationVisibleOnly, zoom]);
@@ -50,7 +56,6 @@ export const usePhoneVisibility = () => {
   return {
     bottom,
     visibility: notifVisibility || visibility,
-    uncollapseNotifications: isNotificationVisibleOnly,
     clickEventOverride,
   };
 };

@@ -37,8 +37,8 @@ export const twitterState = {
     key: 'updateProfileSuccess',
     default: null,
   }),
-  notification: atom({
-    key: 'notification',
-    default: null,
+  unreadTweetsCount: atom({
+    key: 'unreadTweetsCount',
+    default: 0,
   }),
 };
