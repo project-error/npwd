@@ -10,6 +10,32 @@ import DialerNavBar from './DialerNavBar';
 import { useDialHistory } from '../hooks/useDialHistory';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { ContactList } from '../../contacts/components/List/ContactList';
+import { DialerThemeProvider } from '../providers/DialerThemeProvider';
+
+export const DialerApp = () => {
+  const history = useDialHistory();
+
+  const dialer = useApp('DIALER');
+  return (
+    <DialerThemeProvider>
+      <AppWrapper>
+        <AppTitle app={dialer} />
+        <AppContent>
+          <Switch>
+            <Route path='/phone/dial'>
+              <DialPage />
+            </Route>
+            <Route exact path='/phone'>
+              <DialerHistory calls={history} />
+            </Route>
+            <Route path='/phone/contacts' component={ContactList}></Route>
+          </Switch>
+        </AppContent>
+        <DialerNavBar />
+      </AppWrapper>
+    </DialerThemeProvider>
+  );
+};
 
 InjectDebugData([
   {
@@ -29,26 +55,3 @@ InjectDebugData([
     ],
   },
 ]);
-
-export const DialerApp = () => {
-  const history = useDialHistory();
-
-  const dialer = useApp('DIALER');
-  return (
-    <AppWrapper>
-      <AppTitle app={dialer} />
-      <AppContent>
-        <Switch>
-          <Route path='/phone/dial'>
-            <DialPage />
-          </Route>
-          <Route exact path='/phone'>
-            <DialerHistory calls={history} />
-          </Route>
-          <Route path='/phone/contacts' component={ContactList}></Route>
-        </Switch>
-      </AppContent>
-      <DialerNavBar />
-    </AppWrapper>
-  );
-};

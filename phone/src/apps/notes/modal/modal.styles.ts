@@ -4,23 +4,9 @@ const useStyles = makeStyles((theme) => ({
   modalRoot: {
     zIndex: 20,
     position: 'absolute',
-    height: '100%',
+    height: '99%',
     width: '100%',
-    background: '#232323',
-  },
-  modalHide: {
-    display: 'none',
-  },
-  closeButton: {
-    width: '10%',
-    position: 'absolute',
-    top: 10,
-    left: 0,
-  },
-  noteContainer: {
-    width: '90%',
-    marginTop: 80,
-    margin: '0 auto',
+    background: theme.palette.background.default,
   },
   input: {
     marginBottom: 20,
@@ -30,19 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputPropsContent: {
     fontSize: 20,
-  },
-  saveButton: {
-    background: '#f9a825',
-    padding: '10px 30px',
-  },
-  updateButton: {
-    background: '#f9a825',
-    padding: '10px 30px',
-    marginRight: '8px',
-  },
-  deleteButton: {
-    background: '#c62828',
-    padding: '10px 30px',
+    lineHeight: 1.2,
   },
 }));
 

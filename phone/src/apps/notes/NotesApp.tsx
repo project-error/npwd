@@ -4,17 +4,45 @@ import { AppContent } from '../../ui/components/AppContent';
 import { AppTitle } from '../../ui/components/AppTitle';
 import { useApp } from '../../os/apps/hooks/useApps';
 import NoteList from './list/NoteList';
-
-import { useNotes } from './hooks/useNotes';
 import { NoteModal } from './modal/NoteModal';
 import { Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-
-import { useNoteModal } from './hooks/useNoteModal';
 import { useNoteDetail } from './hooks/useNoteDetail';
-
 import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
+import { NotesThemeProvider } from './providers/NotesThemeProvider';
+import { Route, useHistory } from 'react-router-dom';
+
+export const NotesApp = () => {
+  const classes = useStyles();
+  const history = useHistory();
+  const notesApp = useApp('NOTES');
+  const { setDetail } = useNoteDetail();
+
+  const onClickCreate = () => {
+    setDetail({ title: '', content: '' });
+    history.push('/notes/detail');
+  };
+
+  return (
+    <NotesThemeProvider>
+      <AppWrapper id='notes-app'>
+        <AppTitle app={notesApp} />
+        <Route path='/notes/detail' component={NoteModal} />
+        <AppContent>
+          <Route path='/notes' component={NoteList} />
+          <Fab
+            className={classes.absolute}
+            onClick={onClickCreate}
+            color='primary'
+          >
+            <AddIcon />
+          </Fab>
+        </AppContent>
+      </AppWrapper>
+    </NotesThemeProvider>
+  );
+};
 
 InjectDebugData([
   {
@@ -34,37 +62,3 @@ InjectDebugData([
     ],
   },
 ]);
-
-export const NotesApp = () => {
-  const { setNoteModal } = useNoteModal();
-  const { detail, setDetail } = useNoteDetail();
-  const { notes } = useNotes();
-  const notesApp = useApp('NOTES');
-
-  const classes = useStyles();
-
-  const handleModal = () => {
-    setNoteModal(true);
-    setDetail(null);
-  };
-
-  return (
-    <AppWrapper id='notes-app'>
-      <AppTitle app={notesApp} />
-      <NoteModal key={detail?.id} />
-      <AppContent>
-        <NoteList notes={notes} />
-      </AppContent>
-      <Fab
-        className={classes.absolute}
-        onClick={handleModal}
-        style={{
-          background: '#f9a825',
-          color: '#fff',
-        }}
-      >
-        <AddIcon />
-      </Fab>
-    </AppWrapper>
-  );
-};
