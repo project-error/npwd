@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar as MuiAvatar,
   Box,
@@ -13,10 +13,15 @@ import { useContacts } from '../../hooks/useContacts';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 
 interface ContactInfoRouteParams {
   mode: string;
   id: string;
+}
+
+interface ContactInfoRouteQuery {
+  addNumber: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -54,6 +59,7 @@ const ContactsInfoPage = () => {
   const { getContact } = useContacts();
 
   const { id } = useParams<ContactInfoRouteParams>();
+  const { addNumber } = useQueryParams<ContactInfoRouteQuery>();
 
   const contact = getContact(parseInt(id));
 
@@ -63,6 +69,12 @@ const ContactsInfoPage = () => {
   const [avatar, setAvatar] = useState(contact ? contact.avatar : '');
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (addNumber) {
+      setNumber(addNumber);
+    }
+  }, [addNumber]);
 
   const handleContactAdd = () => {
     LogDebugEvent({
@@ -113,6 +125,7 @@ const ContactsInfoPage = () => {
       <div className={classes.listContainer}>
         <MuiAvatar className={classes.avatar} src={avatar} />
         <TextField
+          autoFocus
           className={classes.input}
           value={name}
           onChange={(e) => setName(e.target.value)}
