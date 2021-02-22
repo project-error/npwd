@@ -39,7 +39,7 @@ export const DialerInput = () => {
   };
 
   const handleNewContact = (number: string) => {
-    history.push(`/contacts/-1/?addNumber=${number}`)
+    history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`)
   }
 
   return (

@@ -21,7 +21,8 @@ interface ContactInfoRouteParams {
 }
 
 interface ContactInfoRouteQuery {
-  addNumber: string;
+  addNumber?: string;
+  referal?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -59,7 +60,7 @@ const ContactsInfoPage = () => {
   const { getContact } = useContacts();
 
   const { id } = useParams<ContactInfoRouteParams>();
-  const { addNumber } = useQueryParams<ContactInfoRouteQuery>();
+  const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({ referal: '/contacts' });
 
   const contact = getContact(parseInt(id));
 
@@ -87,7 +88,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
-    history.replace('/contacts');
+    history.replace(referal);
   };
 
   const handleContactSave = () => {
