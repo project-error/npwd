@@ -3,7 +3,6 @@ import {
   blue,
   common,
   grey,
-  green,
   purple,
 } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,6 +43,7 @@ import {
 } from '../../../apps/contacts/contacts.theme';
 import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_ICON_COLOR } from '../../../apps/sellout/sellout.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
+import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 
 export interface IAppConfig {
   id: string;
@@ -62,8 +62,8 @@ export const APPS: IAppConfig[] = [
     nameLocale: 'APPS_DIALER',
     icon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
     notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
-    backgroundColor: green[600],
-    color: common.white,
+    backgroundColor: DIALER_APP_PRIMARY_COLOR,
+    color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id='DIALER' path='/phone' component={DialerApp} />,
   },
