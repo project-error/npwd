@@ -87,7 +87,7 @@ const ContactsInfoPage = () => {
       number,
       avatar,
     });
-    history.goBack();
+    history.replace('/contacts');
   };
 
   const handleContactSave = () => {
