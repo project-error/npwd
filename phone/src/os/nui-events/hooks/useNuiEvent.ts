@@ -16,16 +16,16 @@ interface IOptions {
  * @param options Any options to pass to the addEventListener
  **/
 
+const defaultOptions = {};
+
 export const useNuiEvent = <S = Record<string, unknown>>(
   app: string,
   method: string,
   handler: Function,
   currentState?: S,
-  options: IOptions = {}
+  options: IOptions = defaultOptions
 ) => {
   const savedHandler: MutableRefObject<any> = useRef();
-  // Destructure passed options
-  const { capture, passive, once } = options;
 
   // When handler value changes set mutable ref to handler val
   useEffect(() => {
@@ -47,11 +47,9 @@ export const useNuiEvent = <S = Record<string, unknown>>(
         savedHandler.current(newData);
       }
     };
-    // Why are destructing then restructuring option data?
-    const opts = { capture, passive, once };
 
-    window.addEventListener(eventName, eventListener, opts);
+    window.addEventListener(eventName, eventListener, options);
     // Remove Event Listener on component cleanup
-    return () => window.removeEventListener(eventName, eventListener, opts);
-  }, [app, method, capture, passive, once, currentState]);
+    return () => window.removeEventListener(eventName, eventListener, options);
+  }, [app, method, currentState, options]);
 };
