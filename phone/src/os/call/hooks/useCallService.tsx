@@ -46,7 +46,6 @@ export const useCallService = () => {
     cantClose: true,
     icon,
     notificationIcon,
-    onClick: () => setModal(true),
   };
 
   const _setCall = (_call: CallProps) => {
