@@ -1,20 +1,24 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '../../notifications/notifications.constants';
-import { usePhone } from './usePhone';
+import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
-  const { setVisibility, visibility } = usePhone();
+  const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
   const { currentAlert } = useNotifications();
   const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
-  const isNotificationVisibleOnly = useMemo(
-    () => !!(!visibility && currentAlert),
-    [visibility, currentAlert]
-  );
+  const [isNotificationVisibleOnly, setNotificationVisibleOnly] = useState<
+    boolean
+  >(false);
+
+  useEffect(() => {
+    setNotificationVisibleOnly(!!(!visibility && currentAlert));
+  }, [visibility, currentAlert]);
 
   const notificationTimer = useRef<NodeJS.Timeout>();
 
@@ -26,7 +30,6 @@ export const usePhoneVisibility = () => {
         notificationTimer.current = undefined;
       }
       notificationTimer.current = setTimeout(() => {
-        setVisibility(false);
         setNotifVisibility(false);
       }, DEFAULT_ALERT_HIDE_TIME);
     }
@@ -43,20 +46,8 @@ export const usePhoneVisibility = () => {
     return 0;
   }, [isNotificationVisibleOnly, zoom]);
 
-  const clickEventOverride = useCallback(
-    (e) => {
-      if (isNotificationVisibleOnly) {
-        e.preventDefault();
-        e.stopPropagation();
-        setVisibility(true);
-      }
-    },
-    [setVisibility, isNotificationVisibleOnly]
-  );
-
   return {
     bottom,
     visibility: notifVisibility || visibility,
-    clickEventOverride,
   };
 };
