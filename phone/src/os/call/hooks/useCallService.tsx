@@ -41,7 +41,7 @@ export const useCallService = () => {
   const setModal = useSetRecoilState(callerState.callModal);
 
   const callNotificationBase = {
-    app: 'DIALER',
+    app: 'CALL',
     id: NOTIFICATION_ID,
     cantClose: true,
     icon,
@@ -49,37 +49,38 @@ export const useCallService = () => {
     onClick: () => setModal(true),
   };
 
-  const _setCall = (call: CallProps) => {
-    setCall(call);
-    if (!call || !call.active) {
+  const _setCall = (_call: CallProps) => {
+    setCall(_call);
+    if (!_call || !_call.active) {
       removeId(NOTIFICATION_ID);
       return;
     }
-    if (call.accepted) {
+    if (_call.accepted) {
       removeId(NOTIFICATION_ID);
       addNotification({
         ...callNotificationBase,
         content: (
           <CallNotification>
             {t('APPS_DIALER_CURRENT_CALL_WITH', {
-              transmitter: call.transmitter,
+              transmitter: _call.transmitter,
             })}
           </CallNotification>
         ),
         title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
       });
     }
-    if (!call.isTransmitter && !call.accepted) {
+    if (!_call.isTransmitter && !_call.accepted) {
+      removeId(NOTIFICATION_ID);
       addNotificationAlert(
         {
           ...callNotificationBase,
           title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
-            transmitter: call.transmitter,
+            transmitter: _call.transmitter,
           }),
           content: (
             <CallNotification>
               {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {
-                transmitter: call.transmitter,
+                transmitter: _call.transmitter,
               })}
             </CallNotification>
           ),

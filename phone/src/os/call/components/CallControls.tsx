@@ -15,6 +15,10 @@ export const CallControls = ({
   const { setModal } = useModal();
   const { call, endCall, acceptCall, rejectCall } = useCall();
 
+  if (!call) {
+    return null;
+  }
+
   const handleRejectCall = () => {
     setModal(false);
     rejectCall();
