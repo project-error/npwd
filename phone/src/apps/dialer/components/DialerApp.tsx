@@ -39,7 +39,7 @@ export const DialerApp = () => {
 
 InjectDebugData([
   {
-    app: 'DAILER',
+    app: 'DIALER',
     method: 'setHistory',
     data: [
       {

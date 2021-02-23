@@ -9,10 +9,12 @@ import React, {
 
 export interface INotification {
   app: string;
+  id?: string;
   title: string;
   content?: React.ReactNode;
   icon?: JSX.Element;
   notificationIcon?: JSX.Element;
+  cantClose?: boolean;
   onClick?: (notification: INotification) => void;
 }
 
@@ -29,8 +31,9 @@ export const NotificationsContext = createContext<{
   count: number;
   addOrUpdateNotification(add: INotification, update?: INotification): void;
   addNotification(value: INotification): void;
-  updateNotification(idx: number, value: INotification): void;
   removeNotification(idx: number): void;
+  updateId(id: string, value: Partial<INotification>): void;
+  removeId(id: string): void;
   hasNotification(app: string): number;
   addNotificationAlert(
     n: INotification,
@@ -61,13 +64,13 @@ export function NotificationsProvider({ children }) {
     []
   );
 
-  const removeNotification = useCallback((idx) => {
+  const removeNotification = (idx) => {
     setNotifications((all) => {
-      const updated = [...all];
+      const updated = all;
       updated.splice(idx, 1);
-      return updated;
+      return [...updated];
     });
-  }, []);
+  };
 
   const addNotification = useCallback((value: INotification) => {
     setNotifications((all) => [value, ...all]);
@@ -131,6 +134,21 @@ export function NotificationsProvider({ children }) {
     setAlerts((curr) => [...curr, [n, persist, update]]);
   };
 
+  const removeId = (id: string) => {
+    const idx = notifications.findIndex((n) => n.id === id);
+    if (idx !== -1) {
+      removeNotification(idx);
+    }
+  };
+
+  const updateId = (id: string, value: Partial<INotification>) => {
+    const idx = notifications.findIndex((n) => n.id === id);
+    if (idx !== -1) {
+      const curr = { ...notifications[idx], ...value };
+      updateNotification(idx, curr);
+    }
+  };
+
   useEffect(() => {
     if (!currentAlert && alerts.length) {
       _showAlert(...alerts[0]).then(() => {
@@ -164,8 +182,9 @@ export function NotificationsProvider({ children }) {
         currentAlert,
         notifications,
         addNotification,
-        updateNotification,
         removeNotification,
+        updateId,
+        removeId,
         hasNotification,
         addNotificationAlert,
         addOrUpdateNotification,

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     width: '370px',
     height: '120px',
-    zIndex: 10000,
+    zIndex: 50,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     '& .MuiAlert-icon': {

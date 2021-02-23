@@ -132,7 +132,9 @@ export const NotificationBar = () => {
                   }}
                   onClickClose={() => {
                     setUncollapsed(false);
-                    removeNotification(idx);
+                    if (!notification.cantClose) {
+                      removeNotification(idx);
+                    }
                   }}
                   {...notification}
                 />

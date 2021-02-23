@@ -16,14 +16,13 @@ interface IOptions {
  * @param options Any options to pass to the addEventListener
  **/
 
-export const useNuiEvent = (
+export const useNuiEvent = <S = Record<string, unknown>>(
   app: string,
   method: string,
   handler: Function,
-  options: IOptions = {},
-  currentState?: Record<string, unknown>
+  currentState?: S,
+  options: IOptions = {}
 ) => {
-
   const savedHandler: MutableRefObject<any> = useRef();
   // Destructure passed options
   const { capture, passive, once } = options;
@@ -44,8 +43,8 @@ export const useNuiEvent = (
           data: event.data,
           level: 1,
         });
-        const newData = currentState ? { ...currentState, ...data } : data
-        savedHandler.current(newData)
+        const newData = currentState ? { ...currentState, ...data } : data;
+        savedHandler.current(newData);
       }
     };
     // Why are destructing then restructuring option data?

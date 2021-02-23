@@ -1,6 +1,12 @@
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
-import { IconButton, ListItem, ListItemAvatar, ListItemText, makeStyles } from '@material-ui/core';
+import {
+  IconButton,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  makeStyles,
+} from '@material-ui/core';
 import { INotification } from '../providers/NotificationsProvider';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +28,7 @@ export const NotificationItem = ({
   onClose: (e: any) => void;
   onClickClose: (e: any) => void;
 }) => {
-  const { title, icon, content, onClick } = notification;
+  const { title, icon, content, cantClose, onClick } = notification;
   const classes = useStyles();
   return (
     <ListItem
@@ -38,13 +44,15 @@ export const NotificationItem = ({
     >
       {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
       <ListItemText secondary={content}>{title}</ListItemText>
-      <IconButton
-        className={classes.closeNotifBtn}
-        size='small'
-        onClick={onClose}
-      >
-        <CloseIcon color='primary' />
-      </IconButton>
+      {!cantClose && (
+        <IconButton
+          className={classes.closeNotifBtn}
+          size='small'
+          onClick={onClose}
+        >
+          <CloseIcon color='primary' />
+        </IconButton>
+      )}
     </ListItem>
   );
 };
