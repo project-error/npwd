@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { Box, IconButton, makeStyles, Slide } from '@material-ui/core';
 import { useNotifications } from '../hooks/useNotifications';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
@@ -11,6 +12,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   alert: {
+    '& .MuiAlert-action': {
+      top: theme.spacing(1),
+      right: theme.spacing(2),
+      position: 'absolute',
+    },
     position: 'relative',
     cursor: 'pointer',
     width: '370px',
@@ -30,17 +36,29 @@ export const NotificationAlert = () => {
 
   return (
     <div className={classes.snackbar}>
-      {currentAlert ? (
+      <Slide in={!!currentAlert} mountOnEnter unmountOnExit>
         <Alert
-          onClick={() => currentAlert.onClick?.(currentAlert)}
-          icon={currentAlert.icon || false}
+          action={
+            <IconButton
+              color='primary'
+              size='small'
+              onClick={(e) => {
+                e.stopPropagation();
+                currentAlert?.onCloseAlert(e);
+              }}
+            >
+              <CloseIcon fontSize='small' />
+            </IconButton>
+          }
+          onClick={(e) => currentAlert?.onClickAlert(e)}
+          icon={currentAlert?.icon || false}
           className={classes.alert}
           elevation={6}
         >
-          <AlertTitle>{currentAlert.title}</AlertTitle>
-          <Box width='100%'>{currentAlert.content}</Box>
+          <AlertTitle>{currentAlert?.title}</AlertTitle>
+          <Box width='100%'>{currentAlert?.content}</Box>
         </Alert>
-      ) : null}
+      </Slide>
     </div>
   );
 };

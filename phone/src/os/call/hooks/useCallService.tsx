@@ -12,7 +12,7 @@ import InjectDebugData from '../../debug/InjectDebugData';
 
 const NOTIFICATION_ID = 'call:current';
 
-InjectDebugData<CallProps>([
+InjectDebugData<CallProps | boolean>([
   {
     app: 'CALL',
     method: 'setCaller',
@@ -23,6 +23,11 @@ InjectDebugData<CallProps>([
       receiver: 'Taso',
       active: true,
     },
+  },
+  {
+    app: 'CALL',
+    method: 'callModal',
+    data: true,
   },
 ]);
 
@@ -76,6 +81,7 @@ export const useCallService = () => {
           title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
             transmitter: _call.transmitter,
           }),
+          keepWhenPhoneClosed: true,
           content: (
             <CallNotification>
               {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {

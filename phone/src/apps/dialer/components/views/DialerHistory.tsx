@@ -48,7 +48,12 @@ export const DialerHistory = ({ calls }) => {
         alignItems='center'
         paddingTop={35}
       >
-        <p>You got no friends!😎</p>
+        <p>
+          You got no friends!
+          <span role='img' aria-label='deal with it'>
+            😎
+          </span>
+        </p>
       </Box>
     );
   }

@@ -12,35 +12,36 @@ export const usePhoneVisibility = () => {
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
-  const [isNotificationVisibleOnly, setNotificationVisibleOnly] = useState<
-    boolean
-  >(false);
-
-  useEffect(() => {
-    setNotificationVisibleOnly(!!(!visibility && currentAlert));
-  }, [visibility, currentAlert]);
-
   const notificationTimer = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (isNotificationVisibleOnly) {
+    if (visibility) {
+      setNotifVisibility(false);
+    }
+  }, [visibility]);
+
+  useEffect(() => {
+    if (!visibility && currentAlert) {
       setNotifVisibility(true);
       if (notificationTimer.current) {
         clearTimeout(notificationTimer.current);
         notificationTimer.current = undefined;
       }
+      if (currentAlert?.keepWhenPhoneClosed) {
+        return;
+      }
       notificationTimer.current = setTimeout(() => {
         setNotifVisibility(false);
       }, DEFAULT_ALERT_HIDE_TIME);
     }
-  }, [isNotificationVisibleOnly, setVisibility]);
+  }, [currentAlert, visibility, setVisibility]);
 
   const bottom = useMemo(() => {
-    if (isNotificationVisibleOnly) {
+    if (!visibility) {
       return `calc(-70% * ${zoom})`;
     }
     return 0;
-  }, [isNotificationVisibleOnly, zoom]);
+  }, [visibility, zoom]);
 
   return {
     bottom,

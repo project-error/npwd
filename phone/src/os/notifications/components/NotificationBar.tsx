@@ -123,8 +123,10 @@ export const NotificationBar = () => {
               {notifications.map((notification, idx) => (
                 <NotificationItem
                   key={idx}
+                  {...notification}
                   onClose={(e) => {
                     e.stopPropagation();
+                    notification.onClose?.(notification);
                     if (notifications.length === 1) {
                       setUncollapsed(false);
                     }
@@ -136,7 +138,6 @@ export const NotificationBar = () => {
                       removeNotification(idx);
                     }
                   }}
-                  {...notification}
                 />
               ))}
             </List>
