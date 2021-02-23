@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AppIcon } from './AppIcon';
 import { useTranslation } from 'react-i18next';
 import { Grid, makeStyles, Tooltip, Zoom } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { useKeyboard } from '../../os/keyboard/hooks/useKeyboard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,16 +18,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const GridMenu = ({ items, Component = AppIcon }) => {
-  const setKey = useKeyboard();
   const classes = useStyles();
   const { t } = useTranslation();
 
-  useEffect(function registerKeyHandlers() {
-    setKey('ArrowLeft', () => {
-      console.log(':v');
-    });
-    // eslint-disable-next-line
-  }, []);
   // TODO: Fix tooltip position to be closer to app icon
   return (
     <Grid container justify='center'>
