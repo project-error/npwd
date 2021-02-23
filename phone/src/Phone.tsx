@@ -52,7 +52,7 @@ function Phone() {
   useDialService();
 
   return (
-    <Slide direction='up' in={visibility} mountOnEnter unmountOnExit>
+    <Slide direction='up' in={visibility}>
       <div className='PhoneWrapper'>
         <div>
           <div
