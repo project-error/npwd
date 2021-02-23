@@ -6,6 +6,7 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
+import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
   app: string;
@@ -41,8 +42,6 @@ export const NotificationsContext = createContext<{
     update?: Partial<INotification>
   );
 }>(null);
-
-const DEFAULT_ALERT_HIDE_TIME = 3000;
 
 export function NotificationsProvider({ children }) {
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -111,7 +110,9 @@ export function NotificationsProvider({ children }) {
 
         alertTimeout.current = setTimeout(() => {
           resolve();
-        }, DEFAULT_ALERT_HIDE_TIME);
+          // If you change or remove the 300 i'll kill your pet - Kidz /s
+          // Really, this makes it work nicely with usePhoneVisibility :)
+        }, DEFAULT_ALERT_HIDE_TIME + 300);
 
         setCurrentAlert({
           ...n,

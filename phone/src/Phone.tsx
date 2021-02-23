@@ -35,11 +35,7 @@ function Phone() {
 
   const [settings] = useSettings();
 
-  const {
-    bottom,
-    visibility,
-    clickEventOverride,
-  } = usePhoneVisibility();
+  const { bottom, visibility } = usePhoneVisibility();
 
   useNuiService();
   usePhoneService();
@@ -56,54 +52,53 @@ function Phone() {
   useDialService();
 
   return (
-      <Slide direction='up' in={visibility} mountOnEnter unmountOnExit>
-        <div className='PhoneWrapper'>
-          <div>
+    <Slide direction='up' in={visibility} mountOnEnter unmountOnExit>
+      <div className='PhoneWrapper'>
+        <div>
+          <div
+            className='Phone'
+            style={{
+              transformOrigin: 'right bottom',
+              transform: `scale(${settings.zoom}`,
+              bottom,
+            }}
+          >
             <div
-              onClick={clickEventOverride}
-              className='Phone'
+              className='PhoneFrame'
               style={{
-                transformOrigin: 'right bottom',
-                transform: `scale(${settings.zoom}`,
-                bottom,
+                backgroundImage: `url(./media/frames/${settings.frame})`,
+              }}
+            />
+            <div
+              id='phone'
+              className='PhoneScreen'
+              style={{
+                backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
               }}
             >
-              <div
-                className='PhoneFrame'
-                style={{
-                  backgroundImage: `url(./media/frames/${settings.frame})`,
-                }}
-              />
-              <div
-                id='phone'
-                className='PhoneScreen'
-                style={{
-                  backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
-                }}
-              >
-                <>
-                  <NotificationBar />
-                  <div className='PhoneAppContainer'>
-                    {modal ? (
-                      <CallModal />
-                    ) : (
-                      <>
-                        <Route exact path='/' component={HomeApp} />
-                        {apps.map((App) => (
-                          <App.Route key={App.id} />
-                        ))}
-                      </>
-                    )}
-                    <NotificationAlert />
-                    <Snackbar />
-                  </div>
-                  <Navigation />
-                </>
-              </div>
+              <>
+                <NotificationBar />
+                <div className='PhoneAppContainer'>
+                  {modal ? (
+                    <CallModal />
+                  ) : (
+                    <>
+                      <Route exact path='/' component={HomeApp} />
+                      {apps.map((App) => (
+                        <App.Route key={App.id} />
+                      ))}
+                    </>
+                  )}
+                  <NotificationAlert />
+                  <Snackbar />
+                </div>
+                <Navigation />
+              </>
             </div>
           </div>
         </div>
-      </Slide>
+      </div>
+    </Slide>
   );
 }
 

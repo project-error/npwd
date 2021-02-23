@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
+import { DEFAULT_ALERT_HIDE_TIME } from '../../notifications/notifications.constants';
 import { usePhone } from './usePhone';
 
 export const usePhoneVisibility = () => {
   const { setVisibility, visibility } = usePhone();
-  const { currentAlert, count } = useNotifications();
+  const { currentAlert } = useNotifications();
   const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
   const isNotificationVisibleOnly = useMemo(
-    () => !!(!visibility && (currentAlert || count)),
-    [visibility, currentAlert, count]
+    () => !!(!visibility && currentAlert),
+    [visibility, currentAlert]
   );
 
   const notificationTimer = useRef<NodeJS.Timeout>();
@@ -27,7 +28,7 @@ export const usePhoneVisibility = () => {
       notificationTimer.current = setTimeout(() => {
         setVisibility(false);
         setNotifVisibility(false);
-      }, 5000);
+      }, DEFAULT_ALERT_HIDE_TIME);
     }
     return () => {
       clearTimeout(notificationTimer.current);
