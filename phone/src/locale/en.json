@@ -17,6 +17,14 @@
     "APPS_SELLOUT": "Market",
     "APPS_CAMERA": "Camera",
 
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
+    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "You have a new call from {{ transmitter }}!",
+    "APPS_DIALER_ACCEPT_CALL": "Accept",
+    "APPS_DIALER_REJECT_CALL": "Reject",
+    "APPS_DIALER_END_CALL": "End",
+
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTIONS_FRAME": "Frame",
@@ -48,6 +56,7 @@
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "d",
     "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
     "APPS_BANK_HOME_TITLE": "Welcome",
     "APPS_BANK_ACCOUNT_LINK": "Account",

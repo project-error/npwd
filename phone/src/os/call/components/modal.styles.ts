@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: '10%',
   },
   actionButton: {
-    margin: 20,
+    margin: 10,
   },
 }));
 

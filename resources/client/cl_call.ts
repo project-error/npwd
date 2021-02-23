@@ -1,6 +1,6 @@
 import events from '../utils/events';
 import { ICall } from '../../phone/src/common/typings/call';
-import {phoneCallStartAnim, phoneCallEndAnim} from './functions';
+import { phoneCallStartAnim, phoneCallEndAnim } from './functions';
 
 const exp = (global as any).exports;
 
@@ -21,6 +21,7 @@ onNet(
         app: 'CALL',
         method: 'setCaller',
         data: {
+          active: true,
           transmitter: transmitter,
           receiver: receiver,
           isTransmitter: isTransmitter,
@@ -41,12 +42,13 @@ onNet(
   events.PHONE_CALL_WAS_ACCEPTED,
   (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
     exp['mumble-voip'].SetCallChannel(channelId);
-    phoneCallStartAnim() // Trigger call animation only if the call was accepted.
+    phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
     SendNuiMessage(
       JSON.stringify({
         app: 'CALL',
         method: 'setCaller',
         data: {
+          active: true,
           transmitter: currentCall.transmitter,
           receiver: currentCall.receiver,
           isTransmitter: isTransmitter,
@@ -75,13 +77,14 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
         receiver: null,
         isTransmitter: null,
         accepted: false,
+        active: false,
       },
     })
   );
 });
 
 onNet(events.PHONE_CALL_SEND_HANGUP_ANIM, () => {
-  phoneCallEndAnim()
+  phoneCallEndAnim();
 });
 
 RegisterNuiCallbackType(events.PHONE_END_CALL); // Fires when ending an ACTIVE call
@@ -104,6 +107,7 @@ onNet(events.PHONE_CALL_WAS_ENDED, () => {
         receiver: null,
         isTransmitter: null,
         accepted: false,
+        active: false,
       },
     })
   );

@@ -8,18 +8,14 @@ import {
   Paper,
   Box,
   List,
-  ListItem,
-  ListItemText,
   Divider,
-  ListItemAvatar,
 } from '@material-ui/core';
 import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
-import CloseIcon from '@material-ui/icons/Close';
 import Battery90Icon from '@material-ui/icons/Battery90';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
-import { useHistory } from 'react-router-dom';
+import { NotificationItem } from './NotificationItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,9 +63,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean }) => {
+export const NotificationBar = () => {
   const classes = useStyles();
-  const history = useHistory();
 
   const { icons, notifications, removeNotification } = useNotifications();
 
@@ -120,41 +115,29 @@ export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean 
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction='down' in={forceUncollapse || uncollapsed}>
+      <Slide direction='down' in={uncollapsed}>
         <Paper square className={classes.drawer}>
           <Box p={2}>
             <List>
               <Divider />
-              {notifications.map(({ href, title, content, icon }, idx) => (
-                <ListItem
-                  divider
-                  button
-                  onClick={() => {
-                    if (href) {
-                      history.push(href);
+              {notifications.map((notification, idx) => (
+                <NotificationItem
+                  key={idx}
+                  onClose={(e) => {
+                    e.stopPropagation();
+                    if (notifications.length === 1) {
                       setUncollapsed(false);
+                    }
+                    removeNotification(idx);
+                  }}
+                  onClickClose={() => {
+                    setUncollapsed(false);
+                    if (!notification.cantClose) {
                       removeNotification(idx);
                     }
                   }}
-                  className={classes.notificationItem}
-                  key={idx}
-                >
-                  {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
-                  <ListItemText secondary={content}>{title}</ListItemText>
-                  <IconButton
-                    className={classes.closeNotifBtn}
-                    size='small'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (notifications.length === 1) {
-                        setUncollapsed(false);
-                      }
-                      removeNotification(idx);
-                    }}
-                  >
-                    <CloseIcon color='primary' />
-                  </IconButton>
-                </ListItem>
+                  {...notification}
+                />
               ))}
             </List>
           </Box>
