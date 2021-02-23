@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
-import Nui from '../../nui-events/utils/Nui';
+import { usePhone } from '../../phone/hooks/usePhone';
 
 const keyboardState = {
   ArrowRight: atom({
@@ -48,6 +48,7 @@ const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
 export const useInitKeyboard = () => {
   const history = useHistory();
+  const { closePhone } = usePhone();
   const getters = {
     ArrowRight: useRecoilValue(keyboardState.ArrowRight),
     ArrowLeft: useRecoilValue(keyboardState.ArrowLeft),
@@ -82,15 +83,18 @@ export const useInitKeyboard = () => {
     [getters]
   );
 
-  const escapeHandler = useCallback(() => Nui.send('phone:close'), []);
+  const escapeHandler = closePhone;
 
-  const backspaceHandler = useCallback((event) => {
-    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
-      // Dont anything if we are typing something :)
-      return;
-    }
-    history.goBack();
-  }, [history]);
+  const backspaceHandler = useCallback(
+    (event) => {
+      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+        // Dont anything if we are typing something :)
+        return;
+      }
+      history.goBack();
+    },
+    [history]
+  );
 
   useEffect(
     function registerDefaultHandlers() {

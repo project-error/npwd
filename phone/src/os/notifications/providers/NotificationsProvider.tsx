@@ -30,6 +30,7 @@ export const NotificationsContext = createContext<{
   currentAlert: INotification;
   icons: INotificationIcon[];
   count: number;
+  removeAlerts(): void;
   addOrUpdateNotification(add: INotification, update?: INotification): void;
   addNotification(value: INotification): void;
   removeNotification(idx: number): void;
@@ -177,11 +178,17 @@ export function NotificationsProvider({ children }) {
     [notifications]
   );
 
+  const removeAlerts = () => {
+    setAlerts([]);
+    setCurrentAlert(null);
+  };
+
   return (
     <NotificationsContext.Provider
       value={{
         currentAlert,
         notifications,
+        removeAlerts,
         addNotification,
         removeNotification,
         updateId,
