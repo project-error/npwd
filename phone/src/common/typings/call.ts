@@ -1,4 +1,5 @@
 export interface CallProps {
+  active: boolean;
   accepted: boolean;
   isTransmitter: boolean;
   transmitter: string;

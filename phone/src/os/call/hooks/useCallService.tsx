@@ -10,18 +10,18 @@ import { CallProps } from '../../../common/typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import InjectDebugData from '../../debug/InjectDebugData';
 
-const NOTIFICATION_ID = 'dialer:currentcall';
+const NOTIFICATION_ID = 'call:current';
 
-InjectDebugData([
+InjectDebugData<CallProps>([
   {
     app: 'CALL',
     method: 'setCaller',
     data: {
-      accepted: true,
-      isTransmitter: true,
+      accepted: false,
+      isTransmitter: false,
       transmitter: 'Chip',
       receiver: 'Taso',
-      phone_number: '860-4504',
+      active: true,
     },
   },
 ]);
@@ -46,13 +46,12 @@ export const useCallService = () => {
     cantClose: true,
     icon,
     notificationIcon,
-    content: <CallNotification />,
     onClick: () => setModal(true),
   };
 
   const _setCall = (call: CallProps) => {
     setCall(call);
-    if (!call) {
+    if (!call || !call.active) {
       removeId(NOTIFICATION_ID);
       return;
     }
@@ -60,19 +59,30 @@ export const useCallService = () => {
       removeId(NOTIFICATION_ID);
       addNotification({
         ...callNotificationBase,
-        content: <CallNotification />,
-        title: t('APPS_DIALER_CURRENT_CALL_WITH', {
-          transmitter: call.transmitter,
-        }),
+        content: (
+          <CallNotification>
+            {t('APPS_DIALER_CURRENT_CALL_WITH', {
+              transmitter: call.transmitter,
+            })}
+          </CallNotification>
+        ),
+        title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
       });
     }
     if (!call.isTransmitter && !call.accepted) {
       addNotificationAlert(
         {
           ...callNotificationBase,
-          title: t('APPS_DIALER_TRANSMITTER_IS_CALLING', {
+          title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
             transmitter: call.transmitter,
           }),
+          content: (
+            <CallNotification>
+              {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {
+                transmitter: call.transmitter,
+              })}
+            </CallNotification>
+          ),
         },
         true
       );

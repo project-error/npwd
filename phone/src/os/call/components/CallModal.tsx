@@ -15,8 +15,8 @@ export const CallModal = () => {
     <AppWrapper>
       <AppContent>
         <Box pt={16}>
-          <h1 style={{ textAlign: 'center' }}>{call.transmitter}</h1>
-          <CallTimer isAccepted={call.accepted} />
+          <h1 style={{ textAlign: 'center' }}>{call?.transmitter}</h1>
+          <CallTimer isAccepted={call?.accepted} />
         </Box>
         <div className={classes.actions}>
           <CallControls />

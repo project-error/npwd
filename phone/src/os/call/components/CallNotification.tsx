@@ -7,10 +7,17 @@ interface ICallNotificationProps {
   onReject(): void;
 }
 
-export const CallNotification = () => {
+export const CallNotification = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
-    <Box textAlign="right">
-      <CallControls size="small" />
-    </Box>
+    <div style={{ paddingBottom: '48px' }}>
+      <Box>{children}</Box>
+      <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
+        <CallControls size='small' />
+      </Box>
+    </div>
   );
 };

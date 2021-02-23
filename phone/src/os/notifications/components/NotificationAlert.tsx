@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { useNotifications } from '../hooks/useNotifications';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   alert: {
+    position: 'relative',
     cursor: 'pointer',
     width: '370px',
     height: '120px',
@@ -37,7 +38,7 @@ export const NotificationAlert = () => {
           elevation={6}
         >
           <AlertTitle>{currentAlert.title}</AlertTitle>
-          {currentAlert.content}
+          <Box width='100%'>{currentAlert.content}</Box>
         </Alert>
       ) : null}
     </div>
