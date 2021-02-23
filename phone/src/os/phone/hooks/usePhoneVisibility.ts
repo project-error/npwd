@@ -33,10 +33,6 @@ export const usePhoneVisibility = () => {
         setNotifVisibility(false);
       }, DEFAULT_ALERT_HIDE_TIME);
     }
-    return () => {
-      clearTimeout(notificationTimer.current);
-      notificationTimer.current = undefined;
-    };
   }, [isNotificationVisibleOnly, setVisibility]);
 
   const bottom = useMemo(() => {
