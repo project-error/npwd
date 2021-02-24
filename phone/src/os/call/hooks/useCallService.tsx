@@ -9,7 +9,7 @@ import { useCall } from './useCall';
 import { CallProps } from '../../../common/typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import InjectDebugData from '../../debug/InjectDebugData';
-import { useModal } from './useModal';
+import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'call:current';
@@ -35,7 +35,7 @@ InjectDebugData<CallProps | boolean>([
 
 export const useCallService = () => {
   const { t } = useTranslation();
-  const { modal } = useModal();
+  const { modal } = useCallModal();
   const history = useHistory();
   const { pathname } = useLocation();
   const {

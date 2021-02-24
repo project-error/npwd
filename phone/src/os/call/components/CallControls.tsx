@@ -2,7 +2,7 @@ import React from 'react';
 import CallIcon from '@material-ui/icons/Call';
 import CallEndIcon from '@material-ui/icons/CallEnd';
 import { useCall } from '../hooks/useCall';
-import { useModal } from '../hooks/useModal';
+import { useCallModal } from '../hooks/useCallModal';
 import { StatusIconButton } from '../../../ui/components/StatusIconButton';
 import { Box, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -21,7 +21,7 @@ const SIZES_SPACING = {
 export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { setModal } = useModal();
+  const { setModal } = useCallModal();
   const { call, endCall, acceptCall, rejectCall } = useCall();
 
   if (!call) {
