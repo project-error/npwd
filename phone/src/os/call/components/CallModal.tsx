@@ -19,7 +19,7 @@ export const CallModal = () => {
           <CallTimer isAccepted={call?.accepted} />
         </Box>
         <div className={classes.actions}>
-          <CallControls />
+          <CallControls size="medium" />
         </div>
       </AppContent>
     </AppWrapper>
