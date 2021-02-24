@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
@@ -26,15 +26,16 @@ import { useModal } from './os/call/hooks/useModal';
 import themes from './config/themes.json';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
+import Nui from './os/nui-events/utils/Nui';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 import { Snackbar } from './ui/components/Snackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
+import { useTranslation } from 'react-i18next';
+import { useSnackbar } from './ui/hooks/useSnackbar';
+import { NotificationIcon } from './os/notifications/components/NotificationIcon';
 
 function Phone() {
-  const { modal } = useModal();
   const { apps } = useApps();
-
-  const [settings] = useSettings();
 
   const { bottom, visibility } = usePhoneVisibility();
 
