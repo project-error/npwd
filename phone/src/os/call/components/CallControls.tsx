@@ -26,12 +26,19 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
     return null;
   }
 
-  const handleRejectCall = () => {
+  const handleAcceptCall = (e) => {
+    e.stopPropagation();
+    acceptCall();
+  }
+
+  const handleRejectCall = (e) => {
+    e.stopPropagation();
     setModal(false);
     rejectCall();
   };
 
-  const handleEndCall = () => {
+  const handleEndCall = (e) => {
+    e.stopPropagation();
     setModal(false);
     endCall();
   };
@@ -47,13 +54,13 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
   }
   return (
     <>
-      <Box ml={SIZES_SPACING[size] || 1} display='inline'>
+      <Box m={SIZES_SPACING[size] || 1} display='inline'>
         <StatusIconButton color='error' size={size} onClick={handleRejectCall}>
           <CallEndIcon className={classes.icon} />
         </StatusIconButton>
       </Box>
-      <Box ml={SIZES_SPACING[size] || 1} display='inline'>
-        <StatusIconButton color='success' size={size} onClick={acceptCall}>
+      <Box m={SIZES_SPACING[size] || 1} display='inline'>
+        <StatusIconButton color='success' size={size} onClick={handleAcceptCall}>
           <CallIcon className={classes.icon} />
         </StatusIconButton>
       </Box>

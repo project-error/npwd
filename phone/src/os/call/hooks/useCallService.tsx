@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { callerState } from './state';
@@ -9,6 +9,8 @@ import { useCall } from './useCall';
 import { CallProps } from '../../../common/typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import InjectDebugData from '../../debug/InjectDebugData';
+import { useModal } from './useModal';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'call:current';
 
@@ -33,6 +35,9 @@ InjectDebugData<CallProps | boolean>([
 
 export const useCallService = () => {
   const { t } = useTranslation();
+  const { modal } = useModal();
+  const history = useHistory();
+  const { pathname } = useLocation();
   const {
     addNotificationAlert,
     removeId,
@@ -45,13 +50,29 @@ export const useCallService = () => {
 
   const setModal = useSetRecoilState(callerState.callModal);
 
+  const [modalHasBeenOpenedThisCall, setModalOpened] = useState<boolean>(false);
+
   const callNotificationBase = {
     app: 'CALL',
     id: NOTIFICATION_ID,
     cantClose: true,
     icon,
+    onClick: () => history.push('/call'),
     notificationIcon,
   };
+
+  useEffect(() => {
+    setModalOpened(!!modal);
+  }, [modal]);
+
+  useEffect(() => {
+    if (!modal && pathname === '/call') {
+      history.replace('/');
+    }
+    if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
+      history.push('/call');
+    }
+  }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
   const _setCall = (_call: CallProps) => {
     setCall(_call);

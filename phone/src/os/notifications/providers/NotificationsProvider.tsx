@@ -36,6 +36,8 @@ interface INotificationIcon {
 }
 
 export const NotificationsContext = createContext<{
+  barUncollapsed: boolean;
+  setBarUncollapsed: (v: boolean | ((c: boolean) => boolean)) => void;
   notifications: INotification[];
   currentAlert: INotificationAlert;
   icons: INotificationIcon[];
@@ -56,6 +58,8 @@ export const NotificationsContext = createContext<{
 
 export function NotificationsProvider({ children }) {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
+
+  const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
@@ -212,6 +216,8 @@ export function NotificationsProvider({ children }) {
   return (
     <NotificationsContext.Provider
       value={{
+        setBarUncollapsed,
+        barUncollapsed,
         currentAlert,
         notifications,
         removeAlerts,

@@ -22,7 +22,6 @@ import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from './os/call/hooks/useCallService';
-import { useModal } from './os/call/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
@@ -30,7 +29,6 @@ import { Snackbar } from './ui/components/Snackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 
 function Phone() {
-  const { modal } = useModal();
   const { apps } = useApps();
 
   const [settings] = useSettings();
@@ -79,16 +77,13 @@ function Phone() {
               <>
                 <NotificationBar />
                 <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {apps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
+                  <>
+                    <Route exact path='/' component={HomeApp} />
+                    <Route exact path='/call' component={CallModal} />
+                    {apps.map((App) => (
+                      <App.Route key={App.id} />
+                    ))}
+                  </>
                   <NotificationAlert />
                   <Snackbar />
                 </div>

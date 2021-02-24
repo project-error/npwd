@@ -28,6 +28,16 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.primary,
     },
   },
+  alertContent: {
+    display: '-webkit-box',
+    maxWidth: '360px',
+    height: '60px',
+    margin: '0 auto',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 }));
 
 export const NotificationAlert = () => {
@@ -55,8 +65,16 @@ export const NotificationAlert = () => {
           className={classes.alert}
           elevation={6}
         >
-          <AlertTitle>{currentAlert?.title}</AlertTitle>
-          <Box width='100%'>{currentAlert?.content}</Box>
+          <AlertTitle>
+            <Box width='282px' whiteSpace='nowrap'>
+              <Box overflow='hidden' component='div' textOverflow='ellipsis'>
+                {currentAlert?.title}
+              </Box>
+            </Box>
+          </AlertTitle>
+          <Box component='div' className={classes.alertContent}>
+            {currentAlert?.content}
+          </Box>
         </Alert>
       </Slide>
     </div>

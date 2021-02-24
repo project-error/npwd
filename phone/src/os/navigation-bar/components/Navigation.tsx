@@ -9,6 +9,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import { useHistory } from 'react-router-dom';
 import { usePhone } from '../../phone/hooks/usePhone';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,14 +19,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Navigation = () => {
-  const { closePhone } = usePhone();
-
   const classes = useStyles();
   const history = useHistory();
+  const { closePhone } = usePhone();
+  const { setBarUncollapsed } = useNotifications();
   return (
     <BottomNavigation
       className={classes.root}
-      onChange={(_e, value) => value()}
+      onChange={(_e, value) => {
+        setBarUncollapsed(false);
+        value();
+      }}
     >
       <BottomNavigationAction
         label='Home'
