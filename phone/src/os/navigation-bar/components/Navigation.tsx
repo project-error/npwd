@@ -7,7 +7,7 @@ import {
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import AppsIcon from '@material-ui/icons/Apps';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '../../phone/hooks/usePhone';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export const Navigation = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { isExact } = useRouteMatch('/');
   const { closePhone } = usePhone();
   const { setBarUncollapsed } = useNotifications();
   return (
@@ -43,7 +44,7 @@ export const Navigation = () => {
       />
       <BottomNavigationAction
         label='Back'
-        value={history.goBack}
+        value={() => !isExact && history.goBack()}
         icon={<KeyboardArrowLeftIcon />}
       />
     </BottomNavigation>
