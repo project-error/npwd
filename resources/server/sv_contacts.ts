@@ -18,7 +18,7 @@ interface ContactId {
 }
 
 async function fetchAllContacts(identifier: string): Promise<Contacts[]> {
-  const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ?';
+   const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
   const [results] = await pool.query(query, [identifier]);
   const contacts = <Contacts[]>results;
   return contacts;
