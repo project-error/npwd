@@ -111,3 +111,12 @@ InjectDebugData([
     data: false,
   },
 ]);
+
+
+InjectDebugData([
+  {
+    app: 'PHONE',
+    method: 'setVisibility',
+    data: true,
+  },
+], 10000);

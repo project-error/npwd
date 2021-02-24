@@ -26,6 +26,7 @@ export interface INotification {
 type INotificationAlert = INotification & {
   onClickAlert(e?: any): void;
   onCloseAlert(e?: any): void;
+  resolve(): void;
 };
 
 interface INotificationIcon {
@@ -65,15 +66,10 @@ export function NotificationsProvider({ children }) {
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
   useEffect(() => {
-    if (isPhoneOpen) {
-      setCurrentAlert((curr) => {
-        if (curr && curr.keepWhenPhoneClosed) {
-          return null;
-        }
-        return curr;
-      });
+    if (isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
+      currentAlert.resolve();
     }
-  }, [isPhoneOpen]);
+  }, [isPhoneOpen, currentAlert]);
 
   const updateNotification = useCallback(
     (idx: number, value: INotification) => {
@@ -139,6 +135,7 @@ export function NotificationsProvider({ children }) {
 
         setCurrentAlert({
           ...n,
+          resolve,
           onClickAlert: onExit(n.onClick),
           onCloseAlert: onExit(n.onClose),
         });
