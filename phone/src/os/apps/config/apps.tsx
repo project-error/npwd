@@ -60,7 +60,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
-    icon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
+    icon: <FontAwesomeIcon icon={faPhoneAlt} />,
     notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
     color: DIALER_APP_TEXT_COLOR,
@@ -70,7 +70,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
-    icon: <MessageIcon fontSize='default' />,
+    icon: <MessageIcon fontSize="large" />,
     notificationIcon: <MessageIcon fontSize='small' />,
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
@@ -82,7 +82,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
-    icon: <ContactsIcon />,
+    icon: <ContactsIcon fontSize="large" />,
     notificationIcon: <ContactsIcon fontSize='small' />,
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
@@ -94,7 +94,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
-    icon: <CalculatorIcon />,
+    icon: <CalculatorIcon fontSize="large" />,
     notificationIcon: <CalculatorIcon fontSize='small' />,
     backgroundColor: purple[500],
     color: grey[50],
@@ -106,7 +106,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
-    icon: <SettingsIcon />,
+    icon: <SettingsIcon fontSize="large" />,
     notificationIcon: <SettingsIcon fontSize='small' />,
     backgroundColor: '#383838',
     color: grey[50],
@@ -118,7 +118,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
-    icon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
+    icon: <FontAwesomeIcon icon={faWonSign} />,
     notificationIcon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
     backgroundColor: blue[900],
     color: common.white,
@@ -128,7 +128,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'TWITTER',
     nameLocale: 'APPS_TWITTER',
-    icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
+    icon: <FontAwesomeIcon icon={faTwitter} fixedWidth />,
     notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
     backgroundColor: blue[600],
     color: common.white,

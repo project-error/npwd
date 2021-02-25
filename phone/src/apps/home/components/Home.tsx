@@ -8,8 +8,8 @@ export const HomeApp = () => {
   const { apps } = useApps();
   return (
     <AppWrapper>
-      <Box width='100%' mt={6} px={1}>
-        {apps && <GridMenu items={apps} />}
+      <Box component="div" mt={6} px={1}>
+        {apps && <GridMenu xs={3} items={apps} />}
       </Box>
     </AppWrapper>
   );
