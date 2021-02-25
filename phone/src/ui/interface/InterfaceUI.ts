@@ -1,4 +1,3 @@
-import { BoxProps } from '@material-ui/core';
 import { CSSProperties } from 'react';
 
 export interface AppContentTypes {
@@ -8,9 +7,9 @@ export interface AppContentTypes {
   onClickBackdrop?: (...args: any[]) => void;
 }
 
-export type AppWrapperTypes = BoxProps & {
+export interface AppWrapperTypes {
   id?: string;
   children?: JSX.Element | JSX.Element[];
   style?: CSSProperties;
   handleClickAway?: (...args: any[]) => void;
-};
+}
