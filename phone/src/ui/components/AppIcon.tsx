@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { fade, makeStyles, Theme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { green } from '@material-ui/core/colors';
 import { Badge, Button, Tooltip, Zoom } from '@material-ui/core';
@@ -12,6 +12,9 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
       marginTop: theme.spacing(3),
     },
     avatar: {
+      '&:hover': {
+        backgroundColor: ({ backgroundColor }) => fade(backgroundColor, 0.6),  
+      },
       backgroundColor: ({ backgroundColor }) => backgroundColor,
       color: ({ color }) => color,
       boxShadow: theme.shadows[2],
