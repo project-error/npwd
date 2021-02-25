@@ -19,45 +19,46 @@ const useSound = (
   { volume = 1, interrupt = false, loop = false }: ISoundOptions = {}
 ) => {
   const isMounted = useRef<boolean>(false);
+  const soundRef = useRef<Howl>(null);
 
   const [playing, setPlaying] = useState<boolean>(false);
 
-  const [sound, setSound] = useState<Howl | null>(null);
+  const setSound = useCallback((instance) => {
+    soundRef.current = instance;
+  }, []);
 
   // Mount & Dismount handling
   useEffect(() => {
     isMounted.current = true;
-    const sound = new Howl({
-      src: url,
-      volume,
-      loop,
-    });
-    setSound(sound);
+    setSound(
+      new Howl({
+        src: url,
+        volume: 1,
+        loop,
+      })
+    );
 
     return () => {
       isMounted.current = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loop, setSound, url]);
 
   useEffect(() => {
-    if (sound) {
-      sound.volume(volume);
+    if (soundRef.current) {
+      soundRef.current.volume(volume);
     }
-    // Shouldnt need to rerun if sound changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume]);
 
   const play = useCallback(() => {
-    if (!sound) return;
+    if (!soundRef) return;
 
-    if (interrupt) return sound.stop();
+    if (interrupt) return soundRef.current.stop();
 
-    sound.play();
+    soundRef.current.play();
 
     if (isMounted.current) {
-      sound.once('end', () => {
-        if (!sound.playing()) {
+      soundRef.current.once('end', () => {
+        if (!soundRef.current.playing()) {
           setPlaying(false);
         }
       });
@@ -66,17 +67,17 @@ const useSound = (
     if (isMounted.current) {
       setPlaying(true);
     }
-  }, [interrupt, sound]);
+  }, [interrupt]);
 
   const stop = useCallback(() => {
-    if (!sound) return;
+    if (!soundRef.current) return;
 
-    sound.stop();
+    soundRef.current.stop();
 
     if (isMounted.current) {
       setPlaying(false);
     }
-  }, [sound]);
+  }, []);
 
   return { play, playing, stop };
 };
