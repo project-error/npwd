@@ -2,7 +2,6 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { bankState } from './state';
 import { useTransactions } from './useTransactions';
 import { useCredentials } from './useCredentials';
-import { useBankAlert } from './useBankAlert';
 import { useSetRecoilState } from 'recoil';
 import { useBankNotification } from './useBankNotification';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
@@ -17,5 +16,5 @@ export const useBankService = () => {
   useNuiEvent('BANK', 'setCredentials', setCredentials);
   useNuiEvent('BANK', 'setAlert', addAlert);
   useNuiEvent('BANK', 'setNotification', setNotification);
-  return { useTransactions, useCredentials, useBankAlert, useBankNotification };
+  return { useTransactions, useCredentials, useBankNotification };
 };
