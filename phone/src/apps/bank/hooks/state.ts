@@ -9,10 +9,6 @@ export const bankState = {
     key: 'modalVisibility',
     default: false,
   }),
-  transferSuccessful: atom({
-    key: 'bankAlert',
-    default: null,
-  }),
   bankCredentials: atom({
     key: 'bankCredentails',
     default: null,
