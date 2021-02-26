@@ -29,8 +29,6 @@ if (PhoneConfig.SentryErrorMetrics) {
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
-      <TwitterNotification />
-      <BankNotification />
       <SnackbarProvider>
         <NotificationsProvider>
           <Phone />
