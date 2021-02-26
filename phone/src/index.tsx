@@ -7,8 +7,6 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './main.css';
 import Phone from './Phone';
-import TwitterNotification from './apps/twitter/components/notification/TwitterNotification';
-import { BankNotification } from './apps/bank/components/notification/BankNotification';
 import PhoneConfig from './config/default.json';
 import SnackbarProvider from './ui/providers/SnackbarProvider';
 import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
