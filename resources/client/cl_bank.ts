@@ -1,3 +1,4 @@
+import { IAlertProps } from '../../phone/src/common/typings/alerts';
 import events from '../utils/events';
 
 onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
@@ -30,12 +31,12 @@ onNet(events.BANK_ADD_TRANSFER_SUCCESS, () => {
   emitNet(events.BANK_FETCH_TRANSACTIONS);
 });
 
-onNet(events.BANK_TRANSACTION_ALERT, (bool: boolean) => {
+onNet(events.BANK_TRANSACTION_ALERT, (result: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
       method: 'setAlert',
-      data: bool,
+      data: result,
     })
   );
 });

@@ -5,18 +5,17 @@ import { useCredentials } from './useCredentials';
 import { useBankAlert } from './useBankAlert';
 import { useSetRecoilState } from 'recoil';
 import { useBankNotification } from './useBankNotification';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 export const useBankService = () => {
   const setTransaction = useSetRecoilState(bankState.transactions);
   const setCredentials = useSetRecoilState(bankState.bankCredentials);
-  const setAlertMessage = useSetRecoilState(bankState.transferSuccessful);
   const setNotification = useSetRecoilState(bankState.notification);
-
-  ///
+  const { addAlert } = useSnackbar()
 
   useNuiEvent('BANK', 'setTransaction', setTransaction);
   useNuiEvent('BANK', 'setCredentials', setCredentials);
-  useNuiEvent('BANK', 'setAlert', setAlertMessage);
+  useNuiEvent('BANK', 'setAlert', addAlert);
   useNuiEvent('BANK', 'setNotification', setNotification);
   return { useTransactions, useCredentials, useBankAlert, useBankNotification };
 };
