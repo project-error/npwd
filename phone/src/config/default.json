@@ -44,7 +44,7 @@
       "palette": {
         "type": "dark",
         "primary": {
-          "main": "#a6d4fa"
+        "main": "#a6d4fa"
         },
         "background": {
           "paper": "#1c1c1c",

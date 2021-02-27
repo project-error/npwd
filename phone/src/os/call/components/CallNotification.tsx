@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { CallControls } from './CallControls';
 
 interface ICallNotificationProps {
@@ -7,15 +7,27 @@ interface ICallNotificationProps {
   onReject(): void;
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingBottom: '48px',
+  },
+  controls: {
+    position: 'absolute',
+    bottom: theme.spacing(1),
+    right: '4px',
+  },
+}));
+
 export const CallNotification = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+  const classes = useStyles();
   return (
-    <div style={{ paddingBottom: '48px' }}>
+    <div className={classes.root}>
       <Box>{children}</Box>
-      <Box style={{ position: 'absolute', bottom: 0, right: 0 }}>
+      <Box className={classes.controls}>
         <CallControls size='small' />
       </Box>
     </div>

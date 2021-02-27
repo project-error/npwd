@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { callerState } from './state';
@@ -9,10 +9,12 @@ import { useCall } from './useCall';
 import { CallProps } from '../../../common/typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import InjectDebugData from '../../debug/InjectDebugData';
+import { useCallModal } from './useCallModal';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'call:current';
 
-InjectDebugData<CallProps>([
+/* InjectDebugData<CallProps | boolean>([
   {
     app: 'CALL',
     method: 'setCaller',
@@ -20,14 +22,22 @@ InjectDebugData<CallProps>([
       accepted: false,
       isTransmitter: false,
       transmitter: 'Chip',
-      receiver: 'Taso',
+      receiver: 'Taso', 
       active: true,
     },
   },
-]);
+  {
+    app: 'CALL',
+    method: 'callModal',
+    data: true,
+  },
+]); */
 
 export const useCallService = () => {
   const { t } = useTranslation();
+  const { modal } = useCallModal();
+  const history = useHistory();
+  const { pathname } = useLocation();
   const {
     addNotificationAlert,
     removeId,
@@ -40,13 +50,29 @@ export const useCallService = () => {
 
   const setModal = useSetRecoilState(callerState.callModal);
 
+  const [modalHasBeenOpenedThisCall, setModalOpened] = useState<boolean>(false);
+
   const callNotificationBase = {
     app: 'CALL',
     id: NOTIFICATION_ID,
     cantClose: true,
     icon,
+    onClick: () => history.push('/call'),
     notificationIcon,
   };
+
+  useEffect(() => {
+    setModalOpened(!!modal);
+  }, [modal]);
+
+  useEffect(() => {
+    if (!modal && pathname === '/call') {
+      history.replace('/');
+    }
+    if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
+      history.push('/call');
+    }
+  }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
   const _setCall = (_call: CallProps) => {
     setCall(_call);
@@ -76,6 +102,7 @@ export const useCallService = () => {
           title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
             transmitter: _call.transmitter,
           }),
+          keepWhenPhoneClosed: true,
           content: (
             <CallNotification>
               {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {

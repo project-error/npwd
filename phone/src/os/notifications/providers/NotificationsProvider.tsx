@@ -6,6 +6,8 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
+import { useRecoilValue } from 'recoil';
+import { phoneState } from '../../phone/hooks/state';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -16,8 +18,16 @@ export interface INotification {
   icon?: JSX.Element;
   notificationIcon?: JSX.Element;
   cantClose?: boolean;
+  keepWhenPhoneClosed?: boolean;
+  onClose?: (notification: INotification) => void;
   onClick?: (notification: INotification) => void;
 }
+
+type INotificationAlert = INotification & {
+  onClickAlert(e?: any): void;
+  onCloseAlert(e?: any): void;
+  resolve(): void;
+};
 
 interface INotificationIcon {
   key: string;
@@ -26,8 +36,10 @@ interface INotificationIcon {
 }
 
 export const NotificationsContext = createContext<{
+  barUncollapsed: boolean;
+  setBarUncollapsed: (v: boolean | ((c: boolean) => boolean)) => void;
   notifications: INotification[];
-  currentAlert: INotification;
+  currentAlert: INotificationAlert;
   icons: INotificationIcon[];
   count: number;
   removeAlerts(): void;
@@ -45,13 +57,23 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
+  const isPhoneOpen = useRecoilValue(phoneState.visibility);
+
+  const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
+
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
   const alertTimeout = useRef<NodeJS.Timeout>();
   const [alerts, setAlerts] = useState<
     Array<[INotification, boolean, Partial<INotification>]>
   >([]);
-  const [currentAlert, setCurrentAlert] = useState<INotification>();
+  const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
+
+  useEffect(() => {
+    if (isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
+      currentAlert.resolve();
+    }
+  }, [isPhoneOpen, currentAlert]);
 
   const updateNotification = useCallback(
     (idx: number, value: INotification) => {
@@ -109,20 +131,28 @@ export function NotificationsProvider({ children }) {
           res();
         };
 
+        const onExit = (cb) => () => {
+          cb?.(n);
+          clearTimeout(alertTimeout.current);
+          resolve();
+        };
+
+        setCurrentAlert({
+          ...n,
+          resolve,
+          onClickAlert: onExit(n.onClick),
+          onCloseAlert: onExit(n.onClose),
+        });
+
+        if (n.keepWhenPhoneClosed) {
+          return;
+        }
+
         alertTimeout.current = setTimeout(() => {
           resolve();
           // If you change or remove the 300 i'll kill your pet - Kidz /s
           // Really, this makes it work nicely with usePhoneVisibility :)
         }, DEFAULT_ALERT_HIDE_TIME + 300);
-
-        setCurrentAlert({
-          ...n,
-          onClick: () => {
-            clearTimeout(alertTimeout.current);
-            n.onClick?.(n);
-            resolve();
-          },
-        });
       });
     },
     [addOrUpdateNotification]
@@ -186,6 +216,8 @@ export function NotificationsProvider({ children }) {
   return (
     <NotificationsContext.Provider
       value={{
+        setBarUncollapsed,
+        barUncollapsed,
         currentAlert,
         notifications,
         removeAlerts,

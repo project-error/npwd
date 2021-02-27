@@ -46,7 +46,7 @@ const validKeys = [
 
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
-export const useInitKeyboard = () => {
+export const useKeyboardService = () => {
   const history = useHistory();
   const { closePhone } = usePhone();
   const getters = {

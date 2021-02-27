@@ -6,16 +6,18 @@ import {
   ListItemAvatar,
   ListItemText,
   makeStyles,
+  Theme,
 } from '@material-ui/core';
 import { INotification } from '../providers/NotificationsProvider';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme, { cantClose: boolean }>((theme) => ({
   closeNotifBtn: {
     position: 'absolute',
     right: '8px',
     top: '8px',
   },
   notificationItem: {
+    paddingRight: ({ cantClose }) => (cantClose ? '8px' : '28px'),
     position: 'relative',
   },
 }));
@@ -29,7 +31,7 @@ export const NotificationItem = ({
   onClickClose: (e: any) => void;
 }) => {
   const { title, icon, content, cantClose, onClick } = notification;
-  const classes = useStyles();
+  const classes = useStyles({ cantClose });
   return (
     <ListItem
       divider

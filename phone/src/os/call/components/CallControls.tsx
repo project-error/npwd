@@ -1,30 +1,47 @@
 import React from 'react';
 import CallIcon from '@material-ui/icons/Call';
 import CallEndIcon from '@material-ui/icons/CallEnd';
-import { Fab } from '@material-ui/core';
 import { useCall } from '../hooks/useCall';
-import useStyles from './modal.styles';
-import { useModal } from '../hooks/useModal';
+import { useCallModal } from '../hooks/useCallModal';
+import { StatusIconButton } from '../../../ui/components/StatusIconButton';
+import { Box, makeStyles } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
-export const CallControls = ({
-  size,
-}: {
-  size?: 'small' | 'medium' | 'large';
-}) => {
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    color: theme.palette.secondary.contrastText,
+  },
+}));
+
+const SIZES_SPACING = {
+  small: 1,
+  medium: 3,
+};
+
+export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
   const classes = useStyles();
-  const { setModal } = useModal();
+  const history = useHistory();
+  const { setModal } = useCallModal();
   const { call, endCall, acceptCall, rejectCall } = useCall();
 
   if (!call) {
     return null;
   }
 
-  const handleRejectCall = () => {
+  const handleAcceptCall = (e) => {
+    e.stopPropagation();
+    history.push('/call');
+    acceptCall();
+  };
+
+  const handleRejectCall = (e) => {
+    e.stopPropagation();
     setModal(false);
     rejectCall();
   };
 
-  const handleEndCall = () => {
+  const handleEndCall = (e) => {
+    e.stopPropagation();
     setModal(false);
     endCall();
   };
@@ -33,34 +50,27 @@ export const CallControls = ({
 
   if (accepted || isTransmitter) {
     return (
-      <Fab
-        size={size}
-        onClick={handleEndCall}
-        style={{ backgroundColor: '#e74c3c', color: '#fff' }}
-        className={classes.actionButton}
-      >
+      <StatusIconButton color='error' size={size} onClick={handleEndCall}>
         <CallEndIcon />
-      </Fab>
+      </StatusIconButton>
     );
   }
   return (
     <>
-      <Fab
-        size={size}
-        onClick={handleRejectCall}
-        style={{ backgroundColor: '#e74c3c', color: '#fff' }}
-        className={classes.actionButton}
-      >
-        <CallEndIcon />
-      </Fab>
-      <Fab
-        size={size}
-        onClick={acceptCall}
-        style={{ backgroundColor: '#27ae60', color: '#fff' }}
-        className={classes.actionButton}
-      >
-        <CallIcon />
-      </Fab>
+      <Box m={SIZES_SPACING[size] || 1} display='inline'>
+        <StatusIconButton color='error' size={size} onClick={handleRejectCall}>
+          <CallEndIcon className={classes.icon} />
+        </StatusIconButton>
+      </Box>
+      <Box m={SIZES_SPACING[size] || 1} display='inline'>
+        <StatusIconButton
+          color='success'
+          size={size}
+          onClick={handleAcceptCall}
+        >
+          <CallIcon className={classes.icon} />
+        </StatusIconButton>
+      </Box>
     </>
   );
 };

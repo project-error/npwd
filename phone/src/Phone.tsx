@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { CallModal } from './os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
 import { Slide } from '@material-ui/core';
-import { useInitKeyboard } from './os/keyboard/hooks/useKeyboard';
+import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useNuiService } from './os/nui-events/hooks/useNuiService';
@@ -22,27 +22,24 @@ import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from './os/call/hooks/useCallService';
-import { useModal } from './os/call/hooks/useModal';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 import { Snackbar } from './ui/components/Snackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
+import { useCallModal } from './os/call/hooks/useCallModal';
 
 function Phone() {
-  const { modal } = useModal();
   const { apps } = useApps();
 
   const [settings] = useSettings();
 
-  const { bottom, visibility } = usePhoneVisibility();
-
   useNuiService();
+  useKeyboardService();
   usePhoneService();
   useSimcardService();
   useContactsService();
   useTwitterService();
-  useInitKeyboard();
   useSelloutService();
   useBankService();
   useMessagesService();
@@ -50,6 +47,9 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+
+  const { modal: callModal } = useCallModal();
+  const { bottom, visibility } = usePhoneVisibility();
 
   return (
     <Slide direction='up' in={visibility}>
@@ -79,16 +79,15 @@ function Phone() {
               <>
                 <NotificationBar />
                 <div className='PhoneAppContainer'>
-                  {modal ? (
-                    <CallModal />
-                  ) : (
-                    <>
-                      <Route exact path='/' component={HomeApp} />
-                      {apps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                  )}
+                  <>
+                    <Route exact path='/' component={HomeApp} />
+                    {callModal && (
+                      <Route exact path='/call' component={CallModal} />
+                    )}
+                    {apps.map((App) => (
+                      <App.Route key={App.id} />
+                    ))}
+                  </>
                   <NotificationAlert />
                   <Snackbar />
                 </div>

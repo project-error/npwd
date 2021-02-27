@@ -14,12 +14,12 @@ export const CallModal = () => {
   return (
     <AppWrapper>
       <AppContent>
-        <Box pt={16}>
+        <Box pt={24}>
           <h1 style={{ textAlign: 'center' }}>{call?.transmitter}</h1>
           <CallTimer isAccepted={call?.accepted} />
         </Box>
         <div className={classes.actions}>
-          <CallControls />
+          <CallControls size="medium" />
         </div>
       </AppContent>
     </AppWrapper>

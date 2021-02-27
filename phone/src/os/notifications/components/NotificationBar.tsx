@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   makeStyles,
   Typography,
@@ -66,9 +66,13 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
   const classes = useStyles();
 
-  const { icons, notifications, removeNotification } = useNotifications();
-
-  const [uncollapsed, setUncollapsed] = useState<boolean>(false);
+  const {
+    icons,
+    notifications,
+    removeNotification,
+    barUncollapsed,
+    setBarUncollapsed,
+  } = useNotifications();
 
   return (
     <>
@@ -78,7 +82,7 @@ export const NotificationBar = () => {
         justify='space-between'
         wrap='nowrap'
         onClick={() => {
-          setUncollapsed(!uncollapsed);
+          setBarUncollapsed((curr) => !curr);
         }}
       >
         <Grid container item wrap='nowrap'>
@@ -115,28 +119,29 @@ export const NotificationBar = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction='down' in={uncollapsed}>
+      <Slide direction='down' in={barUncollapsed}>
         <Paper square className={classes.drawer}>
-          <Box p={2}>
+          <Box py={2}>
             <List>
               <Divider />
               {notifications.map((notification, idx) => (
                 <NotificationItem
                   key={idx}
+                  {...notification}
                   onClose={(e) => {
                     e.stopPropagation();
+                    notification.onClose?.(notification);
                     if (notifications.length === 1) {
-                      setUncollapsed(false);
+                      setBarUncollapsed(false);
                     }
                     removeNotification(idx);
                   }}
                   onClickClose={() => {
-                    setUncollapsed(false);
+                    setBarUncollapsed(false);
                     if (!notification.cantClose) {
                       removeNotification(idx);
                     }
                   }}
-                  {...notification}
                 />
               ))}
             </List>
@@ -145,7 +150,7 @@ export const NotificationBar = () => {
             <IconButton
               className={classes.collapseBtn}
               size='small'
-              onClick={() => setUncollapsed(false)}
+              onClick={() => setBarUncollapsed(false)}
             >
               <ArrowDropUpIcon />
             </IconButton>

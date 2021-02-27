@@ -48,7 +48,12 @@ export const DialerHistory = ({ calls }) => {
         alignItems='center'
         paddingTop={35}
       >
-        <p>You got no friends!😎</p>
+        <p>
+          You got no friends!
+          <span role='img' aria-label='deal with it'>
+            😎
+          </span>
+        </p>
       </Box>
     );
   }
@@ -60,7 +65,6 @@ export const DialerHistory = ({ calls }) => {
           <ListItem
             key={call.id}
             divider
-            onClick={() => handleCall(call.receiver)}
           >
             <ListItemIcon>
               {<PhoneForwardedIcon className={classes.callForward} />}
@@ -74,21 +78,22 @@ export const DialerHistory = ({ calls }) => {
               {<PhoneIcon />}
             </IconButton>
 
-            <IconButton
-              onClick={() =>
-                history.push(
-                  `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
-                )
-              }
-            >
-              {<PersonAddIcon />}
-            </IconButton>
+            {getDisplayByNumber(call.transmitter) === call.transmitter ? (
+              <IconButton
+                onClick={() =>
+                  history.push(
+                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                  )
+                }
+              >
+                {<PersonAddIcon />}
+              </IconButton>
+            ) : null}
           </ListItem>
         ) : (
           <ListItem
             key={call.id}
             divider
-            onClick={() => handleCall(call.transmitter)}
           >
             <ListItemIcon>
               {<PhoneCallbackIcon className={classes.callBack} />}

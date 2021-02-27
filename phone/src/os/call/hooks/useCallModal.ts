@@ -6,7 +6,7 @@ interface ModalProps {
   setModal: (show: boolean) => void;
 }
 
-export const useModal = (): ModalProps => {
+export const useCallModal = (): ModalProps => {
   const [modal, setModal] = useRecoilState(callerState.callModal);
   return { modal, setModal }
 }
