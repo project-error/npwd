@@ -103,7 +103,7 @@ export const DialerHistory = ({ calls }) => {
               primary={getDisplayByNumber(call.transmitter)}
               secondary={dayjs.unix(call.start).format(t('DATE_TIME_FORMAT'))}
             />
-            <IconButton onClick={() => handleCall(call.receiver)}>
+            <IconButton onClick={() => handleCall(call.transmitter)}>
               {<PhoneIcon />}
             </IconButton>
 
