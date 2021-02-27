@@ -35,20 +35,27 @@ function getRandomPhoneNumber() {
     // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
     // Example: 123-4567
   }
-
   mainLogger.verbose(`Getting random number: ${randomNumber}`);
 
   return randomNumber;
 }
 
 async function generatePhoneNumber(identifier: string) {
-  let phoneNumber = await usePhoneNumber(identifier);
-
-  if (!phoneNumber) {
-    phoneNumber = getRandomPhoneNumber();
+  if (!await usePhoneNumber(identifier)) {
+    let existingId;
+    let newNumber;
+    do {
+        newNumber = getRandomPhoneNumber();
+        try {
+          existingId = await getIdentifierByPhoneNumber(newNumber)
+        } catch(e) {
+          existingId = false
+        }
+    } while(existingId);
+    mainLogger.verbose(`Inserting number into Database: ${newNumber}`);
     const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
-    await pool.query(query, [phoneNumber, identifier]);
-  } 
+    await pool.query(query, [newNumber, identifier]);
+  }
 }
 
 async function getCredentials(identifier: string): Promise<string> {
