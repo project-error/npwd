@@ -1,32 +1,33 @@
-import { useCallback } from "react";
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { useApp } from '../../../os/apps/hooks/useApps';
-import { useNotifications } from "../../../os/notifications/hooks/useNotifications";
+import {useCallback} from "react";
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
+import {useRecoilState} from 'recoil';
+import {useApp} from '../../../os/apps/hooks/useApps';
+import {useNotifications} from "../../../os/notifications/hooks/useNotifications";
 import {messageState} from "./state";
 
 export const useMessageNotifications = () => {
-	const { t } = useTranslation() ;
+	const {t} = useTranslation();
 	const history = useHistory();
-	const { addNotificationAlert } = useNotifications();
-	const { icon, notificationIcon } = useApp('MESSAGES');
+	const {addNotificationAlert} = useNotifications();
+	const {icon, notificationIcon} = useApp('MESSAGES');
 	const [unreadCount, setUnreadCount] = useRecoilState(messageState.unreadMessagesCount);
 
-	const setNotification = useCallback(({ number, message }) => {
+
+	const setNotification = useCallback(({number, message}) => {
 		setUnreadCount((curr: number) => {
 			const unread = curr + 1;
 			addNotificationAlert({
-				app: 'MESSAGES',
-				title: t('APPS_MESSAGES_NEW_BROADCAST', { number }),
-				onClick: () => history.push('/messages'),
-				content: message,
-				icon,
-				notificationIcon
-			},
+					app: 'MESSAGES',
+					title: t('APPS_MESSAGES_NEW_BROADCAST', {number}),
+					onClick: () => history.push('/messages'),
+					content: message,
+					icon,
+					notificationIcon
+				},
 				true,
 				{
-					title: t('APPS_MESSAGES_UNREAD_MESSAGES', { count: unread }),
+					title: t('APPS_MESSAGES_UNREAD_MESSAGES', {count: unread}),
 					content: null
 				}
 			);
@@ -34,5 +35,5 @@ export const useMessageNotifications = () => {
 		})
 	}, [setUnreadCount, addNotificationAlert, t, icon, notificationIcon, history])
 
-	return { setNotification, setUnreadCount, unreadCount };
+	return {setNotification, setUnreadCount, unreadCount};
 }
