@@ -70,6 +70,7 @@ export default {
   MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
   MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
   MESSAGES_ACTION_RESULT: 'phone:setMessagesAlert',
+  MESSAGES_CREATE_MESSAGE_BROADCAST: 'createMessagesBroadcast',
 
   // Notes
   NOTE_ADD_NOTE: 'phone:addNote',

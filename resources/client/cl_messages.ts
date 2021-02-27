@@ -78,3 +78,6 @@ onNet(events.MESSAGES_SEND_MESSAGE_FAILED, () => {
 onNet(events.MESSAGES_ACTION_RESULT, (result: any) => {
   sendMessageEvent(events.MESSAGES_ACTION_RESULT, result);
 });
+onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, (message: any) => {
+  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_BROADCAST, message);
+})

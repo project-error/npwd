@@ -2,13 +2,13 @@ import md5 from 'md5';
 
 import events from '../utils/events';
 import {
+  CreateMessageGroupResult,
   Message,
   MessageGroup,
-  CreateMessageGroupResult,
 } from '../../phone/src/common/typings/messages';
-import { pool, withTransaction } from './db';
-import { getSource, getIdentifier } from './functions';
-import { mainLogger } from './sv_logger';
+import {pool, withTransaction} from './db';
+import {getIdentifier, getSource, getPlayerFromIdentifier} from './functions';
+import {mainLogger} from './sv_logger';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -39,6 +39,8 @@ interface MessageGroupMapping {
     updatedAt: string;
   };
 }
+
+
 
 /**
  * Create a message in the database
@@ -354,6 +356,16 @@ async function createMessageGroupsFromPhoneNumbers(
   return { error: false, groupId };
 }
 
+// getting the participants from groupId.
+// this should return the source or and array of identifiers
+async function getIdentifiersFromParticipants(groupId: string) {
+  const query =
+    'SELECT participant_identifier FROM npwd_messages_groups WHERE group_id = ?'
+  const [results] = await pool.query(query, [groupId]);
+  console.log(<any[]>results);
+  return <any[]>results;
+}
+
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   const _source = getSource();
   try {
@@ -431,25 +443,54 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   }
 });
 
-onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string) => {
-  const _source = getSource();
-  try {
-    const _identifier = getIdentifier(_source);
-    await createMessage(_identifier, groupId, message);
-    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
-  } catch (e) {
-    // Not really sure what this does? As I cant find any reference
-    // of this in the ui part.
-    emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
-    // sending a new alert
-    // The message property is always using the locale strings without
-    // the APPS_ prefix.
-    emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-      message: 'MESSAGES_NEW_MESSAGE_FAILED',
-      type: 'error',
-    });
-    messageLogger.error(`Failed to send message, ${e.message}`, {
-      source: _source,
-    });
+onNet(
+  events.MESSAGES_SEND_MESSAGE,
+  async (groupId: string, message: string) => {
+    const _source = getSource();
+    try {
+      const _identifier = getIdentifier(_source);
+      await createMessage(_identifier, groupId, message);
+      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
+
+      // currently sending the notification to only the person that created it.
+      // we need to get all participants and only send to them.
+      // afaik we are only sending the groupId and message from nui.
+      // although this could easily be solved by getting participants
+      // from the current groupId.
+      const userParticipants = await getIdentifiersFromParticipants(groupId);
+
+      for (const participantId of userParticipants) {
+        console.log("PARTICIPANTS: ", participantId);
+        const participantPlayer = await getPlayerFromIdentifier(participantId)
+        emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+          groupId, message
+        })
+      }
+
+    } catch (e) {
+      // Not really sure what this does? As I cant find any reference
+      // of this in the ui part.
+      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+      // sending a new alert
+      // The message property is always using the locale strings without
+      // the APPS_ prefix.
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: 'MESSAGES_NEW_MESSAGE_FAILED',
+        type: 'error',
+      });
+      messageLogger.error(`Failed to send message, ${e.message}`, {
+        source: _source,
+      });
+    }
   }
-});
+);
+
+// currently sending the notification to only the person that created it.
+// we need to get all participants and only send to them.
+// afaik we are only sending the groupId and message from nui.
+// although this could easily be solved by getting participants
+// from the current groupId.
+
+onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, async () => {
+
+})
