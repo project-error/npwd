@@ -35,26 +35,27 @@ function getRandomPhoneNumber() {
     // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
     // Example: 123-4567
   }
-
   mainLogger.verbose(`Getting random number: ${randomNumber}`);
 
   return randomNumber;
 }
 
 async function generatePhoneNumber(identifier: string) {
-  const _identifier = identifier;
-  let phoneNumber = await usePhoneNumber(_identifier);
-  let id = await getIdentifierByPhoneNumber(phoneNumber);
-
-  do {
-    if (!phoneNumber) {
-      phoneNumber = await getRandomPhoneNumber();
-      const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
-      await pool.query(query, [phoneNumber, _identifier]);
-    } else {
-      break;
-    }
-  } while (id);
+  if (!await usePhoneNumber(identifier)) {
+    let existingId;
+    let newNumber;
+    do {
+        newNumber = getRandomPhoneNumber();
+        try {
+          existingId = await getIdentifierByPhoneNumber(newNumber)
+        } catch(e) {
+          existingId = false
+        }
+    } while(existingId);
+    mainLogger.verbose(`Inserting number into Database: ${newNumber}`);
+    const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
+    await pool.query(query, [newNumber, identifier]);
+  }
 }
 
 async function getCredentials(identifier: string): Promise<string> {
@@ -65,11 +66,11 @@ async function getCredentials(identifier: string): Promise<string> {
   return number[0].phone_number;
 }
 
-on('playerConnecting', async () => {
+onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
   const _source = getSource()
   try {
-    const identifier = getIdentifier(_source);
-    await generatePhoneNumber(identifier)
+    const identifier = xPlayer.identifier;
+    await generatePhoneNumber(identifier);
   } catch(e) {
     mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
       source: _source,
