@@ -11,6 +11,7 @@ import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -63,6 +64,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -74,6 +76,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -85,6 +88,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -96,6 +100,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -108,6 +113,7 @@ InjectDebugData([
         display: 'kidz',
         avatar: null,
         isRead: true,
+        groupId: '2',
         isMine: false,
         updatedAt: Date.now(),
       },
@@ -118,6 +124,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -129,6 +136,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: true,
         updatedAt: Date.now(),
@@ -140,6 +148,7 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: false,
         updatedAt: Date.now(),
@@ -151,11 +160,30 @@ InjectDebugData([
         phone_number: '444-4444',
         display: 'kidz',
         avatar: null,
+        groupId: '2',
         isRead: true,
         isMine: true,
         updatedAt: Date.now(),
       },
     ],
+  },
+  {
+    app: 'MESSAGES',
+    method: 'createMessagesBroadcast',
+    data: {
+      id: 222,
+      number: '777-7777',
+      message: 'Hi! Just checking in on you!'
+    }
+  },
+  {
+    app: 'MESSAGES',
+    method: 'createMessagesBroadcast',
+    data: {
+      id: 223,
+      number: 'Kidz',
+      message: 'Hi! You are awesome!'
+    }
   },
   {
     app: 'MESSAGES',
@@ -165,6 +193,14 @@ InjectDebugData([
         groupId: '2',
         groupDisplay: 'dev-chat',
         isGroupChat: true,
+        avatar: null,
+        label: null,
+        updatedAt: Date.now(),
+      },
+      {
+        groupId: '3',
+        groupDisplay: 'Chip',
+        isGroupChat: false,
         avatar: null,
         label: null,
         updatedAt: Date.now(),

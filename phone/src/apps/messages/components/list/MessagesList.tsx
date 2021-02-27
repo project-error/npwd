@@ -8,10 +8,12 @@ import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
+import {useMessageNotifications} from "../../hooks/useMessageNotifications";
 
 const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
+  const { setUnreadCount } = useMessageNotifications()
 
   const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
@@ -25,6 +27,19 @@ const MessagesList = (): any => {
     [history],
   );
 
+  const formattedSearch = searchValue.toLowerCase().trim();
+  const filteredGroups = formattedSearch
+    ? messageGroups.filter((group) => {
+      const groupDisplay = group.groupDisplay.toLowerCase();
+      const displayIncludes = groupDisplay.includes(formattedSearch);
+
+      const label = group.label?.toLowerCase();
+      return label
+        ? displayIncludes || label.includes(formattedSearch)
+        : displayIncludes;
+    })
+    : messageGroups;
+
   useEffect(() => {
     if (createMessageGroupResult?.groupId) {
       const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
@@ -35,23 +50,18 @@ const MessagesList = (): any => {
     }
   }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
 
+  useEffect(() => {
+    if (filteredGroups?.length) {
+      setUnreadCount(0);
+    }
+  }, [setUnreadCount, filteredGroups]);
+
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
     history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`);
   };
-
-  const formattedSearch = searchValue.toLowerCase().trim();
-  const filteredGroups = formattedSearch
-    ? messageGroups.filter((group) => {
-        const groupDisplay = group.groupDisplay.toLowerCase();
-        const displayIncludes = groupDisplay.includes(formattedSearch);
-
-        const label = group.label?.toLowerCase();
-        return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
-      })
-    : messageGroups;
 
   return (
     <>
