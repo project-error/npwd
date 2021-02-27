@@ -67,9 +67,16 @@ async function getCredentials(identifier: string): Promise<string> {
 }
 
 onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
-  const identifier = xPlayer.identifier;
-  await generatePhoneNumber(identifier);
-});
+  const _source = getSource()
+  try {
+    const identifier = xPlayer.identifier;
+    await generatePhoneNumber(identifier);
+  } catch(e) {
+    mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
+      source: _source,
+    })
+  }
+})
 
 onNet('phone:getCredentials', async () => {
   const _source = getSource();
