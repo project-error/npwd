@@ -22,8 +22,8 @@ async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
 
 async function deletePhoto(photo: IPhoto, identifier: string) {
   const query =
-    'DELETE FROM npwd_phone_gallery WHERE id = ? AND identifier = ?';
-  await pool.query(query, [photo.id, identifier]);
+    'DELETE FROM npwd_phone_gallery WHERE image = ? AND identifier = ?';
+  await pool.query(query, [photo.image, identifier]);
 }
 
 onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {

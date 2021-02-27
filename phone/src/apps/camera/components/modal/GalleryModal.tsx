@@ -27,12 +27,12 @@ export const GalleryModal = () => {
     history.push(referal);
   };
 
-  const handleDeletePhoto = useCallback(() => {
+  const handleDeletePhoto = () => {
     Nui.send('photo:deletePhoto', {
-      id: meta.id,
+      image: meta.image,
     });
     history.push(referal);
-  }, [history, meta.id, referal]);
+  };
 
   const handleSharePhoto = useCallback(() => {
     setShareOpen(meta);
@@ -42,7 +42,11 @@ export const GalleryModal = () => {
 
   return (
     <>
-      <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
+      <ShareModal
+        referal={referal}
+        meta={shareOpen}
+        onClose={() => setShareOpen(null)}
+      />
       <Paper className={classes.modal}>
         <div className={shareOpen ? classes.backgroundModal : null} />
         <Button onClick={_handleClose}>
