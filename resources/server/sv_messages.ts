@@ -484,13 +484,3 @@ onNet(
     }
   }
 );
-
-// currently sending the notification to only the person that created it.
-// we need to get all participants and only send to them.
-// afaik we are only sending the groupId and message from nui.
-// although this could easily be solved by getting participants
-// from the current groupId.
-
-onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, async () => {
-
-})
