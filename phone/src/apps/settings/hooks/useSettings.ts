@@ -22,13 +22,18 @@ export const settingsState = atom({
   effects_UNSTABLE: [localStorageEffect('settings')],
 });
 
-interface IPhoneSettings {
+export interface IPhoneSettings {
   wallpaper: string;
   frame: string;
   theme: string;
   zoom: number;
   ringtone: string;
   ringtoneVol: number;
+  notification: string;
+  notificationVol: number;
+  TWITTER_notification: string;
+  TWITTER_notificationVol: number;
+  TWITTER_notifyNewFeedTweet: boolean;
 }
 
 export const useSettings = () => {

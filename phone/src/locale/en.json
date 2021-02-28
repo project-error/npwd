@@ -25,6 +25,11 @@
     "APPS_DIALER_REJECT_CALL": "Reject",
     "APPS_DIALER_END_CALL": "End",
 
+<<<<<<< HEAD
+=======
+    "APPS_BANK_TRANSFER": "Transfer",
+
+>>>>>>> Add calling and notification sounds
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "A link to your image or gif",
@@ -103,9 +108,6 @@
 
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
 
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
-
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
@@ -113,9 +115,11 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
-    
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",

@@ -12,9 +12,9 @@ export const MapStringOptions = (current, onClick) => (string) => {
   };
 };
 
-export const useContextMenu = (_options = []): UseContextMenu => {
+export const useContextMenu = (_options?): UseContextMenu => {
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState(_options);
+  const [options, setOptions] = useState(_options || []);
 
   const onClose = () => setOpen(false);
 

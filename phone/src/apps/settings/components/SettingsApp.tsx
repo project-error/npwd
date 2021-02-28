@@ -23,7 +23,15 @@ import {
   VolumeUp,
 } from '@material-ui/icons';
 
-import { ListSubheader } from '@material-ui/core';
+import {
+  Box,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  ListSubheader,
+  Slider,
+} from '@material-ui/core';
 import { useRecoilState } from 'recoil';
 import { settingsState } from '../hooks/useSettings';
 
@@ -65,18 +73,22 @@ export const SettingsApp = () => {
       handleSettingChange('zoom', val)
     )
   );
-  // Doesn't actually do anything for the time being
   const ringtones = config.ringtones.map(
     MapStringOptions(settings.ringtone, (val: string) =>
       handleSettingChange('ringtone', val)
     )
   );
-  // * Probably gonna make this a slider component in the future
-  // const ringtoneVols = config.ringtoneVols.map(
-  //   MapStringOptions(settings.ringtoneVol, (val: number) => setSettings('ringtoneVol', val))
-  // )
+  const notifications = config.notifications.map(
+    MapStringOptions(settings.notification, (val: string) =>
+      handleSettingChange('notification', val)
+    )
+  );
 
-  // TODO: These new settings all work
+  const twitterNotifications = config.notifications.map(
+    MapStringOptions(settings.notification, (val: string) =>
+      handleSettingChange('TWITTER_notification', val)
+    )
+  );
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
@@ -96,17 +108,55 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          {
-            // * NOTE: This component is most likely temporary
-            // * Probably want to make it a slider in the future. Ignore hardcoded for the meantime
-          }
+          <ListItem>
+            <ListItemIcon>
+              <VolumeUp />
+            </ListItemIcon>
+            <ListItemText
+              primary={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
+              secondary={settings.ringtoneVol}
+            />
+            <ListItemSecondaryAction>
+              <Box p={2} width={150}>
+                <Slider
+                  value={settings.ringtoneVol}
+                  min={0}
+                  max={100}
+                  onChange={(e, volume) =>
+                    handleSettingChange('ringtoneVol', volume)
+                  }
+                />
+              </Box>
+            </ListItemSecondaryAction>
+          </ListItem>
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
-            value='100%'
-            options={['100%', '80%', '70%']}
+            label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
+            value={settings.notification}
+            options={notifications}
             onClick={openMenu}
-            icon={<VolumeUp />}
+            icon={<LibraryMusic />}
           />
+          <ListItem>
+            <ListItemIcon>
+              <VolumeUp />
+            </ListItemIcon>
+            <ListItemText
+              primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+              secondary={settings.notificationVol}
+            />
+            <ListItemSecondaryAction>
+              <Box p={2} width={150}>
+                <Slider
+                  value={settings.notificationVol}
+                  min={0}
+                  max={100}
+                  onChange={(e, volume) =>
+                    handleSettingChange('notificationVol', volume)
+                  }
+                />
+              </Box>
+            </ListItemSecondaryAction>
+          </ListItem>
         </List>
         <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
           <SettingItem
@@ -137,6 +187,40 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<ZoomIn />}
           />
+        </List>
+        <List
+          disablePadding
+          subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}
+        >
+          <SettingItem
+            label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
+            value={settings.TWITTER_notification}
+            options={twitterNotifications}
+            onClick={openMenu}
+            icon={<LibraryMusic />}
+          />
+          <ListItem>
+            <ListItemIcon>
+              <VolumeUp />
+            </ListItemIcon>
+            <ListItemText
+              primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+              secondary={settings.TWITTER_notificationVol}
+            />
+
+            <ListItemSecondaryAction>
+              <Box p={2} width={150}>
+                <Slider
+                  value={settings.TWITTER_notificationVol}
+                  min={0}
+                  max={100}
+                  onChange={(e, volume) =>
+                    handleSettingChange('TWITTER_notificationVol', volume)
+                  }
+                />
+              </Box>
+            </ListItemSecondaryAction>
+          </ListItem>
         </List>
       </AppContent>
       <ContextMenu />
