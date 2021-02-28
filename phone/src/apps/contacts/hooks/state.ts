@@ -20,9 +20,5 @@ export const contactsState = {
   contactDetail: atom({
     key: 'contactDetail',
     default: null,
-  }),
-  contactAlert: atom({
-    key: 'contactAlert',
-    default: null,
-  }),
+  })
 };

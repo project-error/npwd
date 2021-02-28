@@ -86,3 +86,7 @@ onNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, (groupId: string) => {
 onNet(events.MESSAGES_SEND_MESSAGE_FAILED, () => {
   sendMessageEvent(events.MESSAGES_SEND_MESSAGE_FAILED);
 });
+
+onNet(events.MESSAGES_ACTION_RESULT, (result: any) => {
+  sendMessageEvent(events.MESSAGES_ACTION_RESULT, result);
+});

@@ -14,7 +14,6 @@ import { NavigationBar } from './navigation/NavigationBar';
 import { BankHome } from './home/BankHome';
 import { BankAccount } from './account/BankAccount';
 import { TransactionList } from './transactions/TransactionList';
-import { BankAlert } from './alert/BankAlert';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 InjectDebugData([
@@ -110,7 +109,6 @@ export const BankApp = () => {
           <Route path='/bank/account' exact component={BankAccount} />
           <Route path='/bank/transactions' exact component={TransactionList} />
         </Switch>
-        <BankAlert />
       </AppContent>
       <NavigationBar />
     </AppWrapper>

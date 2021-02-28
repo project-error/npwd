@@ -412,21 +412,42 @@ onNet(
         label
       );
 
-      if (result.error) {
-        emitNet(
-          events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED,
-          _source,
-          result
-        );
+      if (result.error && result.duplicate) {
+        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+          message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
+          type: 'error',
+        });
+
+        // if the phoneNumber is invalid
+      } else if (result.error && result.phoneNumber) {
+        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+          message: 'MESSAGES_INVALID_PHONE_NUMBER',
+          type: 'error',
+        });
+
+        // if you are try to add yourself
+      } else if (result.error && result.mine) {
+        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+          message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
+          type: 'error',
+        });
+      } else if (result.error) {
+        // if it just fails, welp
+        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
+        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+          message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+          type: 'error',
+        });
       } else {
-        emitNet(
-          events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS,
-          _source,
-          result
-        );
+        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
       }
     } catch (e) {
       emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
+
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+        type: 'error',
+      });
       messageLogger.error(`Failed to create message group, ${e.message}`, {
         source: _source,
       });
@@ -457,7 +478,16 @@ onNet(
       await createMessage(_identifier, groupId, message);
       emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
     } catch (e) {
+      // Not really sure what this does? As I cant find any reference
+      // of this in the ui part.
       emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+      // sending a new alert
+      // The message property is always using the locale strings without
+      // the APPS_ prefix.
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: 'MESSAGES_NEW_MESSAGE_FAILED',
+        type: 'error',
+      });
       messageLogger.error(`Failed to send message, ${e.message}`, {
         source: _source,
       });

@@ -74,10 +74,11 @@
 
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Search messages...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Send",
-    "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number: ",
+    "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number",
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
@@ -111,6 +112,9 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
+
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",

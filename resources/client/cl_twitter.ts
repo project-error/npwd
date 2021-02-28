@@ -1,5 +1,6 @@
 import events from '../utils/events';
 import { sendTwitterMessage } from '../utils/messages';
+import { IAlertProps } from '../../phone/src/common/typings/alerts';
 
 /**
  * Twitter get or create profile
@@ -26,8 +27,8 @@ on(`__cfx_nui:${events.TWITTER_UPDATE_PROFILE}`, (data: string) => {
   emitNet(events.TWITTER_UPDATE_PROFILE, data);
 });
 
-onNet(events.TWITTER_UPDATE_PROFILE_RESULT, (result: boolean) => {
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_RESULT, result);
+onNet(events.TWITTER_UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_RESULT, alert);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
 });
 
@@ -75,8 +76,8 @@ on(`__cfx_nui:${events.TWITTER_CREATE_TWEET}`, (data: string) => {
   emitNet(events.TWITTER_CREATE_TWEET, data);
 });
 
-onNet(events.TWITTER_CREATE_TWEET_RESULT, (result: boolean) => {
-  sendTwitterMessage(events.TWITTER_CREATE_TWEET_RESULT, result);
+onNet(events.TWITTER_CREATE_TWEET_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(events.TWITTER_CREATE_TWEET_RESULT, alert);
   emitNet(events.TWITTER_FETCH_TWEETS);
 });
 
