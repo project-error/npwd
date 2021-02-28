@@ -3,7 +3,6 @@ import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import AlertBar from './AlertBar';
 import MessageGroupModal from './modal/MessageGroupModal';
 import MessagesList from './list/MessagesList';
 import { Route, Switch, useHistory } from 'react-router-dom';
@@ -50,7 +49,6 @@ export const MessagesApp = () => {
           </Switch>
         </AppContent>
         <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
-        <AlertBar />
       </AppWrapper>
     </MessagesThemeProvider>
   );

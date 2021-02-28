@@ -9,7 +9,7 @@ export const useMessagesService = () => {
   const setCreateMessageGroupResult = useSetRecoilState(
     messageState.createMessageGroupResult
   );
-  const { addAlert } = useSnackbar()
+  const { addAlert } = useSnackbar();
 
   useNuiEvent('MESSAGES', 'phone:fetchMessageGroupsSuccess', setMessageGroups);
   useNuiEvent('MESSAGES', 'phone:fetchMessagesSuccess', setMessages);
@@ -23,5 +23,5 @@ export const useMessagesService = () => {
     'phone:createMessageGroupFailed',
     setCreateMessageGroupResult
   );
-  useNuiEvent('MESSAGES', 'setAlert', addAlert);
+  useNuiEvent('MESSAGES', 'phone:setMessagesAlert', addAlert);
 };
