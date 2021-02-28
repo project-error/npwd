@@ -3,10 +3,7 @@ import {
   blue,
   common,
   grey,
-  green,
   purple,
-  yellow,
-  red,
 } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -35,6 +32,7 @@ import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
+
 import {
   MESSAGES_APP_PRIMARY_COLOR,
   MESSAGES_APP_TEXT_COLOR,
@@ -43,6 +41,9 @@ import {
   CONTACTS_APP_PRIMARY_COLOR,
   CONTACTS_APP_TEXT_COLOR,
 } from '../../../apps/contacts/contacts.theme';
+import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_ICON_COLOR } from '../../../apps/sellout/sellout.theme';
+import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
+import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 
 export interface IAppConfig {
   id: string;
@@ -59,17 +60,17 @@ export const APPS: IAppConfig[] = [
   {
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
-    icon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
+    icon: <FontAwesomeIcon icon={faPhoneAlt} />,
     notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
-    backgroundColor: green[600],
-    color: common.white,
+    backgroundColor: DIALER_APP_PRIMARY_COLOR,
+    color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id='DIALER' path='/phone' component={DialerApp} />,
   },
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
-    icon: <MessageIcon fontSize='default' />,
+    icon: <MessageIcon fontSize="large" />,
     notificationIcon: <MessageIcon fontSize='small' />,
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
@@ -81,7 +82,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
-    icon: <ContactsIcon />,
+    icon: <ContactsIcon fontSize="large" />,
     notificationIcon: <ContactsIcon fontSize='small' />,
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
@@ -93,7 +94,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
-    icon: <CalculatorIcon />,
+    icon: <CalculatorIcon fontSize="large" />,
     notificationIcon: <CalculatorIcon fontSize='small' />,
     backgroundColor: purple[500],
     color: grey[50],
@@ -105,7 +106,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
-    icon: <SettingsIcon />,
+    icon: <SettingsIcon fontSize="large" />,
     notificationIcon: <SettingsIcon fontSize='small' />,
     backgroundColor: '#383838',
     color: grey[50],
@@ -117,7 +118,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
-    icon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
+    icon: <FontAwesomeIcon icon={faWonSign} />,
     notificationIcon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
     backgroundColor: blue[900],
     color: common.white,
@@ -127,7 +128,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'TWITTER',
     nameLocale: 'APPS_TWITTER',
-    icon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
+    icon: <FontAwesomeIcon icon={faTwitter} fixedWidth />,
     notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
     backgroundColor: blue[600],
     color: common.white,
@@ -141,8 +142,8 @@ export const APPS: IAppConfig[] = [
     nameLocale: 'APPS_SELLOUT',
     icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
     notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size='xs' />,
-    backgroundColor: red[500],
-    color: common.white,
+    backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
+    color: SELLOUT_APP_ICON_COLOR,
     path: '/sellout',
     Route: () => (
       <AppRoute id='SELLOUT' path='/sellout' component={SelloutApp} />
@@ -155,8 +156,8 @@ export const APPS: IAppConfig[] = [
     notificationIcon: (
       <FontAwesomeIcon icon={faStickyNote} fixedWidth size='xs' />
     ),
-    backgroundColor: yellow[800],
-    color: common.white,
+    backgroundColor: NOTES_APP_PRIMARY_COLOR,
+    color: NOTES_APP_ICON_COLOR,
     path: '/notes',
     Route: () => <AppRoute id='NOTES' path='/notes' component={NotesApp} />,
   },

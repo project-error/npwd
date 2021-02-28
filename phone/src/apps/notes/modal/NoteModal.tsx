@@ -1,41 +1,39 @@
-import { Button, TextField, Slide } from '@material-ui/core';
-import React, { useState } from 'react';
+import {
+  Button,
+  TextField,
+  Slide,
+  Paper,
+  Typography,
+  Container,
+  CircularProgress,
+  Box,
+} from '@material-ui/core';
+import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-import { useNoteModal } from '../hooks/useNoteModal';
 import { useNoteDetail } from '../hooks/useNoteDetail';
-
 import useStyles from './modal.styles';
-
-import '../NotesApp.css';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { StatusButton } from '../../../ui/components/StatusButton';
 
-// TODO: Fix input focus color
 export const NoteModal = () => {
-  const { noteModal, setNoteModal } = useNoteModal();
+  const classes = useStyles();
+  const history = useHistory();
+  const { t } = useTranslation();
   const { detail, setDetail } = useNoteDetail();
-  const [title, setTitle] = useState(detail ? detail.title : '');
-  const [content, setContent] = useState(detail ? detail.content : '');
 
-  const classes = useStyles()
-
-  
+  const onClose = () => history.goBack();
 
   const _handleClose = () => {
     setDetail(null);
-    setNoteModal(false);
+    onClose();
   };
 
   const handleNoteSave = () => {
-    Nui.send('phone:addNote', {
-      title,
-      content,
-    });
+    Nui.send('phone:addNote', detail);
     setDetail(null);
-    setNoteModal(false);
-    
-    setTitle('')
-    setContent('')
+    onClose();
   };
 
   const handleDeleteNote = () => {
@@ -44,78 +42,112 @@ export const NoteModal = () => {
       id,
     });
     setDetail(null);
-    setNoteModal(false);
+    onClose();
   };
 
   const handleUpdateNote = () => {
-    Nui.send('phone:updateNote', {
-      id: detail.id,
-      title,
-      content,
-    });
+    Nui.send('phone:updateNote', detail);
     setDetail(null);
-    setNoteModal(false);
+    onClose();
   };
 
   return (
-    <div className={noteModal ? classes.modalRoot : classes.modalHide}>
-      <Slide direction='left' in={noteModal} mountOnEnter unmountOnExit>
-        <div>
-          <Button className={classes.closeButton} onClick={_handleClose}>
-            <ArrowBackIcon fontSize='large' />
-          </Button>
-          <div id='notes-modal' className={classes.noteContainer}>
-            <TextField
-              className={classes.input}
-              rowsMax={1}
-              placeholder='Title'
-              inputProps={{
-                className: classes.inputPropsTitle,
-                maxLength: 25
-              }}
-              fullWidth
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <TextField
-              className={classes.input}
-              inputProps={{
-                className: classes.inputPropsContent,
-                maxLength: 250,
-              }}
-              placeholder='Content'
-              multiline
-              fullWidth
-              rows={19}
-              variant='outlined'
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-            <p style={{ color: "#fff" }}>{content.length}/250</p>
-            {!detail &&(
-              <Button disabled={title.length > 0 ? false : true} className={classes.saveButton} onClick={handleNoteSave}>
-                Save
-              </Button>
-            )}
-            {detail && (
-              <Button
-                className={classes.updateButton}
-                onClick={handleUpdateNote}
-              >
-                Update
-              </Button>
-            )}
-            {detail && (
-              <Button
-                className={classes.deleteButton}
-                onClick={handleDeleteNote}
-              >
-                Delete
-              </Button>
-            )}
-          </div>
-        </div>
-      </Slide>
-    </div>
+    <Slide direction='left' in={!!detail}>
+      <Paper className={classes.modalRoot}>
+        {!detail ? (
+          <CircularProgress />
+        ) : (
+          <Container>
+            <Box>
+              <Box py={2}>
+                <Button
+                  color='primary'
+                  size='large'
+                  startIcon={<ArrowBackIcon fontSize='large' />}
+                  onClick={_handleClose}
+                >
+                  {t('APPS_NOTES')}
+                </Button>
+              </Box>
+              <TextField
+                className={classes.input}
+                rowsMax={1}
+                label={t('GENERIC_TITLE')}
+                inputProps={{
+                  className: classes.inputPropsTitle,
+                  maxLength: 25,
+                }}
+                fullWidth
+                value={detail.title}
+                onChange={(e) =>
+                  setDetail((d) => ({ ...d, title: e.target.value }))
+                }
+              />
+              <TextField
+                className={classes.input}
+                inputProps={{
+                  className: classes.inputPropsContent,
+                  maxLength: 250,
+                }}
+                label={t('GENERIC_CONTENT')}
+                multiline
+                fullWidth
+                rows={16}
+                variant='outlined'
+                value={detail.content}
+                onChange={(e) =>
+                  setDetail((d) => ({ ...d, content: e.target.value }))
+                }
+              />
+              <Typography paragraph>{detail.content.length}/250</Typography>
+              {!detail.id ? (
+                <>
+                  <Box display="inline" p={1}>
+                    <Button
+                      color='primary'
+                      variant='contained'
+                      disabled={detail.title.length > 0 ? false : true}
+                      onClick={handleNoteSave}
+                    >
+                      {t('GENERIC_SAVE')}
+                    </Button>
+                  </Box>
+                  <Box display="inline" p={1}>
+                    <StatusButton
+                      color='error'
+                      variant='contained'
+                      onClick={_handleClose}
+                    >
+                      {t('GENERIC_CANCEL')}
+                    </StatusButton>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box display="inline" p={1}>
+                    <Button
+                      color='primary'
+                      variant='contained'
+                      onClick={handleUpdateNote}
+                    >
+                      {t('GENERIC_UPDATE')}
+                    </Button>
+                  </Box>
+                  <Box display="inline" p={1}>
+                    <StatusButton
+                      color='error'
+                      variant='contained'
+                      onClick={handleDeleteNote}
+                    >
+                      {t('GENERIC_DELETE')}
+                    </StatusButton>
+                  </Box>
+                </>
+              )}
+            </Box>
+          </Container>
+        )}
+      </Paper>
+    </Slide>
   );
 };

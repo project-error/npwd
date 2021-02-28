@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { Box, IconButton, InputBase, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { DialInputCtx } from '../context/InputContext';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -26,14 +28,19 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DialerInput = () => {
   const classes = useStyles();
+  const history = useHistory();
 
-  const { inputVal } = useContext(DialInputCtx)
+  const { inputVal } = useContext(DialInputCtx);
 
   const handleCall = (number: string) => {
     Nui.send('phone:beginCall', {
       number,
     });
   };
+
+  const handleNewContact = (number: string) => {
+    history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`)
+  }
 
   return (
     <Box component={Paper} className={classes.root}>
@@ -42,8 +49,11 @@ export const DialerInput = () => {
         className={classes.input}
         value={inputVal}
       />
+      <IconButton color='primary' className={classes.iconBtn}>
+        <PhoneIcon fontSize="large" onClick={() => handleCall(inputVal)} />
+      </IconButton>
       <IconButton className={classes.iconBtn}>
-        <PhoneIcon onClick={() => handleCall(inputVal)} />
+        <PersonAddIcon fontSize="large" onClick={() => handleNewContact(inputVal)} />
       </IconButton>
     </Box>
   );

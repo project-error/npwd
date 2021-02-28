@@ -5,7 +5,7 @@ interface ICallUI {
   history: ICall[];
 }
 
-export const useDialHistory = (): ICallUI => {
+export const useDialHistory = (): ICallUI[] => {
   const history = useRecoilValue(dialState.history);
   return history;
 };

@@ -6,10 +6,8 @@ import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './main.css';
-import Phone from './Phone';
 import PhoneConfig from './config/default.json';
-import SnackbarProvider from './ui/providers/SnackbarProvider';
-import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
+import { PhoneContainer } from './PhoneContainer';
 
 // Enable Sentry when config setting is true
 if (PhoneConfig.SentryErrorMetrics) {
@@ -27,11 +25,7 @@ if (PhoneConfig.SentryErrorMetrics) {
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
-      <SnackbarProvider>
-        <NotificationsProvider>
-          <Phone />
-        </NotificationsProvider>
-      </SnackbarProvider>
+      <PhoneContainer />
     </RecoilRoot>
   </HashRouter>,
   document.getElementById('root')

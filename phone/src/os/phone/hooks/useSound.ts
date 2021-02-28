@@ -13,70 +13,75 @@ interface ISoundOptions {
  *
  * @param { volume, interrupt, loop} Additional options
  **/
-
 const useSound = (
   url: string,
   { volume = 1, interrupt = false, loop = false }: ISoundOptions = {}
 ) => {
-  const isMounted = useRef<boolean>(false);
+  const [isMounted, setMounted] = useState<boolean>(false);
+  const soundRef = useRef<Howl>(null);
 
   const [playing, setPlaying] = useState<boolean>(false);
 
-  const [sound, setSound] = useState<Howl | null>(null);
-
   // Mount & Dismount handling
   useEffect(() => {
-    isMounted.current = true;
-    const sound = new Howl({
+    soundRef.current?.unload();
+    setPlaying(false);
+    setMounted(false);
+
+    soundRef.current = new Howl({
       src: url,
-      volume,
-      loop,
+      volume: 1,
+      loop: false,
     });
-    setSound(sound);
+
+    setMounted(true);
 
     return () => {
-      isMounted.current = false;
+      soundRef.current?.unload();
+      soundRef.current = undefined;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [url]);
 
   useEffect(() => {
-    if (sound) {
-      sound.volume(volume);
+    if (isMounted) {
+      soundRef.current.volume(volume);
     }
-    // Shouldnt need to rerun if sound changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume]);
+  }, [volume, isMounted]);
+
+  useEffect(() => {
+    if (isMounted) {
+      soundRef.current.loop(loop);
+    }
+  }, [loop, isMounted]);
 
   const play = useCallback(() => {
-    if (!sound) return;
+    if (!soundRef.current) return;
 
-    if (interrupt) return sound.stop();
-
-    sound.play();
-
-    if (isMounted.current) {
-      sound.once('end', () => {
-        if (!sound.playing()) {
+    if (isMounted) {
+      soundRef.current.play();
+      soundRef.current.once('end', () => {
+        if (!soundRef.current.playing()) {
           setPlaying(false);
         }
       });
-    }
-
-    if (isMounted.current) {
       setPlaying(true);
     }
-  }, [interrupt, sound]);
+  }, [isMounted]);
 
   const stop = useCallback(() => {
-    if (!sound) return;
+    if (!soundRef.current) return;
 
-    sound.stop();
-
-    if (isMounted.current) {
+    if (isMounted) {
+      soundRef.current.stop();
       setPlaying(false);
     }
-  }, [sound]);
+  }, [isMounted]);
+
+  useEffect(() => {
+    if (interrupt && isMounted) {
+      stop();
+    }
+  }, [interrupt, isMounted, stop]);
 
   return { play, playing, stop };
 };

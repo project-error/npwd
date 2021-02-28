@@ -7,9 +7,9 @@ import {
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import AppsIcon from '@material-ui/icons/Apps';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import { useHistory } from 'react-router-dom';
-
-import Nui from '../../nui-events/utils/Nui';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { usePhone } from '../../phone/hooks/usePhone';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,17 +19,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Navigation = () => {
-  const closePhone = () => {
-    console.log('Phone closed');
-    Nui.send('phone:close');
-  };
-
   const classes = useStyles();
   const history = useHistory();
+  const { isExact } = useRouteMatch('/');
+  const { closePhone } = usePhone();
+  const { setBarUncollapsed } = useNotifications();
   return (
     <BottomNavigation
       className={classes.root}
-      onChange={(_e, value) => value()}
+      onChange={(_e, value) => {
+        setBarUncollapsed(false);
+        value();
+      }}
     >
       <BottomNavigationAction
         label='Home'
@@ -38,12 +39,12 @@ export const Navigation = () => {
       />
       <BottomNavigationAction
         label='Close'
-        value={() => closePhone()}
+        value={closePhone}
         icon={<RadioButtonUncheckedIcon />}
       />
       <BottomNavigationAction
         label='Back'
-        value={() => history.goBack()}
+        value={() => !isExact && history.goBack()}
         icon={<KeyboardArrowLeftIcon />}
       />
     </BottomNavigation>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   makeStyles,
   Typography,
@@ -8,18 +8,14 @@ import {
   Paper,
   Box,
   List,
-  ListItem,
-  ListItemText,
   Divider,
-  ListItemAvatar,
 } from '@material-ui/core';
 import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
-import CloseIcon from '@material-ui/icons/Close';
 import Battery90Icon from '@material-ui/icons/Battery90';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
-import { useHistory } from 'react-router-dom';
+import { NotificationItem } from './NotificationItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,13 +63,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean }) => {
+export const NotificationBar = () => {
   const classes = useStyles();
-  const history = useHistory();
 
-  const { icons, notifications, removeNotification } = useNotifications();
-
-  const [uncollapsed, setUncollapsed] = useState<boolean>(false);
+  const {
+    icons,
+    notifications,
+    removeNotification,
+    barUncollapsed,
+    setBarUncollapsed,
+  } = useNotifications();
 
   return (
     <>
@@ -83,7 +82,7 @@ export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean 
         justify='space-between'
         wrap='nowrap'
         onClick={() => {
-          setUncollapsed(!uncollapsed);
+          setBarUncollapsed((curr) => !curr);
         }}
       >
         <Grid container item wrap='nowrap'>
@@ -120,41 +119,30 @@ export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean 
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction='down' in={forceUncollapse || uncollapsed}>
+      <Slide direction='down' in={barUncollapsed}>
         <Paper square className={classes.drawer}>
-          <Box p={2}>
+          <Box py={2}>
             <List>
               <Divider />
-              {notifications.map(({ href, title, content, icon }, idx) => (
-                <ListItem
-                  divider
-                  button
-                  onClick={() => {
-                    if (href) {
-                      history.push(href);
-                      setUncollapsed(false);
+              {notifications.map((notification, idx) => (
+                <NotificationItem
+                  key={idx}
+                  {...notification}
+                  onClose={(e) => {
+                    e.stopPropagation();
+                    notification.onClose?.(notification);
+                    if (notifications.length === 1) {
+                      setBarUncollapsed(false);
+                    }
+                    removeNotification(idx);
+                  }}
+                  onClickClose={() => {
+                    setBarUncollapsed(false);
+                    if (!notification.cantClose) {
                       removeNotification(idx);
                     }
                   }}
-                  className={classes.notificationItem}
-                  key={idx}
-                >
-                  {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
-                  <ListItemText secondary={content}>{title}</ListItemText>
-                  <IconButton
-                    className={classes.closeNotifBtn}
-                    size='small'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (notifications.length === 1) {
-                        setUncollapsed(false);
-                      }
-                      removeNotification(idx);
-                    }}
-                  >
-                    <CloseIcon color='primary' />
-                  </IconButton>
-                </ListItem>
+                />
               ))}
             </List>
           </Box>
@@ -162,7 +150,7 @@ export const NotificationBar = ({ forceUncollapse }: { forceUncollapse: boolean 
             <IconButton
               className={classes.collapseBtn}
               size='small'
-              onClick={() => setUncollapsed(false)}
+              onClick={() => setBarUncollapsed(false)}
             >
               <ArrowDropUpIcon />
             </IconButton>

@@ -9,10 +9,10 @@ import HistoryIcon from '@material-ui/icons/History';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
   },
   icon: {
-    color: '#43a047',
+    color: theme.palette.primary.main,
   },
 }));
 

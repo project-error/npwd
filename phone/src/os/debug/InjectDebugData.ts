@@ -1,7 +1,7 @@
-interface DebugEvent {
+interface DebugEvent<P = any> {
   app: string;
   method: string;
-  data: any;
+  data: P;
 }
 
 // TODO: This should be unit tested
@@ -27,7 +27,7 @@ interface DebugEvent {
  *  }
  * ])
  **/
-const InjectDebugData = (events: DebugEvent[], timer = 1000) => {
+const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 1000) => {
   if (process.env.NODE_ENV === 'development') {
     for (const event of events) {
       setTimeout(() => {

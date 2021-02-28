@@ -1,50 +1,11 @@
 import config from '../utils/config';
 import events from '../utils/events';
-import {phoneCloseAnim, phoneOpenAnim, removePhoneProp} from './functions';
+import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 
 let prop = 0;
 let isPhoneOpen = false;
 let propCreated = false;
 let phoneModel = 'prop_amb_phone'; // Refered to in newphoneProp function. Requires custom phone being streamed.
-
-/* * * * * * * * * * * * *
- *
- *  Register Command and Keybinding
- *
- * * * * * * * * * * * * */
-
-RegisterCommand(
-  'phone:close',
-  async (source: any, args: string[], raw: any) => {
-    await phoneCloseAnim();
-    SetNuiFocus(false, false);
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'PHONE',
-        method: 'setVisibility',
-        data: false,
-      })
-    );
-  },
-  false
-);
-
-RegisterCommand(
-  'phone',
-  async () => {
-    //-- Toggles Phone
-    await Phone();
-  },
-  false
-);
-
-RegisterCommand(
-  'phone:open',
-  async () => {
-    await Phone();
-  },
-  false
-);
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
@@ -66,7 +27,6 @@ const showPhone = async (): Promise<void> => {
       data: true,
     })
   );
-  sendPhoneConfig();
   SetNuiFocus(true, true);
 };
 
@@ -84,13 +44,36 @@ const hidePhone = async (): Promise<void> => {
   SetNuiFocus(false, false);
 };
 
-const togglePhoneVisible = async (): Promise<void> => {
-  if (isPhoneOpen) {
+/* * * * * * * * * * * * *
+ *
+ *  Register Command and Keybinding
+ *
+ * * * * * * * * * * * * */
+
+RegisterCommand(
+  'phone:close',
+  async () => {
     await hidePhone();
-  } else {
+  },
+  false
+);
+
+RegisterCommand(
+  'phone',
+  async () => {
+    //-- Toggles Phone
+    await Phone();
+  },
+  false
+);
+
+RegisterCommand(
+  'phone:open',
+  async () => {
     await showPhone();
-  }
-};
+  },
+  false
+);
 
 /* * * * * * * * * * * * *
  *
@@ -99,24 +82,17 @@ const togglePhoneVisible = async (): Promise<void> => {
  * * * * * * * * * * * * */
 
 async function Phone(): Promise<void> {
-  fetchOnInitialize()
+  fetchOnInitialize();
   if (config.PhoneAsItem) {
     // TODO: Do promise callback here
     // const hasPhoneItem = await emitNetPromise('phone:hasPhoneItem')
     // if (!hasPhoneItem) return
-    return await togglePhoneVisible();
   }
-  await togglePhoneVisible();
-}
-
-function sendPhoneConfig() {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'phoneConfig',
-      data: config,
-    })
-  );
+  if (isPhoneOpen) {
+    await hidePhone();
+  } else {
+    await showPhone();
+  }
 }
 
 AddEventHandler('onResourceStop', function (resource: string) {
@@ -144,7 +120,6 @@ onNet('phone:sendCredentials', (number: string) => {
   );
 });
 
-
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
 
 /* * * * * * * * * * * * *
@@ -156,7 +131,6 @@ onNet('phone:sendCredentials', (number: string) => {
 function fetchOnInitialize() {
   emitNet(events.CONTACTS_GET_CONTACTS);
 }
-
 
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
 on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
@@ -191,7 +165,7 @@ on(`__cfx_nui:${events.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
 
 RegisterNuiCallbackType('phone:close');
 on(`__cfx_nui:phone:close`, async (data: any, cb: Function) => {
-  await Phone();
+  await hidePhone();
   cb();
 }); // Called for when the phone is closed via the UI.
 

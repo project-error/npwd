@@ -1,7 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
-import Nui from '../../nui-events/utils/Nui';
+import { usePhone } from '../../phone/hooks/usePhone';
 
 const keyboardState = {
   ArrowRight: atom({
@@ -46,8 +46,9 @@ const validKeys = [
 
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
-export const useInitKeyboard = () => {
+export const useKeyboardService = () => {
   const history = useHistory();
+  const { closePhone } = usePhone();
   const getters = {
     ArrowRight: useRecoilValue(keyboardState.ArrowRight),
     ArrowLeft: useRecoilValue(keyboardState.ArrowLeft),
@@ -58,21 +59,26 @@ export const useInitKeyboard = () => {
     Escape: useRecoilValue(keyboardState.Escape),
   };
 
+  const handlers = useRef(new Map());
   const setEscape = useSetRecoilState<any>(keyboardState.Escape);
   const setBackspace = useSetRecoilState(keyboardState.Backspace);
+
+  useEffect(
+    function registerCustomKeys() {
+      Object.keys(getters).forEach((g) => {
+        handlers.current.set(g, getters[g]);
+      });
+    },
+    [getters]
+  );
 
   useEffect(
     function handleNUIKeyboardMessage() {
       function onKeyUp(event) {
         const { key } = event;
-        const callback = getters[key];
-        if (
-          isKeyValid(key) &&
-          callback &&
-          callback.handler &&
-          callback.handler.call
-        ) {
-          return callback.handler(event);
+        const callback = handlers.current.get(key);
+        if (isKeyValid(key) && callback && callback.call) {
+          return callback(event);
         }
       }
 
@@ -82,35 +88,22 @@ export const useInitKeyboard = () => {
     [getters]
   );
 
-  const escapeHandler = useCallback(() => Nui.send('phone:close'), []);
-
-  const backspaceHandler = useCallback((event) => {
-    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
-      // Dont anything if we are typing something :)
-      return;
-    }
-    history.goBack();
-  }, [history]);
+  const backspaceHandler = useCallback(
+    (event) => {
+      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+        // Dont anything if we are typing something :)
+        return;
+      }
+      history.goBack();
+    },
+    [history]
+  );
 
   useEffect(
     function registerDefaultHandlers() {
-      setEscape({ handler: escapeHandler });
-      setBackspace({ handler: backspaceHandler });
+      handlers.current.set('Escape', () => closePhone());
+      handlers.current.set('Backspace', backspaceHandler);
     },
-    [setEscape, setBackspace, history, escapeHandler, backspaceHandler]
+    [setEscape, setBackspace, history, backspaceHandler, closePhone]
   );
-};
-
-export const useKeyboard = () => {
-  const setters = {
-    ArrowRight: useSetRecoilState(keyboardState.ArrowRight),
-    ArrowLeft: useSetRecoilState(keyboardState.ArrowLeft),
-    ArrowUp: useSetRecoilState(keyboardState.ArrowUp),
-    ArrowDown: useSetRecoilState(keyboardState.ArrowDown),
-    Enter: useSetRecoilState(keyboardState.Enter),
-  };
-
-  return (key, handler) => {
-    setters[key]({ handler });
-  };
 };

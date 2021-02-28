@@ -45,7 +45,7 @@ InjectDebugData([
       {
         id: 3,
         display: 'Chip',
-        number: '417-8792',
+        number: '777-7777',
       },
     ],
   },

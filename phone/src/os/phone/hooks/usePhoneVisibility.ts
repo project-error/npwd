@@ -1,56 +1,50 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
-import { usePhone } from './usePhone';
+import { DEFAULT_ALERT_HIDE_TIME } from '../../notifications/notifications.constants';
+import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
-  const { setVisibility, visibility } = usePhone();
-  const { count } = useNotifications();
+  const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
+  const { currentAlert } = useNotifications();
   const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
-  const isNotificationVisibleOnly = useMemo(
-    () => !!(!visibility && count > 0),
-    [visibility, count]
-  );
-
   const notificationTimer = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (isNotificationVisibleOnly) {
-      setNotifVisibility(true);
-      clearTimeout(notificationTimer.current);
-      notificationTimer.current = setTimeout(() => {
-        setVisibility(false);
-        setNotifVisibility(false);
-      }, 5000);
+    if (visibility) {
+      setNotifVisibility(false);
     }
-    return () => clearTimeout(notificationTimer.current);
-  }, [isNotificationVisibleOnly, setVisibility]);
+  }, [visibility]);
+
+  useEffect(() => {
+    if (!visibility && currentAlert) {
+      setNotifVisibility(true);
+      if (notificationTimer.current) {
+        clearTimeout(notificationTimer.current);
+        notificationTimer.current = undefined;
+      }
+      if (currentAlert?.keepWhenPhoneClosed) {
+        return;
+      }
+      notificationTimer.current = setTimeout(() => {
+        setNotifVisibility(false);
+      }, DEFAULT_ALERT_HIDE_TIME);
+    }
+  }, [currentAlert, visibility, setVisibility]);
 
   const bottom = useMemo(() => {
-    if (isNotificationVisibleOnly) {
-      return `calc(-60% * ${zoom})`;
+    if (!visibility) {
+      return `calc(-70% * ${zoom})`;
     }
     return 0;
-  }, [isNotificationVisibleOnly, zoom]);
-
-  const clickEventOverride = useCallback(
-    (e) => {
-      if (isNotificationVisibleOnly) {
-        e.preventDefault();
-        e.stopPropagation();
-        setVisibility(true);
-      }
-    },
-    [setVisibility, isNotificationVisibleOnly]
-  );
+  }, [visibility, zoom]);
 
   return {
     bottom,
     visibility: notifVisibility || visibility,
-    uncollapseNotifications: isNotificationVisibleOnly,
-    clickEventOverride,
   };
 };

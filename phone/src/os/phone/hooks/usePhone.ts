@@ -1,15 +1,29 @@
-import { useRecoilState } from 'recoil';
-import { phoneState } from './state';
+import { useRecoilValue } from 'recoil';
 import { IServerConfig } from '../../../common/typings/config';
 import ServerConfig from '../../../config.autogen.json';
+import { useNotifications } from '../../notifications/hooks/useNotifications';
+import Nui from '../../nui-events/utils/Nui';
+import { phoneState } from './state';
 
 interface IUsePhone {
-  visibility: boolean;
-  setVisibility(v: boolean): void;
   config?: IServerConfig;
+  openPhone(): void;
+  closePhone(): void;
+  isPhoneOpen: boolean;
 }
 
 export const usePhone = (): IUsePhone => {
-  const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
-  return { visibility, setVisibility, config: ServerConfig as any };
+  const isPhoneOpen = useRecoilValue(phoneState.visibility);
+  
+  const { removeAlerts } = useNotifications();
+
+  const closePhone = () => {
+    removeAlerts();
+    Nui.send('phone:close');
+  };
+  const openPhone = () => {
+    Nui.send('phone:open');
+  };
+
+  return { config: ServerConfig as any, closePhone, openPhone, isPhoneOpen };
 };

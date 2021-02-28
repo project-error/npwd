@@ -1,7 +1,8 @@
 import React from 'react';
-import ListItemText from '@material-ui/core/ListItemText';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
+import PhoneIcon from '@material-ui/icons/Phone';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
 import Nui from '../../../../os/nui-events/utils/Nui';
@@ -10,10 +11,26 @@ import { useContacts } from '../../../contacts/hooks/useContacts';
 import { ICall } from '../../../../common/typings/call';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  callForward: {
+    color: theme.palette.success.main,
+  },
+  callBack: {
+    color: theme.palette.error.main,
+  },
+}));
 
 export const DialerHistory = ({ calls }) => {
   const { number } = useSimcard();
   const { getDisplayByNumber } = useContacts();
+
+  const classes = useStyles();
+
+  const history = useHistory();
 
   const { t } = useTranslation();
 
@@ -23,8 +40,22 @@ export const DialerHistory = ({ calls }) => {
     });
   };
 
-  if (!calls) {
-    return <p>Things are loading or arent here at all</p>;
+  if (!calls?.length) {
+    return (
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        paddingTop={35}
+      >
+        <p>
+          You got no friends!
+          <span role='img' aria-label='deal with it'>
+            😎
+          </span>
+        </p>
+      </Box>
+    );
   }
 
   return (
@@ -34,27 +65,59 @@ export const DialerHistory = ({ calls }) => {
           <ListItem
             key={call.id}
             divider
-            button
-            onClick={() => handleCall(call.receiver)}
           >
+            <ListItemIcon>
+              {<PhoneForwardedIcon className={classes.callForward} />}
+            </ListItemIcon>
+
             <ListItemText
               primary={getDisplayByNumber(call.receiver)}
-              secondary={new Date(call.start).getUTCDate()}
+              secondary={dayjs.unix(call.start).format(t('DATE_TIME_FORMAT'))}
             />
-            {<PhoneForwardedIcon />}
+            <IconButton onClick={() => handleCall(call.receiver)}>
+              {<PhoneIcon />}
+            </IconButton>
+
+            {getDisplayByNumber(call.transmitter) === call.transmitter ? (
+              <IconButton
+                onClick={() =>
+                  history.push(
+                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                  )
+                }
+              >
+                {<PersonAddIcon />}
+              </IconButton>
+            ) : null}
           </ListItem>
         ) : (
           <ListItem
             key={call.id}
             divider
-            button
-            onClick={() => handleCall(call.transmitter)}
           >
+            <ListItemIcon>
+              {<PhoneCallbackIcon className={classes.callBack} />}
+            </ListItemIcon>
+
             <ListItemText
               primary={getDisplayByNumber(call.transmitter)}
               secondary={dayjs.unix(call.start).format(t('DATE_TIME_FORMAT'))}
             />
-            {<PhoneCallbackIcon />}
+            <IconButton onClick={() => handleCall(call.transmitter)}>
+              {<PhoneIcon />}
+            </IconButton>
+
+            {getDisplayByNumber(call.transmitter) === call.transmitter ? (
+              <IconButton
+                onClick={() =>
+                  history.push(
+                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                  )
+                }
+              >
+                {<PersonAddIcon />}
+              </IconButton>
+            ) : null}
           </ListItem>
         )
       )}
