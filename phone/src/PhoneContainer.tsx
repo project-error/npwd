@@ -1,6 +1,5 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core';
-import { BankNotification } from './apps/bank/components/notification/BankNotification';
 import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
 import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './ui/providers/SnackbarProvider';
@@ -11,7 +10,6 @@ export const PhoneContainer = () => {
   return (
     <ThemeProvider theme={currentTheme}>
       <NotificationsProvider>
-        <BankNotification />
         <SnackbarProvider>
           <Phone />
         </SnackbarProvider>
