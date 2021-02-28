@@ -68,7 +68,7 @@ export default {
   MESSAGES_FETCH_MESSAGES: 'phone:fetchMessages',
   MESSAGES_FETCH_MESSAGES_SUCCESS: 'phone:fetchMessagesSuccess',
   MESSAGES_FETCH_MESSAGES_FAILED: 'phone:fetchMessagesFailed',
-  MESSAGES_ACTION_RESULT: 'phone:messagesActionResult',
+  MESSAGES_ACTION_RESULT: 'phone:setMessagesAlert',
 
   // Notes
   NOTE_ADD_NOTE: 'phone:addNote',
@@ -80,7 +80,6 @@ export default {
   NOTE_UPDATE_NOTE_SUCCESS: 'phone:updateNoteSuccess',
   NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure',
   NOTE_ACTION_RESULT: 'phone:notesActionResult',
-
 
   // DO NOT CHANGE WHATS BELOW, PLEASE - CHIP
   OPEN_APP_CONTACTS: 'phone:app:CONTACTS',

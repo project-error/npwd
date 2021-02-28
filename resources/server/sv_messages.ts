@@ -412,18 +412,7 @@ onNet(
         label
       );
 
-      if (result.error) {
-        // if it just fails, welp
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
-        /*emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
-          type: 'error',
-        });*/
-
-        console.log(result);
-
-        // if you try to create a existing group
-      } else if (result.error && result.duplicate) {
+      if (result.error && result.duplicate) {
         emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
           type: 'error',
@@ -432,15 +421,21 @@ onNet(
         // if the phoneNumber is invalid
       } else if (result.error && result.phoneNumber) {
         emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_INVALID_PHONE_NUMBER' + result.phoneNumber,
+          message: 'MESSAGES_INVALID_PHONE_NUMBER',
           type: 'error',
         });
 
         // if you are try to add yourself
       } else if (result.error && result.mine) {
-        console.log('yes');
         emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
+          type: 'error',
+        });
+      } else if (result.error) {
+        // if it just fails, welp
+        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
+        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+          message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
           type: 'error',
         });
       } else {
