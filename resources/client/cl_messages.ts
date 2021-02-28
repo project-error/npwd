@@ -25,9 +25,6 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, () => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED);
 });
 
-// fetch message groups on client launch
-emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
-
 /**
  * Messages create message group
  */
