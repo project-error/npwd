@@ -113,9 +113,8 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Toque",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume do toque",
-    
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Papél de fundo",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Borda",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Atualizar",
