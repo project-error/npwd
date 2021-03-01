@@ -17,13 +17,13 @@
     "APPS_SELLOUT": "Marché",
     "APPS_CAMERA": "Caméra",
 
-    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
-    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
-    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
-    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
-    "APPS_DIALER_ACCEPT_CALL": "Accept",
-    "APPS_DIALER_REJECT_CALL": "Reject",
-    "APPS_DIALER_END_CALL": "End",
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Appel entrant",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Appel en cours",
+    "APPS_DIALER_CURRENT_CALL_WITH": "En appel avec {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} vous appelle!",
+    "APPS_DIALER_ACCEPT_CALL": "Accepter",
+    "APPS_DIALER_REJECT_CALL": "Rejeter",
+    "APPS_DIALER_END_CALL": "Raccrocher",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
@@ -52,8 +52,8 @@
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "j",
-    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
-    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
+    "APPS_TWITTER_NEW_BROADCAST": "Nouveau tweet de @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "Vous avez {{ count }} nouveaux tweets dans votre fil d'actualité!",
 
     "APPS_BANK_TRANSFER": "Transfert",
     "APPS_BANK_HOME_TITLE": "Bienvenue",
@@ -68,15 +68,15 @@
 
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Rechercher...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
-    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Erreur d'envoi",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Numéros de téléphone...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Nom de groupe...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
     "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Numéro de téléphone invalide: ",
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Ce groupe existe déjà",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
-    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-mêmes !",
-    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Entrez un nom ou un numéro et pressez Entrée",
 
     "APPS_CONTACT_FORM_NAME": "Nom",
     "APPS_CONTACT_FORM_NUMBER": "Numéro",
@@ -101,10 +101,10 @@
     "APPS_NOTES_DELETE_SUCCESS": "Note supprimée avec succès.",
     "APPS_NOTES_DELETE_FAILED": "Erreur lors de la suppression d'une note.",
 
-    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "APPS_CALCULATOR_COPIED": "Résultat copié dans le presse-papier!",
 
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
 
     "APPS_SETTINGS_PHONE_NUMBER": "Numéro de téléphone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Fond d'écran",
@@ -114,14 +114,14 @@
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
-    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume des notifications",
     
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
     "GENERIC_DELETE": "Supprimer",
-    "GENERIC_CLOSE": "Close",
-    "GENERIC_CANCEL": "Cancel",
-    "GENERIC_TITLE": "Title",
-    "GENERIC_CONTENT": "Content"
+    "GENERIC_CLOSE": "Fermer",
+    "GENERIC_CANCEL": "Annuler",
+    "GENERIC_TITLE": "Titre",
+    "GENERIC_CONTENT": "Contenu"
   }
 }
