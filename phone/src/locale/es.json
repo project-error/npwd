@@ -66,10 +66,6 @@
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Te ha transferido con exito!",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transferencia fallida!",
 
-    "APPS_CONTACT_FORM_NAME": "Nombre",
-    "APPS_CONTACT_FORM_NUMBER": "Numero",
-    "APPS_CONTACT_FORM_AVATAR": "URL Avatar",
-
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Buscar mensajes...",
     "APPS_MESSAGES_NEW_MESSAGE": "Mensaje...",
     "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Hubo un error al mandar mensaje",
@@ -81,6 +77,10 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Hubo un error al crear grupo de mensajes",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "No puedes agregarte a ti mismo!",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Busca contactos o escribe un numero y presiona enter",
+
+    "APPS_CONTACT_FORM_NAME": "Nombre",
+    "APPS_CONTACT_FORM_NUMBER": "Numero",
+    "APPS_CONTACT_FORM_AVATAR": "URL Avatar",
 
     "APPS_CONTACT_ADD_SUCCESS": "Se ha creado el contacto!",
     "APPS_CONTACT_ADD_FAILED": "Hubo un error al crear el contacto!",
