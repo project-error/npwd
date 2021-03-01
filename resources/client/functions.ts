@@ -174,9 +174,11 @@ const handleCallStartNormalAnim = async (playerPed: number): Promise<void> => {
 const handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_to_text';
-
-  await loadAnimDict(DICT); 
-  TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
+  
+  if (IsEntityPlayingAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 49)) {
+    await loadAnimDict(DICT); 
+    TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
+  }
 };
 
 export async function phoneOpenAnim(): Promise<void> {
