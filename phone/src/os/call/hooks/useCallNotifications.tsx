@@ -37,6 +37,7 @@ export const useCallNotifications = () => {
       return;
     }
     if (call.accepted) {
+      stop();
       removeId(NOTIFICATION_ID);
       addNotificationAlert(
         {
