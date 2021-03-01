@@ -62,7 +62,12 @@ onNet(events.MESSAGES_FETCH_MESSAGES_FAILED, (): void => {
  */
 RegisterNuiCallbackType(events.MESSAGES_SEND_MESSAGE);
 on(`__cfx_nui:${events.MESSAGES_SEND_MESSAGE}`, (data: any, cb: Function) => {
-  emitNet(events.MESSAGES_SEND_MESSAGE, data.groupId, data.message);
+  emitNet(
+    events.MESSAGES_SEND_MESSAGE,
+    data.groupId,
+    data.message,
+    data.groupName
+  );
   cb();
 });
 
@@ -80,4 +85,4 @@ onNet(events.MESSAGES_ACTION_RESULT, (result: any) => {
 });
 onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, (message: any) => {
   sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_BROADCAST, message);
-})
+});

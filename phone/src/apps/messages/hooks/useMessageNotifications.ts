@@ -16,13 +16,13 @@ export const useMessageNotifications = () => {
   );
 
   const setNotification = useCallback(
-    ({ number, message }) => {
+    ({ groupId, message }) => {
       setUnreadCount((curr: number) => {
         const unread = curr + 1;
         addNotificationAlert(
           {
             app: 'MESSAGES',
-            title: t('APPS_MESSAGES_NEW_BROADCAST', { number }),
+            title: t('APPS_MESSAGES_NEW_BROADCAST', { groupId }),
             onClick: () => history.push('/messages'),
             content: message,
             icon,

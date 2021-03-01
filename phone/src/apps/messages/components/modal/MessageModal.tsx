@@ -97,13 +97,6 @@ export const MessageModal = () => {
           <Typography variant="h5" className={headerClass}>
             {header}
           </Typography>
-          <IconButton
-            onClick={() =>
-              history.push(`/contacts/-1?addNumber=${header}`)
-            }
-          >
-            <PersonAddIcon />
-          </IconButton>
         </Paper>
         {hasLoaded ? (
           <Conversation messages={messages} activeMessageGroup={activeMessageGroup} />

@@ -7,6 +7,7 @@ import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
+import { act } from 'react-dom/test-utils';
 
 interface IProps {
   activeMessageGroup: MessageGroup;
@@ -46,6 +47,12 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         ))}
       </Box>
       <MessageInput
+        /*  I should do some groupDiplay here */
+        messageGroupName={
+          activeMessageGroup.label
+            ? activeMessageGroup.label
+            : activeMessageGroup.groupDisplay
+        }
         messageGroupId={activeMessageGroup.groupId}
         onAddImageClick={() => setImageModalOpen(true)}
       />

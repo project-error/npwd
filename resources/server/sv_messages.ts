@@ -6,9 +6,9 @@ import {
   Message,
   MessageGroup,
 } from '../../phone/src/common/typings/messages';
-import {pool, withTransaction} from './db';
-import {getIdentifier, getSource, getPlayerFromIdentifier} from './functions';
-import {mainLogger} from './sv_logger';
+import { pool, withTransaction } from './db';
+import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
+import { mainLogger } from './sv_logger';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -39,8 +39,6 @@ interface MessageGroupMapping {
     updatedAt: string;
   };
 }
-
-
 
 /**
  * Create a message in the database
@@ -360,7 +358,7 @@ async function createMessageGroupsFromPhoneNumbers(
 // this should return the source or and array of identifiers
 async function getIdentifiersFromParticipants(groupId: string) {
   const query =
-    'SELECT participant_identifier FROM npwd_messages_groups WHERE group_id = ?'
+    'SELECT participant_identifier FROM npwd_messages_groups WHERE group_id = ?';
   const [results] = await pool.query(query, [groupId]);
   console.log(<any[]>results);
   return <any[]>results;
@@ -415,6 +413,7 @@ onNet(
       } else {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
       }
+      
     } catch (e) {
       emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
 
@@ -445,28 +444,31 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
 
 onNet(
   events.MESSAGES_SEND_MESSAGE,
-  async (groupId: string, message: string) => {
+  async (groupId: string, message: string, groupName: string) => {
     const _source = getSource();
     try {
       const _identifier = getIdentifier(_source);
       await createMessage(_identifier, groupId, message);
       emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
 
-      // currently sending the notification to only the person that created it.
-      // we need to get all participants and only send to them.
-      // afaik we are only sending the groupId and message from nui.
-      // although this could easily be solved by getting participants
-      // from the current groupId.
+      // currently getting all participants and emitting an event for each
+      // as we loop through. However, as we only get the groupId, we get the
+      // label of the group chat on the NUI side. If there is any way to get
+      // the label on server-side?
       const userParticipants = await getIdentifiersFromParticipants(groupId);
 
       for (const participantId of userParticipants) {
-        console.log("PARTICIPANTS: ", participantId);
-        const participantPlayer = await getPlayerFromIdentifier(participantId)
-        emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-          groupId, message
-        })
+        console.log('PARTICIPANTS: ', participantId);
+        const participantPlayer = await getPlayerFromIdentifier(participantId);
+        emitNet(
+          events.MESSAGES_CREATE_MESSAGE_BROADCAST,
+          participantPlayer.source,
+          {
+            groupName,
+            message,
+          }
+        );
       }
-
     } catch (e) {
       // Not really sure what this does? As I cant find any reference
       // of this in the ui part.
