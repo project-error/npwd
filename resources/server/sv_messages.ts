@@ -459,7 +459,9 @@ onNet(
 
       for (const participantId of userParticipants) {
         console.log('PARTICIPANTS: ', participantId);
-        const participantPlayer = await getPlayerFromIdentifier(participantId);
+        const participantPlayer = await getPlayerFromIdentifier(
+          participantId.participant_identifier
+        );
         emitNet(
           events.MESSAGES_CREATE_MESSAGE_BROADCAST,
           participantPlayer.source,
