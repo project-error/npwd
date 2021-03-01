@@ -41,6 +41,7 @@ export const useCallNotifications = () => {
       addNotificationAlert(
         {
           ...callNotificationBase,
+          keepWhenPhoneClosed: true,
           content: (
             <CallNotification>
               {t('APPS_DIALER_CURRENT_CALL_WITH', {
