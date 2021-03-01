@@ -122,7 +122,7 @@ export const SettingsApp = () => {
                   value={settings.ringtoneVol}
                   min={0}
                   max={100}
-                  onChange={(e, volume) =>
+                  onChangeCommitted={(_e, volume) =>
                     handleSettingChange('ringtoneVol', volume)
                   }
                 />
@@ -150,7 +150,7 @@ export const SettingsApp = () => {
                   value={settings.notificationVol}
                   min={0}
                   max={100}
-                  onChange={(e, volume) =>
+                  onChangeCommitted={(_e, volume) =>
                     handleSettingChange('notificationVol', volume)
                   }
                 />
@@ -214,7 +214,7 @@ export const SettingsApp = () => {
                   value={settings.TWITTER_notificationVol}
                   min={0}
                   max={100}
-                  onChange={(e, volume) =>
+                  onChangeCommitted={(_e, volume) =>
                     handleSettingChange('TWITTER_notificationVol', volume)
                   }
                 />
