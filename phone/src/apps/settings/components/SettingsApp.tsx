@@ -146,7 +146,7 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={sliders[0]}
+                  value={sliders[0] || settings.ringtoneVol}
                   min={0}
                   max={100}
                   onChange={handleSliderChange(0)}
@@ -176,7 +176,7 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={sliders[1]}
+                  value={sliders[1] || settings.notificationVol}
                   min={0}
                   max={100}
                   onChange={handleSliderChange(1)}
@@ -241,7 +241,7 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={sliders[2]}
+                  value={sliders[2] || settings.TWITTER_notificationVol}
                   min={0}
                   max={100}
                   onChange={handleSliderChange(2)}
