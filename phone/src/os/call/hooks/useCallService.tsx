@@ -14,8 +14,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'call:current';
 
-/* InjectDebugData<CallProps | boolean>([
-  {
+InjectDebugData<CallProps | boolean>([
+  /*   {
     app: 'CALL',
     method: 'setCaller',
     data: {
@@ -30,8 +30,8 @@ const NOTIFICATION_ID = 'call:current';
     app: 'CALL',
     method: 'callModal',
     data: true,
-  },
-]); */
+  }, */
+]);
 
 export const useCallService = () => {
   const { t } = useTranslation();
