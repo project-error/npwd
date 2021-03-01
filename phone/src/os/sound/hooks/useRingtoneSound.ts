@@ -33,7 +33,7 @@ export const useRingtoneSound = () => {
   }, [context, options.sound]);
 
   const playing = useCallback(() => {
-    context.playing(options.sound);
+    return context.playing(options.sound);
   }, [context, options.sound]);
 
   return useMemo(
