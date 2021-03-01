@@ -36,7 +36,7 @@ import { useRecoilState } from 'recoil';
 import { settingsState } from '../hooks/useSettings';
 
 const SubHeaderComp = (props: { text: string }) => (
-  <ListSubheader component='div' disableSticky>
+  <ListSubheader color='primary' component='div' disableSticky>
     {props.text}
   </ListSubheader>
 );
@@ -108,7 +108,7 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem>
+          <ListItem divider>
             <ListItemIcon>
               <VolumeUp />
             </ListItemIcon>
@@ -136,7 +136,7 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem>
+          <ListItem divider>
             <ListItemIcon>
               <VolumeUp />
             </ListItemIcon>
@@ -199,7 +199,7 @@ export const SettingsApp = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem>
+          <ListItem divider>
             <ListItemIcon>
               <VolumeUp />
             </ListItemIcon>

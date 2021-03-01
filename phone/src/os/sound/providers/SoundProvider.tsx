@@ -68,7 +68,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
 
       const onError = (_id, e) => {
         res(null);
-        console.error('Howler Error \n', e, '\nid: ', _id);
+        console.error('Howler Error \n', e, '\nid: ', _id, '\nsrc: ', url);
       };
 
       instance.once('loaderror', onError);

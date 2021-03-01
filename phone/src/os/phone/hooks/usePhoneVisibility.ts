@@ -36,11 +36,9 @@ export const usePhoneVisibility = () => {
     }
   }, [currentAlert, visibility, setVisibility]);
 
-  // Changing .Phone bottom css is its closed but alert is open
   const bottom = useMemo(() => {
     if (!visibility) {
-      // I wish this was 420
-      return `calc(-728px * ${zoom})`;
+      return `calc(-70% * ${zoom})`;
     }
     return 0;
   }, [visibility, zoom]);

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemText,
-  Divider,
-  ListItemIcon,
-} from '@material-ui/core';
+import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 
 interface IProps {
   options?: any;
@@ -19,26 +14,12 @@ export const SettingItem = ({
   label,
   value,
   onClick,
-  icon
+  icon,
 }: IProps) => {
-  if (!onClick)
-    return (
-      <>
-        <ListItem button>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText primary={label} secondary={value ? value : undefined} />
-        </ListItem>
-        <Divider />
-      </>
-    );
-
   return (
-    <>
-      <ListItem onClick={() => onClick(options)} button>
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText primary={label} secondary={value ? value : undefined} />
-      </ListItem>
-      <Divider />
-    </>
+    <ListItem divider onClick={() => onClick?.(options)} button>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} secondary={value ? value : undefined} />
+    </ListItem>
   );
 };

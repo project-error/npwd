@@ -5,13 +5,9 @@ import React, {
   useMemo,
   useRef,
   useEffect,
-  useContext,
 } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from '../../phone/hooks/state';
-import { soundContext } from '../../sound/providers/SoundProvider';
-import { getSoundSettings } from '../../sound/utils/getSoundSettings';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -23,7 +19,6 @@ export interface INotification {
   notificationIcon?: JSX.Element;
   cantClose?: boolean;
   keepWhenPhoneClosed?: boolean;
-  sound?: boolean;
   onClose?: (notification: INotification) => void;
   onClick?: (notification: INotification) => void;
 }
@@ -39,13 +34,6 @@ interface INotificationIcon {
   icon: JSX.Element;
   badge: number;
 }
-
-type SetAlertParams = [
-  INotification,
-  boolean,
-  Partial<INotification>,
-  string | undefined
-];
 
 export const NotificationsContext = createContext<{
   barUncollapsed: boolean;
@@ -76,12 +64,10 @@ export function NotificationsProvider({ children }) {
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
   const alertTimeout = useRef<NodeJS.Timeout>();
-  const [alerts, setAlerts] = useState<Array<SetAlertParams>>([]);
+  const [alerts, setAlerts] = useState<
+    Array<[INotification, boolean, Partial<INotification>]>
+  >([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
-
-  const [settings] = useSettings();
-
-  const { mount, play } = useContext(soundContext);
 
   useEffect(() => {
     if (isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
@@ -136,12 +122,7 @@ export function NotificationsProvider({ children }) {
   );
 
   const _showAlert = useCallback(
-    (
-      n: INotification,
-      persist: boolean,
-      update: Partial<INotification>,
-      soundUrl: string | undefined
-    ) => {
+    (n: INotification, persist: boolean, update: Partial<INotification>) => {
       return new Promise<void>((res) => {
         const resolve = () => {
           if (persist) {
@@ -163,10 +144,6 @@ export function NotificationsProvider({ children }) {
           onCloseAlert: onExit(n.onClose),
         });
 
-        if (n.sound && soundUrl) {
-          play(soundUrl);
-        }
-
         if (n.keepWhenPhoneClosed) {
           return;
         }
@@ -178,7 +155,7 @@ export function NotificationsProvider({ children }) {
         }, DEFAULT_ALERT_HIDE_TIME + 300);
       });
     },
-    [addOrUpdateNotification, play]
+    [addOrUpdateNotification]
   );
 
   const addNotificationAlert = (
@@ -186,14 +163,7 @@ export function NotificationsProvider({ children }) {
     persist?: boolean,
     update?: Partial<INotification>
   ) => {
-    if (n.sound) {
-      const { sound, volume } = getSoundSettings('notification', settings, n.app);
-      mount(sound, volume).then(({ url }) => {
-        setAlerts((curr) => [...curr, [n, persist, update, url]]);
-      });
-      return;
-    }
-    setAlerts((curr) => [...curr, [n, persist, update, undefined]]);
+    setAlerts((curr) => [...curr, [n, persist, update]]);
   };
 
   const removeId = (id: string) => {
