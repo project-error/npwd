@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   alertContent: {
+    wordBreak: 'break-all',
     display: '-webkit-box',
     maxWidth: '360px',
     height: '60px',
