@@ -1,14 +1,25 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg", "projecterror.jpg"],
+  "wallpapers": [
+    "beach.jpg",
+    "minimal.jpg",
+    "surf.jpg",
+    "waves.jpg",
+    "projecterror.jpg"
+  ],
   "defaultSettings": {
     "wallpaper": "projecterror.jpg",
     "frame": "default.png",
     "theme": "taso-dark",
     "zoom": 1,
     "ringtone": "pixel",
-    "ringtoneVol": 100
+    "ringtoneVol": 50,
+    "notification": "online",
+    "notificationVol": 50,
+    "TWITTER_notification": "online",
+    "TWITTER_notificationVol": 100,
+    "TWITTER_notifyNewFeedTweet": true
   },
   "debug": {
     "printDebugLogs": true,
@@ -25,6 +36,7 @@
   ],
   "zoomOptions": [1, 0.9, 0.8],
   "ringtones": ["marimba", "pixel"],
+  "notifications": ["online", "99kr"],
   "themes": {
     "default-dark": {
       "palette": {
@@ -44,7 +56,7 @@
       "palette": {
         "type": "dark",
         "primary": {
-        "main": "#a6d4fa"
+          "main": "#a6d4fa"
         },
         "background": {
           "paper": "#1c1c1c",

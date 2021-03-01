@@ -38,7 +38,7 @@ function CallTimer({ isAccepted }) {
     return () => clearInterval(timer.current)
   }, [isAccepted, setDuration]);
 
-  if (!duration) return null;
+  if (!duration || !isAccepted) return null;
 
   return (
     <div

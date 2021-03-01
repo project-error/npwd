@@ -48,6 +48,7 @@ const useStyles = makeStyles(() => ({
   },
   message: {
     fontSize: '18px',
+    wordBreak: 'break-all',
   },
   buttonContainer: {
     display: 'flex',

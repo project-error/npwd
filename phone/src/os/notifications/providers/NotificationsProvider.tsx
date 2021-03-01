@@ -5,9 +5,13 @@ import React, {
   useMemo,
   useRef,
   useEffect,
+  useContext,
 } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from '../../phone/hooks/state';
+import { soundContext } from '../../sound/providers/SoundProvider';
+import { getSoundSettings } from '../../sound/utils/getSoundSettings';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -17,6 +21,7 @@ export interface INotification {
   content?: React.ReactNode;
   icon?: JSX.Element;
   notificationIcon?: JSX.Element;
+  sound?: boolean;
   cantClose?: boolean;
   keepWhenPhoneClosed?: boolean;
   onClose?: (notification: INotification) => void;
@@ -59,13 +64,17 @@ export const NotificationsContext = createContext<{
 export function NotificationsProvider({ children }) {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
 
+  const [settings] = useSettings();
+
   const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
+  const { mount, play } = useContext(soundContext);
+
   const alertTimeout = useRef<NodeJS.Timeout>();
   const [alerts, setAlerts] = useState<
-    Array<[INotification, boolean, Partial<INotification>]>
+    Array<[INotification, boolean, Partial<INotification>, string | undefined]>
   >([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
@@ -122,7 +131,12 @@ export function NotificationsProvider({ children }) {
   );
 
   const _showAlert = useCallback(
-    (n: INotification, persist: boolean, update: Partial<INotification>) => {
+    (
+      n: INotification,
+      persist: boolean,
+      update: Partial<INotification>,
+      soundUrl: string
+    ) => {
       return new Promise<void>((res) => {
         const resolve = () => {
           if (persist) {
@@ -144,6 +158,10 @@ export function NotificationsProvider({ children }) {
           onCloseAlert: onExit(n.onClose),
         });
 
+        if (n.sound && soundUrl) {
+          play(soundUrl);
+        }
+
         if (n.keepWhenPhoneClosed) {
           return;
         }
@@ -155,7 +173,7 @@ export function NotificationsProvider({ children }) {
         }, DEFAULT_ALERT_HIDE_TIME + 300);
       });
     },
-    [addOrUpdateNotification]
+    [addOrUpdateNotification, play]
   );
 
   const addNotificationAlert = (
@@ -163,7 +181,18 @@ export function NotificationsProvider({ children }) {
     persist?: boolean,
     update?: Partial<INotification>
   ) => {
-    setAlerts((curr) => [...curr, [n, persist, update]]);
+    if (n.sound) {
+      const { sound, volume } = getSoundSettings(
+        'notification',
+        settings,
+        n.app
+      );
+      mount(sound, volume, false).then(({ url }) =>
+        setAlerts((curr) => [...curr, [n, persist, update, url]])
+      );
+      return;
+    }
+    setAlerts((curr) => [...curr, [n, persist, update, undefined]]);
   };
 
   const removeId = (id: string) => {
