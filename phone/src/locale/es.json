@@ -114,8 +114,8 @@
     "APPS_SETTINGS_OPTION_RINGTONE": "Tono de llamada",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volumen del tono de llamada",
     
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fondo de Pantalla",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Marco",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notificacion",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notificacion de volumen",
 
     "GENERIC_SAVE": "Guardar",
     "GENERIC_UPDATE": "Actualizar",
