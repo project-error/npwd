@@ -78,6 +78,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
+    "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "copy:config": "cp-cli ../config.json ./src/config.autogen.json",
     "start": "yarn copy:config && react-scripts start",
     "watch": "cra-build-watch --disable-chunks --build-path ../resources/html --output-filename dev.js",
