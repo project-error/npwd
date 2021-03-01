@@ -6,10 +6,16 @@ import Alert from './Alert';
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '-100px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '50%',
+    overflow: 'auto',
+    margin: '0 auto',
+    position: 'absolute',
+    left: 0,
+    bottom: '-100px',
+    right: 0,
   },
 });
 
@@ -21,9 +27,7 @@ export const Snackbar = () => {
   return (
     <div className={classes.root}>
       {alert ? (
-        <Alert severity={alert.type}>
-          {t('APPS_' + alert.message)}
-        </Alert>
+        <Alert severity={alert.type}>{t('APPS_' + alert.message)}</Alert>
       ) : null}
     </div>
   );
