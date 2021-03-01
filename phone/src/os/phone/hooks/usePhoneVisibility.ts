@@ -38,7 +38,7 @@ export const usePhoneVisibility = () => {
 
   const bottom = useMemo(() => {
     if (!visibility) {
-      return `calc(-70% * ${zoom})`;
+      return `calc(-728px * ${zoom})`;
     }
     return 0;
   }, [visibility, zoom]);
