@@ -155,7 +155,6 @@ export const SettingsApp = () => {
                   }
                 />
               </Box>
-              ,
             </ListItemSecondaryAction>
           </ListItem>
           <SettingItem

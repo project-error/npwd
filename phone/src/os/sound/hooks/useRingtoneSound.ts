@@ -25,14 +25,8 @@ export const useRingtoneSound = () => {
   }, [context, options.sound, options.volume]);
 
   return {
-    play: () => {
-      context.play(options.sound, options.volume, true);
-    },
-    stop: () => {
-      context.stop(options.sound);
-    },
-    playing: () => {
-      return context.playing(options.sound);
-    },
+    play: () => context.play(options.sound, options.volume, true),
+    stop: () => context.stop(options.sound),
+    playing: () => context.playing(options.sound),
   };
 };
