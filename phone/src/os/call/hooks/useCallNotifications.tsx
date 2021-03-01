@@ -6,16 +6,19 @@ import { useApp } from '../../apps/hooks/useApps';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
 import { CallNotification } from '../components/CallNotification';
-import { useCall } from './useCall';
 
 const NOTIFICATION_ID = 'call:current';
 
 export const useCallNotifications = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { addNotificationAlert, removeId } = useNotifications();
+  const {
+    addNotificationAlert,
+    removeId,
+    addNotification,
+  } = useNotifications();
 
-  const { play, stop, playing } = useRingtoneSound();
+  const { play, stop } = useRingtoneSound();
 
   const { icon, notificationIcon } = useApp('DIALER');
 
@@ -28,37 +31,28 @@ export const useCallNotifications = () => {
     notificationIcon,
   };
 
-  const { call } = useCall();
-
   const setNotification = (call: CallProps) => {
+    stop();
     if (!call || !call.active) {
-      stop();
       removeId(NOTIFICATION_ID);
       return;
     }
     if (call.accepted) {
-      stop();
       removeId(NOTIFICATION_ID);
-      addNotificationAlert(
-        {
-          ...callNotificationBase,
-          keepWhenPhoneClosed: true,
-          content: (
-            <CallNotification>
-              {t('APPS_DIALER_CURRENT_CALL_WITH', {
-                transmitter: call.transmitter,
-              })}
-            </CallNotification>
-          ),
-          title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
-        },
-        true
-      );
+      addNotification({
+        ...callNotificationBase,
+        content: (
+          <CallNotification>
+            {t('APPS_DIALER_CURRENT_CALL_WITH', {
+              transmitter: call.transmitter,
+            })}
+          </CallNotification>
+        ),
+        title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
+      });
     }
     if (!call.isTransmitter && !call.accepted) {
-      if (!playing()) {
-        play();
-      }
+      play();
       removeId(NOTIFICATION_ID);
       addNotificationAlert(
         {
@@ -80,7 +74,5 @@ export const useCallNotifications = () => {
     }
   };
 
-  const resetCallNotification = () => setNotification(call);
-
-  return { setNotification, resetCallNotification };
+  return { setNotification };
 };
