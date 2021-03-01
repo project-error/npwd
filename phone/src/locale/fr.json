@@ -17,9 +17,14 @@
     "APPS_SELLOUT": "Marché",
     "APPS_CAMERA": "Caméra",
 
-    "APPS_BANK_TRANSFER": "Transfert",
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fond d'écran",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Cadre/Coque",
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
+    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
+    "APPS_DIALER_ACCEPT_CALL": "Accept",
+    "APPS_DIALER_REJECT_CALL": "Reject",
+    "APPS_DIALER_END_CALL": "End",
+
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "Lien vers votre image/GIF",
@@ -33,6 +38,7 @@
     "APPS_TWITTER_SEARCH_TWEETS": "Rechercher des tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Chercher par profil ou message",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Votre message dépasse la limite de caractères",
+    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
     "APPS_TWITTER_CREATE_SUCCESS": "Tweet envoyé avec succès",
     "APPS_TWITTER_CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL Photo de profil",
@@ -46,7 +52,10 @@
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "j",
+    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
+    "APPS_BANK_TRANSFER": "Transfert",
     "APPS_BANK_HOME_TITLE": "Bienvenue",
     "APPS_BANK_ACCOUNT_LINK": "Compte",
     "APPS_BANK_TIME_JUST_NOW": "A l'instant",
@@ -57,12 +66,9 @@
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transfert effectué avec succès !",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Échec du transfert !",
 
-    "APPS_CONTACT_FORM_NAME": "Nom",
-    "APPS_CONTACT_FORM_NUMBER": "Numéro",
-    "APPS_CONTACT_FORM_AVATAR": "URL Photo de profil",
-
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Rechercher...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Numéros de téléphone...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Nom de groupe...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
@@ -70,6 +76,11 @@
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Ce groupe existe déjà",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-mêmes !",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+
+    "APPS_CONTACT_FORM_NAME": "Nom",
+    "APPS_CONTACT_FORM_NUMBER": "Numéro",
+    "APPS_CONTACT_FORM_AVATAR": "URL Photo de profil",
 
     "APPS_CONTACT_ADD_SUCCESS": "Contact créé avec succès!",
     "APPS_CONTACT_ADD_FAILED": "Erreur lors de la création du contact!",
@@ -90,6 +101,11 @@
     "APPS_NOTES_DELETE_SUCCESS": "Note supprimée avec succès.",
     "APPS_NOTES_DELETE_FAILED": "Erreur lors de la suppression d'une note.",
 
+    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Numéro de téléphone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Fond d'écran",
     "APPS_SETTINGS_OPTION_FRAME": "Coque",
@@ -97,9 +113,15 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
-
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+    
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
-    "GENERIC_DELETE": "Supprimer"
+    "GENERIC_DELETE": "Supprimer",
+    "GENERIC_CLOSE": "Close",
+    "GENERIC_CANCEL": "Cancel",
+    "GENERIC_TITLE": "Title",
+    "GENERIC_CONTENT": "Content"
   }
 }

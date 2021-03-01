@@ -1,6 +1,10 @@
 {
   "translation": {
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+
     "COMING_SOON": "Em breve...",
+
     "APPS_DIALER": "Telefone",
     "APPS_CONTACTS": "Contactos",
     "APPS_MESSAGES": "Mensagens",
@@ -9,10 +13,18 @@
     "APPS_BANK": "WhoDis Banco",
     "APPS_NOTES": "Notas",
     "APPS_EXAMPLE": "Aplicativo exemplo",
-    "APPS_BANK_TRANSFER": "Transferir",
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Papél de fundo",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Borda",
     "APPS_TWITTER": "Twitter",
+    "APPS_SELLOUT": "Market",
+    "APPS_CAMERA": "Camera",
+
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
+    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
+    "APPS_DIALER_ACCEPT_CALL": "Accept",
+    "APPS_DIALER_REJECT_CALL": "Reject",
+    "APPS_DIALER_END_CALL": "End",
+
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "O que se passa?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "Link para imagem ou gif",
@@ -26,6 +38,7 @@
     "APPS_TWITTER_SEARCH_TWEETS": "Procurar por tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Procurar por nome de perfil ou mensagem",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Mensagem maior que o límite de caracteres",
+    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
     "APPS_TWITTER_CREATE_SUCCESS": "Tweet enviado com sucesso!",
     "APPS_TWITTER_CREATE_FAILED": "Falha a enviar o seu tweet",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL do Avatar",
@@ -39,7 +52,10 @@
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "d",
+    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
+    "APPS_BANK_TRANSFER": "Transferir",
     "APPS_BANK_HOME_TITLE": "Bem-vindo",
     "APPS_BANK_ACCOUNT_LINK": "Conta",
     "APPS_BANK_TIME_JUST_NOW": "Agora",
@@ -50,12 +66,9 @@
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transferência feita com sucesso!",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transferência falhada!",
 
-    "APPS_CONTACT_FORM_NAME": "Nome",
-    "APPS_CONTACT_FORM_NUMBER": "Numero",
-    "APPS_CONTACT_FORM_AVATAR": "URL do avatar",
-
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Procurar mensagens...",
     "APPS_MESSAGES_NEW_MESSAGE": "Mensagem...",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Números de telefone...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Nome do grupo...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Enviar",
@@ -63,6 +76,11 @@
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Este grupo já existe",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Falha a criar grupo",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Não te podes adicionar a tí mesmo!",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+
+    "APPS_CONTACT_FORM_NAME": "Nome",
+    "APPS_CONTACT_FORM_NUMBER": "Numero",
+    "APPS_CONTACT_FORM_AVATAR": "URL do avatar",
 
     "APPS_CONTACT_ADD_SUCCESS": "Contacto criado com sucesso!",
     "APPS_CONTACT_ADD_FAILED": "Falha a criar contacto!",
@@ -76,6 +94,18 @@
     "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
     "APPS_CONTACT_MODAL_BUTTON_ADD": "Adicionar contacto",
 
+    "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
+    "APPS_NOTES_ADD_FAILED": "Failed to save note.",
+    "APPS_NOTES_UPDATE_SUCCESS": "Successfully updated note.",
+    "APPS_NOTES_UPDATE_FAILED": "Failed to update note.",
+    "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
+    "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
+
+    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Número de telefone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Papél de parede",
     "APPS_SETTINGS_OPTION_FRAME": "Borda",
@@ -83,8 +113,15 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Toque",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume do toque",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
 
+    "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Atualizar",
-    "GENERIC_DELETE": "Apagar"
+    "GENERIC_DELETE": "Apagar",
+    "GENERIC_CLOSE": "Close",
+    "GENERIC_CANCEL": "Cancel",
+    "GENERIC_TITLE": "Title",
+    "GENERIC_CONTENT": "Content"
   }
 }

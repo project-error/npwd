@@ -17,17 +17,14 @@
     "APPS_SELLOUT": "Market",
     "APPS_CAMERA": "Camera",
 
-    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
     "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
     "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
     "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
     "APPS_DIALER_ACCEPT_CALL": "Accept",
     "APPS_DIALER_REJECT_CALL": "Reject",
     "APPS_DIALER_END_CALL": "End",
 
-    "APPS_BANK_TRANSFER": "Transfer",
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Wallpaper",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Frame",
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "A link to your image or gif",
@@ -58,6 +55,7 @@
     "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
     "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
+    "APPS_BANK_TRANSFER": "Transfer",
     "APPS_BANK_HOME_TITLE": "Welcome",
     "APPS_BANK_ACCOUNT_LINK": "Account",
     "APPS_BANK_TIME_JUST_NOW": "Just now",
@@ -67,10 +65,6 @@
     "APPS_BANK_ACTIONS_TRANSFER": "Transfer",
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transfer done successfully!",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transfer failed!",
-
-    "APPS_CONTACT_FORM_NAME": "Name",
-    "APPS_CONTACT_FORM_NUMBER": "Number",
-    "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
 
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Search messages...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
@@ -83,6 +77,10 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+
+    "APPS_CONTACT_FORM_NAME": "Name",
+    "APPS_CONTACT_FORM_NUMBER": "Number",
+    "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
 
     "APPS_CONTACT_ADD_SUCCESS": "Successfully created contact!",
     "APPS_CONTACT_ADD_FAILED": "Failed to created contact!",
@@ -105,6 +103,9 @@
 
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
 
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
@@ -112,9 +113,9 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
-
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+    
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",

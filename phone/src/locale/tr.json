@@ -1,6 +1,10 @@
 {
   "translation": {
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+
     "COMING_SOON": "Yakında...",
+
     "APPS_DIALER": "Telefon",
     "APPS_CONTACTS": "Kişiler",
     "APPS_MESSAGES": "Mesajlar",
@@ -9,10 +13,18 @@
     "APPS_BANK": "WhoDis Bankası",
     "APPS_NOTES": "Notlar",
     "APPS_EXAMPLE": "Örnek uygulama",
-    "APPS_BANK_TRANSFER": "Transfer",
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Arkaplan",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Çerçeve",
     "APPS_TWITTER": "Twitter",
+    "APPS_SELLOUT": "Market",
+    "APPS_CAMERA": "Camera",
+
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
+    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
+    "APPS_DIALER_ACCEPT_CALL": "Accept",
+    "APPS_DIALER_REJECT_CALL": "Reject",
+    "APPS_DIALER_END_CALL": "End",
+
     "APPS_TWITTER_TWEET": "Tweetle",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Neler oluyor?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "GIF veya Resminin linki",
@@ -26,6 +38,7 @@
     "APPS_TWITTER_SEARCH_TWEETS": "Tweetleri ara",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Profil ismi veya tweet ile ara",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Mesajın karakter limitine takıldı",
+    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
     "APPS_TWITTER_CREATE_SUCCESS": "Tweetin başarıyla gönderildi",
     "APPS_TWITTER_CREATE_FAILED": "Tweetin gönderilemedi.",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "Avatar LINK",
@@ -36,10 +49,13 @@
     "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Profilin başarıyla güncellendi",
     "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Profilini güncellerken bir hata oluştu",
     "APPS_TWITTER_TIME_JUST_NOW": "Hemen şu an",
-    "APPS_TWITTER_TIME_MINUTES": "d",
-    "APPS_TWITTER_TIME_HOURS": "s",
-    "APPS_TWITTER_TIME_DAYS": "g",
+    "APPS_TWITTER_TIME_MINUTES": "m",
+    "APPS_TWITTER_TIME_HOURS": "h",
+    "APPS_TWITTER_TIME_DAYS": "d",
+    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
+    "APPS_BANK_TRANSFER": "Transfer",
     "APPS_BANK_HOME_TITLE": "Hoşgeldin",
     "APPS_BANK_ACCOUNT_LINK": "Hesap",
     "APPS_BANK_TIME_JUST_NOW": "Hemen şu an",
@@ -50,12 +66,9 @@
     "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transfer başarıyla tamamlandı!",
     "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transfer başarısız!",
 
-    "APPS_CONTACT_FORM_NAME": "İsim",
-    "APPS_CONTACT_FORM_NUMBER": "Numara",
-    "APPS_CONTACT_FORM_AVATAR": "Avatar LINK",
-
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Mesajları ara...",
     "APPS_MESSAGES_NEW_MESSAGE": "Mesaj...",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Telefon numaraları...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Grup yazışması ismi...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Tamamla",
@@ -63,12 +76,52 @@
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Böyle bir mesaj grubu zaten var.",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Mesaj grubu oluşturulamadı.",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Kendini ekleyemezsin!",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+
+    "APPS_CONTACT_FORM_NAME": "İsim",
+    "APPS_CONTACT_FORM_NUMBER": "Numara",
+    "APPS_CONTACT_FORM_AVATAR": "Avatar LINK",
 
     "APPS_CONTACT_ADD_SUCCESS": "Kişi başarıyla oluşturuldu!",
     "APPS_CONTACT_ADD_FAILED": "Kişi oluşturulamadı!",
     "APPS_CONTACT_UPDATE_SUCCESS": "Kişi başarıyla güncellendi!",
     "APPS_CONTACT_UPDATE_FAILED": "Kişi güncellenemedi!",
     "APPS_CONTACT_DELETE_SUCCESS": "Kişi başarıyla silindi!",
-    "APPS_CONTACT_DELETE_FAILED": "Kişi silinemedi!"
+    "APPS_CONTACT_DELETE_FAILED": "Kişi silinemedi!",
+    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Search contacts",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_NAME": "Name",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Number",
+    "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
+    "APPS_CONTACT_MODAL_BUTTON_ADD": "Add Contact",
+
+    "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
+    "APPS_NOTES_ADD_FAILED": "Failed to save note.",
+    "APPS_NOTES_UPDATE_SUCCESS": "Successfully updated note.",
+    "APPS_NOTES_UPDATE_FAILED": "Failed to update note.",
+    "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
+    "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
+
+    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
+    "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
+    "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
+    "APPS_SETTINGS_OPTION_FRAME": "Frame",
+    "APPS_SETTINGS_OPTION_THEME": "Theme",
+    "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
+    "APPS_SETTINGS_OPTION_RINGTONE": "Ringtone",
+    "APPS_SETTINGS_OPTION_RINGTONEVOL": "Ringtone Volume",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+
+    "GENERIC_SAVE": "Save",
+    "GENERIC_UPDATE": "Update",
+    "GENERIC_DELETE": "Delete",
+    "GENERIC_CLOSE": "Close",
+    "GENERIC_CANCEL": "Cancel",
+    "GENERIC_TITLE": "Title",
+    "GENERIC_CONTENT": "Content"
   }
 }
