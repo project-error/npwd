@@ -17,17 +17,15 @@
     "APPS_SELLOUT": "Mercado",
     "APPS_CAMERA": "Camara",
 
-    "APPS_DIALER_CURRENT_CALL_TITLE": "Llamada actual",
     "APPS_DIALER_INCOMING_CALL_TITLE": "Llamada entrante",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Llamada actual",
     "APPS_DIALER_CURRENT_CALL_WITH": "En llamada con {{ transmitter }}",
     "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} te esta llamando!",
     "APPS_DIALER_ACCEPT_CALL": "Aceptar",
     "APPS_DIALER_REJECT_CALL": "Rechazar",
     "APPS_DIALER_END_CALL": "Colgar",
 
-    "APPS_BANK_TRANSFER": "Transferir",
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fondo de Pantalla",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Marco",
+
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "¿Qué esta pasando?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "Un link a tu imagen/gif",
@@ -58,6 +56,7 @@
     "APPS_TWITTER_NEW_BROADCAST": "Nuevo tweet de @{{ profile_name }}!",
     "APPS_TWITTER_UNREAD_MESSAGES": "Tienes {{ count }} nuevos tweets en el historial!",
 
+    "APPS_BANK_TRANSFER": "Transferir",
     "APPS_BANK_HOME_TITLE": "Bienvenido",
     "APPS_BANK_ACCOUNT_LINK": "Cuenta",
     "APPS_BANK_TIME_JUST_NOW": "Justo ahora",
@@ -105,6 +104,9 @@
 
     "APPS_CALCULATOR_COPIED": "Se ha copiado el resultado!",
 
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Se ha creado un nuevo listado",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Hubo un error al crear un nuevo listado",
+
     "APPS_SETTINGS_PHONE_NUMBER": "Numero de telefono",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Fondo de pantalla",
     "APPS_SETTINGS_OPTION_FRAME": "Marco",
@@ -112,9 +114,8 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Ampliar",
     "APPS_SETTINGS_OPTION_RINGTONE": "Tono de llamada",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volumen del tono de llamada",
-
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Se ha creado un nuevo listado",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Hubo un error al crear un nuevo listado",
+    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fondo de Pantalla",
+    "APPS_SETTINGS_OPTIONS_FRAME": "Marco",
 
     "GENERIC_SAVE": "Guardar",
     "GENERIC_UPDATE": "Actualizar",
