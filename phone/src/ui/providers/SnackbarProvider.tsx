@@ -16,10 +16,8 @@ function SnackbarProvider({ children }) {
     return () => clearTimeout(timer.current);
   }, [alert]);
 
-  const addAlert = (value) => setAlert(value);
-
   return (
-    <SnackbarContext.Provider value={{ addAlert, alert }}>
+    <SnackbarContext.Provider value={{ alert, addAlert: setAlert }}>
       {children}
     </SnackbarContext.Provider>
   );
