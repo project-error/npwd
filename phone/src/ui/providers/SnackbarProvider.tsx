@@ -11,7 +11,7 @@ function SnackbarProvider({ children }) {
       clearTimeout(timer.current);
       timer.current = setTimeout(() => {
         setAlert(null);
-      }, 1000);
+      }, 2000);
     }
     return () => clearTimeout(timer.current);
   }, [alert]);
