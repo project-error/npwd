@@ -113,10 +113,9 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
     
-    "APPS_SETTINGS_OPTIONS_WALLPAPER": "Fond d'écran",
-    "APPS_SETTINGS_OPTIONS_FRAME": "Cadre/Coque",
-
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
     "GENERIC_DELETE": "Supprimer",
