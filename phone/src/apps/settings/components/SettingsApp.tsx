@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -49,6 +49,33 @@ export const SettingsApp = () => {
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
+  };
+
+  const [sliders, setSliders] = useState([]);
+
+  useEffect(() => {
+    setSliders((curr) => {
+      if (!curr.length) {
+        return [
+          settings.ringtoneVol,
+          settings.notificationVol,
+          settings.TWITTER_notificationVol,
+        ];
+      }
+      return curr;
+    });
+  }, [
+    settings.notificationVol,
+    settings.ringtoneVol,
+    settings.TWITTER_notificationVol,
+  ]);
+
+  const handleSliderChange = (idx) => (_e: any, value: number | number[]) => {
+    setSliders((curr) => {
+      const newValues = [...curr];
+      newValues[idx] = value;
+      return newValues;
+    });
   };
 
   const { t } = useTranslation();
@@ -119,14 +146,16 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={settings.ringtoneVol}
+                  value={sliders[0]}
                   min={0}
                   max={100}
-                  onChangeCommitted={(_e, volume) =>
-                    handleSettingChange('ringtoneVol', volume)
+                  onChange={handleSliderChange(0)}
+                  onChangeCommitted={() =>
+                    handleSettingChange('ringtoneVol', sliders[0])
                   }
                 />
               </Box>
+              ,
             </ListItemSecondaryAction>
           </ListItem>
           <SettingItem
@@ -147,11 +176,12 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={settings.notificationVol}
+                  value={sliders[1]}
                   min={0}
                   max={100}
-                  onChangeCommitted={(_e, volume) =>
-                    handleSettingChange('notificationVol', volume)
+                  onChange={handleSliderChange(1)}
+                  onChangeCommitted={() =>
+                    handleSettingChange('notificationVol', sliders[1])
                   }
                 />
               </Box>
@@ -211,11 +241,12 @@ export const SettingsApp = () => {
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
-                  value={settings.TWITTER_notificationVol}
+                  value={sliders[2]}
                   min={0}
                   max={100}
-                  onChangeCommitted={(_e, volume) =>
-                    handleSettingChange('TWITTER_notificationVol', volume)
+                  onChange={handleSliderChange(2)}
+                  onChangeCommitted={() =>
+                    handleSettingChange('TWITTER_notificationVol', sliders[2])
                   }
                 />
               </Box>
