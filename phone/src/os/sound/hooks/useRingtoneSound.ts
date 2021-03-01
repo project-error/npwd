@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { soundContext } from '../providers/SoundProvider';
 import { getSoundSettings } from '../utils/getSoundSettings';
@@ -24,24 +24,9 @@ export const useRingtoneSound = () => {
     context.volume(options.sound, options.volume);
   }, [context, options.sound, options.volume]);
 
-  const play = useCallback(() => {
-    context.play(options.sound, options.volume, true);
-  }, [context, options.sound, options.volume]);
-
-  const stop = useCallback(() => {
-    context.stop(options.sound);
-  }, [context, options.sound]);
-
-  const playing = useCallback(() => {
-    return context.playing(options.sound);
-  }, [context, options.sound]);
-
-  return useMemo(
-    () => ({
-      play,
-      stop,
-      playing,
-    }),
-    [play, playing, stop]
-  );
+  return {
+    play: () => context.play(options.sound, options.volume, true),
+    stop: () => context.stop(options.sound),
+    playing: () => context.playing(options.sound),
+  };
 };
