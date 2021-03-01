@@ -25,11 +25,6 @@
     "APPS_DIALER_REJECT_CALL": "Reject",
     "APPS_DIALER_END_CALL": "End",
 
-<<<<<<< HEAD
-=======
-    "APPS_BANK_TRANSFER": "Transfer",
-
->>>>>>> Add calling and notification sounds
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
     "APPS_TWITTER_IMAGE_PLACEHOLDER": "A link to your image or gif",
