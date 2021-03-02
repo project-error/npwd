@@ -68,10 +68,12 @@ const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
   useEffect(() => {
     if (interrupt) {
       stop(url);
+      setPlaying(false);
       return;
     }
     if (!playing(url) && previousInterrupt) {
       play();
+      setPlaying(true);
     }
   }, [interrupt, play, playing, previousInterrupt, stop, url]);
 
