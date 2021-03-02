@@ -31,7 +31,7 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
       />
       <Box
         id={CONVERSATION_ELEMENT_ID}
-        height="90%"
+        height="85%"
         display="flex"
         flexDirection="column"
         pb={4}
