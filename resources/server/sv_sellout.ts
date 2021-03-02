@@ -8,7 +8,6 @@ import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
-
 async function fetchAllListings(): Promise<MarketplaceListing[]> {
   const query = 'SELECT * FROM npwd_sellout_listings ORDER BY id DESC';
 
@@ -58,18 +57,19 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     const phoneNumber = await usePhoneNumber(_identifier);
     await addListing(_identifier, name, phoneNumber, listing);
 
+    emitNet(events.SELLOUT_ADD_LISTING_SUCCESS, _source);
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
       message: 'MARKETPLACE_CREATE_LISTING_SUCCESS',
-      type: 'success'
-    })
+      type: 'success',
+    });
   } catch (e) {
     selloutLogger.error(`Failed to add listing ${e.message}`, {
       source: _source,
     });
-    
+
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
       message: 'MARKETPALCE_CREATE_LISTING_FAILED',
-      type: 'error'
-    })
+      type: 'error',
+    });
   }
 });

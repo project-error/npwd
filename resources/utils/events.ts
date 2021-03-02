@@ -41,6 +41,7 @@ export default {
 
   // Sellout
   SELLOUT_ADD_LISTING: 'phone:addListing',
+  SELLOUT_ADD_LISTING_SUCCESS: 'phone:addListingSuccess',
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
   SELLOUT_ACTION_RESULT: 'phone:selloutActionResult',
