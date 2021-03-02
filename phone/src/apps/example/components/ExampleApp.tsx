@@ -16,7 +16,16 @@ export const ExampleApp = () => {
   const exampleString = useExample();
   const example = useApp('EXAMPLE');
   const [soundName, setSound] = useState('pixel.ogg');
-  const { play, playing, stop } = useSound('media/ringtones/' + soundName);
+  const { play, playing, stop } = useSound('./media/ringtones/' + soundName);
+
+  const toggleSound = () => {
+    if (soundName === 'pixel.ogg') {
+      setSound('marimba.ogg');
+      return;
+    }
+    setSound('pixel.ogg');
+  };
+
   return (
     <ExampleThemeProvider>
       <AppWrapper>
@@ -29,9 +38,7 @@ export const ExampleApp = () => {
           <IconButton onClick={() => (playing ? stop() : play())}>
             {playing ? <StopIcon /> : <PlayIcon />}
           </IconButton>
-          <Button onClick={() => setSound('marimba.ogg')}>
-             Change sound on the fly
-          </Button>
+          <Button onClick={toggleSound}>Change sound on the fly</Button>
         </AppContent>
       </AppWrapper>
     </ExampleThemeProvider>

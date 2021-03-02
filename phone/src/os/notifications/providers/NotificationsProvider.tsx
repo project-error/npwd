@@ -5,12 +5,11 @@ import React, {
   useMemo,
   useRef,
   useEffect,
-  useContext,
 } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from '../../phone/hooks/state';
-import { soundContext } from '../../sound/providers/SoundProvider';
+import { useSoundProvider } from '../../sound/hooks/useSoundProvider';
 import { getSoundSettings } from '../../sound/utils/getSoundSettings';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
@@ -70,7 +69,7 @@ export function NotificationsProvider({ children }) {
 
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
-  const { mount, play } = useContext(soundContext);
+  const { mount, play } = useSoundProvider();
 
   const alertTimeout = useRef<NodeJS.Timeout>();
   const [alerts, setAlerts] = useState<

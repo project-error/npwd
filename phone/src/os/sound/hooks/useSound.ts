@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Howl } from 'howler';
+import { useEffect, useState } from 'react';
+import { usePreviousState } from '../../../common/utils/usePreviousState';
+import { useSoundProvider } from './useSoundProvider';
 
 interface ISoundOptions {
   volume?: number;
@@ -7,83 +8,84 @@ interface ISoundOptions {
   loop?: boolean;
 }
 
+const DEFAULT_OPTIONS = { volume: 1, interrupt: false, loop: false };
+
 /**
  * A hook allowing to play sound
  * @param url The url of the sound you would like to play
  *
  * @param { volume, interrupt, loop} Additional options
  **/
-const useSound = (
-  url: string,
-  { volume = 1, interrupt = false, loop = false }: ISoundOptions = {}
-) => {
-  const [isMounted, setMounted] = useState<boolean>(false);
-  const soundRef = useRef<Howl>(null);
+const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
+  const { volume: vol, loop: isLoop, interrupt } = options;
 
-  const [playing, setPlaying] = useState<boolean>(false);
+  const [isPlaying, setPlaying] = useState<boolean>(false);
 
-  // Mount & Dismount handling
-  useEffect(() => {
-    soundRef.current?.unload();
-    setPlaying(false);
-    setMounted(false);
+  const {
+    mount,
+    play,
+    stop,
+    playing,
+    volume,
+    loop,
+    remove,
+    isMounted,
+  } = useSoundProvider();
 
-    soundRef.current = new Howl({
-      src: url,
-      volume: 1,
-      loop: false,
-    });
-
-    setMounted(true);
-
-    return () => {
-      soundRef.current?.unload();
-      soundRef.current = undefined;
-    };
-  }, [url]);
+  const previousInterrupt = usePreviousState(interrupt);
+  const previousUrl = usePreviousState(url);
 
   useEffect(() => {
-    if (isMounted) {
-      soundRef.current.volume(volume);
+    const changed = previousUrl !== url;
+    if (changed) {
+      stop(previousUrl);
+      remove(previousUrl);
     }
-  }, [volume, isMounted]);
+    if (!isMounted(url)) {
+      mount(url, vol, isLoop, changed && isPlaying);
+      return;
+    }
+    if (changed && isPlaying) {
+      play(url);
+    }
+    volume(url, vol);
+    loop(url, isLoop);
+  }, [
+    url,
+    vol,
+    isLoop,
+    isMounted,
+    volume,
+    loop,
+    mount,
+    previousUrl,
+    stop,
+    remove,
+    isPlaying,
+    play,
+  ]);
 
   useEffect(() => {
-    if (isMounted) {
-      soundRef.current.loop(loop);
+    if (interrupt) {
+      stop(url);
+      return;
     }
-  }, [loop, isMounted]);
+    if (!playing(url) && previousInterrupt) {
+      play();
+    }
+  }, [interrupt, play, playing, previousInterrupt, stop, url]);
 
-  const play = useCallback(() => {
-    if (!soundRef.current) return;
-
-    if (isMounted) {
-      soundRef.current.play();
-      soundRef.current.once('end', () => {
-        if (!soundRef.current.playing()) {
-          setPlaying(false);
-        }
-      });
+  return {
+    play: () => {
+      play(url);
       setPlaying(true);
-    }
-  }, [isMounted]);
-
-  const stop = useCallback(() => {
-    if (!soundRef.current) return;
-
-    if (isMounted) {
-      soundRef.current.stop();
+    },
+    stop: () => {
+      stop(url);
       setPlaying(false);
-    }
-  }, [isMounted]);
-
-  useEffect(() => {
-    if (interrupt && isMounted) {
-      stop();
-    }
-  }, [interrupt, isMounted, stop]);
-
-  return { play, playing, stop };
+    },
+    playing: isPlaying,
+  };
 };
 
 export default useSound;
