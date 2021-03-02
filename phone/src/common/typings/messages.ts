@@ -18,6 +18,7 @@ export interface MessageGroup {
   avatar?: string;
   label?: string;
   updatedAt: string;
+  unreadCount: number;
 }
 
 export interface CreateMessageGroupResult {

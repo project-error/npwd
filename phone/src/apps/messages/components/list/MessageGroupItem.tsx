@@ -19,7 +19,7 @@ const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
   // get unread messages, check the length. If we have any, get the groupId,
   // and show the badge
 
-  const hasUnread = messageGroup.unreadMessages > 0;
+  const hasUnread = messageGroup.unreadCount > 0;
 
   return (
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>

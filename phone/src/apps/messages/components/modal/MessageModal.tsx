@@ -75,16 +75,12 @@ export const MessageModal = () => {
 
   // sends all unread messages
   useEffect(() => {
-    if (!messages) return;
-    const unreadMessages = messages
-      .filter((msg) => !msg.isRead)
-      .map((msg) => msg.id);
-    if (unreadMessages.length) {
+    if (activeMessageGroup?.groupId && activeMessageGroup.unreadCount > 0) {
       Nui.send('phone:setReadMessages', {
         groupId: activeMessageGroup.groupId,
       });
     }
-  }, [messages]);
+  }, [activeMessageGroup]);
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately

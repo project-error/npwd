@@ -18,6 +18,10 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, () => {
   sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE);
 });
 
+
+// RegisterCommand
+Regis
+
 /**
  * Twitter update profile
  */
