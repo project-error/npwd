@@ -104,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages_groups` (
   `group_id` varchar(60) NOT NULL,
   `participant_identifier` varchar(40) NOT NULL,
   `label` varchar(60) DEFAULT '',
+  `unreadCount` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `npwd_messages_groups_group_id` (`group_id`),
   KEY `npwd_messages_groups_user_identifier_idx` (`user_identifier`),
