@@ -24,8 +24,7 @@ export const BankHome = () => {
   return (
     <div className={classes.root}>
       <Typography className={classes.headTitle}>
-        <span style={{ fontWeight: 'bold' }}>{t('APPS_BANK_HOME_TITLE')}</span>,{' '}
-        {credentials.name}
+        <span style={{ fontWeight: 'bold' }}>{t('APPS_BANK_HOME_TITLE')}</span>, {credentials.name}
       </Typography>
       <div className={classes.accounts}>
         <h2 className={classes.accountsType}>Checking:</h2>

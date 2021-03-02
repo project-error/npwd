@@ -106,10 +106,7 @@ export const AddTweetModal = () => {
 
     const data = {
       message,
-      images:
-        images && images.length > 0
-          ? images.map((image) => image.link).join(IMAGE_DELIMITER)
-          : '',
+      images: images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
       realUser: 'testUser',
     };
     Nui.send('phone:createTweet', data);
@@ -158,27 +155,13 @@ export const AddTweetModal = () => {
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
-      <TweetMessage
-        modalVisible={modalVisible}
-        message={message}
-        handleChange={handleMessageChange}
-      />
-      <ImagePrompt
-        visible={showImagePrompt}
-        value={link}
-        handleChange={handleimageChange}
-      />
+      <TweetMessage modalVisible={modalVisible} message={message} handleChange={handleMessageChange} />
+      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleimageChange} />
       <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
-      <ImageDisplay
-        visible={!showEmoji && images.length > 0}
-        images={images}
-        removeImage={removeImage}
-      />
+      <ImageDisplay visible={!showEmoji && images.length > 0} images={images} removeImage={removeImage} />
       <div className={classes.buttonsContainer}>
         <IconButtons
-          onImageClick={
-            images.length < config.twitter.maxImages ? toggleShowImagePrompt : null
-          }
+          onImageClick={images.length < config.twitter.maxImages ? toggleShowImagePrompt : null}
           onEmojiClick={toggleShowEmoji}
         />
         <ControlButtons

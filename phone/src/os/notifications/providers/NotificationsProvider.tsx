@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { createContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from '../../phone/hooks/state';
@@ -53,11 +46,7 @@ export const NotificationsContext = createContext<{
   updateId(id: string, value: Partial<INotification>): void;
   removeId(id: string): void;
   hasNotification(app: string): number;
-  addNotificationAlert(
-    n: INotification,
-    persist: boolean,
-    update?: Partial<INotification>,
-  );
+  addNotificationAlert(n: INotification, persist: boolean, update?: Partial<INotification>);
 }>(null);
 
 export function NotificationsProvider({ children }) {
@@ -72,9 +61,7 @@ export function NotificationsProvider({ children }) {
   const { mount, play } = useSoundProvider();
 
   const alertTimeout = useRef<NodeJS.Timeout>();
-  const [alerts, setAlerts] = useState<
-    Array<[INotification, boolean, Partial<INotification>, string | undefined]>
-  >([]);
+  const [alerts, setAlerts] = useState<Array<[INotification, boolean, Partial<INotification>, string | undefined]>>([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
   useEffect(() => {
@@ -127,12 +114,7 @@ export function NotificationsProvider({ children }) {
   );
 
   const _showAlert = useCallback(
-    (
-      n: INotification,
-      persist: boolean,
-      update: Partial<INotification>,
-      soundUrl: string,
-    ) => {
+    (n: INotification, persist: boolean, update: Partial<INotification>, soundUrl: string) => {
       return new Promise<void>((res) => {
         const resolve = () => {
           if (persist) {
@@ -172,16 +154,10 @@ export function NotificationsProvider({ children }) {
     [addOrUpdateNotification, play],
   );
 
-  const addNotificationAlert = (
-    n: INotification,
-    persist?: boolean,
-    update?: Partial<INotification>,
-  ) => {
+  const addNotificationAlert = (n: INotification, persist?: boolean, update?: Partial<INotification>) => {
     if (n.sound) {
       const { sound, volume } = getSoundSettings('notification', settings, n.app);
-      mount(sound, volume, false).then(({ url }) =>
-        setAlerts((curr) => [...curr, [n, persist, update, url]]),
-      );
+      mount(sound, volume, false).then(({ url }) => setAlerts((curr) => [...curr, [n, persist, update, url]]));
       return;
     }
     setAlerts((curr) => [...curr, [n, persist, update, undefined]]);

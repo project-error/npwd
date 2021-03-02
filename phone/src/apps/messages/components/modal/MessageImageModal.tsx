@@ -89,10 +89,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
         <Box py={1}>
           <Typography paragraph>Do you want to share this image?</Typography>
-          <PictureResponsive
-            src={queryParamImagePreview}
-            alt={'Share gallery image preview'}
-          />
+          <PictureResponsive src={queryParamImagePreview} alt={'Share gallery image preview'} />
           <Button
             fullWidth
             variant="contained"

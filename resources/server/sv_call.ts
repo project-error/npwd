@@ -1,11 +1,6 @@
 import { ESX } from './server';
 import events from '../utils/events';
-import {
-  getIdentifierByPhoneNumber,
-  usePhoneNumber,
-  getIdentifier,
-  getSource,
-} from './functions';
+import { getIdentifierByPhoneNumber, usePhoneNumber, getIdentifier, getSource } from './functions';
 import { XPlayer } from 'esx.js/@types/server';
 import { ICall } from '../../phone/src/common/typings/call';
 
@@ -35,8 +30,7 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
 }
 
 async function saveCall(call: ICall) {
-  const query =
-    'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
+  const query = 'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
   await pool.query(query, [call.identifier, call.transmitter, call.receiver, call.start]);
 }
 
@@ -46,8 +40,7 @@ async function updateCall(call: ICall, isAccepted: boolean, end: number) {
 }
 
 async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
-  const query =
-    'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC';
+  const query = 'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC';
   const [result] = await pool.query(query, [phoneNumber, phoneNumber]);
   const calls = <ICall[]>result;
   return calls;
@@ -87,13 +80,7 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   emitNet(events.PHONE_START_CALL, _source, transmitterNumber, receiverNumber, true);
 
   // client that is being called
-  emitNet(
-    events.PHONE_START_CALL,
-    xReceiver.source,
-    transmitterNumber,
-    receiverNumber,
-    false,
-  );
+  emitNet(events.PHONE_START_CALL, xReceiver.source, transmitterNumber, receiverNumber, false);
 });
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
@@ -108,13 +95,7 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId, currentCall, false);
 
     // player who is calling
-    emitNet(
-      events.PHONE_CALL_WAS_ACCEPTED,
-      currentCall.transmitterSource,
-      channelId,
-      currentCall,
-      true,
-    );
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, currentCall.transmitterSource, channelId, currentCall, true);
 
     currentCall.accepted = true;
   } catch (e) {
@@ -124,25 +105,22 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   }
 });
 
-onNet(
-  events.PHONE_CALL_REJECTED,
-  async (transmitterNumber: string, timestamp: number) => {
-    const pSource = getSource();
-    try {
-      const currentCall = calls.get(transmitterNumber);
-      await updateCall(currentCall, false, timestamp);
+onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: number) => {
+  const pSource = getSource();
+  try {
+    const currentCall = calls.get(transmitterNumber);
+    await updateCall(currentCall, false, timestamp);
 
-      // player who is called and initiasted the rejection.
-      emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
-      // player who is calling and recieved the rejection.
-      emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
-    } catch (e) {
-      callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
-        source: pSource,
-      });
-    }
-  },
-);
+    // player who is called and initiasted the rejection.
+    emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
+    // player who is calling and recieved the rejection.
+    emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
+  } catch (e) {
+    callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
+      source: pSource,
+    });
+  }
+});
 
 onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number) => {
   const pSource = getSource();

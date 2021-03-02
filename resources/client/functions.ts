@@ -24,23 +24,7 @@ const newPhoneProp = async () => {
     prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     //prop = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
-    AttachEntityToEntity(
-      prop,
-      playerPed,
-      boneIndex,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      -0.0,
-      true,
-      true,
-      false,
-      true,
-      1.0,
-      true,
-    ); //-- Attaches the phone to the player.
+    AttachEntityToEntity(prop, playerPed, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0, true, true, false, true, 1.0, true); //-- Attaches the phone to the player.
     propCreated = true;
   } else if (propCreated) {
     console.log('prop already created');
@@ -77,19 +61,7 @@ const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
   SetCurrentPedWeapon(playerPed, 0xa2719263, true);
   ClearPedTasks(playerPed);
   await loadAnimDict(dict);
-  TaskPlayAnim(
-    playerPed,
-    dict,
-    'cellphone_text_in',
-    7.0,
-    -1,
-    -1,
-    50,
-    0,
-    false,
-    false,
-    false,
-  );
+  TaskPlayAnim(playerPed, dict, 'cellphone_text_in', 7.0, -1, -1, 50, 0, false, false, false);
   await Delay(300);
   await newPhoneProp();
 };
@@ -101,19 +73,7 @@ const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
   SetCurrentPedWeapon(playerPed, 0xa2719263, true);
   ClearPedTasks(playerPed);
   await loadAnimDict(dict);
-  TaskPlayAnim(
-    playerPed,
-    dict,
-    'cellphone_text_in',
-    8.0,
-    -1,
-    -1,
-    50,
-    0,
-    false,
-    false,
-    false,
-  );
+  TaskPlayAnim(playerPed, dict, 'cellphone_text_in', 8.0, -1, -1, 50, 0, false, false, false);
   await Delay(300);
   await newPhoneProp();
 };

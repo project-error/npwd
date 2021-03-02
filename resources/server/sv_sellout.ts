@@ -17,22 +17,10 @@ async function fetchAllListings(): Promise<MarketplaceListing[]> {
   return listings;
 }
 
-async function addListing(
-  identifier: string,
-  name: string,
-  number: any,
-  listing: MarketplaceListing,
-): Promise<void> {
+async function addListing(identifier: string, name: string, number: any, listing: MarketplaceListing): Promise<void> {
   const query =
     'INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)';
-  await pool.query(query, [
-    identifier,
-    name,
-    number,
-    listing.title,
-    listing.url,
-    listing.description,
-  ]);
+  await pool.query(query, [identifier, name, number, listing.title, listing.url, listing.description]);
 }
 
 onNet(events.SELLOUT_FETCH_LISTING, async () => {

@@ -1,13 +1,4 @@
-import {
-  Button,
-  TextField,
-  Slide,
-  Paper,
-  Typography,
-  Container,
-  CircularProgress,
-  Box,
-} from '@material-ui/core';
+import { Button, TextField, Slide, Paper, Typography, Container, CircularProgress, Box } from '@material-ui/core';
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useNoteDetail } from '../hooks/useNoteDetail';
@@ -109,11 +100,7 @@ export const NoteModal = () => {
                     </Button>
                   </Box>
                   <Box display="inline" p={1}>
-                    <StatusButton
-                      color="error"
-                      variant="contained"
-                      onClick={_handleClose}
-                    >
+                    <StatusButton color="error" variant="contained" onClick={_handleClose}>
                       {t('GENERIC_CANCEL')}
                     </StatusButton>
                   </Box>
@@ -121,20 +108,12 @@ export const NoteModal = () => {
               ) : (
                 <>
                   <Box display="inline" p={1}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={handleUpdateNote}
-                    >
+                    <Button color="primary" variant="contained" onClick={handleUpdateNote}>
                       {t('GENERIC_UPDATE')}
                     </Button>
                   </Box>
                   <Box display="inline" p={1}>
-                    <StatusButton
-                      color="error"
-                      variant="contained"
-                      onClick={handleDeleteNote}
-                    >
+                    <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
                       {t('GENERIC_DELETE')}
                     </StatusButton>
                   </Box>

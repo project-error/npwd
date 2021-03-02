@@ -1,11 +1,7 @@
 import md5 from 'md5';
 
 import events from '../utils/events';
-import {
-  Message,
-  MessageGroup,
-  CreateMessageGroupResult,
-} from '../../phone/src/common/typings/messages';
+import { Message, MessageGroup, CreateMessageGroupResult } from '../../phone/src/common/typings/messages';
 import { pool, withTransaction } from './db';
 import { getSource, getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
@@ -46,11 +42,7 @@ interface MessageGroupMapping {
  * @param groupId - the message group ID to attach this message to
  * @param message - content of the message
  */
-async function createMessage(
-  userIdentifier: string,
-  groupId: string,
-  message: string,
-): Promise<any> {
+async function createMessage(userIdentifier: string, groupId: string, message: string): Promise<any> {
   const query = `
   INSERT INTO npwd_messages
   (user_identifier, message, group_id)
@@ -65,9 +57,7 @@ async function createMessage(
  * populate the list of message groups on the UI
  * @param userIdentifier - identifier of the user to get message groups for
  */
-async function getMessageGroups(
-  userIdentifier: string,
-): Promise<UnformattedMessageGroup[]> {
+async function getMessageGroups(userIdentifier: string): Promise<UnformattedMessageGroup[]> {
   const query = `
   SELECT
     npwd_messages_groups.group_id,
@@ -89,11 +79,7 @@ async function getMessageGroups(
   WHERE npwd_messages_groups.participant_identifier != ?
   ORDER BY npwd_messages_groups.createdAt DESC
   `;
-  const [results] = await pool.query(query, [
-    userIdentifier,
-    userIdentifier,
-    userIdentifier,
-  ]);
+  const [results] = await pool.query(query, [userIdentifier, userIdentifier, userIdentifier]);
   return <UnformattedMessageGroup[]>results;
 }
 
@@ -136,11 +122,7 @@ async function getMessages(userIdentifier: string, groupId: string): Promise<Mes
  * @param groupId - groupId this label is attached to
  * @param label - the label itself
  */
-async function createLabel(
-  userIdentifier: string,
-  groupId: string,
-  label: string,
-): Promise<any> {
+async function createLabel(userIdentifier: string, groupId: string, label: string): Promise<any> {
   const query = `
   INSERT INTO npwd_messages_labels
   (user_identifier, group_id, label)
@@ -166,11 +148,7 @@ async function createMessageGroup(
   (user_identifier, group_id, participant_identifier)
   VALUES (?, ?, ?)
   `;
-  const [results] = await pool.query(query, [
-    userIdentifier,
-    groupId,
-    participantIdentifier,
-  ]);
+  const [results] = await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
 }
 
 /**
@@ -225,36 +203,28 @@ async function getMessageCountByGroup(groupId: string): Promise<number> {
  * groups into a single MessageGroup object.
  * @param userIdentifier - the user identifier to get message groups for
  */
-async function getConsolidatedMessageGroups(
-  userIdentifier: string,
-): Promise<MessageGroupMapping> {
+async function getConsolidatedMessageGroups(userIdentifier: string): Promise<MessageGroupMapping> {
   const messageGroups = await getMessageGroups(userIdentifier);
-  return messageGroups.reduce(
-    (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
-      const groupId = messageGroup.group_id;
-      const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
+  return messageGroups.reduce((mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
+    const groupId = messageGroup.group_id;
+    const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
 
-      if (groupId in mapping) {
-        mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
-      } else {
-        mapping[groupId] = {
-          user_identifier: messageGroup.user_identifier,
-          avatar: messageGroup.avatar,
-          label: messageGroup.label,
-          participants: [displayTerm],
-          updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
-        };
-      }
-      return mapping;
-    },
-    {},
-  );
+    if (groupId in mapping) {
+      mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
+    } else {
+      mapping[groupId] = {
+        user_identifier: messageGroup.user_identifier,
+        avatar: messageGroup.avatar,
+        label: messageGroup.label,
+        participants: [displayTerm],
+        updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
+      };
+    }
+    return mapping;
+  }, {});
 }
 
-async function getGroupIds(
-  userIdentifier: string,
-  groupMapping: MessageGroupMapping,
-): Promise<string[]> {
+async function getGroupIds(userIdentifier: string, groupMapping: MessageGroupMapping): Promise<string[]> {
   const groupIds: string[] = [];
   for (const groupId of Object.keys(groupMapping)) {
     const isMine = groupMapping[groupId].user_identifier === userIdentifier;
@@ -270,9 +240,7 @@ async function getGroupIds(
  * of MessageGroup objects ready for the UI to consume
  * @param userIdentifier - user to generate the MessageGroups for
  */
-async function getFormattedMessageGroups(
-  userIdentifier: string,
-): Promise<MessageGroup[]> {
+async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
   const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
   const groupIds = await getGroupIds(userIdentifier, groupMapping);
 
@@ -352,9 +320,7 @@ async function createMessageGroupsFromPhoneNumbers(
     // create a row that contains ourselves so reverse accessing from
     // other players works as expected
     createMessageGroup(userIdentifier, groupId, userIdentifier),
-    ...identifiers.map((identifier) =>
-      createMessageGroup(userIdentifier, groupId, identifier),
-    ),
+    ...identifiers.map((identifier) => createMessageGroup(userIdentifier, groupId, identifier)),
   ];
 
   // we allow users to attach labels to name their group chats
@@ -386,60 +352,53 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   }
 });
 
-onNet(
-  events.MESSAGES_CREATE_MESSAGE_GROUP,
-  async (phoneNumbers: string[], label: string = null) => {
-    const _source = getSource();
-    try {
-      const _identifier = await getIdentifier(_source);
-      const result = await createMessageGroupsFromPhoneNumbers(
-        _identifier,
-        phoneNumbers,
-        label,
-      );
+onNet(events.MESSAGES_CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: string = null) => {
+  const _source = getSource();
+  try {
+    const _identifier = await getIdentifier(_source);
+    const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
-      if (result.error && result.duplicate) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
-          type: 'error',
-        });
+    if (result.error && result.duplicate) {
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
+        type: 'error',
+      });
 
-        // if the phoneNumber is invalid
-      } else if (result.error && result.phoneNumber) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_INVALID_PHONE_NUMBER',
-          type: 'error',
-        });
+      // if the phoneNumber is invalid
+    } else if (result.error && result.phoneNumber) {
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: 'MESSAGES_INVALID_PHONE_NUMBER',
+        type: 'error',
+      });
 
-        // if you are try to add yourself
-      } else if (result.error && result.mine) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
-          type: 'error',
-        });
-      } else if (result.error) {
-        // if it just fails, welp
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
-          type: 'error',
-        });
-      } else {
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
-      }
-    } catch (e) {
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
-
+      // if you are try to add yourself
+    } else if (result.error && result.mine) {
+      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
+        type: 'error',
+      });
+    } else if (result.error) {
+      // if it just fails, welp
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
       emitNet(events.MESSAGES_ACTION_RESULT, _source, {
         message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
         type: 'error',
       });
-      messageLogger.error(`Failed to create message group, ${e.message}`, {
-        source: _source,
-      });
+    } else {
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
     }
-  },
-);
+  } catch (e) {
+    emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
+
+    emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+      message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+      type: 'error',
+    });
+    messageLogger.error(`Failed to create message group, ${e.message}`, {
+      source: _source,
+    });
+  }
+});
 
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   const _source = getSource();

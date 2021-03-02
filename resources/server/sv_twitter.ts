@@ -49,10 +49,7 @@ async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
  * @param profileId - twitter profile id of the player
  * @param searchValue - value to search
  */
-async function fetchTweetsFiltered(
-  profileId: number,
-  searchValue: string,
-): Promise<Tweet[]> {
+async function fetchTweetsFiltered(profileId: number, searchValue: string): Promise<Tweet[]> {
   const parameterizedSearchValue = `%${searchValue}%`;
   const query = `
     SELECT
@@ -71,12 +68,7 @@ async function fetchTweetsFiltered(
     ORDER BY npwd_twitter_tweets.createdAt DESC 
     LIMIT 100
     `;
-  const [results] = await pool.query(query, [
-    profileId,
-    profileId,
-    parameterizedSearchValue,
-    parameterizedSearchValue,
-  ]);
+  const [results] = await pool.query(query, [profileId, profileId, parameterizedSearchValue, parameterizedSearchValue]);
   const tweets = <Tweet[]>results;
   return tweets.map((tweet) => ({
     ...tweet,

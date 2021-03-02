@@ -1,12 +1,7 @@
 import { ESX } from './server';
 import { pool } from './db';
 import config from '../utils/config';
-import {
-  getIdentifier,
-  getIdentifierByPhoneNumber,
-  getSource,
-  usePhoneNumber,
-} from './functions';
+import { getIdentifier, getIdentifierByPhoneNumber, getSource, usePhoneNumber } from './functions';
 import { mainLogger } from './sv_logger';
 
 //db = DatabaseConfig  //helper variable for use in server function

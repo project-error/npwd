@@ -11,26 +11,23 @@ on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
   cb();
 });
 
-onNet(
-  events.PHONE_START_CALL,
-  (transmitter: string, receiver: string, isTransmitter: boolean) => {
-    openCallModal(true);
+onNet(events.PHONE_START_CALL, (transmitter: string, receiver: string, isTransmitter: boolean) => {
+  openCallModal(true);
 
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'CALL',
-        method: 'setCaller',
-        data: {
-          active: true,
-          transmitter: transmitter,
-          receiver: receiver,
-          isTransmitter: isTransmitter,
-          accepted: false,
-        },
-      }),
-    );
-  },
-);
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'setCaller',
+      data: {
+        active: true,
+        transmitter: transmitter,
+        receiver: receiver,
+        isTransmitter: isTransmitter,
+        accepted: false,
+      },
+    }),
+  );
+});
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL); // Fires when the TARGET accepts.
 on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
@@ -38,26 +35,23 @@ on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
   cb();
 });
 
-onNet(
-  events.PHONE_CALL_WAS_ACCEPTED,
-  (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
-    exp['mumble-voip'].SetCallChannel(channelId);
-    phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'CALL',
-        method: 'setCaller',
-        data: {
-          active: true,
-          transmitter: currentCall.transmitter,
-          receiver: currentCall.receiver,
-          isTransmitter: isTransmitter,
-          accepted: true,
-        },
-      }),
-    );
-  },
-);
+onNet(events.PHONE_CALL_WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
+  exp['mumble-voip'].SetCallChannel(channelId);
+  phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'setCaller',
+      data: {
+        active: true,
+        transmitter: currentCall.transmitter,
+        receiver: currentCall.receiver,
+        isTransmitter: isTransmitter,
+        accepted: true,
+      },
+    }),
+  );
+});
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {

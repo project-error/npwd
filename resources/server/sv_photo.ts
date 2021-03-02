@@ -12,8 +12,7 @@ async function uploadPhoto(identifier: string, image: string) {
 }
 
 async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
-  const query =
-    'SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC';
+  const query = 'SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
   const photos = <IPhoto[]>results;
   return photos;

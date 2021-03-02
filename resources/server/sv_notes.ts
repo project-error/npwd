@@ -23,8 +23,7 @@ async function deleteNote(noteId: number, identifier: string) {
 }
 
 async function updateNote(note: Note, identifier: string): Promise<any> {
-  const query =
-    'UPDATE npwd_notes SET title = ?, content = ? WHERE id = ? AND identifier = ?';
+  const query = 'UPDATE npwd_notes SET title = ?, content = ? WHERE id = ? AND identifier = ?';
   await pool.query(query, [note.title, note.content, note.id, identifier]);
 }
 

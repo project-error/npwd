@@ -7,8 +7,6 @@ interface FilterdContactsProps {
 }
 
 export const useFilteredContacts = (): FilterdContactsProps => {
-  const [filteredContacts, setFilteredContacts] = useRecoilState(
-    contactsState.filterContacts,
-  );
+  const [filteredContacts, setFilteredContacts] = useRecoilState(contactsState.filterContacts);
   return { filteredContacts, setFilteredContacts };
 };

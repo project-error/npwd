@@ -19,9 +19,7 @@ export const AccountTransactions = (): any => {
     <div id="account-section">
       <div className={classes.header}>
         <h2 className={classes.title}>{t('APPS_BANK_ACCOUNT_TRANSACTIONS')}</h2>
-        <Button className={classes.seeAll}>
-          {t('APPS_BANK_ACCOUNT_SEE_TRANSACTION')}
-        </Button>
+        <Button className={classes.seeAll}>{t('APPS_BANK_ACCOUNT_SEE_TRANSACTION')}</Button>
       </div>
 
       <div className={classes.transcationDiv}>

@@ -58,25 +58,17 @@ export const DialerHistory = ({ calls }) => {
       {calls.map((call: ICall) =>
         call.transmitter === number ? (
           <ListItem key={call.id} divider>
-            <ListItemIcon>
-              {<PhoneForwardedIcon className={classes.callForward} />}
-            </ListItemIcon>
+            <ListItemIcon>{<PhoneForwardedIcon className={classes.callForward} />}</ListItemIcon>
 
             <ListItemText
               primary={getDisplayByNumber(call.receiver)}
               secondary={dayjs.unix(call.start).format(t('DATE_TIME_FORMAT'))}
             />
-            <IconButton onClick={() => handleCall(call.receiver)}>
-              {<PhoneIcon />}
-            </IconButton>
+            <IconButton onClick={() => handleCall(call.receiver)}>{<PhoneIcon />}</IconButton>
 
             {getDisplayByNumber(call.transmitter) === call.transmitter ? (
               <IconButton
-                onClick={() =>
-                  history.push(
-                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`,
-                  )
-                }
+                onClick={() => history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)}
               >
                 {<PersonAddIcon />}
               </IconButton>
@@ -84,25 +76,17 @@ export const DialerHistory = ({ calls }) => {
           </ListItem>
         ) : (
           <ListItem key={call.id} divider>
-            <ListItemIcon>
-              {<PhoneCallbackIcon className={classes.callBack} />}
-            </ListItemIcon>
+            <ListItemIcon>{<PhoneCallbackIcon className={classes.callBack} />}</ListItemIcon>
 
             <ListItemText
               primary={getDisplayByNumber(call.transmitter)}
               secondary={dayjs.unix(call.start).format(t('DATE_TIME_FORMAT'))}
             />
-            <IconButton onClick={() => handleCall(call.transmitter)}>
-              {<PhoneIcon />}
-            </IconButton>
+            <IconButton onClick={() => handleCall(call.transmitter)}>{<PhoneIcon />}</IconButton>
 
             {getDisplayByNumber(call.transmitter) === call.transmitter ? (
               <IconButton
-                onClick={() =>
-                  history.push(
-                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`,
-                  )
-                }
+                onClick={() => history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)}
               >
                 {<PersonAddIcon />}
               </IconButton>

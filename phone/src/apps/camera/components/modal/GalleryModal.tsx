@@ -18,10 +18,7 @@ export const GalleryModal = () => {
 
   const [shareOpen, setShareOpen] = useState(null);
 
-  const meta: ICameraPhoto = useMemo(
-    () => ({ id: query.id as string, image: query.image as string }),
-    [query],
-  );
+  const meta: ICameraPhoto = useMemo(() => ({ id: query.id as string, image: query.image as string }), [query]);
 
   const _handleClose = () => {
     history.push(referal);
@@ -48,10 +45,7 @@ export const GalleryModal = () => {
         <Button onClick={_handleClose}>
           <ArrowBackIcon />
         </Button>
-        <div
-          className={classes.image}
-          style={{ backgroundImage: `url(${meta.image})` }}
-        />
+        <div className={classes.image} style={{ backgroundImage: `url(${meta.image})` }} />
         <div className={classes.actionDiv}>
           <Button onClick={handleDeletePhoto}>
             <DeleteIcon fontSize="large" />

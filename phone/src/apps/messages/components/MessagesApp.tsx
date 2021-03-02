@@ -38,11 +38,7 @@ export const MessagesApp = () => {
             />
           </Switch>
           <Switch>
-            <Route
-              exact
-              path={['/messages/new/:phoneNumber', '/messages/new']}
-              render={() => <MessageGroupModal />}
-            />
+            <Route exact path={['/messages/new/:phoneNumber', '/messages/new']} render={() => <MessageGroupModal />} />
           </Switch>
         </AppContent>
         <NewMessageGroupButton onClick={() => history.push('/messages/new')} />

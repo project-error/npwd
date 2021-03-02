@@ -1,12 +1,7 @@
 import React from 'react';
 import { AppWrapperTypes } from '../interface/InterfaceUI';
 
-export const AppWrapper = ({
-  children,
-  style,
-  handleClickAway,
-  ...props
-}: AppWrapperTypes) => {
+export const AppWrapper = ({ children, style, handleClickAway, ...props }: AppWrapperTypes) => {
   return (
     <div
       {...props}

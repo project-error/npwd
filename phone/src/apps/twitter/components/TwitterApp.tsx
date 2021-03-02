@@ -59,8 +59,7 @@ export const TwitterApp = () => {
 
   // before any other action can be taken by the user we force
   // them have a profile name
-  const promptProfileName =
-    profile && (!profile.profile_name || !profile.profile_name.trim());
+  const promptProfileName = profile && (!profile.profile_name || !profile.profile_name.trim());
 
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);
@@ -83,9 +82,7 @@ export const TwitterApp = () => {
         )}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
-      {!promptProfileName && (
-        <BottomNavigation activePage={activePage} handleChange={handlePageChange} />
-      )}
+      {!promptProfileName && <BottomNavigation activePage={activePage} handleChange={handlePageChange} />}
     </AppWrapper>
   );
 };

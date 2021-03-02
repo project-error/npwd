@@ -15,10 +15,7 @@ const DISCORD_HEADERS = { authorization: `Bot ${DISCORD_TOKEN}` };
 const BASE_URL = 'https://discord.com/api';
 const POST_CHANNEL_URL = `${BASE_URL}/channels/${DISCORD_CHANNEL_ID}/messages`;
 
-export async function reportTweetToDiscord(
-  tweet: Tweet,
-  reportingProfile: Profile,
-): Promise<any> {
+export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profile): Promise<any> {
   if (!DISCORD_TOKEN || !DISCORD_CHANNEL_ID) {
     discordLogger.warn(`Got a request to report a tweet but discord is not 
         configured. See README on how to configure discord endpoints.`);

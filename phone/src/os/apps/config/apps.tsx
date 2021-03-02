@@ -1,13 +1,7 @@
 import React from 'react';
 import { blue, common, grey, purple } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAd,
-  faPlaneArrival,
-  faPhoneAlt,
-  faWonSign,
-  faStickyNote,
-} from '@fortawesome/free-solid-svg-icons';
+import { faAd, faPlaneArrival, faPhoneAlt, faWonSign, faStickyNote } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 import ContactsIcon from '@material-ui/icons/Contacts';
@@ -28,26 +22,11 @@ import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
 
-import {
-  MESSAGES_APP_PRIMARY_COLOR,
-  MESSAGES_APP_TEXT_COLOR,
-} from '../../../apps/messages/messages.theme';
-import {
-  CONTACTS_APP_PRIMARY_COLOR,
-  CONTACTS_APP_TEXT_COLOR,
-} from '../../../apps/contacts/contacts.theme';
-import {
-  SELLOUT_APP_PRIMARY_COLOR,
-  SELLOUT_APP_ICON_COLOR,
-} from '../../../apps/sellout/sellout.theme';
-import {
-  NOTES_APP_ICON_COLOR,
-  NOTES_APP_PRIMARY_COLOR,
-} from '../../../apps/notes/notes.theme';
-import {
-  DIALER_APP_PRIMARY_COLOR,
-  DIALER_APP_TEXT_COLOR,
-} from '../../../apps/dialer/dialer.theme';
+import { MESSAGES_APP_PRIMARY_COLOR, MESSAGES_APP_TEXT_COLOR } from '../../../apps/messages/messages.theme';
+import { CONTACTS_APP_PRIMARY_COLOR, CONTACTS_APP_TEXT_COLOR } from '../../../apps/contacts/contacts.theme';
+import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_ICON_COLOR } from '../../../apps/sellout/sellout.theme';
+import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
+import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 
 export interface IAppConfig {
   id: string;
@@ -99,9 +78,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: purple[500],
     color: grey[50],
     path: '/calculator',
-    Route: () => (
-      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} />
-    ),
+    Route: () => <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} />,
   },
   {
     id: 'SETTINGS',

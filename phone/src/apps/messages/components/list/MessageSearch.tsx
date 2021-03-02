@@ -7,9 +7,7 @@ import useStyles from './list.styles';
 
 interface IProps {
   value: string;
-  handleChange: (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => void;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }
 
 const MessageSearch = ({ value, handleChange }: IProps) => {

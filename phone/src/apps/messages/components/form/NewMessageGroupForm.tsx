@@ -32,9 +32,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       // handles phone numbers in a csv format and strips all spaces and
       // external characters out of them:
       // 123-4567, 987-6543, 333-4444
-      const phoneNumbers = participants.map(({ number }) =>
-        number.replace(/[^0-9]/g, ''),
-      );
+      const phoneNumbers = participants.map(({ number }) => number.replace(/[^0-9]/g, ''));
       const labelValue = isGroupChat ? label.trim() : null;
 
       if (phoneNumbers.length) {
@@ -101,13 +99,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         </Box>
       )}
       <Box px={2} py={3}>
-        <Button
-          disabled={submitDisabled}
-          variant="contained"
-          fullWidth
-          color="primary"
-          type="submit"
-        >
+        <Button disabled={submitDisabled} variant="contained" fullWidth color="primary" type="submit">
           {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
         </Button>
       </Box>

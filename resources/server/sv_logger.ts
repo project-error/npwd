@@ -7,14 +7,12 @@ const manualColorize = (strToColor: string): string => `[\x1b[35m${strToColor}\x
 
 // Format handler passed to winston
 const formatLogs = (log: winston.Logform.TransformableInfo): string => {
-  if (log.module)
-    return `${log.label} ${manualColorize(log.module)} [${log.level}]: ${log.message}`;
+  if (log.module) return `${log.label} ${manualColorize(log.module)} [${log.level}]: ${log.message}`;
 
   return `${log.label} [${log.level}]: ${log.message}`;
 };
 
-const findLogPath = () =>
-  `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
+const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
 // Initiate the main logger for NPWD
 
 export const mainLogger = winston.createLogger({

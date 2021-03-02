@@ -1,8 +1,5 @@
 import { IPhoneSettings } from '../../../apps/settings/hooks/useSettings';
-import {
-  getNotificationPath,
-  getRingtonePath,
-} from '../../../apps/settings/utils/getRingtonePath';
+import { getNotificationPath, getRingtonePath } from '../../../apps/settings/utils/getRingtonePath';
 
 const getPath = {
   ringtone: getRingtonePath,
@@ -12,11 +9,7 @@ const getPath = {
 /**
  * Gets the configuration for SoundProvider based on settings and apps
  */
-export const getSoundSettings = (
-  type: 'ringtone' | 'notification',
-  settings: IPhoneSettings,
-  app?: string,
-) => {
+export const getSoundSettings = (type: 'ringtone' | 'notification', settings: IPhoneSettings, app?: string) => {
   try {
     return app
       ? {

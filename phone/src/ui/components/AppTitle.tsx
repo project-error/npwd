@@ -28,11 +28,7 @@ const useStyle = makeStyles(
 );
 // Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
 // but need to think about the best way to do that for standardization sake.
-export const AppTitle = ({
-  app: { backgroundColor, color, nameLocale },
-  variant = 'h5',
-  ...props
-}: IProps) => {
+export const AppTitle = ({ app: { backgroundColor, color, nameLocale }, variant = 'h5', ...props }: IProps) => {
   const classes = useStyle({ color, backgroundColor });
   const { t } = useTranslation();
   return (

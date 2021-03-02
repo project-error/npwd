@@ -18,35 +18,21 @@ interface ContactId {
 }
 
 async function fetchAllContacts(identifier: string): Promise<Contacts[]> {
-  const query =
-    'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
+  const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
   const [results] = await pool.query(query, [identifier]);
   const contacts = <Contacts[]>results;
   return contacts;
 }
 
-async function addContact(
-  identifier: string,
-  number: string,
-  display: string,
-  avatar: string,
-): Promise<any> {
-  const query =
-    'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
+async function addContact(identifier: string, number: string, display: string, avatar: string): Promise<any> {
+  const query = 'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
 
   const [result] = await pool.query(query, [identifier, number, display, avatar]);
 }
 
 async function updateContact(contact: Contacts, identifier: string): Promise<any> {
-  const query =
-    'UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
-  await pool.query(query, [
-    contact.number,
-    contact.display,
-    contact.avatar,
-    contact.id,
-    identifier,
-  ]);
+  const query = 'UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
+  await pool.query(query, [contact.number, contact.display, contact.avatar, contact.id, identifier]);
 }
 
 async function deleteContact(contact: ContactId, identifier: string): Promise<any> {
@@ -66,29 +52,26 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
   }
 });
 
-onNet(
-  events.CONTACTS_ADD_CONTACT,
-  async (number: string, display: string, avatar: string) => {
-    const _source = getSource();
-    try {
-      const _identifier = getIdentifier(_source);
-      await addContact(_identifier, number, display, avatar);
-      emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
-      emitNet(events.CONTACTS_ACTION_RESULT, _source, {
-        message: 'CONTACT_ADD_SUCCESS',
-        type: 'success',
-      });
-    } catch (e) {
-      emitNet(events.CONTACTS_ACTION_RESULT, _source, {
-        message: 'CONTACT_ADD_FAILED',
-        type: 'error',
-      });
-      contactsLogger.error(`Failed to add contact, ${e.message}`, {
-        source: _source,
-      });
-    }
-  },
-);
+onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avatar: string) => {
+  const _source = getSource();
+  try {
+    const _identifier = getIdentifier(_source);
+    await addContact(_identifier, number, display, avatar);
+    emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, {
+      message: 'CONTACT_ADD_SUCCESS',
+      type: 'success',
+    });
+  } catch (e) {
+    emitNet(events.CONTACTS_ACTION_RESULT, _source, {
+      message: 'CONTACT_ADD_FAILED',
+      type: 'error',
+    });
+    contactsLogger.error(`Failed to add contact, ${e.message}`, {
+      source: _source,
+    });
+  }
+});
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
   const _source = getSource();

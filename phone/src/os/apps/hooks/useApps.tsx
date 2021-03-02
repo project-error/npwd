@@ -12,10 +12,7 @@ export const useApps = () => {
       })),
     [icons],
   );
-  const getApp = useCallback(
-    (id: string): IAppConfig => apps.find((a) => a.id === id) || null,
-    [apps],
-  );
+  const getApp = useCallback((id: string): IAppConfig => apps.find((a) => a.id === id) || null, [apps]);
   return { apps, getApp };
 };
 

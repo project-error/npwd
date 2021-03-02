@@ -23,10 +23,5 @@ export const useContextMenu = (_options?): UseContextMenu => {
     setOpen(true);
   };
 
-  return [
-    onOpen,
-    onClose,
-    () => <ContextMenu open={open} onClose={onClose} options={options} />,
-    open,
-  ];
+  return [onOpen, onClose, () => <ContextMenu open={open} onClose={onClose} options={options} />, open];
 };

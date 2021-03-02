@@ -6,9 +6,7 @@ import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 export const useMessagesService = () => {
   const setMessageGroups = useSetRecoilState(messageState.messageGroups);
   const setMessages = useSetRecoilState(messageState.messages);
-  const setCreateMessageGroupResult = useSetRecoilState(
-    messageState.createMessageGroupResult,
-  );
+  const setCreateMessageGroupResult = useSetRecoilState(messageState.createMessageGroupResult);
   const { addAlert } = useSnackbar();
 
   useNuiEvent('MESSAGES', 'phone:fetchMessageGroupsSuccess', setMessageGroups);

@@ -25,9 +25,7 @@ const unshiftApp = (arr: IAppConfig[], app) => {
 export const useQuickAccess = () => {
   const history = useHistory();
   const { apps, getApp } = useApps();
-  const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(
-    state.recentlyUsed,
-  );
+  const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(state.recentlyUsed);
 
   useEffect(() => {
     setRecentlyUsed([getApp('SETTINGS')]);

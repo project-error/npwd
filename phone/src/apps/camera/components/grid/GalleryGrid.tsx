@@ -28,18 +28,9 @@ export const GalleryGrid = () => {
 
   if (!photos)
     return (
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        alignContent="flex-start"
-        className={classes.root}
-      >
+      <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
         <Box>
-          <Button
-            onClick={handleCamera}
-            style={{ borderRadius: 0 }}
-            className={classes.photo}
-          >
+          <Button onClick={handleCamera} style={{ borderRadius: 0 }} className={classes.photo}>
             <AddIcon fontSize="large" />
           </Button>
         </Box>
@@ -48,27 +39,15 @@ export const GalleryGrid = () => {
 
   return (
     <div>
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        alignContent="flex-start"
-        className={classes.root}
-      >
+      <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
         <Box>
-          <Button
-            onClick={handleCamera}
-            style={{ borderRadius: 0 }}
-            className={classes.photo}
-          >
+          <Button onClick={handleCamera} style={{ borderRadius: 0 }} className={classes.photo}>
             <AddIcon fontSize="large" />
           </Button>
         </Box>
         {photos.map((photo) => (
           <Box key={photo.id} onClick={() => handlePhotoOpen(photo)}>
-            <div
-              style={{ backgroundImage: `url(${photo.image})` }}
-              className={classes.photo}
-            />
+            <div style={{ backgroundImage: `url(${photo.image})` }} className={classes.photo} />
           </Box>
         ))}
       </Box>

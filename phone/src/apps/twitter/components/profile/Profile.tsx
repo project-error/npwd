@@ -70,22 +70,13 @@ export function Profile() {
         handleChange={handleNameChange}
         allowChange={allowEdtiableProfileName}
       />
-      <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_BIO')}
-        value={bio}
-        handleChange={handleBioChange}
-        multiline
-      />
+      <ProfileField label={t('APPS_TWITTER_EDIT_PROFILE_BIO')} value={bio} handleChange={handleBioChange} multiline />
       <ProfileField
         label={t('APPS_TWITTER_EDIT_PROFILE_LOCATION')}
         value={location}
         handleChange={handleLocationChange}
       />
-      <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_JOB')}
-        value={job}
-        handleChange={handleJobChange}
-      />
+      <ProfileField label={t('APPS_TWITTER_EDIT_PROFILE_JOB')} value={job} handleChange={handleJobChange} />
       <ProfileUpdateButton handleClick={handleUpdate} />
     </div>
   );

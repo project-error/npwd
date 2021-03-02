@@ -1,12 +1,6 @@
 import React from 'react';
 import ListItemText from '@material-ui/core/ListItemText';
-import {
-  Button,
-  ListItemAvatar,
-  Avatar as MuiAvatar,
-  List,
-  ListItem,
-} from '@material-ui/core';
+import { Button, ListItemAvatar, Avatar as MuiAvatar, List, ListItem } from '@material-ui/core';
 import { useFilteredContacts } from '../../hooks/useFilteredContacts';
 import PhoneIcon from '@material-ui/icons/Phone';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -54,10 +48,7 @@ export const ContactList = () => {
       <SearchContacts />
       <List>
         {contacts
-          .filter(
-            (contact) =>
-              contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx),
-          )
+          .filter((contact) => contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx))
           .map((contact) => (
             <ListItem key={contact.id} divider>
               <ListItemAvatar>

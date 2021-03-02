@@ -17,11 +17,9 @@ const useStyles = makeStyles(
       },
     },
     outlined: {
-      border: ({ color }: IStatusButtonStyleProps) =>
-        `1px solid ${fade(theme.palette[color].main, 0.5)}`,
+      border: ({ color }: IStatusButtonStyleProps) => `1px solid ${fade(theme.palette[color].main, 0.5)}`,
       '&:hover': {
-        border: ({ color }: IStatusButtonStyleProps) =>
-          `1px solid ${theme.palette[color].main}`,
+        border: ({ color }: IStatusButtonStyleProps) => `1px solid ${theme.palette[color].main}`,
       },
       '&$disabled': {
         border: `1px solid ${theme.palette.action.disabled}`,
@@ -31,8 +29,7 @@ const useStyles = makeStyles(
       color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].contrastText,
       backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
       '&:hover': {
-        backgroundColor: ({ color }: IStatusButtonStyleProps) =>
-          theme.palette[color].dark,
+        backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].dark,
       },
     },
   }),
@@ -46,11 +43,5 @@ export const StatusButton = ({
   ...props
 }: Omit<ButtonProps, 'color'> & { color: StatusButtonStyleColor }) => {
   const classes = useStyles({ color });
-  return (
-    <Button
-      variant={variant}
-      className={`${classes.root} ${classes[variant] || ''} ${className}`}
-      {...props}
-    />
-  );
+  return <Button variant={variant} className={`${classes.root} ${classes[variant] || ''} ${className}`} {...props} />;
 };

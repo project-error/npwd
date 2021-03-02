@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar as MuiAvatar,
-} from '@material-ui/core';
+import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/typings/messages';
 
@@ -15,12 +10,7 @@ interface IProps {
 
 const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
   return (
-    <ListItem
-      key={messageGroup.groupId}
-      onClick={handleClick(messageGroup)}
-      divider
-      button
-    >
+    <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
         <MuiAvatar src={messageGroup?.avatar} />
       </ListItemAvatar>

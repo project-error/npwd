@@ -13,46 +13,30 @@ const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
 
-  const {
-    messageGroups,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-  } = useMessages();
+  const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
   const goToConversation = useCallback(
-    (messageGroup) =>
-      history.push(
-        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
-      ),
+    (messageGroup) => history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`),
     [history],
   );
 
   useEffect(() => {
     if (createMessageGroupResult?.groupId) {
-      const findGroup = messageGroups.find(
-        (g) => g.groupId === createMessageGroupResult.groupId,
-      );
+      const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
         goToConversation(findGroup);
       }
     }
-  }, [
-    messageGroups,
-    createMessageGroupResult,
-    goToConversation,
-    clearMessageGroupResult,
-  ]);
+  }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
 
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
-    history.push(
-      `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
-    );
+    history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`);
   };
 
   const formattedSearch = searchValue.toLowerCase().trim();
@@ -62,25 +46,16 @@ const MessagesList = (): any => {
         const displayIncludes = groupDisplay.includes(formattedSearch);
 
         const label = group.label?.toLowerCase();
-        return label
-          ? displayIncludes || label.includes(formattedSearch)
-          : displayIncludes;
+        return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
       })
     : messageGroups;
 
   return (
     <>
-      <MessageSearch
-        value={searchValue}
-        handleChange={(e) => setSearchValue(e.target.value)}
-      />
+      <MessageSearch value={searchValue} handleChange={(e) => setSearchValue(e.target.value)} />
       <List className={classes.root}>
         {filteredGroups.map((messageGroup) => (
-          <MessageGroupItem
-            key={messageGroup.groupId}
-            messageGroup={messageGroup}
-            handleClick={handleClick}
-          />
+          <MessageGroupItem key={messageGroup.groupId} messageGroup={messageGroup} handleClick={handleClick} />
         ))}
       </List>
     </>

@@ -23,9 +23,7 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
     textFieldRef.current && textFieldRef.current.focus();
   }, [visible]);
 
-  const handleImageChange = useCallback((e) => handleChange(e.target.value), [
-    handleChange,
-  ]);
+  const handleImageChange = useCallback((e) => handleChange(e.target.value), [handleChange]);
 
   if (!visible) return null;
   return (

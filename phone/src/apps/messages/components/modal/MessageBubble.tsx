@@ -41,33 +41,21 @@ const isImage = (url) => {
   return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
 };
 
-export const MessageBubble = ({
-  message,
-  isGroupChat,
-}: {
-  message: Message;
-  isGroupChat: boolean;
-}) => {
+export const MessageBubble = ({ message, isGroupChat }: { message: Message; isGroupChat: boolean }) => {
   const classes = useStyles();
   return (
     <div>
       <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box>
           {isImage(message.message) ? (
-            <img
-              src={message.message}
-              className={classes.imageMessage}
-              alt="multimedia"
-            />
+            <img src={message.message} className={classes.imageMessage} alt="multimedia" />
           ) : (
             <div>{message.message}</div>
           )}
         </Box>
         <Box>
           <Typography variant="subtitle1" color="secondary">
-            {isGroupChat && !message.isMine
-              ? message.display || message.phone_number
-              : null}
+            {isGroupChat && !message.isMine ? message.display || message.phone_number : null}
           </Typography>
         </Box>
       </Paper>

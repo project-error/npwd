@@ -25,11 +25,7 @@ export const BankAccount = () => {
       <div>
         <h1 className={classes.title}>{t('APPS_BANK_ACCOUNT_TITLE')}</h1>
       </div>
-      <BankCard
-        name={credentials.name}
-        account="Checking"
-        balance={credentials.balance}
-      />
+      <BankCard name={credentials.name} account="Checking" balance={credentials.balance} />
       <AccountTransactions />
     </div>
   );

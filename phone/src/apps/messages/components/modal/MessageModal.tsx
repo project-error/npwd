@@ -75,13 +75,9 @@ export const MessageModal = () => {
   // don't allow too many characters, it takes too much room
   let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
-  header =
-    header.length > MAX_HEADER_CHARS
-      ? activeMessageGroup?.label || truncatedHeader
-      : header;
+  header = header.length > MAX_HEADER_CHARS ? activeMessageGroup?.label || truncatedHeader : header;
 
-  const headerClass =
-    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
+  const headerClass = header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
 
   return (
     <Slide direction="left" in={!!activeMessageGroup}>

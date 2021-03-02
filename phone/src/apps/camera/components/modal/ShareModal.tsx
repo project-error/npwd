@@ -28,9 +28,7 @@ export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
       <div className={classes.shareModal}>
         <div className={classes.innerShareModal}>
           <>
-            <h4 style={{ textAlign: 'center', marginTop: 20 }}>
-              Where do you want to share the photo?
-            </h4>
+            <h4 style={{ textAlign: 'center', marginTop: 20 }}>Where do you want to share the photo?</h4>
             <Button>{<MessageIcon />} Message</Button>
             <h4>Or just copy the image here:</h4>
             <Button onClick={handleCopyImage} variant="contained">

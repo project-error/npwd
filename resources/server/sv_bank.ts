@@ -13,9 +13,7 @@ async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   const [results] = await pool.query(query, [identifier]);
   const transactions = <Transfer[]>results;
 
-  bankLogger.verbose(
-    `Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`,
-  );
+  bankLogger.verbose(`Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`);
 
   return transactions;
 }

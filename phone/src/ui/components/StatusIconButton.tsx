@@ -13,16 +13,13 @@ const useStyles = makeStyles(
       color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].contrastText,
       backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
       '&:hover': {
-        backgroundColor: ({ color }: IStatusButtonStyleProps) =>
-          theme.palette[color].light,
+        backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].light,
       },
     },
     outlined: {
-      border: ({ color }: IStatusButtonStyleProps) =>
-        `1px solid ${fade(theme.palette[color].main, 0.5)}`,
+      border: ({ color }: IStatusButtonStyleProps) => `1px solid ${fade(theme.palette[color].main, 0.5)}`,
       '&:hover': {
-        border: ({ color }: IStatusButtonStyleProps) =>
-          `1px solid ${theme.palette[color].main}`,
+        border: ({ color }: IStatusButtonStyleProps) => `1px solid ${theme.palette[color].main}`,
       },
       '&$disabled': {
         border: `1px solid ${theme.palette.action.disabled}`,
@@ -32,8 +29,7 @@ const useStyles = makeStyles(
       color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].contrastText,
       backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
       '&:hover': {
-        backgroundColor: ({ color }: IStatusButtonStyleProps) =>
-          theme.palette[color].dark,
+        backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].dark,
       },
     },
   }),
