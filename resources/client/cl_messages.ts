@@ -55,9 +55,13 @@ on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGES}`, ({ groupId }: any, cb: Functio
 });
 
 RegisterNuiCallbackType(events.MESSAGES_SET_MESSAGE_READ);
-on(`__cfx_nui:${events.MESSAGES_SET_MESSAGE_READ}`, (data: SetMessageRead) => {
-  onNet(events.MESSAGES_SET_MESSAGE_READ, data.ids);
-});
+on(
+  `__cfx_nui:${events.MESSAGES_SET_MESSAGE_READ}`,
+  (data: SetMessageRead, cb: Function) => {
+    emitNet(events.MESSAGES_SET_MESSAGE_READ, data.groupId);
+    cb();
+  }
+);
 
 onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGES_SUCCESS, messages);

@@ -18,7 +18,6 @@ export interface MessageGroup {
   avatar?: string;
   label?: string;
   updatedAt: string;
-  hasUnread?: number;
 }
 
 export interface CreateMessageGroupResult {
@@ -35,5 +34,5 @@ export interface CreateMessageBroadcast {
 }
 
 export interface SetMessageRead {
-  ids: any;
+  groupId: string;
 }

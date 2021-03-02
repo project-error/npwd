@@ -81,7 +81,7 @@ export const MessageModal = () => {
       .map((msg) => msg.id);
     if (unreadMessages.length) {
       Nui.send('phone:setReadMessages', {
-        ids: unreadMessages,
+        groupId: activeMessageGroup.groupId,
       });
     }
   }, [messages]);

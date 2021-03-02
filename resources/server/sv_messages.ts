@@ -24,6 +24,7 @@ interface UnformattedMessageGroup {
   avatar?: string;
   display?: string;
   updatedAt: string;
+  unreadCount: number;
 }
 
 /**
@@ -37,6 +38,7 @@ interface MessageGroupMapping {
     label?: string;
     avatar?: string;
     updatedAt: string;
+    unreadCount: number;
   };
 }
 
@@ -50,13 +52,27 @@ async function createMessage(
   userIdentifier: string,
   groupId: string,
   message: string,
+  participants: string[]
 ): Promise<any> {
   const query = `
   INSERT INTO npwd_messages
   (user_identifier, message, group_id)
   VALUES (?, ?, ?)
   `;
+
+  const groupQuery = `
+    UPDATE npwd_messages_groups SET unreadCount = unreadCount + 1 WHERE participant_identifier = ?
+  `;
+
   const [results] = await pool.query(query, [userIdentifier, message, groupId]);
+
+  // updates unreadCount for all participants
+  await Promise.all(
+    participants
+      .filter((s) => userIdentifier !== s)
+      .map((s) => pool.query(groupQuery, [s]))
+  );
+
   return results;
 }
 
@@ -224,6 +240,7 @@ async function getConsolidatedMessageGroups(userIdentifier: string): Promise<Mes
       } else {
         mapping[groupId] = {
           user_identifier: messageGroup.user_identifier,
+          unreadCount: messageGroup.unreadCount,
           avatar: messageGroup.avatar,
           label: messageGroup.label,
           participants: [displayTerm],
@@ -281,12 +298,12 @@ function createGroupHashID(identifiers: string[]) {
   // that this not change! Changing this order can result in the ability
   // of duplicate message groups being created.
   identifiers.sort();
-  const mergedIdentifiers = identifiers.join('-');
+  const mergedIdentifiers = identifiers.join(':');
   // we don't need this to be secure. Its purpose is to create a unique
   // string derived from the identifiers. In this way we can check
   // that this groupId isn't used before. If it has then it means
   // we are trying to create a duplicate message group!
-  return md5(mergedIdentifiers);
+  return mergedIdentifiers;
 }
 
 /**
@@ -357,22 +374,20 @@ async function createMessageGroupsFromPhoneNumbers(
 
 // getting the participants from groupId.
 // this should return the source or and array of identifiers
-async function getIdentifiersFromParticipants(groupId: string) {
-  const query =
-    'SELECT participant_identifier FROM npwd_messages_groups WHERE group_id = ?';
-  const [results] = await pool.query(query, [groupId]);
-  console.log(<any[]>results);
-  return <any[]>results;
+function getIdentifiersFromParticipants(groupId: string) {
+  return groupId.split(':');
 }
 
 /**
- * Sets the current message isRead to true
+ * Sets the current message isRead to 0 for said player
  * @param id
  */
-async function setMessageRead(id: number) {
-  const query = 'UPDATE npwd_messages SET isRead = 1 WHERE id = ?';
-  const [result] = await pool.query(query, [id]);
-  return result;
+async function setMessageRead(groupId: string, pSource: number) {
+  const query =
+    'UPDATE npwd_messages_groups SET unreadCount = 0 WHERE groupId = ? AND participant_identifier = ?';
+
+  const identifier = getIdentifier(pSource);
+  await pool.query(query, [groupId, identifier]);
 }
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
@@ -458,18 +473,19 @@ onNet(
     const _source = getSource();
     try {
       const _identifier = getIdentifier(_source);
-      await createMessage(_identifier, groupId, message);
+      const userParticipants = getIdentifiersFromParticipants(groupId);
+
+      await createMessage(_identifier, groupId, message, userParticipants);
+
       emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
 
       // gets the identifiers foe the participants for current groupId.
-      const userParticipants = await getIdentifiersFromParticipants(groupId);
 
       for (const participantId of userParticipants) {
         // we don't broadcast to the source of the event.
-        if (participantId.participant_identifier !== _identifier) {
-          console.log('PARTICIPANTS: ', participantId);
+        if (participantId !== _identifier) {
           const participantPlayer = await getPlayerFromIdentifier(
-            participantId.participant_identifier
+            participantId
           );
           emitNet(
             events.MESSAGES_CREATE_MESSAGE_BROADCAST,
@@ -499,8 +515,7 @@ onNet(
   }
 );
 
-onNet(events.MESSAGES_SET_MESSAGE_READ, async (ids: number[]) => {
-  for (const id of ids) {
-    await setMessageRead(id);
-  }
+onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
+  const pSource = getSource();
+  await setMessageRead(groupId, pSource);
 });

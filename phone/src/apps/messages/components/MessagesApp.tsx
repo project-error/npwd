@@ -173,8 +173,8 @@ InjectDebugData([
     data: {
       id: 222,
       number: '777-7777',
-      message: 'Hi! Just checking in on you!'
-    }
+      message: 'Hi! Just checking in on you!',
+    },
   },
   {
     app: 'MESSAGES',
@@ -182,8 +182,8 @@ InjectDebugData([
     data: {
       id: 223,
       number: 'Kidz',
-      message: 'Hi! You are awesome!'
-    }
+      message: 'Hi! You are awesome!',
+    },
   },
   {
     app: 'MESSAGES',
@@ -196,14 +196,16 @@ InjectDebugData([
         avatar: null,
         label: null,
         updatedAt: Date.now(),
+        unreadMessages: 3,
       },
       {
         groupId: '3',
         groupDisplay: 'Chip',
-        isGroupChat: false,
+        isGroupChat: true,
         avatar: null,
         label: null,
         updatedAt: Date.now(),
+        unreadMessages: 0,
       },
     ],
   },

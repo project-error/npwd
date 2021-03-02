@@ -17,12 +17,14 @@ interface IProps {
 
 const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
   // get unread messages, check the length. If we have any, get the groupId,
-  // and how the badge
+  // and show the badge
+
+  const hasUnread = messageGroup.unreadMessages > 0;
 
   return (
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
-        <Badge color='error' variant='dot' invisible={false}>
+        <Badge color='error' variant='dot' invisible={!hasUnread}>
           <MuiAvatar src={messageGroup?.avatar} />
         </Badge>
       </ListItemAvatar>
