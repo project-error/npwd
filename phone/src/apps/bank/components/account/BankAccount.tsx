@@ -27,7 +27,7 @@ export const BankAccount = () => {
       </div>
       <BankCard
         name={credentials.name}
-        account='Checking'
+        account="Checking"
         balance={credentials.balance}
       />
       <AccountTransactions />

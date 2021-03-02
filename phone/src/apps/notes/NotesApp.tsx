@@ -26,16 +26,12 @@ export const NotesApp = () => {
 
   return (
     <NotesThemeProvider>
-      <AppWrapper id='notes-app'>
+      <AppWrapper id="notes-app">
         <AppTitle app={notesApp} />
-        <Route path='/notes/detail' component={NoteModal} />
+        <Route path="/notes/detail" component={NoteModal} />
         <AppContent>
-          <Route path='/notes' component={NoteList} />
-          <Fab
-            className={classes.absolute}
-            onClick={onClickCreate}
-            color='primary'
-          >
+          <Route path="/notes" component={NoteList} />
+          <Fab className={classes.absolute} onClick={onClickCreate} color="primary">
             <AddIcon />
           </Fab>
         </AppContent>

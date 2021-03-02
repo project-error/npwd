@@ -65,115 +65,103 @@ export const APPS: IAppConfig[] = [
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
     icon: <FontAwesomeIcon icon={faPhoneAlt} />,
-    notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size='xs' />,
+    notificationIcon: <FontAwesomeIcon icon={faPhoneAlt} size="xs" />,
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
-    Route: () => <AppRoute id='DIALER' path='/phone' component={DialerApp} />,
+    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} />,
   },
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
-    icon: <MessageIcon fontSize='large' />,
-    notificationIcon: <MessageIcon fontSize='small' />,
+    icon: <MessageIcon fontSize="large" />,
+    notificationIcon: <MessageIcon fontSize="small" />,
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
-    Route: () => (
-      <AppRoute id='MESSAGE' path='/messages' component={MessagesApp} />
-    ),
+    Route: () => <AppRoute id="MESSAGE" path="/messages" component={MessagesApp} />,
   },
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
-    icon: <ContactsIcon fontSize='large' />,
-    notificationIcon: <ContactsIcon fontSize='small' />,
+    icon: <ContactsIcon fontSize="large" />,
+    notificationIcon: <ContactsIcon fontSize="small" />,
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
-    Route: () => (
-      <AppRoute id='CONTACTS' path='/contacts' component={ContactsApp} />
-    ),
+    Route: () => <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} />,
   },
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
-    icon: <CalculatorIcon fontSize='large' />,
-    notificationIcon: <CalculatorIcon fontSize='small' />,
+    icon: <CalculatorIcon fontSize="large" />,
+    notificationIcon: <CalculatorIcon fontSize="small" />,
     backgroundColor: purple[500],
     color: grey[50],
     path: '/calculator',
     Route: () => (
-      <AppRoute id='CALCULATOR' path='/calculator' component={CalculatorApp} />
+      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} />
     ),
   },
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
-    icon: <SettingsIcon fontSize='large' />,
-    notificationIcon: <SettingsIcon fontSize='small' />,
+    icon: <SettingsIcon fontSize="large" />,
+    notificationIcon: <SettingsIcon fontSize="small" />,
     backgroundColor: '#383838',
     color: grey[50],
     path: '/settings',
-    Route: () => (
-      <AppRoute id='SETTINGS' path='/settings' component={SettingsApp} />
-    ),
+    Route: () => <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} />,
   },
   {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
     icon: <FontAwesomeIcon icon={faWonSign} />,
-    notificationIcon: <FontAwesomeIcon icon={faWonSign} size='xs' />,
+    notificationIcon: <FontAwesomeIcon icon={faWonSign} size="xs" />,
     backgroundColor: blue[900],
     color: common.white,
     path: '/bank',
-    Route: () => <AppRoute id='BANK' path='/bank' component={BankApp} />,
+    Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
   },
   {
     id: 'TWITTER',
     nameLocale: 'APPS_TWITTER',
     icon: <FontAwesomeIcon icon={faTwitter} fixedWidth />,
-    notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size='xs' />,
+    notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size="xs" />,
     backgroundColor: blue[600],
     color: common.white,
     path: '/twitter',
-    Route: () => (
-      <AppRoute id='TWITTER' path='/twitter' component={TwitterApp} />
-    ),
+    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} />,
   },
   {
     id: 'SELLOUT',
     nameLocale: 'APPS_SELLOUT',
     icon: <FontAwesomeIcon icon={faAd} fixedWidth />,
-    notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size='xs' />,
+    notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size="xs" />,
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
     path: '/sellout',
-    Route: () => (
-      <AppRoute id='SELLOUT' path='/sellout' component={SelloutApp} />
-    ),
+    Route: () => <AppRoute id="SELLOUT" path="/sellout" component={SelloutApp} />,
   },
   {
     id: 'NOTES',
     nameLocale: 'APPS_NOTES',
     icon: <FontAwesomeIcon icon={faStickyNote} fixedWidth />,
-    notificationIcon: (
-      <FontAwesomeIcon icon={faStickyNote} fixedWidth size='xs' />
-    ),
+    notificationIcon: <FontAwesomeIcon icon={faStickyNote} fixedWidth size="xs" />,
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
-    Route: () => <AppRoute id='NOTES' path='/notes' component={NotesApp} />,
+    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} />,
   },
   {
     id: 'CAMERA',
     nameLocale: 'APPS_CAMERA',
-    icon: <CameraAltIcon fontSize='large' />,
-    notificationIcon: <CameraAltIcon fontSize='small' />,
+    icon: <CameraAltIcon fontSize="large" />,
+    notificationIcon: <CameraAltIcon fontSize="small" />,
     backgroundColor: grey['A400'],
     color: common.white,
     path: '/camera',
-    Route: () => <AppRoute id='CAMERA' path='/camera' component={CameraApp} />,
+    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} />,
   },
 ];
 
@@ -182,13 +170,11 @@ if (process.env.NODE_ENV === 'development') {
   APPS.push({
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',
-    icon: <FontAwesomeIcon icon={faPlaneArrival} size='sm' />,
-    notificationIcon: <FontAwesomeIcon icon={faPlaneArrival} size='xs' />,
+    icon: <FontAwesomeIcon icon={faPlaneArrival} size="sm" />,
+    notificationIcon: <FontAwesomeIcon icon={faPlaneArrival} size="xs" />,
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
-    Route: () => (
-      <AppRoute id='EXAMPLE' path='/example' component={ExampleApp} />
-    ),
+    Route: () => <AppRoute id="EXAMPLE" path="/example" component={ExampleApp} />,
   });
 }

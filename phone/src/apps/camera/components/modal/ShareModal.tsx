@@ -33,7 +33,7 @@ export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
             </h4>
             <Button>{<MessageIcon />} Message</Button>
             <h4>Or just copy the image here:</h4>
-            <Button onClick={handleCopyImage} variant='contained'>
+            <Button onClick={handleCopyImage} variant="contained">
               Copy image
             </Button>
           </>

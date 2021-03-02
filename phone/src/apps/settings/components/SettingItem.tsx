@@ -9,13 +9,7 @@ interface IProps {
   icon: JSX.Element;
 }
 
-export const SettingItem = ({
-  options,
-  label,
-  value,
-  onClick,
-  icon,
-}: IProps) => {
+export const SettingItem = ({ options, label, value, onClick, icon }: IProps) => {
   return (
     <ListItem divider onClick={() => onClick?.(options)} button>
       <ListItemIcon>{icon}</ListItemIcon>

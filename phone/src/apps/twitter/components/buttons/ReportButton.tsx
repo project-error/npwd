@@ -32,7 +32,7 @@ function ReportButton({ handleClose, tweetId, isReported }) {
   if (loading) {
     return (
       <Button disabled>
-        <CircularProgress id='twitter-report-progress' size={22} />
+        <CircularProgress id="twitter-report-progress" size={22} />
       </Button>
     );
   }

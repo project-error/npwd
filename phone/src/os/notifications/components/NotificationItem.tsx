@@ -47,12 +47,8 @@ export const NotificationItem = ({
       {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
       <ListItemText secondary={content}>{title}</ListItemText>
       {!cantClose && (
-        <IconButton
-          className={classes.closeNotifBtn}
-          size='small'
-          onClick={onClose}
-        >
-          <CloseIcon color='primary' />
+        <IconButton className={classes.closeNotifBtn} size="small" onClick={onClose}>
+          <CloseIcon color="primary" />
         </IconButton>
       )}
     </ListItem>

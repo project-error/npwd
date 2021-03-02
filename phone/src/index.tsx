@@ -12,8 +12,7 @@ import { PhoneContainer } from './PhoneContainer';
 // Enable Sentry when config setting is true
 if (PhoneConfig.SentryErrorMetrics) {
   Sentry.init({
-    dsn:
-      'https://71fff4e8f11543fa8dbe7acd0f94fb5d@o478949.ingest.sentry.io/5581619',
+    dsn: 'https://71fff4e8f11543fa8dbe7acd0f94fb5d@o478949.ingest.sentry.io/5581619',
     autoSessionTracking: true,
     integrations: [new Integrations.BrowserTracing()],
     // We recommend adjusting this value in production, or using tracesSampler
@@ -28,5 +27,5 @@ ReactDOM.render(
       <PhoneContainer />
     </RecoilRoot>
   </HashRouter>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

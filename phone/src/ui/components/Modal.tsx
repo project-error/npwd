@@ -49,9 +49,7 @@ export const Modal = ({ children, visible, handleClose }) => {
     return () => window.removeEventListener('keydown', _handleEscape);
   });
 
-  const showHideClassName = visible
-    ? classes.displayBlock
-    : classes.displayNone;
+  const showHideClassName = visible ? classes.displayBlock : classes.displayNone;
 
   return (
     <div className={showHideClassName}>

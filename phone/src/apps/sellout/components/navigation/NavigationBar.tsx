@@ -31,12 +31,12 @@ export const NavigationBar = () => {
       <BottomNavigationAction
         component={Link}
         icon={<FontAwesomeIcon icon={faHome} />}
-        to='/sellout'
+        to="/sellout"
       />
       <BottomNavigationAction
         component={Link}
         icon={<AddCircleIcon />}
-        to='/sellout/new'
+        to="/sellout/new"
       />
     </BottomNavigation>
   );

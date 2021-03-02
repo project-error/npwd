@@ -30,14 +30,14 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
         <img
           className={classes.img}
           src={showInvalidImage ? IMG_INVALID_AVATAR : IMG_DEFAULT_AVATAR}
-          alt='Invalid avatar'
+          alt="Invalid avatar"
           style={{ height, width }}
         />
       )}
       <img
         className={classes.img}
         src={avatarUrl || IMG_DEFAULT_AVATAR}
-        alt='Your profile avatar'
+        alt="Your profile avatar"
         onError={handleImageError}
         onLoad={handleImageLoad}
         style={{ display: showImageError ? 'none' : 'block', height, width }}

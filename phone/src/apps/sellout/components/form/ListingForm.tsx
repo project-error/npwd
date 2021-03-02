@@ -47,32 +47,32 @@ export const ListingForm = () => {
       <TextField
         className={classes.input}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder='Title on listing..'
+        placeholder="Title on listing.."
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: '80%' }}
-        size='medium'
+        size="medium"
       />
 
       <TextField
         className={classes.input}
-        placeholder='Image URL'
+        placeholder="Image URL"
         onChange={(e) => setUrl(e.target.value)}
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: '80%' }}
-        size='medium'
-        variant='outlined'
+        size="medium"
+        variant="outlined"
       />
 
       <TextField
         className={classes.input}
         onChange={(e) => setDescription(e.target.value)}
-        placeholder='Description'
+        placeholder="Description"
         inputProps={{ className: classes.multilineFieldInput }}
         style={{ width: '80%' }}
-        size='medium'
+        size="medium"
         multiline
         rows={4}
-        variant='outlined'
+        variant="outlined"
       />
 
       <Button onClick={addListing} className={classes.postButton}>

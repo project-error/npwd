@@ -14,9 +14,7 @@ export const useTwitterNotifications = () => {
 
   const { icon, notificationIcon } = useApp('TWITTER');
 
-  const [unreadCount, setUnreadCount] = useRecoilState(
-    twitterState.unreadTweetsCount
-  );
+  const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
 
   const setNotification = useCallback(
     ({ profile_name, message }) => {
@@ -38,12 +36,12 @@ export const useTwitterNotifications = () => {
               count: unread,
             }),
             content: null,
-          }
+          },
         );
         return unread;
       });
     },
-    [setUnreadCount, addNotificationAlert, t, icon, notificationIcon, history]
+    [setUnreadCount, addNotificationAlert, t, icon, notificationIcon, history],
   );
 
   return { setNotification, setUnreadCount, unreadCount };

@@ -29,23 +29,15 @@ async function addContact(
   identifier: string,
   number: string,
   display: string,
-  avatar: string
+  avatar: string,
 ): Promise<any> {
   const query =
     'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
 
-  const [result] = await pool.query(query, [
-    identifier,
-    number,
-    display,
-    avatar,
-  ]);
+  const [result] = await pool.query(query, [identifier, number, display, avatar]);
 }
 
-async function updateContact(
-  contact: Contacts,
-  identifier: string
-): Promise<any> {
+async function updateContact(contact: Contacts, identifier: string): Promise<any> {
   const query =
     'UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
   await pool.query(query, [
@@ -57,12 +49,8 @@ async function updateContact(
   ]);
 }
 
-async function deleteContact(
-  contact: ContactId,
-  identifier: string
-): Promise<any> {
-  const query =
-    'DELETE FROM npwd_phone_contacts WHERE id = ? AND identifier = ?';
+async function deleteContact(contact: ContactId, identifier: string): Promise<any> {
+  const query = 'DELETE FROM npwd_phone_contacts WHERE id = ? AND identifier = ?';
   await pool.query(query, [contact.id, identifier]);
 }
 
@@ -99,7 +87,7 @@ onNet(
         source: _source,
       });
     }
-  }
+  },
 );
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {

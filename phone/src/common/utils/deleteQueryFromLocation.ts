@@ -8,7 +8,7 @@ interface IRouterLocation {
 
 export const deleteQueryFromLocation = (
   location: Record<string, unknown> & IRouterLocation,
-  key = ''
+  key = '',
 ) => {
   const { query } = url(location.pathname + location.search);
   return `${location.pathname}/?${qs.stringify({

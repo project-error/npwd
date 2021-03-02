@@ -6,8 +6,7 @@
   font-family: 'Bahnschrift Regular';
   font-style: normal;
   font-weight: normal;
-  src: local('Bahnschrift Regular'),
-    url('../fonts/BAHNSCHRIFT.woff') format('woff');
+  src: local('Bahnschrift Regular'), url('../fonts/BAHNSCHRIFT.woff') format('woff');
 }
 
 #account-section,

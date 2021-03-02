@@ -21,15 +21,7 @@ const newPhoneProp = async () => {
 
     const playerPed = PlayerPedId();
     const [x, y, z] = GetEntityCoords(playerPed, true);
-    prop = CreateObject(
-      GetHashKey(phoneModel),
-      x,
-      y,
-      z + 0.2,
-      true,
-      true,
-      true
-    );
+    prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     //prop = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
     AttachEntityToEntity(
@@ -47,7 +39,7 @@ const newPhoneProp = async () => {
       false,
       true,
       1.0,
-      true
+      true,
     ); //-- Attaches the phone to the player.
     propCreated = true;
   } else if (propCreated) {
@@ -96,7 +88,7 @@ const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
     0,
     false,
     false,
-    false
+    false,
   );
   await Delay(300);
   await newPhoneProp();
@@ -120,7 +112,7 @@ const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
     0,
     false,
     false,
-    false
+    false,
   );
   await Delay(300);
   await newPhoneProp();
@@ -174,28 +166,9 @@ const handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_to_text';
 
-  if (
-    IsEntityPlayingAnim(
-      playerPed,
-      'cellphone@',
-      'cellphone_call_listen_base',
-      49
-    )
-  ) {
+  if (IsEntityPlayingAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 49)) {
     await loadAnimDict(DICT);
-    TaskPlayAnim(
-      playerPed,
-      DICT,
-      ANIM,
-      2.5,
-      8.0,
-      -1,
-      50,
-      0,
-      false,
-      false,
-      false
-    );
+    TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
   }
 };
 

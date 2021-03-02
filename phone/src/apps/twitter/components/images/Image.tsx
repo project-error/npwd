@@ -41,16 +41,12 @@ export const Image = ({ link, handleClick, small }) => {
   return (
     <div className={classes.imageContainer}>
       {handleClick && (
-        <IconButton
-          className={classes.imgButton}
-          onClick={handleClick}
-          size='small'
-        >
+        <IconButton className={classes.imgButton} onClick={handleClick} size="small">
           <CloseIcon />
         </IconButton>
       )}
       <img
-        alt='small avatar'
+        alt="small avatar"
         className={small ? classes.imgSmall : classes.img}
         src={link}
       />

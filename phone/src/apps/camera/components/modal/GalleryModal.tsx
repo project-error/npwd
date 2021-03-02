@@ -20,7 +20,7 @@ export const GalleryModal = () => {
 
   const meta: ICameraPhoto = useMemo(
     () => ({ id: query.id as string, image: query.image as string }),
-    [query]
+    [query],
   );
 
   const _handleClose = () => {
@@ -42,11 +42,7 @@ export const GalleryModal = () => {
 
   return (
     <>
-      <ShareModal
-        referal={referal}
-        meta={shareOpen}
-        onClose={() => setShareOpen(null)}
-      />
+      <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
       <Paper className={classes.modal}>
         <div className={shareOpen ? classes.backgroundModal : null} />
         <Button onClick={_handleClose}>
@@ -58,10 +54,10 @@ export const GalleryModal = () => {
         />
         <div className={classes.actionDiv}>
           <Button onClick={handleDeletePhoto}>
-            <DeleteIcon fontSize='large' />
+            <DeleteIcon fontSize="large" />
           </Button>
           <Button onClick={handleSharePhoto}>
-            <ShareIcon fontSize='large' />
+            <ShareIcon fontSize="large" />
           </Button>
         </div>
       </Paper>

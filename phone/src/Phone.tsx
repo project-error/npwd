@@ -52,11 +52,11 @@ function Phone() {
   const { bottom, visibility } = usePhoneVisibility();
 
   return (
-    <Slide direction='up' in={visibility}>
-      <div className='PhoneWrapper'>
+    <Slide direction="up" in={visibility}>
+      <div className="PhoneWrapper">
         <div>
           <div
-            className='Phone'
+            className="Phone"
             style={{
               transformOrigin: 'right bottom',
               transform: `scale(${settings.zoom}`,
@@ -64,26 +64,24 @@ function Phone() {
             }}
           >
             <div
-              className='PhoneFrame'
+              className="PhoneFrame"
               style={{
                 backgroundImage: `url(./media/frames/${settings.frame})`,
               }}
             />
             <div
-              id='phone'
-              className='PhoneScreen'
+              id="phone"
+              className="PhoneScreen"
               style={{
                 backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
               }}
             >
               <>
                 <NotificationBar />
-                <div className='PhoneAppContainer'>
+                <div className="PhoneAppContainer">
                   <>
-                    <Route exact path='/' component={HomeApp} />
-                    {callModal && (
-                      <Route exact path='/call' component={CallModal} />
-                    )}
+                    <Route exact path="/" component={HomeApp} />
+                    {callModal && <Route exact path="/call" component={CallModal} />}
                     {apps.map((App) => (
                       <App.Route key={App.id} />
                     ))}

@@ -7,7 +7,7 @@ onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
       app: 'BANK',
       method: 'setTransaction',
       data: transfer,
-    })
+    }),
   );
 });
 
@@ -17,7 +17,7 @@ onNet(events.BANK_SEND_CREDENTIALS, (credentials: any) => {
       app: 'BANK',
       method: 'setCredentials',
       data: credentials,
-    })
+    }),
   );
 });
 
@@ -37,7 +37,7 @@ onNet(events.BANK_TRANSACTION_ALERT, (result: IAlertProps) => {
       app: 'BANK',
       method: 'setAlert',
       data: result,
-    })
+    }),
   );
 });
 
@@ -47,6 +47,6 @@ onNet(events.BANK_TRANSACTION_NOTIFICATION, (transfer: any) => {
       app: 'BANK',
       method: 'setNotification',
       data: transfer,
-    })
+    }),
   );
 });

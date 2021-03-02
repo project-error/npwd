@@ -56,8 +56,7 @@ export const ContactList = () => {
         {contacts
           .filter(
             (contact) =>
-              contact.display.match(filteredRegEx) ||
-              contact.number.match(filteredRegEx)
+              contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx),
           )
           .map((contact) => (
             <ListItem key={contact.id} divider>
@@ -65,25 +64,17 @@ export const ContactList = () => {
                 {contact.avatar ? (
                   <MuiAvatar src={contact.avatar} />
                 ) : (
-                  <MuiAvatar>
-                    {contact.display.slice(0, 1).toUpperCase()}
-                  </MuiAvatar>
+                  <MuiAvatar>{contact.display.slice(0, 1).toUpperCase()}</MuiAvatar>
                 )}
               </ListItemAvatar>
-              <ListItemText
-                primary={contact.display}
-                secondary={contact.number}
-              />
+              <ListItemText primary={contact.display} secondary={contact.number} />
               <Button onClick={() => startCall(contact.number)}>
                 <PhoneIcon />
               </Button>
               <Button onClick={() => handleMessage(contact.number)}>
                 <ChatIcon />
               </Button>
-              <Button
-                style={{ margin: -15 }}
-                onClick={() => openContactInfo(contact.id)}
-              >
+              <Button style={{ margin: -15 }} onClick={() => openContactInfo(contact.id)}>
                 <MoreVertIcon />
               </Button>
             </ListItem>

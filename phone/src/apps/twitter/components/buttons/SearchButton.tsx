@@ -19,7 +19,7 @@ export function ProfileUpdateButton({ handleClick }) {
 
   return (
     <div className={classes.root}>
-      <Fab className={classes.button} color='primary' onClick={handleClick}>
+      <Fab className={classes.button} color="primary" onClick={handleClick}>
         <SearchIcon />
       </Fab>
     </div>

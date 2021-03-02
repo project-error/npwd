@@ -16,7 +16,7 @@ export const AccountTransactions = (): any => {
   const { transactionList } = useTransactions();
   const { t } = useTranslation();
   return (
-    <div id='account-section'>
+    <div id="account-section">
       <div className={classes.header}>
         <h2 className={classes.title}>{t('APPS_BANK_ACCOUNT_TRANSACTIONS')}</h2>
         <Button className={classes.seeAll}>

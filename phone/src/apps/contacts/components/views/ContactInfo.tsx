@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Avatar as MuiAvatar,
-  Box,
-  Button,
-  Paper,
-  TextField,
-} from '@material-ui/core';
+import { Avatar as MuiAvatar, Box, Button, Paper, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -123,7 +117,7 @@ const ContactsInfoPage = () => {
   return (
     <Paper className={classes.root} square>
       <Button style={{ margin: 10 }} onClick={() => history.goBack()}>
-        <ArrowBackIcon fontSize='large' />
+        <ArrowBackIcon fontSize="large" />
       </Button>
       <div className={classes.listContainer}>
         <MuiAvatar className={classes.avatar} src={avatar} />
@@ -161,21 +155,13 @@ const ContactsInfoPage = () => {
         {/* Display if fetched contact */}
         {contact && (
           <>
-            <Box py={1} display='block'>
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={handleContactSave}
-              >
+            <Box py={1} display="block">
+              <Button color="primary" variant="contained" onClick={handleContactSave}>
                 {t('GENERIC_UPDATE')}
               </Button>
             </Box>
-            <Box py={1} display='block'>
-              <Button
-                variant='contained'
-                color='secondary'
-                onClick={handleContactDelete}
-              >
+            <Box py={1} display="block">
+              <Button variant="contained" color="secondary" onClick={handleContactDelete}>
                 {t('GENERIC_DELETE')}
               </Button>
             </Box>
@@ -183,12 +169,8 @@ const ContactsInfoPage = () => {
         )}
         {/* Display if no fetched contact */}
         {!contact && (
-          <Box display='block'>
-            <Button
-              color='primary'
-              variant='contained'
-              onClick={handleContactAdd}
-            >
+          <Box display="block">
+            <Button color="primary" variant="contained" onClick={handleContactAdd}>
               {t('APPS_CONTACT_MODAL_BUTTON_ADD')}
             </Button>
           </Box>

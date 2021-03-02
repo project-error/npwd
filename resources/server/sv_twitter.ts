@@ -51,7 +51,7 @@ async function fetchAllTweets(profileId: number): Promise<Tweet[]> {
  */
 async function fetchTweetsFiltered(
   profileId: number,
-  searchValue: string
+  searchValue: string,
 ): Promise<Tweet[]> {
   const parameterizedSearchValue = `%${searchValue}%`;
   const query = `
@@ -116,19 +116,12 @@ async function createTweet(identifier: string, tweet: Tweet): Promise<Tweet> {
     INSERT INTO npwd_twitter_tweets (identifier, message, images)
     VALUES (?, ?, ?)
     `;
-  const [results] = await pool.query(query, [
-    identifier,
-    tweet.message,
-    tweet.images,
-  ]);
+  const [results] = await pool.query(query, [identifier, tweet.message, tweet.images]);
   const insertData = <any>results;
   return await getTweet(profile.id, insertData.insertId);
 }
 
-async function createTweetReport(
-  tweetId: number,
-  profileId: number
-): Promise<void> {
+async function createTweetReport(tweetId: number, profileId: number): Promise<void> {
   const query = `
     INSERT INTO npwd_twitter_reports (tweet_id, profile_id)
     VALUES (?, ?)
@@ -203,14 +196,7 @@ async function updateProfile(identifier: string, profile: Profile) {
     SET avatar_url = ?, profile_name = ?, bio = ?, location = ?, job = ?
     WHERE identifier = ?
     `;
-  await pool.execute(query, [
-    avatar_url,
-    profile_name,
-    bio,
-    location,
-    job,
-    identifier,
-  ]);
+  await pool.execute(query, [avatar_url, profile_name, bio, location, job, identifier]);
 }
 
 /**
@@ -259,10 +245,7 @@ async function deleteTweet(identifier: string, tweetId: number): Promise<void> {
  * @param profileId - primary key of the profile to check
  * @param tweetId - primary key of the tweet to check
  */
-async function doesLikeExist(
-  profileId: number,
-  tweetId: number
-): Promise<boolean> {
+async function doesLikeExist(profileId: number, tweetId: number): Promise<boolean> {
   const query = `
     SELECT * FROM npwd_twitter_likes
     WHERE profile_id = ? AND tweet_id = ?
@@ -278,10 +261,7 @@ async function doesLikeExist(
  * @param tweetId - primary key of the tweet to check
  * @param profileId - primary key of the profile to check
  */
-async function doesReportExist(
-  tweetId: number,
-  profileId: number
-): Promise<boolean> {
+async function doesReportExist(tweetId: number, profileId: number): Promise<boolean> {
   const query = `
     SELECT * FROM npwd_twitter_reports
     WHERE tweet_id = ? AND profile_id = ?

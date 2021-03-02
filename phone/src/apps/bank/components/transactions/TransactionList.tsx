@@ -27,7 +27,7 @@ export const TransactionList = () => {
   };
 
   return (
-    <div id='transaction-section'>
+    <div id="transaction-section">
       <div className={classes.header}>
         <h2 className={classes.title}>{t('APPS_BANK_ACCOUNT_TRANSACTIONS')}</h2>
       </div>
@@ -52,7 +52,7 @@ export const TransactionList = () => {
         <TablePagination
           rowsPerPageOptions={[3, 5]}
           className={classes.pagination}
-          component='div'
+          component="div"
           count={transactionList.length}
           rowsPerPage={rowsPerPage}
           page={page}

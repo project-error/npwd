@@ -69,7 +69,7 @@ export const useKeyboardService = () => {
         handlers.current.set(g, getters[g]);
       });
     },
-    [getters]
+    [getters],
   );
 
   useEffect(
@@ -85,7 +85,7 @@ export const useKeyboardService = () => {
       window.addEventListener('keyup', onKeyUp);
       return () => window.removeEventListener('keyup', onKeyUp);
     },
-    [getters]
+    [getters],
   );
 
   const backspaceHandler = useCallback(
@@ -96,7 +96,7 @@ export const useKeyboardService = () => {
       }
       history.goBack();
     },
-    [history]
+    [history],
   );
 
   useEffect(
@@ -104,6 +104,6 @@ export const useKeyboardService = () => {
       handlers.current.set('Escape', () => closePhone());
       handlers.current.set('Backspace', backspaceHandler);
     },
-    [setEscape, setBackspace, history, backspaceHandler, closePhone]
+    [setEscape, setBackspace, history, backspaceHandler, closePhone],
   );
 };

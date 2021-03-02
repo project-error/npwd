@@ -52,7 +52,7 @@ export const NoteModal = () => {
   };
 
   return (
-    <Slide direction='left' in={!!detail}>
+    <Slide direction="left" in={!!detail}>
       <Paper className={classes.modalRoot}>
         {!detail ? (
           <CircularProgress />
@@ -61,9 +61,9 @@ export const NoteModal = () => {
             <Box>
               <Box py={2}>
                 <Button
-                  color='primary'
-                  size='large'
-                  startIcon={<ArrowBackIcon fontSize='large' />}
+                  color="primary"
+                  size="large"
+                  startIcon={<ArrowBackIcon fontSize="large" />}
                   onClick={_handleClose}
                 >
                   {t('APPS_NOTES')}
@@ -79,9 +79,7 @@ export const NoteModal = () => {
                 }}
                 fullWidth
                 value={detail.title}
-                onChange={(e) =>
-                  setDetail((d) => ({ ...d, title: e.target.value }))
-                }
+                onChange={(e) => setDetail((d) => ({ ...d, title: e.target.value }))}
               />
               <TextField
                 className={classes.input}
@@ -93,29 +91,27 @@ export const NoteModal = () => {
                 multiline
                 fullWidth
                 rows={16}
-                variant='outlined'
+                variant="outlined"
                 value={detail.content}
-                onChange={(e) =>
-                  setDetail((d) => ({ ...d, content: e.target.value }))
-                }
+                onChange={(e) => setDetail((d) => ({ ...d, content: e.target.value }))}
               />
               <Typography paragraph>{detail.content.length}/250</Typography>
               {!detail.id ? (
                 <>
-                  <Box display='inline' p={1}>
+                  <Box display="inline" p={1}>
                     <Button
-                      color='primary'
-                      variant='contained'
+                      color="primary"
+                      variant="contained"
                       disabled={detail.title.length > 0 ? false : true}
                       onClick={handleNoteSave}
                     >
                       {t('GENERIC_SAVE')}
                     </Button>
                   </Box>
-                  <Box display='inline' p={1}>
+                  <Box display="inline" p={1}>
                     <StatusButton
-                      color='error'
-                      variant='contained'
+                      color="error"
+                      variant="contained"
                       onClick={_handleClose}
                     >
                       {t('GENERIC_CANCEL')}
@@ -124,19 +120,19 @@ export const NoteModal = () => {
                 </>
               ) : (
                 <>
-                  <Box display='inline' p={1}>
+                  <Box display="inline" p={1}>
                     <Button
-                      color='primary'
-                      variant='contained'
+                      color="primary"
+                      variant="contained"
                       onClick={handleUpdateNote}
                     >
                       {t('GENERIC_UPDATE')}
                     </Button>
                   </Box>
-                  <Box display='inline' p={1}>
+                  <Box display="inline" p={1}>
                     <StatusButton
-                      color='error'
-                      variant='contained'
+                      color="error"
+                      variant="contained"
                       onClick={handleDeleteNote}
                     >
                       {t('GENERIC_DELETE')}

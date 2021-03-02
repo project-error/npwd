@@ -22,7 +22,7 @@ const showPhone = async (): Promise<void> => {
       app: 'PHONE',
       method: 'setVisibility',
       data: true,
-    })
+    }),
   );
   SetNuiFocus(true, true);
 };
@@ -35,7 +35,7 @@ const hidePhone = async (): Promise<void> => {
       app: 'PHONE',
       method: 'setVisibility',
       data: false,
-    })
+    }),
   );
   await phoneCloseAnim();
   SetNuiFocus(false, false);
@@ -52,7 +52,7 @@ RegisterCommand(
   async () => {
     await hidePhone();
   },
-  false
+  false,
 );
 
 RegisterCommand(
@@ -61,7 +61,7 @@ RegisterCommand(
     //-- Toggles Phone
     await Phone();
   },
-  false
+  false,
 );
 
 RegisterCommand(
@@ -69,7 +69,7 @@ RegisterCommand(
   async () => {
     await showPhone();
   },
-  false
+  false,
 );
 
 /* * * * * * * * * * * * *
@@ -99,7 +99,7 @@ AddEventHandler('onResourceStop', function (resource: string) {
         app: 'PHONE',
         method: 'setVisibility',
         data: false,
-      })
+      }),
     );
     SetNuiFocus(false, false);
     removePhoneProp(); //Deletes the phone incase it was attached.
@@ -113,7 +113,7 @@ onNet('phone:sendCredentials', (number: string) => {
       app: 'SIMCARD',
       method: 'setNumber',
       data: number,
-    })
+    }),
   );
 });
 

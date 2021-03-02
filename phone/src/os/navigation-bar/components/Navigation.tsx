@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  makeStyles,
-  BottomNavigation,
-  BottomNavigationAction,
-} from '@material-ui/core';
+import { makeStyles, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import AppsIcon from '@material-ui/icons/Apps';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
@@ -33,17 +29,17 @@ export const Navigation = () => {
       }}
     >
       <BottomNavigationAction
-        label='Home'
+        label="Home"
         value={() => history.push('/')}
         icon={<AppsIcon />}
       />
       <BottomNavigationAction
-        label='Close'
+        label="Close"
         value={closePhone}
         icon={<RadioButtonUncheckedIcon />}
       />
       <BottomNavigationAction
-        label='Back'
+        label="Back"
         value={() => !isExact && history.goBack()}
         icon={<KeyboardArrowLeftIcon />}
       />

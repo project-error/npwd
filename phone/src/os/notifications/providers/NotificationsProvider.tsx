@@ -56,7 +56,7 @@ export const NotificationsContext = createContext<{
   addNotificationAlert(
     n: INotification,
     persist: boolean,
-    update?: Partial<INotification>
+    update?: Partial<INotification>,
   );
 }>(null);
 
@@ -83,16 +83,13 @@ export function NotificationsProvider({ children }) {
     }
   }, [isPhoneOpen, currentAlert]);
 
-  const updateNotification = useCallback(
-    (idx: number, value: INotification) => {
-      setNotifications((all) => {
-        const updated = [...all];
-        updated.splice(idx, 1, value);
-        return updated;
-      });
-    },
-    []
-  );
+  const updateNotification = useCallback((idx: number, value: INotification) => {
+    setNotifications((all) => {
+      const updated = [...all];
+      updated.splice(idx, 1, value);
+      return updated;
+    });
+  }, []);
 
   const removeNotification = (idx) => {
     setNotifications((all) => {
@@ -114,7 +111,7 @@ export function NotificationsProvider({ children }) {
     (appId: string): number => {
       return notifications.findIndex((n) => n.app === appId);
     },
-    [notifications]
+    [notifications],
   );
 
   const addOrUpdateNotification = useCallback(
@@ -126,7 +123,7 @@ export function NotificationsProvider({ children }) {
       }
       addNotification(add);
     },
-    [addNotification, hasNotification, updateNotification]
+    [addNotification, hasNotification, updateNotification],
   );
 
   const _showAlert = useCallback(
@@ -134,7 +131,7 @@ export function NotificationsProvider({ children }) {
       n: INotification,
       persist: boolean,
       update: Partial<INotification>,
-      soundUrl: string
+      soundUrl: string,
     ) => {
       return new Promise<void>((res) => {
         const resolve = () => {
@@ -172,22 +169,18 @@ export function NotificationsProvider({ children }) {
         }, DEFAULT_ALERT_HIDE_TIME + 300);
       });
     },
-    [addOrUpdateNotification, play]
+    [addOrUpdateNotification, play],
   );
 
   const addNotificationAlert = (
     n: INotification,
     persist?: boolean,
-    update?: Partial<INotification>
+    update?: Partial<INotification>,
   ) => {
     if (n.sound) {
-      const { sound, volume } = getSoundSettings(
-        'notification',
-        settings,
-        n.app
-      );
+      const { sound, volume } = getSoundSettings('notification', settings, n.app);
       mount(sound, volume, false).then(({ url }) =>
-        setAlerts((curr) => [...curr, [n, persist, update, url]])
+        setAlerts((curr) => [...curr, [n, persist, update, url]]),
       );
       return;
     }
@@ -233,7 +226,7 @@ export function NotificationsProvider({ children }) {
         icons.unshift({ key: curr.app, icon: curr.notificationIcon, badge: 1 });
         return icons;
       }, []),
-    [notifications]
+    [notifications],
   );
 
   const removeAlerts = () => {

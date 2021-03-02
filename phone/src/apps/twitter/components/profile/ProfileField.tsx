@@ -12,14 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-function ProfileField({
-  label,
-  value,
-  handleChange,
-  allowChange,
-  multiline,
-  inputRef,
-}) {
+function ProfileField({ label, value, handleChange, allowChange, multiline, inputRef }) {
   const classes = useStyles();
   const _handleChange = (e) => handleChange(e.target.value);
 

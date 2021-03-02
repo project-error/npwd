@@ -15,11 +15,11 @@ export const ContactsApp = () => {
 
   return (
     <ContactsThemeProvider>
-      <AppWrapper id='contact-app'>
+      <AppWrapper id="contact-app">
         <AppTitle app={contacts} />
         <AppContent>
-          <Route path='/contacts/' exact component={ContactPage} />
-          <Route path='/contacts/:id' exact component={ContactsInfoPage} />
+          <Route path="/contacts/" exact component={ContactPage} />
+          <Route path="/contacts/:id" exact component={ContactsInfoPage} />
         </AppContent>
       </AppWrapper>
     </ContactsThemeProvider>

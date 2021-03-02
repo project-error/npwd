@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
-import {
-  useContextMenu,
-  MapStringOptions,
-} from '../../../ui/hooks/useContextMenu';
+import { useContextMenu, MapStringOptions } from '../../../ui/hooks/useContextMenu';
 import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
@@ -36,7 +33,7 @@ import { useRecoilState } from 'recoil';
 import { settingsState } from '../hooks/useSettings';
 
 const SubHeaderComp = (props: { text: string }) => (
-  <ListSubheader color='primary' component='div' disableSticky>
+  <ListSubheader color="primary" component="div" disableSticky>
     {props.text}
   </ListSubheader>
 );
@@ -64,11 +61,7 @@ export const SettingsApp = () => {
       }
       return curr;
     });
-  }, [
-    settings.notificationVol,
-    settings.ringtoneVol,
-    settings.TWITTER_notificationVol,
-  ]);
+  }, [settings.notificationVol, settings.ringtoneVol, settings.TWITTER_notificationVol]);
 
   const handleSliderChange = (idx) => (_e: any, value: number | number[]) => {
     setSliders((curr) => {
@@ -82,39 +75,33 @@ export const SettingsApp = () => {
 
   const wallpapers = config.wallpapers.map(
     MapStringOptions(settings.wallpaper, (val: string) =>
-      handleSettingChange('wallpaper', val)
-    )
+      handleSettingChange('wallpaper', val),
+    ),
   );
   const frames = config.frames.map(
-    MapStringOptions(settings.frame, (val: string) =>
-      handleSettingChange('frame', val)
-    )
+    MapStringOptions(settings.frame, (val: string) => handleSettingChange('frame', val)),
   );
   const themes = Object.keys(config.themes).map(
-    MapStringOptions(settings.theme, (val: string) =>
-      handleSettingChange('theme', val)
-    )
+    MapStringOptions(settings.theme, (val: string) => handleSettingChange('theme', val)),
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(settings.zoom, (val: string) =>
-      handleSettingChange('zoom', val)
-    )
+    MapStringOptions(settings.zoom, (val: string) => handleSettingChange('zoom', val)),
   );
   const ringtones = config.ringtones.map(
     MapStringOptions(settings.ringtone, (val: string) =>
-      handleSettingChange('ringtone', val)
-    )
+      handleSettingChange('ringtone', val),
+    ),
   );
   const notifications = config.notifications.map(
     MapStringOptions(settings.notification, (val: string) =>
-      handleSettingChange('notification', val)
-    )
+      handleSettingChange('notification', val),
+    ),
   );
 
   const twitterNotifications = config.notifications.map(
     MapStringOptions(settings.notification, (val: string) =>
-      handleSettingChange('TWITTER_notification', val)
-    )
+      handleSettingChange('TWITTER_notification', val),
+    ),
   );
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
@@ -122,7 +109,7 @@ export const SettingsApp = () => {
     <AppWrapper>
       <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
-        <List disablePadding subheader={<SubHeaderComp text='Phone' />}>
+        <List disablePadding subheader={<SubHeaderComp text="Phone" />}>
           <SettingItem
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
             value={simcard.number}
@@ -150,9 +137,7 @@ export const SettingsApp = () => {
                   min={0}
                   max={100}
                   onChange={handleSliderChange(0)}
-                  onChangeCommitted={() =>
-                    handleSettingChange('ringtoneVol', sliders[0])
-                  }
+                  onChangeCommitted={() => handleSettingChange('ringtoneVol', sliders[0])}
                 />
               </Box>
             </ListItemSecondaryAction>
@@ -187,7 +172,7 @@ export const SettingsApp = () => {
             </ListItemSecondaryAction>
           </ListItem>
         </List>
-        <List disablePadding subheader={<SubHeaderComp text='Appearance' />}>
+        <List disablePadding subheader={<SubHeaderComp text="Appearance" />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_THEME')}
             value={settings.theme}
@@ -217,10 +202,7 @@ export const SettingsApp = () => {
             icon={<ZoomIn />}
           />
         </List>
-        <List
-          disablePadding
-          subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}
-        >
+        <List disablePadding subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
             value={settings.TWITTER_notification}

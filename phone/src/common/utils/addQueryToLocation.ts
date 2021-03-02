@@ -9,7 +9,7 @@ interface IRouterLocation {
 export const addQueryToLocation = (
   { pathname = '', search = '' }: Record<string, unknown> & IRouterLocation,
   key = '',
-  value = ''
+  value = '',
 ) => {
   const { query } = url(pathname + search);
   return `${pathname}?${qs.stringify({

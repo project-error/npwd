@@ -27,9 +27,9 @@ onNet(
           isTransmitter: isTransmitter,
           accepted: false,
         },
-      })
+      }),
     );
-  }
+  },
 );
 
 RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL); // Fires when the TARGET accepts.
@@ -54,9 +54,9 @@ onNet(
           isTransmitter: isTransmitter,
           accepted: true,
         },
-      })
+      }),
     );
-  }
+  },
 );
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
@@ -79,7 +79,7 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
         accepted: false,
         active: false,
       },
-    })
+    }),
   );
 });
 
@@ -109,7 +109,7 @@ onNet(events.PHONE_CALL_WAS_ENDED, () => {
         accepted: false,
         active: false,
       },
-    })
+    }),
   );
 });
 
@@ -119,7 +119,7 @@ function openCallModal(show: boolean) {
       app: 'CALL',
       method: 'callModal',
       data: show,
-    })
+    }),
   );
 }
 
@@ -129,6 +129,6 @@ onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICall) => {
       app: 'DAILER',
       method: 'setHistory',
       data: calls,
-    })
+    }),
   );
 });

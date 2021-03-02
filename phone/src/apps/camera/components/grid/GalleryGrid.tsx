@@ -14,9 +14,7 @@ export const GalleryGrid = () => {
   const history = useHistory();
   const query = useQueryParams();
 
-  const referal = query.referal
-    ? decodeURIComponent(query.referal)
-    : '/camera/image';
+  const referal = query.referal ? decodeURIComponent(query.referal) : '/camera/image';
 
   const photos = usePhotos();
 
@@ -25,17 +23,15 @@ export const GalleryGrid = () => {
   };
 
   const handlePhotoOpen = (photo) => {
-    history.push(
-      addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
-    );
+    history.push(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
   };
 
   if (!photos)
     return (
       <Box
-        display='flex'
-        flexWrap='wrap'
-        alignContent='flex-start'
+        display="flex"
+        flexWrap="wrap"
+        alignContent="flex-start"
         className={classes.root}
       >
         <Box>
@@ -44,7 +40,7 @@ export const GalleryGrid = () => {
             style={{ borderRadius: 0 }}
             className={classes.photo}
           >
-            <AddIcon fontSize='large' />
+            <AddIcon fontSize="large" />
           </Button>
         </Box>
       </Box>
@@ -53,9 +49,9 @@ export const GalleryGrid = () => {
   return (
     <div>
       <Box
-        display='flex'
-        flexWrap='wrap'
-        alignContent='flex-start'
+        display="flex"
+        flexWrap="wrap"
+        alignContent="flex-start"
         className={classes.root}
       >
         <Box>
@@ -64,7 +60,7 @@ export const GalleryGrid = () => {
             style={{ borderRadius: 0 }}
             className={classes.photo}
           >
-            <AddIcon fontSize='large' />
+            <AddIcon fontSize="large" />
           </Button>
         </Box>
         {photos.map((photo) => (

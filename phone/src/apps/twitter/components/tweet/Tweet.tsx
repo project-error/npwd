@@ -98,7 +98,7 @@ export const Tweet = (tweet) => {
       {enableAvatars && (
         <ListItemAvatar>
           <MuiAvatar>
-            <Avatar avatarUrl={avatar_url} height='40px' width='40px' />
+            <Avatar avatarUrl={avatar_url} height="40px" width="40px" />
           </MuiAvatar>
         </ListItemAvatar>
       )}
@@ -107,9 +107,9 @@ export const Tweet = (tweet) => {
           <div className={classes.profile}>{profileName}</div>
           <Typography
             className={classes.date}
-            component='div'
-            variant='body2'
-            color='textSecondary'
+            component="div"
+            variant="body2"
+            color="textSecondary"
           >
             {secondsToHumanReadable(t, seconds_since_tweet)}
           </Typography>

@@ -51,23 +51,20 @@ export const MessageBubble = ({
   const classes = useStyles();
   return (
     <div>
-      <Paper
-        className={message.isMine ? classes.mySms : classes.sms}
-        variant='outlined'
-      >
+      <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box>
           {isImage(message.message) ? (
             <img
               src={message.message}
               className={classes.imageMessage}
-              alt='multimedia'
+              alt="multimedia"
             />
           ) : (
             <div>{message.message}</div>
           )}
         </Box>
         <Box>
-          <Typography variant='subtitle1' color='secondary'>
+          <Typography variant="subtitle1" color="secondary">
             {isGroupChat && !message.isMine
               ? message.display || message.phone_number
               : null}

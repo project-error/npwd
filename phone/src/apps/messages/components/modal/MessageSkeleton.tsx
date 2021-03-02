@@ -18,12 +18,7 @@ export default function MessageSkeleton({ height, isMine = false }) {
   const marginLeft = isMine ? '60px' : '8px';
   return (
     <div className={classes.root} style={{ marginLeft, height: `${height}px` }}>
-      <Skeleton
-        className={classes.skeleton}
-        variant='text'
-        width={325}
-        height={height}
-      />
+      <Skeleton className={classes.skeleton} variant="text" width={325} height={height} />
     </div>
   );
 }

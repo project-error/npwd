@@ -14,7 +14,7 @@ const DAYS = 'APPS_TWITTER_TIME_DAYS';
  */
 export function secondsToHumanReadable(
   t: (input: string) => string,
-  seconds: number
+  seconds: number,
 ): string {
   if (seconds < 60) {
     return t(JUST_NOW);

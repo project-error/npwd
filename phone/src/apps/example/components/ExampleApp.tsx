@@ -32,7 +32,7 @@ export const ExampleApp = () => {
         <AppTitle app={example} />
         <AppContent>
           <h1>This is an example</h1>
-          <Button color='primary'>{example.id}</Button>
+          <Button color="primary">{example.id}</Button>
           {/* Here we are using the value in a h3 tag */}
           <h3>{exampleString}</h3>
           <IconButton onClick={() => (playing ? stop() : play())}>

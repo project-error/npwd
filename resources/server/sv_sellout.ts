@@ -21,7 +21,7 @@ async function addListing(
   identifier: string,
   name: string,
   number: any,
-  listing: MarketplaceListing
+  listing: MarketplaceListing,
 ): Promise<void> {
   const query =
     'INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)';

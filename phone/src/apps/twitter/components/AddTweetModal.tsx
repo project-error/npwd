@@ -86,9 +86,7 @@ export const AddTweetModal = () => {
 
   const handleimageChange = useCallback((link) => setLink(link), []);
 
-  const handleMessageChange = useCallback((message) => setMessage(message), [
-    setMessage,
-  ]);
+  const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   useEffect(() => {
     window.addEventListener('keydown', _handleEscape, true);
@@ -138,8 +136,7 @@ export const AddTweetModal = () => {
     setShowImagePrompt(false);
     setLink('');
   };
-  const removeImage = (id) =>
-    setImages(images.filter((image) => id !== image.id));
+  const removeImage = (id) => setImages(images.filter((image) => id !== image.id));
 
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
@@ -180,9 +177,7 @@ export const AddTweetModal = () => {
       <div className={classes.buttonsContainer}>
         <IconButtons
           onImageClick={
-            images.length < config.twitter.maxImages
-              ? toggleShowImagePrompt
-              : null
+            images.length < config.twitter.maxImages ? toggleShowImagePrompt : null
           }
           onEmojiClick={toggleShowEmoji}
         />

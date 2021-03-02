@@ -14,10 +14,10 @@ const MessageGroupModal = () => {
   const params = useParams<{ phoneNumber?: string }>();
 
   return (
-    <Slide direction='left' in>
+    <Slide direction="left" in>
       <Paper className={classes.modalRoot}>
         <Button onClick={handleClose}>
-          <ArrowBackIcon fontSize='large' />
+          <ArrowBackIcon fontSize="large" />
         </Button>
         <NewMessageGroupForm phoneNumber={params.phoneNumber} />
       </Paper>

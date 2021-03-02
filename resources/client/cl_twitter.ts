@@ -52,12 +52,9 @@ onNet(events.TWITTER_FETCH_TWEETS_FAILURE, () => {
  * Twitter fetch filtered tweets
  */
 RegisterNuiCallbackType(events.TWITTER_FETCH_TWEETS_FILTERED);
-on(
-  `__cfx_nui:${events.TWITTER_FETCH_TWEETS_FILTERED}`,
-  (searchValue: string) => {
-    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED, searchValue);
-  }
-);
+on(`__cfx_nui:${events.TWITTER_FETCH_TWEETS_FILTERED}`, (searchValue: string) => {
+  emitNet(events.TWITTER_FETCH_TWEETS_FILTERED, searchValue);
+});
 
 onNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, (tweets: any) => {
   sendTwitterMessage(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, tweets);

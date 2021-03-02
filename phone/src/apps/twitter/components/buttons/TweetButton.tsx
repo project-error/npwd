@@ -19,7 +19,7 @@ export function TweetButton({ openModal }) {
 
   return (
     <div className={classes.root}>
-      <Fab className={classes.button} color='primary' onClick={openModal}>
+      <Fab className={classes.button} color="primary" onClick={openModal}>
         <CreateIcon />
       </Fab>
     </div>

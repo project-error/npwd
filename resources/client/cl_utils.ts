@@ -25,18 +25,13 @@ export default class ClientUtils {
     };
   }
 
-  public emitNetPromise<T = any>(
-    eventName: string,
-    ...args: any[]
-  ): Promise<T> {
+  public emitNetPromise<T = any>(eventName: string, ...args: any[]): Promise<T> {
     return new Promise((resolve, reject) => {
       let hasTimedOut = false;
 
       setTimeout(() => {
         hasTimedOut = true;
-        reject(
-          `${eventName} has timed out after ${this._settings.promiseTimeout} ms`
-        );
+        reject(`${eventName} has timed out after ${this._settings.promiseTimeout} ms`);
       }, this._settings.promiseTimeout);
 
       // Have to use this as the regular uuid refused to work here for some

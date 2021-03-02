@@ -24,7 +24,7 @@ const useStyle = makeStyles(
     text: ({ color }) => ({
       color: color || theme.palette.text.primary,
     }),
-  })
+  }),
 );
 // Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
 // but need to think about the best way to do that for standardization sake.

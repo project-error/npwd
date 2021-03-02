@@ -10,9 +10,7 @@ import { useLocation } from 'react-router-dom';
  *
  *     const { id, title } = useQueryParams<{ id: string, title: string }>();
  */
-export function useQueryParams<T = Record<string, string>>(
-  defaultValues: T = null
-) {
+export function useQueryParams<T = Record<string, string>>(defaultValues: T = null) {
   const query = qs.parse(useLocation().search, { ignoreQueryPrefix: true });
   if (!defaultValues) {
     return query as T & Partial<ParsedQs>;

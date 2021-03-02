@@ -11,7 +11,7 @@ interface ISoundContext {
     url: string,
     volume?: number,
     loop?: boolean,
-    autoplay?: boolean
+    autoplay?: boolean,
   ): Promise<IMountResponse>;
   play(url?: string, volume?: number, loop?: boolean): void;
   stop(url: string): void;
@@ -36,7 +36,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
       url: string,
       volume: number = 1,
       loop: boolean = false,
-      autoplay: boolean = false
+      autoplay: boolean = false,
     ) => {
       return new Promise<IMountResponse>((res) => {
         if (!soundRefs.current) {
@@ -78,7 +78,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         instance.once('playerror', onError);
       });
     },
-    []
+    [],
   );
 
   const play = useCallback(
@@ -115,25 +115,19 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
       }
       mount(url, volume, loop, true);
     },
-    [mount]
+    [mount],
   );
 
-  const volume = useCallback(
-    (url: string, volume: number = undefined): number => {
-      const sound = soundRefs.current.get(url);
-      return sound?.howl.volume(volume) as number;
-    },
-    []
-  );
+  const volume = useCallback((url: string, volume: number = undefined): number => {
+    const sound = soundRefs.current.get(url);
+    return sound?.howl.volume(volume) as number;
+  }, []);
 
-  const loop = useCallback(
-    (url: string, loop: boolean = undefined): boolean => {
-      const sound = soundRefs.current.get(url);
-      sound.howl.loop(loop);
-      return sound.howl.loop();
-    },
-    []
-  );
+  const loop = useCallback((url: string, loop: boolean = undefined): boolean => {
+    const sound = soundRefs.current.get(url);
+    sound.howl.loop(loop);
+    return sound.howl.loop();
+  }, []);
 
   const stop = useCallback((url: string) => {
     if (!soundRefs.current) {

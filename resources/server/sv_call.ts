@@ -25,10 +25,7 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
 
     for (const player of xPlayers) {
       const xPlayer = ESX.GetPlayerFromId(player);
-      if (
-        xPlayer.getIdentifier() != null &&
-        xPlayer.getIdentifier() == identifier
-      ) {
+      if (xPlayer.getIdentifier() != null && xPlayer.getIdentifier() == identifier) {
         res(xPlayer);
       }
     }
@@ -40,17 +37,11 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
 async function saveCall(call: ICall) {
   const query =
     'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
-  await pool.query(query, [
-    call.identifier,
-    call.transmitter,
-    call.receiver,
-    call.start,
-  ]);
+  await pool.query(query, [call.identifier, call.transmitter, call.receiver, call.start]);
 }
 
 async function updateCall(call: ICall, isAccepted: boolean, end: number) {
-  const query =
-    'UPDATE npwd_calls SET is_accepted=?, end=? WHERE identifier = ?';
+  const query = 'UPDATE npwd_calls SET is_accepted=?, end=? WHERE identifier = ?';
   await pool.query(query, [isAccepted, end, call.identifier]);
 }
 
@@ -64,57 +55,46 @@ async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
 
 let calls: Map<string, ICall> = new Map();
 
-onNet(
-  events.PHONE_INITIALIZE_CALL,
-  async (phoneNumber: string, timestamp: number) => {
-    const _source = getSource();
+onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: number) => {
+  const _source = getSource();
 
-    const callIdentifier = uuidv4();
+  const callIdentifier = uuidv4();
 
-    // the client that is calling
-    const xTransmitter = ESX.GetPlayerFromId(_source);
-    const transmitterNumber = await usePhoneNumber(
-      xTransmitter.getIdentifier()
-    );
+  // the client that is calling
+  const xTransmitter = ESX.GetPlayerFromId(_source);
+  const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
 
-    // player who is being called
-    const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-    const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
-    const receiverNumber = phoneNumber;
+  // player who is being called
+  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+  const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
+  const receiverNumber = phoneNumber;
 
-    calls.set(transmitterNumber, {
-      identifier: callIdentifier,
-      transmitter: transmitterNumber,
-      transmitterSource: _source,
-      receiver: receiverNumber,
-      receiverSource: xReceiver.source,
-      start: timestamp / 1000,
-      accepted: false,
-    });
+  calls.set(transmitterNumber, {
+    identifier: callIdentifier,
+    transmitter: transmitterNumber,
+    transmitterSource: _source,
+    receiver: receiverNumber,
+    receiverSource: xReceiver.source,
+    start: timestamp / 1000,
+    accepted: false,
+  });
 
-    const currentCall = calls.get(transmitterNumber);
-    await saveCall(currentCall);
+  const currentCall = calls.get(transmitterNumber);
+  await saveCall(currentCall);
 
-    // events
-    // client that is calling
-    emitNet(
-      events.PHONE_START_CALL,
-      _source,
-      transmitterNumber,
-      receiverNumber,
-      true
-    );
+  // events
+  // client that is calling
+  emitNet(events.PHONE_START_CALL, _source, transmitterNumber, receiverNumber, true);
 
-    // client that is being called
-    emitNet(
-      events.PHONE_START_CALL,
-      xReceiver.source,
-      transmitterNumber,
-      receiverNumber,
-      false
-    );
-  }
-);
+  // client that is being called
+  emitNet(
+    events.PHONE_START_CALL,
+    xReceiver.source,
+    transmitterNumber,
+    receiverNumber,
+    false,
+  );
+});
 
 onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   const pSource = getSource();
@@ -125,13 +105,7 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     await updateCall(currentCall, true, null);
 
     // player who is being called
-    emitNet(
-      events.PHONE_CALL_WAS_ACCEPTED,
-      pSource,
-      channelId,
-      currentCall,
-      false
-    );
+    emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId, currentCall, false);
 
     // player who is calling
     emitNet(
@@ -139,7 +113,7 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
       currentCall.transmitterSource,
       channelId,
       currentCall,
-      true
+      true,
     );
 
     currentCall.accepted = true;
@@ -167,39 +141,33 @@ onNet(
         source: pSource,
       });
     }
-  }
+  },
 );
 
-onNet(
-  events.PHONE_END_CALL,
-  async (transmitterNumber: string, timestamp: number) => {
-    const pSource = getSource();
-    try {
-      const currentCall = calls.get(transmitterNumber);
-      const endTime = timestamp / 1000;
-      await updateCall(currentCall, false, endTime);
-      const accepted = calls.get(pSource);
+onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number) => {
+  const pSource = getSource();
+  try {
+    const currentCall = calls.get(transmitterNumber);
+    const endTime = timestamp / 1000;
+    await updateCall(currentCall, false, endTime);
+    const accepted = calls.get(pSource);
 
-      // player who is being called
-      emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
-      // player who is calling
-      emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
-      // ends animations if call is active
-      if (currentCall.accepted) {
-        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource);
-        emitNet(
-          events.PHONE_CALL_SEND_HANGUP_ANIM,
-          currentCall.transmitterSource
-        );
-      }
-      calls.delete(transmitterNumber);
-    } catch (e) {
-      callLogger.error(`Error ending Phone Call, ${e.message}`, {
-        source: pSource,
-      });
+    // player who is being called
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);
+    // player who is calling
+    emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
+    // ends animations if call is active
+    if (currentCall.accepted) {
+      emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource);
+      emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource);
     }
+    calls.delete(transmitterNumber);
+  } catch (e) {
+    callLogger.error(`Error ending Phone Call, ${e.message}`, {
+      source: pSource,
+    });
   }
-);
+});
 
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = getSource();

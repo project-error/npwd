@@ -7,6 +7,6 @@ it('renders Phone', () => {
   shallow(
     <RecoilRoot>
       <Phone />
-    </RecoilRoot>
+    </RecoilRoot>,
   );
 });

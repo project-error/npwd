@@ -14,7 +14,7 @@ import { mainLogger } from './sv_logger';
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 if (mysqlConnectionString === 'none') {
   const error = new Error(
-    `No connection string provided. make sure "${CONNECTION_STRING}" is set in your config.`
+    `No connection string provided. make sure "${CONNECTION_STRING}" is set in your config.`,
   );
   mainLogger.error(error.message);
   throw error;
@@ -51,9 +51,7 @@ export function generateConnectionPool() {
         scheme: 'mysql',
         hosts: [],
       });
-      const connectionOjbect = connectionStringParser.parse(
-        mysqlConnectionString
-      );
+      const connectionOjbect = connectionStringParser.parse(mysqlConnectionString);
 
       return mysql.createPool({
         host: connectionOjbect.hosts[0].host,
@@ -84,9 +82,7 @@ export async function withTransaction(queries: Promise<any>[]): Promise<any[]> {
     await connection.release();
     return results;
   } catch (err) {
-    mainLogger.warn(
-      `Error when submitting queries in transaction, ${err.message}`
-    );
+    mainLogger.warn(`Error when submitting queries in transaction, ${err.message}`);
     await connection.rollback();
     await connection.release();
     return Promise.reject(err);

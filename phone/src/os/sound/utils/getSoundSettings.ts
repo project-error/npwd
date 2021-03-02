@@ -15,14 +15,13 @@ const getPath = {
 export const getSoundSettings = (
   type: 'ringtone' | 'notification',
   settings: IPhoneSettings,
-  app?: string
+  app?: string,
 ) => {
   try {
     return app
       ? {
           sound: getPath[type](settings[`${app}_${type}`] || settings[type]),
-          volume:
-            (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
+          volume: (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
         }
       : {
           sound: getPath[type](settings[type]),

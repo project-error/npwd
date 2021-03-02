@@ -22,17 +22,14 @@ export const MessagesApp = () => {
 
   return (
     <MessagesThemeProvider>
-      <AppWrapper id='messages-app'>
+      <AppWrapper id="messages-app">
         <AppTitle app={messages} />
         <AppContent>
           <Switch>
-            <Route
-              path='/messages/conversations/:groupId'
-              component={MessageModal}
-            />
+            <Route path="/messages/conversations/:groupId" component={MessageModal} />
             <Route
               exact
-              path='/messages'
+              path="/messages"
               render={() => (
                 <>
                   <MessagesList />

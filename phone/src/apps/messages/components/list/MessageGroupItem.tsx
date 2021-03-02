@@ -24,9 +24,7 @@ const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
       <ListItemAvatar>
         <MuiAvatar src={messageGroup?.avatar} />
       </ListItemAvatar>
-      <ListItemText>
-        {messageGroup.label || messageGroup.groupDisplay}
-      </ListItemText>
+      <ListItemText>{messageGroup.label || messageGroup.groupDisplay}</ListItemText>
     </ListItem>
   );
 };

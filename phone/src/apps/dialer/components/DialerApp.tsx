@@ -22,13 +22,13 @@ export const DialerApp = () => {
         <AppTitle app={dialer} />
         <AppContent>
           <Switch>
-            <Route path='/phone/dial'>
+            <Route path="/phone/dial">
               <DialPage />
             </Route>
-            <Route exact path='/phone'>
+            <Route exact path="/phone">
               <DialerHistory calls={history} />
             </Route>
-            <Route path='/phone/contacts' component={ContactList}></Route>
+            <Route path="/phone/contacts" component={ContactList}></Route>
           </Switch>
         </AppContent>
         <DialerNavBar />

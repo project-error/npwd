@@ -25,11 +25,11 @@ InjectDebugData([
 
 const CameraApp = () => {
   return (
-    <AppWrapper id='camera-app'>
+    <AppWrapper id="camera-app">
       <AppContent>
         <Switch>
-          <Route path='/camera' exact component={GalleryGrid} />
-          <Route path='/camera/image' exact component={GalleryModal} />
+          <Route path="/camera" exact component={GalleryGrid} />
+          <Route path="/camera/image" exact component={GalleryModal} />
         </Switch>
       </AppContent>
     </AppWrapper>

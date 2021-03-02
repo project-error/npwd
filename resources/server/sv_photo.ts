@@ -7,8 +7,7 @@ import { mainLogger } from './sv_logger';
 const photoLogger = mainLogger.child({ module: 'photo' });
 
 async function uploadPhoto(identifier: string, image: string) {
-  const query =
-    'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';
+  const query = 'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';
   await pool.query(query, [identifier, image]);
 }
 
@@ -21,8 +20,7 @@ async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
 }
 
 async function deletePhoto(photo: IPhoto, identifier: string) {
-  const query =
-    'DELETE FROM npwd_phone_gallery WHERE image = ? AND identifier = ?';
+  const query = 'DELETE FROM npwd_phone_gallery WHERE image = ? AND identifier = ?';
   await pool.query(query, [photo.image, identifier]);
 }
 

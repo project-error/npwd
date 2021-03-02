@@ -35,7 +35,7 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       className={classes.textField}
       onChange={handleImageChange}
       multiline
-      size='small'
+      size="small"
       placeholder={t('APPS_TWITTER_IMAGE_PLACEHOLDER')}
       inputRef={textFieldRef}
     />

@@ -22,9 +22,7 @@ export function getIdentifier(source: number): string {
   return ESX.GetPlayerFromId(source).getIdentifier();
 }
 
-export async function getIdentifierByPhoneNumber(
-  phoneNumber: string
-): Promise<string> {
+export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<string> {
   const query = 'SELECT identifier FROM users WHERE phone_number = ?';
   const [results] = await pool.query(query, [phoneNumber]);
   const identifier = <Identifier[]>results;

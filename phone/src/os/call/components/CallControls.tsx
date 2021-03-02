@@ -50,24 +50,20 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
 
   if (accepted || isTransmitter) {
     return (
-      <StatusIconButton color='error' size={size} onClick={handleEndCall}>
+      <StatusIconButton color="error" size={size} onClick={handleEndCall}>
         <CallEndIcon />
       </StatusIconButton>
     );
   }
   return (
     <>
-      <Box m={SIZES_SPACING[size] || 1} display='inline'>
-        <StatusIconButton color='error' size={size} onClick={handleRejectCall}>
+      <Box m={SIZES_SPACING[size] || 1} display="inline">
+        <StatusIconButton color="error" size={size} onClick={handleRejectCall}>
           <CallEndIcon className={classes.icon} />
         </StatusIconButton>
       </Box>
-      <Box m={SIZES_SPACING[size] || 1} display='inline'>
-        <StatusIconButton
-          color='success'
-          size={size}
-          onClick={handleAcceptCall}
-        >
+      <Box m={SIZES_SPACING[size] || 1} display="inline">
+        <StatusIconButton color="success" size={size} onClick={handleAcceptCall}>
           <CallIcon className={classes.icon} />
         </StatusIconButton>
       </Box>

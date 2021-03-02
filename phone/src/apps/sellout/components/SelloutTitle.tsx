@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export const SelloutTitle = () => {
   const classes = useStyles();
   return (
-    <Paper className={classes.root} square variant='outlined' elevation={24}>
+    <Paper className={classes.root} square variant="outlined" elevation={24}>
       <FontAwesomeIcon icon={faAd} className={classes.icon} />
     </Paper>
   );

@@ -12,11 +12,7 @@ const NOTIFICATION_ID = 'call:current';
 export const useCallNotifications = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const {
-    addNotificationAlert,
-    removeId,
-    addNotification,
-  } = useNotifications();
+  const { addNotificationAlert, removeId, addNotification } = useNotifications();
 
   const { play, stop } = useRingtoneSound();
 
@@ -69,7 +65,7 @@ export const useCallNotifications = () => {
             </CallNotification>
           ),
         },
-        true
+        true,
       );
     }
   };

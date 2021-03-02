@@ -51,7 +51,7 @@ export const SelloutItem = (listing) => {
       <div className={classes.content}>
         <Paper elevation={2} className={classes.paper}>
           <div className={classes.header}>
-            <Typography className={classes.headerTypo} variant='h5'>
+            <Typography className={classes.headerTypo} variant="h5">
               {listing.name}
             </Typography>
             <Typography
@@ -60,24 +60,21 @@ export const SelloutItem = (listing) => {
             >
               {listing.number}
             </Typography>
-            <Typography variant='h5' style={{ padding: 5 }}>
+            <Typography variant="h5" style={{ padding: 5 }}>
               {listing.title}
             </Typography>
           </div>
           {listing.url ? (
-            <PictureResponsive
-              src={listing.url}
-              alt={`${listing.name} image`}
-            />
+            <PictureResponsive src={listing.url} alt={`${listing.name} image`} />
           ) : (
             <Typography style={{ margin: 10 }}>
               No image provided{' '}
-              <span role='img' aria-label='emoji'>
+              <span role="img" aria-label="emoji">
                 🙁
               </span>
             </Typography>
           )}
-          <Typography variant='h6' className={classes.desc}>
+          <Typography variant="h6" className={classes.desc}>
             {listing.description}
           </Typography>
           <div>

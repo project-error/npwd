@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 const NotesTitle = () => {
   const classes = useStyles();
   return (
-    <Paper elevation={24} square variant='outlined' className={classes.header}>
-      <FontAwesomeIcon icon={faStickyNote} className={classes.icon} size='lg' />
+    <Paper elevation={24} square variant="outlined" className={classes.header}>
+      <FontAwesomeIcon icon={faStickyNote} className={classes.icon} size="lg" />
     </Paper>
   );
 };

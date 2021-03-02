@@ -6,7 +6,5 @@ import * as config from '../../../config/default.json';
 export const usePhoneTheme = () => {
   const [settings] = useSettings();
 
-  return useMemo(() => createMuiTheme(config.themes[settings.theme]), [
-    settings.theme,
-  ]);
+  return useMemo(() => createMuiTheme(config.themes[settings.theme]), [settings.theme]);
 };

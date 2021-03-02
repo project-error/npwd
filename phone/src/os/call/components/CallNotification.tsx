@@ -18,17 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CallNotification = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const CallNotification = ({ children }: { children: React.ReactNode }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Box>{children}</Box>
       <Box className={classes.controls}>
-        <CallControls size='small' />
+        <CallControls size="small" />
       </Box>
     </div>
   );

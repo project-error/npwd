@@ -10,11 +10,11 @@ export const useApps = () => {
         ...a,
         notification: icons.find((i) => i.key === a.id),
       })),
-    [icons]
+    [icons],
   );
   const getApp = useCallback(
     (id: string): IAppConfig => apps.find((a) => a.id === id) || null,
-    [apps]
+    [apps],
   );
   return { apps, getApp };
 };

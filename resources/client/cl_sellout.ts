@@ -8,7 +8,7 @@ onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
       app: 'SELLOUT',
       method: 'setListings',
       data: listing,
-    })
+    }),
   );
 });
 
@@ -30,6 +30,6 @@ onNet(events.SELLOUT_ACTION_RESULT, (alert: IAlertProps) => {
       app: 'SELLOUT',
       method: 'setAlert',
       data: alert,
-    })
+    }),
   );
 });

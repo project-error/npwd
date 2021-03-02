@@ -33,7 +33,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       // external characters out of them:
       // 123-4567, 987-6543, 333-4444
       const phoneNumbers = participants.map(({ number }) =>
-        number.replace(/[^0-9]/g, '')
+        number.replace(/[^0-9]/g, ''),
       );
       const labelValue = isGroupChat ? label.trim() : null;
 
@@ -46,7 +46,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         history.push('/messages');
       }
     },
-    [history, label, participants, isGroupChat]
+    [history, label, participants, isGroupChat],
   );
 
   const onAutocompleteChange = useCallback((_e, value: any) => {
@@ -71,7 +71,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         }}
       />
     ),
-    [t]
+    [t],
   );
 
   const submitDisabled = !participants.length || (isGroupChat && !label);
@@ -103,10 +103,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       <Box px={2} py={3}>
         <Button
           disabled={submitDisabled}
-          variant='contained'
+          variant="contained"
           fullWidth
-          color='primary'
-          type='submit'
+          color="primary"
+          type="submit"
         >
           {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
         </Button>

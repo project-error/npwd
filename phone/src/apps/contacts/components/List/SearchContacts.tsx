@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'center',
     },
-  })
+  }),
 );
 
 export const SearchContacts = () => {

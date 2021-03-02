@@ -8,7 +8,6 @@
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
     "build": "webpack --mode production",
-    "format": "prettier --write \"./**/*.ts\"",
     "watch": "webpack --mode development --watch",
     "test": "jest"
   },

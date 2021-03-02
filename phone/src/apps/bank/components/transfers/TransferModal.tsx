@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../../../../ui/components/Modal';
-import {
-  Button,
-  List,
-  ListItem,
-  TextField,
-  makeStyles,
-} from '@material-ui/core';
+import { Button, List, ListItem, TextField, makeStyles } from '@material-ui/core';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
 
@@ -64,8 +58,8 @@ export const TransferModal = () => {
           <TextField
             inputProps={{ className: classes.modalInputCenter }}
             fullWidth
-            type='number'
-            placeholder='ID'
+            type="number"
+            placeholder="ID"
             value={targetID}
             onChange={(e) => setTargetID(e.target.value)}
           />
@@ -73,9 +67,9 @@ export const TransferModal = () => {
         <ListItem>
           <TextField
             inputProps={{ className: classes.modalInputCenter }}
-            placeholder='Amount'
+            placeholder="Amount"
             fullWidth
-            type='number'
+            type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
@@ -83,7 +77,7 @@ export const TransferModal = () => {
         <ListItem>
           <TextField
             inputProps={{ className: classes.modalInput }}
-            placeholder='Message'
+            placeholder="Message"
             fullWidth
             value={message}
             multiline

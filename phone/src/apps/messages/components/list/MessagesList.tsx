@@ -24,17 +24,15 @@ const MessagesList = (): any => {
   const goToConversation = useCallback(
     (messageGroup) =>
       history.push(
-        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(
-          messageGroup
-        )}`
+        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
       ),
-    [history]
+    [history],
   );
 
   useEffect(() => {
     if (createMessageGroupResult?.groupId) {
       const findGroup = messageGroups.find(
-        (g) => g.groupId === createMessageGroupResult.groupId
+        (g) => g.groupId === createMessageGroupResult.groupId,
       );
       clearMessageGroupResult();
       if (findGroup) {
@@ -53,9 +51,7 @@ const MessagesList = (): any => {
   const handleClick = (messageGroup: MessageGroup) => () => {
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
     history.push(
-      `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(
-        messageGroup
-      )}`
+      `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
     );
   };
 

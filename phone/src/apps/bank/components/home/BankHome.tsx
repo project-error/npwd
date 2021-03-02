@@ -32,13 +32,10 @@ export const BankHome = () => {
         <p className={classes.accountBalance}>{credentials.balance}</p>
       </div>
       <div className={classes.actions}>
-        <Button id='actionButton' className={classes.actionButton}>
-          <NavLink to='/bank/account'>{t('APPS_BANK_ACCOUNT_LINK')}</NavLink>
+        <Button id="actionButton" className={classes.actionButton}>
+          <NavLink to="/bank/account">{t('APPS_BANK_ACCOUNT_LINK')}</NavLink>
         </Button>
-        <Button
-          onClick={openTransactionsModal}
-          className={classes.actionButton}
-        >
+        <Button onClick={openTransactionsModal} className={classes.actionButton}>
           {t('APPS_BANK_ACTIONS_TRANSFER')}
         </Button>
       </div>

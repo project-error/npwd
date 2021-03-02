@@ -25,7 +25,7 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
     tooltip: {
       fontSize: 12,
     },
-  })
+  }),
 );
 
 export const AppIcon = ({
@@ -48,19 +48,17 @@ export const AppIcon = ({
       arrow
       key={id}
       title={t(nameLocale)}
-      placement='top'
+      placement="top"
       classes={{ tooltip: classes.tooltip }}
       TransitionComponent={Zoom}
     >
       <Button className={classes.root}>
         <Badge
-          color='error'
+          color="error"
           badgeContent={notification?.badge}
           invisible={!notification || notification.badge < 2}
         >
-          <Avatar className={classes.avatar}>
-            {icon || name[0].toUpperCase()}
-          </Avatar>
+          <Avatar className={classes.avatar}>{icon || name[0].toUpperCase()}</Avatar>
         </Badge>
       </Button>
     </Tooltip>

@@ -42,15 +42,10 @@ export const DialerHistory = ({ calls }) => {
 
   if (!calls?.length) {
     return (
-      <Box
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-        paddingTop={35}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
           You got no friends!
-          <span role='img' aria-label='deal with it'>
+          <span role="img" aria-label="deal with it">
             😎
           </span>
         </p>
@@ -79,7 +74,7 @@ export const DialerHistory = ({ calls }) => {
               <IconButton
                 onClick={() =>
                   history.push(
-                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`,
                   )
                 }
               >
@@ -105,7 +100,7 @@ export const DialerHistory = ({ calls }) => {
               <IconButton
                 onClick={() =>
                   history.push(
-                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                    `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`,
                   )
                 }
               >
@@ -113,7 +108,7 @@ export const DialerHistory = ({ calls }) => {
               </IconButton>
             ) : null}
           </ListItem>
-        )
+        ),
       )}
     </List>
   );

@@ -14,7 +14,7 @@ function closePhoneTemp() {
       app: 'PHONE',
       method: 'setVisibility',
       data: false,
-    })
+    }),
   );
 }
 
@@ -26,7 +26,7 @@ function openPhoneTemp() {
       app: 'PHONE',
       method: 'setVisibility',
       data: true,
-    })
+    }),
   );
 }
 
@@ -95,16 +95,14 @@ onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
       app: 'CAMERA',
       method: 'setPhotos',
       data: photos,
-    })
+    }),
   );
 });
 
 function takePhoto() {
   // Return and log error if screenshot basic token not found
   if (SCREENSHOT_BASIC_TOKEN === 'none') {
-    return console.error(
-      'Screenshot basic token not found. Please set in server.cfg'
-    );
+    return console.error('Screenshot basic token not found. Please set in server.cfg');
   }
   exp['screenshot-basic'].requestScreenshotUpload(
     'https://api.imgur.com/3/image',
@@ -118,7 +116,7 @@ function takePhoto() {
     (data: string) => {
       const imageLink = JSON.parse(data).data.link;
       emitNet(events.CAMERA_UPLOAD_PHOTO, imageLink);
-    }
+    },
   );
 }
 

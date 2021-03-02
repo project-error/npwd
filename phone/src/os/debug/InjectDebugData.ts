@@ -38,7 +38,7 @@ const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 1000) => {
               method: event.method,
               data: event.data,
             },
-          })
+          }),
         );
       }, timer);
     }

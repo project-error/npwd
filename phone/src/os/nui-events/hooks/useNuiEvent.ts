@@ -23,7 +23,7 @@ export const useNuiEvent = <S = Record<string, unknown>>(
   method: string,
   handler: Function,
   currentState?: S,
-  options: IOptions = defaultOptions
+  options: IOptions = defaultOptions,
 ) => {
   const savedHandler: MutableRefObject<any> = useRef();
 

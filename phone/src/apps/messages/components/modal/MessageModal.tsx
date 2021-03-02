@@ -81,26 +81,21 @@ export const MessageModal = () => {
       : header;
 
   const headerClass =
-    header.length > LARGE_HEADER_CHARS
-      ? classes.largeGroupDisplay
-      : classes.groupdisplay;
+    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
 
   return (
-    <Slide direction='left' in={!!activeMessageGroup}>
+    <Slide direction="left" in={!!activeMessageGroup}>
       <Paper className={classes.modalRoot}>
         <Paper className={classes.topContainer}>
           <Button onClick={closeModal}>
-            <ArrowBackIcon fontSize='large' />
+            <ArrowBackIcon fontSize="large" />
           </Button>
-          <Typography variant='h5' className={headerClass}>
+          <Typography variant="h5" className={headerClass}>
             {header}
           </Typography>
         </Paper>
         {hasLoaded ? (
-          <Conversation
-            messages={messages}
-            activeMessageGroup={activeMessageGroup}
-          />
+          <Conversation messages={messages} activeMessageGroup={activeMessageGroup} />
         ) : (
           <MessageSkeletonList />
         )}

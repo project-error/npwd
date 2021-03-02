@@ -15,18 +15,14 @@ interface IUseMessages {
 }
 
 export default (): IUseMessages => {
-  const [messages, setMessages] = useRecoilState<Message[] | null>(
-    messageState.messages
-  );
-  const messageGroups = useRecoilValue<MessageGroup[] | null>(
-    messageState.messageGroups
-  );
+  const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
+  const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
 
   const [
     createMessageGroupResult,
     setCreateMessageGroupResult,
   ] = useRecoilState<CreateMessageGroupResult | null>(
-    messageState.createMessageGroupResult
+    messageState.createMessageGroupResult,
   );
 
   const clearMessageGroupResult = () => setCreateMessageGroupResult(null);

@@ -13,12 +13,9 @@ on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGE_GROUPS}`, (): void => {
 onNet(
   events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
   (messageGroups: MessageGroup[]): void => {
-    sendMessageEvent(
-      events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
-      messageGroups
-    );
+    sendMessageEvent(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, messageGroups);
     emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS);
-  }
+  },
 );
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, () => {
@@ -34,7 +31,7 @@ on(
   ({ phoneNumbers, label }: any, cb: Function): void => {
     emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP, phoneNumbers, label);
     cb();
-  }
+  },
 );
 
 onNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, (result: any): void => {
@@ -55,7 +52,7 @@ on(
   ({ groupId }: any, cb: Function): void => {
     emitNet(events.MESSAGES_FETCH_MESSAGES, groupId);
     cb();
-  }
+  },
 );
 
 onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {

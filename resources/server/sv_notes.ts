@@ -7,14 +7,12 @@ import { mainLogger } from './sv_logger';
 const notesLogger = mainLogger.child({ module: 'notes' });
 
 async function addNote(identifier: string, note: Note): Promise<any> {
-  const query =
-    'INSERT INTO npwd_notes (identifier, title, content) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO npwd_notes (identifier, title, content) VALUES (?, ?, ?)';
   await pool.query(query, [identifier, note.title, note.content]);
 }
 
 async function fetchAllNotes(identifier: string): Promise<Note[]> {
-  const query =
-    'SELECT * FROM npwd_notes WHERE identifier = ? ORDER BY id DESC';
+  const query = 'SELECT * FROM npwd_notes WHERE identifier = ? ORDER BY id DESC';
   const [result] = await pool.query(query, [identifier]);
   return <Note[]>result;
 }

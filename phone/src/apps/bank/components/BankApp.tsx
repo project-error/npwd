@@ -99,15 +99,15 @@ export const BankApp = () => {
   const classes = useStyles();
 
   return (
-    <AppWrapper id='bank-app'>
+    <AppWrapper id="bank-app">
       <BankTitle />
       <TransferModal />
       <div className={showBankModal ? classes.backgroundModal : undefined} />
       <AppContent>
         <Switch>
-          <Route path='/bank' exact component={BankHome} />
-          <Route path='/bank/account' exact component={BankAccount} />
-          <Route path='/bank/transactions' exact component={TransactionList} />
+          <Route path="/bank" exact component={BankHome} />
+          <Route path="/bank/account" exact component={BankAccount} />
+          <Route path="/bank/transactions" exact component={TransactionList} />
         </Switch>
       </AppContent>
       <NavigationBar />

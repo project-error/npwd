@@ -12,12 +12,12 @@ import { SelloutThemeProvider } from '../providers/SelloutThemeProvider';
 export const SelloutApp = () => {
   return (
     <SelloutThemeProvider>
-      <AppWrapper id='sellout-app'>
+      <AppWrapper id="sellout-app">
         <SelloutTitle />
         <AppContent>
           <Switch>
-            <Route path='/sellout' exact component={SelloutListContainer} />
-            <Route path='/sellout/new' component={ListingFormContainer} />
+            <Route path="/sellout" exact component={SelloutListContainer} />
+            <Route path="/sellout/new" component={ListingFormContainer} />
           </Switch>
         </AppContent>
         <NavigationBar />

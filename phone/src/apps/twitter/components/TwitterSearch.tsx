@@ -47,7 +47,7 @@ function TwitterSearch() {
             label={t('APPS_TWITTER_SEARCH_TWEETS')}
             value={searchValue}
             onChange={handleChange}
-            size='medium'
+            size="medium"
             inputRef={(input) => input && input.focus()}
           />
         </div>

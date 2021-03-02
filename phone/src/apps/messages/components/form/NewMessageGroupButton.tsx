@@ -15,13 +15,11 @@ interface INewMessageGroupButtonProps {
   onClick(): void;
 }
 
-export function NewMessageGroupButton({
-  onClick,
-}: INewMessageGroupButtonProps) {
+export function NewMessageGroupButton({ onClick }: INewMessageGroupButtonProps) {
   const classes = useStyles();
 
   return (
-    <Fab className={classes.root} color='primary' onClick={onClick}>
+    <Fab className={classes.root} color="primary" onClick={onClick}>
       <AddIcon />
     </Fab>
   );

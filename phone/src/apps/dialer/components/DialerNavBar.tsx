@@ -33,27 +33,27 @@ const DialerNavBar = () => {
       className={classes.root}
     >
       <BottomNavigationAction
-        label='History'
-        value='/phone'
+        label="History"
+        value="/phone"
         component={NavLink}
         icon={<HistoryIcon />}
-        to='/phone'
+        to="/phone"
       />
       <BottomNavigationAction
-        label='Dial'
-        value='/phone/dial'
-        color='secondary'
+        label="Dial"
+        value="/phone/dial"
+        color="secondary"
         component={NavLink}
         icon={<PhoneIcon />}
-        to='/phone/dial'
+        to="/phone/dial"
       />
       <BottomNavigationAction
-        label='Contacts'
-        value='/phone/contacts'
-        color='secondary'
+        label="Contacts"
+        value="/phone/contacts"
+        color="secondary"
         component={NavLink}
         icon={<PersonIcon />}
-        to='/phone/contacts'
+        to="/phone/contacts"
       />
     </BottomNavigation>
   );

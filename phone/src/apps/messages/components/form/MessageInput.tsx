@@ -34,9 +34,9 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
   if (!messageGroupId) return null;
 
   return (
-    <Paper variant='outlined' className={classes.root}>
+    <Paper variant="outlined" className={classes.root}>
       <form onSubmit={handleSubmit}>
-        <Box display='flex'>
+        <Box display="flex">
           <Box pl={1} flexGrow={1}>
             <TextField
               fullWidth
@@ -51,7 +51,7 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
             <Button onClick={onAddImageClick}>
               <ImageIcon />
             </Button>
-            <Button type='submit'>
+            <Button type="submit">
               <SendIcon />
             </Button>
           </Box>

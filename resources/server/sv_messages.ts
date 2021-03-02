@@ -49,7 +49,7 @@ interface MessageGroupMapping {
 async function createMessage(
   userIdentifier: string,
   groupId: string,
-  message: string
+  message: string,
 ): Promise<any> {
   const query = `
   INSERT INTO npwd_messages
@@ -66,7 +66,7 @@ async function createMessage(
  * @param userIdentifier - identifier of the user to get message groups for
  */
 async function getMessageGroups(
-  userIdentifier: string
+  userIdentifier: string,
 ): Promise<UnformattedMessageGroup[]> {
   const query = `
   SELECT
@@ -104,10 +104,7 @@ async function getMessageGroups(
  * @param userIdentifier - user to get messages for
  * @param groupId - the group to get messages from
  */
-async function getMessages(
-  userIdentifier: string,
-  groupId: string
-): Promise<Message[]> {
+async function getMessages(userIdentifier: string, groupId: string): Promise<Message[]> {
   const query = `
   SELECT
 	  npwd_messages.id,
@@ -142,7 +139,7 @@ async function getMessages(
 async function createLabel(
   userIdentifier: string,
   groupId: string,
-  label: string
+  label: string,
 ): Promise<any> {
   const query = `
   INSERT INTO npwd_messages_labels
@@ -162,7 +159,7 @@ async function createLabel(
 async function createMessageGroup(
   userIdentifier: string,
   groupId: string,
-  participantIdentifier: string
+  participantIdentifier: string,
 ): Promise<any> {
   const query = `
   INSERT INTO npwd_messages_groups
@@ -180,9 +177,7 @@ async function createMessageGroup(
  * Find a players identifier from their phone number
  * @param phoneNumber - the phone number to search for
  */
-async function getIdentifierFromPhoneNumber(
-  phoneNumber: string
-): Promise<string> {
+async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
   const query = `
     SELECT identifier
     FROM users
@@ -231,39 +226,34 @@ async function getMessageCountByGroup(groupId: string): Promise<number> {
  * @param userIdentifier - the user identifier to get message groups for
  */
 async function getConsolidatedMessageGroups(
-  userIdentifier: string
+  userIdentifier: string,
 ): Promise<MessageGroupMapping> {
   const messageGroups = await getMessageGroups(userIdentifier);
   return messageGroups.reduce(
     (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
       const groupId = messageGroup.group_id;
-      const displayTerm =
-        messageGroup.display || messageGroup.phone_number || '???';
+      const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
 
       if (groupId in mapping) {
-        mapping[groupId].participants = mapping[groupId].participants.concat(
-          displayTerm
-        );
+        mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
       } else {
         mapping[groupId] = {
           user_identifier: messageGroup.user_identifier,
           avatar: messageGroup.avatar,
           label: messageGroup.label,
           participants: [displayTerm],
-          updatedAt: messageGroup.updatedAt
-            ? messageGroup.updatedAt.toString()
-            : null,
+          updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
         };
       }
       return mapping;
     },
-    {}
+    {},
   );
 }
 
 async function getGroupIds(
   userIdentifier: string,
-  groupMapping: MessageGroupMapping
+  groupMapping: MessageGroupMapping,
 ): Promise<string[]> {
   const groupIds: string[] = [];
   for (const groupId of Object.keys(groupMapping)) {
@@ -281,7 +271,7 @@ async function getGroupIds(
  * @param userIdentifier - user to generate the MessageGroups for
  */
 async function getFormattedMessageGroups(
-  userIdentifier: string
+  userIdentifier: string,
 ): Promise<MessageGroup[]> {
   const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
   const groupIds = await getGroupIds(userIdentifier, groupMapping);
@@ -335,7 +325,7 @@ function createGroupHashID(identifiers: string[]) {
 async function createMessageGroupsFromPhoneNumbers(
   userIdentifier: string,
   phoneNumbers: string[],
-  groupLabel: string
+  groupLabel: string,
 ): Promise<CreateMessageGroupResult> {
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
@@ -363,7 +353,7 @@ async function createMessageGroupsFromPhoneNumbers(
     // other players works as expected
     createMessageGroup(userIdentifier, groupId, userIdentifier),
     ...identifiers.map((identifier) =>
-      createMessageGroup(userIdentifier, groupId, identifier)
+      createMessageGroup(userIdentifier, groupId, identifier),
     ),
   ];
 
@@ -389,11 +379,7 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   try {
     const identifier = getIdentifier(_source);
     const messageGroups = await getFormattedMessageGroups(identifier);
-    emitNet(
-      events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS,
-      _source,
-      messageGroups
-    );
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, _source, messageGroups);
   } catch (e) {
     emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, _source);
     messageLogger.error(`Failed to fetch messages groups, ${e.message}`);
@@ -409,7 +395,7 @@ onNet(
       const result = await createMessageGroupsFromPhoneNumbers(
         _identifier,
         phoneNumbers,
-        label
+        label,
       );
 
       if (result.error && result.duplicate) {
@@ -452,7 +438,7 @@ onNet(
         source: _source,
       });
     }
-  }
+  },
 );
 
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
@@ -469,28 +455,25 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   }
 });
 
-onNet(
-  events.MESSAGES_SEND_MESSAGE,
-  async (groupId: string, message: string) => {
-    const _source = getSource();
-    try {
-      const _identifier = getIdentifier(_source);
-      await createMessage(_identifier, groupId, message);
-      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
-    } catch (e) {
-      // Not really sure what this does? As I cant find any reference
-      // of this in the ui part.
-      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
-      // sending a new alert
-      // The message property is always using the locale strings without
-      // the APPS_ prefix.
-      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-        message: 'MESSAGES_NEW_MESSAGE_FAILED',
-        type: 'error',
-      });
-      messageLogger.error(`Failed to send message, ${e.message}`, {
-        source: _source,
-      });
-    }
+onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string) => {
+  const _source = getSource();
+  try {
+    const _identifier = getIdentifier(_source);
+    await createMessage(_identifier, groupId, message);
+    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
+  } catch (e) {
+    // Not really sure what this does? As I cant find any reference
+    // of this in the ui part.
+    emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+    // sending a new alert
+    // The message property is always using the locale strings without
+    // the APPS_ prefix.
+    emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+      message: 'MESSAGES_NEW_MESSAGE_FAILED',
+      type: 'error',
+    });
+    messageLogger.error(`Failed to send message, ${e.message}`, {
+      source: _source,
+    });
   }
-);
+});

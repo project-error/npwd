@@ -35,7 +35,6 @@ module.exports = require('./webpack.common')({
   ],
 
   performance: {
-    assetFilter: (assetFilename) =>
-      !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
+    assetFilter: (assetFilename) => !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
 });

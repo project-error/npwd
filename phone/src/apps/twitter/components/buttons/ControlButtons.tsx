@@ -33,14 +33,14 @@ export const ControlButtons = ({
 
   return (
     <div className={classes.buttons}>
-      <Button variant='contained' color='primary' onClick={onPrimaryClick}>
+      <Button variant="contained" color="primary" onClick={onPrimaryClick}>
         {primaryButtonText}
       </Button>
       {showCloseButton && (
         <Button
           className={classes.close}
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           onClick={onCloseClick}
         >
           {t('APPS_TWITTER_CLOSE_IMAGE')}

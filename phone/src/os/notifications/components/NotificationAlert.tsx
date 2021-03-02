@@ -51,14 +51,14 @@ export const NotificationAlert = () => {
         <Alert
           action={
             <IconButton
-              color='primary'
-              size='small'
+              color="primary"
+              size="small"
               onClick={(e) => {
                 e.stopPropagation();
                 currentAlert?.onCloseAlert(e);
               }}
             >
-              <CloseIcon fontSize='small' />
+              <CloseIcon fontSize="small" />
             </IconButton>
           }
           onClick={(e) => currentAlert?.onClickAlert(e)}
@@ -67,13 +67,13 @@ export const NotificationAlert = () => {
           elevation={6}
         >
           <AlertTitle>
-            <Box width='282px' whiteSpace='nowrap'>
-              <Box overflow='hidden' component='div' textOverflow='ellipsis'>
+            <Box width="282px" whiteSpace="nowrap">
+              <Box overflow="hidden" component="div" textOverflow="ellipsis">
                 {currentAlert?.title}
               </Box>
             </Box>
           </AlertTitle>
-          <Box component='div' className={classes.alertContent}>
+          <Box component="div" className={classes.alertContent}>
             {currentAlert?.content}
           </Box>
         </Alert>

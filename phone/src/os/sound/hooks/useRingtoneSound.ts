@@ -12,9 +12,7 @@ export const useRingtoneSound = () => {
     throw new Error('useRingtoneSound must be wrapped in SoundProvider');
   }
 
-  const options = useMemo(() => getSoundSettings('ringtone', settings), [
-    settings,
-  ]);
+  const options = useMemo(() => getSoundSettings('ringtone', settings), [settings]);
 
   useEffect(() => {
     if (!sound.isMounted(options.sound)) {

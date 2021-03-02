@@ -43,7 +43,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
       textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
       handleChange(e.target.value);
     },
-    [handleChange]
+    [handleChange],
   );
 
   if (!config) return null;
@@ -52,12 +52,12 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
 
   const overCharacterLimit = message.trim().length > characterLimit;
   const characterWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT'
+    'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT',
   )} (${characterLimit})`;
 
   const overNewLineLimit = getNewLineCount(message) > newLineLimit;
   const newLineWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT'
+    'APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT',
   )} (${newLineLimit})`;
 
   if (overCharacterLimit) {

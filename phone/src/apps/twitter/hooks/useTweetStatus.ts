@@ -5,7 +5,7 @@ import { twitterState } from './state';
 export const useTweetStatus = () => {
   const createTweetLoading = useRecoilValue(twitterState.createTweetLoading);
   const [createTweetSuccessful, setCreateTweetSuccessful] = useRecoilState(
-    twitterState.createTweetSuccessful
+    twitterState.createTweetSuccessful,
   );
   return {
     createTweetLoading,

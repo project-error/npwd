@@ -18,12 +18,7 @@ interface IProps {
   image?: string;
 }
 
-export const MessageImageModal = ({
-  isOpen,
-  messageGroupId,
-  onClose,
-  image,
-}: IProps) => {
+export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
   const classes = useStyles();
   const history = useHistory();
   const { pathname, search } = useLocation();
@@ -45,7 +40,7 @@ export const MessageImageModal = ({
       });
       onClose();
     },
-    [messageGroupId, onClose]
+    [messageGroupId, onClose],
   );
 
   const sendFromQueryParam = useCallback(
@@ -53,7 +48,7 @@ export const MessageImageModal = ({
       sendImageMessage(image);
       removeQueryParamImage();
     },
-    [removeQueryParamImage, sendImageMessage]
+    [removeQueryParamImage, sendImageMessage],
   );
 
   useEffect(() => {
@@ -81,20 +76,17 @@ export const MessageImageModal = ({
           history.push(
             `/camera?${qs.stringify({
               referal: encodeURIComponent(pathname + search),
-            })}`
+            })}`,
           ),
       },
     ],
-    [history, pathname, search]
+    [history, pathname, search],
   );
 
   return (
     <>
       <ContextMenu open={isOpen} options={menuOptions} onClose={onClose} />
-      <Modal
-        visible={queryParamImagePreview}
-        handleClose={removeQueryParamImage}
-      >
+      <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
         <Box py={1}>
           <Typography paragraph>Do you want to share this image?</Typography>
           <PictureResponsive
@@ -103,8 +95,8 @@ export const MessageImageModal = ({
           />
           <Button
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             onClick={() => sendFromQueryParam(queryParamImagePreview)}
           >
             Share
@@ -114,7 +106,7 @@ export const MessageImageModal = ({
       <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
         <Box p={1}>
           <TextField
-            placeholder='A link to your image or gif'
+            placeholder="A link to your image or gif"
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             fullWidth

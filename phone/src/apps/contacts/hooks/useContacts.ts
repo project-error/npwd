@@ -17,7 +17,7 @@ export const useContacts = (): IUseContacts => {
       const found = contacts.find((contact) => contact.number === number);
       return found ? found.display : number;
     },
-    [contacts]
+    [contacts],
   );
   const getContact = useCallback(
     (id: number): Contact | null => {
@@ -25,7 +25,7 @@ export const useContacts = (): IUseContacts => {
         if (contact.id === id) return contact;
       }
     },
-    [contacts]
+    [contacts],
   );
   return { contacts, getDisplayByNumber, getContact };
 };

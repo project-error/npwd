@@ -31,9 +31,9 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
       />
       <Box
         id={CONVERSATION_ELEMENT_ID}
-        height='90%'
-        display='flex'
-        flexDirection='column'
+        height="90%"
+        display="flex"
+        flexDirection="column"
         pb={4}
         className={classes.overflowAutoY}
       >

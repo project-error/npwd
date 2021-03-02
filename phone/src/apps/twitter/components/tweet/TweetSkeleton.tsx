@@ -25,11 +25,11 @@ export default function TweetSkeleton() {
     <>
       <div className={classes.root}>
         <div className={classes.left}>
-          <Skeleton variant='circle' width={60} height={60} />
+          <Skeleton variant="circle" width={60} height={60} />
         </div>
         <div className={classes.right}>
-          <Skeleton variant='text' />
-          <Skeleton variant='rect' width={250} height={118} />
+          <Skeleton variant="text" />
+          <Skeleton variant="rect" width={250} height={118} />
         </div>
       </div>
 

@@ -29,12 +29,12 @@ export const IconButtons = ({ onImageClick, onEmojiClick }) => {
     <div className={classes.buttons}>
       {enableImages && (
         <Button className={classes.button} onClick={onImageClick}>
-          <InsertPhotoIcon color='action' />
+          <InsertPhotoIcon color="action" />
         </Button>
       )}
       {enableEmojis && (
         <Button className={classes.button} onClick={onEmojiClick}>
-          <EmojiIcon color='action' />
+          <EmojiIcon color="action" />
         </Button>
       )}
     </div>

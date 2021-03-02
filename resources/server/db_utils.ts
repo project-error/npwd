@@ -15,7 +15,7 @@ export function parseSemiColonFormat(connectionString: string): Map {
   const parts = connectionString.split(';');
   if (parts.length === 1) {
     throw new Error(
-      `Connection string ${connectionString} is in the incorrect format. Please follow the README.`
+      `Connection string ${connectionString} is in the incorrect format. Please follow the README.`,
     );
   }
 

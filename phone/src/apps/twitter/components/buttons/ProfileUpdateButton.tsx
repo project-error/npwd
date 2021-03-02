@@ -37,7 +37,7 @@ export function ProfileUpdateButton({ handleClick }) {
     <div className={classes.root}>
       <Fab
         className={classes.button}
-        color='primary'
+        color="primary"
         onClick={handleClick}
         disabled={isLoading}
       >

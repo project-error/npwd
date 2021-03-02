@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ListItemIcon,
-  ListItemText,
-  Slide,
-  makeStyles,
-  Paper,
-} from '@material-ui/core';
+import { ListItemIcon, ListItemText, Slide, makeStyles, Paper } from '@material-ui/core';
 import { List } from './List';
 import { ListItem } from './ListItem';
 import { useTranslation } from 'react-i18next';
@@ -51,7 +45,7 @@ export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
     : options;
 
   return (
-    <Slide direction='up' in={open} mountOnEnter unmountOnExit>
+    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
       <Paper square className={classes.root}>
         <List disablePadding>
           {_options.map((option) => (
@@ -65,10 +59,7 @@ export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
               }}
             >
               {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
-              <ListItemText
-                primary={option.label}
-                secondary={option.description}
-              />
+              <ListItemText primary={option.label} secondary={option.description} />
             </ListItem>
           ))}
         </List>

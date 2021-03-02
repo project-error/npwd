@@ -58,20 +58,15 @@ export const ShowMore = ({ id, isReported, isMine }) => {
 
   // if the user cannot perform any actions in show more then don't
   // allow them to interact with it
-  let _handleClick =
-    allowedToDelete || allowedToReport ? handleClick : () => null;
+  let _handleClick = allowedToDelete || allowedToReport ? handleClick : () => null;
 
   return (
     <>
-      <Button
-        aria-controls='simple-menu'
-        aria-haspopup='true'
-        onClick={_handleClick}
-      >
+      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={_handleClick}>
         <MoreIcon />
       </Button>
       <Menu
-        id='simple-menu'
+        id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -82,16 +77,10 @@ export const ShowMore = ({ id, isReported, isMine }) => {
         }}
       >
         {allowedToDelete && (
-          <MenuItem onClick={handleDeleteTweet}>
-            {t('APPS_TWITTER_DELETE')}
-          </MenuItem>
+          <MenuItem onClick={handleDeleteTweet}>{t('APPS_TWITTER_DELETE')}</MenuItem>
         )}
         {allowedToReport && (
-          <ReportButton
-            handleClose={handleClose}
-            isReported={isReported}
-            tweetId={id}
-          />
+          <ReportButton handleClose={handleClose} isReported={isReported} tweetId={id} />
         )}
       </Menu>
     </>

@@ -2,23 +2,19 @@ import events from '../utils/events';
 import { ESX } from './server';
 import { getSource } from './functions';
 import { pool } from './db';
-import {
-  Transfer,
-  IBankCredentials,
-} from '../../phone/src/common/typings/bank';
+import { Transfer, IBankCredentials } from '../../phone/src/common/typings/bank';
 import { getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 
 const bankLogger = mainLogger.child({ module: 'bank' });
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
-  const query =
-    'SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC';
+  const query = 'SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
   const transactions = <Transfer[]>results;
 
   bankLogger.verbose(
-    `Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`
+    `Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`,
   );
 
   return transactions;
@@ -38,10 +34,7 @@ function fetchCredentials(): IBankCredentials {
   return result;
 }
 
-async function addTransfer(
-  identifier: string,
-  transfer: Transfer
-): Promise<any> {
+async function addTransfer(identifier: string, transfer: Transfer): Promise<any> {
   const xPlayer = ESX.GetPlayerFromId(getSource());
   const bankBalance = xPlayer.getAccount('bank').money;
   const sourceName = xPlayer.getName();

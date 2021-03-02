@@ -79,13 +79,13 @@ export const NotificationBar = () => {
       <Grid
         className={classes.root}
         container
-        justify='space-between'
-        wrap='nowrap'
+        justify="space-between"
+        wrap="nowrap"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
         }}
       >
-        <Grid container item wrap='nowrap'>
+        <Grid container item wrap="nowrap">
           {icons.map((notifIcon) => (
             <Grid
               item
@@ -97,29 +97,21 @@ export const NotificationBar = () => {
             </Grid>
           ))}
         </Grid>
-        <Grid
-          container
-          item
-          wrap='nowrap'
-          justify='flex-end'
-          alignItems='center'
-        >
+        <Grid container item wrap="nowrap" justify="flex-end" alignItems="center">
           <Grid item>
-            <SignalIcon fontSize='small' />
+            <SignalIcon fontSize="small" />
           </Grid>
           <Grid item className={classes.item}>
-            <Typography className={classes.text} variant='button'>
+            <Typography className={classes.text} variant="button">
               {Default.cellProvider}
             </Typography>
           </Grid>
           <Grid item>
-            <Battery90Icon
-              style={{ transform: 'rotate(90deg)', display: 'block' }}
-            />
+            <Battery90Icon style={{ transform: 'rotate(90deg)', display: 'block' }} />
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction='down' in={barUncollapsed}>
+      <Slide direction="down" in={barUncollapsed}>
         <Paper square className={classes.drawer}>
           <Box py={2}>
             <List>
@@ -146,10 +138,10 @@ export const NotificationBar = () => {
               ))}
             </List>
           </Box>
-          <Box display='flex'>
+          <Box display="flex">
             <IconButton
               className={classes.collapseBtn}
-              size='small'
+              size="small"
               onClick={() => setBarUncollapsed(false)}
             >
               <ArrowDropUpIcon />

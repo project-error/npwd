@@ -34,9 +34,7 @@ export const useTwitterService = () => {
   const { setNotification } = useTwitterNotifications();
 
   const setProfile = useSetRecoilState(twitterState.profile);
-  const setUpdateProfileLoading = useSetRecoilState(
-    twitterState.updateProfileLoading
-  );
+  const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
 
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);

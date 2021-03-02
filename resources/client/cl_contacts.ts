@@ -6,7 +6,7 @@ onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {
       app: 'CONTACTS',
       method: 'setContacts',
       data: contacts,
-    })
+    }),
   );
 });
 
@@ -46,6 +46,6 @@ onNet(events.CONTACTS_ACTION_RESULT, (alert: any) => {
       app: 'CONTACTS',
       method: 'setAlert',
       data: alert,
-    })
+    }),
   );
 });

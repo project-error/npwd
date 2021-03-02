@@ -15,7 +15,7 @@ export const useNuiService = (options: IOptions = {}) => {
       window.dispatchEvent(
         new MessageEvent(eventNameFactory(app, method), {
           data,
-        })
+        }),
       );
     }
   };

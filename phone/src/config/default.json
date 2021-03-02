@@ -1,13 +1,7 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": [
-    "beach.jpg",
-    "minimal.jpg",
-    "surf.jpg",
-    "waves.jpg",
-    "projecterror.jpg"
-  ],
+  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg", "projecterror.jpg"],
   "defaultSettings": {
     "wallpaper": "projecterror.jpg",
     "frame": "default.png",

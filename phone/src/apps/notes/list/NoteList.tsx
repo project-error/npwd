@@ -19,12 +19,7 @@ const NoteList = () => {
   return (
     <List disablePadding>
       {notes.map((note) => (
-        <ListItem
-          key={note.id}
-          button
-          divider
-          onClick={() => handleNoteModal(note)}
-        >
+        <ListItem key={note.id} button divider onClick={() => handleNoteModal(note)}>
           <ListItemText>{note.title}</ListItemText>
         </ListItem>
       ))}

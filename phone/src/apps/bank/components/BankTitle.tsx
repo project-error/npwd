@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 export const BankTitle = () => {
   const classes = useStyles();
   return (
-    <Paper className={classes.root} square variant='outlined' elevation={24}>
-      <Typography id='bank-title' style={{ margin: 0 }} variant='h4'>
+    <Paper className={classes.root} square variant="outlined" elevation={24}>
+      <Typography id="bank-title" style={{ margin: 0 }} variant="h4">
         WhoDis Banking
       </Typography>
     </Paper>

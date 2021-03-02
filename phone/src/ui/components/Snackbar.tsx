@@ -27,9 +27,7 @@ export const Snackbar = () => {
 
   return (
     <div className={classes.root}>
-      {alert ? (
-        <Alert severity={alert.type}>{t('APPS_' + alert.message)}</Alert>
-      ) : null}
+      {alert ? <Alert severity={alert.type}>{t('APPS_' + alert.message)}</Alert> : null}
     </div>
   );
 };

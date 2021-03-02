@@ -6,7 +6,7 @@ function sendMessage(app: string, method: string, data: any) {
       app,
       method,
       data,
-    })
+    }),
   );
 }
 

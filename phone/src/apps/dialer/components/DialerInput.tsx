@@ -45,18 +45,15 @@ export const DialerInput = () => {
   return (
     <Box component={Paper} className={classes.root}>
       <InputBase
-        placeholder='Enter a number'
+        placeholder="Enter a number"
         className={classes.input}
         value={inputVal}
       />
-      <IconButton color='primary' className={classes.iconBtn}>
-        <PhoneIcon fontSize='large' onClick={() => handleCall(inputVal)} />
+      <IconButton color="primary" className={classes.iconBtn}>
+        <PhoneIcon fontSize="large" onClick={() => handleCall(inputVal)} />
       </IconButton>
       <IconButton className={classes.iconBtn}>
-        <PersonAddIcon
-          fontSize='large'
-          onClick={() => handleNewContact(inputVal)}
-        />
+        <PersonAddIcon fontSize="large" onClick={() => handleNewContact(inputVal)} />
       </IconButton>
     </Box>
   );

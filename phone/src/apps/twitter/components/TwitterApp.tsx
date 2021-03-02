@@ -67,7 +67,7 @@ export const TwitterApp = () => {
   const showTweetButton = !promptProfileName && activePage === 0;
 
   return (
-    <AppWrapper id='twitter-app'>
+    <AppWrapper id="twitter-app">
       <AddTweetModal />
       <div className={modalVisible ? classes.backgroundModal : undefined} />
       <TwitterTitle />
@@ -76,18 +76,15 @@ export const TwitterApp = () => {
           <ProfilePrompt />
         ) : (
           <Switch>
-            <Route path='/twitter' exact component={TweetListContainer} />
-            <Route path='/twitter/search' component={TwitterSearch} />
-            <Route path='/twitter/profile' component={TwitterProfile} />
+            <Route path="/twitter" exact component={TweetListContainer} />
+            <Route path="/twitter/search" component={TwitterSearch} />
+            <Route path="/twitter/profile" component={TwitterProfile} />
           </Switch>
         )}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
       {!promptProfileName && (
-        <BottomNavigation
-          activePage={activePage}
-          handleChange={handlePageChange}
-        />
+        <BottomNavigation activePage={activePage} handleChange={handlePageChange} />
       )}
     </AppWrapper>
   );
@@ -191,5 +188,5 @@ InjectDebugData(
       },
     },
   ],
-  3000
+  3000,
 );

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export function TwitterTitle() {
   const classes = useStyles();
   return (
-    <Paper elevation={24} variant='outlined' square className={classes.root}>
+    <Paper elevation={24} variant="outlined" square className={classes.root}>
       <TwitterIcon className={classes.icon} />
     </Paper>
   );

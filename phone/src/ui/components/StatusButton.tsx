@@ -28,17 +28,15 @@ const useStyles = makeStyles(
       },
     },
     contained: {
-      color: ({ color }: IStatusButtonStyleProps) =>
-        theme.palette[color].contrastText,
-      backgroundColor: ({ color }: IStatusButtonStyleProps) =>
-        theme.palette[color].main,
+      color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].contrastText,
+      backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
       '&:hover': {
         backgroundColor: ({ color }: IStatusButtonStyleProps) =>
           theme.palette[color].dark,
       },
     },
   }),
-  { name: 'MuiButton' }
+  { name: 'MuiButton' },
 );
 
 export const StatusButton = ({

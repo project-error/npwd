@@ -17,7 +17,7 @@ const POST_CHANNEL_URL = `${BASE_URL}/channels/${DISCORD_CHANNEL_ID}/messages`;
 
 export async function reportTweetToDiscord(
   tweet: Tweet,
-  reportingProfile: Profile
+  reportingProfile: Profile,
 ): Promise<any> {
   if (!DISCORD_TOKEN || !DISCORD_CHANNEL_ID) {
     discordLogger.warn(`Got a request to report a tweet but discord is not 
@@ -26,9 +26,7 @@ export async function reportTweetToDiscord(
   }
   const content = `**REPORTED TWEET**
     ----------------------------------------------------------------------
-    **Reporting User**: ${reportingProfile.profile_name} (${
-    reportingProfile.id
-  })
+    **Reporting User**: ${reportingProfile.profile_name} (${reportingProfile.id})
     **Reported User**: ${tweet.profile_name} (${tweet.profile_id})
     **Reported Tweet timestamp**: ${tweet.createdAt}
     ----------------------------------------------------------------------
@@ -40,9 +38,5 @@ export async function reportTweetToDiscord(
     ${tweet.images.split(IMAGE_DELIMITER).join('\n')}
     `;
 
-  return await axios.post(
-    POST_CHANNEL_URL,
-    { content },
-    { headers: DISCORD_HEADERS }
-  );
+  return await axios.post(POST_CHANNEL_URL, { content }, { headers: DISCORD_HEADERS });
 }

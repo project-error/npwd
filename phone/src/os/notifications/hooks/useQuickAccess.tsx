@@ -26,7 +26,7 @@ export const useQuickAccess = () => {
   const history = useHistory();
   const { apps, getApp } = useApps();
   const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(
-    state.recentlyUsed
+    state.recentlyUsed,
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const useQuickAccess = () => {
       });
       setRecentlyUsed(newState.slice(0, MAX_QUICK_ACCESS_ITEMS));
     },
-    [apps, recentlyUsed, setRecentlyUsed]
+    [apps, recentlyUsed, setRecentlyUsed],
   );
 
   history.listen(listener);
