@@ -37,7 +37,6 @@ const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
 
   useEffect(() => {
     const changed = previousUrl !== url;
-    console.log(changed);
     if (changed) {
       stop(previousUrl);
       remove(previousUrl);
