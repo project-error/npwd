@@ -1,14 +1,14 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { soundContext } from '../providers/SoundProvider';
 import { getSoundSettings } from '../utils/getSoundSettings';
+import { useSoundProvider } from './useSoundProvider';
 
 export const useRingtoneSound = () => {
   const [settings] = useSettings();
 
-  const context = useContext(soundContext);
+  const sound = useSoundProvider();
 
-  if (!context) {
+  if (!sound) {
     throw new Error('useRingtoneSound must be wrapped in SoundProvider');
   }
 
@@ -17,16 +17,16 @@ export const useRingtoneSound = () => {
   ]);
 
   useEffect(() => {
-    if (!context.isMounted(options.sound)) {
-      context.mount(options.sound, options.volume, true);
+    if (!sound.isMounted(options.sound)) {
+      sound.mount(options.sound, options.volume, true);
       return;
     }
-    context.volume(options.sound, options.volume);
-  }, [context, options.sound, options.volume]);
+    sound.volume(options.sound, options.volume);
+  }, [sound, options.sound, options.volume]);
 
   return {
-    play: () => context.play(options.sound, options.volume, true),
-    stop: () => context.stop(options.sound),
-    playing: () => context.playing(options.sound),
+    play: () => sound.play(options.sound, options.volume, true),
+    stop: () => sound.stop(options.sound),
+    playing: () => sound.playing(options.sound),
   };
 };
