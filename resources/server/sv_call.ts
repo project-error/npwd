@@ -70,7 +70,7 @@ onNet(
     const _source = getSource();
 
     const callIdentifier = uuidv4();
-    
+
     // the client that is calling
     const xTransmitter = ESX.GetPlayerFromId(_source);
     const transmitterNumber = await usePhoneNumber(
@@ -157,7 +157,7 @@ onNet(
     try {
       const currentCall = calls.get(transmitterNumber);
       await updateCall(currentCall, false, timestamp);
-      
+
       // player who is called and initiasted the rejection.
       emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
       // player who is calling and recieved the rejection.
@@ -186,8 +186,11 @@ onNet(
       emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.transmitterSource);
       // ends animations if call is active
       if (currentCall.accepted) {
-        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource); 
-        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.transmitterSource); 
+        emitNet(events.PHONE_CALL_SEND_HANGUP_ANIM, currentCall.receiverSource);
+        emitNet(
+          events.PHONE_CALL_SEND_HANGUP_ANIM,
+          currentCall.transmitterSource
+        );
       }
       calls.delete(transmitterNumber);
     } catch (e) {
@@ -200,10 +203,14 @@ onNet(
 
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = getSource();
-  const identifier = await getIdentifier(_source);
-  const phoneNumber = await usePhoneNumber(identifier);
-
-  const calls = await fetchCalls(phoneNumber);
-
-  emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
+  try {
+    const identifier = await getIdentifier(_source);
+    const phoneNumber = await usePhoneNumber(identifier);
+    const calls = await fetchCalls(phoneNumber);
+    emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
+  } catch (e) {
+    callLogger.error(`Failed to fetch calls, ${e.message}`, {
+      source: _source,
+    });
+  }
 });
