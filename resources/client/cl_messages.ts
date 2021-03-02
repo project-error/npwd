@@ -3,6 +3,7 @@ import {
   CreateMessageBroadcast,
   Message,
   MessageGroup,
+  SetMessageRead,
 } from '../../phone/src/common/typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
@@ -51,6 +52,11 @@ RegisterNuiCallbackType(events.MESSAGES_FETCH_MESSAGES);
 on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGES}`, ({ groupId }: any, cb: Function): void => {
   emitNet(events.MESSAGES_FETCH_MESSAGES, groupId);
   cb();
+});
+
+RegisterNuiCallbackType(events.MESSAGES_SET_MESSAGE_READ);
+on(`__cfx_nui:${events.MESSAGES_SET_MESSAGE_READ}`, (data: SetMessageRead) => {
+  onNet(events.MESSAGES_SET_MESSAGE_READ, data.ids);
 });
 
 onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {

@@ -8,20 +8,21 @@ import {
 } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/typings/messages';
+import useMessages from '../../hooks/useMessages';
 
 interface IProps {
   messageGroup: MessageGroup;
   handleClick: (group: MessageGroup) => () => void;
 }
 
-// get unread messages, check the length. If we have any, get the groupId,
-// and how the badge
-
 const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
+  // get unread messages, check the length. If we have any, get the groupId,
+  // and how the badge
+
   return (
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
-        <Badge color='error' variant='dot'>
+        <Badge color='error' variant='dot' invisible={false}>
           <MuiAvatar src={messageGroup?.avatar} />
         </Badge>
       </ListItemAvatar>

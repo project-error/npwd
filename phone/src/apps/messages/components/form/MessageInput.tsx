@@ -6,6 +6,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
 
+
 interface IProps {
   onAddImageClick(): void;
   messageGroupId: string | undefined;
@@ -38,6 +39,7 @@ const MessageInput = ({
   };
 
   if (!messageGroupId) return null;
+
 
   return (
     <Paper variant="outlined" className={classes.root}>

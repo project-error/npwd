@@ -8,30 +8,29 @@ import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
-import {useMessageNotifications} from "../../hooks/useMessageNotifications";
+import { useMessageNotifications } from '../../hooks/useMessageNotifications';
 import { goToConversation } from '../../utils/goToConversation';
 
 const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
-  const { setUnreadCount } = useMessageNotifications()
+  const { setUnreadCount } = useMessageNotifications();
 
   const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
-  
   const formattedSearch = searchValue.toLowerCase().trim();
   const filteredGroups = formattedSearch
     ? messageGroups.filter((group) => {
-      const groupDisplay = group.groupDisplay.toLowerCase();
-      const displayIncludes = groupDisplay.includes(formattedSearch);
+        const groupDisplay = group.groupDisplay.toLowerCase();
+        const displayIncludes = groupDisplay.includes(formattedSearch);
 
-      const label = group.label?.toLowerCase();
-      return label
-        ? displayIncludes || label.includes(formattedSearch)
-        : displayIncludes;
-    })
+        const label = group.label?.toLowerCase();
+        return label
+          ? displayIncludes || label.includes(formattedSearch)
+          : displayIncludes;
+      })
     : messageGroups;
 
   useEffect(() => {
@@ -42,7 +41,12 @@ const MessagesList = (): any => {
         goToConversation(findGroup, history);
       }
     }
-  }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
+  }, [
+    messageGroups,
+    createMessageGroupResult,
+    goToConversation,
+    clearMessageGroupResult,
+  ]);
 
   useEffect(() => {
     if (filteredGroups?.length) {

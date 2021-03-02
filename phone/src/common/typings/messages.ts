@@ -3,6 +3,7 @@ export interface Message {
   message: string;
   user_identifier: string;
   phone_number: string;
+  groupId?: string;
   display?: string;
   avatar?: string;
   isRead: boolean;
@@ -17,6 +18,7 @@ export interface MessageGroup {
   avatar?: string;
   label?: string;
   updatedAt: string;
+  hasUnread?: number;
 }
 
 export interface CreateMessageGroupResult {
@@ -30,4 +32,8 @@ export interface CreateMessageGroupResult {
 export interface CreateMessageBroadcast {
   message: string;
   groupName: string;
+}
+
+export interface SetMessageRead {
+  ids: any;
 }

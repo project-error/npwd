@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Slide, Paper, Typography, Button, IconButton } from '@material-ui/core';
+import {
+  Slide,
+  Paper,
+  Typography,
+  Button,
+  IconButton,
+} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import useStyles from './modal.styles';
@@ -10,9 +16,6 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageGroup } from '../../../../common/typings/messages';
 import { useHistory, useParams } from 'react-router-dom';
-
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-//import { useContacts } from '../../../contacts/hooks/useContacts';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -26,8 +29,6 @@ export const MessageModal = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { messages, setMessages } = useMessages();
 
-  
-
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
 
   const minLoadTimeoutRef = useRef(null);
@@ -38,7 +39,6 @@ export const MessageModal = () => {
     setMessages(null);
     setMimimumLoadPassed(false);
   };
-
 
   useEffect(() => {
     if (!groupId) return;
@@ -73,15 +73,18 @@ export const MessageModal = () => {
     }
   }, [activeMessageGroup, minimumLoadPassed]);
 
-  useEffect(() =>  {
-    if(!messages) return;
-    const unreadMessages = messages.filter((msg) => !msg.isRead).map((msg) => msg.id);
+  // sends all unread messages
+  useEffect(() => {
+    if (!messages) return;
+    const unreadMessages = messages
+      .filter((msg) => !msg.isRead)
+      .map((msg) => msg.id);
     if (unreadMessages.length) {
       Nui.send('phone:setReadMessages', {
-        ids: unreadMessages
-      })
+        ids: unreadMessages,
+      });
     }
-  }, [messages])
+  }, [messages]);
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately
@@ -95,7 +98,6 @@ export const MessageModal = () => {
 
   const headerClass =
     header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
-
 
   return (
     <Slide direction="left" in={!!activeMessageGroup}>

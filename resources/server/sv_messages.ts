@@ -103,6 +103,7 @@ async function getMessages(userIdentifier: string, groupId: string): Promise<Mes
   SELECT
 	  npwd_messages.id,
     npwd_messages.message,
+    npwd_messages.group_id,
     npwd_messages.user_identifier,
     npwd_messages.isRead,
     npwd_messages.updatedAt,
@@ -364,6 +365,16 @@ async function getIdentifiersFromParticipants(groupId: string) {
   return <any[]>results;
 }
 
+/**
+ * Sets the current message isRead to true
+ * @param id
+ */
+async function setMessageRead(id: number) {
+  const query = 'UPDATE npwd_messages SET isRead = 1 WHERE id = ?';
+  const [result] = await pool.query(query, [id]);
+  return result;
+}
+
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   const _source = getSource();
   try {
@@ -413,7 +424,6 @@ onNet(
       } else {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
       }
-      
     } catch (e) {
       emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
 
@@ -488,3 +498,9 @@ onNet(
     }
   }
 );
+
+onNet(events.MESSAGES_SET_MESSAGE_READ, async (ids: number[]) => {
+  for (const id of ids) {
+    await setMessageRead(id);
+  }
+});

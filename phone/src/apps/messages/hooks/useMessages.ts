@@ -20,9 +20,7 @@ export default (): IUseMessages => {
   const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
 
   const getMessageGroupById = (id: string): MessageGroup | null => {
-    return messageGroups 
-      ? messageGroups.find(c => c.groupId === id) 
-      : null;
+    return messageGroups ? messageGroups.find((c) => c.groupId === id) : null;
   };
 
   const [
