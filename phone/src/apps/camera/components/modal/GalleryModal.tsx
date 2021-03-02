@@ -18,7 +18,10 @@ export const GalleryModal = () => {
 
   const [shareOpen, setShareOpen] = useState(null);
 
-  const meta: ICameraPhoto = useMemo(() => ({ id: query.id as string, image: query.image as string }), [query]);
+  const meta: ICameraPhoto = useMemo(
+    () => ({ id: query.id as string, image: query.image as string }),
+    [query],
+  );
 
   const _handleClose = () => {
     history.push(referal);

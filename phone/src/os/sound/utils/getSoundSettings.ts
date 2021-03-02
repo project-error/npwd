@@ -9,7 +9,11 @@ const getPath = {
 /**
  * Gets the configuration for SoundProvider based on settings and apps
  */
-export const getSoundSettings = (type: 'ringtone' | 'notification', settings: IPhoneSettings, app?: string) => {
+export const getSoundSettings = (
+  type: 'ringtone' | 'notification',
+  settings: IPhoneSettings,
+  app?: string,
+) => {
   try {
     return app
       ? {

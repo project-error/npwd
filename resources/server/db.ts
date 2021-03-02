@@ -13,7 +13,9 @@ import { mainLogger } from './sv_logger';
 // we require set mysql_connection_string  to be set in the config
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 if (mysqlConnectionString === 'none') {
-  const error = new Error(`No connection string provided. make sure "${CONNECTION_STRING}" is set in your config.`);
+  const error = new Error(
+    `No connection string provided. make sure "${CONNECTION_STRING}" is set in your config.`,
+  );
   mainLogger.error(error.message);
   throw error;
 }

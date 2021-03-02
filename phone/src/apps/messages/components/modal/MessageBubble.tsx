@@ -41,7 +41,13 @@ const isImage = (url) => {
   return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
 };
 
-export const MessageBubble = ({ message, isGroupChat }: { message: Message; isGroupChat: boolean }) => {
+export const MessageBubble = ({
+  message,
+  isGroupChat,
+}: {
+  message: Message;
+  isGroupChat: boolean;
+}) => {
   const classes = useStyles();
   return (
     <div>

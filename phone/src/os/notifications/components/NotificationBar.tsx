@@ -1,5 +1,15 @@
 import React from 'react';
-import { makeStyles, Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@material-ui/core';
+import {
+  makeStyles,
+  Typography,
+  Grid,
+  IconButton,
+  Slide,
+  Paper,
+  Box,
+  List,
+  Divider,
+} from '@material-ui/core';
 import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
 import Battery90Icon from '@material-ui/icons/Battery90';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -56,7 +66,13 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
   const classes = useStyles();
 
-  const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
+  const {
+    icons,
+    notifications,
+    removeNotification,
+    barUncollapsed,
+    setBarUncollapsed,
+  } = useNotifications();
 
   return (
     <>
@@ -118,7 +134,11 @@ export const NotificationBar = () => {
             </List>
           </Box>
           <Box display="flex">
-            <IconButton className={classes.collapseBtn} size="small" onClick={() => setBarUncollapsed(false)}>
+            <IconButton
+              className={classes.collapseBtn}
+              size="small"
+              onClick={() => setBarUncollapsed(false)}
+            >
               <ArrowDropUpIcon />
             </IconButton>
           </Box>

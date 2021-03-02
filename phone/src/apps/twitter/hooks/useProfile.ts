@@ -19,7 +19,9 @@ interface IUseProfile {
 export const useProfile = (): IUseProfile => {
   const profile = useRecoilValue(twitterState.profile);
   const updateProfileLoading = useRecoilValue(twitterState.updateProfileLoading);
-  const [updateProfileSuccessful, setUpdateProfileSuccessful] = useRecoilState(twitterState.updateProfileSuccess);
+  const [updateProfileSuccessful, setUpdateProfileSuccessful] = useRecoilState(
+    twitterState.updateProfileSuccess,
+  );
   return {
     profile,
     updateProfileLoading,

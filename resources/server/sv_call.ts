@@ -30,7 +30,8 @@ async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
 }
 
 async function saveCall(call: ICall) {
-  const query = 'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
+  const query =
+    'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
   await pool.query(query, [call.identifier, call.transmitter, call.receiver, call.start]);
 }
 
@@ -95,7 +96,13 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
     emitNet(events.PHONE_CALL_WAS_ACCEPTED, pSource, channelId, currentCall, false);
 
     // player who is calling
-    emitNet(events.PHONE_CALL_WAS_ACCEPTED, currentCall.transmitterSource, channelId, currentCall, true);
+    emitNet(
+      events.PHONE_CALL_WAS_ACCEPTED,
+      currentCall.transmitterSource,
+      channelId,
+      currentCall,
+      true,
+    );
 
     currentCall.accepted = true;
   } catch (e) {

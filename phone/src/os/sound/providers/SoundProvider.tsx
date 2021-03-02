@@ -26,47 +26,50 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     soundRefs.current = new Map();
   }, []);
 
-  const mount = useCallback((url: string, volume: number = 1, loop: boolean = false, autoplay: boolean = false) => {
-    return new Promise<IMountResponse>((res) => {
-      if (!soundRefs.current) {
-        soundRefs.current = new Map();
-      }
-
-      const find = soundRefs.current.get(url);
-
-      if (find) {
-        find.howl.volume(volume);
-        find.howl.loop(loop);
-        if (autoplay) {
-          find.howl.play();
+  const mount = useCallback(
+    (url: string, volume: number = 1, loop: boolean = false, autoplay: boolean = false) => {
+      return new Promise<IMountResponse>((res) => {
+        if (!soundRefs.current) {
+          soundRefs.current = new Map();
         }
-        return res({ howl: find.howl, url });
-      }
 
-      const instance = new Howl({
-        src: url,
-        loop,
-        volume,
-        autoplay,
+        const find = soundRefs.current.get(url);
+
+        if (find) {
+          find.howl.volume(volume);
+          find.howl.loop(loop);
+          if (autoplay) {
+            find.howl.play();
+          }
+          return res({ howl: find.howl, url });
+        }
+
+        const instance = new Howl({
+          src: url,
+          loop,
+          volume,
+          autoplay,
+        });
+
+        soundRefs.current.set(url, { howl: instance, volume });
+
+        instance.once('load', () => {
+          console.log('ready', instance);
+          res({ howl: instance, url });
+        });
+
+        const onError = (_id, e) => {
+          res(null);
+          console.error('Howler Error \n', e, '\nid: ', _id, '\nsrc: ', url);
+        };
+
+        instance.once('loaderror', onError);
+
+        instance.once('playerror', onError);
       });
-
-      soundRefs.current.set(url, { howl: instance, volume });
-
-      instance.once('load', () => {
-        console.log('ready', instance);
-        res({ howl: instance, url });
-      });
-
-      const onError = (_id, e) => {
-        res(null);
-        console.error('Howler Error \n', e, '\nid: ', _id, '\nsrc: ', url);
-      };
-
-      instance.once('loaderror', onError);
-
-      instance.once('playerror', onError);
-    });
-  }, []);
+    },
+    [],
+  );
 
   const play = useCallback(
     (url: string, volume: number, loop: boolean) => {

@@ -82,7 +82,9 @@ export const TwitterApp = () => {
         )}
       </AppContent>
       {showTweetButton && <TweetButton openModal={openModal} />}
-      {!promptProfileName && <BottomNavigation activePage={activePage} handleChange={handlePageChange} />}
+      {!promptProfileName && (
+        <BottomNavigation activePage={activePage} handleChange={handlePageChange} />
+      )}
     </AppWrapper>
   );
 };

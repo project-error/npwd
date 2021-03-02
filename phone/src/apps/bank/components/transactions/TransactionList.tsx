@@ -33,20 +33,22 @@ export const TransactionList = () => {
       </div>
 
       <div className={classes.transcationDiv}>
-        {transactionList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((transaction: any) => (
-          <div className={classes.transactions}>
-            <div>
-              <h1 className={classes.tranSource}>{transaction.source}</h1>
-              <p className={classes.tranType}>{transaction.type}</p>
+        {transactionList
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((transaction: any) => (
+            <div className={classes.transactions}>
+              <div>
+                <h1 className={classes.tranSource}>{transaction.source}</h1>
+                <p className={classes.tranType}>{transaction.type}</p>
+              </div>
+              <div>
+                <p className={TransactionTypes[transaction.type]}>
+                  {transaction.type === 'Withdraw' ? '-' : '+'}
+                  {transaction.amount}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className={TransactionTypes[transaction.type]}>
-                {transaction.type === 'Withdraw' ? '-' : '+'}
-                {transaction.amount}
-              </p>
-            </div>
-          </div>
-        ))}
+          ))}
         <TablePagination
           rowsPerPageOptions={[3, 5]}
           className={classes.pagination}

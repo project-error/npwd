@@ -19,7 +19,15 @@
     "printDebugLogs": true,
     "logLevel": 1
   },
-  "frames": ["default.png", "blue.png", "gold.png", "kawaii.png", "minimal.png", "pink.png", "white.png"],
+  "frames": [
+    "default.png",
+    "blue.png",
+    "gold.png",
+    "kawaii.png",
+    "minimal.png",
+    "pink.png",
+    "white.png"
+  ],
   "zoomOptions": [1, 0.9, 0.8],
   "ringtones": ["marimba", "pixel"],
   "notifications": ["online", "99kr"],

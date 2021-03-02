@@ -10,7 +10,15 @@ import { useApp } from '../../../os/apps/hooks/useApps';
 import { SettingItem } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 
-import { Brush, Wallpaper, Phone, Smartphone, ZoomIn, LibraryMusic, VolumeUp } from '@material-ui/icons';
+import {
+  Brush,
+  Wallpaper,
+  Phone,
+  Smartphone,
+  ZoomIn,
+  LibraryMusic,
+  VolumeUp,
+} from '@material-ui/icons';
 
 import {
   Box,
@@ -77,11 +85,15 @@ export const SettingsApp = () => {
     MapStringOptions(settings.ringtone, (val: string) => handleSettingChange('ringtone', val)),
   );
   const notifications = config.notifications.map(
-    MapStringOptions(settings.notification, (val: string) => handleSettingChange('notification', val)),
+    MapStringOptions(settings.notification, (val: string) =>
+      handleSettingChange('notification', val),
+    ),
   );
 
   const twitterNotifications = config.notifications.map(
-    MapStringOptions(settings.notification, (val: string) => handleSettingChange('TWITTER_notification', val)),
+    MapStringOptions(settings.notification, (val: string) =>
+      handleSettingChange('TWITTER_notification', val),
+    ),
   );
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
@@ -90,7 +102,11 @@ export const SettingsApp = () => {
       <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List disablePadding subheader={<SubHeaderComp text="Phone" />}>
-          <SettingItem label={t('APPS_SETTINGS_PHONE_NUMBER')} value={simcard.number} icon={<Phone />} />
+          <SettingItem
+            label={t('APPS_SETTINGS_PHONE_NUMBER')}
+            value={simcard.number}
+            icon={<Phone />}
+          />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_RINGTONE')}
             value={settings.ringtone}
@@ -102,7 +118,10 @@ export const SettingsApp = () => {
             <ListItemIcon>
               <VolumeUp />
             </ListItemIcon>
-            <ListItemText primary={t('APPS_SETTINGS_OPTION_RINGTONEVOL')} secondary={settings.ringtoneVol} />
+            <ListItemText
+              primary={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
+              secondary={settings.ringtoneVol}
+            />
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
@@ -126,7 +145,10 @@ export const SettingsApp = () => {
             <ListItemIcon>
               <VolumeUp />
             </ListItemIcon>
-            <ListItemText primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')} secondary={settings.notificationVol} />
+            <ListItemText
+              primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+              secondary={settings.notificationVol}
+            />
             <ListItemSecondaryAction>
               <Box p={2} width={150}>
                 <Slider
@@ -194,7 +216,9 @@ export const SettingsApp = () => {
                   min={0}
                   max={100}
                   onChange={handleSliderChange(2)}
-                  onChangeCommitted={() => handleSettingChange('TWITTER_notificationVol', sliders[2])}
+                  onChangeCommitted={() =>
+                    handleSettingChange('TWITTER_notificationVol', sliders[2])
+                  }
                 />
               </Box>
             </ListItemSecondaryAction>

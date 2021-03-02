@@ -38,10 +38,17 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         className={classes.overflowAutoY}
       >
         {messages.map((message) => (
-          <MessageBubble key={message.id} message={message} isGroupChat={activeMessageGroup?.isGroupChat} />
+          <MessageBubble
+            key={message.id}
+            message={message}
+            isGroupChat={activeMessageGroup?.isGroupChat}
+          />
         ))}
       </Box>
-      <MessageInput messageGroupId={activeMessageGroup.groupId} onAddImageClick={() => setImageModalOpen(true)} />
+      <MessageInput
+        messageGroupId={activeMessageGroup.groupId}
+        onAddImageClick={() => setImageModalOpen(true)}
+      />
     </>
   );
 };

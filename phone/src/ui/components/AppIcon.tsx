@@ -43,7 +43,11 @@ export const AppIcon = ({ id, nameLocale, name, icon, backgroundColor, color, no
       TransitionComponent={Zoom}
     >
       <Button className={classes.root}>
-        <Badge color="error" badgeContent={notification?.badge} invisible={!notification || notification.badge < 2}>
+        <Badge
+          color="error"
+          badgeContent={notification?.badge}
+          invisible={!notification || notification.badge < 2}
+        >
           <Avatar className={classes.avatar}>{icon || name[0].toUpperCase()}</Avatar>
         </Badge>
       </Button>

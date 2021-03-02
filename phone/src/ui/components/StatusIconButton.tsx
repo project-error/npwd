@@ -17,7 +17,8 @@ const useStyles = makeStyles(
       },
     },
     outlined: {
-      border: ({ color }: IStatusButtonStyleProps) => `1px solid ${fade(theme.palette[color].main, 0.5)}`,
+      border: ({ color }: IStatusButtonStyleProps) =>
+        `1px solid ${fade(theme.palette[color].main, 0.5)}`,
       '&:hover': {
         border: ({ color }: IStatusButtonStyleProps) => `1px solid ${theme.palette[color].main}`,
       },

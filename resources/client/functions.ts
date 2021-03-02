@@ -24,7 +24,23 @@ const newPhoneProp = async () => {
     prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     //prop = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
-    AttachEntityToEntity(prop, playerPed, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0, true, true, false, true, 1.0, true); //-- Attaches the phone to the player.
+    AttachEntityToEntity(
+      prop,
+      playerPed,
+      boneIndex,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0,
+      true,
+      true,
+      false,
+      true,
+      1.0,
+      true,
+    ); //-- Attaches the phone to the player.
     propCreated = true;
   } else if (propCreated) {
     console.log('prop already created');

@@ -21,7 +21,9 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
   const { t } = useTranslation();
 
   const imagePromptVisible = showImagePrompt && !showEmoji;
-  const primaryButtonText = imagePromptVisible ? t('APPS_TWITTER_SUBMIT_IMAGE') : t('APPS_TWITTER_TWEET');
+  const primaryButtonText = imagePromptVisible
+    ? t('APPS_TWITTER_SUBMIT_IMAGE')
+    : t('APPS_TWITTER_TWEET');
   const showCloseButton = showImagePrompt || showEmoji;
 
   return (
@@ -30,7 +32,12 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
         {primaryButtonText}
       </Button>
       {showCloseButton && (
-        <Button className={classes.close} variant="contained" color="secondary" onClick={onCloseClick}>
+        <Button
+          className={classes.close}
+          variant="contained"
+          color="secondary"
+          onClick={onCloseClick}
+        >
           {t('APPS_TWITTER_CLOSE_IMAGE')}
         </Button>
       )}

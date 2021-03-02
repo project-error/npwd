@@ -30,9 +30,21 @@ export const NavigationBar = () => {
       showLabels
       className={classes.root}
     >
-      <BottomNavigationAction component={Link} icon={<FontAwesomeIcon icon={faHome} />} to="/bank" />
-      <BottomNavigationAction component={Link} icon={<FontAwesomeIcon icon={faMoneyCheck} />} to="/bank/account" />
-      <BottomNavigationAction component={Link} icon={<FontAwesomeIcon icon={faList} />} to="/bank/transactions" />
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faHome} />}
+        to="/bank"
+      />
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faMoneyCheck} />}
+        to="/bank/account"
+      />
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faList} />}
+        to="/bank/transactions"
+      />
     </BottomNavigation>
   );
 };

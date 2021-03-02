@@ -48,7 +48,10 @@ export const ContactList = () => {
       <SearchContacts />
       <List>
         {contacts
-          .filter((contact) => contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx))
+          .filter(
+            (contact) =>
+              contact.display.match(filteredRegEx) || contact.number.match(filteredRegEx),
+          )
           .map((contact) => (
             <ListItem key={contact.id} divider>
               <ListItemAvatar>

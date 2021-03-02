@@ -68,7 +68,12 @@ async function fetchTweetsFiltered(profileId: number, searchValue: string): Prom
     ORDER BY npwd_twitter_tweets.createdAt DESC 
     LIMIT 100
     `;
-  const [results] = await pool.query(query, [profileId, profileId, parameterizedSearchValue, parameterizedSearchValue]);
+  const [results] = await pool.query(query, [
+    profileId,
+    profileId,
+    parameterizedSearchValue,
+    parameterizedSearchValue,
+  ]);
   const tweets = <Tweet[]>results;
   return tweets.map((tweet) => ({
     ...tweet,

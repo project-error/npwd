@@ -61,7 +61,9 @@ export function NotificationsProvider({ children }) {
   const { mount, play } = useSoundProvider();
 
   const alertTimeout = useRef<NodeJS.Timeout>();
-  const [alerts, setAlerts] = useState<Array<[INotification, boolean, Partial<INotification>, string | undefined]>>([]);
+  const [alerts, setAlerts] = useState<
+    Array<[INotification, boolean, Partial<INotification>, string | undefined]>
+  >([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
   useEffect(() => {
@@ -154,10 +156,16 @@ export function NotificationsProvider({ children }) {
     [addOrUpdateNotification, play],
   );
 
-  const addNotificationAlert = (n: INotification, persist?: boolean, update?: Partial<INotification>) => {
+  const addNotificationAlert = (
+    n: INotification,
+    persist?: boolean,
+    update?: Partial<INotification>,
+  ) => {
     if (n.sound) {
       const { sound, volume } = getSoundSettings('notification', settings, n.app);
-      mount(sound, volume, false).then(({ url }) => setAlerts((curr) => [...curr, [n, persist, update, url]]));
+      mount(sound, volume, false).then(({ url }) =>
+        setAlerts((curr) => [...curr, [n, persist, update, url]]),
+      );
       return;
     }
     setAlerts((curr) => [...curr, [n, persist, update, undefined]]);

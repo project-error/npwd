@@ -41,7 +41,20 @@ const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
     }
     volume(url, vol);
     loop(url, isLoop);
-  }, [url, vol, isLoop, isMounted, volume, loop, mount, previousUrl, stop, remove, isPlaying, play]);
+  }, [
+    url,
+    vol,
+    isLoop,
+    isMounted,
+    volume,
+    loop,
+    mount,
+    previousUrl,
+    stop,
+    remove,
+    isPlaying,
+    play,
+  ]);
 
   useEffect(() => {
     if (interrupt) {

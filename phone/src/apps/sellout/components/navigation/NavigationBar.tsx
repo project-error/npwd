@@ -28,7 +28,11 @@ export const NavigationBar = () => {
       showLabels
       className={classes.root}
     >
-      <BottomNavigationAction component={Link} icon={<FontAwesomeIcon icon={faHome} />} to="/sellout" />
+      <BottomNavigationAction
+        component={Link}
+        icon={<FontAwesomeIcon icon={faHome} />}
+        to="/sellout"
+      />
       <BottomNavigationAction component={Link} icon={<AddCircleIcon />} to="/sellout/new" />
     </BottomNavigation>
   );

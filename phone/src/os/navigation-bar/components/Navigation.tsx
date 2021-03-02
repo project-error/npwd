@@ -29,7 +29,11 @@ export const Navigation = () => {
       }}
     >
       <BottomNavigationAction label="Home" value={() => history.push('/')} icon={<AppsIcon />} />
-      <BottomNavigationAction label="Close" value={closePhone} icon={<RadioButtonUncheckedIcon />} />
+      <BottomNavigationAction
+        label="Close"
+        value={closePhone}
+        icon={<RadioButtonUncheckedIcon />}
+      />
       <BottomNavigationAction
         label="Back"
         value={() => !isExact && history.goBack()}

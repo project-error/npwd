@@ -18,7 +18,10 @@ const MessagesList = (): any => {
   const [searchValue, setSearchValue] = useState('');
 
   const goToConversation = useCallback(
-    (messageGroup) => history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`),
+    (messageGroup) =>
+      history.push(
+        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
+      ),
     [history],
   );
 
@@ -55,7 +58,11 @@ const MessagesList = (): any => {
       <MessageSearch value={searchValue} handleChange={(e) => setSearchValue(e.target.value)} />
       <List className={classes.root}>
         {filteredGroups.map((messageGroup) => (
-          <MessageGroupItem key={messageGroup.groupId} messageGroup={messageGroup} handleClick={handleClick} />
+          <MessageGroupItem
+            key={messageGroup.groupId}
+            messageGroup={messageGroup}
+            handleClick={handleClick}
+          />
         ))}
       </List>
     </>

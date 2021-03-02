@@ -1,4 +1,13 @@
-import { Button, TextField, Slide, Paper, Typography, Container, CircularProgress, Box } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  Slide,
+  Paper,
+  Typography,
+  Container,
+  CircularProgress,
+  Box,
+} from '@material-ui/core';
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useNoteDetail } from '../hooks/useNoteDetail';

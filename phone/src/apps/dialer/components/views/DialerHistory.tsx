@@ -68,7 +68,9 @@ export const DialerHistory = ({ calls }) => {
 
             {getDisplayByNumber(call.transmitter) === call.transmitter ? (
               <IconButton
-                onClick={() => history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)}
+                onClick={() =>
+                  history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
+                }
               >
                 {<PersonAddIcon />}
               </IconButton>
@@ -86,7 +88,9 @@ export const DialerHistory = ({ calls }) => {
 
             {getDisplayByNumber(call.transmitter) === call.transmitter ? (
               <IconButton
-                onClick={() => history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)}
+                onClick={() =>
+                  history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
+                }
               >
                 {<PersonAddIcon />}
               </IconButton>

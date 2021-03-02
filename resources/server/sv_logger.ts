@@ -7,7 +7,8 @@ const manualColorize = (strToColor: string): string => `[\x1b[35m${strToColor}\x
 
 // Format handler passed to winston
 const formatLogs = (log: winston.Logform.TransformableInfo): string => {
-  if (log.module) return `${log.label} ${manualColorize(log.module)} [${log.level}]: ${log.message}`;
+  if (log.module)
+    return `${log.label} ${manualColorize(log.module)} [${log.level}]: ${log.message}`;
 
   return `${log.label} [${log.level}]: ${log.message}`;
 };

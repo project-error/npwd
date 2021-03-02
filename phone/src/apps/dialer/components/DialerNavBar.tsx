@@ -27,7 +27,13 @@ const DialerNavBar = () => {
 
   return (
     <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
-      <BottomNavigationAction label="History" value="/phone" component={NavLink} icon={<HistoryIcon />} to="/phone" />
+      <BottomNavigationAction
+        label="History"
+        value="/phone"
+        component={NavLink}
+        icon={<HistoryIcon />}
+        to="/phone"
+      />
       <BottomNavigationAction
         label="Dial"
         value="/phone/dial"

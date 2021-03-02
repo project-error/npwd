@@ -34,7 +34,15 @@ const keyboardState = {
   }),
 };
 
-const validKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Backspace', 'Enter', 'Escape'];
+const validKeys = [
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowUp',
+  'ArrowDown',
+  'Backspace',
+  'Enter',
+  'Escape',
+];
 
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 

@@ -56,7 +56,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Tweet = (tweet) => {
-  const { id, message, images, avatar_url, profile_name, seconds_since_tweet, isLiked, isMine, isReported } = tweet;
+  const {
+    id,
+    message,
+    images,
+    avatar_url,
+    profile_name,
+    seconds_since_tweet,
+    isLiked,
+    isMine,
+    isReported,
+  } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
   const { config } = usePhone();
@@ -90,7 +100,12 @@ export const Tweet = (tweet) => {
       <div className={classes.content}>
         <div className={classes.primary}>
           <div className={classes.profile}>{profileName}</div>
-          <Typography className={classes.date} component="div" variant="body2" color="textSecondary">
+          <Typography
+            className={classes.date}
+            component="div"
+            variant="body2"
+            color="textSecondary"
+          >
             {secondsToHumanReadable(t, seconds_since_tweet)}
           </Typography>
         </div>

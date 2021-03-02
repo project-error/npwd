@@ -25,7 +25,11 @@ export const ContactPage = () => {
   return (
     <>
       <ContactList />
-      <Fab color="primary" onClick={() => history.push('/contacts/-1')} className={classes.absolute}>
+      <Fab
+        color="primary"
+        onClick={() => history.push('/contacts/-1')}
+        className={classes.absolute}
+      >
         <PersonAddIcon />
       </Fab>
     </>
