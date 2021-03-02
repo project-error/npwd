@@ -7,11 +7,12 @@
     "pretty-quick": "^3.1.0"
   },
   "scripts": {
-    "build": "lerna run build --concurrency 1"
+    "build": "lerna run build --concurrency 1",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
-      "husky": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
