@@ -110,7 +110,7 @@ onNet(events.TWITTER_DELETE_TWEET_FAILURE, () => {
  * Twitter likes
  */
 RegisterNuiCallbackType(events.TWITTER_TOGGLE_LIKE);
-on(`__cfx_nui:${events.TWITTER_TOGGLE_LIKE}`, (tweetId: number) => {
+on(`__cfx_nui:${events.TWITTER_TOGGLE_LIKE}`, (tweetId: any) => {
   emitNet(events.TWITTER_TOGGLE_LIKE, tweetId);
 });
 
