@@ -4,21 +4,16 @@ import { getSource } from './functions';
 import { pool } from './db';
 import { usePhoneNumber } from './functions';
 import { mainLogger } from './sv_logger';
+import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
-interface Listing {
-  title: string;
-  name: string;
-  url?: string;
-  description: string;
-}
 
-async function fetchAllListings(): Promise<Listing[]> {
+async function fetchAllListings(): Promise<MarketplaceListing[]> {
   const query = 'SELECT * FROM npwd_sellout_listings ORDER BY id DESC';
 
   const [results] = await pool.query(query);
-  const listings = <Listing[]>results;
+  const listings = <MarketplaceListing[]>results;
 
   return listings;
 }
@@ -27,8 +22,8 @@ async function addListing(
   identifier: string,
   name: string,
   number: any,
-  listing: Listing
-): Promise<any> {
+  listing: MarketplaceListing
+): Promise<void> {
   const query =
     'INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)';
   await pool.query(query, [
@@ -53,7 +48,7 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
   }
 });
 
-onNet(events.SELLOUT_ADD_LISTING, async (listing: Listing) => {
+onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
   const _source = getSource();
   try {
     const xPlayer = ESX.GetPlayerFromId(_source);
