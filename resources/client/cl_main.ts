@@ -2,10 +2,7 @@ import config from '../utils/config';
 import events from '../utils/events';
 import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 
-let prop = 0;
 let isPhoneOpen = false;
-let propCreated = false;
-let phoneModel = 'prop_amb_phone'; // Refered to in newphoneProp function. Requires custom phone being streamed.
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 

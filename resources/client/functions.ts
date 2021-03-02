@@ -1,9 +1,8 @@
 import { Delay } from '../utils/fivem';
 
 let prop = 0;
-let isPhoneOpen = false;
 let propCreated = false;
-const phoneModel = 'prop_amb_phone'
+const phoneModel = 'prop_amb_phone';
 
 /* * * * * * * * * * * * *
  *
@@ -79,11 +78,11 @@ export async function loadAnimDict(dict: any) {
     await Delay(100);
   }
 }
- 
+
 const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
   const dict = 'anim@cellphone@in_car@ps';
 
-  SetCurrentPedWeapon(playerPed, 0xA2719263, true)
+  SetCurrentPedWeapon(playerPed, 0xa2719263, true);
   ClearPedTasks(playerPed);
   await loadAnimDict(dict);
   TaskPlayAnim(
@@ -99,15 +98,15 @@ const handleOpenVehicleAnim = async (playerPed: number): Promise<void> => {
     false,
     false
   );
-  await Delay(300); 
-  await newPhoneProp(); 
+  await Delay(300);
+  await newPhoneProp();
 };
 
 const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
   //While not in a vehicle it will use this dict.
   const dict = 'cellphone@';
-  
-  SetCurrentPedWeapon(playerPed, 0xA2719263, true)
+
+  SetCurrentPedWeapon(playerPed, 0xa2719263, true);
   ClearPedTasks(playerPed);
   await loadAnimDict(dict);
   TaskPlayAnim(
@@ -123,8 +122,8 @@ const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
     false,
     false
   );
-  await Delay(300); 
-  await newPhoneProp(); 
+  await Delay(300);
+  await newPhoneProp();
 };
 
 const handleCloseVehicleAnim = async (playerPed: number): Promise<void> => {
@@ -139,12 +138,12 @@ const handleCloseNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_text_out';
   StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
-  await Delay(100); 
-  await loadAnimDict(DICT); 
+  await Delay(100);
+  await loadAnimDict(DICT);
   TaskPlayAnim(playerPed, DICT, ANIM, 7.0, -1, -1, 50, 0, false, false, false);
-  await Delay(200); 
+  await Delay(200);
   StopAnimTask(playerPed, DICT, ANIM, 1.0);
-  removePhoneProp(); 
+  removePhoneProp();
 };
 
 const handleCallStartVehicleAnim = async (playerPed: number): Promise<void> => {
@@ -167,17 +166,36 @@ const handleCallEndVehicleAnim = async (playerPed: number): Promise<void> => {
 const handleCallStartNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_listen_base';
-  await loadAnimDict(DICT); 
+  await loadAnimDict(DICT);
   TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
 };
 
 const handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'cellphone@';
   const ANIM = 'cellphone_call_to_text';
-  
-  if (IsEntityPlayingAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 49)) {
-    await loadAnimDict(DICT); 
-    TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
+
+  if (
+    IsEntityPlayingAnim(
+      playerPed,
+      'cellphone@',
+      'cellphone_call_listen_base',
+      49
+    )
+  ) {
+    await loadAnimDict(DICT);
+    TaskPlayAnim(
+      playerPed,
+      DICT,
+      ANIM,
+      2.5,
+      8.0,
+      -1,
+      50,
+      0,
+      false,
+      false,
+      false
+    );
   }
 };
 
