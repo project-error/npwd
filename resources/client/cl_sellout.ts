@@ -1,6 +1,8 @@
 import events from '../utils/events';
+import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
+import { IAlertProps } from '../../phone/src/common/typings/alerts';
 
-onNet(events.SELLOUT_SEND_LISTING, (listing: any) => {
+onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'SELLOUT',
@@ -11,7 +13,7 @@ onNet(events.SELLOUT_SEND_LISTING, (listing: any) => {
 });
 
 RegisterNuiCallbackType(events.SELLOUT_ADD_LISTING);
-on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: any) => {
+on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: MarketplaceListing) => {
   emitNet(events.SELLOUT_ADD_LISTING, data);
 
   setTimeout(() => {
@@ -21,7 +23,7 @@ on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: any) => {
 });
 
 
-onNet(events.SELLOUT_ACTION_RESULT, (alert: { message: string, type: string }) => {
+onNet(events.SELLOUT_ACTION_RESULT, (alert: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: "SELLOUT",
