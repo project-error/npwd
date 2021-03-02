@@ -1,14 +1,13 @@
 import { useContext } from 'react';
 import { SnackbarContext } from '../providers/SnackbarProvider';
 
-
 export interface IAlert {
   message: string;
-  type: 'success' | 'error' | 'info'
+  type: 'success' | 'error' | 'info';
 }
 
 interface ISnackBar {
-  addAlert: ({ message, type}: IAlert) => void;
+  addAlert: ({ message, type }: IAlert) => void;
   alert: IAlert | null;
 }
 

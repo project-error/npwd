@@ -1,3 +1,3 @@
 export const tokenData = {
-  token: '2518ea90647ba45'
-}
+  token: '2518ea90647ba45',
+};

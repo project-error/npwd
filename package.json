@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "lerna run build --concurrency 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "pretty-quick"
   },
   "husky": {
     "hooks": {

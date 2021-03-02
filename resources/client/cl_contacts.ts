@@ -45,7 +45,7 @@ onNet(events.CONTACTS_ACTION_RESULT, (alert: any) => {
     JSON.stringify({
       app: 'CONTACTS',
       method: 'setAlert',
-      data: alert
+      data: alert,
     })
   );
 });

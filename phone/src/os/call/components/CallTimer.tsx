@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDuration } from '../hooks/useDuration';
 
-
 const runTimer = (updatedTime, setDuration) => {
   let newTime = { ...updatedTime.current };
   if (newTime.m >= 60) {
@@ -17,25 +16,24 @@ const runTimer = (updatedTime, setDuration) => {
   newTime = { ...newTime, ms: newTime.ms + 1 };
   updatedTime.current = newTime;
   setDuration(newTime);
-}
+};
 
 function CallTimer({ isAccepted }) {
   const { duration, setDuration } = useDuration();
   const updatedTime = useRef({ ms: 0, s: 0, m: 0, h: 0 });
-  const timer = useRef(null)
-
+  const timer = useRef(null);
 
   useEffect(() => {
     if (isAccepted) {
-      runTimer(updatedTime, setDuration)
+      runTimer(updatedTime, setDuration);
       timer.current = setInterval(() => {
-        runTimer(updatedTime, setDuration)
+        runTimer(updatedTime, setDuration);
       }, 10);
     } else {
       clearInterval(timer.current);
       timer.current = null;
     }
-    return () => clearInterval(timer.current)
+    return () => clearInterval(timer.current);
   }, [isAccepted, setDuration]);
 
   if (!duration || !isAccepted) return null;

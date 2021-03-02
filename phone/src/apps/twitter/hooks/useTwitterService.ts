@@ -30,7 +30,7 @@ function processTweet(tweet) {
  * there and have moved that logic here instead.
  */
 export const useTwitterService = () => {
-  const { addAlert } = useSnackbar()
+  const { addAlert } = useSnackbar();
   const { setNotification } = useTwitterNotifications();
 
   const setProfile = useSetRecoilState(twitterState.profile);
@@ -38,7 +38,6 @@ export const useTwitterService = () => {
     twitterState.updateProfileLoading
   );
 
-  
   const setTweets = useSetRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);

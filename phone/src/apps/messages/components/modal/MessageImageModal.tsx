@@ -84,7 +84,6 @@ export const MessageImageModal = ({
             })}`
           ),
       },
-      
     ],
     [history, pathname, search]
   );

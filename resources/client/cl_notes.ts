@@ -17,7 +17,7 @@ onNet(events.NOTE_SEND_NOTE_SUCCESS, () => {
 RegisterNuiCallbackType(events.NOTE_DELETE_NOTE);
 on(`__cfx_nui:${events.NOTE_DELETE_NOTE}`, (data: any) => {
   emitNet(events.NOTE_DELETE_NOTE, data);
-  
+
   emitNet(events.NOTE_FETCH_ALL_NOTES);
 });
 
@@ -30,7 +30,6 @@ onNet(events.NOTE_UPDATE_NOTE_SUCCESS, () => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
 });
 
-
 onNet(events.NOTE_ACTION_RESULT, (alert: any) => {
-  sendNotesEvent('setAlert', alert)
-})
+  sendNotesEvent('setAlert', alert);
+});

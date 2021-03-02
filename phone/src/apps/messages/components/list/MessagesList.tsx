@@ -41,7 +41,12 @@ const MessagesList = (): any => {
         goToConversation(findGroup);
       }
     }
-  }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
+  }, [
+    messageGroups,
+    createMessageGroupResult,
+    goToConversation,
+    clearMessageGroupResult,
+  ]);
 
   if (!messageGroups) return null;
 

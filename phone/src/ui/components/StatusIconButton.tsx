@@ -56,5 +56,11 @@ export const StatusIconButton = ({
   ...props
 }: Omit<IconButtonProps, 'color'> & { color: StatusButtonStyleColor }) => {
   const classes = useStyles({ color });
-  return <IconButton className={`${classes.root} ${className}`} size={size} {...props} />;
+  return (
+    <IconButton
+      className={`${classes.root} ${className}`}
+      size={size}
+      {...props}
+    />
+  );
 };

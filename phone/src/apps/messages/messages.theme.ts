@@ -9,7 +9,7 @@ const theme = {
       main: MESSAGES_APP_PRIMARY_COLOR,
       dark: amber[900],
       light: amber[100],
-      contrastText: MESSAGES_APP_TEXT_COLOR
+      contrastText: MESSAGES_APP_TEXT_COLOR,
     },
   },
 };

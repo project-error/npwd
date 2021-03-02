@@ -1,9 +1,9 @@
 const theme = {
   palette: {
     primary: {
-      main: '#f23123'
-    }
-  }
-}
+      main: '#f23123',
+    },
+  },
+};
 
 export default theme;

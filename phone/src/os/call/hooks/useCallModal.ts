@@ -8,5 +8,5 @@ interface ModalProps {
 
 export const useCallModal = (): ModalProps => {
   const [modal, setModal] = useRecoilState(callerState.callModal);
-  return { modal, setModal }
-}
+  return { modal, setModal };
+};

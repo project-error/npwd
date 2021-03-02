@@ -21,13 +21,9 @@ export function NewMessageGroupButton({
   const classes = useStyles();
 
   return (
-      <Fab
-        className={classes.root}
-        color='primary'
-        onClick={onClick}
-      >
-        <AddIcon />
-      </Fab>
+    <Fab className={classes.root} color='primary' onClick={onClick}>
+      <AddIcon />
+    </Fab>
   );
 }
 

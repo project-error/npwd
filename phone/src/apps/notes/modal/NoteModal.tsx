@@ -102,7 +102,7 @@ export const NoteModal = () => {
               <Typography paragraph>{detail.content.length}/250</Typography>
               {!detail.id ? (
                 <>
-                  <Box display="inline" p={1}>
+                  <Box display='inline' p={1}>
                     <Button
                       color='primary'
                       variant='contained'
@@ -112,7 +112,7 @@ export const NoteModal = () => {
                       {t('GENERIC_SAVE')}
                     </Button>
                   </Box>
-                  <Box display="inline" p={1}>
+                  <Box display='inline' p={1}>
                     <StatusButton
                       color='error'
                       variant='contained'
@@ -124,7 +124,7 @@ export const NoteModal = () => {
                 </>
               ) : (
                 <>
-                  <Box display="inline" p={1}>
+                  <Box display='inline' p={1}>
                     <Button
                       color='primary'
                       variant='contained'
@@ -133,7 +133,7 @@ export const NoteModal = () => {
                       {t('GENERIC_UPDATE')}
                     </Button>
                   </Box>
-                  <Box display="inline" p={1}>
+                  <Box display='inline' p={1}>
                     <StatusButton
                       color='error'
                       variant='contained'

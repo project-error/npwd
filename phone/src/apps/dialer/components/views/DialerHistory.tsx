@@ -62,10 +62,7 @@ export const DialerHistory = ({ calls }) => {
     <List disablePadding>
       {calls.map((call: ICall) =>
         call.transmitter === number ? (
-          <ListItem
-            key={call.id}
-            divider
-          >
+          <ListItem key={call.id} divider>
             <ListItemIcon>
               {<PhoneForwardedIcon className={classes.callForward} />}
             </ListItemIcon>
@@ -91,10 +88,7 @@ export const DialerHistory = ({ calls }) => {
             ) : null}
           </ListItem>
         ) : (
-          <ListItem
-            key={call.id}
-            divider
-          >
+          <ListItem key={call.id} divider>
             <ListItemIcon>
               {<PhoneCallbackIcon className={classes.callBack} />}
             </ListItemIcon>

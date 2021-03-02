@@ -41,17 +41,17 @@ function getRandomPhoneNumber() {
 }
 
 async function generatePhoneNumber(identifier: string) {
-  if (!await usePhoneNumber(identifier)) {
+  if (!(await usePhoneNumber(identifier))) {
     let existingId;
     let newNumber;
     do {
-        newNumber = getRandomPhoneNumber();
-        try {
-          existingId = await getIdentifierByPhoneNumber(newNumber)
-        } catch(e) {
-          existingId = false
-        }
-    } while(existingId);
+      newNumber = getRandomPhoneNumber();
+      try {
+        existingId = await getIdentifierByPhoneNumber(newNumber);
+      } catch (e) {
+        existingId = false;
+      }
+    } while (existingId);
     mainLogger.verbose(`Inserting number into Database: ${newNumber}`);
     const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
     await pool.query(query, [newNumber, identifier]);
@@ -67,16 +67,16 @@ async function getCredentials(identifier: string): Promise<string> {
 }
 
 onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
-  const _source = getSource()
+  const _source = getSource();
   try {
     const identifier = xPlayer.identifier;
     await generatePhoneNumber(identifier);
-  } catch(e) {
+  } catch (e) {
     mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
       source: _source,
-    })
+    });
   }
-})
+});
 
 onNet('phone:getCredentials', async () => {
   const _source = getSource();

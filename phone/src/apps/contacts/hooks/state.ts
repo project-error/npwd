@@ -20,5 +20,5 @@ export const contactsState = {
   contactDetail: atom({
     key: 'contactDetail',
     default: null,
-  })
+  }),
 };

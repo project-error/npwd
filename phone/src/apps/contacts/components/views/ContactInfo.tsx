@@ -60,7 +60,9 @@ const ContactsInfoPage = () => {
   const { getContact } = useContacts();
 
   const { id } = useParams<ContactInfoRouteParams>();
-  const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({ referal: '/contacts' });
+  const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({
+    referal: '/contacts',
+  });
 
   const contact = getContact(parseInt(id));
 

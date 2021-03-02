@@ -7,6 +7,6 @@ interface BankModalProps {
 }
 
 export const useBankModal = (): BankModalProps => {
-  const [ showBankModal, setShowBankModal ] = useRecoilState(bankState.bankModal);
+  const [showBankModal, setShowBankModal] = useRecoilState(bankState.bankModal);
   return { showBankModal, setShowBankModal };
 };

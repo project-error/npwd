@@ -10,7 +10,7 @@ export const useBankService = () => {
   const setTransaction = useSetRecoilState(bankState.transactions);
   const setCredentials = useSetRecoilState(bankState.bankCredentials);
   const setNotification = useSetRecoilState(bankState.notification);
-  const { addAlert } = useSnackbar()
+  const { addAlert } = useSnackbar();
 
   useNuiEvent('BANK', 'setTransaction', setTransaction);
   useNuiEvent('BANK', 'setCredentials', setCredentials);

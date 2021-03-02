@@ -6,9 +6,9 @@ interface IStyleProps {
 }
 
 interface IProps {
-  src: string,
-  alt: string,
-  size?: string
+  src: string;
+  alt: string;
+  size?: string;
 }
 
 const useStyles = makeStyles<Theme, IStyleProps>({

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
   },
   icon: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   header: {
     margin: 10,

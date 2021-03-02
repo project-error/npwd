@@ -104,29 +104,25 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
   try {
     const _identifier = getIdentifier(_source);
     await addTransfer(_identifier, transfer);
-    
+
     // we need to create a notification for bank. that's why i have commented out.
     // as well as creating a check if the player has enough money etc....
-    
+
     //emitNet(events.BANK_TRANSACTION_NOTIFICATION, xTarget, transferNotify);
-    
+
     emitNet(events.BANK_ADD_TRANSFER_SUCCESS, _source);
-    emitNet(events.BANK_TRANSACTION_ALERT, _source, 
-      {
-        message: 'BANK_ALERT_TRANSFER_SUCCESS',
-        type: 'success'
-      }
-    );
+    emitNet(events.BANK_TRANSACTION_ALERT, _source, {
+      message: 'BANK_ALERT_TRANSFER_SUCCESS',
+      type: 'success',
+    });
   } catch (e) {
     bankLogger.error(`Failed to add transaction, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.BANK_TRANSACTION_ALERT, _source, 
-      {
-        message: 'APPS_BANK_ALERT_TRANSFER_FAILURE',
-        type: 'error'
-      }
-    );
+    emitNet(events.BANK_TRANSACTION_ALERT, _source, {
+      message: 'APPS_BANK_ALERT_TRANSFER_FAILURE',
+      type: 'error',
+    });
   }
 });
 

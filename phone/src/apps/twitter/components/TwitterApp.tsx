@@ -186,7 +186,8 @@ InjectDebugData(
         profile_name: 'ItsChip',
         isMine: false,
         isReported: false,
-        message: 'I have tweeted this because Im even more badass... And I need this to be longer so I will continue to write',
+        message:
+          'I have tweeted this because Im even more badass... And I need this to be longer so I will continue to write',
       },
     },
   ],

@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
   textFieldInput: {
     fontSize: '22px',
-    paddingTop: '8px'
+    paddingTop: '8px',
   },
 });
 

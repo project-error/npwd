@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  blue,
-  common,
-  grey,
-  purple,
-} from '@material-ui/core/colors';
+import { blue, common, grey, purple } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faAd,
@@ -41,9 +36,18 @@ import {
   CONTACTS_APP_PRIMARY_COLOR,
   CONTACTS_APP_TEXT_COLOR,
 } from '../../../apps/contacts/contacts.theme';
-import { SELLOUT_APP_PRIMARY_COLOR, SELLOUT_APP_ICON_COLOR } from '../../../apps/sellout/sellout.theme';
-import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
-import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
+import {
+  SELLOUT_APP_PRIMARY_COLOR,
+  SELLOUT_APP_ICON_COLOR,
+} from '../../../apps/sellout/sellout.theme';
+import {
+  NOTES_APP_ICON_COLOR,
+  NOTES_APP_PRIMARY_COLOR,
+} from '../../../apps/notes/notes.theme';
+import {
+  DIALER_APP_PRIMARY_COLOR,
+  DIALER_APP_TEXT_COLOR,
+} from '../../../apps/dialer/dialer.theme';
 
 export interface IAppConfig {
   id: string;
@@ -70,7 +74,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
-    icon: <MessageIcon fontSize="large" />,
+    icon: <MessageIcon fontSize='large' />,
     notificationIcon: <MessageIcon fontSize='small' />,
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
@@ -82,7 +86,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
-    icon: <ContactsIcon fontSize="large" />,
+    icon: <ContactsIcon fontSize='large' />,
     notificationIcon: <ContactsIcon fontSize='small' />,
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
@@ -94,7 +98,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
-    icon: <CalculatorIcon fontSize="large" />,
+    icon: <CalculatorIcon fontSize='large' />,
     notificationIcon: <CalculatorIcon fontSize='small' />,
     backgroundColor: purple[500],
     color: grey[50],
@@ -106,7 +110,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
-    icon: <SettingsIcon fontSize="large" />,
+    icon: <SettingsIcon fontSize='large' />,
     notificationIcon: <SettingsIcon fontSize='small' />,
     backgroundColor: '#383838',
     color: grey[50],

@@ -1,5 +1,9 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../common/typings/messages';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageGroup,
+} from '../../../common/typings/messages';
 import { messageState } from './state';
 
 interface IUseMessages {
@@ -18,11 +22,20 @@ export default (): IUseMessages => {
     messageState.messageGroups
   );
 
-  const [createMessageGroupResult, setCreateMessageGroupResult] = useRecoilState<CreateMessageGroupResult | null>(
+  const [
+    createMessageGroupResult,
+    setCreateMessageGroupResult,
+  ] = useRecoilState<CreateMessageGroupResult | null>(
     messageState.createMessageGroupResult
   );
 
   const clearMessageGroupResult = () => setCreateMessageGroupResult(null);
 
-  return { messages, setMessages, messageGroups, createMessageGroupResult, clearMessageGroupResult };
+  return {
+    messages,
+    setMessages,
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+  };
 };

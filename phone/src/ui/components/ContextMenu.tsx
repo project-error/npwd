@@ -28,7 +28,7 @@ interface IContextMenuOption {
   selected?: boolean;
   icon?: React.ReactNode;
   key?: string;
-};
+}
 
 interface IContextMenuProps {
   open: boolean;
@@ -64,8 +64,11 @@ export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
                 onClose();
               }}
             >
-              {option.icon && <ListItemIcon >{option.icon}</ListItemIcon>}
-              <ListItemText primary={option.label} secondary={option.description} />
+              {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
+              <ListItemText
+                primary={option.label}
+                secondary={option.description}
+              />
             </ListItem>
           ))}
         </List>

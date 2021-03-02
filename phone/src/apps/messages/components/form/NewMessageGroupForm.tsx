@@ -101,8 +101,14 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         </Box>
       )}
       <Box px={2} py={3}>
-        <Button disabled={submitDisabled} variant='contained' fullWidth color='primary' type='submit'>
-          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')} 
+        <Button
+          disabled={submitDisabled}
+          variant='contained'
+          fullWidth
+          color='primary'
+          type='submit'
+        >
+          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
         </Button>
       </Box>
     </form>

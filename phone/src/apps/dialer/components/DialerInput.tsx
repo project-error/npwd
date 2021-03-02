@@ -39,8 +39,8 @@ export const DialerInput = () => {
   };
 
   const handleNewContact = (number: string) => {
-    history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`)
-  }
+    history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`);
+  };
 
   return (
     <Box component={Paper} className={classes.root}>
@@ -50,10 +50,13 @@ export const DialerInput = () => {
         value={inputVal}
       />
       <IconButton color='primary' className={classes.iconBtn}>
-        <PhoneIcon fontSize="large" onClick={() => handleCall(inputVal)} />
+        <PhoneIcon fontSize='large' onClick={() => handleCall(inputVal)} />
       </IconButton>
       <IconButton className={classes.iconBtn}>
-        <PersonAddIcon fontSize="large" onClick={() => handleNewContact(inputVal)} />
+        <PersonAddIcon
+          fontSize='large'
+          onClick={() => handleNewContact(inputVal)}
+        />
       </IconButton>
     </Box>
   );

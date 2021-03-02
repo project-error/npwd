@@ -8,8 +8,8 @@ const useStyles = makeStyles({
   },
   msg: {
     maxWidth: '300px',
-    wordWrap:  'break-word',
-    fontSize: '1em'
+    wordWrap: 'break-word',
+    fontSize: '1em',
   },
 });
 

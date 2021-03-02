@@ -14,7 +14,7 @@ interface IUsePhone {
 
 export const usePhone = (): IUsePhone => {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
-  
+
   const { removeAlerts } = useNotifications();
 
   const closePhone = () => {

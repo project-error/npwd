@@ -42,7 +42,7 @@ const DialerNavBar = () => {
       <BottomNavigationAction
         label='Dial'
         value='/phone/dial'
-        color="secondary"
+        color='secondary'
         component={NavLink}
         icon={<PhoneIcon />}
         to='/phone/dial'
@@ -50,7 +50,7 @@ const DialerNavBar = () => {
       <BottomNavigationAction
         label='Contacts'
         value='/phone/contacts'
-        color="secondary"
+        color='secondary'
         component={NavLink}
         icon={<PersonIcon />}
         to='/phone/contacts'

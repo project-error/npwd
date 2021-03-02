@@ -9,7 +9,7 @@ interface INotificationIcon {
 
 export const NotificationIcon = ({ icon, to }: INotificationIcon) => {
   return (
-    <IconButton component={NavLink} to={to} size="small">
+    <IconButton component={NavLink} to={to} size='small'>
       {icon}
     </IconButton>
   );

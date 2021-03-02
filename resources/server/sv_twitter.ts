@@ -313,7 +313,7 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
     await updateProfile(identifier, profile);
     emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_SUCCESS',
-      type: 'success'
+      type: 'success',
     });
   } catch (e) {
     twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
@@ -321,7 +321,7 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
     });
     emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_FAILURE',
-      type: 'error'
+      type: 'error',
     });
   }
 });
@@ -368,8 +368,8 @@ onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
     });
     emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, {
       message: 'TWITTER_CREATE_FAILED',
-      type: 'error'
-    }); 
+      type: 'error',
+    });
   }
 });
 
