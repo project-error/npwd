@@ -15,6 +15,6 @@ ui_page 'resources/html/index.html'
 
 files {
     'resources/html/index.html',
-    'resources/html/main.js',
+    'resources/html/*.js',
     'resources/html/media/**/*'
 }
