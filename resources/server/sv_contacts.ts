@@ -18,7 +18,8 @@ interface ContactId {
 }
 
 async function fetchAllContacts(identifier: string): Promise<Contacts[]> {
-   const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
+  const query =
+    'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
   const [results] = await pool.query(query, [identifier]);
   const contacts = <Contacts[]>results;
   return contacts;
@@ -87,12 +88,12 @@ onNet(
       emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
       emitNet(events.CONTACTS_ACTION_RESULT, _source, {
         message: 'CONTACT_ADD_SUCCESS',
-        type: 'success'
+        type: 'success',
       });
     } catch (e) {
       emitNet(events.CONTACTS_ACTION_RESULT, _source, {
         message: 'CONTACT_ADD_FAILED',
-        type: 'error'
+        type: 'error',
       });
       contactsLogger.error(`Failed to add contact, ${e.message}`, {
         source: _source,
@@ -105,23 +106,19 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
   const _source = getSource();
   try {
     const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
-    // console.log('nice identifier bro', _identifier);
     await updateContact(contact, _identifier);
-    // console.log('i updated the contact server side!');
 
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
-    // console.log('ffs, didd it return successful');
 
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {
       message: 'CONTACT_UPDATE_SUCCESS',
-      type: 'success'
+      type: 'success',
     });
-    // console.log('UPDATED CONTACT: ', contact);
   } catch (e) {
     const _source = (global as any).source;
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {
       message: 'CONTACT_UPDATE_FAILED',
-      type: 'error'
+      type: 'error',
     });
     contactsLogger.error(`Failed to update contact, ${e.message}`, {
       source: _source,
@@ -137,7 +134,7 @@ onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
     emitNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, _source);
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {
       message: 'CONTACT_DELETE_SUCCESS',
-      type: 'success'
+      type: 'success',
     });
   } catch (e) {
     contactsLogger.error(`Failed to delete contact, ${e.message}`, {
@@ -145,7 +142,7 @@ onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
     });
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {
       message: 'CONTACT_DELETE_FAILED',
-      type: 'error'
+      type: 'error',
     });
   }
 });
