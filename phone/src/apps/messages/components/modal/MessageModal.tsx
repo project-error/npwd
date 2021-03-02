@@ -73,6 +73,16 @@ export const MessageModal = () => {
     }
   }, [activeMessageGroup, minimumLoadPassed]);
 
+  useEffect(() =>  {
+    if(!messages) return;
+    const unreadMessages = messages.filter((msg) => !msg.isRead).map((msg) => msg.id);
+    if (unreadMessages.length) {
+      Nui.send('phone:setReadMessages', {
+        ids: unreadMessages
+      })
+    }
+  }, [messages])
+
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately
   // another flash to the tweets screen.

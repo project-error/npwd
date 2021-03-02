@@ -1,5 +1,9 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../common/typings/messages';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageGroup,
+} from '../../../common/typings/messages';
 import { messageState } from './state';
 
 interface IUseMessages {
@@ -8,16 +12,25 @@ interface IUseMessages {
   messageGroups?: MessageGroup[] | null;
   createMessageGroupResult?: CreateMessageGroupResult | null;
   clearMessageGroupResult(): void;
+  getMessageGroupById: (id: string) => MessageGroup | null;
 }
 
 export default (): IUseMessages => {
   const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
   const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
 
+  const getMessageGroupById = (id: string): MessageGroup | null => {
+    return messageGroups 
+      ? messageGroups.find(c => c.groupId === id) 
+      : null;
+  };
+
   const [
     createMessageGroupResult,
     setCreateMessageGroupResult,
-  ] = useRecoilState<CreateMessageGroupResult | null>(messageState.createMessageGroupResult);
+  ] = useRecoilState<CreateMessageGroupResult | null>(
+    messageState.createMessageGroupResult
+  );
 
   const clearMessageGroupResult = () => setCreateMessageGroupResult(null);
 
@@ -27,5 +40,6 @@ export default (): IUseMessages => {
     messageGroups,
     createMessageGroupResult,
     clearMessageGroupResult,
+    getMessageGroupById,
   };
 };

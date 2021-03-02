@@ -9,6 +9,7 @@ import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
 import {useMessageNotifications} from "../../hooks/useMessageNotifications";
+import { goToConversation } from '../../utils/goToConversation';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -19,14 +20,7 @@ const MessagesList = (): any => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const goToConversation = useCallback(
-    (messageGroup) =>
-      history.push(
-        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
-      ),
-    [history],
-  );
-
+  
   const formattedSearch = searchValue.toLowerCase().trim();
   const filteredGroups = formattedSearch
     ? messageGroups.filter((group) => {
@@ -45,7 +39,7 @@ const MessagesList = (): any => {
       const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
-        goToConversation(findGroup);
+        goToConversation(findGroup, history);
       }
     }
   }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);

@@ -26,3 +26,8 @@ export interface CreateMessageGroupResult {
   groupId?: string;
   mine?: boolean;
 }
+
+export interface CreateMessageBroadcast {
+  message: string;
+  groupName: string;
+}

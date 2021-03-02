@@ -1,5 +1,11 @@
 import React from 'react';
-import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar } from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar as MuiAvatar,
+  Badge,
+} from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/typings/messages';
 
@@ -8,11 +14,16 @@ interface IProps {
   handleClick: (group: MessageGroup) => () => void;
 }
 
+// get unread messages, check the length. If we have any, get the groupId,
+// and how the badge
+
 const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
   return (
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
-        <MuiAvatar src={messageGroup?.avatar} />
+        <Badge color='error' variant='dot'>
+          <MuiAvatar src={messageGroup?.avatar} />
+        </Badge>
       </ListItemAvatar>
       <ListItemText>{messageGroup.label || messageGroup.groupDisplay}</ListItemText>
     </ListItem>

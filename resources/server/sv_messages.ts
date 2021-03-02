@@ -451,25 +451,25 @@ onNet(
       await createMessage(_identifier, groupId, message);
       emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
 
-      // currently getting all participants and emitting an event for each
-      // as we loop through. However, as we only get the groupId, we get the
-      // label of the group chat on the NUI side. If there is any way to get
-      // the label on server-side?
+      // gets the identifiers foe the participants for current groupId.
       const userParticipants = await getIdentifiersFromParticipants(groupId);
 
       for (const participantId of userParticipants) {
-        console.log('PARTICIPANTS: ', participantId);
-        const participantPlayer = await getPlayerFromIdentifier(
-          participantId.participant_identifier
-        );
-        emitNet(
-          events.MESSAGES_CREATE_MESSAGE_BROADCAST,
-          participantPlayer.source,
-          {
-            groupName,
-            message,
-          }
-        );
+        // we don't broadcast to the source of the event.
+        if (participantId.participant_identifier !== _identifier) {
+          console.log('PARTICIPANTS: ', participantId);
+          const participantPlayer = await getPlayerFromIdentifier(
+            participantId.participant_identifier
+          );
+          emitNet(
+            events.MESSAGES_CREATE_MESSAGE_BROADCAST,
+            participantPlayer.source,
+            {
+              groupName,
+              message,
+            }
+          );
+        }
       }
     } catch (e) {
       // Not really sure what this does? As I cant find any reference

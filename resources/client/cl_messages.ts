@@ -1,5 +1,9 @@
 import events from '../utils/events';
-import { Message, MessageGroup } from '../../phone/src/common/typings/messages';
+import {
+  CreateMessageBroadcast,
+  Message,
+  MessageGroup,
+} from '../../phone/src/common/typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
 /**
@@ -83,6 +87,10 @@ onNet(events.MESSAGES_SEND_MESSAGE_FAILED, () => {
 onNet(events.MESSAGES_ACTION_RESULT, (result: any) => {
   sendMessageEvent(events.MESSAGES_ACTION_RESULT, result);
 });
-onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, (message: any) => {
-  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_BROADCAST, message);
-});
+
+onNet(
+  events.MESSAGES_CREATE_MESSAGE_BROADCAST,
+  (result: CreateMessageBroadcast) => {
+    sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_BROADCAST, result);
+  }
+);
