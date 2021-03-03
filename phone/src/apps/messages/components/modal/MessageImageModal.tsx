@@ -10,6 +10,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
+import { Snackbar } from '../../../../ui/components/Snackbar';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 interface IProps {
   isOpen: boolean;
@@ -26,6 +28,11 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const [message, setMessage] = useState('');
   const [pasteVisible, setPasteVisible] = useState(false);
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
+
+  const isImage = (url) => {
+    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
+  };
+  const { addAlert } = useSnackbar();
 
   const removeQueryParamImage = useCallback(() => {
     setQueryParamImagePreview(null);
@@ -57,9 +64,13 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   }, [image, sendFromQueryParam]);
 
   const sendFromClipboard = (event) => {
-    if (event.key === 'Enter') {
-      sendImageMessage(message);
-    }
+    navigator.clipboard.readText().then((text) => {
+      if (isImage(text)) {
+        sendImageMessage(text);
+      } else {
+        addAlert({ message: 'MESSAGES_NO_LINK_CLIPBOARD', type: 'error' });
+      }
+    });
   };
 
   const menuOptions = useMemo(
@@ -67,7 +78,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       {
         label: 'Paste from clipboard',
         icon: <FileCopyIcon />,
-        onClick: () => setPasteVisible(true),
+        onClick: sendFromClipboard,
       },
       {
         label: 'Camera / Gallery',
@@ -98,21 +109,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           >
             Share
           </Button>
-        </Box>
-      </Modal>
-      <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
-        <Box p={1}>
-          <TextField
-            placeholder="A link to your image or gif"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-            fullWidth
-            inputProps={{
-              className: classes.messagesInput,
-            }}
-            inputRef={(input) => input && input.focus()}
-            onKeyPress={sendFromClipboard}
-          />
         </Box>
       </Modal>
     </>
