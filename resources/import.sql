@@ -103,9 +103,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages_labels` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `group_id` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `npwd_messages_labels_group_id_idx` (`group_id`),
-  CONSTRAINT `npwd_messages_labels_group_id` FOREIGN KEY (`group_id`) REFERENCES `npwd_messages_groups` (`group_id`)
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_messages` (
