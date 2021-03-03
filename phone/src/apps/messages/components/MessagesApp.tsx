@@ -33,6 +33,7 @@ export const MessagesApp = () => {
               render={() => (
                 <>
                   <MessagesList />
+                  <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
                 </>
               )}
             />
@@ -45,7 +46,6 @@ export const MessagesApp = () => {
             />
           </Switch>
         </AppContent>
-        <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
       </AppWrapper>
     </MessagesThemeProvider>
   );
@@ -92,78 +92,6 @@ InjectDebugData([
         isMine: false,
         updatedAt: Date.now(),
       },
-      {
-        id: 4,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 5,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        isRead: true,
-        groupId: '2',
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 6,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 7,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: true,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 8,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 9,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: true,
-        updatedAt: Date.now(),
-      },
     ],
   },
   {
@@ -174,15 +102,17 @@ InjectDebugData([
         groupId: '2',
         groupDisplay: 'dev-chat',
         isGroupChat: true,
+        phoneNumbers: ['444-4444', '111-1134', '111-1111'],
         avatar: null,
         label: null,
         updatedAt: Date.now(),
-        unreadCount: 3,
+        unreadCount: 2,
       },
       {
         groupId: '3',
         groupDisplay: 'Chip',
-        isGroupChat: true,
+        isGroupChat: false,
+        phoneNumbers: ['111-1134', '111-1111'],
         avatar: null,
         label: null,
         updatedAt: Date.now(),
@@ -222,5 +152,5 @@ InjectDebugData(
       },
     },
   ],
-  3000
+  3000,
 );

@@ -35,6 +35,7 @@ interface MessageGroupMapping {
   [groupId: string]: {
     user_identifier: string;
     participants: string[];
+    phoneNumbers: string[];
     label?: string;
     avatar?: string;
     updatedAt: string;
@@ -236,6 +237,9 @@ async function getConsolidatedMessageGroups(userIdentifier: string): Promise<Mes
 
       if (groupId in mapping) {
         mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
+        mapping[groupId].phoneNumbers = mapping[groupId].phoneNumbers.concat(
+          messageGroup.phone_number,
+        );
       } else {
         mapping[groupId] = {
           user_identifier: messageGroup.user_identifier,
@@ -243,6 +247,7 @@ async function getConsolidatedMessageGroups(userIdentifier: string): Promise<Mes
           avatar: messageGroup.avatar,
           label: messageGroup.label,
           participants: [displayTerm],
+          phoneNumbers: [messageGroup.phone_number],
           updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
         };
       }

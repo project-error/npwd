@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { List } from '@material-ui/core';
-import qs from 'qs';
 import { MessageGroup } from '../../../../common/typings/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
@@ -25,9 +24,7 @@ const MessagesList = (): any => {
         const displayIncludes = groupDisplay.includes(formattedSearch);
 
         const label = group.label?.toLowerCase();
-        return label
-          ? displayIncludes || label.includes(formattedSearch)
-          : displayIncludes;
+        return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
       })
     : messageGroups;
 
@@ -39,18 +36,13 @@ const MessagesList = (): any => {
         goToConversation(findGroup, history);
       }
     }
-  }, [
-    messageGroups,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-    history,
-  ]);
+  }, [messageGroups, createMessageGroupResult, clearMessageGroupResult, history]);
 
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
     Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
-    history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`);
+    goToConversation(messageGroup, history);
   };
 
   return (

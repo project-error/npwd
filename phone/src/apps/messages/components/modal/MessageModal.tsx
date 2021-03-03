@@ -1,32 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Slide, Paper, Typography, Button } from '@material-ui/core';
+import {
+  Slide,
+  Paper,
+  Typography,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import useStyles from './modal.styles';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { MessageGroup } from '../../../../common/typings/messages';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Modal from '../../../../ui/components/Modal';
+import { useContacts } from '../../../contacts/hooks/useContacts';
+import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 750;
-const MESSAGES_REFRESH_RATE = 5000;
 
 export const MessageModal = () => {
   const classes = useStyles();
   const history = useHistory();
-  const activeMessageGroup = useQueryParams<MessageGroup>();
+  const { number: myNumber } = useSimcard();
+  const { pathname } = useLocation();
+  const { t } = useTranslation();
   const { groupId } = useParams<{ groupId: string }>();
-  const { messages, setMessages } = useMessages();
+  const { messages, setMessages, activeMessageGroup, setActiveMessageGroup } = useMessages();
+  const { doesContactExist, getDisplayByNumber } = useContacts();
 
+  const [groupActionsOpen, setGroupActionsOpen] = useState(false);
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
 
   const minLoadTimeoutRef = useRef(null);
-  const fetchInterval = useRef(null);
 
   const closeModal = () => {
     history.push('/messages');
@@ -41,20 +56,8 @@ export const MessageModal = () => {
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
 
-    fetchInterval.current = setInterval(() => {
-      if (!groupId) return;
-      Nui.send('phone:fetchMessages', {
-        groupId,
-      });
-    }, MESSAGES_REFRESH_RATE);
-
-    return () => {
-      clearInterval(fetchInterval.current);
-      fetchInterval.current = null;
-      clearTimeout(minLoadTimeoutRef.current);
-      minLoadTimeoutRef.current = null;
-    };
-  }, [groupId]);
+    setActiveMessageGroup(groupId);
+  }, [groupId, setActiveMessageGroup]);
 
   useEffect(() => {
     // when we get a new message group we should scroll to the
@@ -89,23 +92,73 @@ export const MessageModal = () => {
   const headerClass =
     header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
 
+  const handleAddContact = (number) => {
+    history.push(`/contacts/-1/?addNumber=${number}&referal=${pathname}`);
+  };
+
+  const phoneNumbers = activeMessageGroup?.phoneNumbers || [];
+
   return (
-    <Slide direction="left" in={!!activeMessageGroup}>
-      <Paper className={classes.modalRoot}>
-        <Paper className={classes.topContainer}>
-          <Button onClick={closeModal}>
-            <ArrowBackIcon fontSize="large" />
-          </Button>
-          <Typography variant="h5" className={headerClass}>
-            {header}
-          </Typography>
+    <div>
+      <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
+        <Typography variant="h6">{t('APPS_MESSAGES_MEMBERS_TITLE')}</Typography>
+        <List>
+          {phoneNumbers.map((number) => {
+            const display = getDisplayByNumber(number);
+            return (
+              <ListItem divider>
+                <ListItemText>
+                  {display !== number ? (
+                    <span>
+                      {display} ({number})
+                    </span>
+                  ) : (
+                    <span>{number}</span>
+                  )}
+                </ListItemText>
+                {!doesContactExist(number) && myNumber !== number && (
+                  <ListItemSecondaryAction>
+                    <Button onClick={() => handleAddContact(number)}>
+                      <PersonAddIcon />
+                    </Button>
+                  </ListItemSecondaryAction>
+                )}
+              </ListItem>
+            );
+          })}
+        </List>
+      </Modal>
+      <Slide direction="left" in={!!activeMessageGroup}>
+        <Paper className={classes.modalRoot}>
+          <Paper>
+            <Box display="flex" justifyContent="space-between">
+              <Button onClick={closeModal}>
+                <ArrowBackIcon fontSize="large" />
+              </Button>
+              <Typography variant="h5" className={headerClass}>
+                {header}
+              </Typography>
+              {activeMessageGroup?.isGroupChat ? (
+                <Button>
+                  <MoreVertIcon onClick={() => setGroupActionsOpen(true)} fontSize="large" />
+                </Button>
+              ) : (
+                <Button>
+                  <PersonAddIcon
+                    onClick={() => handleAddContact(phoneNumbers.find((n) => myNumber !== n))}
+                    fontSize="large"
+                  />
+                </Button>
+              )}
+            </Box>
+          </Paper>
+          {hasLoaded ? (
+            <Conversation messages={messages} activeMessageGroup={activeMessageGroup} />
+          ) : (
+            <MessageSkeletonList />
+          )}
         </Paper>
-        {hasLoaded ? (
-          <Conversation messages={messages} activeMessageGroup={activeMessageGroup} />
-        ) : (
-          <MessageSkeletonList />
-        )}
-      </Paper>
-    </Slide>
+      </Slide>
+    </div>
   );
 };

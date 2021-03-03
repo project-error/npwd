@@ -19,6 +19,8 @@ export interface MessageGroup {
   label?: string;
   updatedAt: string;
   unreadCount: number;
+  phoneNumbers: string[];
+  participants: string[];
 }
 
 export interface CreateMessageGroupResult {
