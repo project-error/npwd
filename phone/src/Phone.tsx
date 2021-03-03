@@ -59,21 +59,21 @@ function Phone() {
             className="Phone"
             style={{
               transformOrigin: 'right bottom',
-              transform: `scale(${settings.zoom}`,
+              transform: `scale(${settings.zoom.value}`,
               bottom,
             }}
           >
             <div
               className="PhoneFrame"
               style={{
-                backgroundImage: `url(./media/frames/${settings.frame})`,
+                backgroundImage: `url(./media/frames/${settings.frame.value})`,
               }}
             />
             <div
               id="phone"
               className="PhoneScreen"
               style={{
-                backgroundImage: `url(./media/backgrounds/${settings.wallpaper})`,
+                backgroundImage: `url(./media/backgrounds/${settings.wallpaper.value})`,
               }}
             >
               <>

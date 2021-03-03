@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
-import { useContextMenu, MapStringOptions } from '../../../ui/hooks/useContextMenu';
+import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks/useContextMenu';
 import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { SettingItem } from './SettingItem';
+import { SettingItem, SettingItemSlider } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -20,17 +20,8 @@ import {
   VolumeUp,
 } from '@material-ui/icons';
 
-import {
-  Box,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-  ListSubheader,
-  Slider,
-} from '@material-ui/core';
-import { useRecoilState } from 'recoil';
-import { settingsState } from '../hooks/useSettings';
+import { ListSubheader } from '@material-ui/core';
+import { useSettings } from '../hooks/useSettings';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -42,57 +33,39 @@ export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const simcard = useSimcard();
-  const [settings, setSettings] = useRecoilState(settingsState);
+  const [settings, setSettings] = useSettings();
+  const { t } = useTranslation();
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
   };
 
-  const [sliders, setSliders] = useState([]);
-
-  useEffect(() => {
-    setSliders((curr) => {
-      if (!curr.length) {
-        return [settings.ringtoneVol, settings.notificationVol, settings.TWITTER_notificationVol];
-      }
-      return curr;
-    });
-  }, [settings.notificationVol, settings.ringtoneVol, settings.TWITTER_notificationVol]);
-
-  const handleSliderChange = (idx) => (_e: any, value: number | number[]) => {
-    setSliders((curr) => {
-      const newValues = [...curr];
-      newValues[idx] = value;
-      return newValues;
-    });
-  };
-
-  const { t } = useTranslation();
-
   const wallpapers = config.wallpapers.map(
-    MapStringOptions(settings.wallpaper, (val: string) => handleSettingChange('wallpaper', val)),
+    MapSettingItem(settings.wallpaper, (val: SettingOption) =>
+      handleSettingChange('wallpaper', val),
+    ),
   );
   const frames = config.frames.map(
-    MapStringOptions(settings.frame, (val: string) => handleSettingChange('frame', val)),
+    MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
   );
-  const themes = Object.keys(config.themes).map(
-    MapStringOptions(settings.theme, (val: string) => handleSettingChange('theme', val)),
+  const themes = config.themes.map(
+    MapSettingItem(settings.theme, (val: SettingOption) => handleSettingChange('theme', val)),
   );
   const zoomOptions = config.zoomOptions.map(
-    MapStringOptions(settings.zoom, (val: string) => handleSettingChange('zoom', val)),
+    MapSettingItem(settings.zoom, (val: SettingOption) => handleSettingChange('zoom', val)),
   );
   const ringtones = config.ringtones.map(
-    MapStringOptions(settings.ringtone, (val: string) => handleSettingChange('ringtone', val)),
+    MapSettingItem(settings.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val)),
   );
-  const notifications = config.notifications.map(
-    MapStringOptions(settings.notification, (val: string) =>
-      handleSettingChange('notification', val),
+  const notifications = config.notiSounds.map(
+    MapSettingItem(settings.notiSound, (val: SettingOption) =>
+      handleSettingChange('notiSound', val),
     ),
   );
 
-  const twitterNotifications = config.notifications.map(
-    MapStringOptions(settings.notification, (val: string) =>
-      handleSettingChange('TWITTER_notification', val),
+  const twitterNotifications = config.notiSounds.map(
+    MapSettingItem(settings.notiSound, (item: SettingOption) =>
+      handleSettingChange('TWITTER_notiSound', item),
     ),
   );
 
@@ -109,84 +82,56 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_RINGTONE')}
-            value={settings.ringtone}
+            value={settings.ringtone.label}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem divider>
-            <ListItemIcon>
-              <VolumeUp />
-            </ListItemIcon>
-            <ListItemText
-              primary={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
-              secondary={settings.ringtoneVol}
-            />
-            <ListItemSecondaryAction>
-              <Box p={2} width={150}>
-                <Slider
-                  value={sliders[0] || settings.ringtoneVol}
-                  min={0}
-                  max={100}
-                  onChange={handleSliderChange(0)}
-                  onChangeCommitted={() => handleSettingChange('ringtoneVol', sliders[0])}
-                />
-              </Box>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <SettingItemSlider
+            label={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
+            icon={<VolumeUp />}
+            value={settings.ringtoneVol}
+            onCommit={(e, val) => handleSettingChange('ringtoneVol', val)}
+          />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
-            value={settings.notification}
+            value={settings.notiSound.label}
             options={notifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem divider>
-            <ListItemIcon>
-              <VolumeUp />
-            </ListItemIcon>
-            <ListItemText
-              primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
-              secondary={settings.notificationVol}
-            />
-            <ListItemSecondaryAction>
-              <Box p={2} width={150}>
-                <Slider
-                  value={sliders[1] || settings.notificationVol}
-                  min={0}
-                  max={100}
-                  onChange={handleSliderChange(1)}
-                  onChangeCommitted={() => handleSettingChange('notificationVol', sliders[1])}
-                />
-              </Box>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <SettingItemSlider
+            label={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+            icon={<VolumeUp />}
+            value={settings.notiSoundVol}
+            onCommit={(e, val) => handleSettingChange('notiSoundVol', val)}
+          />
         </List>
         <List disablePadding subheader={<SubHeaderComp text="Appearance" />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_THEME')}
-            value={settings.theme}
+            value={settings.theme.label}
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
-            value={settings.wallpaper}
+            value={settings.wallpaper.label}
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_FRAME')}
-            value={settings.frame}
+            value={settings.frame.label}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_ZOOM')}
-            value={settings.zoom}
+            value={settings.zoom.label}
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}
@@ -195,34 +140,17 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}>
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
-            value={settings.TWITTER_notification}
+            value={settings.TWITTER_notiSound.label}
             options={twitterNotifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <ListItem divider>
-            <ListItemIcon>
-              <VolumeUp />
-            </ListItemIcon>
-            <ListItemText
-              primary={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
-              secondary={settings.TWITTER_notificationVol}
-            />
-
-            <ListItemSecondaryAction>
-              <Box p={2} width={150}>
-                <Slider
-                  value={sliders[2] || settings.TWITTER_notificationVol}
-                  min={0}
-                  max={100}
-                  onChange={handleSliderChange(2)}
-                  onChangeCommitted={() =>
-                    handleSettingChange('TWITTER_notificationVol', sliders[2])
-                  }
-                />
-              </Box>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <SettingItemSlider
+            label={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+            value={settings.TWITTER_notiSoundVol}
+            onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
+            icon={<VolumeUp />}
+          />
         </List>
       </AppContent>
       <ContextMenu />
