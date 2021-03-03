@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import qs from 'qs';
-import Nui from '../../../../os/nui-events/utils/Nui';
-import Modal from '../../../../ui/components/Modal';
-import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import { Box, Typography, TextField, Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import useStyles from './modal.styles';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import qs from 'qs';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
+import { isImage } from '../../../../common/utils/isImage';
+import Nui from '../../../../os/nui-events/utils/Nui';
+import { ContextMenu } from '../../../../ui/components/ContextMenu';
+import Modal from '../../../../ui/components/Modal';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { Snackbar } from '../../../../ui/components/Snackbar';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 interface IProps {
@@ -21,21 +20,13 @@ interface IProps {
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
-  const classes = useStyles();
   const history = useHistory();
   const { pathname, search } = useLocation();
-
-  const [message, setMessage] = useState('');
-  const [pasteVisible, setPasteVisible] = useState(false);
-  const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
-
-  const isImage = (url) => {
-    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
-  };
+  const [imagePreview, setImagePreview] = useState(null);
   const { addAlert } = useSnackbar();
 
-  const removeQueryParamImage = useCallback(() => {
-    setQueryParamImagePreview(null);
+  const removeImage = useCallback(() => {
+    setImagePreview(null);
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
   }, [history, pathname, search]);
 
@@ -53,20 +44,20 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const sendFromQueryParam = useCallback(
     (image) => {
       sendImageMessage(image);
-      removeQueryParamImage();
+      removeImage();
     },
-    [removeQueryParamImage, sendImageMessage],
+    [removeImage, sendImageMessage],
   );
 
   useEffect(() => {
     if (!image) return;
-    setQueryParamImagePreview(image);
+    setImagePreview(image);
   }, [image, sendFromQueryParam]);
 
   const sendFromClipboard = (event) => {
     navigator.clipboard.readText().then((text) => {
       if (isImage(text)) {
-        sendImageMessage(text);
+        setImagePreview(text);
       } else {
         addAlert({ message: 'MESSAGES_NO_LINK_CLIPBOARD', type: 'error' });
       }
@@ -97,15 +88,15 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   return (
     <>
       <ContextMenu open={isOpen} options={menuOptions} onClose={onClose} />
-      <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
+      <Modal visible={imagePreview} handleClose={removeImage}>
         <Box py={1}>
           <Typography paragraph>Do you want to share this image?</Typography>
-          <PictureResponsive src={queryParamImagePreview} alt={'Share gallery image preview'} />
+          <PictureResponsive src={imagePreview} alt={'Share gallery image preview'} />
           <Button
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => sendFromQueryParam(queryParamImagePreview)}
+            onClick={() => sendFromQueryParam(imagePreview)}
           >
             Share
           </Button>
