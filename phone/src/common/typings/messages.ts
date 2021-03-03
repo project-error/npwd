@@ -27,6 +27,7 @@ export interface CreateMessageGroupResult {
   duplicate?: boolean;
   groupId?: string;
   mine?: boolean;
+  identifiers?: string[];
 }
 
 export interface CreateMessageBroadcast {

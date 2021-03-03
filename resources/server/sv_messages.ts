@@ -52,7 +52,7 @@ async function createMessage(
   userIdentifier: string,
   groupId: string,
   message: string,
-  participants: string[]
+  participants: string[],
 ): Promise<any> {
   const query = `
   INSERT INTO npwd_messages
@@ -68,9 +68,7 @@ async function createMessage(
 
   // updates unreadCount for all participants
   await Promise.all(
-    participants
-      .filter((s) => userIdentifier !== s)
-      .map((s) => pool.query(groupQuery, [s]))
+    participants.filter((s) => userIdentifier !== s).map((s) => pool.query(groupQuery, [s])),
   );
 
   return results;
@@ -345,7 +343,7 @@ async function createMessageGroupsFromPhoneNumbers(
 
   const groupId = createGroupHashID(identifiers);
   if (await checkIfMessageGroupExists(groupId)) {
-    return { error: false, duplicate: true, groupId };
+    return { error: false, duplicate: true, groupId, identifiers };
   }
 
   const queryPromises = [
@@ -369,7 +367,7 @@ async function createMessageGroupsFromPhoneNumbers(
     return { error: true };
   }
 
-  return { error: false, groupId };
+  return { error: false, groupId, identifiers };
 }
 
 // getting the participants from groupId.
@@ -438,6 +436,15 @@ onNet(
         });
       } else {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
+        if (result.identifiers) {
+          for (const participantId of result.identifiers) {
+            // we don't broadcast to the source of the event.
+            if (participantId !== _identifier) {
+              const participantPlayer = await getPlayerFromIdentifier(participantId);
+              emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
+            }
+          }
+        }
       }
     } catch (e) {
       emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
@@ -467,54 +474,45 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   }
 });
 
-onNet(
-  events.MESSAGES_SEND_MESSAGE,
-  async (groupId: string, message: string, groupName: string) => {
-    const _source = getSource();
-    try {
-      const _identifier = getIdentifier(_source);
-      const userParticipants = getIdentifiersFromParticipants(groupId);
+onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, groupName: string) => {
+  const _source = getSource();
+  try {
+    const _identifier = getIdentifier(_source);
+    const userParticipants = getIdentifiersFromParticipants(groupId);
 
-      await createMessage(_identifier, groupId, message, userParticipants);
+    await createMessage(_identifier, groupId, message, userParticipants);
 
-      emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
+    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
 
-      // gets the identifiers foe the participants for current groupId.
+    // gets the identifiers foe the participants for current groupId.
 
-      for (const participantId of userParticipants) {
-        // we don't broadcast to the source of the event.
-        if (participantId !== _identifier) {
-          const participantPlayer = await getPlayerFromIdentifier(
-            participantId
-          );
-          emitNet(
-            events.MESSAGES_CREATE_MESSAGE_BROADCAST,
-            participantPlayer.source,
-            {
-              groupName,
-              groupId,
-              message,
-            }
-          );
-        }
+    for (const participantId of userParticipants) {
+      // we don't broadcast to the source of the event.
+      if (participantId !== _identifier) {
+        const participantPlayer = await getPlayerFromIdentifier(participantId);
+        emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+          groupName,
+          groupId,
+          message,
+        });
       }
-    } catch (e) {
-      // Not really sure what this does? As I cant find any reference
-      // of this in the ui part.
-      emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
-      // sending a new alert
-      // The message property is always using the locale strings without
-      // the APPS_ prefix.
-      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-        message: 'MESSAGES_NEW_MESSAGE_FAILED',
-        type: 'error',
-      });
-      messageLogger.error(`Failed to send message, ${e.message}`, {
-        source: _source,
-      });
     }
+  } catch (e) {
+    // Not really sure what this does? As I cant find any reference
+    // of this in the ui part.
+    emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+    // sending a new alert
+    // The message property is always using the locale strings without
+    // the APPS_ prefix.
+    emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+      message: 'MESSAGES_NEW_MESSAGE_FAILED',
+      type: 'error',
+    });
+    messageLogger.error(`Failed to send message, ${e.message}`, {
+      source: _source,
+    });
   }
-);
+});
 
 onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
   const pSource = getSource();
