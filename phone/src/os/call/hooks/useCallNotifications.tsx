@@ -65,7 +65,7 @@ export const useCallNotifications = () => {
             </CallNotification>
           ),
         },
-        true,
+        (n) => addNotification(n)
       );
     }
   };

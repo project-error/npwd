@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List } from '@material-ui/core';
 import qs from 'qs';
 import { MessageGroup } from '../../../../common/typings/messages';
@@ -8,13 +8,11 @@ import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
-import { useMessageNotifications } from '../../hooks/useMessageNotifications';
 import { goToConversation } from '../../utils/goToConversation';
 
 const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
-  const { setUnreadCount } = useMessageNotifications();
 
   const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
@@ -44,15 +42,9 @@ const MessagesList = (): any => {
   }, [
     messageGroups,
     createMessageGroupResult,
-    goToConversation,
     clearMessageGroupResult,
+    history,
   ]);
-
-  useEffect(() => {
-    if (filteredGroups?.length) {
-      setUnreadCount(0);
-    }
-  }, [setUnreadCount, filteredGroups]);
 
   if (!messageGroups) return null;
 

@@ -7,7 +7,6 @@ import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
-import { act } from 'react-dom/test-utils';
 
 interface IProps {
   activeMessageGroup: MessageGroup;

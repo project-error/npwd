@@ -11,7 +11,6 @@ import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -169,24 +168,6 @@ InjectDebugData([
   },
   {
     app: 'MESSAGES',
-    method: 'createMessagesBroadcast',
-    data: {
-      id: 222,
-      number: '777-7777',
-      message: 'Hi! Just checking in on you!',
-    },
-  },
-  {
-    app: 'MESSAGES',
-    method: 'createMessagesBroadcast',
-    data: {
-      id: 223,
-      number: 'Kidz',
-      message: 'Hi! You are awesome!',
-    },
-  },
-  {
-    app: 'MESSAGES',
     method: 'phone:fetchMessageGroupsSuccess',
     data: [
       {
@@ -196,7 +177,7 @@ InjectDebugData([
         avatar: null,
         label: null,
         updatedAt: Date.now(),
-        unreadMessages: 3,
+        unreadCount: 3,
       },
       {
         groupId: '3',
@@ -205,8 +186,41 @@ InjectDebugData([
         avatar: null,
         label: null,
         updatedAt: Date.now(),
-        unreadMessages: 0,
+        unreadCount: 0,
       },
     ],
   },
 ]);
+
+InjectDebugData(
+  [
+    {
+      app: 'MESSAGES',
+      method: 'createMessagesBroadcast',
+      data: {
+        groupId: '2',
+        number: '777-7777',
+        message: 'Hi! Just checking in on you!',
+      },
+    },
+    {
+      app: 'MESSAGES',
+      method: 'createMessagesBroadcast',
+      data: {
+        groupId: '2',
+        number: 'Kidz',
+        message: 'Hi! You are awesome!',
+      },
+    },
+    {
+      app: 'MESSAGES',
+      method: 'createMessagesBroadcast',
+      data: {
+        groupId: '3',
+        number: 'Kidz',
+        message: 'I am testing this like crazy',
+      },
+    },
+  ],
+  3000
+);

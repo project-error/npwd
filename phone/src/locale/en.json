@@ -77,7 +77,6 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
-    "APPS_MESSAGES_NEW_BROADCAST": "New message from {{ group }}",
     "APPS_MESSAGES_UNREAD_MESSAGES": "You have {{ count }} unread messages",
 
     "APPS_CONTACT_FORM_NAME": "Name",

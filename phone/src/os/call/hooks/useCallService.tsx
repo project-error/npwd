@@ -11,11 +11,11 @@ import { useCallNotifications } from './useCallNotifications';
 import { useDuration } from './useDuration';
 
 InjectDebugData<CallProps | boolean>([
-  /*   {
+  {
     app: 'CALL',
     method: 'setCaller',
     data: {
-      accepted: false,
+      accepted: true,
       isTransmitter: false,
       transmitter: 'Chip',
       receiver: 'Taso',
@@ -26,7 +26,7 @@ InjectDebugData<CallProps | boolean>([
     app: 'CALL',
     method: 'callModal',
     data: true,
-  }, */
+  },
 ]);
 
 export const useCallService = () => {

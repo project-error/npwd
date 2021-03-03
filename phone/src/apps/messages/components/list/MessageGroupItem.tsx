@@ -8,8 +8,6 @@ import {
 } from '@material-ui/core';
 
 import { MessageGroup } from '../../../../common/typings/messages';
-import useMessages from '../../hooks/useMessages';
-
 interface IProps {
   messageGroup: MessageGroup;
   handleClick: (group: MessageGroup) => () => void;

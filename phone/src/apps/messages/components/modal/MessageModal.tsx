@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Slide,
-  Paper,
-  Typography,
-  Button,
-  IconButton,
-} from '@material-ui/core';
+import { Slide, Paper, Typography, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import useStyles from './modal.styles';

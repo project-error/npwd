@@ -4,8 +4,6 @@ import { Paper, Box, makeStyles, TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
-import useMessages from '../../hooks/useMessages';
-
 
 interface IProps {
   onAddImageClick(): void;
@@ -17,10 +15,7 @@ const useStyles = makeStyles({
   root: { position: 'absolute', bottom: 0, width: '100%' },
 });
 
-const MessageInput = ({
-  messageGroupId,
-  onAddImageClick,
-}: IProps) => {
+const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [message, setMessage] = useState('');
@@ -39,7 +34,6 @@ const MessageInput = ({
   };
 
   if (!messageGroupId) return null;
-
 
   return (
     <Paper variant="outlined" className={classes.root}>
