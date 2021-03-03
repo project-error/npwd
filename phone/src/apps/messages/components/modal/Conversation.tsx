@@ -48,9 +48,7 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
       <MessageInput
         /*  I should do some groupDiplay here */
         messageGroupName={
-          activeMessageGroup.label
-            ? activeMessageGroup.label
-            : activeMessageGroup.groupDisplay
+          activeMessageGroup.label || activeMessageGroup.groupDisplay
         }
         messageGroupId={activeMessageGroup.groupId}
         onAddImageClick={() => setImageModalOpen(true)}
