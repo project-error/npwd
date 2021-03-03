@@ -1,73 +1,142 @@
 {
   "cellProvider": "AT&T",
   "language": "en",
-  "wallpapers": ["beach.jpg", "minimal.jpg", "surf.jpg", "waves.jpg", "projecterror.jpg"],
+  "wallpapers": [
+    {
+    "label": "Minimal",
+    "value": "minimal.jpg"
+    },
+    {
+      "label": "Surf",
+      "value": "surf.jpg"
+    },
+    {
+      "label": "Waves",
+      "value": "waves.jpg"
+    },
+    {
+      "label": "Project Error",
+      "value": "projecterror.jpg"
+    }
+  ],
+  "frames": [
+    {
+      "label": "Default",
+      "value": "default.png"
+    },
+    {
+      "label": "Blue",
+      "value": "blue.png"
+    },
+    {
+      "label": "Gold",
+      "value": "gold.png"
+    },
+    {
+      "label": "Kawaii",
+      "value": "kawaii.png"
+    },
+    {
+      "label": "Minimal",
+      "value": "minimal.png"
+    },
+    {
+      "label": "Pink",
+      "value": "pink.png"
+    },
+    {
+      "label": "White",
+      "value": "white.png"
+    }
+  ],
+  "zoomOptions": [
+    {
+      "label": "100%",
+      "value": 1
+    },
+    {
+      "label": "90%",
+      "value": 0.9
+    },
+    {
+      "label": "80%",
+      "value": 0.8
+    },
+    {
+      "label": "70%",
+      "value": 0.7
+    }
+  ],
+  "ringtones": [
+    {
+      "label": "Marimba",
+      "value": "marimba"
+    },
+    {
+      "label": "Pixel",
+      "value": "pixel"
+    }
+  ],
+  "notiSounds": [
+    {
+      "label": "Online",
+      "value": "online"
+    },
+    {
+      "label": "99kr",
+      "value": "99kr"
+    }],
   "defaultSettings": {
-    "wallpaper": "projecterror.jpg",
-    "frame": "default.png",
-    "theme": "taso-dark",
-    "zoom": 1,
-    "ringtone": "pixel",
+    "wallpaper": {
+      "label": "Project Error",
+      "value":"projecterror.jpg"
+    },
+    "frame": {
+      "label": "Default",
+      "value":"default.png"
+    },
+    "theme": {
+      "label": "taso-dark",
+      "value":"taso-dark"
+    },
+    "zoom": {
+      "label": "100%",
+      "value": 1
+    },
+    "ringtone": {
+      "label": "Pixel",
+      "value": "pixel"
+    },
+    "notiSound": {
+      "label": "Online",
+      "value": "online"
+    },
     "ringtoneVol": 50,
-    "notification": "online",
-    "notificationVol": 50,
-    "TWITTER_notification": "online",
-    "TWITTER_notificationVol": 100,
+    "notiSoundVol": 50,
+    "TWITTER_notiSound": {
+      "label": "Online",
+      "value": "online"
+    },
+    "TWITTER_notiSoundVol": 100,
     "TWITTER_notifyNewFeedTweet": true
   },
+  "themes": [
+    {
+      "label": "Taso Dark",
+      "value": "taso-dark"
+    },
+    {
+      "label": "Default Dark",
+      "value": "default-dark"
+    },
+    {
+      "label": "Default Light",
+      "value": "default-light"
+    }
+  ],
   "debug": {
     "printDebugLogs": true,
     "logLevel": 1
-  },
-  "frames": [
-    "default.png",
-    "blue.png",
-    "gold.png",
-    "kawaii.png",
-    "minimal.png",
-    "pink.png",
-    "white.png"
-  ],
-  "zoomOptions": [1, 0.9, 0.8],
-  "ringtones": ["marimba", "pixel"],
-  "notifications": ["online", "99kr"],
-  "themes": {
-    "default-dark": {
-      "palette": {
-        "type": "dark",
-        "primary": {
-          "main": "#a6d4fa"
-        }
-      }
-    },
-    "default-light": {
-      "palette": {
-        "type": "light"
-      }
-    },
-    "taso-dark": {
-      "common": {},
-      "palette": {
-        "type": "dark",
-        "primary": {
-          "main": "#a6d4fa"
-        },
-        "background": {
-          "paper": "#1c1c1c",
-          "default": "#121212",
-          "dark": "#000000",
-          "light": "#383838"
-        },
-        "text": {
-          "primary": "#fff",
-          "secondary": "rgba(255, 255, 255, 0.7)",
-          "disabled": "rgba(255, 255, 255, 0.5)",
-          "hint": "rgba(255, 255, 255, 0.5)",
-          "icon": "rgba(255, 255, 255, 0.5)"
-        }
-      },
-      "divider": "rgba(255, 255, 255, 0.12)"
-    }
   },
   "SentryErrorMetrics": true
 }

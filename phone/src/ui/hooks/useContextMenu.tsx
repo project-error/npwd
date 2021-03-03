@@ -12,6 +12,20 @@ export const MapStringOptions = (current, onClick) => (string) => {
   };
 };
 
+export interface SettingOption {
+  label: string;
+  value: string | number;
+}
+
+export const MapSettingItem = (current: SettingOption, onClick: Function) => (
+  item: SettingOption,
+) => ({
+  selected: current.value === item.value,
+  onClick: () => onClick(item),
+  key: item.value,
+  label: item.label,
+});
+
 export const useContextMenu = (_options?): UseContextMenu => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(_options || []);

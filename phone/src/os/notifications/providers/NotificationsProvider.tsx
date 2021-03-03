@@ -162,7 +162,7 @@ export function NotificationsProvider({ children }) {
     update?: Partial<INotification>,
   ) => {
     if (n.sound) {
-      const { sound, volume } = getSoundSettings('notification', settings, n.app);
+      const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
       mount(sound, volume, false).then(({ url }) =>
         setAlerts((curr) => [...curr, [n, persist, update, url]]),
       );

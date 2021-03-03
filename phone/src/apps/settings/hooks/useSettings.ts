@@ -1,5 +1,6 @@
 import { atom, DefaultValue, useRecoilState } from 'recoil';
 import config from '../../../config/default.json';
+import { SettingOption } from '../../../ui/hooks/useContextMenu';
 
 const localStorageEffect = (key) => ({ setSelf, onSet }) => {
   const savedVal = localStorage.getItem(key);
@@ -23,19 +24,19 @@ export const settingsState = atom({
 });
 
 export interface IPhoneSettings {
-  wallpaper: string;
-  frame: string;
-  theme: string;
-  zoom: number;
-  ringtone: string;
+  wallpaper: SettingOption;
+  frame: SettingOption;
+  theme: SettingOption;
+  zoom: SettingOption;
+  ringtone: SettingOption;
   ringtoneVol: number;
-  notification: string;
-  notificationVol: number;
-  TWITTER_notification: string;
-  TWITTER_notificationVol: number;
+  notiSound: SettingOption;
+  notiSoundVol: number;
+  TWITTER_notiSound: SettingOption;
+  TWITTER_notiSoundVol: number;
   TWITTER_notifyNewFeedTweet: boolean;
 }
 
 export const useSettings = () => {
-  return useRecoilState<IPhoneSettings>(settingsState);
+  return useRecoilState(settingsState);
 };
