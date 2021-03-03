@@ -32,6 +32,7 @@ export interface CreateMessageGroupResult {
 export interface CreateMessageBroadcast {
   message: string;
   groupName: string;
+  groupId: string;
 }
 
 export interface SetMessageRead {
