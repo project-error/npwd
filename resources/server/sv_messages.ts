@@ -82,6 +82,7 @@ async function createMessage(
 async function getMessageGroups(userIdentifier: string): Promise<UnformattedMessageGroup[]> {
   const query = `
   SELECT
+    npwd_messages_groups.unreadCount,
     npwd_messages_groups.group_id,
     npwd_messages_groups.participant_identifier,
     npwd_messages_groups.user_identifier,
