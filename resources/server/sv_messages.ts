@@ -492,6 +492,7 @@ onNet(
             participantPlayer.source,
             {
               groupName,
+              groupId,
               message,
             }
           );
