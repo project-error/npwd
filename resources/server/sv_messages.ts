@@ -384,7 +384,7 @@ function getIdentifiersFromParticipants(groupId: string) {
  */
 async function setMessageRead(groupId: string, pSource: number) {
   const query =
-    'UPDATE npwd_messages_groups SET unreadCount = 0 WHERE groupId = ? AND participant_identifier = ?';
+    'UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?';
 
   const identifier = getIdentifier(pSource);
   await pool.query(query, [groupId, identifier]);
