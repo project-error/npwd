@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Nui from '../../../os/nui-events/utils/Nui';
 import Modal from '../../../ui/components/Modal';
-import { IMAGE_DELIMITER } from '../utils/images';
-import { withValidImage } from '../utils/images';
+import { IMAGE_DELIMITER, isImageValid } from '../utils/images';
 import { useModal } from '../hooks/useModal';
 import EmojiSelect from './EmojiSelect';
 import ImageDisplay from './images/ImageDisplay';
@@ -129,7 +128,9 @@ export const AddTweetModal = () => {
     // other users see this image on their TweetList it will be
     // from the database and should already have passed through
     // this logic
-    withValidImage(cleanedLink, () => setImages([...images, image]));
+    isImageValid(cleanedLink)
+      .then(() => setImages([...images, image]))
+      .catch((e) => console.error(e));
 
     setShowImagePrompt(false);
     setLink('');

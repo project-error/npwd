@@ -6,15 +6,18 @@
 export const IMAGE_DELIMITER = '||!||';
 
 /**
- * Validate that the URL successfully loads in the browser
+ * Returns a Promise that validates that the URL successfully
+ * loads in the browser. If the URL doesn't load the promise is
+ * rejected.
  * @param {string} link - a URL we are trying to validate
- * @param {func} onSuccess - callback if the link is valid
+ * @returns {Promise<string>} link - Will resolve the promise with the link string
+ * if valid. Will reject if failed.
  */
-export function withValidImage(link: string, onSuccess: any): void {
-  const image = new Image();
-  image.onload = onSuccess;
-  image.onerror = () => {
-    console.warn(`Invalid image submitted: ${link}`);
-  };
-  image.src = link;
+export function isImageValid(link: string): Promise<string> {
+  return new Promise((res, rej) => {
+    const image = new Image();
+    image.src = link;
+    image.onerror = () => rej(`Invalid image, ${link}`);
+    image.onload = () => res(link);
+  });
 }
