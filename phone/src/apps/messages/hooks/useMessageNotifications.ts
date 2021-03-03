@@ -27,6 +27,7 @@ export const useMessageNotifications = () => {
     const notification = {
       app: 'MESSAGES',
       id,
+      sound: true,
       title: group.label || group.groupDisplay,
       onClick: () => goToConversation(group, history),
       content: message,
