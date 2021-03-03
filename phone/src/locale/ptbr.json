@@ -17,13 +17,13 @@
     "APPS_SELLOUT": "Market",
     "APPS_CAMERA": "Camera",
 
-    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
-    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
-    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
-    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
-    "APPS_DIALER_ACCEPT_CALL": "Accept",
-    "APPS_DIALER_REJECT_CALL": "Reject",
-    "APPS_DIALER_END_CALL": "End",
+    "APPS_DIALER_INCOMING_CALL_TITLE": "Ligaçao",
+    "APPS_DIALER_CURRENT_CALL_TITLE": "Chamada atual",
+    "APPS_DIALER_CURRENT_CALL_WITH": "Em ligaçao com {{ transmitter }}",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} Esta te ligando!",
+    "APPS_DIALER_ACCEPT_CALL": "Atender",
+    "APPS_DIALER_REJECT_CALL": "Desligar",
+    "APPS_DIALER_END_CALL": "Fim",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "O que está acontecendo?",
@@ -52,8 +52,8 @@
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "d",
-    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
-    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
+    "APPS_TWITTER_NEW_BROADCAST": "Novo tweet de @{{ profile_name }}!",
+    "APPS_TWITTER_UNREAD_MESSAGES": "Voce tem {{ count }} novos tweets na sua timeline!",
 
     "APPS_BANK_TRANSFER": "Transferir",
     "APPS_BANK_HOME_TITLE": "Bem vindo",
@@ -76,7 +76,7 @@
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Esse grupo ja existe",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Falha ao criar grupo de mensagens",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Voce nao pode adcionar voce mesmo!",
-    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Procure por contatos ou numero e aperte enter",
 
     "APPS_CONTACT_FORM_NAME": "Nome",
     "APPS_CONTACT_FORM_NUMBER": "Número",
@@ -94,17 +94,17 @@
     "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Foto de perfil",
     "APPS_CONTACT_MODAL_BUTTON_ADD": "Adcionar contato",
 
-    "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
-    "APPS_NOTES_ADD_FAILED": "Failed to save note.",
-    "APPS_NOTES_UPDATE_SUCCESS": "Successfully updated note.",
-    "APPS_NOTES_UPDATE_FAILED": "Failed to update note.",
-    "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
-    "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
+    "APPS_NOTES_ADD_SUCCESS": "Nota salva com sucesso.",
+    "APPS_NOTES_ADD_FAILED": "Falha em salvar nota.",
+    "APPS_NOTES_UPDATE_SUCCESS": "Nota atualizada com sucesso.",
+    "APPS_NOTES_UPDATE_FAILED": "Falha em atualizar nota.",
+    "APPS_NOTES_DELETE_SUCCESS": "Nota deletada com sucesso.",
+    "APPS_NOTES_DELETE_FAILED": "Falha em deletar nota.",
 
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
 
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Lista sendo criada com sucesso",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Falha em criar nova lista",
 
     "APPS_SETTINGS_PHONE_NUMBER": "Número de telefone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Papel de parede",
@@ -113,15 +113,15 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Toque",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume do toque",
-    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
-    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notificaçao",
+    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume da notificaçao",
 
-    "GENERIC_SAVE": "Save",
+    "GENERIC_SAVE": "Salvar",
     "GENERIC_UPDATE": "Atualizar",
     "GENERIC_DELETE": "Deletar",
-    "GENERIC_CLOSE": "Close",
-    "GENERIC_CANCEL": "Cancel",
-    "GENERIC_TITLE": "Title",
-    "GENERIC_CONTENT": "Content"
+    "GENERIC_CLOSE": "Fechar",
+    "GENERIC_CANCEL": "Cancelar",
+    "GENERIC_TITLE": "Titulo",
+    "GENERIC_CONTENT": "Conteudo"
   }
 }
