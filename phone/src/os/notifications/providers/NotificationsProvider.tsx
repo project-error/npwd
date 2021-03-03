@@ -108,7 +108,6 @@ export function NotificationsProvider({ children }) {
    */
   const hasNotification = useCallback(
     (id: string): INotification | null => {
-      console.log(id, notifications);
       return notifications.find((n) => n.id === id) || null;
     },
     [notifications]
