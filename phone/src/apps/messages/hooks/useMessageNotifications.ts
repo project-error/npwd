@@ -25,7 +25,7 @@ export const useMessageNotifications = () => {
     const id = `${NOTIFICATION_ID}:${groupId}`;
 
     const notification = {
-      app: 'MESSAGS',
+      app: 'MESSAGES',
       id,
       title: group.label || group.groupDisplay,
       onClick: () => goToConversation(group, history),
