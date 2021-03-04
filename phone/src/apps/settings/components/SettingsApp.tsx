@@ -7,7 +7,7 @@ import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { SettingItem, SettingItemSlider } from './SettingItem';
+import { SettingItem, SettingItemIconAction, SettingItemSlider } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -18,10 +18,12 @@ import {
   ZoomIn,
   LibraryMusic,
   VolumeUp,
+  FileCopy,
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
 import { useSettings } from '../hooks/useSettings';
+// import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -35,6 +37,8 @@ export const SettingsApp = () => {
   const simcard = useSimcard();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
+  // TODO: Uncomment when #135 is merged
+  // const { addAlert } = useSnackbar();
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
@@ -69,16 +73,33 @@ export const SettingsApp = () => {
     ),
   );
 
+  const handleCopyPhoneNumber = () => {
+    // TODO: Dependent on #132 merge
+    // setClipboard(simcard.number)
+    // TODO: Dependent on #135 merge
+    // addAlert({
+    //   message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+    //     content: 'number',
+    //   }),
+    //   type: 'success',
+    // });
+  };
+
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List disablePadding subheader={<SubHeaderComp text="Phone" />}>
-          <SettingItem
+          <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
-            value={simcard.number}
+            labelSecondary={simcard.number}
+            actionLabel={t('GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP', {
+              content: 'number',
+            })}
             icon={<Phone />}
+            actionIcon={<FileCopy />}
+            handleAction={handleCopyPhoneNumber}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_RINGTONE')}
