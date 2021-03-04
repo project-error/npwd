@@ -69,15 +69,13 @@ export const MessageModal = () => {
   }, [groupId, setActiveMessageGroup]);
 
   useEffect(() => {
-    // when we get a new message group we should scroll to the
-    // bottom to show the latest messages
-    if (activeMessageGroup) {
+    if (messages) {
       const element = document.getElementById(CONVERSATION_ELEMENT_ID);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [activeMessageGroup]);
+  }, [messages]);
 
   // sends all unread messages
   useEffect(() => {
