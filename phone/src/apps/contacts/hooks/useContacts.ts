@@ -7,11 +7,13 @@ import { useCallback } from 'react';
 interface IUseContacts {
   contacts: Contact[];
   getDisplayByNumber: (number: string) => string;
-  getContact: (id: number) => Contact;
+  getContactByNumber: (number: string) => Contact | null;
+  getContact: (id: number) => Contact | null;
 }
 
 export const useContacts = (): IUseContacts => {
   const contacts = useRecoilValue(contactsState.contacts);
+
   const getDisplayByNumber = useCallback(
     (number: string) => {
       const found = contacts.find((contact) => contact.number === number);
@@ -19,13 +21,26 @@ export const useContacts = (): IUseContacts => {
     },
     [contacts],
   );
+
+  const getContactByNumber = useCallback(
+    (number: string): Contact | null => {
+      for (const contact of contacts) {
+        if (contact.number === number) return contact;
+      }
+      return null;
+    },
+    [contacts],
+  );
+
   const getContact = useCallback(
     (id: number): Contact | null => {
       for (const contact of contacts) {
         if (contact.id === id) return contact;
       }
+      return null;
     },
     [contacts],
   );
-  return { contacts, getDisplayByNumber, getContact };
+
+  return { contacts, getDisplayByNumber, getContact, getContactByNumber };
 };

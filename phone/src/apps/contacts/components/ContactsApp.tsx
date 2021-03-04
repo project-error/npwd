@@ -45,7 +45,12 @@ InjectDebugData([
       {
         id: 3,
         display: 'Chip',
-        number: '777-7777',
+        number: '111-1111',
+      },
+      {
+        id: 4,
+        display: 'Kidz',
+        number: '444-4444',
       },
     ],
   },

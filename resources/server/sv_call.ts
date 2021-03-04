@@ -1,7 +1,13 @@
 import { ESX } from './server';
 import events from '../utils/events';
-import { getIdentifierByPhoneNumber, usePhoneNumber, getIdentifier, getSource } from './functions';
-import { XPlayer } from 'esx.js/@types/server';
+import {
+  getIdentifierByPhoneNumber,
+  usePhoneNumber,
+  getIdentifier,
+  getSource,
+} from './functions';
+
+import { getPlayerFromIdentifier } from './functions'
 import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
@@ -9,25 +15,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { mainLogger } from './sv_logger';
 
 const callLogger = mainLogger.child({ module: 'calls' });
-
-/**
- * Returns the player phoneNumber for a passed identifier
- * @param identifier The players phone number
- */
-async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
-  return new Promise((res, rej) => {
-    const xPlayers = ESX.GetPlayers();
-
-    for (const player of xPlayers) {
-      const xPlayer = ESX.GetPlayerFromId(player);
-      if (xPlayer.getIdentifier() != null && xPlayer.getIdentifier() == identifier) {
-        res(xPlayer);
-      }
-    }
-
-    rej(new Error('Call Target Identifier was not found in xPlayers array'));
-  });
-}
 
 async function saveCall(call: ICall) {
   const query =

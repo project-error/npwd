@@ -40,13 +40,13 @@ export const NotificationsContext = createContext<{
   icons: INotificationIcon[];
   count: number;
   removeAlerts(): void;
-  addOrUpdateNotification(add: INotification, update?: INotification): void;
   addNotification(value: INotification): void;
   removeNotification(idx: number): void;
   updateId(id: string, value: Partial<INotification>): void;
   removeId(id: string): void;
-  hasNotification(app: string): number;
-  addNotificationAlert(n: INotification, persist: boolean, update?: Partial<INotification>);
+  hasNotification(id: string): INotification | null;
+  hasAppNotification(app: string): number;
+  addNotificationAlert(n: INotification, cb?: (n: INotification) => void);
 }>(null);
 
 export function NotificationsProvider({ children }) {
@@ -62,7 +62,7 @@ export function NotificationsProvider({ children }) {
 
   const alertTimeout = useRef<NodeJS.Timeout>();
   const [alerts, setAlerts] = useState<
-    Array<[INotification, boolean, Partial<INotification>, string | undefined]>
+    Array<[INotification, (n: INotification) => void, string | undefined]>
   >([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
@@ -96,32 +96,28 @@ export function NotificationsProvider({ children }) {
    * Checks if a notification exists for current app
    * and returns its index or -1 if not found.
    */
-  const hasNotification = useCallback(
+  const hasAppNotification = useCallback(
     (appId: string): number => {
       return notifications.findIndex((n) => n.app === appId);
     },
     [notifications],
   );
 
-  const addOrUpdateNotification = useCallback(
-    (add: INotification, update?: INotification) => {
-      const exists = hasNotification(add.app);
-      if (update && exists !== -1) {
-        updateNotification(exists, update);
-        return;
-      }
-      addNotification(add);
+  /**
+   * Checks if a notification exists by its `id`
+   */
+  const hasNotification = useCallback(
+    (id: string): INotification | null => {
+      return notifications.find((n) => n.id === id) || null;
     },
-    [addNotification, hasNotification, updateNotification],
+    [notifications]
   );
 
   const _showAlert = useCallback(
-    (n: INotification, persist: boolean, update: Partial<INotification>, soundUrl: string) => {
+    (n: INotification, cb: (n: INotification) => void, soundUrl: string) => {
       return new Promise<void>((res) => {
         const resolve = () => {
-          if (persist) {
-            addOrUpdateNotification(n, update ? { ...n, ...update } : null);
-          }
+          cb?.(n);
           res();
         };
 
@@ -153,29 +149,25 @@ export function NotificationsProvider({ children }) {
         }, DEFAULT_ALERT_HIDE_TIME + 300);
       });
     },
-    [addOrUpdateNotification, play],
+    [play]
   );
 
   const addNotificationAlert = (
     n: INotification,
-    persist?: boolean,
-    update?: Partial<INotification>,
+    cb: (n: INotification) => void
   ) => {
     if (n.sound) {
       const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
       mount(sound, volume, false).then(({ url }) =>
-        setAlerts((curr) => [...curr, [n, persist, update, url]]),
+        setAlerts((curr) => [...curr, [n, cb, url]])
       );
       return;
     }
-    setAlerts((curr) => [...curr, [n, persist, update, undefined]]);
+    setAlerts((curr) => [...curr, [n, cb, undefined]]);
   };
 
   const removeId = (id: string) => {
-    const idx = notifications.findIndex((n) => n.id === id);
-    if (idx !== -1) {
-      removeNotification(idx);
-    }
+    setNotifications((curr) => curr.filter((n) => n.id !== id));
   };
 
   const updateId = (id: string, value: Partial<INotification>) => {
@@ -231,8 +223,8 @@ export function NotificationsProvider({ children }) {
         updateId,
         removeId,
         hasNotification,
+        hasAppNotification,
         addNotificationAlert,
-        addOrUpdateNotification,
         icons,
         count: notifications.length,
       }}

@@ -3,6 +3,7 @@ export interface Message {
   message: string;
   user_identifier: string;
   phone_number: string;
+  groupId?: string;
   display?: string;
   avatar?: string;
   isRead: boolean;
@@ -17,6 +18,9 @@ export interface MessageGroup {
   avatar?: string;
   label?: string;
   updatedAt: string;
+  unreadCount: number;
+  phoneNumbers: string[];
+  participants: string[];
 }
 
 export interface CreateMessageGroupResult {
@@ -25,4 +29,15 @@ export interface CreateMessageGroupResult {
   duplicate?: boolean;
   groupId?: string;
   mine?: boolean;
+  identifiers?: string[];
+}
+
+export interface CreateMessageBroadcast {
+  message: string;
+  groupName: string;
+  groupId: string;
+}
+
+export interface SetMessageRead {
+  groupId: string;
 }

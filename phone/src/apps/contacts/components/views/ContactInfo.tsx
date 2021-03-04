@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar as MuiAvatar, Box, Button, Paper, TextField } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContacts } from '../../hooks/useContacts';
@@ -19,7 +19,7 @@ interface ContactInfoRouteQuery {
   referal?: string;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   root: {
     height: '100%',
     width: '100%',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputProps: {
     fontSize: 22,
   },
-}));
+});
 
 const ContactsInfoPage = () => {
   const classes = useStyles();

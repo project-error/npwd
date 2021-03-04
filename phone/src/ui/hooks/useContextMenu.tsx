@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ContextMenu } from '../components/ContextMenu';
+import { ContextMenu, IContextMenuOption } from '../components/ContextMenu';
 
 type UseContextMenu = [any, any, () => JSX.Element, boolean];
 
@@ -26,7 +26,7 @@ export const MapSettingItem = (current: SettingOption, onClick: Function) => (
   label: item.label,
 });
 
-export const useContextMenu = (_options?): UseContextMenu => {
+export const useContextMenu = (_options?: IContextMenuOption[]): UseContextMenu => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(_options || []);
 
