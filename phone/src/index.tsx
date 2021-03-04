@@ -8,6 +8,7 @@ import { Integrations } from '@sentry/tracing';
 import './main.css';
 import PhoneConfig from './config/default.json';
 import { PhoneContainer } from './PhoneContainer';
+import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
 
 // Enable Sentry when config setting is true
 if (PhoneConfig.SentryErrorMetrics) {
@@ -20,6 +21,8 @@ if (PhoneConfig.SentryErrorMetrics) {
     tracesSampleRate: 1.0,
   });
 }
+
+attachMockNuiEvent();
 
 ReactDOM.render(
   <HashRouter>
