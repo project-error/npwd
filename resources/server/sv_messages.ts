@@ -9,6 +9,7 @@ import {
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
+import { group } from 'console';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -62,14 +63,16 @@ async function createMessage(
   `;
 
   const groupQuery = `
-    UPDATE npwd_messages_groups SET unreadCount = unreadCount + 1 WHERE participant_identifier = ?
+    UPDATE npwd_messages_groups SET unreadCount = unreadCount + 1 WHERE participant_identifier = ? AND group_id = ?
   `;
 
   const [results] = await pool.query(query, [userIdentifier, message, groupId]);
 
   // updates unreadCount for all participants
   await Promise.all(
-    participants.filter((s) => userIdentifier !== s).map((s) => pool.query(groupQuery, [s])),
+    participants
+      .filter((s) => userIdentifier !== s)
+      .map((s) => pool.query(groupQuery, [s, groupId])),
   );
 
   return results;
