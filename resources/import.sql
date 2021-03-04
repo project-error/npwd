@@ -11,10 +11,7 @@ CREATE TABLE IF NOT EXISTS npwd_phone_contacts (
   number varchar(10) DEFAULT NULL,
   display varchar(60) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
-)
-ENGINE = INNODB,
-AUTO_INCREMENT = 6,
-AVG_ROW_LENGTH = 4096;
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -26,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
   `visible` tinyint NOT NULL DEFAULT '1',
   `images` varchar(1000) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19;
+);
 
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
@@ -41,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `profile_name_UNIQUE` (`profile_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=15;
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -53,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   KEY `tweet_idx` (`tweet_id`),
   CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
   CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41;
+);
 
 
 CREATE TABLE IF NOT EXISTS npwd_notes (
@@ -62,10 +59,7 @@ CREATE TABLE IF NOT EXISTS npwd_notes (
   title varchar(255) NOT NULL,
   content varchar(255) NOT NULL,
   PRIMARY KEY (id)
-)
-ENGINE = INNODB,
-AUTO_INCREMENT = 5,
-AVG_ROW_LENGTH = 4096;
+);
 
 CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -76,12 +70,7 @@ CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   url varchar(255) DEFAULT NULL,
   description varchar(255) NOT NULL,
   PRIMARY KEY (id)
-)
-ENGINE = INNODB,
-AUTO_INCREMENT = 26,
-AVG_ROW_LENGTH = 2048,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_reports` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -93,26 +82,19 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_reports` (
   KEY `tweet_idx` (`tweet_id`),
   CONSTRAINT `report_profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
   CONSTRAINT `report_tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45;
-
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_messages_groups` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_identifier` varchar(40) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `group_id` varchar(60) NOT NULL,
+  `group_id` varchar(512) NOT NULL,
   `participant_identifier` varchar(40) NOT NULL,
   `label` varchar(60) DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `npwd_messages_groups_group_id` (`group_id`),
-  KEY `npwd_messages_groups_user_identifier_idx` (`user_identifier`),
-  KEY `npwd_messages_groups_participant_identifier_idx` (`participant_identifier`),
-#   This table is erroring out because of default collation and charset values on the `user` table
-#   We should discuss an adequate solution
-  CONSTRAINT `npwd_messages_groups_participant_identifier` FOREIGN KEY (`participant_identifier`) REFERENCES `users` (`identifier`),
-  CONSTRAINT `npwd_messages_groups_user_identifier` FOREIGN KEY (`user_identifier`) REFERENCES `users` (`identifier`)
-) ENGINE=InnoDB AUTO_INCREMENT=66;
+  `unreadCount` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_messages_labels` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -120,27 +102,20 @@ CREATE TABLE IF NOT EXISTS `npwd_messages_labels` (
   `label` varchar(60) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `group_id` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `npwd_messages_labels_group_id_idx` (`group_id`),
-  KEY `npwd_messages_labels_group_id_idx1` (`user_identifier`),
-  CONSTRAINT `npwd_messages_labels_group_id` FOREIGN KEY (`group_id`) REFERENCES `npwd_messages_groups` (`group_id`)
+  `group_id` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_messages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `message` varchar(512) NOT NULL,
   `user_identifier` varchar(40) NOT NULL,
-  `group_id` varchar(60) NOT NULL,
+  `group_id` varchar(512) NOT NULL,
   `isRead` tinyint NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `visible` tinyint NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `messages_identifier_idx` (`user_identifier`),
-  KEY `npwd_messages_group_id_idx` (`group_id`),
-  CONSTRAINT `npwd_messages_group_id` FOREIGN KEY (`group_id`) REFERENCES `npwd_messages_groups` (`group_id`),
-  CONSTRAINT `npwd_messages_user_identifier` FOREIGN KEY (`user_identifier`) REFERENCES `users` (`identifier`)
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS npwd_calls (
@@ -152,20 +127,11 @@ CREATE TABLE IF NOT EXISTS npwd_calls (
   start varchar(255) DEFAULT NULL,
   end varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
-)
-ENGINE = INNODB,
-AUTO_INCREMENT = 8,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+);
 
 CREATE TABLE IF NOT EXISTS npwd_phone_gallery (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(255) DEFAULT NULL,
   image varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
-)
-ENGINE = INNODB,
-AUTO_INCREMENT = 53,
-AVG_ROW_LENGTH = 4096,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+);

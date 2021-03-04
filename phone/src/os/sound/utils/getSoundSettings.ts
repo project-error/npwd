@@ -3,25 +3,25 @@ import { getNotificationPath, getRingtonePath } from '../../../apps/settings/uti
 
 const getPath = {
   ringtone: getRingtonePath,
-  notification: getNotificationPath,
+  notiSound: getNotificationPath,
 };
 
 /**
  * Gets the configuration for SoundProvider based on settings and apps
  */
 export const getSoundSettings = (
-  type: 'ringtone' | 'notification',
+  type: 'ringtone' | 'notiSound',
   settings: IPhoneSettings,
   app?: string,
 ) => {
   try {
     return app
       ? {
-          sound: getPath[type](settings[`${app}_${type}`] || settings[type]),
+          sound: getPath[type](settings[`${app}_${type}`].value || settings[type].value),
           volume: (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
         }
       : {
-          sound: getPath[type](settings[type]),
+          sound: getPath[type](settings[type as string].value),
           volume: settings[`${type}Vol`] / 100,
         };
   } catch (e) {

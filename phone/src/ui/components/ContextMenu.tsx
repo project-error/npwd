@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IContextMenuOption {
+export interface IContextMenuOption {
   onClick(e, option): void;
   label: string;
   description?: string;

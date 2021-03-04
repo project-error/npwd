@@ -1,5 +1,10 @@
 import events from '../utils/events';
-import { Message, MessageGroup } from '../../phone/src/common/typings/messages';
+import {
+  CreateMessageBroadcast,
+  Message,
+  MessageGroup,
+  SetMessageRead,
+} from '../../phone/src/common/typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
 /**
@@ -17,6 +22,10 @@ onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, (messageGroups: MessageGroup
 
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, () => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED);
+});
+
+onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, () => {
+  emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
 });
 
 /**
@@ -49,6 +58,12 @@ on(`__cfx_nui:${events.MESSAGES_FETCH_MESSAGES}`, ({ groupId }: any, cb: Functio
   cb();
 });
 
+RegisterNuiCallbackType(events.MESSAGES_SET_MESSAGE_READ);
+on(`__cfx_nui:${events.MESSAGES_SET_MESSAGE_READ}`, (data: SetMessageRead, cb: Function) => {
+  emitNet(events.MESSAGES_SET_MESSAGE_READ, data.groupId);
+  cb();
+});
+
 onNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, (messages: Message[]): void => {
   sendMessageEvent(events.MESSAGES_FETCH_MESSAGES_SUCCESS, messages);
 });
@@ -62,7 +77,7 @@ onNet(events.MESSAGES_FETCH_MESSAGES_FAILED, (): void => {
  */
 RegisterNuiCallbackType(events.MESSAGES_SEND_MESSAGE);
 on(`__cfx_nui:${events.MESSAGES_SEND_MESSAGE}`, (data: any, cb: Function) => {
-  emitNet(events.MESSAGES_SEND_MESSAGE, data.groupId, data.message);
+  emitNet(events.MESSAGES_SEND_MESSAGE, data.groupId, data.message, data.groupName);
   cb();
 });
 
@@ -77,4 +92,8 @@ onNet(events.MESSAGES_SEND_MESSAGE_FAILED, () => {
 
 onNet(events.MESSAGES_ACTION_RESULT, (result: any) => {
   sendMessageEvent(events.MESSAGES_ACTION_RESULT, result);
+});
+
+onNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, (result: CreateMessageBroadcast) => {
+  sendMessageEvent(events.MESSAGES_CREATE_MESSAGE_BROADCAST, result);
 });

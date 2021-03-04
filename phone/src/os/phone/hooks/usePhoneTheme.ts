@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 import { createMuiTheme } from '@material-ui/core';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import * as config from '../../../config/default.json';
+import themes from '../../../config/themes.json';
 
 export const usePhoneTheme = () => {
   const [settings] = useSettings();
-
-  return useMemo(() => createMuiTheme(config.themes[settings.theme]), [settings.theme]);
+  return useMemo(() => createMuiTheme(themes[settings.theme.value]), [settings.theme]);
 };

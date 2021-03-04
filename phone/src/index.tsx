@@ -8,9 +8,10 @@ import { Integrations } from '@sentry/tracing';
 import './main.css';
 import PhoneConfig from './config/default.json';
 import { PhoneContainer } from './PhoneContainer';
+import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
 
-// Enable Sentry when config setting is true
-if (PhoneConfig.SentryErrorMetrics) {
+// Enable Sentry when config setting is true and when in prod
+if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: 'https://71fff4e8f11543fa8dbe7acd0f94fb5d@o478949.ingest.sentry.io/5581619',
     autoSessionTracking: true,
@@ -20,6 +21,9 @@ if (PhoneConfig.SentryErrorMetrics) {
     tracesSampleRate: 1.0,
   });
 }
+
+// window.mockNuiEvent is restricted to development env only
+if (process.env.NODE_ENV === 'development') attachMockNuiEvent();
 
 ReactDOM.render(
   <HashRouter>
