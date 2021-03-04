@@ -68,8 +68,8 @@ export const SettingsApp = () => {
   );
 
   const twitterNotifications = config.notiSounds.map(
-    MapSettingItem(settings.notiSound, (item: SettingOption) =>
-      handleSettingChange('TWITTER_notiSound', item),
+    MapSettingItem(settings.TWITTER_notiSound, (val: SettingOption) =>
+      handleSettingChange('TWITTER_notiSound', val),
     ),
   );
 
