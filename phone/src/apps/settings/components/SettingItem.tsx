@@ -6,6 +6,9 @@ import {
   ListItemSecondaryAction,
   Box,
   Slider,
+  IconButton,
+  Tooltip,
+  Typography,
 } from '@material-ui/core';
 
 interface ISettingItem {
@@ -47,4 +50,40 @@ export const SettingItemSlider = ({ icon, label, value, onCommit }: ISettingSlid
       </Box>
     </ListItemSecondaryAction>
   </ListItem>
+);
+
+interface ISettingItemIconAction {
+  icon: JSX.Element;
+  actionIcon: JSX.Element;
+  label: string;
+  labelSecondary: string;
+  handleAction: () => void;
+  actionLabel: string;
+}
+
+export const SettingItemIconAction = ({
+  icon,
+  label,
+  handleAction,
+  actionIcon,
+  labelSecondary,
+  actionLabel,
+}: ISettingItemIconAction) => (
+  <>
+    <ListItem divider>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} secondary={labelSecondary} />
+      <ListItemSecondaryAction>
+        <Tooltip
+          arrow
+          title={<Typography variant="body2">{actionLabel}</Typography>}
+          placement="top-end"
+        >
+          <IconButton edge="end" onClick={handleAction}>
+            {actionIcon}
+          </IconButton>
+        </Tooltip>
+      </ListItemSecondaryAction>
+    </ListItem>
+  </>
 );
