@@ -351,7 +351,7 @@ async function createMessageGroupsFromPhoneNumbers(
     return { error: true, mine: true };
   }
 
-  const groupId = createGroupHashID(identifiers);
+  const groupId = createGroupHashID([userIdentifier, ...identifiers]);
   if (await checkIfMessageGroupExists(groupId)) {
     return { error: false, duplicate: true, groupId, identifiers };
   }
