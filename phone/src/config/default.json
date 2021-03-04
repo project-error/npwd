@@ -3,8 +3,8 @@
   "language": "en",
   "wallpapers": [
     {
-    "label": "Minimal",
-    "value": "minimal.jpg"
+      "label": "Minimal",
+      "value": "minimal.jpg"
     },
     {
       "label": "Surf",
@@ -85,19 +85,20 @@
     {
       "label": "99kr",
       "value": "99kr"
-    }],
+    }
+  ],
   "defaultSettings": {
     "wallpaper": {
       "label": "Project Error",
-      "value":"projecterror.jpg"
+      "value": "projecterror.jpg"
     },
     "frame": {
       "label": "Default",
-      "value":"default.png"
+      "value": "default.png"
     },
     "theme": {
       "label": "taso-dark",
-      "value":"taso-dark"
+      "value": "taso-dark"
     },
     "zoom": {
       "label": "100%",
@@ -117,7 +118,7 @@
       "label": "Online",
       "value": "online"
     },
-    "TWITTER_notiSoundVol": 100,
+    "TWITTER_notiSoundVol": 50,
     "TWITTER_notifyNewFeedTweet": true
   },
   "themes": [
