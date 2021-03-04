@@ -39,13 +39,13 @@ async function addListing(
 }
 
 async function deleteListing(listingId: number, identifier: string): Promise<void> {
-  const query = 'DELETE FROM npwd_sellout_listing WHERE id = ? AND identifier = ?';
+  const query = 'DELETE FROM npwd_sellout_listings WHERE id = ? AND identifier = ?';
 
   await pool.query(query, [listingId, identifier]);
 }
 
 async function getListing(listingId: number): Promise<MarketplaceListing> {
-  const query = `SELECT * FROM npwd_sellout_listing WHERE id = ?`;
+  const query = `SELECT * FROM npwd_sellout_listings WHERE id = ?`;
   const [results] = await pool.query(query, [listingId]);
   const listings = <MarketplaceListing[]>results;
   const listing = listings[0];
