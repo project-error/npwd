@@ -6,6 +6,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     height: '100%',
     width: '100%',
+    overflowY: 'hidden',
   },
   modalHide: {
     display: 'none',

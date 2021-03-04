@@ -35,6 +35,7 @@ const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) 
         height="85%"
         display="flex"
         flexDirection="column"
+        justifyContent="flex-end"
         pb={4}
         className={classes.overflowAutoY}
       >
