@@ -55,9 +55,9 @@ export const SelloutItem = (listing: MarketplaceListing) => {
     });
   };
 
-  const handleReportListing = (listingId: number) => {
+  const handleReportListing = (listing) => {
     Nui.send('phone:reportListing', {
-      id: listingId,
+      listing,
     });
   };
 
@@ -108,7 +108,7 @@ export const SelloutItem = (listing: MarketplaceListing) => {
                 </Tooltip>
               ) : (
                 <Tooltip title="Report listing">
-                  <Button onClick={() => handleReportListing(listing.id)}>
+                  <Button onClick={() => handleReportListing(listing)}>
                     <ReportIcon />
                   </Button>
                 </Tooltip>
