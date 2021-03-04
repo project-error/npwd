@@ -117,7 +117,7 @@ onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
     await deleteListing(listingId, identifier);
 
     // fetches the listings again
-    emitNet(events.SELLOUT_DELETE_LISTING_SUCCESS);
+    emitNet(events.SELLOUT_DELETE_LISTING_SUCCESS, pSource);
 
     emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
       message: 'MARKETPLACE_DELETE_LISTING_SUCCESS',

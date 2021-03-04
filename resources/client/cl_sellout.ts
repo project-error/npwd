@@ -14,18 +14,21 @@ onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
 });
 
 RegisterNuiCallbackType(events.SELLOUT_ADD_LISTING);
-on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: MarketplaceListing) => {
+on(`__cfx_nui:${events.SELLOUT_ADD_LISTING}`, (data: MarketplaceListing, cb: Function) => {
   emitNet(events.SELLOUT_ADD_LISTING, data);
+  cb();
 });
 
 RegisterNuiCallbackType(events.SELLOUT_DELETE_LISTING);
-on(`__cfx_nui:${events.SELLOUT_DELETE_LISTING}`, (data: MarketplaceListing) => {
+on(`__cfx_nui:${events.SELLOUT_DELETE_LISTING}`, (data: MarketplaceListing, cb: Function) => {
   emitNet(events.SELLOUT_DELETE_LISTING, data.id);
+  cb();
 });
 
 RegisterNuiCallbackType(events.SELLOUT_REPORT_LISTING);
-on(`__cfx_nui:${events.SELLOUT_REPORT_LISTING}`, (data: MarketplaceListing) => {
+on(`__cfx_nui:${events.SELLOUT_REPORT_LISTING}`, (data: MarketplaceListing, cb: Function) => {
   emitNet(events.SELLOUT_SEND_LISTING, data);
+  cb();
 });
 
 // this will be triggerd when
