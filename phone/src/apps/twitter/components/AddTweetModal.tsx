@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Nui from '../../../os/nui-events/utils/Nui';
 import Modal from '../../../ui/components/Modal';
-import { IMAGE_DELIMITER, isImageValid } from '../utils/images';
+import { IMAGE_DELIMITER } from '../utils/images';
+import { isImageValid } from '../../../common/utils/isImageValid';
 import { useModal } from '../hooks/useModal';
 import EmojiSelect from './EmojiSelect';
 import ImageDisplay from './images/ImageDisplay';
