@@ -4,6 +4,7 @@ import { Grid, makeStyles, Box, Paper, Fab } from '@material-ui/core';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -59,6 +60,8 @@ export const Calculator = ({ ...props }) => {
     [result],
   );
 
+  const { t } = useTranslation();
+
   return (
     <Box display="flex" flexDirection="column">
       <Box flexGrow={1} component={Paper} p={4} className={classes.result}>
@@ -66,7 +69,12 @@ export const Calculator = ({ ...props }) => {
           size="small"
           onClick={() => {
             setClipboard(resultStr);
-            addAlert({ message: 'CALCULATOR_COPIED', type: 'info' });
+            addAlert({
+              message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+                content: 'number',
+              }),
+              type: 'success',
+            });
           }}
           className={classes.copyFab}
         >

@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Alert from './Alert';
 
@@ -22,12 +21,11 @@ const useStyles = makeStyles({
 
 export const Snackbar = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const { alert } = useSnackbar();
 
   return (
     <div className={classes.root}>
-      {alert ? <Alert severity={alert.type}>{t('APPS_' + alert.message)}</Alert> : null}
+      {alert ? <Alert severity={alert.type}>{alert.message}</Alert> : null}
     </div>
   );
 };
