@@ -305,7 +305,7 @@ function createGroupHashID(identifiers: string[]) {
   // that this not change! Changing this order can result in the ability
   // of duplicate message groups being created.
   identifiers.sort();
-  const mergedIdentifiers = identifiers.join(':');
+  const mergedIdentifiers = identifiers.join('+');
   // we don't need this to be secure. Its purpose is to create a unique
   // string derived from the identifiers. In this way we can check
   // that this groupId isn't used before. If it has then it means
@@ -384,7 +384,7 @@ async function createMessageGroupsFromPhoneNumbers(
 // getting the participants from groupId.
 // this should return the source or and array of identifiers
 function getIdentifiersFromParticipants(groupId: string) {
-  return groupId.split(':');
+  return groupId.split('+');
 }
 
 /**
