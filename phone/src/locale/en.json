@@ -117,6 +117,8 @@
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
     "APPS_MARKETPLACE_DELETE_LISTING_SUCCESS": "Successfully delete listing",
     "APPS_MARKETPLACE_DELETE_LISTING_FAILED": "Failed to delete listing",
+    "APPS_MARKETPLACE_REPORT_LISTING_FAILED": "This listing has already been reported",
+    "APPS_MARKETPLACE_REPORT_LISTING_SUCCESS": "Successfully reported listing",
 
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
