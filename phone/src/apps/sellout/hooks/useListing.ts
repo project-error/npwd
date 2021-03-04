@@ -1,7 +1,12 @@
 import { useRecoilValue } from 'recoil';
+import { MarketplaceListing } from '../../../common/typings/marketplace';
 import { selloutState } from './state';
 
-export const useListing = () => {
-  const listing = useRecoilValue(selloutState.listing);
-  return { listing };
+interface ListingHook {
+  listings: MarketplaceListing[];
+}
+
+export const useListing = (): ListingHook => {
+  const listings = useRecoilValue(selloutState.listing);
+  return { listings };
 };
