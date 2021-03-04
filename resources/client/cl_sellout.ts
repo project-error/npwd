@@ -23,6 +23,11 @@ on(`__cfx_nui:${events.SELLOUT_DELETE_LISTING}`, (data: MarketplaceListing) => {
   emitNet(events.SELLOUT_DELETE_LISTING, data.id);
 });
 
+RegisterNuiCallbackType(events.SELLOUT_REPORT_LISTING);
+on(`__cfx_nui:${events.SELLOUT_REPORT_LISTING}`, (data: MarketplaceListing) => {
+  emitNet(events.SELLOUT_SEND_LISTING, data);
+});
+
 // this will be triggerd when
 // the adding of a new listing is successfully
 

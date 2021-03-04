@@ -49,6 +49,8 @@ export default {
   SELLOUT_DELETE_LISTING: 'phone:marketplaceDeleteListing',
   SELLOUT_DELETE_LISTING_SUCCESS: 'phone:marketplaceDeleteListingSuccess',
   SELLOUT_REPORT_LISTING: 'phone:reportListing',
+  SELLOUT_REPORT_LISTING_SUCCESS: 'phone:reportListingSuccess',
+  SELLOUT_REPORT_LISTING_SUCESS: 'phone:reportListingFailed',
 
   //
   BANK_ADD_TRANSFER: 'phone:addTransfer',
