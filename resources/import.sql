@@ -70,6 +70,7 @@ AVG_ROW_LENGTH = 4096;
 CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(255) DEFAULT NULL,
+  player varchar(255) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
   number varchar(255) NOT NULL,
   title varchar(255) DEFAULT NULL,
@@ -78,8 +79,18 @@ CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 26,
+AUTO_INCREMENT = 31,
 AVG_ROW_LENGTH = 2048,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS npwd_marketplace_reports (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  listing_id int(11) DEFAULT NULL,
+  profile varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
 CHARACTER SET utf8mb4,
 COLLATE utf8mb4_general_ci;
 
