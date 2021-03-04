@@ -337,13 +337,8 @@ async function createMessageGroupsFromPhoneNumbers(
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
   for (const phoneNumber of phoneNumbers) {
-    try {
-      const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
-      identifiers.push(identifier);
-    } catch (err) {
-      console.error('ERROR IN: createMessageGroupsFromPhoneNumbers', err);
-      return { error: true, phoneNumber };
-    }
+    const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
+    identifiers.push(identifier);
   }
 
   // don't allow explicitly adding yourself
@@ -371,12 +366,7 @@ async function createMessageGroupsFromPhoneNumbers(
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
-  try {
-    await withTransaction(queryPromises);
-  } catch (err) {
-    console.error('ERROR IN: createMessageGroupsFromPhoneNumbers', err);
-    return { error: true };
-  }
+  await withTransaction(queryPromises);
 
   return { error: false, groupId, identifiers };
 }
