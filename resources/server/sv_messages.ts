@@ -388,11 +388,9 @@ function getIdentifiersFromParticipants(groupId: string) {
  * Sets the current message isRead to 0 for said player
  * @param id
  */
-async function setMessageRead(groupId: string, pSource: number) {
+async function setMessageRead(groupId: string, identifier: string) {
   const query =
     'UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?';
-
-  const identifier = getIdentifier(pSource);
   await pool.query(query, [groupId, identifier]);
 }
 
@@ -525,5 +523,12 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
 
 onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
   const pSource = getSource();
-  await setMessageRead(groupId, pSource);
+  try {
+    const identifier = getIdentifier(pSource);
+    await setMessageRead(groupId, identifier);
+  } catch (e) {
+    messageLogger.error(`Failed to set message as read, ${e.message}`, {
+      source: pSource,
+    });
+  }
 });
