@@ -55,6 +55,12 @@ export const SelloutItem = (listing: MarketplaceListing) => {
     });
   };
 
+  const handleReportListing = (listingId: number) => {
+    Nui.send('phone:reportListing', {
+      id: listingId,
+    });
+  };
+
   return (
     <ListItem className={classes.root}>
       <div className={classes.content}>
@@ -102,7 +108,7 @@ export const SelloutItem = (listing: MarketplaceListing) => {
                 </Tooltip>
               ) : (
                 <Tooltip title="Report listing">
-                  <Button>
+                  <Button onClick={() => handleReportListing(listing.id)}>
                     <ReportIcon />
                   </Button>
                 </Tooltip>

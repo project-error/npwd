@@ -1,6 +1,6 @@
 import events from '../utils/events';
 import { ESX } from './server';
-import { getSource } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { pool } from './db';
 import { usePhoneNumber } from './functions';
 import { mainLogger } from './sv_logger';
@@ -33,6 +33,12 @@ async function addListing(
     listing.url,
     listing.description,
   ]);
+}
+
+async function deleteListing(listingId: number, identifier: string): Promise<void> {
+  const query = 'DELETE FROM npwd_sellout_listing WHERE id = ? AND identifier = ?';
+
+  await pool.query(query, [listingId, identifier]);
 }
 
 onNet(events.SELLOUT_FETCH_LISTING, async () => {
@@ -69,6 +75,31 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
 
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
       message: 'MARKETPALCE_CREATE_LISTING_FAILED',
+      type: 'error',
+    });
+  }
+});
+
+onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
+  const pSource = getSource();
+  try {
+    const identifier = getIdentifier(pSource);
+
+    await deleteListing(listingId, identifier);
+
+    // fetches the listings again
+    emitNet(events.SELLOUT_DELETE_LISTING_SUCCESS);
+
+    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      message: 'MARKETPLACE_DELETE_LISTING_SUCCESS',
+      type: 'success',
+    });
+  } catch (e) {
+    selloutLogger.error(`Failed to delte listing ${e.message}`, {
+      source: pSource,
+    });
+    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      message: 'MARKETPLACE_DELETE_LISTING_FAILED',
       type: 'error',
     });
   }
