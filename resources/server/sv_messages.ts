@@ -338,6 +338,7 @@ async function createMessageGroupsFromPhoneNumbers(
       const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
       identifiers.push(identifier);
     } catch (err) {
+      console.error('ERROR IN: createMessageGroupsFromPhoneNumbers', err);
       return { error: true, phoneNumber };
     }
   }
@@ -370,6 +371,7 @@ async function createMessageGroupsFromPhoneNumbers(
   try {
     await withTransaction(queryPromises);
   } catch (err) {
+    console.error('ERROR IN: createMessageGroupsFromPhoneNumbers', err);
     return { error: true };
   }
 
@@ -461,6 +463,7 @@ onNet(
       });
       messageLogger.error(`Failed to create message group, ${e.message}`, {
         source: _source,
+        e,
       });
     }
   },
