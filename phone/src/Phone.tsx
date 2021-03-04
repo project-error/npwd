@@ -52,9 +52,9 @@ function Phone() {
   const { bottom, visibility } = usePhoneVisibility();
 
   return (
-    <Slide direction="up" in={visibility}>
-      <div className="PhoneWrapper">
-        <div>
+    <div>
+      <Slide direction="up" in={visibility}>
+        <div className="PhoneWrapper">
           <div
             className="Phone"
             style={{
@@ -94,8 +94,8 @@ function Phone() {
             </div>
           </div>
         </div>
-      </div>
-    </Slide>
+      </Slide>
+    </div>
   );
 }
 
@@ -105,6 +105,6 @@ InjectDebugData([
   {
     app: 'PHONE',
     method: 'setVisibility',
-    data: true,
+    data: false,
   },
 ]);
