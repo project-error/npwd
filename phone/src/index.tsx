@@ -22,7 +22,8 @@ if (PhoneConfig.SentryErrorMetrics) {
   });
 }
 
-attachMockNuiEvent();
+// window.mockNuiEvent is restricted to development env only
+if (process.env.NODE_ENV === 'development') attachMockNuiEvent();
 
 ReactDOM.render(
   <HashRouter>
