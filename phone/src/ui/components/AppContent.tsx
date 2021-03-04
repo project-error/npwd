@@ -11,7 +11,6 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%', // allow application to fill entireity of space
     position: 'relative',
-    overflow: 'auto',
   },
   backdrop: {
     position: 'absolute',
@@ -32,7 +31,11 @@ export const AppContent = ({
 }: AppContentTypes & BoxProps) => {
   const classes = useStyles();
   return (
-    <Paper className={classes.wrapper} square>
+    <Paper
+      className={classes.wrapper}
+      square
+      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
+    >
       <Box flexGrow={1} className={classes.box} {...props}>
         <Paper square elevation={0} className={classes.paper}>
           <Backdrop
