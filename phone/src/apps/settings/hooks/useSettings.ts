@@ -35,7 +35,7 @@ class PhoneSettings implements IPhoneSettings {
 
   validate(value, defaultSettings) {
     Object.keys(this).map((key) => {
-      if (!value[key] || typeof value[key] !== typeof defaultSettings[key]) {
+      if (value[key] === undefined || typeof value[key] !== typeof defaultSettings[key]) {
         this[key] = defaultSettings[key];
         return key;
       }
