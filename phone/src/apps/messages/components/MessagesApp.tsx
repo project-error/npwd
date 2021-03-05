@@ -26,24 +26,22 @@ export const MessagesApp = () => {
         <AppTitle app={messages} />
         <AppContent>
           <Switch>
-            <Route path="/messages/conversations/:groupId" component={MessageModal} />
-            <Route
-              exact
-              path="/messages"
-              render={() => (
-                <>
-                  <MessagesList />
-                  <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
-                </>
-              )}
-            />
+            <Route path="/messages/conversations/:groupId">
+              <div>
+                <MessageModal />
+              </div>
+            </Route>
+            <Route exact path="/messages">
+              <>
+                <MessagesList />
+                <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+              </>
+            </Route>
           </Switch>
           <Switch>
-            <Route
-              exact
-              path={['/messages/new/:phoneNumber', '/messages/new']}
-              render={() => <MessageGroupModal />}
-            />
+            <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
+              <MessageGroupModal />
+            </Route>
           </Switch>
         </AppContent>
       </AppWrapper>
