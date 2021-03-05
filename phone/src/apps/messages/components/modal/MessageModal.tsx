@@ -26,6 +26,7 @@ import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
+const MINIMUM_LOAD_TIME = 600;
 
 const memberDisplay = (display, number, myNumber, t) => {
   if (myNumber === number) {
@@ -54,6 +55,18 @@ export const MessageModal = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { messages, setMessages, activeMessageGroup, setActiveMessageGroup } = useMessages();
   const { getContactByNumber, getDisplayByNumber } = useContacts();
+
+  const [isLoaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (activeMessageGroup && messages) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, MINIMUM_LOAD_TIME);
+      return;
+    }
+    setLoaded(false);
+  }, [activeMessageGroup, messages]);
 
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
@@ -85,8 +98,6 @@ export const MessageModal = () => {
       });
     }
   }, [activeMessageGroup]);
-
-  const hasLoaded = !!(messages && activeMessageGroup);
 
   // don't allow too many characters, it takes too much room
   let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';
@@ -152,7 +163,7 @@ export const MessageModal = () => {
               )}
             </Box>
           </Paper>
-          {hasLoaded ? (
+          {isLoaded ? (
             <Conversation
               onClickDisplay={handleAddContact}
               messages={messages}

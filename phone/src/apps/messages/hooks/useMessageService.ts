@@ -4,7 +4,8 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useMessageNotifications } from './useMessageNotifications';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import Nui from '../../../os/nui-events/utils/Nui';
 
 export const useMessagesService = () => {
   const setMessageGroups = useSetRecoilState(messageState.messageGroups);
@@ -13,6 +14,10 @@ export const useMessagesService = () => {
   const { addAlert } = useSnackbar();
   const { setNotification } = useMessageNotifications();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    Nui.send('phone:fetchMessageGroups');
+  }, []);
 
   const handleAddAlert = useCallback(
     ({ message, type }: IAlert) => {
