@@ -46,15 +46,6 @@ const hidePhone = async (): Promise<void> => {
  *  Register Command and Keybinding
  *
  * * * * * * * * * * * * */
-
-RegisterCommand(
-  'phone:close',
-  async () => {
-    await hidePhone();
-  },
-  false,
-);
-
 RegisterCommand(
   'phone',
   async () => {
@@ -65,9 +56,16 @@ RegisterCommand(
 );
 
 RegisterCommand(
-  'phone:open',
+  'phone:restart',
   async () => {
-    await showPhone();
+    await hidePhone();
+    SendNuiMessage(
+      JSON.stringify({
+        app: 'PHONE',
+        method: 'startRestart',
+        data: {},
+      }),
+    );
   },
   false,
 );

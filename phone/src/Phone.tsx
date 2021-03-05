@@ -28,6 +28,7 @@ import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 import { Snackbar } from './ui/components/Snackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { useCallModal } from './os/call/hooks/useCallModal';
+import WindowSnackbar from './ui/components/WindowSnackbar';
 
 function Phone() {
   const { apps } = useApps();
@@ -53,6 +54,7 @@ function Phone() {
 
   return (
     <div>
+      <WindowSnackbar />
       <Slide direction="up" timeout={{ enter: 500, exit: 500 }} in={visibility}>
         <div className="PhoneWrapper">
           <div
