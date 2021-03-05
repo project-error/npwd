@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ContextMenu, IContextMenuOption } from '../components/ContextMenu';
 
 type UseContextMenu = [any, any, () => JSX.Element, boolean];
@@ -30,12 +30,12 @@ export const useContextMenu = (_options?: IContextMenuOption[]): UseContextMenu 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(_options || []);
 
-  const onClose = () => setOpen(false);
+  const onClose = useCallback(() => setOpen(false), []);
 
-  const onOpen = (opts) => {
+  const onOpen = useCallback((opts) => {
     setOptions(opts);
     setOpen(true);
-  };
+  }, []);
 
   return [
     onOpen,
