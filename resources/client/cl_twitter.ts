@@ -120,6 +120,10 @@ on(`__cfx_nui:${events.TWITTER_RETWEET}`, (tweetId: number, cb: Function) => {
   cb();
 });
 
+onNet(events.TWITTER_RETWEET_EXISTS, (alert: IAlertProps) => {
+  sendTwitterMessage(events.TWITTER_RETWEET_EXISTS, alert);
+});
+
 
 /**
  * Twitter reporting tweets

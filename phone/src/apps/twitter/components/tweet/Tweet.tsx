@@ -64,7 +64,6 @@ const useStyles = makeStyles({
 });
 
 export const Tweet = (tweet: ITweet) => {
-  console.log(tweet);
   const {
     id,
     message,
@@ -104,9 +103,6 @@ export const Tweet = (tweet: ITweet) => {
   const formattedProfileName = profileName ? `@${profileName}` : '';
 
   const avatarUrl = isRetweet ? retweetAvatarUrl : avatar_url;
-
-  console.log(tweet);
-
 
   return (
     <ListItem className={classes.root} divider>

@@ -25,6 +25,7 @@ export default {
   TWITTER_TOGGLE_LIKE_FAILURE: 'toggleLikeFailed',
   TWITTER_RETWEET: 'phone:retweet',
   TWITTER_RETWEET_SUCCESS: 'phone:retweetSuccess',
+  TWITTER_RETWEET_EXISTS: 'phone:retweetExists',
   TWITTER_RETWEET_FAILURE: 'phone:retweetFailed',
   TWITTER_REPORT: 'phone:reportTweet',
   TWITTER_REPORT_SUCCESS: 'reportTweetSuccess',

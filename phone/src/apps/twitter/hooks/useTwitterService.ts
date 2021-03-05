@@ -64,4 +64,5 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
+  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert)
 };

@@ -425,9 +425,15 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
   try {
     const identifier = getIdentifier(_source);
 
-    // TODO - alert the player that they have already retweeted
+    // alert the player that they have already retweeted
     // this post (or that they are the original poster)
-    if(await doesRetweetExist(tweetId, identifier)) return;
+    if(await doesRetweetExist(tweetId, identifier)) {
+      emitNet(events.TWITTER_RETWEET_EXISTS, _source, {
+        message: 'TWITTER_RETWEET_EXISTS',
+        type: 'error',
+      });
+      return;
+    }
 
     // our message for this row is blank because when we
     // query for this tweet it will join off of the retweet
@@ -437,7 +443,6 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
 
     const profile = await getProfile(identifier);
     const tweet = await getTweet(profile.id, createdTweet.id);
-    console.log(tweet);
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, tweet);
   } catch (e) {
     twitterLogger.error(`Retweet failed, ${e.message}`, {
