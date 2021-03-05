@@ -34,6 +34,7 @@
     "APPS_TWITTER_DELETE": "Delete",
     "APPS_TWITTER_REPORT": "Report",
     "APPS_TWITTER_REPORTED": " Reported",
+    "APPS_TWITTER_RETWEETED": "Retweeted",
     "APPS_TWITTER_JUST_NOW": "Just now",
     "APPS_TWITTER_SEARCH_TWEETS": "Search for tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
@@ -53,6 +54,7 @@
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "d",
     "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+    "APPS_TWITTER_NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
     "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
     "APPS_BANK_TRANSFER": "Transfer",

@@ -1,15 +1,27 @@
-export interface Tweet {
-  id: number;
-  profile_name?: string;
-  profile_id: number;
-  isMine: boolean;
-  isReported: boolean;
-  avatar_url?: string;
+
+export interface NewTweet {
   message: string;
-  createdAt?: string;
-  updatedAt?: string;
   images?: string;
-  likes?: number;
+  retweet?: number;
+}
+
+export interface Tweet extends NewTweet {
+  profile_name: string;
+  profile_id: number;
+  id: number;
+  isMine: boolean;
+  isLiked: boolean;
+  isReported: boolean;
+  avatar_url: string;
+  isRetweet: number | boolean;
+  isRetweetedByPlayer?: boolean;
+  retweetIdentifier: string;
+  retweetId: string;
+  seconds_since_tweet: number;
+  retweetProfileName: string;
+  retweetAvatarUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Profile {
