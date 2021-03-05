@@ -32,7 +32,7 @@ import { useCallModal } from './os/call/hooks/useCallModal';
 function Phone() {
   const { apps } = useApps();
 
-  const { settings } = useSettings();
+  const [settings] = useSettings();
 
   useNuiService();
   useKeyboardService();

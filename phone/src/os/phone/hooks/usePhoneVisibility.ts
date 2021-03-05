@@ -8,9 +8,7 @@ import { phoneState } from './state';
 export const usePhoneVisibility = () => {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
   const { currentAlert } = useNotifications();
-  const {
-    settings: { zoom },
-  } = useSettings();
+  const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 

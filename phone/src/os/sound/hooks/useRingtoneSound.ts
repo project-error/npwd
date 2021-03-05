@@ -4,7 +4,7 @@ import { getSoundSettings } from '../utils/getSoundSettings';
 import { useSoundProvider } from './useSoundProvider';
 
 export const useRingtoneSound = () => {
-  const { settings } = useSettings();
+  const [settings] = useSettings();
 
   const sound = useSoundProvider();
 
