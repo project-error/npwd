@@ -130,7 +130,7 @@ export const MessageModal = () => {
       </Modal>
       <Slide direction="left" in={!!activeMessageGroup}>
         <Paper className={classes.modalRoot}>
-          <Paper>
+          <Paper className={classes.conversationHeader}>
             <Box display="flex" justifyContent="space-between">
               <Button onClick={closeModal}>
                 <ArrowBackIcon fontSize="large" />

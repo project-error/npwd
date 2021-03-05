@@ -23,14 +23,14 @@ const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) 
   const referalImage = query?.image || null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className={classes.conversationContainer}>
       <MessageImageModal
         image={referalImage}
         onClose={() => setImageModalOpen(false)}
         isOpen={imageModalOpen}
         messageGroupId={activeMessageGroup.groupId}
       />
-      <Box id={CONVERSATION_ELEMENT_ID} height="85%" pb={4} className={classes.overflowAutoY}>
+      <Box id={CONVERSATION_ELEMENT_ID} height="85%" py={6} className={classes.overflowAutoY}>
         {messages.map((message) => (
           <MessageBubble
             onClickDisplay={onClickDisplay}
