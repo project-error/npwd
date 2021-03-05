@@ -20,7 +20,7 @@ const localStorageEffect = (key) => ({ setSelf, onSet }) => {
 export const settingsState = atom({
   key: 'settings',
   default: config.defaultSettings,
-  effects_UNSTABLE: [localStorageEffect('settings')],
+  effects_UNSTABLE: [localStorageEffect('npwd_settings')],
 });
 
 export interface IPhoneSettings {
