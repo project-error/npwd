@@ -17,11 +17,11 @@ export const getSoundSettings = (
   try {
     return app
       ? {
-          sound: getPath[type](settings[`${app}_${type}`].value || settings[type].value),
+          sound: getPath[type](settings[`${app}_${type}`]?.value || settings[type]?.value),
           volume: (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
         }
       : {
-          sound: getPath[type](settings[type as string].value),
+          sound: getPath[type](settings[type as string]?.value),
           volume: settings[`${type}Vol`] / 100,
         };
   } catch (e) {
