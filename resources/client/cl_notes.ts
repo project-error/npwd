@@ -1,35 +1,35 @@
-import events from '../utils/events';
 import { sendNotesEvent } from '../utils/messages';
+import { NotesNetEvents } from '../../phone/src/common/typings/notes';
 
-onNet(events.NOTE_SEND_NOTE, (notes: any) => {
+onNet(NotesNetEvents.SEND_NOTE, (notes: any) => {
   sendNotesEvent('setNotes', notes);
 });
 
-RegisterNuiCallbackType(events.NOTE_ADD_NOTE);
-on(`__cfx_nui:${events.NOTE_ADD_NOTE}`, (data: any) => {
-  emitNet(events.NOTE_ADD_NOTE, data);
+RegisterNuiCallbackType(NotesNetEvents.ADD_NOTE);
+on(`__cfx_nui:${NotesNetEvents.ADD_NOTE}`, (data: any) => {
+  emitNet(NotesNetEvents.ADD_NOTE, data);
 });
 
-onNet(events.NOTE_SEND_NOTE_SUCCESS, () => {
-  emitNet(events.NOTE_FETCH_ALL_NOTES);
+onNet(NotesNetEvents.SEND_NOTE_SUCCESS, () => {
+  emitNet(NotesNetEvents.FETCH_ALL_NOTES);
 });
 
-RegisterNuiCallbackType(events.NOTE_DELETE_NOTE);
-on(`__cfx_nui:${events.NOTE_DELETE_NOTE}`, (data: any) => {
-  emitNet(events.NOTE_DELETE_NOTE, data);
+RegisterNuiCallbackType(NotesNetEvents.DELETE_NOTE);
+on(`__cfx_nui:${NotesNetEvents.DELETE_NOTE}`, (data: any) => {
+  emitNet(NotesNetEvents.DELETE_NOTE, data);
 
-  emitNet(events.NOTE_FETCH_ALL_NOTES);
+  emitNet(NotesNetEvents.FETCH_ALL_NOTES);
 });
 
-RegisterNuiCallbackType(events.NOTE_UPDATE_NOTE);
-on(`__cfx_nui:${events.NOTE_UPDATE_NOTE}`, (data: any) => {
-  emitNet(events.NOTE_UPDATE_NOTE, data);
+RegisterNuiCallbackType(NotesNetEvents.UPDATE_NOTE);
+on(`__cfx_nui:${NotesNetEvents.UPDATE_NOTE}`, (data: any) => {
+  emitNet(NotesNetEvents.UPDATE_NOTE, data);
 });
 
-onNet(events.NOTE_UPDATE_NOTE_SUCCESS, () => {
-  emitNet(events.NOTE_FETCH_ALL_NOTES);
+onNet(NotesNetEvents.UPDATE_NOTE_SUCCESS, () => {
+  emitNet(NotesNetEvents.FETCH_ALL_NOTES);
 });
 
-onNet(events.NOTE_ACTION_RESULT, (alert: any) => {
+onNet(NotesNetEvents.ACTION_RESULT, (alert: any) => {
   sendNotesEvent('setAlert', alert);
 });

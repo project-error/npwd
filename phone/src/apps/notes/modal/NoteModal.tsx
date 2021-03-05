@@ -16,6 +16,7 @@ import Nui from '../../../os/nui-events/utils/Nui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { StatusButton } from '../../../ui/components/StatusButton';
+import { NotesNetEvents } from '../../../common/typings/notes';
 
 export const NoteModal = () => {
   const classes = useStyles();
@@ -31,14 +32,14 @@ export const NoteModal = () => {
   };
 
   const handleNoteSave = () => {
-    Nui.send('phone:addNote', detail);
+    Nui.send(NotesNetEvents.ADD_NOTE, detail);
     setDetail(null);
     onClose();
   };
 
   const handleDeleteNote = () => {
     const id = detail.id;
-    Nui.send('phone:deleteNote', {
+    Nui.send(NotesNetEvents.DELETE_NOTE, {
       id,
     });
     setDetail(null);
@@ -46,7 +47,7 @@ export const NoteModal = () => {
   };
 
   const handleUpdateNote = () => {
-    Nui.send('phone:updateNote', detail);
+    Nui.send(NotesNetEvents.UPDATE_NOTE, detail);
     setDetail(null);
     onClose();
   };
