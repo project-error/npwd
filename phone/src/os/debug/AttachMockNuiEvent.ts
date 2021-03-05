@@ -1,4 +1,4 @@
-function dispatchEvent({ method, app, data }: { method: string; app: string; data: unknown }) {
+function dispatchEvent({ method, app, data = {} }: { method: string; app: string; data: unknown }) {
   setTimeout(() => {
     window.dispatchEvent(
       new MessageEvent('message', {
