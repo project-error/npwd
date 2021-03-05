@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     display: 'none',
   },
   overflowAutoY: {
-    overflowY: 'auto',
+    overflowY: 'scroll',
   },
   groupdisplay: {
     width: '300px',
