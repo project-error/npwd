@@ -54,7 +54,6 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         soundRefs.current.set(url, { howl: instance, volume });
 
         instance.once('load', () => {
-          console.log('ready', instance);
           res({ howl: instance, url });
         });
 
