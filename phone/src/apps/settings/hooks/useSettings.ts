@@ -16,7 +16,7 @@ export interface IPhoneSettings {
   TWITTER_notifyNewFeedTweet: boolean;
 }
 
-class PhoneSettings implements IPhoneSettings {
+export class PhoneSettings implements IPhoneSettings {
   wallpaper: SettingOption;
   frame: SettingOption;
   theme: SettingOption;
@@ -46,7 +46,7 @@ class PhoneSettings implements IPhoneSettings {
   }
 }
 
-const localStorageEffect = (key) => ({ setSelf, onSet }) => {
+export const localStorageEffect = (key) => ({ setSelf, onSet }) => {
   const storedSettings = localStorage.getItem(key);
   if (storedSettings) {
     try {
