@@ -11,11 +11,12 @@ import { MessageBubble } from './MessageBubble';
 interface IProps {
   activeMessageGroup: MessageGroup;
   messages: Message[];
+  onClickDisplay(phoneNumber: string): void;
 }
 
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
-const Conversation = ({ activeMessageGroup, messages }: IProps) => {
+const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) => {
   const classes = useStyles();
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const query = useQueryParams();
@@ -34,11 +35,13 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         height="85%"
         display="flex"
         flexDirection="column"
+        justifyContent="flex-end"
         pb={4}
         className={classes.overflowAutoY}
       >
         {messages.map((message) => (
           <MessageBubble
+            onClickDisplay={onClickDisplay}
             key={message.id}
             message={message}
             isGroupChat={activeMessageGroup?.isGroupChat}
@@ -46,6 +49,8 @@ const Conversation = ({ activeMessageGroup, messages }: IProps) => {
         ))}
       </Box>
       <MessageInput
+        /*  I should do some groupDiplay here */
+        messageGroupName={activeMessageGroup.label || activeMessageGroup.groupDisplay}
         messageGroupId={activeMessageGroup.groupId}
         onAddImageClick={() => setImageModalOpen(true)}
       />

@@ -5,13 +5,11 @@ import { AppContentTypes } from '../interface/InterfaceUI';
 const useStyles = makeStyles(() => ({
   wrapper: {
     flex: 1,
-    overflow: 'auto',
   },
   box: {
     width: '100%',
     height: '100%', // allow application to fill entireity of space
     position: 'relative',
-    overflow: 'auto',
   },
   backdrop: {
     position: 'absolute',
@@ -31,15 +29,16 @@ export const AppContent = ({
   ...props
 }: AppContentTypes & BoxProps) => {
   const classes = useStyles();
+
   return (
-    <Paper className={classes.wrapper} square>
+    <Paper
+      className={classes.wrapper}
+      square
+      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
+    >
+      <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
       <Box flexGrow={1} className={classes.box} {...props}>
         <Paper square elevation={0} className={classes.paper}>
-          <Backdrop
-            className={classes.backdrop}
-            open={backdrop || false}
-            onClick={onClickBackdrop}
-          />
           {children}
         </Paper>
       </Box>

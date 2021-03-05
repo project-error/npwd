@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List } from '@material-ui/core';
-import qs from 'qs';
 import { MessageGroup } from '../../../../common/typings/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
@@ -8,6 +7,7 @@ import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
+import { goToConversation } from '../../utils/goToConversation';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -16,31 +16,6 @@ const MessagesList = (): any => {
   const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
-
-  const goToConversation = useCallback(
-    (messageGroup) =>
-      history.push(
-        `/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`,
-      ),
-    [history],
-  );
-
-  useEffect(() => {
-    if (createMessageGroupResult?.groupId) {
-      const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
-      clearMessageGroupResult();
-      if (findGroup) {
-        goToConversation(findGroup);
-      }
-    }
-  }, [messageGroups, createMessageGroupResult, goToConversation, clearMessageGroupResult]);
-
-  if (!messageGroups) return null;
-
-  const handleClick = (messageGroup: MessageGroup) => () => {
-    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
-    history.push(`/messages/conversations/${messageGroup.groupId}/?${qs.stringify(messageGroup)}`);
-  };
 
   const formattedSearch = searchValue.toLowerCase().trim();
   const filteredGroups = formattedSearch
@@ -52,6 +27,23 @@ const MessagesList = (): any => {
         return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
       })
     : messageGroups;
+
+  useEffect(() => {
+    if (createMessageGroupResult?.groupId) {
+      const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
+      clearMessageGroupResult();
+      if (findGroup) {
+        goToConversation(findGroup, history);
+      }
+    }
+  }, [messageGroups, createMessageGroupResult, clearMessageGroupResult, history]);
+
+  if (!messageGroups) return null;
+
+  const handleClick = (messageGroup: MessageGroup) => () => {
+    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
+    goToConversation(messageGroup, history);
+  };
 
   return (
     <>

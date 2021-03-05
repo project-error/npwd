@@ -30,7 +30,7 @@ function Notification({ children, handleClose, open }) {
   if (!config) return null;
 
   const { horizontal, vertical } = config.notificationPosition;
-  const currentTheme = () => createMuiTheme(themeConfig.themes[settings.theme]);
+  const currentTheme = () => createMuiTheme(themeConfig.themes[settings.theme.value]);
 
   return (
     <ThemeProvider theme={currentTheme()}>

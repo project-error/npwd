@@ -8,6 +8,7 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 interface IProps {
   onAddImageClick(): void;
   messageGroupId: string | undefined;
+  messageGroupName: string | undefined;
 }
 
 const useStyles = makeStyles({
@@ -23,6 +24,7 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
     event.preventDefault();
     if (message.trim()) {
       // don't allow the user to submit white space
+
       Nui.send('phone:sendMessage', {
         groupId: messageGroupId,
         message,

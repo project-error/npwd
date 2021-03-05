@@ -25,4 +25,8 @@ export const messageState = {
     key: 'useImageModal',
     default: false,
   }),
+  unreadMessagesCount: atom({
+    key: 'unreadMessagesCount',
+    default: 0,
+  })
 };

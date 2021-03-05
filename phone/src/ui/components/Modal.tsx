@@ -38,6 +38,7 @@ export const Modal = ({ children, visible, handleClose }) => {
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
+    e.stopPropagation();
     const isEscapeKey = e.key === 'Escape' || e.key === 'Esc';
     if (isEscapeKey) {
       e.preventDefault();

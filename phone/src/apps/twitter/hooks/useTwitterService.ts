@@ -5,8 +5,9 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -32,6 +33,7 @@ function processTweet(tweet) {
 export const useTwitterService = () => {
   const { addAlert } = useSnackbar();
   const { setNotification } = useTwitterNotifications();
+  const { t } = useTranslation();
 
   const setProfile = useSetRecoilState(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
@@ -47,12 +49,19 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
+  const handleAddAlert = ({ message, type }: IAlert) => {
+    addAlert({
+      message: t(`APPS_${message}`),
+      type,
+    });
+  };
+
   useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', setProfile);
   useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
-  useNuiEvent(APP_TWITTER, 'updateProfileResult', addAlert);
+  useNuiEvent(APP_TWITTER, 'updateProfileResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
-  useNuiEvent(APP_TWITTER, 'createTweetResult', addAlert);
+  useNuiEvent(APP_TWITTER, 'createTweetResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
 };

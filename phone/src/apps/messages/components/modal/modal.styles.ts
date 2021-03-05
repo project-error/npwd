@@ -6,14 +6,10 @@ const useStyles = makeStyles({
     position: 'absolute',
     height: '100%',
     width: '100%',
+    overflowY: 'hidden',
   },
   modalHide: {
     display: 'none',
-  },
-  topContainer: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    padding: '3px 0px',
   },
   overflowAutoY: {
     overflowY: 'auto',

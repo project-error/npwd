@@ -1,7 +1,17 @@
 import React from 'react';
-import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Box,
+  Slider,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 
-interface IProps {
+interface ISettingItem {
   options?: any;
   label: string;
   value?: string | number | null;
@@ -9,11 +19,71 @@ interface IProps {
   icon: JSX.Element;
 }
 
-export const SettingItem = ({ options, label, value, onClick, icon }: IProps) => {
-  return (
-    <ListItem divider onClick={() => onClick?.(options)} button>
+export const SettingItem = ({ options, label, value, onClick, icon }: ISettingItem) => (
+  <ListItem divider onClick={() => onClick?.(options)} button>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <ListItemText primary={label} secondary={value ? value : undefined} />
+  </ListItem>
+);
+
+interface ISettingSlider {
+  label: string;
+  icon: JSX.Element;
+  value: number;
+  onCommit: (event: React.ChangeEvent<{}>, value: number | number[]) => void;
+}
+
+export const SettingItemSlider = ({ icon, label, value, onCommit }: ISettingSlider) => (
+  <ListItem divider>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <ListItemText primary={label} secondary={`${value}%`} />
+    <ListItemSecondaryAction>
+      <Box p={2} width={150}>
+        <Slider
+          key={`slider-${value}`}
+          defaultValue={value}
+          min={0}
+          max={100}
+          valueLabelDisplay="auto"
+          onChangeCommitted={onCommit}
+        />
+      </Box>
+    </ListItemSecondaryAction>
+  </ListItem>
+);
+
+interface ISettingItemIconAction {
+  icon: JSX.Element;
+  actionIcon: JSX.Element;
+  label: string;
+  labelSecondary: string;
+  handleAction: () => void;
+  actionLabel: string;
+}
+
+export const SettingItemIconAction = ({
+  icon,
+  label,
+  handleAction,
+  actionIcon,
+  labelSecondary,
+  actionLabel,
+}: ISettingItemIconAction) => (
+  <>
+    <ListItem divider>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={label} secondary={value ? value : undefined} />
+      <ListItemText primary={label} secondary={labelSecondary} />
+      <ListItemSecondaryAction>
+        <Tooltip
+          arrow
+          title={<Typography variant="body2">{actionLabel}</Typography>}
+          placement="top-end"
+        >
+          <IconButton edge="end" onClick={handleAction}>
+            {actionIcon}
+          </IconButton>
+        </Tooltip>
+      </ListItemSecondaryAction>
     </ListItem>
-  );
-};
+  </>
+);

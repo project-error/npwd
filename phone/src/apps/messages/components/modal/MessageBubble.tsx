@@ -1,4 +1,4 @@
-import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Box, Link, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { Message } from '../../../../common/typings/messages';
 
@@ -44,9 +44,11 @@ const isImage = (url) => {
 export const MessageBubble = ({
   message,
   isGroupChat,
+  onClickDisplay,
 }: {
   message: Message;
   isGroupChat: boolean;
+  onClickDisplay(phoneNumber: string): void;
 }) => {
   const classes = useStyles();
   return (
@@ -60,9 +62,13 @@ export const MessageBubble = ({
           )}
         </Box>
         <Box>
-          <Typography variant="subtitle1" color="secondary">
-            {isGroupChat && !message.isMine ? message.display || message.phone_number : null}
-          </Typography>
+          {isGroupChat && !message.isMine ? (
+            <Link onClick={() => onClickDisplay(message.phone_number)}>
+              <Typography variant="subtitle1" color="secondary">
+                {message.display || message.phone_number}
+              </Typography>
+            </Link>
+          ) : null}
         </Box>
       </Paper>
     </div>
