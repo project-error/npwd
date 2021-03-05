@@ -2,6 +2,14 @@ import config from '../../../../config/default.json';
 import { PhoneSettings } from '../useSettings';
 
 describe('useSettings', () => {
+  it('Creates settings and returns every needed key', () => {
+    const invalid = {};
+    const validated = new PhoneSettings(invalid, config.defaultSettings);
+    for (const key of Object.keys(config.defaultSettings)) {
+      expect(validated[key]).toBe(config.defaultSettings[key]);
+    }
+  });
+
   it('Creates settings and adds missing key', () => {
     const invalid = {};
     const validated = new PhoneSettings(invalid, { ...config.defaultSettings, ringtoneVol: 2 });
