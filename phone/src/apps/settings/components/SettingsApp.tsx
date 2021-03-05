@@ -35,7 +35,7 @@ export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const simcard = useSimcard();
-  const [settings, setSettings] = useSettings();
+  const { settings, setSettings } = useSettings();
   const { t } = useTranslation();
   // TODO: Uncomment when #135 is merged
   // const { addAlert } = useSnackbar();
