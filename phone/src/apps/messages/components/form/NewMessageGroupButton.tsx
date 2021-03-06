@@ -6,7 +6,7 @@ import { Fab } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(5),
     right: theme.spacing(3),
   },
 }));

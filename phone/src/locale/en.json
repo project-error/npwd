@@ -91,7 +91,7 @@
     "APPS_CONTACT_UPDATE_FAILED": "Failed to update contact!",
     "APPS_CONTACT_DELETE_SUCCESS": "Successfully deleted contact!",
     "APPS_CONTACT_DELETE_FAILED": "Failed to delete contact!",
-    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Search contacts",
+    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Search contacts...",
     "APPS_CONTACT_MODAL_PLACEHOLDER_NAME": "Name",
     "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Number",
     "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
