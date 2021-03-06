@@ -82,13 +82,13 @@ export const MessageModal = () => {
   }, [groupId, setActiveMessageGroup]);
 
   useEffect(() => {
-    if (messages && isLoaded && activeMessageGroup) {
+    if (isLoaded) {
       const element = document.getElementById(CONVERSATION_ELEMENT_ID);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [messages, isLoaded, activeMessageGroup]);
+  }, [isLoaded]);
 
   // sends all unread messages
   useEffect(() => {
