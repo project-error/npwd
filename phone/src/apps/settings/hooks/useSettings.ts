@@ -1,4 +1,6 @@
-import { atom, DefaultValue, useRecoilState } from 'recoil';
+import { atom, DefaultValue, SetterOrUpdater, useRecoilState } from 'recoil';
+
+import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '../../../common/typings/twitter';
 import config from '../../../config/default.json';
 import { SettingOption } from '../../../ui/hooks/useContextMenu';
 
@@ -32,11 +34,12 @@ export interface IPhoneSettings {
   ringtoneVol: number;
   notiSound: SettingOption;
   notiSoundVol: number;
+  TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
   TWITTER_notiSound: SettingOption;
   TWITTER_notiSoundVol: number;
   TWITTER_notifyNewFeedTweet: boolean;
 }
 
-export const useSettings = () => {
+export const useSettings = (): [IPhoneSettings, SetterOrUpdater<any>] => {
   return useRecoilState(settingsState);
 };

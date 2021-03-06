@@ -1,9 +1,11 @@
-
 export interface NewTweet {
   message: string;
   images?: string;
   retweet?: number;
 }
+
+export type SETTING_MENTIONS = 'mentions';
+export type SETTINGS_ALL_TWEETS = 'all';
 
 export interface Tweet extends NewTweet {
   profile_name: string;

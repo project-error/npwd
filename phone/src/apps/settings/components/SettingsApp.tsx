@@ -11,6 +11,7 @@ import { SettingItem, SettingItemIconAction, SettingItemSlider } from './Setting
 import { useTranslation } from 'react-i18next';
 
 import {
+  FilterList,
   Brush,
   Wallpaper,
   Phone,
@@ -23,7 +24,6 @@ import {
 
 import { ListSubheader } from '@material-ui/core';
 import { useSettings } from '../hooks/useSettings';
-// import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -70,6 +70,12 @@ export const SettingsApp = () => {
   const twitterNotifications = config.notiSounds.map(
     MapSettingItem(settings.TWITTER_notiSound, (val: SettingOption) =>
       handleSettingChange('TWITTER_notiSound', val),
+    ),
+  );
+
+  const twitterNotificationFilters = config.notiFilters.map(
+    MapSettingItem(settings.TWITTER_notiFilter, (val: SettingOption) =>
+      handleSettingChange('TWITTER_notiFilter', val),
     ),
   );
 
@@ -159,6 +165,13 @@ export const SettingsApp = () => {
           />
         </List>
         <List disablePadding subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}>
+          <SettingItem
+            label={t('APPS_SETTINGS_OPTION_NOTIFICATION_FILTER')}
+            value={settings.TWITTER_notiFilter.label}
+            options={twitterNotificationFilters}
+            onClick={openMenu}
+            icon={<FilterList />}
+          />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
             value={settings.TWITTER_notiSound.label}

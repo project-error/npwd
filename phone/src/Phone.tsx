@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Phone.css';
 import './i18n';
 import { Route } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { useNuiService } from './os/nui-events/hooks/useNuiService';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
+import Nui from './os/nui-events/utils/Nui';
 
 import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
@@ -51,6 +52,12 @@ function Phone() {
   usePhotoService();
   useCallService();
   useDialService();
+
+  useEffect(() => {
+    // We want to get the profile on phone start so we can 
+    // filter notifications by profile name
+    Nui.send('phone:getOrCreateTwitterProfile', {})
+  }, []);
 
   const { modal: callModal } = useCallModal();
   const { bottom, visibility } = usePhoneVisibility();
