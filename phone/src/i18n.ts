@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import en from './locale/en.json';
 import es from './locale/es.json';
 import fr from './locale/fr.json';
-import bh from './locale/bh.json';
+import bh from './locale/bs.json';
 import sv from './locale/sv.json';
 import tr from './locale/tr.json';
 import ptbr from './locale/ptbr.json';
