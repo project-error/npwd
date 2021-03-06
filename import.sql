@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   title varchar(255) DEFAULT NULL,
   url varchar(255) DEFAULT NULL,
   description varchar(255) NOT NULL,
+  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
