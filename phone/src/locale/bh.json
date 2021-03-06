@@ -77,6 +77,9 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Nismo mogli napraviti ovu groupu!",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Ne možete sami sebe dodati u grupu!",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+    "APPS_MESSAGES_UNREAD_MESSAGES": "imate {{ count }} nepročitanu poruku",
+    "APPS_MESSAGES_MEMBERS_TITLE": "Clanovi",
+    "APPS_MESSAGES_ME": "Ja",
 
     "APPS_CONTACT_FORM_NAME": "Ime",
     "APPS_CONTACT_FORM_NUMBER": "Brok",
@@ -103,9 +106,6 @@
 
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
 
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
-
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
@@ -116,12 +116,18 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
 
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+
+
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete",
     "GENERIC_CLOSE": "Close",
     "GENERIC_CANCEL": "Cancel",
     "GENERIC_TITLE": "Title",
-    "GENERIC_CONTENT": "Content"
+    "GENERIC_CONTENT": "Content",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiraj {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopirano je {{ content }} u međuspremnik!"
   }
 }
