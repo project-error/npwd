@@ -3,6 +3,7 @@ import { CircularProgress, makeStyles, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 
+import { ITwitterTheme } from '../../twitter.theme';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 interface IProps {
@@ -11,12 +12,11 @@ interface IProps {
   isRetweet: boolean | number;
 }
 
-const useStyles = makeStyles({
-  icon: {},
+const useStyles = makeStyles((theme: ITwitterTheme) => ({
   iconFilled: {
-    color: "#00acee",
+    color: theme.palette.twitter.main,
   }
-});
+}));
 
 const LOADING_TIME = 1250;
 
