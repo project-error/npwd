@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  root: { position: 'absolute', bottom: 0, width: '100%' },
+  root: { width: '100%' },
 });
 
 const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
