@@ -296,7 +296,7 @@ async function doesReportExist(tweetId: number, profileId: number): Promise<bool
 async function doesRetweetExist(tweetId: number, identifier: string): Promise<boolean> {
   const query = `
   SELECT COUNT(id) as count
-  FROM es_extended.npwd_twitter_tweets
+  FROM npwd_twitter_tweets
   WHERE (id = ? OR retweet = ?) AND identifier = ?
   `
   const [results] = await pool.query(query, [tweetId, tweetId, identifier]);
