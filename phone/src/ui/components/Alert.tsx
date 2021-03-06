@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   msg: {
     maxWidth: '300px',
     wordWrap: 'break-word',
-    fontSize: '1em',
+    fontSize: '1.1em',
   },
 });
 
