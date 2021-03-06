@@ -26,7 +26,7 @@ async function deletePhoto(photo: IPhoto, identifier: string) {
 onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     await uploadPhoto(identifier, image);
     emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, _source);
   } catch (e) {
@@ -38,7 +38,7 @@ onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
 
 onNet(events.CAMERA_FETCH_PHOTOS, async () => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = await getIdentifier(_source);
   const photos = await getPhotosByIdentifier(identifier);
   emitNet(events.CAMERA_SEND_PHOTOS, source, photos);
 });
@@ -46,7 +46,7 @@ onNet(events.CAMERA_FETCH_PHOTOS, async () => {
 onNet(events.CAMERA_DELETE_PHOTO, async (photo: IPhoto) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     await deletePhoto(photo, identifier);
     emitNet(events.CAMERA_DELETE_PHOTO_SUCCESS, _source);
   } catch (e) {

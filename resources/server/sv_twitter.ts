@@ -272,7 +272,7 @@ async function doesReportExist(tweetId: number, profileId: number): Promise<bool
 onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
   } catch (e) {
@@ -286,7 +286,7 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
 onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     await updateProfile(identifier, profile);
     emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_SUCCESS',
@@ -306,7 +306,7 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
 onNet(events.TWITTER_FETCH_TWEETS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchAllTweets(profile.id);
     emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, _source, tweets);
@@ -321,7 +321,7 @@ onNet(events.TWITTER_FETCH_TWEETS, async () => {
 onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchTweetsFiltered(profile.id, searchValue);
     emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, _source, tweets);
@@ -336,7 +336,7 @@ onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
 onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const createdTweet = await createTweet(identifier, tweet);
     emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
@@ -353,7 +353,7 @@ onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
 onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     await deleteTweet(identifier, tweetId);
 
     emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, _source);
@@ -368,7 +368,7 @@ onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
 onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
     const likeExists = await doesLikeExist(profile.id, tweetId);
     if (likeExists) {
@@ -388,7 +388,7 @@ onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
 onNet(events.TWITTER_REPORT, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweet = await getTweet(profile.id, tweetId);
 

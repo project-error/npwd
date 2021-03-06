@@ -48,9 +48,10 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
 });
 
 onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
+  const _ESX = await ESX();
   const _source = getSource();
   try {
-    const xPlayer = ESX.GetPlayerFromId(_source);
+    const xPlayer = _ESX.GetPlayerFromId(_source);
     const _identifier = xPlayer.getIdentifier();
     const name = xPlayer.getName();
 

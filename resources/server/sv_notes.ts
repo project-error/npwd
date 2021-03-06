@@ -30,7 +30,7 @@ async function updateNote(note: Note, identifier: string): Promise<any> {
 onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
   const pSource = getSource();
   try {
-    const _identifier = getIdentifier(pSource);
+    const _identifier = await getIdentifier(pSource);
     await addNote(_identifier, note);
     emitNet(events.NOTE_SEND_NOTE_SUCCESS, pSource);
     emitNet(events.NOTE_ACTION_RESULT, pSource, {
@@ -64,7 +64,7 @@ onNet(events.NOTE_FETCH_ALL_NOTES, async () => {
 onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
   const pSource = getSource();
   try {
-    const _identifier = getIdentifier(pSource);
+    const _identifier = await getIdentifier(pSource);
     await deleteNote(noteId.id, _identifier);
 
     emitNet(events.NOTE_ACTION_RESULT, pSource, {

@@ -21,8 +21,9 @@ export const getSource = () => (global as any).source;
 
 // we might need to run a db query on this.
 // to make it more standalone
-export function getIdentifier(source: number): string {
-  return ESX.GetPlayerFromId(source).getIdentifier();
+export async function getIdentifier(source: number): Promise<string> {
+  const _ESX = await ESX();
+  return _ESX.GetPlayerFromId(source).getIdentifier();
 }
 
 export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<string> {
@@ -36,18 +37,14 @@ export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<s
  * Returns the player phoneNumber for a passed identifier
  * @param identifier The players phone number
  */
-export async function getPlayerFromIdentifier(
-  identifier: string
-): Promise<XPlayer> {
+export async function getPlayerFromIdentifier(identifier: string): Promise<XPlayer> {
+  const _ESX = await ESX();
   return new Promise((res, rej) => {
-    const xPlayers = ESX.GetPlayers();
+    const xPlayers = _ESX.GetPlayers();
 
     for (const player of xPlayers) {
-      const xPlayer = ESX.GetPlayerFromId(player);
-      if (
-        xPlayer.getIdentifier() != null &&
-        xPlayer.getIdentifier() == identifier
-      ) {
+      const xPlayer = _ESX.GetPlayerFromId(player);
+      if (xPlayer.getIdentifier() != null && xPlayer.getIdentifier() == identifier) {
         res(xPlayer);
       }
     }

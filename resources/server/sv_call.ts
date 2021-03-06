@@ -1,13 +1,8 @@
 import { ESX } from './server';
 import events from '../utils/events';
-import {
-  getIdentifierByPhoneNumber,
-  usePhoneNumber,
-  getIdentifier,
-  getSource,
-} from './functions';
+import { getIdentifierByPhoneNumber, usePhoneNumber, getIdentifier, getSource } from './functions';
 
-import { getPlayerFromIdentifier } from './functions'
+import { getPlayerFromIdentifier } from './functions';
 import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
@@ -37,12 +32,13 @@ async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
 let calls: Map<string, ICall> = new Map();
 
 onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: number) => {
+  const _ESX = await ESX();
   const _source = getSource();
 
   const callIdentifier = uuidv4();
 
   // the client that is calling
-  const xTransmitter = ESX.GetPlayerFromId(_source);
+  const xTransmitter = _ESX.GetPlayerFromId(_source);
   const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
 
   // player who is being called

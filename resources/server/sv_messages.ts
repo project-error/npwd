@@ -390,7 +390,7 @@ async function setMessageRead(groupId: string, identifier: string) {
 onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const messageGroups = await getFormattedMessageGroups(identifier);
     emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, _source, messageGroups);
   } catch (e) {
@@ -477,7 +477,7 @@ onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
 onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, groupName: string) => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = await getIdentifier(_source);
     const userParticipants = getIdentifiersFromParticipants(groupId);
 
     await createMessage(_identifier, groupId, message, userParticipants);
@@ -517,7 +517,7 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
 onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
   const pSource = getSource();
   try {
-    const identifier = getIdentifier(pSource);
+    const identifier = await getIdentifier(pSource);
     await setMessageRead(groupId, identifier);
   } catch (e) {
     messageLogger.error(`Failed to set message as read, ${e.message}`, {

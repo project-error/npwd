@@ -18,9 +18,10 @@ async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   return transactions;
 }
 
-function fetchCredentials(): IBankCredentials {
-  const name = ESX.GetPlayerFromId(getSource()).getName();
-  const balance = ESX.GetPlayerFromId(getSource()).getAccount('bank').money;
+async function fetchCredentials(): Promise<IBankCredentials> {
+  const _ESX = await ESX();
+  const name = _ESX.GetPlayerFromId(getSource()).getName();
+  const balance = _ESX.GetPlayerFromId(getSource()).getAccount('bank').money;
 
   const result = {
     name,
@@ -33,11 +34,12 @@ function fetchCredentials(): IBankCredentials {
 }
 
 async function addTransfer(identifier: string, transfer: Transfer): Promise<any> {
-  const xPlayer = ESX.GetPlayerFromId(getSource());
+  const _ESX = await ESX();
+  const xPlayer = _ESX.GetPlayerFromId(getSource());
   const bankBalance = xPlayer.getAccount('bank').money;
   const sourceName = xPlayer.getName();
 
-  const xTarget = ESX.GetPlayerFromId(transfer.targetID);
+  const xTarget = _ESX.GetPlayerFromId(transfer.targetID);
 
   if (transfer.transferAmount > bankBalance) {
     emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false);
@@ -90,10 +92,11 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
 });
 
 onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
+  const _ESX = await ESX();
   const _source = getSource();
-  const xTarget = ESX.GetPlayerFromId(transfer.targetID);
+  const xTarget = _ESX.GetPlayerFromId(transfer.targetID);
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = await getIdentifier(_source);
     await addTransfer(_identifier, transfer);
 
     // we need to create a notification for bank. that's why i have commented out.

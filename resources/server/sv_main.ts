@@ -76,7 +76,7 @@ onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
 onNet('phone:getCredentials', async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = await getIdentifier(_source);
     const number = await getCredentials(identifier);
     emitNet('phone:sendCredentials', _source, number);
   } catch (e) {

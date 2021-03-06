@@ -56,7 +56,7 @@ async function deleteContact(contact: ContactId, identifier: string): Promise<an
 onNet(events.CONTACTS_GET_CONTACTS, async () => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = await getIdentifier(_source);
 
     const contacts = await fetchAllContacts(_identifier);
     emitNet(events.CONTACTS_SEND_CONTACTS, _source, contacts);
@@ -68,7 +68,7 @@ onNet(events.CONTACTS_GET_CONTACTS, async () => {
 onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avatar: string) => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = await getIdentifier(_source);
     await addContact(_identifier, number, display, avatar);
     emitNet(events.CONTACTS_ADD_CONTACT_SUCCESS, _source);
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {
@@ -87,9 +87,10 @@ onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avata
 });
 
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
+  const _ESX = await ESX();
   const _source = getSource();
   try {
-    const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
+    const _identifier = _ESX.GetPlayerFromId(_source).getIdentifier();
     await updateContact(contact, _identifier);
 
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
