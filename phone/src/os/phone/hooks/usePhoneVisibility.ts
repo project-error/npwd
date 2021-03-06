@@ -40,7 +40,7 @@ export const usePhoneVisibility = () => {
     if (!visibility) {
       return `${-728 * zoom.value}px`;
     }
-    return 0;
+    return '0px';
   }, [visibility, zoom]);
 
   return {

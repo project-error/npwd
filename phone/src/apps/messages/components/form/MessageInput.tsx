@@ -46,7 +46,6 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
-              inputRef={(input) => input && input.focus()}
             />
           </Box>
           <Box>

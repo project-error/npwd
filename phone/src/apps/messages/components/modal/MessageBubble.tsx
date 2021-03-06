@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
+  message: {
+    wordBreak: 'break-all',
+  },
 }));
 
 const isImage = (url) => {
@@ -54,7 +57,7 @@ export const MessageBubble = ({
   return (
     <div>
       <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
-        <Box>
+        <Box className={classes.message}>
           {isImage(message.message) ? (
             <img src={message.message} className={classes.imageMessage} alt="multimedia" />
           ) : (

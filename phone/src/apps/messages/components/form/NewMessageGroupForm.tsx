@@ -13,15 +13,14 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const { t } = useTranslation();
   const [participants, setParticipants] = useState([]);
   const [label, setLabel] = useState('');
-  const { contacts } = useContacts();
+  const { getContactByNumber, contacts } = useContacts();
 
   useEffect(() => {
     if (phoneNumber) {
-      const find = contacts.find((c) => c.number === phoneNumber);
-      const newPart = find || { number: phoneNumber };
-      setParticipants((all) => [...all, newPart]);
+      const find = getContactByNumber(phoneNumber) || { number: phoneNumber };
+      setParticipants((all) => [...all, find]);
     }
-  }, [phoneNumber, contacts]);
+  }, [phoneNumber, getContactByNumber]);
 
   const isGroupChat = participants.length > 1;
 
@@ -47,7 +46,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     [history, label, participants, isGroupChat],
   );
 
-  const onAutocompleteChange = useCallback((_e, value: any) => {
+  const onAutocompleteChange = (_e, value: any) => {
     const lastIdx = value.length - 1;
     if (typeof value[lastIdx] === 'string') {
       value.splice(lastIdx, 1, { number: value[lastIdx] });
@@ -55,21 +54,24 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       return;
     }
     setParticipants(value as any[]);
-  }, []);
+  };
 
-  const renderAutocompleteInput = useCallback(
-    (params) => (
-      <TextField
-        {...params}
-        fullWidth
-        label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
-        inputProps={{
-          ...params.inputProps,
-          autoFocus: true,
-        }}
-      />
-    ),
-    [t],
+  const renderAutocompleteInput = (params) => (
+    <TextField
+      {...params}
+      fullWidth
+      label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
+      inputProps={{
+        ...params.inputProps,
+        onKeyPress: (e) => {
+          if (e.key === 'Enter' && e.currentTarget.value) {
+            e.preventDefault();
+            onAutocompleteChange(e, [...participants, e.currentTarget.value]);
+          }
+        },
+        autoFocus: true,
+      }}
+    />
   );
 
   const submitDisabled = !participants.length || (isGroupChat && !label);
