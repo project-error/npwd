@@ -3,6 +3,11 @@ import React from 'react';
 import { Message } from '../../../../common/typings/messages';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '&:first-child': {
+      marginTop: 'auto',
+    },
+  },
   imageMessage: {
     width: '80%',
     maxWidth: '80%',
@@ -55,7 +60,7 @@ export const MessageBubble = ({
 }) => {
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.root}>
       <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box className={classes.message}>
           {isImage(message.message) ? (

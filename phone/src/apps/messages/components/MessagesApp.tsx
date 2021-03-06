@@ -32,10 +32,7 @@ export const MessagesApp = () => {
               </div>
             </Route>
             <Route exact path="/messages">
-              <>
-                <MessagesList />
-                <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
-              </>
+              <MessagesList />
             </Route>
           </Switch>
           <Switch>
@@ -44,6 +41,9 @@ export const MessagesApp = () => {
             </Route>
           </Switch>
         </AppContent>
+        <Route exact path="/messages">
+          <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+        </Route>
       </AppWrapper>
     </MessagesThemeProvider>
   );

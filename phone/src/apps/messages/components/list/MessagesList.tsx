@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { List } from '@material-ui/core';
+import { Box, List } from '@material-ui/core';
 import { MessageGroup } from '../../../../common/typings/messages';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import useMessages from '../../hooks/useMessages';
-import MessageSearch from './MessageSearch';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
 import { goToConversation } from '../../utils/goToConversation';
+import { SearchField } from '../../../../ui/components/SearchField';
+import { useTranslation } from 'react-i18next';
 
 const MessagesList = (): any => {
   const classes = useStyles();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
 
@@ -46,18 +48,28 @@ const MessagesList = (): any => {
   };
 
   return (
-    <>
-      <MessageSearch value={searchValue} handleChange={(e) => setSearchValue(e.target.value)} />
-      <List className={classes.root}>
-        {filteredGroups.map((messageGroup) => (
-          <MessageGroupItem
-            key={messageGroup.groupId}
-            messageGroup={messageGroup}
-            handleClick={handleClick}
-          />
-        ))}
-      </List>
-    </>
+    <Box display="flex" flexDirection="column">
+      <Box>
+        <SearchField
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          placeholder={t('APPS_MESSAGES_SEARCH_PLACEHOLDER')}
+        />
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <Box className={classes.root}>
+          <List>
+            {filteredGroups.map((messageGroup) => (
+              <MessageGroupItem
+                key={messageGroup.groupId}
+                messageGroup={messageGroup}
+                handleClick={handleClick}
+              />
+            ))}
+          </List>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

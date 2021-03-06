@@ -26,10 +26,9 @@ const useStyles = makeStyles({
     bottom: '0',
   },
   overflowAutoY: {
-    flex: 6,
+    height: '550px',
     overflowY: 'auto',
     overflowX: 'hidden',
-    justifyContent: 'end',
   },
   groupdisplay: {
     width: '300px',

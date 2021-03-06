@@ -30,15 +30,29 @@ const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) 
         isOpen={imageModalOpen}
         messageGroupId={activeMessageGroup.groupId}
       />
-      <Box id={CONVERSATION_ELEMENT_ID} height="85%" py={6} className={classes.overflowAutoY}>
-        {messages.map((message) => (
-          <MessageBubble
-            onClickDisplay={onClickDisplay}
-            key={message.id}
-            message={message}
-            isGroupChat={activeMessageGroup?.isGroupChat}
-          />
-        ))}
+      <Box
+        id={CONVERSATION_ELEMENT_ID}
+        height="85%"
+        pt={6}
+        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
+      >
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 'min-content',
+            width: '100%',
+          }}
+        >
+          {messages.map((message) => (
+            <MessageBubble
+              onClickDisplay={onClickDisplay}
+              key={message.id}
+              message={message}
+              isGroupChat={activeMessageGroup?.isGroupChat}
+            />
+          ))}
+        </Box>
       </Box>
       <MessageInput
         /*  I should do some groupDiplay here */
