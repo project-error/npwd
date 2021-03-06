@@ -26,24 +26,22 @@ export const MessagesApp = () => {
         <AppTitle app={messages} />
         <AppContent>
           <Switch>
-            <Route path="/messages/conversations/:groupId" component={MessageModal} />
-            <Route
-              exact
-              path="/messages"
-              render={() => (
-                <>
-                  <MessagesList />
-                  <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
-                </>
-              )}
-            />
+            <Route path="/messages/conversations/:groupId">
+              <div>
+                <MessageModal />
+              </div>
+            </Route>
+            <Route exact path="/messages">
+              <>
+                <MessagesList />
+                <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+              </>
+            </Route>
           </Switch>
           <Switch>
-            <Route
-              exact
-              path={['/messages/new/:phoneNumber', '/messages/new']}
-              render={() => <MessageGroupModal />}
-            />
+            <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
+              <MessageGroupModal />
+            </Route>
           </Switch>
         </AppContent>
       </AppWrapper>
@@ -52,60 +50,6 @@ export const MessagesApp = () => {
 };
 
 InjectDebugData([
-  {
-    app: 'MESSAGES',
-    method: 'phone:fetchMessagesSuccess',
-    data: [
-      {
-        id: 1,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 2,
-        message: 'sup!',
-        user_identifier: '1234',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 3,
-        message: 'sup!',
-        user_identifier: '123',
-        phone_number: '444-4444',
-        display: 'kidz',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-      {
-        id: 3,
-        message: 'what are you doing!?',
-        user_identifier: '12345',
-        phone_number: '444-5555',
-        display: '444-5555',
-        avatar: null,
-        groupId: '2',
-        isRead: true,
-        isMine: false,
-        updatedAt: Date.now(),
-      },
-    ],
-  },
   {
     app: 'MESSAGES',
     method: 'phone:fetchMessageGroupsSuccess',
@@ -136,6 +80,48 @@ InjectDebugData([
 
 InjectDebugData(
   [
+    {
+      app: 'MESSAGES',
+      method: 'phone:fetchMessagesSuccess',
+      data: [
+        {
+          id: 1,
+          message: 'sup!',
+          user_identifier: '1234',
+          phone_number: '444-4444',
+          display: 'kidz',
+          avatar: null,
+          groupId: '2',
+          isRead: true,
+          isMine: false,
+          updatedAt: Date.now(),
+        },
+        {
+          id: 2,
+          message: 'sup!',
+          user_identifier: '1234',
+          phone_number: '444-4444',
+          display: 'kidz',
+          avatar: null,
+          groupId: '2',
+          isRead: true,
+          isMine: true,
+          updatedAt: Date.now(),
+        },
+        {
+          id: 3,
+          message: 'sup!',
+          user_identifier: '123',
+          phone_number: '444-4444',
+          display: 'kidz',
+          avatar: null,
+          groupId: '2',
+          isRead: true,
+          isMine: false,
+          updatedAt: Date.now(),
+        },
+      ],
+    },
     {
       app: 'MESSAGES',
       method: 'createMessagesBroadcast',

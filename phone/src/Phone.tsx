@@ -53,11 +53,12 @@ function Phone() {
 
   return (
     <div>
-      <Slide direction="up" in={visibility}>
+      <Slide direction="up" timeout={{ enter: 500, exit: 500 }} in={visibility}>
         <div className="PhoneWrapper">
           <div
             className="Phone"
             style={{
+              position: 'fixed',
               transformOrigin: 'right bottom',
               transform: `scale(${settings.zoom.value}`,
               bottom,

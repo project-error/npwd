@@ -11,8 +11,25 @@ const useStyles = makeStyles({
   modalHide: {
     display: 'none',
   },
+  conversationHeader: {
+    zIndex: 10,
+  },
+  conversationContainer: {
+    zIndex: -1,
+    display: 'flex',
+    flexFlow: 'row wrap',
+    flexDirection: 'column',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+  },
   overflowAutoY: {
+    flex: 6,
     overflowY: 'auto',
+    overflowX: 'hidden',
+    justifyContent: 'end',
   },
   groupdisplay: {
     width: '300px',
