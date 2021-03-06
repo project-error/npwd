@@ -15,6 +15,13 @@ function fetchOnInitialize() {
   emitNet(events.CONTACTS_GET_CONTACTS);
   emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'PHONE',
+      method: 'setPhoneReady',
+      data: true,
+    }),
+  );
 }
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
