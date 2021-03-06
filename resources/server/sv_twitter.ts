@@ -199,10 +199,11 @@ async function createDefaultProfile(identifier: string): Promise<Profile> {
  * not, create it and return it.
  * @param identifier - player's identifier
  */
-async function getOrCreateProfile(identifier: string): Promise<Profile> {
+export async function getOrCreateProfile(identifier: string): Promise<Profile> {
   const profile = await getProfile(identifier);
   return profile || (await createDefaultProfile(identifier));
 }
+
 
 async function updateProfile(identifier: string, profile: Profile) {
   const { avatar_url, profile_name, bio, location, job } = profile;
@@ -306,8 +307,9 @@ async function doesRetweetExist(tweetId: number, identifier: string): Promise<bo
 
 onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
+  const identifier = getIdentifier(_source);
+  
   try {
-    const identifier = getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
   } catch (e) {

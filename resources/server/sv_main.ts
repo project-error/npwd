@@ -2,7 +2,9 @@ import { ESX } from './server';
 import { pool } from './db';
 import config from '../utils/config';
 import { getIdentifier, getIdentifierByPhoneNumber, getSource, usePhoneNumber } from './functions';
+import { getOrCreateProfile } from './sv_twitter';
 import { mainLogger } from './sv_logger';
+import events from '../utils/events';
 
 //db = DatabaseConfig  //helper variable for use in server function
 
@@ -63,14 +65,18 @@ async function getCredentials(identifier: string): Promise<string> {
 
 onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
   const _source = getSource();
+  const identifier = xPlayer.identifier;
   try {
-    const identifier = xPlayer.identifier;
     await generatePhoneNumber(identifier);
   } catch (e) {
     mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
       source: _source,
     });
   }
+
+  // make sure a twitter profile exists for this user before
+  // we load the phone
+  await getOrCreateProfile(identifier);
 });
 
 onNet('phone:getCredentials', async () => {
