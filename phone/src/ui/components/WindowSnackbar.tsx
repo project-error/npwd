@@ -20,10 +20,10 @@ const WindowSnackbar = () => {
   const classes = useStyles();
 
   useNuiEvent('PHONE', 'startRestart', () => {
-    setMessage('Starting UI restart...');
+    setMessage('Restarting UI');
     setOpen(true);
-    setSeverity('info');
-    setTimeout(() => window.location.reload(), 6000);
+    setSeverity('error');
+    setTimeout(() => window.location.reload(), 3000);
   });
 
   const handleClose = () => {
@@ -31,7 +31,7 @@ const WindowSnackbar = () => {
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} className={classes.root}>
+    <Snackbar open={open} onClose={handleClose} className={classes.root}>
       <Alert severity={severity}>
         <Typography variant="body1">Phone - {message}</Typography>
       </Alert>
