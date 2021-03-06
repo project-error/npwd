@@ -1,15 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography, Paper, Tooltip } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import { ListItem } from '../../../../ui/components/ListItem';
-import ChatIcon from '@material-ui/icons/Chat';
-import PhoneIcon from '@material-ui/icons/Phone';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MarketplaceListing } from '../../../../common/typings/marketplace';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { ListingActions } from './ListingActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,31 +30,10 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
     marginBottom: 20,
   },
-  icon: {
-    color: theme.palette.primary.main,
-  },
-  actionRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
 }));
 
 export const SelloutItem = (listing: MarketplaceListing) => {
   const classes = useStyles();
-
-  const { number: myNumber } = useSimcard();
-
-  const handleDeleteListing = (listingId: number) => {
-    Nui.send('phone:marketplaceDeleteListing', {
-      id: listingId,
-    });
-  };
-
-  const handleReportListing = (listing) => {
-    Nui.send('phone:reportListing', {
-      listing,
-    });
-  };
 
   return (
     <ListItem className={classes.root}>
@@ -73,8 +47,9 @@ export const SelloutItem = (listing: MarketplaceListing) => {
               {listing.title}
             </Typography>
           </div>
+
           {listing.url ? (
-            <PictureResponsive src={listing.url} alt={`${listing.name} image`} />
+            <PictureResponsive src={listing.url} alt={`${listing.name}`} />
           ) : (
             <Typography style={{ margin: 10 }}>
               No image provided{' '}
@@ -83,38 +58,11 @@ export const SelloutItem = (listing: MarketplaceListing) => {
               </span>
             </Typography>
           )}
+
           <Typography variant="h6" style={{ padding: 10 }}>
             {listing.description}
           </Typography>
-          <div className={classes.actionRow}>
-            <div>
-              <Tooltip title="Send a message">
-                <Button>
-                  <ChatIcon className={classes.icon} />
-                </Button>
-              </Tooltip>
-              <Tooltip title={listing.number}>
-                <Button>
-                  <PhoneIcon className={classes.icon} />
-                </Button>
-              </Tooltip>
-            </div>
-            <div>
-              {listing.number === myNumber ? (
-                <Tooltip title="Delete listing">
-                  <Button onClick={() => handleDeleteListing(listing.id)}>
-                    <DeleteIcon />
-                  </Button>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Report listing">
-                  <Button onClick={() => handleReportListing(listing)}>
-                    <ReportIcon />
-                  </Button>
-                </Tooltip>
-              )}
-            </div>
-          </div>
+          <ListingActions {...listing} />
         </Paper>
       </div>
     </ListItem>

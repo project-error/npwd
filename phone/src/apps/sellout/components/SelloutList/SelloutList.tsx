@@ -4,7 +4,8 @@ import { useListing } from '../../hooks/useListing';
 import { SelloutItem } from './SelloutItem';
 
 export const SelloutList = () => {
-  const { listings } = useListing();
+  const listings = useListing();
+
   return (
     <List>
       {listings.map((listing) => (
