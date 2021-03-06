@@ -25,7 +25,7 @@ import { useCallService } from './os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
-import { Snackbar } from './ui/components/Snackbar';
+import { PhoneSnackbar } from './ui/components/PhoneSnackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
@@ -90,7 +90,7 @@ function Phone() {
                     ))}
                   </>
                   <NotificationAlert />
-                  <Snackbar />
+                  <PhoneSnackbar />
                 </div>
                 <Navigation />
               </>

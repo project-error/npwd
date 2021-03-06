@@ -9,14 +9,14 @@ const useStyles = makeStyles({
   msg: {
     maxWidth: '300px',
     wordWrap: 'break-word',
-    fontSize: '1em',
+    fontSize: '1.1em',
   },
 });
 
 export function Alert({ children, ...props }) {
   const classes = useStyles();
   return (
-    <MuiAlert className={classes.root} elevation={6} variant="filled" {...props}>
+    <MuiAlert className={classes.root} elevation={4} variant="filled" {...props}>
       <Typography className={classes.msg}>{children}</Typography>
     </MuiAlert>
   );
