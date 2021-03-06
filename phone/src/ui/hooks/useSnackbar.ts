@@ -11,6 +11,8 @@ export type AlertType = 'success' | 'error' | 'info';
 interface ISnackBar {
   addAlert: ({ message, type }: IAlert) => void;
   alert: IAlert | null;
+  isOpen: boolean;
+  handleClose: () => void;
 }
 
 export const useSnackbar = (): ISnackBar => useContext(SnackbarContext);

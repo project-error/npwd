@@ -1,23 +1,23 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useState } from 'react';
+import { IAlert } from '../hooks/useSnackbar';
 
 export const SnackbarContext = createContext(null);
 
 function SnackbarProvider({ children }) {
-  const [alert, setAlert] = useState(null);
-  const timer = useRef(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const [alert, setAlert] = useState<IAlert>(null);
 
-  useEffect(() => {
-    if (alert) {
-      clearTimeout(timer.current);
-      timer.current = setTimeout(() => {
-        setAlert(null);
-      }, 2000);
-    }
-    return () => clearTimeout(timer.current);
-  }, [alert]);
+  const setNewAlert = (alert: IAlert) => {
+    setAlert(alert);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <SnackbarContext.Provider value={{ alert, addAlert: setAlert }}>
+    <SnackbarContext.Provider value={{ alert, addAlert: setNewAlert, handleClose, isOpen: open }}>
       {children}
     </SnackbarContext.Provider>
   );

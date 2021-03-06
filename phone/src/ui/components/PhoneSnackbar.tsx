@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Snackbar } from '@material-ui/core';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Alert from './Alert';
 
@@ -14,18 +14,19 @@ const useStyles = makeStyles({
     margin: '0 auto',
     position: 'absolute',
     left: 0,
-    bottom: '100px',
+    bottom: 75,
     right: 0,
+    transform: 'none',
   },
 });
 
-export const Snackbar = () => {
+export const PhoneSnackbar = () => {
   const classes = useStyles();
-  const { alert } = useSnackbar();
+  const { alert, isOpen, handleClose } = useSnackbar();
 
   return (
-    <div className={classes.root}>
-      {alert ? <Alert severity={alert.type}>{alert.message}</Alert> : null}
-    </div>
+    <Snackbar autoHideDuration={4000} open={isOpen} className={classes.root} onClose={handleClose}>
+      <Alert severity={alert?.type || 'info'}>{alert?.message || ''}</Alert>
+    </Snackbar>
   );
 };
