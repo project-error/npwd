@@ -10,10 +10,12 @@ interface IUsePhone {
   openPhone(): void;
   closePhone(): void;
   isPhoneOpen: boolean;
+  isPhoneReady: boolean;
 }
 
 export const usePhone = (): IUsePhone => {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
+  const isPhoneReady = useRecoilValue(phoneState.phoneReady);
 
   const { removeAlerts } = useNotifications();
 
@@ -25,5 +27,5 @@ export const usePhone = (): IUsePhone => {
     Nui.send('phone:open');
   };
 
-  return { config: ServerConfig as any, closePhone, openPhone, isPhoneOpen };
+  return { config: ServerConfig as any, closePhone, openPhone, isPhoneOpen, isPhoneReady };
 };

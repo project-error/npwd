@@ -3,6 +3,19 @@ import events from '../utils/events';
 import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 
 let isPhoneOpen = false;
+let isPhoneReady = false;
+
+/* * * * * * * * * * * * *
+ *
+ *  Phone initialize data
+ *
+ * * * * * * * * * * * * */
+function fetchOnInitialize() {
+  isPhoneReady = true;
+  emitNet(events.CONTACTS_GET_CONTACTS);
+  emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
+  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+}
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
@@ -90,6 +103,8 @@ async function Phone(): Promise<void> {
   }
 }
 
+onNet('esx:playerLoaded', fetchOnInitialize);
+
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
     SendNuiMessage(
@@ -116,17 +131,13 @@ onNet('phone:sendCredentials', (number: string) => {
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
+// ^ AND WHAT ARE YOU GOING TO DO HUH? - KIDZ
 
 /* * * * * * * * * * * * *
  *
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-
-function fetchOnInitialize() {
-  emitNet(events.CONTACTS_GET_CONTACTS);
-}
-
 RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
 on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
   emitNet(events.SELLOUT_FETCH_LISTING);

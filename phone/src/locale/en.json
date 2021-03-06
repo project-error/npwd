@@ -4,6 +4,7 @@
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
 
     "COMING_SOON": "Coming soon...",
+    "INITIALIZING": "Initializing",
 
     "APPS_DIALER": "Phone",
     "APPS_CONTACTS": "Contacts",
@@ -119,6 +120,7 @@
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
 
+    "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete",
