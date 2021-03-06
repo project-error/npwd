@@ -34,7 +34,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TWEETS_REFRESH_RATE = 15000; // TODO move this to twitter config
 
 export const TwitterApp = () => {
   const classes = useStyles();
@@ -43,17 +42,7 @@ export const TwitterApp = () => {
   const { profile } = useProfile();
 
   useEffect(() => {
-    // this is a polling implementation. It is possible that
-    // there is some interaction where, on a new tweet, all
-    // clients are sent the updated query data. Until that can
-    // be accomplished this is naive but robust.
-    //
-    // TODO don't call fetchTweets - implement a function that only
-    // returns tweets that we don't already have
-    const timeout = window.setTimeout(() => {
-      Nui.send('phone:fetchTweets', {});
-    }, TWEETS_REFRESH_RATE);
-    return () => window.clearTimeout(timeout);
+    Nui.send('phone:getOrCreateTwitterProfile', {});
   }, []);
 
   // before any other action can be taken by the user we force

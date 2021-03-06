@@ -1,4 +1,5 @@
 import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
@@ -8,6 +9,7 @@ import { twitterState } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
+import { Tweet } from '../../../common/typings/twitter';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -38,7 +40,7 @@ export const useTwitterService = () => {
   const setProfile = useSetRecoilState(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
 
-  const setTweets = useSetRecoilState(twitterState.tweets);
+  const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
 
@@ -47,6 +49,13 @@ export const useTwitterService = () => {
   };
   const _setFilteredTweets = (tweets) => {
     setFilteredTweets(tweets.map(processTweet));
+  };
+
+  const handleTweetBroadcast = (tweet: Tweet) => {
+    setNotification(tweet);
+    const processedTweet = processTweet(tweet);
+    const updatedTweets = [processedTweet].concat(currentTweets);
+    setTweets(updatedTweets);
   };
 
   const handleAddAlert = ({ message, type }: IAlert) => {
@@ -63,6 +72,6 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', handleAddAlert);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
-  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert);
+  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', handleTweetBroadcast);
+  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert)
 };
