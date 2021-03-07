@@ -12,8 +12,6 @@
     "lib": ["es2015", "DOM"],
     "types": ["@citizenfx/server", "@types/node", "jest"],
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
