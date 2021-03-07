@@ -51,7 +51,7 @@ onNet(events.NOTE_ADD_NOTE, async (note: Note) => {
 onNet(events.NOTE_FETCH_ALL_NOTES, async () => {
   const pSource = getSource();
   try {
-    const _identifier = await getIdentifier(pSource);
+    const _identifier = getIdentifier(pSource);
     const notes = await fetchAllNotes(_identifier);
     emitNet(events.NOTE_SEND_NOTE, pSource, notes);
   } catch (e) {
@@ -84,7 +84,7 @@ onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
 onNet(events.NOTE_UPDATE_NOTE, async (note: Note) => {
   const pSource = getSource();
   try {
-    const _identifier = await getIdentifier(pSource);
+    const _identifier = getIdentifier(pSource);
     await updateNote(note, _identifier);
     emitNet(events.NOTE_UPDATE_NOTE_SUCCESS, pSource);
 

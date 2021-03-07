@@ -1,5 +1,4 @@
 import { pool } from './db';
-import { ESX } from './server';
 import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import events from '../utils/events';
@@ -38,7 +37,7 @@ const SELECT_FIELDS = `
   npwd_twitter_tweets.createdAt,
   npwd_twitter_tweets.updatedAt,
   TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
-`
+`;
 
 /**
  * Retrieve the latest 100 tweets
@@ -204,7 +203,6 @@ export async function getOrCreateProfile(identifier: string): Promise<Profile> {
   return profile || (await createDefaultProfile(identifier));
 }
 
-
 async function updateProfile(identifier: string, profile: Profile) {
   const { avatar_url, profile_name, bio, location, job } = profile;
   const query = `
@@ -299,7 +297,7 @@ async function doesRetweetExist(tweetId: number, identifier: string): Promise<bo
   SELECT COUNT(id) as count
   FROM npwd_twitter_tweets
   WHERE (id = ? OR retweet = ?) AND identifier = ?
-  `
+  `;
   const [results] = await pool.query(query, [tweetId, tweetId, identifier]);
   const counts = <any[]>results;
   return counts[0].count > 0;
@@ -308,7 +306,7 @@ async function doesRetweetExist(tweetId: number, identifier: string): Promise<bo
 onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
-  
+
   try {
     const profile = await getOrCreateProfile(identifier);
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
@@ -429,7 +427,7 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
 
     // alert the player that they have already retweeted
     // this post (or that they are the original poster)
-    if(await doesRetweetExist(tweetId, identifier)) {
+    if (await doesRetweetExist(tweetId, identifier)) {
       emitNet(events.TWITTER_RETWEET_EXISTS, _source, {
         message: 'TWITTER_RETWEET_EXISTS',
         type: 'error',

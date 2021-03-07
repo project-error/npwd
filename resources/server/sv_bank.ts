@@ -78,7 +78,7 @@ async function getTransfer(transferId: number): Promise<Transfer> {
 onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
   const _source = getSource();
   try {
-    const _identifier = await getIdentifier(_source);
+    const _identifier = getIdentifier(_source);
     const transfer = await fetchAllTransactions(_identifier);
 
     emitNet(events.BANK_SEND_TRANSFERS, _source, transfer);

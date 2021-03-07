@@ -1,10 +1,10 @@
-import { ESX } from './server';
 import { pool } from './db';
 import config from '../utils/config';
-import { getIdentifier, getIdentifierByPhoneNumber, getSource, usePhoneNumber } from './functions';
-import { getOrCreateProfile } from './sv_twitter';
+import { getIdentifier, getIdentifierByPhoneNumber, getSource, usePlayer } from './functions';
 import { mainLogger } from './sv_logger';
+import { IPlayer } from '../typings/players';
 import events from '../utils/events';
+import { getOrCreateProfile } from './sv_twitter';
 
 //db = DatabaseConfig  //helper variable for use in server function
 
@@ -17,6 +17,43 @@ import events from '../utils/events';
 interface Credentials {
   phone_number: string;
 }
+
+export const Players = new Map<string, IPlayer>();
+
+// gets the identifers
+onNet(events.PHONE_IS_READY, async () => {
+  const pSource = (global as any).source;
+
+  let identifier = null;
+
+  for (let i = 0; i < GetNumPlayerIdentifiers(pSource); i++) {
+    const identifiers = GetPlayerIdentifier(pSource, i);
+
+    if (identifiers.includes('license')) {
+      identifier = identifiers.split(':')[1];
+    }
+  }
+
+  console.log('PHONE IS READY: ', identifier);
+
+  if (!identifier) {
+    throw new Error('Identifier could not be found.');
+  }
+
+  try {
+    await generatePhoneNumber(identifier);
+  } catch (e) {
+    mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
+      source: pSource,
+    });
+  }
+
+  const { name, phone_number } = await usePlayer(identifier);
+
+  Players.set(pSource, { identifier, source: pSource, name, phone_number });
+
+  emitNet(events.PHONE_IS_READY, pSource);
+});
 
 // Generate phone number
 
@@ -38,7 +75,12 @@ function getRandomPhoneNumber() {
 }
 
 async function generatePhoneNumber(identifier: string) {
-  if (!(await usePhoneNumber(identifier))) {
+  const getQuery = `SELECT phone_number FROM users WHERE identifier = ?`;
+  const [results] = await pool.query(getQuery, [identifier]);
+  const result = <any[]>results;
+  const phoneNumber = result[0]?.phone_number;
+
+  if (!phoneNumber) {
     let existingId;
     let newNumber;
     do {
@@ -62,22 +104,6 @@ async function getCredentials(identifier: string): Promise<string> {
   if (number.length === 0) return '###-####';
   return number[0].phone_number;
 }
-
-onNet('esx:playerLoaded', async (playerId: number, xPlayer: any) => {
-  const _source = getSource();
-  const identifier = xPlayer.identifier;
-  try {
-    await generatePhoneNumber(identifier);
-  } catch (e) {
-    mainLogger.error(`Failed to generate a phone number, ${e.message}`, {
-      source: _source,
-    });
-  }
-
-  // make sure a twitter profile exists for this user before
-  // we load the phone
-  await getOrCreateProfile(identifier);
-});
 
 onNet('phone:getCredentials', async () => {
   const _source = getSource();

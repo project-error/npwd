@@ -5,6 +5,13 @@ import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 let isPhoneOpen = false;
 let isPhoneReady = false;
 
+while (true) {
+  if (NetworkIsPlayerActive(PlayerId())) {
+    emitNet(events.PHONE_IS_READY);
+    break;
+  }
+}
+
 /* * * * * * * * * * * * *
  *
  *  Phone initialize data
@@ -19,7 +26,7 @@ function fetchOnInitialize() {
     JSON.stringify({
       app: 'PHONE',
       method: 'setPhoneReady',
-      data: true,
+      data: isPhoneReady,
     }),
   );
 }
@@ -110,7 +117,8 @@ async function Phone(): Promise<void> {
   }
 }
 
-onNet('esx:playerLoaded', fetchOnInitialize);
+// triggerd when the player is ready
+onNet(events.PHONE_IS_READY, fetchOnInitialize);
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {

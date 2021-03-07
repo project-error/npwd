@@ -1,4 +1,3 @@
-import { ESX } from './server';
 import { pool } from './db';
 import events from '../utils/events';
 import { getIdentifier, getSource } from './functions';
@@ -89,7 +88,7 @@ onNet(events.CONTACTS_ADD_CONTACT, async (number: string, display: string, avata
 onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
   const _source = getSource();
   try {
-    const _identifier = ESX.GetPlayerFromId(_source).getIdentifier();
+    const _identifier = getIdentifier(_source);
     await updateContact(contact, _identifier);
 
     emitNet(events.CONTACTS_UPDATE_CONTACT_SUCCESS, _source);
@@ -113,7 +112,7 @@ onNet(events.CONTACTS_UPDATE_CONTACT, async (contact: Contacts) => {
 onNet(events.CONTACTS_DELETE_CONTACT, async (contact: ContactId) => {
   const _source = getSource();
   try {
-    const _identifier = await getIdentifier(_source);
+    const _identifier = getIdentifier(_source);
     await deleteContact(contact, _identifier);
     emitNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, _source);
     emitNet(events.CONTACTS_ACTION_RESULT, _source, {

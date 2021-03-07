@@ -1,13 +1,7 @@
-import { ESX } from './server';
 import events from '../utils/events';
-import {
-  getIdentifierByPhoneNumber,
-  usePhoneNumber,
-  getIdentifier,
-  getSource,
-} from './functions';
+import { getIdentifierByPhoneNumber, usePhoneNumber, getIdentifier, getSource } from './functions';
 
-import { getPlayerFromIdentifier } from './functions'
+import { getPlayerFromIdentifier } from './functions';
 import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
@@ -42,12 +36,11 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   const callIdentifier = uuidv4();
 
   // the client that is calling
-  const xTransmitter = ESX.GetPlayerFromId(_source);
-  const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
+  const transmitterNumber = usePhoneNumber(getIdentifier(_source));
 
   // player who is being called
   const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-  const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
+  const xReceiver = getPlayerFromIdentifier(receiverIdentifier);
   const receiverNumber = phoneNumber;
 
   calls.set(transmitterNumber, {
@@ -144,8 +137,8 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = getSource();
   try {
-    const identifier = await getIdentifier(_source);
-    const phoneNumber = await usePhoneNumber(identifier);
+    const identifier = getIdentifier(_source);
+    const phoneNumber = usePhoneNumber(identifier);
     const calls = await fetchCalls(phoneNumber);
     emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
   } catch (e) {
