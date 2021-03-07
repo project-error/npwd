@@ -5,6 +5,7 @@ import es from './locale/es.json';
 import fr from './locale/fr.json';
 import bs from './locale/bs.json';
 import sv from './locale/sv.json';
+import no from './locale/no.json';
 import tr from './locale/tr.json';
 import ptbr from './locale/ptbr.json';
 import pt from './locale/pt.json';
@@ -15,6 +16,7 @@ const resources = {
   es,
   fr,
   bs,
+  no,
   sv,
   tr,
   ptbr,
