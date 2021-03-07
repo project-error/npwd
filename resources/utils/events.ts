@@ -44,11 +44,17 @@ export default {
   CONTACTS_ACTION_RESULT: 'phone:contactActionResult',
 
   // Sellout
+  // these event keys needs to be changed to 'MARKETPLACE'
   SELLOUT_ADD_LISTING: 'phone:addListing',
   SELLOUT_ADD_LISTING_SUCCESS: 'phone:addListingSuccess',
   SELLOUT_FETCH_LISTING: 'phone:fetchAllListings',
   SELLOUT_SEND_LISTING: 'phone:sendAllListings',
   SELLOUT_ACTION_RESULT: 'phone:selloutActionResult',
+  SELLOUT_DELETE_LISTING: 'phone:marketplaceDeleteListing',
+  SELLOUT_DELETE_LISTING_SUCCESS: 'phone:marketplaceDeleteListingSuccess',
+  SELLOUT_REPORT_LISTING: 'phone:reportListing',
+  SELLOUT_REPORT_LISTING_SUCCESS: 'phone:reportListingSuccess',
+  SELLOUT_REPORT_LISTING_SUCESS: 'phone:reportListingFailed',
 
   //
   BANK_ADD_TRANSFER: 'phone:addTransfer',

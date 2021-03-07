@@ -123,11 +123,18 @@
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
+    "APPS_MARKETPLACE_DELETE_LISTING_SUCCESS": "Successfully delete listing",
+    "APPS_MARKETPLACE_DELETE_LISTING_FAILED": "Failed to delete listing",
+    "APPS_MARKETPLACE_REPORT_LISTING_FAILED": "This listing has already been reported",
+    "APPS_MARKETPLACE_REPORT_LISTING_SUCCESS": "Successfully reported listing",
 
     "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",
     "GENERIC_DELETE": "Delete",
+    "GENERIC_REPORT": "Report",
+    "GENERIC_CALL": "Call",
+    "GENERIC_MESSAGE": "Message",
     "GENERIC_CLOSE": "Close",
     "GENERIC_CANCEL": "Cancel",
     "GENERIC_TITLE": "Title",

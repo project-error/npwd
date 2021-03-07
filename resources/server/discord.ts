@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
 import { mainLogger } from './sv_logger';
+import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
 
 const discordLogger = mainLogger.child({ module: 'discord' });
 
@@ -34,6 +35,31 @@ export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profi
     **Reported Images**:
     ${tweet.images.split(IMAGE_DELIMITER).join('\n')}
     `;
+
+  return await axios.post(POST_CHANNEL_URL, { content }, { headers: DISCORD_HEADERS });
+}
+
+export async function reportListingToDiscord(
+  listing: MarketplaceListing,
+  reportingProfile: string,
+): Promise<any> {
+  if (!DISCORD_TOKEN || !DISCORD_CHANNEL_ID) {
+    discordLogger.warn(
+      'Got a request to report a listing but discord is not configures. See README o how to configure discord endpoints.',
+    );
+    return;
+  }
+
+  const content = `**REPORTED LISTING**
+    -------------------------------------------------
+    **Reporting User**: ${reportingProfile}
+    **Reported User** ${listing.name} (${listing.username})
+    -------------------------------------------------
+    **Reported Listing**
+    ${listing.title}
+    ----
+    ${listing.description}
+  `;
 
   return await axios.post(POST_CHANNEL_URL, { content }, { headers: DISCORD_HEADERS });
 }

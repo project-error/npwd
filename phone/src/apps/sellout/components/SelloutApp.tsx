@@ -34,7 +34,7 @@ InjectDebugData([
       {
         id: 1,
         name: 'Some guy',
-        number: '123-4567',
+        number: '111-1134',
         title: 'Car',
         description: 'Selling this cool car',
         url: 'https://i.imgur.com/ROmGTwi.jpeg',

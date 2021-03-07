@@ -65,13 +65,32 @@ CREATE TABLE IF NOT EXISTS npwd_notes (
 CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(255) DEFAULT NULL,
+  username varchar(255) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
   number varchar(255) NOT NULL,
   title varchar(255) DEFAULT NULL,
   url varchar(255) DEFAULT NULL,
   description varchar(255) NOT NULL,
+  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 31,
+AVG_ROW_LENGTH = 2048,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
 );
+
+CREATE TABLE IF NOT EXISTS npwd_marketplace_reports (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  listing_id int(11) DEFAULT NULL,
+  profile varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_reports` (
   `id` int NOT NULL AUTO_INCREMENT,

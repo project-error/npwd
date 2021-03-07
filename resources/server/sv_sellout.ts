@@ -1,10 +1,11 @@
 import events from '../utils/events';
 import { ESX } from './server';
-import { getSource } from './functions';
+import { getIdentifier, getSource } from './functions';
 import { pool } from './db';
 import { usePhoneNumber } from './functions';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
+import { reportListingToDiscord } from './discord';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
@@ -19,20 +20,51 @@ async function fetchAllListings(): Promise<MarketplaceListing[]> {
 
 async function addListing(
   identifier: string,
+  username: string,
   name: string,
   number: any,
   listing: MarketplaceListing,
 ): Promise<void> {
   const query =
-    'INSERT INTO npwd_sellout_listings (identifier, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?)';
+    'INSERT INTO npwd_sellout_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
   await pool.query(query, [
     identifier,
+    username,
     name,
     number,
     listing.title,
     listing.url,
     listing.description,
   ]);
+}
+
+async function deleteListing(listingId: number, identifier: string): Promise<void> {
+  const query = 'DELETE FROM npwd_sellout_listings WHERE id = ? AND identifier = ?';
+
+  await pool.query(query, [listingId, identifier]);
+}
+
+async function getListing(listingId: number): Promise<MarketplaceListing> {
+  const query = `SELECT * FROM npwd_sellout_listings WHERE id = ?`;
+  const [results] = await pool.query(query, [listingId]);
+  const listings = <MarketplaceListing[]>results;
+  const listing = listings[0];
+
+  return listing;
+}
+
+async function reportListing(listingId: number, profile: string): Promise<void> {
+  const query = `INSERT INTO npwd_marketplace_reports (listing_id, profile) VALUES (?, ?)`;
+
+  await pool.query(query, [listingId, profile]);
+}
+
+async function doesReportExist(listingId: number, profile: string): Promise<boolean> {
+  const query = `SELECT * FROM npwd_marketplace_reports WHERE listing_id = ? AND profile = ?`;
+  const results = await pool.query(query, [listingId, profile]);
+  const result = <any[]>results;
+
+  return result.length > 0;
 }
 
 onNet(events.SELLOUT_FETCH_LISTING, async () => {
@@ -54,8 +86,11 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     const _identifier = xPlayer.getIdentifier();
     const name = xPlayer.getName();
 
+    // This is used as username for the reports
+    const playerName = GetPlayerName(_source);
+
     const phoneNumber = await usePhoneNumber(_identifier);
-    await addListing(_identifier, name, phoneNumber, listing);
+    await addListing(_identifier, playerName, name, phoneNumber, listing);
 
     emitNet(events.SELLOUT_ADD_LISTING_SUCCESS, _source);
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
@@ -70,6 +105,65 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
       message: 'MARKETPALCE_CREATE_LISTING_FAILED',
       type: 'error',
+    });
+  }
+});
+
+onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
+  const pSource = getSource();
+  try {
+    const identifier = getIdentifier(pSource);
+
+    await deleteListing(listingId, identifier);
+
+    // fetches the listings again
+    emitNet(events.SELLOUT_DELETE_LISTING_SUCCESS, pSource);
+
+    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      message: 'MARKETPLACE_DELETE_LISTING_SUCCESS',
+      type: 'success',
+    });
+  } catch (e) {
+    selloutLogger.error(`Failed to delete listing ${e.message}`, {
+      source: pSource,
+    });
+    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      message: 'MARKETPLACE_DELETE_LISTING_FAILED',
+      type: 'error',
+    });
+  }
+});
+
+onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
+  const pSource = getSource();
+
+  try {
+    const rListing = await getListing(listing.id);
+    const reportExists = await doesReportExist(listing.id, listing.name);
+
+    // gets the player name (steam) of the player that is reporting
+    const reportingPlayer = GetPlayerName(pSource);
+
+    if (reportExists) {
+      // send an info alert
+      selloutLogger.error(`This listing has already been reported`);
+
+      emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+        message: 'MARKETPLACE_REPORT_LISTING_FAILED',
+        type: 'info',
+      });
+    } else {
+      await reportListing(rListing.id, rListing.name);
+      await reportListingToDiscord(rListing, reportingPlayer);
+
+      emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+        message: 'MARKETPLACE_REPORT_LISTING_SUCCESS',
+        type: 'success',
+      });
+    }
+  } catch (e) {
+    selloutLogger.error(`Failed to report listing ${e.message}`, {
+      source: pSource,
     });
   }
 });
