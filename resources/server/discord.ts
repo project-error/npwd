@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from 'axios';
+import axios from 'axios';
 
 import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
 import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
@@ -53,7 +53,7 @@ export async function reportListingToDiscord(
   const content = `**REPORTED LISTING**
     -------------------------------------------------
     **Reporting User**: ${reportingProfile}
-    **Reported User** ${listing.name} (${listing.player})
+    **Reported User** ${listing.name} (${listing.username})
     -------------------------------------------------
     **Reported Listing**
     ${listing.title}

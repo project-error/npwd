@@ -1,7 +1,6 @@
 import events from '../utils/events';
 import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
 import { IAlertProps } from '../../phone/src/common/typings/alerts';
-import { eventNames } from 'process';
 
 onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
   SendNuiMessage(
@@ -30,9 +29,6 @@ on(`__cfx_nui:${events.SELLOUT_REPORT_LISTING}`, (data: MarketplaceListing, cb: 
   emitNet(events.SELLOUT_SEND_LISTING, data);
   cb();
 });
-
-// this will be triggerd when
-// the adding of a new listing is successfully
 
 onNet(events.SELLOUT_ADD_LISTING_SUCCESS, () => {
   emitNet(events.SELLOUT_FETCH_LISTING);

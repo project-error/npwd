@@ -1,7 +1,7 @@
 export interface MarketplaceListing {
   id: number;
   identifier?: string;
-  player: string;
+  username: string;
   name: string;
   number: string;
   title: string;

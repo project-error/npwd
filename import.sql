@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS npwd_notes (
 CREATE TABLE IF NOT EXISTS npwd_sellout_listings (
   id int(11) NOT NULL AUTO_INCREMENT,
   identifier varchar(255) DEFAULT NULL,
-  player varchar(255) DEFAULT NULL,
+  username varchar(255) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
   number varchar(255) NOT NULL,
   title varchar(255) DEFAULT NULL,

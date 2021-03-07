@@ -20,16 +20,16 @@ async function fetchAllListings(): Promise<MarketplaceListing[]> {
 
 async function addListing(
   identifier: string,
-  player: string,
+  username: string,
   name: string,
   number: any,
   listing: MarketplaceListing,
 ): Promise<void> {
   const query =
-    'INSERT INTO npwd_sellout_listings (identifier, player, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    'INSERT INTO npwd_sellout_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
   await pool.query(query, [
     identifier,
-    player,
+    username,
     name,
     number,
     listing.title,
@@ -86,7 +86,7 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     const _identifier = xPlayer.getIdentifier();
     const name = xPlayer.getName();
 
-    // This is used for reports
+    // This is used as username for the reports
     const playerName = GetPlayerName(_source);
 
     const phoneNumber = await usePhoneNumber(_identifier);
