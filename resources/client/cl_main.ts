@@ -5,13 +5,6 @@ import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 let isPhoneOpen = false;
 let isPhoneReady = false;
 
-while (true) {
-  if (NetworkIsPlayerActive(PlayerId())) {
-    emitNet(events.PHONE_IS_READY);
-    break;
-  }
-}
-
 /* * * * * * * * * * * * *
  *
  *  Phone initialize data

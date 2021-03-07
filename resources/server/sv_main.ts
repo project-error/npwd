@@ -26,13 +26,8 @@ on('playerJoining', async () => {
 
   let identifier = null;
 
-  for (let i = 0; i < GetNumPlayerIdentifiers(pSource); i++) {
-    const identifiers = GetPlayerIdentifier(pSource, i);
-
-    if (identifiers.includes('license')) {
-      identifier = identifiers.split(':')[1];
-    }
-  }
+  const identifers = getPlayerIdentifiers(pSource);
+  identifier = identifers[1].split(':')[1];
 
   console.log('PHONE IS READY: ', identifier);
 
