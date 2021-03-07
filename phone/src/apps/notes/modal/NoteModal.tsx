@@ -12,7 +12,6 @@ import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useNoteDetail } from '../hooks/useNoteDetail';
 import useStyles from './modal.styles';
-import Nui from '../../../os/nui-events/utils/Nui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { StatusButton } from '../../../ui/components/StatusButton';
@@ -21,34 +20,29 @@ export const NoteModal = () => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
-  const { detail, setDetail } = useNoteDetail();
+  const { detail, setDetail, addNote, deleteNote, updateNote, isLoading } = useNoteDetail();
 
   const onClose = () => history.goBack();
 
-  const _handleClose = () => {
-    setDetail(null);
+  const _handleClose = async () => {
+    await setDetail(null);
     onClose();
   };
 
-  const handleNoteSave = () => {
-    Nui.send('phone:addNote', detail);
-    setDetail(null);
-    onClose();
+  const handleNoteSave = async () => {
+    await addNote(detail);
+    _handleClose();
   };
 
-  const handleDeleteNote = () => {
+  const handleDeleteNote = async () => {
     const id = detail.id;
-    Nui.send('phone:deleteNote', {
-      id,
-    });
-    setDetail(null);
-    onClose();
+    await deleteNote({ id });
+    _handleClose();
   };
 
-  const handleUpdateNote = () => {
-    Nui.send('phone:updateNote', detail);
-    setDetail(null);
-    onClose();
+  const handleUpdateNote = async () => {
+    await updateNote(detail);
+    _handleClose();
   };
 
   return (
@@ -105,7 +99,11 @@ export const NoteModal = () => {
                       disabled={detail.title.length > 0 ? false : true}
                       onClick={handleNoteSave}
                     >
-                      {t('GENERIC_SAVE')}
+                      {isLoading ? (
+                        <CircularProgress color="secondary" size="1.6em" />
+                      ) : (
+                        t('GENERIC_SAVE')
+                      )}
                     </Button>
                   </Box>
                   <Box display="inline" p={1}>
@@ -118,12 +116,16 @@ export const NoteModal = () => {
                 <>
                   <Box display="inline" p={1}>
                     <Button color="primary" variant="contained" onClick={handleUpdateNote}>
-                      {t('GENERIC_UPDATE')}
+                      {isLoading ? (
+                        <CircularProgress color="secondary" size="1.6em" />
+                      ) : (
+                        t('GENERIC_UPDATE')
+                      )}
                     </Button>
                   </Box>
                   <Box display="inline" p={1}>
                     <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
-                      {t('GENERIC_DELETE')}
+                      {isLoading ? <CircularProgress size="1.6em" /> : t('GENERIC_DELETE')}
                     </StatusButton>
                   </Box>
                 </>
