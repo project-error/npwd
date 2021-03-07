@@ -12,7 +12,7 @@ export const MapStringOptions = (current, onClick) => (string) => {
   };
 };
 
-export interface SettingOption<T = void> {
+export interface SettingOption<T = any> {
   label: string;
   value: T | string | number;
 }

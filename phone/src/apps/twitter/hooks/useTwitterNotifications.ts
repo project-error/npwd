@@ -26,12 +26,13 @@ export const useTwitterNotifications = () => {
 
   const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
   const profile = useRecoilValue(twitterState.profile);
-  const currentProfileName = profile.profile_name;
 
   const setNotification = ({ profile_name, message, isRetweet }) => {
     const titleStr = isRetweet
       ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
       : 'APPS_TWITTER_NEW_BROADCAST';
+
+    const currentProfileName = profile.profile_name;
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
 
