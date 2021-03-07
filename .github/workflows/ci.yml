@@ -1,10 +1,10 @@
-name: Tests and CI
+name: Test Suite
 
 on: [push]
 
 jobs:
   nui_preformatting_tests:
-    name: NUI Preformatting and Tests
+    name: Tests for NUI
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -40,7 +40,7 @@ jobs:
           CI: true
 
   game_scripts_test:
-    name: Formatting/Tests for Native Scripts
+    name: Tests for Game Scripts
     runs-on: ubuntu-latest
     defaults:
       run:
