@@ -21,7 +21,7 @@ interface Credentials {
 export const Players = new Map<string, IPlayer>();
 
 // gets the identifers
-onNet(events.PHONE_IS_READY, async () => {
+on('playerJoining', async () => {
   const pSource = (global as any).source;
 
   let identifier = null;
