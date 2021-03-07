@@ -4,7 +4,7 @@ import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { Slide } from '@material-ui/core';
+import { Box, Paper, Slide, Typography } from '@material-ui/core';
 import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
@@ -29,8 +29,11 @@ import { PhoneSnackbar } from './ui/components/PhoneSnackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
+import { usePhone } from './os/phone/hooks/usePhone';
+import { useTranslation } from 'react-i18next';
 
 function Phone() {
+  const { t } = useTranslation();
   const { apps } = useApps();
 
   const [settings] = useSettings();
@@ -51,6 +54,7 @@ function Phone() {
 
   const { modal: callModal } = useCallModal();
   const { bottom, visibility } = usePhoneVisibility();
+  const { isPhoneReady } = usePhone();
 
   return (
     <div>
@@ -79,21 +83,38 @@ function Phone() {
                 backgroundImage: `url(./media/backgrounds/${settings.wallpaper.value})`,
               }}
             >
-              <>
-                <NotificationBar />
-                <div className="PhoneAppContainer">
-                  <>
-                    <Route exact path="/" component={HomeApp} />
-                    {callModal && <Route exact path="/call" component={CallModal} />}
-                    {apps.map((App) => (
-                      <App.Route key={App.id} />
-                    ))}
-                  </>
-                  <NotificationAlert />
-                  <PhoneSnackbar />
-                </div>
-                <Navigation />
-              </>
+              {isPhoneReady ? (
+                <>
+                  <NotificationBar />
+                  <div className="PhoneAppContainer">
+                    <>
+                      <Route exact path="/" component={HomeApp} />
+                      {callModal && <Route exact path="/call" component={CallModal} />}
+                      {apps.map((App) => (
+                        <App.Route key={App.id} />
+                      ))}
+                    </>
+                    <NotificationAlert />
+                    <PhoneSnackbar />
+                  </div>
+                  <Navigation />
+                </>
+              ) : (
+                <Box
+                  component={Paper}
+                  height="100%"
+                  width="100%"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Typography paragraph variant="h6">
+                    NPWD {t('INITIALIZING')}
+                  </Typography>
+                  <Typography paragraph>{t('GENERIC_WAIT')}</Typography>
+                </Box>
+              )}
             </div>
           </div>
         </div>
@@ -108,6 +129,11 @@ InjectDebugData([
   {
     app: 'PHONE',
     method: 'setVisibility',
+    data: true,
+  },
+  {
+    app: 'PHONE',
+    method: 'setPhoneReady',
     data: true,
   },
 ]);
