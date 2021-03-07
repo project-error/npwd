@@ -13,6 +13,7 @@ interface IProps {
 }
 
 const useStyles = makeStyles((theme: ITwitterTheme) => ({
+  icon: {}, // no styles on default icon
   iconFilled: {
     color: theme.palette.twitter.main,
   }
