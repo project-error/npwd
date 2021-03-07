@@ -112,6 +112,20 @@ on(`__cfx_nui:${events.TWITTER_TOGGLE_LIKE}`, (tweetId: number) => {
 });
 
 /**
+ * Twitter retweets
+ */
+RegisterNuiCallbackType(events.TWITTER_RETWEET);
+on(`__cfx_nui:${events.TWITTER_RETWEET}`, (tweetId: number, cb: Function) => {
+  emitNet(events.TWITTER_RETWEET, tweetId);
+  cb();
+});
+
+onNet(events.TWITTER_RETWEET_EXISTS, (alert: IAlertProps) => {
+  sendTwitterMessage(events.TWITTER_RETWEET_EXISTS, alert);
+});
+
+
+/**
  * Twitter reporting tweets
  */
 RegisterNuiCallbackType(events.TWITTER_REPORT);

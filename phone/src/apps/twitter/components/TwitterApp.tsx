@@ -19,6 +19,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
+import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -66,26 +67,28 @@ export const TwitterApp = () => {
   const showTweetButton = !promptProfileName && activePage === 0;
 
   return (
-    <AppWrapper id="twitter-app">
-      <AddTweetModal />
-      <div className={modalVisible ? classes.backgroundModal : undefined} />
-      <TwitterTitle />
-      <AppContent>
-        {promptProfileName ? (
-          <ProfilePrompt />
-        ) : (
-          <Switch>
-            <Route path="/twitter" exact component={TweetListContainer} />
-            <Route path="/twitter/search" component={TwitterSearch} />
-            <Route path="/twitter/profile" component={TwitterProfile} />
-          </Switch>
+    <TwitterThemeProvider>
+      <AppWrapper id="twitter-app">
+        <AddTweetModal />
+        <div className={modalVisible ? classes.backgroundModal : undefined} />
+        <TwitterTitle />
+        <AppContent>
+          {promptProfileName ? (
+            <ProfilePrompt />
+          ) : (
+            <Switch>
+              <Route path="/twitter" exact component={TweetListContainer} />
+              <Route path="/twitter/search" component={TwitterSearch} />
+              <Route path="/twitter/profile" component={TwitterProfile} />
+            </Switch>
+          )}
+        </AppContent>
+        {showTweetButton && <TweetButton openModal={openModal} />}
+        {!promptProfileName && (
+          <BottomNavigation activePage={activePage} handleChange={handlePageChange} />
         )}
-      </AppContent>
-      {showTweetButton && <TweetButton openModal={openModal} />}
-      {!promptProfileName && (
-        <BottomNavigation activePage={activePage} handleChange={handlePageChange} />
-      )}
-    </AppWrapper>
+      </AppWrapper>
+    </TwitterThemeProvider>
   );
 };
 

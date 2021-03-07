@@ -1,25 +1,33 @@
 import React, { memo } from 'react';
+import DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItemAvatar, Avatar as MuiAvatar, ListItem, Typography } from '@material-ui/core';
+
+import { Tweet as ITweet } from '../../../../common/typings/twitter';
 import { secondsToHumanReadable } from '../../utils/time';
 import LikeButton from '../buttons/LikeButton';
 import ReplyButton from '../buttons/ReplyButton';
 import ImageDisplay from '../images/ImageDisplay';
 import Avatar from '../Avatar';
-import ShowMore from './ShowMore';
-import { QuoteButton } from '../buttons/QuoteButton';
+import { RetweetButton } from '../buttons/RetweetButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import DOMPurify from 'dompurify';
+import Retweet from './Retweet';
+import ShowMore from './ShowMore';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   root: {
     overflowX: 'hidden',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    width: '100%',
+    marginTop: '6px',
+  },
+  container: {
     display: 'flex',
     flexFlow: 'row nowrap',
     alignItems: 'flex-start',
     width: '100%',
-    marginTop: '6px',
   },
   content: {
     display: 'flex',
@@ -53,19 +61,24 @@ const useStyles = makeStyles(() => ({
     marginLeft: '-20px', // easier to do this here than override the MUI styles
     marginTop: '3px',
   },
-}));
+});
 
-export const Tweet = (tweet) => {
+export const Tweet = (tweet: ITweet) => {
   const {
     id,
     message,
     images,
     avatar_url,
     profile_name,
+    retweetProfileName,
+    retweetAvatarUrl,
+    retweetId,
     seconds_since_tweet,
     isLiked,
     isMine,
     isReported,
+    isRetweet,
+    isRetweetedByPlayer,
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -86,41 +99,52 @@ export const Tweet = (tweet) => {
     ALLOWED_TAGS: ['br'],
   });
 
-  const profileName = profile_name ? `@${profile_name}` : '';
+  const profileName = isRetweet ? retweetProfileName : profile_name;
+  const formattedProfileName = profileName ? `@${profileName}` : '';
+
+  const avatarUrl = isRetweet ? retweetAvatarUrl : avatar_url;
 
   return (
     <ListItem className={classes.root} divider>
-      {enableAvatars && (
-        <ListItemAvatar>
-          <MuiAvatar>
-            <Avatar avatarUrl={avatar_url} height="40px" width="40px" />
-          </MuiAvatar>
-        </ListItemAvatar>
-      )}
-      <div className={classes.content}>
-        <div className={classes.primary}>
-          <div className={classes.profile}>{profileName}</div>
-          <Typography
-            className={classes.date}
-            component="div"
-            variant="body2"
-            color="textSecondary"
-          >
-            {secondsToHumanReadable(t, seconds_since_tweet)}
-          </Typography>
-        </div>
-        <div
-          className={classes.message}
-          dangerouslySetInnerHTML={{
-            __html: sanitizedMessage,
-          }}
-        />
-        {enableImages && <ImageDisplay visible images={images} small />}
-        <div className={classes.buttonContainer}>
-          <ReplyButton profile_name={profile_name} />
-          <LikeButton tweetId={id} isLiked={isLiked} />
-          <QuoteButton message={message} />
-          <ShowMore isMine={isMine} isReported={isReported} id={id} />
+      {isRetweet && <Retweet profileName={profile_name} />}
+      <div className={classes.container}>
+        {enableAvatars && (
+          <ListItemAvatar>
+            <MuiAvatar>
+              <Avatar avatarUrl={avatarUrl} height="40px" width="40px" />
+            </MuiAvatar>
+          </ListItemAvatar>
+        )}
+        <div className={classes.content}>
+          <div className={classes.primary}>
+            <div className={classes.profile}>{formattedProfileName}</div>
+            <Typography
+              className={classes.date}
+              component="div"
+              variant="body2"
+              color="textSecondary"
+            >
+              {secondsToHumanReadable(t, seconds_since_tweet)}
+            </Typography>
+          </div>
+          <div
+            className={classes.message}
+            dangerouslySetInnerHTML={{
+              __html: sanitizedMessage,
+            }}
+          />
+          {enableImages && <ImageDisplay visible images={images} small />}
+          <div className={classes.buttonContainer}>
+            <ReplyButton profile_name={profile_name} />
+            <LikeButton tweetId={id} isLiked={isLiked} />
+            {!isMine && (
+              <RetweetButton
+                tweetId={id}
+                retweetId={retweetId}
+                isRetweet={isRetweet}
+              />)}
+            <ShowMore isMine={isMine} isReported={isReported} id={id} />
+          </div>
         </div>
       </div>
     </ListItem>

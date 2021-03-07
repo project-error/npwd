@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
   `identifier` varchar(40) NOT NULL,
   `visible` tinyint NOT NULL DEFAULT '1',
   `images` varchar(1000) DEFAULT '',
+  `retweet` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
