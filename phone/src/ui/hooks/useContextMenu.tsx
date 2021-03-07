@@ -12,9 +12,9 @@ export const MapStringOptions = (current, onClick) => (string) => {
   };
 };
 
-export interface SettingOption {
+export interface SettingOption<T = any> {
   label: string;
-  value: string | number;
+  value: T | string | number;
 }
 
 export const MapSettingItem = (current: SettingOption, onClick: Function) => (

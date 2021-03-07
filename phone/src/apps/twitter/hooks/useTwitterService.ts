@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import Nui from '../../../os/nui-events/utils/Nui';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';
@@ -64,5 +66,5 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
   useNuiEvent(APP_TWITTER, 'createTweetResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'createTweetBroadcast', setNotification);
-  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert)
+  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert);
 };

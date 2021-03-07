@@ -87,6 +87,16 @@
       "value": "99kr"
     }
   ],
+  "notiFilters": [
+    {
+      "label": "All Tweets",
+      "value": "all"
+    },
+    {
+      "label": "Only Mentions",
+      "value": "mentions"
+    }
+  ],
   "defaultSettings": {
     "wallpaper": {
       "label": "Project Error",
@@ -114,6 +124,10 @@
     },
     "ringtoneVol": 50,
     "notiSoundVol": 50,
+    "TWITTER_notiFilter": {
+      "label": "All Tweets",
+      "value": "all"
+    },
     "TWITTER_notiSound": {
       "label": "Online",
       "value": "online"
