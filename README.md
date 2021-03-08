@@ -1,5 +1,8 @@
 # New-Phone-Who-Dis (NPWD)
 
+<img src="https://i.imgur.com/suc7KUf.png" width="500" height="300" />
+
+
 NPWD is our current running project. Our team has been working on the project since Auguest, 2020. This resource isn’t complete yet and currently has no ETA for release. Feel free to test it out in a dev enviorment by following the installation guide.
 
 Written completely by the Project Error Dev Team in [React](https://reactjs.org/) with a [TypeScript](https://www.typescriptlang.org/) client/server environment.
