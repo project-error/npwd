@@ -1,32 +1,14 @@
 import { IPlayer } from '../typings/players';
 import { pool } from './db';
-import { Players } from './sv_main';
+import config from '../utils/config';
+import { mainLogger } from './sv_logger';
+import { Player } from './sv_players';
+import { Players, PlayersByIdentifier } from './sv_players';
 
-interface Identifier {
-  identifier: string;
-}
-
-export async function usePlayer(
-  identifier: string,
-): Promise<Pick<IPlayer, 'name' | 'phone_number'>> {
-  const query = `SELECT firstname, lastname, phone_number FROM users WHERE identifier = ?`;
-  const [results] = await pool.query(query, [identifier]);
-  const creds = <{ firstname: string; lastname: string; phone_number: string }[]>results;
-
-  const name = `${creds[0].firstname} ${creds[0].lastname}`;
-  const phone_number = creds[0].phone_number;
-
-  return { name, phone_number };
-}
-
-export function usePhoneNumber(identifier: string) {
-  const player = getPlayerFromIdentifier(identifier);
-  return player?.phone_number || null;
-}
-
-export function useName(identifer: string) {
-  const player = getPlayerFromIdentifier(identifer);
-  return player?.name || null;
+export function getPlayer(source: number): Player {
+  const player = Players.get(source);
+  if (!player) mainLogger.error(`Could not find player from source: ${source}`);
+  return player;
 }
 
 export const getSource = () => (global as any).source;
@@ -34,30 +16,62 @@ export const getSource = () => (global as any).source;
 // we might need to run a db query on this.
 // to make it more standalone
 export function getIdentifier(source: number): string {
-  const player = getPlayerBySource(source);
-  return player?.identifier || null;
+  return getPlayer(source).identifier;
 }
 
 export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<string> {
-  const query = 'SELECT identifier FROM users WHERE phone_number = ?';
-  const [results] = await pool.query(query, [phoneNumber]);
-  const identifier = <Identifier[]>results;
-  return identifier[0].identifier;
+  for (const [source, player] of Players) {
+    if (player.phoneNumber === phoneNumber) return phoneNumber;
+  }
 }
-
-export const getPlayerBySource = (source: number) => {
-  return Players.get(source);
-};
 
 /**
  * Returns the player phoneNumber for a passed identifier
  * @param identifier The players phone number
  */
 export function getPlayerFromIdentifier(identifier: string) {
-  for (const player of Array.from(Players.entries())) {
-    if (player[1].identifier === identifier) {
-      return player[1];
-    }
+  const player = PlayersByIdentifier.get(identifier);
+  if (!player) mainLogger.error(`Could not find player from identifier: ${identifier}`);
+  return player;
+}
+
+function getRandomPhoneNumber() {
+  let randomNumber: string = null;
+
+  if (!config.general.useDashNumber) {
+    randomNumber = Math.floor(Math.random() * 10000000).toString(); // 10000000 creates a number with 7 characters.
+  } else {
+    randomNumber = Math.floor(Math.random() * 10000000)
+      .toString()
+      .replace(/(\d{3})(\d{4})/, '$1-$2');
+    // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
+    // Example: 123-4567
+  }
+  mainLogger.verbose(`Getting random number: ${randomNumber}`);
+
+  return randomNumber;
+}
+
+export async function generatePhoneNumber(identifier: string) {
+  const getQuery = `SELECT phone_number FROM users WHERE identifier = ?`;
+  const [results] = await pool.query(getQuery, [identifier]);
+  const result = <any[]>results;
+  const phoneNumber = result[0]?.phone_number;
+
+  if (!phoneNumber) {
+    let existingId;
+    let newNumber;
+    do {
+      newNumber = getRandomPhoneNumber();
+      try {
+        existingId = await getIdentifierByPhoneNumber(newNumber);
+      } catch (e) {
+        existingId = false;
+      }
+    } while (existingId);
+    mainLogger.verbose(`Inserting number into Database: ${newNumber}`);
+    const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
+    await pool.query(query, [newNumber, identifier]);
   }
   return null;
 }

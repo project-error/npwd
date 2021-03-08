@@ -10,6 +10,7 @@ import './sv_notes';
 import './sv_photo';
 import './sv_messages';
 import './sv_call';
+import './sv_players';
 import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;

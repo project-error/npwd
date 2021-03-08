@@ -111,7 +111,7 @@ async function Phone(): Promise<void> {
 }
 
 // triggerd when the player is ready
-onNet(events.PHONE_IS_READY, fetchOnInitialize);
+onNet(events.PLAYER_IS_READY, fetchOnInitialize);
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {

@@ -1,5 +1,5 @@
 import events from '../utils/events';
-import { getIdentifierByPhoneNumber, usePhoneNumber, getIdentifier, getSource } from './functions';
+import { getIdentifierByPhoneNumber, getPlayer, getIdentifier, getSource } from './functions';
 
 import { getPlayerFromIdentifier } from './functions';
 import { ICall } from '../../phone/src/common/typings/call';
@@ -36,7 +36,7 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   const callIdentifier = uuidv4();
 
   // the client that is calling
-  const transmitterNumber = usePhoneNumber(getIdentifier(_source));
+  const transmitterNumber = getPlayer(_source).phoneNumber;
 
   // player who is being called
   const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
@@ -137,8 +137,7 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
-    const phoneNumber = usePhoneNumber(identifier);
+    const phoneNumber = getPlayer(_source).phoneNumber;
     const calls = await fetchCalls(phoneNumber);
     emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
   } catch (e) {

@@ -1,6 +1,5 @@
 import events from '../utils/events';
-import { ESX } from './server';
-import { getIdentifier, getPlayerBySource, getSource } from './functions';
+import { getIdentifier, getPlayer, getSource } from './functions';
 import { pool } from './db';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
@@ -81,12 +80,18 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
 onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
   const _source = getSource();
   try {
-    const player = getPlayerBySource(_source);
+    const player = getPlayer(_source);
 
     // This is used as username for the reports
     const username = GetPlayerName(_source);
 
-    await addListing(player.identifier, username, player.name, player.phone_number, listing);
+    await addListing(
+      player.identifier,
+      username,
+      `${player.firstname} ${player.lastname}`,
+      player.phoneNumber,
+      listing,
+    );
 
     emitNet(events.SELLOUT_ADD_LISTING_SUCCESS, _source);
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
