@@ -67,6 +67,8 @@ onNet(events.NOTE_DELETE_NOTE, async (noteId: NoteId) => {
     const _identifier = getIdentifier(pSource);
     await deleteNote(noteId.id, _identifier);
 
+    emitNet(events.NOTE_DELETE_NOTE_SUCCESS, pSource);
+
     emitNet(events.NOTE_ACTION_RESULT, pSource, {
       message: 'NOTES_DELETE_SUCCESS',
       type: 'success',

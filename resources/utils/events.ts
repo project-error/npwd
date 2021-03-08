@@ -89,6 +89,7 @@ export default {
   NOTE_SEND_NOTE: 'phone:sendNote',
   NOTE_SEND_NOTE_SUCCESS: 'phone:sendNoteSuccess',
   NOTE_DELETE_NOTE: 'phone:deleteNote',
+  NOTE_DELETE_NOTE_SUCCESS: 'phone:deleteNoteSuccess',
   NOTE_UPDATE_NOTE: 'phone:updateNote',
   NOTE_UPDATE_NOTE_SUCCESS: 'phone:updateNoteSuccess',
   NOTE_UPDATE_NOTE_FAILURE: 'phone:updateNoteFailure',

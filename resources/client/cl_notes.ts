@@ -14,6 +14,10 @@ onNet(events.NOTE_SEND_NOTE_SUCCESS, () => {
   emitNet(events.NOTE_FETCH_ALL_NOTES);
 });
 
+onNet(events.NOTE_DELETE_NOTE_SUCCESS, () => {
+  emitNet(events.NOTE_FETCH_ALL_NOTES);
+});
+
 RegisterNuiCallbackType(events.NOTE_DELETE_NOTE);
 on(`__cfx_nui:${events.NOTE_DELETE_NOTE}`, (data: any) => {
   emitNet(events.NOTE_DELETE_NOTE, data);
