@@ -5,7 +5,6 @@ import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/m
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
-import { group } from 'console';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -172,7 +171,7 @@ async function createMessageGroup(
   (user_identifier, group_id, participant_identifier)
   VALUES (?, ?, ?)
   `;
-  const [results] = await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
+  await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
 }
 
 /**
@@ -379,7 +378,8 @@ function getIdentifiersFromParticipants(groupId: string) {
 
 /**
  * Sets the current message isRead to 0 for said player
- * @param id
+ * @param groupId The unique group ID for the message
+ * @param identifier The identifier for the player
  */
 async function setMessageRead(groupId: string, identifier: string) {
   const query =
@@ -408,40 +408,44 @@ onNet(
       const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
       if (result.error && result.duplicate) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
           type: 'error',
         });
+      }
 
-        // if the phoneNumber is invalid
-      } else if (result.error && result.phoneNumber) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+      // if the phoneNumber is invalid
+      if (result.error && result.phoneNumber) {
+        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: 'MESSAGES_INVALID_PHONE_NUMBER',
           type: 'error',
         });
+      }
 
-        // if you are try to add yourself
-      } else if (result.error && result.mine) {
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+      // if you are try to add yourself
+      if (result.error && result.mine) {
+        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
           type: 'error',
         });
-      } else if (result.error) {
-        // if it just fails, welp
+      }
+
+      // if it just fails, welp
+      if (result.error) {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
-        emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
           message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
           type: 'error',
         });
-      } else {
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
-        if (result.identifiers) {
-          for (const participantId of result.identifiers) {
-            // we don't broadcast to the source of the event.
-            if (participantId !== _identifier) {
-              const participantPlayer = getPlayerFromIdentifier(participantId);
-              emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
-            }
+      }
+
+      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
+      if (result.identifiers) {
+        for (const participantId of result.identifiers) {
+          // we don't broadcast to the source of the event.
+          if (participantId !== _identifier) {
+            const participantPlayer = getPlayerFromIdentifier(participantId);
+            emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
           }
         }
       }
