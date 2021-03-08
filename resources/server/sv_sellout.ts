@@ -1,5 +1,6 @@
 import events from '../utils/events';
 import { getIdentifier, getPlayer, getSource } from './functions';
+import { ESX } from './server';
 import { pool } from './db';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../typings/marketplace';
@@ -8,12 +9,10 @@ import { reportListingToDiscord } from './discord';
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
 async function fetchAllListings(): Promise<MarketplaceListing[]> {
-  const query = 'SELECT * FROM npwd_sellout_listings ORDER BY id DESC';
+  const query = 'SELECT * FROM npwd_marketplace_listings ORDER BY id DESC';
 
   const [results] = await pool.query(query);
-  const listings = <MarketplaceListing[]>results;
-
-  return listings;
+  return <MarketplaceListing[]>results;
 }
 
 async function addListing(
@@ -24,7 +23,7 @@ async function addListing(
   listing: MarketplaceListing,
 ): Promise<void> {
   const query =
-    'INSERT INTO npwd_sellout_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    'INSERT INTO npwd_marketplace_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
   await pool.query(query, [
     identifier,
     username,
@@ -37,17 +36,16 @@ async function addListing(
 }
 
 async function deleteListing(listingId: number, identifier: string): Promise<void> {
-  const query = 'DELETE FROM npwd_sellout_listings WHERE id = ? AND identifier = ?';
+  const query = 'DELETE FROM npwd_marketplace_listings WHERE id = ? AND identifier = ?';
 
   await pool.query(query, [listingId, identifier]);
 }
 
 async function getListing(listingId: number): Promise<MarketplaceListing> {
-  const query = `SELECT * FROM npwd_sellout_listings WHERE id = ?`;
+  const query = `SELECT * FROM npwd_marketplace_listings WHERE id = ?`;
   const [results] = await pool.query(query, [listingId]);
   const listings = <MarketplaceListing[]>results;
-  const listing = listings[0];
-  return listing;
+  return listings[0];
 }
 
 async function reportListing(listingId: number, profile: string): Promise<void> {
@@ -144,18 +142,19 @@ onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
     if (reportExists) {
       // send an info alert
       selloutLogger.error(`This listing has already been reported`);
-      emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      return emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
         message: 'MARKETPLACE_REPORT_LISTING_FAILED',
         type: 'info',
       });
-    } else {
-      await reportListing(rListing.id, rListing.name);
-      await reportListingToDiscord(rListing, reportingPlayer);
-      emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
-        message: 'MARKETPLACE_REPORT_LISTING_SUCCESS',
-        type: 'success',
-      });
     }
+
+    await reportListing(rListing.id, rListing.name);
+    await reportListingToDiscord(rListing, reportingPlayer);
+
+    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      message: 'MARKETPLACE_REPORT_LISTING_SUCCESS',
+      type: 'success',
+    });
   } catch (e) {
     selloutLogger.error(`Failed to report listing ${e.message}`, {
       source: pSource,
