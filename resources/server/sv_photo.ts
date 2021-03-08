@@ -14,8 +14,7 @@ async function uploadPhoto(identifier: string, image: string) {
 async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
   const query = 'SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
-  const photos = <IPhoto[]>results;
-  return photos;
+  return <IPhoto[]>results;
 }
 
 async function deletePhoto(photo: IPhoto, identifier: string) {
@@ -38,9 +37,15 @@ onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
 
 onNet(events.CAMERA_FETCH_PHOTOS, async () => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
-  const photos = await getPhotosByIdentifier(identifier);
-  emitNet(events.CAMERA_SEND_PHOTOS, source, photos);
+  try {
+    const identifier = getIdentifier(_source);
+    const photos = await getPhotosByIdentifier(identifier);
+    emitNet(events.CAMERA_SEND_PHOTOS, _source, photos);
+  } catch (e) {
+    photoLogger.error(`Failed to fetch photos, ${e.message}`, {
+      source: _source,
+    });
+  }
 });
 
 onNet(events.CAMERA_DELETE_PHOTO, async (photo: IPhoto) => {
