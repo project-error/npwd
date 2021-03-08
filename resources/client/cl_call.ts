@@ -6,8 +6,7 @@ const exp = (global as any).exports;
 
 RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL); // Fires when the call is started.
 on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
-  const start = Date.now();
-  emitNet(events.PHONE_INITIALIZE_CALL, data.number, start);
+  emitNet(events.PHONE_INITIALIZE_CALL, data.number);
   cb();
 });
 
@@ -58,8 +57,7 @@ onNet(
 
 RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
 on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {
-  const end = Date.now();
-  emitNet(events.PHONE_CALL_REJECTED, data.phoneNumber, end);
+  emitNet(events.PHONE_CALL_REJECTED, data.phoneNumber);
   cb();
 });
 
