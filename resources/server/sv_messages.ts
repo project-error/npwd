@@ -1,5 +1,3 @@
-import md5 from 'md5';
-
 import events from '../utils/events';
 import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/messages';
 import { pool, withTransaction } from './db';
@@ -44,13 +42,14 @@ interface MessageGroupMapping {
  * @param userIdentifier - identifier of the user creating this message
  * @param groupId - the message group ID to attach this message to
  * @param message - content of the message
+ * @param participants -
  */
 async function createMessage(
   userIdentifier: string,
   groupId: string,
   message: string,
   participants: string[],
-): Promise<any> {
+): Promise<UnformattedMessageGroup[]> {
   const query = `
   INSERT INTO npwd_messages
   (user_identifier, message, group_id)
@@ -70,7 +69,7 @@ async function createMessage(
       .map((s) => pool.query(groupQuery, [s, groupId])),
   );
 
-  return results;
+  return <UnformattedMessageGroup[]>results;
 }
 
 /**
