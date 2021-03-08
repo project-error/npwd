@@ -26,6 +26,6 @@ export const getSoundSettings = (
         };
   } catch (e) {
     console.error('getSoundSettings.ts error', e, 'Using default sounds');
-    return { sound: getPath[type](), volume: 1 };
+    return { sound: getPath[type](), volume: 0 };
   }
 };

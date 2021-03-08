@@ -78,7 +78,6 @@ export const Tweet = (tweet: ITweet) => {
     isMine,
     isReported,
     isRetweet,
-    isRetweetedByPlayer,
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -137,12 +136,7 @@ export const Tweet = (tweet: ITweet) => {
           <div className={classes.buttonContainer}>
             <ReplyButton profile_name={profile_name} />
             <LikeButton tweetId={id} isLiked={isLiked} />
-            {!isMine && (
-              <RetweetButton
-                tweetId={id}
-                retweetId={retweetId}
-                isRetweet={isRetweet}
-              />)}
+            {!isMine && <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />}
             <ShowMore isMine={isMine} isReported={isReported} id={id} />
           </div>
         </div>

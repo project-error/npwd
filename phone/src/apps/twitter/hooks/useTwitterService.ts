@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
-import Nui from '../../../os/nui-events/utils/Nui';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';

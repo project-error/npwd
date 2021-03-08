@@ -30,6 +30,7 @@ export interface IPhoneSettings {
   frame: SettingOption;
   theme: SettingOption;
   zoom: SettingOption;
+  streamerMode: boolean;
   ringtone: SettingOption;
   ringtoneVol: number;
   notiSound: SettingOption;

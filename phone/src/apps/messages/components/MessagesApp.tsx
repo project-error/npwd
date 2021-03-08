@@ -130,6 +130,19 @@ InjectDebugData(
           isMine: false,
           updatedAt: Date.now(),
         },
+        {
+          id: 4,
+          message:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Hadena_albimacula.jpg/800px-Hadena_albimacula.jpg',
+          user_identifier: '123',
+          phone_number: '444-4444',
+          display: 'kidz',
+          avatar: null,
+          groupId: '2',
+          isRead: true,
+          isMine: false,
+          updatedAt: Date.now(),
+        },
       ],
     },
     {

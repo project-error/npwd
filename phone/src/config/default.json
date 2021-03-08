@@ -114,6 +114,7 @@
       "label": "100%",
       "value": 1
     },
+    "streamerMode": false,
     "ringtone": {
       "label": "Pixel",
       "value": "pixel"
