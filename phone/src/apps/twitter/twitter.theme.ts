@@ -1,27 +1,19 @@
-import { blue, common } from '@material-ui/core/colors';
+import { common } from '@material-ui/core/colors';
 
-export const CONTACTS_APP_PRIMARY_COLOR = blue[500];
-export const CONTACTS_APP_TEXT_COLOR = common.white;
+export const TWITTER_APP_PRIMARY_COLOR = '#00acee';
+export const TWITTER_APP_TEXT_COLOR = common.white;
 
-export interface ITwitterTheme {
+const theme = {
   palette: {
-    twitter: {
-      main: string;
-    },
-    secondary: {
-      main: string;
-    }
-  }
-}
-
-const theme: ITwitterTheme = {
-  palette: {
-    twitter: {
-      main: "#00acee",
+    primary: {
+      main: TWITTER_APP_PRIMARY_COLOR,
+      dark: '#0488ba',
+      light: '#3dbbeb',
+      contrastText: TWITTER_APP_TEXT_COLOR,
     },
     secondary: {
       main: '#999',
-    }
+    },
   },
 };
 

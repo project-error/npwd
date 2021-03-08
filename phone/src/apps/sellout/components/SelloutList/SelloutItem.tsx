@@ -5,6 +5,7 @@ import { ListItem } from '../../../../ui/components/ListItem';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MarketplaceListing } from '../../../../common/typings/marketplace';
 import { ListingActions } from './ListingActions';
+import { PictureReveal } from '../../../../ui/components/PictureReveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,9 @@ export const SelloutItem = (listing: MarketplaceListing) => {
           </div>
 
           {listing.url ? (
-            <PictureResponsive src={listing.url} alt={`${listing.name}`} />
+            <PictureReveal>
+              <PictureResponsive src={listing.url} alt={`${listing.name}`} />
+            </PictureReveal>
           ) : (
             <Typography style={{ margin: 10 }}>
               No image provided{' '}

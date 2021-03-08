@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { StatusButton } from '../../../../ui/components/StatusButton';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -32,14 +33,14 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
         {primaryButtonText}
       </Button>
       {showCloseButton && (
-        <Button
+        <StatusButton
           className={classes.close}
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={onCloseClick}
         >
           {t('APPS_TWITTER_CLOSE_IMAGE')}
-        </Button>
+        </StatusButton>
       )}
     </div>
   );

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { CircularProgress, makeStyles, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
-
-import { ITwitterTheme } from '../../twitter.theme';
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 interface IProps {
@@ -12,11 +10,10 @@ interface IProps {
   isRetweet: boolean | number;
 }
 
-const useStyles = makeStyles((theme: ITwitterTheme) => ({
-  icon: {}, // no styles on default icon
+const useStyles = makeStyles((theme) => ({
   iconFilled: {
-    color: theme.palette.twitter.main,
-  }
+    color: theme.palette.primary.main,
+  },
 }));
 
 const LOADING_TIME = 1250;
@@ -43,7 +40,6 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
       setLoading(false);
     }, LOADING_TIME);
   };
-  
 
   if (loading) {
     return (
@@ -53,7 +49,7 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     );
   }
 
-  const className = retweeted ? classes.iconFilled : classes.icon;
+  const className = retweeted ? classes.iconFilled : '';
 
   return (
     <Button onClick={handleClick}>

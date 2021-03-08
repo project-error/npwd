@@ -43,7 +43,6 @@ export const TwitterApp = () => {
   const { profile } = useProfile();
 
   useEffect(() => {
-
     // this is a polling implementation. It is possible that
     // there is some interaction where, on a new tweet, all
     // clients are sent the updated query data. Until that can
@@ -113,6 +112,7 @@ InjectDebugData([
         avatar_url: 'http://i.tasoagc.dev/jtKL',
         seconds_since_tweet: 500,
         isMine: false,
+        isRetweetedByPlayer: true,
         updateAt: '2021-02-08 14:37:46',
         visible: 1,
         likes: 50000,

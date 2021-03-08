@@ -4,13 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 
-import { ITwitterTheme } from '../../twitter.theme';
-
 interface IProps {
-    profileName: string;
+  profileName: string;
 }
 
-const useStyles = makeStyles((theme: ITwitterTheme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.secondary.main,
     fontSize: '16px',
@@ -18,18 +16,18 @@ const useStyles = makeStyles((theme: ITwitterTheme) => ({
     width: '100%',
     paddingBottom: '8px',
     marginBottom: '6px',
-    marginTop: '-6px'
+    marginTop: '-6px',
   },
 }));
 
 function Retweet({ profileName }: IProps) {
-    const { t } = useTranslation();
-    const classes = useStyles();
-    return (
-        <div className={classes.root}>
-          <FontAwesomeIcon icon={faRetweet} /> {profileName} {t('APPS_TWITTER_RETWEETED')}
-        </div>
-    )
+  const { t } = useTranslation();
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <FontAwesomeIcon icon={faRetweet} /> {profileName} {t('APPS_TWITTER_RETWEETED')}
+    </div>
+  );
 }
 
 export default Retweet;

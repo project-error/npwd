@@ -2,6 +2,8 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import { PictureReveal } from '../../../../ui/components/PictureReveal';
+import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,19 +26,9 @@ const useStyles = makeStyles(() => ({
       backgroundColor: '#000',
     },
   },
-  img: {
-    maxHeight: '125px', // constrain images so we don't overwhelm the UI
-    maxWidth: '300px',
-    padding: '0px 3px 3px 0px',
-  },
-  imgSmall: {
-    maxHeight: '200px', // constrain images so we don't overwhelm the UI
-    maxWidth: '100%',
-    padding: '0px 1px 1px 0px',
-  },
 }));
 
-export const Image = ({ link, handleClick, small }) => {
+export const Image = ({ link, handleClick }) => {
   const classes = useStyles();
   return (
     <div className={classes.imageContainer}>
@@ -45,7 +37,9 @@ export const Image = ({ link, handleClick, small }) => {
           <CloseIcon />
         </IconButton>
       )}
-      <img alt="small avatar" className={small ? classes.imgSmall : classes.img} src={link} />
+      <PictureReveal>
+        <PictureResponsive alt="small avatar" src={link} />
+      </PictureReveal>
     </div>
   );
 };
