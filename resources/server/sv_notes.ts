@@ -95,7 +95,6 @@ onNet(events.NOTE_UPDATE_NOTE, async (note: Note) => {
       type: 'success',
     });
   } catch (e) {
-    const pSource = (global as any).source;
     emitNet(events.NOTE_UPDATE_NOTE_FAILURE, pSource);
     notesLogger.error(`Failed to update note, ${e.message}`, {
       source: pSource,
