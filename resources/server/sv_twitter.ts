@@ -132,8 +132,12 @@ async function createTweet(identifier: string, tweet: NewTweet): Promise<Tweet> 
     tweet.images,
     tweet.retweet,
   ]);
-  const insertData = <Tweet[]>results;
-  return await getTweet(profile.id, insertData[0].id);
+  // This should not be an any type and instead should be
+  // a Tweet[] according to mysql2 documentation. But instead
+  // this exec promise returns the row itself, not an array of rows like it states
+  // Therefore type assertion doesn't work here for correctly typing this out.
+  const insertData = <any>results;
+  return await getTweet(profile.id, insertData.id);
 }
 
 async function createTweetReport(tweetId: number, profileId: number): Promise<void> {
