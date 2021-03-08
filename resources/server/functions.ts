@@ -2,10 +2,6 @@ import { IPlayer } from '../typings/players';
 import { pool } from './db';
 import { Players } from './sv_main';
 
-interface IPhoneNumber {
-  phone_number: string;
-}
-
 interface Identifier {
   identifier: string;
 }
@@ -49,7 +45,7 @@ export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<s
   return identifier[0].identifier;
 }
 
-export const getPlayerBySource = (source: any) => {
+export const getPlayerBySource = (source: number) => {
   return Players.get(source);
 };
 

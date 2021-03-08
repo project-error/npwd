@@ -18,7 +18,7 @@ interface Credentials {
   phone_number: string;
 }
 
-export const Players = new Map<string, IPlayer>();
+export const Players = new Map<number, IPlayer>();
 
 // gets the identifers
 on('playerJoining', async () => {
@@ -28,8 +28,6 @@ on('playerJoining', async () => {
 
   const identifers = getPlayerIdentifiers(pSource);
   identifier = identifers[1].split(':')[1];
-
-  console.log('PHONE IS READY: ', identifier);
 
   if (!identifier) {
     throw new Error('Identifier could not be found.');
@@ -60,7 +58,7 @@ function getRandomPhoneNumber() {
   } else {
     randomNumber = Math.floor(Math.random() * 10000000)
       .toString()
-      .replace(/(\d{3})(\d{4})/, '$1-$2'); // ;
+      .replace(/(\d{3})(\d{4})/, '$1-$2');
     // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
     // Example: 123-4567
   }
