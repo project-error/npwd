@@ -4,6 +4,7 @@
     "DATE_TIME_FORMAT": "DD/MM/AAAA hh:mm A",
 
     "COMING_SOON": "En cours...",
+    "INITIALIZING": "Initialisation",
 
     "APPS_DIALER": "Téléphone",
     "APPS_CONTACTS": "Contacts",
@@ -34,11 +35,12 @@
     "APPS_TWITTER_DELETE": "Supprimer",
     "APPS_TWITTER_REPORT": "Signaler",
     "APPS_TWITTER_REPORTED": " Signalé",
+    "APPS_TWITTER_RETWEETED": "Retweeté",
     "APPS_TWITTER_JUST_NOW": "A l'instant",
     "APPS_TWITTER_SEARCH_TWEETS": "Rechercher des tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Chercher par profil ou message",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Votre message dépasse la limite de caractères",
-    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
+    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Votre message dépasse la limite de ligne",
     "APPS_TWITTER_CREATE_SUCCESS": "Tweet envoyé avec succès",
     "APPS_TWITTER_CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL Photo de profil",
@@ -48,11 +50,13 @@
     "APPS_TWITTER_EDIT_PROFILE_JOB": "Job",
     "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès !",
     "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Erreur lors de la mise à jour de votre profil",
+    "APPS_TWITTER_RETWEET_EXISTS": "Vous avez déjà retweeté ce tweet!",
     "APPS_TWITTER_TIME_JUST_NOW": "A l'instant",
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",
     "APPS_TWITTER_TIME_DAYS": "j",
     "APPS_TWITTER_NEW_BROADCAST": "Nouveau tweet de @{{ profile_name }}!",
+    "APPS_TWITTER_NEW_RETWEET_BROADCAST": "@{{ profile_name }} a rewteeté quelqu'un!",
     "APPS_TWITTER_UNREAD_MESSAGES": "Vous avez {{ count }} nouveaux tweets dans votre fil d'actualité!",
 
     "APPS_BANK_TRANSFER": "Transfert",
@@ -77,6 +81,9 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Entrez un nom ou un numéro et pressez Entrée",
+    "APPS_MESSAGES_UNREAD_MESSAGES": "Vous avez {{ count }} messages non lus",
+    "APPS_MESSAGES_MEMBERS_TITLE": "Membres",
+    "APPS_MESSAGES_ME": "Moi",
 
     "APPS_CONTACT_FORM_NAME": "Nom",
     "APPS_CONTACT_FORM_NUMBER": "Numéro",
@@ -103,9 +110,6 @@
 
     "APPS_CALCULATOR_COPIED": "Résultat copié dans le presse-papier!",
 
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
-
     "APPS_SETTINGS_PHONE_NUMBER": "Numéro de téléphone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Fond d'écran",
     "APPS_SETTINGS_OPTION_FRAME": "Coque",
@@ -113,15 +117,29 @@
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
+    "APPS_SETTINGS_OPTION_NOTIFICATION_FILTER": "Filtre de notification",
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume des notifications",
+    
+    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
+    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
+    "APPS_MARKETPLACE_DELETE_LISTING_SUCCESS": "Liste supprimée avec succès",
+    "APPS_MARKETPLACE_DELETE_LISTING_FAILED": "Erreur lors de la suppression d'une liste",
+    "APPS_MARKETPLACE_REPORT_LISTING_FAILED": "Cette liste a déjà été signalée",
+    "APPS_MARKETPLACE_REPORT_LISTING_SUCCESS": "Liste signalée avec succès",
 
+    "GENERIC_WAIT": "Veuillez patienter...",
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
     "GENERIC_DELETE": "Supprimer",
+    "GENERIC_REPORT": "Signaler",
+    "GENERIC_CALL": "Appeler",
+    "GENERIC_MESSAGE": "Message",
     "GENERIC_CLOSE": "Fermer",
     "GENERIC_CANCEL": "Annuler",
     "GENERIC_TITLE": "Titre",
-    "GENERIC_CONTENT": "Contenu"
+    "GENERIC_CONTENT": "Contenu",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
   }
 }
