@@ -1,9 +1,7 @@
-import { IPlayer } from '../typings/players';
 import { pool } from './db';
 import config from '../utils/config';
 import { mainLogger } from './sv_logger';
-import { Player } from './sv_players';
-import { Players, PlayersByIdentifier } from './sv_players';
+import { Player, Players, PlayersByIdentifier } from './sv_players';
 
 export function getPlayer(source: number): Player {
   const player = Players.get(source);
@@ -15,14 +13,34 @@ export const getSource = () => (global as any).source;
 
 // we might need to run a db query on this.
 // to make it more standalone
+/**
+ * Return the identifier for an online player
+ * @param source The source/netId for the player in question
+ **/
 export function getIdentifier(source: number): string {
   return getPlayer(source).identifier;
 }
 
-export async function getIdentifierByPhoneNumber(phoneNumber: string): Promise<string> {
+/**
+ * Return the attached identifier for a given phone number
+ * @param phoneNumber The phone number to return identifier for
+ * @param fetch Whether or not to query the database if a given player is offline
+ **/
+export async function getIdentifierByPhoneNumber(
+  phoneNumber: string,
+  fetch?: boolean,
+): Promise<string | null> {
   for (const [source, player] of Players) {
-    if (player.phoneNumber === phoneNumber) return phoneNumber;
+    if (player.getPhoneNumber() === phoneNumber) return phoneNumber;
   }
+  // Whether we fetch from database if not found in online players
+  if (fetch) {
+    const query = `SELECT identifier FROM users WHERE phone_number = ?`;
+    const [results] = await pool.query(query, [phoneNumber]);
+    // Get identifier from results
+    return (results as { identifier: string }[])[0].identifier;
+  }
+  return null;
 }
 
 /**
@@ -47,12 +65,12 @@ function getRandomPhoneNumber() {
     // The numbers inside {} in replace() can be changed to how many digits you want on each side of the dash.
     // Example: 123-4567
   }
-  mainLogger.verbose(`Getting random number: ${randomNumber}`);
+  mainLogger.debug(`Getting random number: ${randomNumber}`);
 
   return randomNumber;
 }
 
-export async function generatePhoneNumber(identifier: string) {
+export async function generatePhoneNumber(identifier: string): Promise<void> {
   const getQuery = `SELECT phone_number FROM users WHERE identifier = ?`;
   const [results] = await pool.query(getQuery, [identifier]);
   const result = <any[]>results;
@@ -69,9 +87,8 @@ export async function generatePhoneNumber(identifier: string) {
         existingId = false;
       }
     } while (existingId);
-    mainLogger.verbose(`Inserting number into Database: ${newNumber}`);
+    mainLogger.debug(`Inserting number into Database: ${newNumber}`);
     const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
     await pool.query(query, [newNumber, identifier]);
   }
-  return null;
 }

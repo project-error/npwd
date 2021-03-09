@@ -83,13 +83,11 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     const player = getPlayer(_source);
 
     // This is used as username for the reports
-    const username = GetPlayerName(_source);
-
     await addListing(
       player.identifier,
-      username,
-      `${player.firstname} ${player.lastname}`,
-      player.phoneNumber,
+      player.username,
+      player.getName(),
+      player.getPhoneNumber(),
       listing,
     );
 
