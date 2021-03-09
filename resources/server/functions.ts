@@ -35,7 +35,7 @@ export async function getIdentifierByPhoneNumber(
   }
   // Whether we fetch from database if not found in online players
   if (fetch) {
-    const query = `SELECT identifier FROM users WHERE phone_number = ?`;
+    const query = `SELECT identifier FROM users WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ? `;
     const [results] = await pool.query(query, [phoneNumber]);
     // Get identifier from results
     return (results as { identifier: string }[])[0].identifier;
