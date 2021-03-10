@@ -118,7 +118,6 @@ export const MessageModal = () => {
   const phoneNumbers = activeMessageGroup?.phoneNumbers || [];
 
   const targetNumber = phoneNumbers.find((n) => myNumber !== n);
-  console.log('TARGET NUMBER: ', targetNumber);
 
   return (
     <div>
@@ -160,10 +159,7 @@ export const MessageModal = () => {
               {!activeMessageGroup?.isGroupChat &&
               getDisplayByNumber(targetNumber) == targetNumber ? (
                 <Button>
-                  <PersonAddIcon
-                    onClick={() => handleAddContact(phoneNumbers.find((n) => myNumber !== n))}
-                    fontSize="large"
-                  />
+                  <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
                 </Button>
               ) : null}
             </Box>
