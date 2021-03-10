@@ -12,7 +12,7 @@ import {
 
 on('playerJoining', async () => {
   const _source = getSource();
-  // await handlePlayerAdd(_source);
+  await handlePlayerAdd(_source);
   mainLogger.debug(`Event Source Type: ${typeof _source}`);
 });
 

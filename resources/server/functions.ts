@@ -31,11 +31,11 @@ export async function getIdentifierByPhoneNumber(
   fetch?: boolean,
 ): Promise<string | null> {
   for (const [source, player] of Players) {
-    if (player.getPhoneNumber() === phoneNumber) return phoneNumber;
+    if (player.getPhoneNumber() === phoneNumber) return player.identifier;
   }
   // Whether we fetch from database if not found in online players
   if (fetch) {
-    const query = `SELECT identifier FROM users WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ? `;
+    const query = `SELECT identifier FROM users WHERE phone_number = ?`
     const [results] = await pool.query(query, [phoneNumber]);
     // Get identifier from results
     return (results as { identifier: string }[])[0].identifier;

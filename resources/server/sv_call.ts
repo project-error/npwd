@@ -40,11 +40,13 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   const transmitterNumber = getPlayer(_source).getPhoneNumber();
 
   // player who is being called
-  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
+  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber, true);
   const xReceiver = getPlayerFromIdentifier(receiverIdentifier);
-  const receiverNumber = phoneNumber;
+  const receiverNumber =  phoneNumber;
 
-  callLogger.debug(`${source} xReceiver.source`);
+  callLogger.debug('Receiver Number:', receiverIdentifier)
+
+  callLogger.debug(`${_source} xReceiver.source`);
 
   calls.set(transmitterNumber, {
     identifier: callIdentifier,
