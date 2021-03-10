@@ -34,7 +34,9 @@ export const useTwitterNotifications = () => {
 
     // profile defaults to null, if for some reason it is not initialized
     // defend against this case
-    const currentProfileName = profile?.profile_name;
+    if (!profile) return;
+
+    const currentProfileName = profile.profile_name;
 
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
@@ -43,7 +45,6 @@ export const useTwitterNotifications = () => {
     // mentioned in
     if (
       settings.TWITTER_notiFilter.value === SETTING_MENTIONS &&
-      profile &&
       !isMentioned(currentProfileName, message)
     )
       return;
