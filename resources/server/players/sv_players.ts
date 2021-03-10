@@ -132,7 +132,7 @@ export class Player {
    * @param firstname {string} The first name to set for the user
    **/
   public setFirstName(firstname: string): void {
-    this._firstname = name;
+    this._firstname = firstname;
   }
 
   /**
@@ -147,7 +147,7 @@ export class Player {
    * @param lastname {string} The last name to set for the user
    **/
   public setLastName(lastname: string): void {
-    this._lastname = name;
+    this._lastname = lastname;
   }
 
   /**
