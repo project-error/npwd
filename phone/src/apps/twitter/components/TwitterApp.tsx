@@ -41,10 +41,6 @@ export const TwitterApp = () => {
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
 
-  useEffect(() => {
-    Nui.send('phone:getOrCreateTwitterProfile', {});
-  }, []);
-
   // before any other action can be taken by the user we force
   // them have a profile name
   const promptProfileName = profile && (!profile.profile_name || !profile.profile_name.trim());

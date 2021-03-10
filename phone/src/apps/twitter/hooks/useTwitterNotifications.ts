@@ -11,7 +11,7 @@ import { twitterState } from './state';
 const NOTIFICATION_ID = 'twitter:broadcast';
 
 function isMentioned(profileName: string, message: string) {
-  return !message.toLowerCase().includes(profileName.toLowerCase());
+  return message.toLowerCase().includes(profileName.toLowerCase());
 }
 
 export const useTwitterNotifications = () => {
@@ -30,7 +30,7 @@ export const useTwitterNotifications = () => {
     const titleStr = isRetweet
       ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
       : 'APPS_TWITTER_NEW_BROADCAST';
-
+    
     const currentProfileName = profile.profile_name;
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
@@ -39,7 +39,7 @@ export const useTwitterNotifications = () => {
     // mentioned in
     if (
       settings.TWITTER_notiFilter.value === SETTING_MENTIONS &&
-      isMentioned(currentProfileName, message)
+      !isMentioned(currentProfileName, message)
     )
       return;
 
