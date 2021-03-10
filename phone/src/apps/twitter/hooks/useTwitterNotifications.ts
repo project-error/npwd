@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Profile } from '../../../../../typings/twitter';
 
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
@@ -24,14 +25,17 @@ export const useTwitterNotifications = () => {
   const { icon, notificationIcon } = useApp('TWITTER');
 
   const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
-  const profile = useRecoilValue(twitterState.profile);
+  const profile: Profile | null = useRecoilValue(twitterState.profile);
 
   const setNotification = ({ profile_name, message, isRetweet }) => {
     const titleStr = isRetweet
       ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
       : 'APPS_TWITTER_NEW_BROADCAST';
-    
-    const currentProfileName = profile.profile_name;
+
+    // profile defaults to null, if for some reason it is not initialized
+    // defend against this case
+    const currentProfileName = profile?.profile_name;
+
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
 
@@ -39,6 +43,7 @@ export const useTwitterNotifications = () => {
     // mentioned in
     if (
       settings.TWITTER_notiFilter.value === SETTING_MENTIONS &&
+      profile &&
       !isMentioned(currentProfileName, message)
     )
       return;
