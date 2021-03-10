@@ -243,10 +243,14 @@ async function getConsolidatedMessageGroups(userIdentifier: string): Promise<Mes
         mapping[groupId].phoneNumbers = mapping[groupId].phoneNumbers.concat(
           messageGroup.phone_number,
         );
+        if (messageGroup.participant_identifier === userIdentifier) {
+          mapping[groupId].unreadCount = messageGroup.unreadCount;
+        }
       } else {
         mapping[groupId] = {
           user_identifier: messageGroup.user_identifier,
-          unreadCount: messageGroup.unreadCount,
+          unreadCount:
+            messageGroup.participant_identifier === userIdentifier ? messageGroup.unreadCount : 0,
           avatar: messageGroup.avatar,
           label: messageGroup.label,
           participants: [displayTerm],
