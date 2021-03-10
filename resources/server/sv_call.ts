@@ -44,6 +44,8 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   const xReceiver = getPlayerFromIdentifier(receiverIdentifier);
   const receiverNumber = phoneNumber;
 
+  callLogger.debug(`${source} xReceiver.source`);
+
   calls.set(transmitterNumber, {
     identifier: callIdentifier,
     transmitter: transmitterNumber,
@@ -53,6 +55,8 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
     start: timestamp / 1000,
     accepted: false,
   });
+
+  callLogger.debug(`Call Set key: ${transmitterNumber}`);
 
   const currentCall = calls.get(transmitterNumber);
   await saveCall(currentCall);
@@ -101,8 +105,10 @@ onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: n
 
     // player who is called and initiasted the rejection.
     emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
+
     // player who is calling and recieved the rejection.
     emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
+    calls.delete(transmitterNumber);
   } catch (e) {
     callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
       source: pSource,

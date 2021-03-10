@@ -1,9 +1,9 @@
-import { mainLogger } from './sv_logger';
-import { generatePhoneNumber, getPlayer, getSource } from './functions';
-import events from '../utils/events';
-import { pool } from './db';
+import { mainLogger } from '../sv_logger';
+import { pool } from '../db';
+import { generatePhoneNumber, getSource } from '../functions';
+import events from '../../utils/events';
 
-const playerLogger = mainLogger.child({
+export const playerLogger = mainLogger.child({
   module: 'player',
 });
 
@@ -12,37 +12,8 @@ export const Players = new Map<number, Player>();
 // Map of players by identifier
 export const PlayersByIdentifier = new Map<string, Player>();
 
-interface PlayerQueryResp {
-  firstname: string;
-  lastname: string;
-  phone_number: string;
-}
-
-// Get initial player data to populate new class instance
-// NOTE: We should make this more generic and as easily configurable as possible
-async function getPlayerInfo(identifier: string): Promise<PlayerQueryResp> {
-  const query = `SELECT firstname, lastname, phone_number
-                 FROM users
-                 WHERE identifier = ?`;
-
-  const [results] = await pool.query(query, [identifier]);
-
-  const creds = <PlayerQueryResp[]>results;
-  if (!creds[0]) throw new Error(`Could not get player information for ${identifier}`);
-
-  const firstname = creds[0].firstname;
-  const lastname = creds[0].lastname;
-
-  const phone_number = creds[0].phone_number;
-  return { firstname, lastname, phone_number };
-}
-
-// Attach to playerJoining event as this is when
-// the permanent source is assigned for the user
-on('playerJoining', async () => {
-  const pSource = (global as any).source;
-
-  const playerIdentifiers = getPlayerIdentifiers(pSource);
+export async function handlePlayerAdd(pSource: number) {
+  const playerIdentifiers = getPlayerIdentifiers(pSource.toString());
 
   // Parse specifically for license identifier as its
   // guranteed
@@ -58,7 +29,7 @@ on('playerJoining', async () => {
   }
 
   try {
-    const username = GetPlayerName(pSource);
+    const username = GetPlayerName(pSource.toString());
     playerLogger.info(`Started loading for ${username} (${pSource})`);
     // Ensure phone number exists or generate
     await generatePhoneNumber(playerIdentifer);
@@ -91,20 +62,35 @@ on('playerJoining', async () => {
       source: pSource,
     });
   }
-});
+}
 
-// Handle removing from player maps when player disconnects
-on('playerDropped', () => {
-  const _source = getSource();
-  // Get identifier for player to remove
-  const playerIdentifier = getPlayer(_source).identifier;
-  // Remove from player map by identifier
-  PlayersByIdentifier.delete(playerIdentifier);
-  // Remove from player map by source
-  Players.delete(_source);
+interface PlayerQueryResp {
+  firstname: string;
+  lastname: string;
+  phone_number: string;
+}
 
-  mainLogger.info(`Unloaded NPWD Player, source: (${_source})`);
-});
+// Get initial player data to populate new class instance
+// NOTE: We should make this more generic and as easily configurable as possible
+export async function getPlayerInfo(identifier: string): Promise<PlayerQueryResp> {
+  const query = `SELECT firstname, lastname, phone_number
+                 FROM users
+                 WHERE identifier = ?`;
+
+  const [results] = await pool.query(query, [identifier]);
+
+  const creds = <PlayerQueryResp[]>results;
+  if (!creds[0]) throw new Error(`Could not get player information for ${identifier}`);
+
+  const firstname = creds[0].firstname;
+  const lastname = creds[0].lastname;
+
+  const phone_number = creds[0].phone_number;
+  return { firstname, lastname, phone_number };
+}
+
+// Attach to playerJoining event as this is when
+// the permanent source is assigned for the user
 
 interface PlayerClassArgs {
   source: number;

@@ -1,7 +1,7 @@
 import { pool } from './db';
 import config from '../utils/config';
 import { mainLogger } from './sv_logger';
-import { Player, Players, PlayersByIdentifier } from './sv_players';
+import { Player, Players, PlayersByIdentifier } from './players/sv_players';
 
 export function getPlayer(source: number): Player {
   const player = Players.get(source);
