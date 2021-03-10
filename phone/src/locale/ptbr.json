@@ -38,7 +38,7 @@
     "APPS_TWITTER_SEARCH_TWEETS": "Procurar por tweets",
     "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Procurar por nome de perfil ou mensagem",
     "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Mensagem está ultrapassando o limite de caracteres",
-    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
+    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Mensagem passou do limite de linhas",
     "APPS_TWITTER_CREATE_SUCCESS": "Seu tweet foi enviado com sucesso!",
     "APPS_TWITTER_CREATE_FAILED": "Seu tweet não foi enviado",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL do Avatar",
@@ -68,7 +68,7 @@
 
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Procurar mensagem...",
     "APPS_MESSAGES_NEW_MESSAGE": "Mensagem...",
-    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
+    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Mensagem nao pode ser enviada",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Números de telefone...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Nome do chat em grupo...",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Enviar",
@@ -101,7 +101,7 @@
     "APPS_NOTES_DELETE_SUCCESS": "Nota deletada com sucesso.",
     "APPS_NOTES_DELETE_FAILED": "Falha em deletar nota.",
 
-    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "APPS_CALCULATOR_COPIED": "Resultado foi copiado para a área de transferência!",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Lista sendo criada com sucesso",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Falha em criar nova lista",
