@@ -444,6 +444,7 @@ onNet(
       } else {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
         if (result.duplicate) {
+          emitNet(events.MESSAGES_FETCH_MESSAGES, _source, result.groupId);
           return;
         }
         if (result.identifiers) {
