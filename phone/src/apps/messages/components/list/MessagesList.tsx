@@ -19,6 +19,7 @@ const MessagesList = (): any => {
     messageGroups,
     createMessageGroupResult,
     clearMessageGroupResult,
+    getMessageGroupById,
     setActiveMessageGroup,
   } = useMessages();
 
@@ -37,7 +38,7 @@ const MessagesList = (): any => {
 
   useEffect(() => {
     if (createMessageGroupResult?.groupId) {
-      const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
+      const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
         setActiveMessageGroup(findGroup.groupId);
@@ -50,6 +51,7 @@ const MessagesList = (): any => {
     clearMessageGroupResult,
     history,
     setActiveMessageGroup,
+    getMessageGroupById,
   ]);
 
   if (!messageGroups) return null;
