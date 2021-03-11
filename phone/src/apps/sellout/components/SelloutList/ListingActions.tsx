@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const ListingActions = (listing: MarketplaceListing) => {
+export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => {
   const classes = useStyles();
   const { number: myNumber } = useSimcard();
   const { t } = useTranslation();
@@ -30,9 +30,7 @@ export const ListingActions = (listing: MarketplaceListing) => {
   };
 
   const handleReportListing = () => {
-    Nui.send('phone:reportListing', {
-      listing,
-    });
+    Nui.send('phone:reportListing', listing);
   };
 
   const handleCall = () => {

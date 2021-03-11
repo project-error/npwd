@@ -26,7 +26,7 @@ on(`__cfx_nui:${events.SELLOUT_DELETE_LISTING}`, (data: MarketplaceListing, cb: 
 
 RegisterNuiCallbackType(events.SELLOUT_REPORT_LISTING);
 on(`__cfx_nui:${events.SELLOUT_REPORT_LISTING}`, (data: MarketplaceListing, cb: Function) => {
-  emitNet(events.SELLOUT_SEND_LISTING, data);
+  emitNet(events.SELLOUT_REPORT_LISTING, data);
   cb();
 });
 

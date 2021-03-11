@@ -49,7 +49,6 @@ async function getListing(listingId: number): Promise<MarketplaceListing> {
   const [results] = await pool.query(query, [listingId]);
   const listings = <MarketplaceListing[]>results;
   const listing = listings[0];
-
   return listing;
 }
 
@@ -61,8 +60,8 @@ async function reportListing(listingId: number, profile: string): Promise<void> 
 
 async function doesReportExist(listingId: number, profile: string): Promise<boolean> {
   const query = `SELECT * FROM npwd_marketplace_reports WHERE listing_id = ? AND profile = ?`;
-  const results = await pool.query(query, [listingId, profile]);
-  const result = <any[]>results;
+  const [results] = await pool.query(query, [listingId, profile]);
+  const result = <any>results;
 
   return result.length > 0;
 }
@@ -143,11 +142,9 @@ onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
 
     // gets the player name (steam) of the player that is reporting
     const reportingPlayer = GetPlayerName(pSource);
-
     if (reportExists) {
       // send an info alert
       selloutLogger.error(`This listing has already been reported`);
-
       emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
         message: 'MARKETPLACE_REPORT_LISTING_FAILED',
         type: 'info',
@@ -155,7 +152,6 @@ onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
     } else {
       await reportListing(rListing.id, rListing.name);
       await reportListingToDiscord(rListing, reportingPlayer);
-
       emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
         message: 'MARKETPLACE_REPORT_LISTING_SUCCESS',
         type: 'success',

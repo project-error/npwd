@@ -62,7 +62,7 @@ export const SelloutItem = (listing: MarketplaceListing) => {
           <Typography variant="h6" style={{ padding: 10 }}>
             {listing.description}
           </Typography>
-          <ListingActions {...listing} />
+          <ListingActions listing={listing} />
         </Paper>
       </div>
     </ListItem>
