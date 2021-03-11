@@ -9,7 +9,7 @@ import {
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
-import { getIdentifierByPhoneNumber } from './functions';
+import { group } from 'console';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -183,6 +183,17 @@ async function createMessageGroup(
  * Find a players identifier from their phone number
  * @param phoneNumber - the phone number to search for
  */
+async function getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
+  const query = `
+    SELECT identifier
+    FROM users
+    WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+    LIMIT 1
+  `;
+  const [results] = await pool.query(query, [phoneNumber]);
+  const identifiers = <any>results;
+  return identifiers[0]['identifier'];
+}
 
 /**
  * This method checks if the input groupId already exists in
@@ -326,7 +337,7 @@ async function createMessageGroupsFromPhoneNumbers(
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
   for (const phoneNumber of phoneNumbers) {
-    const identifier = await getIdentifierByPhoneNumber(phoneNumber, true);
+    const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
     identifiers.push(identifier);
   }
 
