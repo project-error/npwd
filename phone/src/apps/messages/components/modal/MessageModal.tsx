@@ -117,6 +117,8 @@ export const MessageModal = () => {
 
   const phoneNumbers = activeMessageGroup?.phoneNumbers || [];
 
+  const targetNumber = phoneNumbers.find((n) => myNumber !== n);
+
   return (
     <div>
       <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
@@ -153,14 +155,13 @@ export const MessageModal = () => {
                 <Button>
                   <MoreVertIcon onClick={() => setGroupActionsOpen(true)} fontSize="large" />
                 </Button>
-              ) : (
+              ) : null}
+              {!activeMessageGroup?.isGroupChat &&
+              getDisplayByNumber(targetNumber) == targetNumber ? (
                 <Button>
-                  <PersonAddIcon
-                    onClick={() => handleAddContact(phoneNumbers.find((n) => myNumber !== n))}
-                    fontSize="large"
-                  />
+                  <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
                 </Button>
-              )}
+              ) : null}
             </Box>
           </Paper>
           {isLoaded ? (

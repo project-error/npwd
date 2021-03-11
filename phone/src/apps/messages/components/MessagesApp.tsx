@@ -74,6 +74,16 @@ InjectDebugData([
         updatedAt: Date.now(),
         unreadCount: 0,
       },
+      {
+        groupId: '4',
+        groupDisplay: 'Dick',
+        isGroupChat: false,
+        phoneNumbers: ['111-1134', '111-2342'],
+        avatar: null,
+        label: null,
+        updatedAt: Date.now(),
+        unreadCount: 0,
+      },
     ],
   },
 ]);
