@@ -5,6 +5,7 @@ import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
+import { ResultSetHeader } from 'mysql2';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
@@ -136,8 +137,8 @@ async function createTweet(identifier: string, tweet: NewTweet): Promise<Tweet> 
   // a Tweet[] according to mysql2 documentation. But instead
   // this exec promise returns the row itself, not an array of rows like it states
   // Therefore type assertion doesn't work here for correctly typing this out.
-  const insertData = <any>results;
-  return await getTweet(profile.id, insertData.id);
+  const insertData = <ResultSetHeader>results;
+  return await getTweet(profile.id, insertData.insertId);
 }
 
 async function createTweetReport(tweetId: number, profileId: number): Promise<void> {
