@@ -15,7 +15,12 @@ const MessagesList = (): any => {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
+  const {
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+    setActiveMessageGroup,
+  } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -35,10 +40,17 @@ const MessagesList = (): any => {
       const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
+        setActiveMessageGroup(findGroup.groupId);
         goToConversation(findGroup, history);
       }
     }
-  }, [messageGroups, createMessageGroupResult, clearMessageGroupResult, history]);
+  }, [
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+    history,
+    setActiveMessageGroup,
+  ]);
 
   if (!messageGroups) return null;
 
