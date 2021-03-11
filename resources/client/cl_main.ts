@@ -19,7 +19,7 @@ function fetchOnInitialize() {
     JSON.stringify({
       app: 'PHONE',
       method: 'setPhoneReady',
-      data: true,
+      data: isPhoneReady,
     }),
   );
 }
@@ -110,7 +110,8 @@ async function Phone(): Promise<void> {
   }
 }
 
-onNet('esx:playerLoaded', fetchOnInitialize);
+// triggerd when the player is ready
+onNet(events.PLAYER_IS_READY, fetchOnInitialize);
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {

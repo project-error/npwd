@@ -1,13 +1,7 @@
-import { ESX } from './server';
 import events from '../utils/events';
-import {
-  getIdentifierByPhoneNumber,
-  usePhoneNumber,
-  getIdentifier,
-  getSource,
-} from './functions';
+import { getIdentifierByPhoneNumber, getPlayer, getSource } from './functions';
 
-import { getPlayerFromIdentifier } from './functions'
+import { getPlayerFromIdentifier } from './functions';
 import { ICall } from '../../phone/src/common/typings/call';
 
 import { pool } from './db';
@@ -42,13 +36,17 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   const callIdentifier = uuidv4();
 
   // the client that is calling
-  const xTransmitter = ESX.GetPlayerFromId(_source);
-  const transmitterNumber = await usePhoneNumber(xTransmitter.getIdentifier());
+  // TODO: Handle offline player calling
+  const transmitterNumber = getPlayer(_source).getPhoneNumber();
 
   // player who is being called
-  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber);
-  const xReceiver = await getPlayerFromIdentifier(receiverIdentifier);
-  const receiverNumber = phoneNumber;
+  const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber, true);
+  const xReceiver = getPlayerFromIdentifier(receiverIdentifier);
+  const receiverNumber =  phoneNumber;
+
+  callLogger.debug('Receiver Number:', receiverIdentifier)
+
+  callLogger.debug(`${_source} xReceiver.source`);
 
   calls.set(transmitterNumber, {
     identifier: callIdentifier,
@@ -59,6 +57,8 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
     start: timestamp / 1000,
     accepted: false,
   });
+
+  callLogger.debug(`Call Set key: ${transmitterNumber}`);
 
   const currentCall = calls.get(transmitterNumber);
   await saveCall(currentCall);
@@ -107,8 +107,10 @@ onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: n
 
     // player who is called and initiasted the rejection.
     emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.receiverSource);
+
     // player who is calling and recieved the rejection.
     emitNet(events.PHONE_CALL_WAS_REJECTED, currentCall.transmitterSource);
+    calls.delete(transmitterNumber);
   } catch (e) {
     callLogger.error(`Phone Call Rejected Event Error ${e.message}`, {
       source: pSource,
@@ -144,8 +146,7 @@ onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number
 onNet(events.PHONE_CALL_FETCH_CALLS, async () => {
   const _source = getSource();
   try {
-    const identifier = await getIdentifier(_source);
-    const phoneNumber = await usePhoneNumber(identifier);
+    const phoneNumber = getPlayer(_source).getPhoneNumber();
     const calls = await fetchCalls(phoneNumber);
     emitNet(events.PHONE_CALL_SEND_HISTORY, _source, calls);
   } catch (e) {

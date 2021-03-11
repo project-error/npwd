@@ -1,8 +1,6 @@
 import events from '../utils/events';
-import { ESX } from './server';
-import { getIdentifier, getSource } from './functions';
+import { getIdentifier, getPlayer, getSource } from './functions';
 import { pool } from './db';
-import { usePhoneNumber } from './functions';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
 import { reportListingToDiscord } from './discord';
@@ -81,15 +79,16 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
 onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
   const _source = getSource();
   try {
-    const xPlayer = ESX.GetPlayerFromId(_source);
-    const _identifier = xPlayer.getIdentifier();
-    const name = xPlayer.getName();
+    const player = getPlayer(_source);
 
     // This is used as username for the reports
-    const playerName = GetPlayerName(_source);
-
-    const phoneNumber = await usePhoneNumber(_identifier);
-    await addListing(_identifier, playerName, name, phoneNumber, listing);
+    await addListing(
+      player.identifier,
+      player.username,
+      player.getName(),
+      player.getPhoneNumber(),
+      listing,
+    );
 
     emitNet(events.SELLOUT_ADD_LISTING_SUCCESS, _source);
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {

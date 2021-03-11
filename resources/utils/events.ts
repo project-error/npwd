@@ -96,6 +96,7 @@ export default {
   NOTE_ACTION_RESULT: 'phone:notesActionResult',
 
   // DO NOT CHANGE WHATS BELOW, PLEASE - CHIP
+  PLAYER_IS_READY: 'phone:playerIsReady',
   OPEN_APP_CONTACTS: 'phone:app:CONTACTS',
   OPEN_APP_BANK: 'phone:app:BANK',
   OPEN_APP_NOTES: 'phone:app:NOTES',

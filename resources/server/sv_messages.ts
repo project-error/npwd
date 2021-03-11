@@ -408,7 +408,7 @@ onNet(
   async (phoneNumbers: string[], label: string = null) => {
     const _source = getSource();
     try {
-      const _identifier = await getIdentifier(_source);
+      const _identifier = getIdentifier(_source);
       const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
       if (result.error && result.duplicate) {
@@ -443,7 +443,7 @@ onNet(
           for (const participantId of result.identifiers) {
             // we don't broadcast to the source of the event.
             if (participantId !== _identifier) {
-              const participantPlayer = await getPlayerFromIdentifier(participantId);
+              const participantPlayer = getPlayerFromIdentifier(participantId);
               emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
             }
           }
@@ -467,7 +467,7 @@ onNet(
 onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
   const _source = getSource();
   try {
-    const _identifier = await getIdentifier(_source);
+    const _identifier = getIdentifier(_source);
     const messages = await getMessages(_identifier, groupId);
     emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, _source, messages);
   } catch (e) {
@@ -493,7 +493,7 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
     for (const participantId of userParticipants) {
       // we don't broadcast to the source of the event.
       if (participantId !== _identifier) {
-        const participantPlayer = await getPlayerFromIdentifier(participantId);
+        const participantPlayer = getPlayerFromIdentifier(participantId);
         emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
           groupName,
           groupId,
