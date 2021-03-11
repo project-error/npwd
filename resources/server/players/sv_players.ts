@@ -1,6 +1,6 @@
 import { mainLogger } from '../sv_logger';
 import { pool } from '../db';
-import { generatePhoneNumber, getSource } from '../functions';
+import { generatePhoneNumber } from '../functions';
 import events from '../../utils/events';
 
 export const playerLogger = mainLogger.child({

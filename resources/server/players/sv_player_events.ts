@@ -1,5 +1,4 @@
 import { generatePhoneNumber, getPlayer, getSource } from '../functions';
-import events from '../../utils/events';
 import { mainLogger } from '../sv_logger';
 import {
   getPlayerInfo,
