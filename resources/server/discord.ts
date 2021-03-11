@@ -41,7 +41,7 @@ const postToWebhook = async (content: DiscordMessage): Promise<AxiosResponse | v
   }
   const resp = await axios.post(DISCORD_WEBHOOK, { ...content });
   // If we get a bad request throw error
-  if (resp.status !== 200)
+  if (resp.status >= 200 && resp.status < 300)
     throw new Error(`Discord Error: ${resp.status} Error - ${resp.statusText}`);
 };
 
@@ -65,7 +65,6 @@ const createDiscordMsgObj = (type: string, message: string, fields: DiscordEmbed
 
 export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profile): Promise<any> {
   // TODO: Add image report functionality
-
   const fields = [
     {
       name: 'Reporting User',
@@ -90,7 +89,7 @@ export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profi
 
   const msgObj = createDiscordMsgObj('TWITTER', `Received a report for a tweet`, fields);
   try {
-    await axios.post(DISCORD_WEBHOOK, { ...msgObj });
+    await postToWebhook(msgObj);
   } catch (e) {
     discordLogger.error(e.message);
   }
