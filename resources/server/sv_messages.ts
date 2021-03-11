@@ -443,6 +443,9 @@ onNet(
         });
       } else {
         emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
+        if (result.duplicate) {
+          return;
+        }
         if (result.identifiers) {
           for (const participantId of result.identifiers) {
             // we don't broadcast to the source of the event.
