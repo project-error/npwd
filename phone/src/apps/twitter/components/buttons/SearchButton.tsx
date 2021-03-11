@@ -9,9 +9,6 @@ const useStyles = makeStyles((theme) => ({
     bottom: '15px',
     right: '15px',
   },
-  button: {
-    background: '#00acee',
-  },
 }));
 
 export function ProfileUpdateButton({ handleClick }) {
@@ -19,7 +16,7 @@ export function ProfileUpdateButton({ handleClick }) {
 
   return (
     <div className={classes.root}>
-      <Fab className={classes.button} color="primary" onClick={handleClick}>
+      <Fab color="primary" onClick={handleClick}>
         <SearchIcon />
       </Fab>
     </div>

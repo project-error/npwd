@@ -28,7 +28,11 @@ function LikeButton({ tweetId, isLiked }) {
     );
   }
 
-  return <Button onClick={handleClick}>{liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}</Button>;
+  return (
+    <Button onClick={handleClick}>
+      {liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
+    </Button>
+  );
 }
 
 export default LikeButton;

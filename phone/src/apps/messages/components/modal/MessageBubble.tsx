@@ -1,18 +1,14 @@
 import { Box, Link, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { Message } from '../../../../common/typings/messages';
+import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
+import { PictureReveal } from '../../../../ui/components/PictureReveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '&:first-child': {
       marginTop: 'auto',
     },
-  },
-  imageMessage: {
-    width: '80%',
-    maxWidth: '80%',
-    height: '80%',
-    maxHeight: '80%',
   },
   mySms: {
     float: 'right',
@@ -64,7 +60,9 @@ export const MessageBubble = ({
       <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box className={classes.message}>
           {isImage(message.message) ? (
-            <img src={message.message} className={classes.imageMessage} alt="multimedia" />
+            <PictureReveal>
+              <PictureResponsive src={message.message} alt="message multimedia" />
+            </PictureReveal>
           ) : (
             <div>{message.message}</div>
           )}

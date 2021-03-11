@@ -18,7 +18,7 @@ export const CallModal = () => {
       <AppContent>
         <Box pt={24}>
           <h1 style={{ textAlign: 'center' }}>
-            {myNumber == call?.transmitter ? call?.receiver : call?.transmitter}
+            {myNumber === call?.transmitter ? call?.receiver : call?.transmitter}
           </h1>
           <CallTimer isAccepted={call?.accepted} />
         </Box>

@@ -9,6 +9,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  Switch,
 } from '@material-ui/core';
 
 interface ISettingItem {
@@ -60,6 +61,23 @@ interface ISettingItemIconAction {
   handleAction: () => void;
   actionLabel: string;
 }
+
+interface ISettingSwitch {
+  label: string;
+  value: boolean;
+  onClick: any;
+  icon: JSX.Element;
+}
+
+export const SettingSwitch = ({ label, value, onClick, icon }: ISettingSwitch) => (
+  <ListItem divider button>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <ListItemText primary={label} />
+    <ListItemSecondaryAction>
+      <Switch color="primary" checked={value} onChange={() => onClick(value)} />
+    </ListItemSecondaryAction>
+  </ListItem>
+);
 
 export const SettingItemIconAction = ({
   icon,

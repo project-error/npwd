@@ -42,6 +42,10 @@ import {
 } from '../../../apps/sellout/sellout.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
+import {
+  TWITTER_APP_PRIMARY_COLOR,
+  TWITTER_APP_TEXT_COLOR,
+} from '../../../apps/twitter/twitter.theme';
 
 export interface IAppConfig {
   id: string;
@@ -120,8 +124,8 @@ export const APPS: IAppConfig[] = [
     nameLocale: 'APPS_TWITTER',
     icon: <FontAwesomeIcon icon={faTwitter} fixedWidth />,
     notificationIcon: <FontAwesomeIcon icon={faTwitter} fixedWidth size="xs" />,
-    backgroundColor: blue[600],
-    color: common.white,
+    backgroundColor: TWITTER_APP_PRIMARY_COLOR,
+    color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
     Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} />,
   },

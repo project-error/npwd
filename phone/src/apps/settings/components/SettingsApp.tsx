@@ -7,9 +7,14 @@ import { useConfig } from '../../../config/hooks/useConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { SettingItem, SettingItemIconAction, SettingItemSlider } from './SettingItem';
+import {
+  SettingItem,
+  SettingItemIconAction,
+  SettingItemSlider,
+  SettingSwitch,
+} from './SettingItem';
 import { useTranslation } from 'react-i18next';
-
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {
   FilterList,
   Brush,
@@ -132,6 +137,12 @@ export const SettingsApp = () => {
             icon={<VolumeUp />}
             value={settings.notiSoundVol}
             onCommit={(e, val) => handleSettingChange('notiSoundVol', val)}
+          />
+          <SettingSwitch
+            label={t('APPS_SETTINGS_OPTION_STREAMER_MODE')}
+            icon={<VisibilityOffIcon />}
+            value={settings.streamerMode}
+            onClick={(curr) => handleSettingChange('streamerMode', !curr)}
           />
         </List>
         <List disablePadding subheader={<SubHeaderComp text="Appearance" />}>
