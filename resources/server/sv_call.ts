@@ -42,9 +42,15 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
   // player who is being called
   const receiverIdentifier = await getIdentifierByPhoneNumber(phoneNumber, true);
   const xReceiver = getPlayerFromIdentifier(receiverIdentifier);
-  const receiverNumber =  phoneNumber;
+  const receiverNumber = phoneNumber;
 
-  callLogger.debug('Receiver Number:', receiverIdentifier)
+  if (!xReceiver.source) {
+    callLogger.error('Player you are trying to call is not online', {
+      source: _source,
+    });
+  }
+
+  callLogger.debug('Receiver Number:', receiverIdentifier);
 
   callLogger.debug(`${_source} xReceiver.source`);
 
