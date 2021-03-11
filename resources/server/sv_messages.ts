@@ -3,6 +3,11 @@ import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/m
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
+<<<<<<< HEAD
+=======
+import { group } from 'console';
+import config from '../utils/config';
+>>>>>>> 8aa3721... Handle offline messages | Fetch messages when broadcasted | Fetch message groups
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -436,15 +441,18 @@ onNet(
           message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
           type: 'error',
         });
-      }
-
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
-      if (result.identifiers) {
-        for (const participantId of result.identifiers) {
-          // we don't broadcast to the source of the event.
-          if (participantId !== _identifier) {
-            const participantPlayer = getPlayerFromIdentifier(participantId);
-            emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
+      } else {
+        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
+        if (result.identifiers) {
+          for (const participantId of result.identifiers) {
+            // we don't broadcast to the source of the event.
+            if (participantId !== _identifier) {
+              const participantPlayer = getPlayerFromIdentifier(participantId);
+              if (!participantPlayer) {
+                return;
+              }
+              emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
+            }
           }
         }
       }
@@ -493,6 +501,10 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
       // we don't broadcast to the source of the event.
       if (participantId !== _identifier) {
         const participantPlayer = getPlayerFromIdentifier(participantId);
+        if (!participantPlayer) {
+          return;
+        }
+        emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
         emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
           groupName,
           groupId,
@@ -522,6 +534,7 @@ onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
   try {
     const identifier = getIdentifier(pSource);
     await setMessageRead(groupId, identifier);
+    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, pSource);
   } catch (e) {
     messageLogger.error(`Failed to set message as read, ${e.message}`, {
       source: pSource,

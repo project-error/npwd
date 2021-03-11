@@ -77,7 +77,6 @@ export const MessageModal = () => {
 
   useEffect(() => {
     if (!groupId) return;
-
     setActiveMessageGroup(groupId);
   }, [groupId, setActiveMessageGroup]);
 
