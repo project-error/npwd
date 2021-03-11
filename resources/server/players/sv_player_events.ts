@@ -28,13 +28,14 @@ on('playerDropped', () => {
   mainLogger.info(`Unloaded NPWD Player, source: (${_source})`);
 });
 
-RegisterCommand(
-  'getPlayers',
-  () => {
-    playerLogger.debug(Players);
-  },
-  false,
-);
+// Can use this to debug the player table if needed. Disabled by default
+// RegisterCommand(
+//   'getPlayers',
+//   () => {
+//     playerLogger.debug(Players);
+//   },
+//   false,
+// );
 
 on('onServerResourceStart', async (resource: string) => {
   if (resource === GetCurrentResourceName()) {
