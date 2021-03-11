@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
-import Nui from '../../../os/nui-events/utils/Nui';
 import { goToConversation } from '../utils/goToConversation';
 import useMessages from './useMessages';
 
@@ -26,10 +25,7 @@ export const useMessageNotifications = () => {
       id,
       sound: true,
       title: group.label || group.groupDisplay,
-      onClick: () => {
-        Nui.send('phone:fetchMessages', { groupId: group.groupId });
-        goToConversation(group, history);
-      },
+      onClick: () => goToConversation(group, history),
       content: message,
       icon,
       notificationIcon,

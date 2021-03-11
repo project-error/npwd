@@ -41,7 +41,6 @@ const MessagesList = (): any => {
       const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
-        setActiveMessageGroup(findGroup.groupId);
         goToConversation(findGroup, history);
       }
     }
@@ -57,7 +56,6 @@ const MessagesList = (): any => {
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
-    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
     goToConversation(messageGroup, history);
   };
 
