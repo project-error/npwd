@@ -17,11 +17,11 @@ interface DebugEvent<P = any> {
  *   data: [
  *    {
  *      id: 1,
- *      image: 'https://i.imgur.com/OO8wx6Z.jpg',
+ *      image: 'https://beta.iodine.gg/noDcb.jpeg',
  *    },
  *    {
  *      id: 2,
- *      image: 'https://i.imgur.com/OO8wx6Z.jpg',
+ *      image: 'https://beta.iodine.gg/noDcb.jpeg',
  *    }
  *   ]
  *  }

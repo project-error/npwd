@@ -37,7 +37,7 @@ InjectDebugData([
         number: '111-1134',
         title: 'Car',
         description: 'Selling this cool car',
-        url: 'https://i.imgur.com/ROmGTwi.jpeg',
+        url: 'https://beta.iodine.gg/706Y3.jpeg',
       },
       {
         id: 2,
