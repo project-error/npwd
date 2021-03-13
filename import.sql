@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
   `profile_name` varchar(90) NOT NULL,
   `identifier` varchar(40) NOT NULL,
 #   Default Profile avatar can be set here
-  `avatar_url` varchar(255) DEFAULT 'https://i.imgur.com/njcJ1rZ.png',
+  `avatar_url` varchar(255) DEFAULT 'https://beta.iodine.gg/QrEvq.png',
   `bio` varchar(512) DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
   `job` varchar(45) DEFAULT NULL,
