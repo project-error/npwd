@@ -17,3 +17,16 @@ export interface Contact {
   number: string;
   avatar?: string;
 }
+
+export enum ContactEvents {
+  SEND_CONTACTS = 'phone:sendContacts',
+  GET_CONTACTS = 'phone:getContacts',
+  ADD_CONTACT_NUI = 'contacts:add',
+  ADD_CONTACT = 'phone:addContacts',
+  ADD_CONTACT_SUCCESS = 'contacts:addSuccess',
+  UPDATE_CONTACT = 'phone:updateContact',
+  DELETE_CONTACT = 'phone:deleteContact',
+  DELETE_CONTACT_SUCCESS = 'contacts:deleteSuccess',
+  UPDATE_CONTACT_SUCCESS = 'phone:updateContactSuccess',
+  ACTION_RESULT = 'phone:contactActionResult',
+}
