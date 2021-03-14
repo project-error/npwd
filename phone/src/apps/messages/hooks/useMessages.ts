@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../common/typings/messages';
+import { CreateMessageGroupResult, Message, MessageGroup } from '../../../../../typings/messages';
 import { messageState } from './state';
 
 interface IUseMessages {

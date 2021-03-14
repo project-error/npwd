@@ -1,6 +1,6 @@
 import events from '../utils/events';
 import { sendTwitterMessage } from '../utils/messages';
-import { IAlertProps } from '../../phone/src/common/typings/alerts';
+import { IAlertProps } from '../../typings/alerts';
 
 /**
  * Twitter get or create profile
@@ -123,7 +123,6 @@ on(`__cfx_nui:${events.TWITTER_RETWEET}`, (tweetId: number, cb: Function) => {
 onNet(events.TWITTER_RETWEET_EXISTS, (alert: IAlertProps) => {
   sendTwitterMessage(events.TWITTER_RETWEET_EXISTS, alert);
 });
-
 
 /**
  * Twitter reporting tweets

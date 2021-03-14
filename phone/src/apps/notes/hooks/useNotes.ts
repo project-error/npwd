@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { Note } from '../../../common/typings/notes';
+import { Note } from '../../../../../typings/notes';
 import { noteStates } from './state';
 
 interface NotesProps {

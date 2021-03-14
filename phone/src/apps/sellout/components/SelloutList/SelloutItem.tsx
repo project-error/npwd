@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Paper } from '@material-ui/core';
 import { ListItem } from '../../../../ui/components/ListItem';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { MarketplaceListing } from '../../../../common/typings/marketplace';
+import { MarketplaceListing } from '../../../../../../typings/marketplace';
 import { ListingActions } from './ListingActions';
 import { PictureReveal } from '../../../../ui/components/PictureReveal';
 

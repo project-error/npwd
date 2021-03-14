@@ -1,6 +1,6 @@
 import { atom, DefaultValue, SetterOrUpdater, useRecoilState } from 'recoil';
 
-import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '../../../common/typings/twitter';
+import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '../../../../../typings/twitter';
 import config from '../../../config/default.json';
 import { SettingOption } from '../../../ui/hooks/useContextMenu';
 

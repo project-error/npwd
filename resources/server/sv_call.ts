@@ -2,7 +2,7 @@ import events from '../utils/events';
 import { getIdentifierByPhoneNumber, getPlayer, getSource } from './functions';
 
 import { getPlayerFromIdentifier } from './functions';
-import { ICall } from '../../phone/src/common/typings/call';
+import { ICall } from '../../typings/call';
 
 import { pool } from './db';
 import { v4 as uuidv4 } from 'uuid';

@@ -7,7 +7,7 @@ import {
   Badge,
 } from '@material-ui/core';
 
-import { MessageGroup } from '../../../../common/typings/messages';
+import { MessageGroup } from '../../../../../../typings/messages';
 interface IProps {
   messageGroup: MessageGroup;
   handleClick: (group: MessageGroup) => () => void;
@@ -22,7 +22,7 @@ const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
   return (
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
-        <Badge color='error' variant='dot' invisible={!hasUnread}>
+        <Badge color="error" variant="dot" invisible={!hasUnread}>
           <MuiAvatar src={messageGroup?.avatar} />
         </Badge>
       </ListItemAvatar>

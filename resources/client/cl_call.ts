@@ -1,5 +1,5 @@
 import events from '../utils/events';
-import { ICall } from '../../phone/src/common/typings/call';
+import { ICall } from '../../typings/call';
 import { phoneCallStartAnim, phoneCallEndAnim } from './functions';
 
 const exp = (global as any).exports;

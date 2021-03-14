@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
-import { CallProps } from '../../../common/typings/call';
+import { CallProps } from '../../../../../typings/call';
 import InjectDebugData from '../../debug/InjectDebugData';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';

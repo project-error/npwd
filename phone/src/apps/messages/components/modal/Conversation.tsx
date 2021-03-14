@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 
-import { Message, MessageGroup } from '../../../../common/typings/messages';
+import { Message, MessageGroup } from '../../../../../../typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';

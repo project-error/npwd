@@ -1,7 +1,7 @@
 import events from '../utils/events';
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { Note, NoteId } from '../../phone/src/common/typings/notes';
+import { Note, NoteId } from '../../typings/notes';
 import { mainLogger } from './sv_logger';
 
 const notesLogger = mainLogger.child({ module: 'notes' });

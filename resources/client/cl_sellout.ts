@@ -1,6 +1,6 @@
 import events from '../utils/events';
-import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
-import { IAlertProps } from '../../phone/src/common/typings/alerts';
+import { MarketplaceListing } from '../../typings/marketplace';
+import { IAlertProps } from '../../typings/alerts';
 
 onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
   SendNuiMessage(

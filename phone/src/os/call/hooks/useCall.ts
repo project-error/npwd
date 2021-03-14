@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { CallProps } from '../../../common/typings/call';
+import { CallProps } from '../../../../../typings/call';
 import Nui from '../../nui-events/utils/Nui';
 import { callerState } from './state';
 

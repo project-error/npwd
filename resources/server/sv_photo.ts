@@ -1,7 +1,7 @@
 import events from '../utils/events';
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { IPhoto } from '../../phone/src/common/typings/photo';
+import { IPhoto } from '../../typings/photo';
 import { mainLogger } from './sv_logger';
 
 const photoLogger = mainLogger.child({ module: 'photo' });

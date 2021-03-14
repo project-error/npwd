@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { CallProps } from '../../../common/typings/call';
+import { CallProps } from '../../../../../typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
@@ -65,7 +65,7 @@ export const useCallNotifications = () => {
             </CallNotification>
           ),
         },
-        (n) => addNotification(n)
+        (n) => addNotification(n),
       );
     }
   };

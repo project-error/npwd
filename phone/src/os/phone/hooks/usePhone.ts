@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { IServerConfig } from '../../../common/typings/config';
+import { IServerConfig } from '../../../../../typings/config';
 import ServerConfig from '../../../config.autogen.json';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import Nui from '../../nui-events/utils/Nui';

@@ -2,7 +2,7 @@ import events from '../utils/events';
 import { getIdentifier, getPlayer, getSource } from './functions';
 import { pool } from './db';
 import { mainLogger } from './sv_logger';
-import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
+import { MarketplaceListing } from '../../typings/marketplace';
 import { reportListingToDiscord } from './discord';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });

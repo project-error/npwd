@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { ICall } from '../../../common/typings/call';
+import { ICall } from '../../../../../typings/call';
 import { dialState } from './state';
 interface ICallUI {
   history: ICall[];

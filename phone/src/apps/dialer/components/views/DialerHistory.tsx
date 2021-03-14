@@ -8,7 +8,7 @@ import { ListItem } from '../../../../ui/components/ListItem';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContacts } from '../../../contacts/hooks/useContacts';
-import { ICall } from '../../../../common/typings/call';
+import { ICall } from '../../../../../../typings/call';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';

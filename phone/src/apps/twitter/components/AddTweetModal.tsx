@@ -15,7 +15,7 @@ import ControlButtons from './buttons/ControlButtons';
 import IconButtons from './buttons/IconButtons';
 import { usePhone } from '../../../os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
-import { NewTweet } from '../../../common/typings/twitter';
+import { NewTweet } from '../../../../../typings/twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {

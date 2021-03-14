@@ -6,7 +6,7 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { useContacts } from '../../../contacts/hooks/useContacts';
-import { Contact } from '../../../../common/typings/contact';
+import { Contact } from '../../../../../../typings/contact';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();

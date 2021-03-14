@@ -1,11 +1,7 @@
 import md5 from 'md5';
 
 import events from '../utils/events';
-import {
-  CreateMessageGroupResult,
-  Message,
-  MessageGroup,
-} from '../../phone/src/common/typings/messages';
+import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/messages';
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';

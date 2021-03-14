@@ -4,7 +4,7 @@ import {
   Message,
   MessageGroup,
   SetMessageRead,
-} from '../../phone/src/common/typings/messages';
+} from '../../typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 
 /**

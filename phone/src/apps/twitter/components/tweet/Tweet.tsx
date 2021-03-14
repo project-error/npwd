@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItemAvatar, Avatar as MuiAvatar, ListItem, Typography } from '@material-ui/core';
 
-import { Tweet as ITweet } from '../../../../common/typings/twitter';
+import { Tweet as ITweet } from '../../../../../../typings/twitter';
 import { secondsToHumanReadable } from '../../utils/time';
 import LikeButton from '../buttons/LikeButton';
 import ReplyButton from '../buttons/ReplyButton';

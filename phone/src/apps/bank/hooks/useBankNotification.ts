@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import { Transfer } from '../../../common/typings/bank';
+import { Transfer } from '../../../../../typings/bank';
 import { bankState } from './state';
 
 interface IBankNotification {

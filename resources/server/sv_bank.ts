@@ -2,7 +2,7 @@ import events from '../utils/events';
 import { ESX } from './server';
 import { getSource } from './functions';
 import { pool } from './db';
-import { Transfer, IBankCredentials } from '../../phone/src/common/typings/bank';
+import { Transfer, IBankCredentials } from '../../typings/bank';
 import { getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 

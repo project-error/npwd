@@ -1,7 +1,7 @@
 import { Box, Tooltip, Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
-import { MarketplaceListing } from '../../../../common/typings/marketplace';
+import { MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReportIcon from '@material-ui/icons/Report';

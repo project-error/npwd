@@ -1,6 +1,6 @@
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { NewTweet, Tweet, Profile } from '../../phone/src/common/typings/twitter';
+import { NewTweet, Tweet, Profile } from '../../typings/twitter';
 import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';

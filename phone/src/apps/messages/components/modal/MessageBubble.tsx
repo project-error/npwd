@@ -1,6 +1,6 @@
 import { Box, Link, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
-import { Message } from '../../../../common/typings/messages';
+import { Message } from '../../../../../../typings/messages';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { PictureReveal } from '../../../../ui/components/PictureReveal';
 

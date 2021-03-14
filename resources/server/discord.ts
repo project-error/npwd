@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Tweet, Profile } from '../../phone/src/common/typings/twitter';
+import { Tweet, Profile } from '../../typings/twitter';
 import { IMAGE_DELIMITER } from '../../phone/src/apps/twitter/utils/images';
 import { mainLogger } from './sv_logger';
-import { MarketplaceListing } from '../../phone/src/common/typings/marketplace';
+import { MarketplaceListing } from '../../typings/marketplace';
 
 const discordLogger = mainLogger.child({ module: 'discord' });
 

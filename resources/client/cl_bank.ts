@@ -1,4 +1,4 @@
-import { IAlertProps } from '../../phone/src/common/typings/alerts';
+import { IAlertProps } from '../../typings/alerts';
 import events from '../utils/events';
 
 onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
