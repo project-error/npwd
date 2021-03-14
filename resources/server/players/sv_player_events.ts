@@ -1,18 +1,10 @@
-import { generatePhoneNumber, getPlayer, getSource } from '../functions';
+import { getPlayer, getSource } from '../functions';
 import { mainLogger } from '../sv_logger';
-import {
-  getPlayerInfo,
-  handlePlayerAdd,
-  Player,
-  playerLogger,
-  Players,
-  PlayersByIdentifier,
-} from './sv_players';
+import { handlePlayerAdd, Players, PlayersByIdentifier } from './sv_players';
 
 on('playerJoining', async () => {
   const _source = getSource();
   await handlePlayerAdd(_source);
-  mainLogger.debug(`Event Source Type: ${typeof _source}`);
 });
 
 // Handle removing from player maps when player disconnects
@@ -44,7 +36,6 @@ on('onServerResourceStart', async (resource: string) => {
     // @ts-ignore
     const onlinePlayers: string[] = getPlayers();
     for (const player of onlinePlayers) {
-      mainLogger.debug(`Type for getPlayers: ${typeof player}`);
       await handlePlayerAdd(parseInt(player));
     }
   }
