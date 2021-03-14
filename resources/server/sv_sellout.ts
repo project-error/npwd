@@ -1,10 +1,9 @@
-import events from '../utils/events';
 import { getIdentifier, getPlayer, getSource } from './functions';
-import { ESX } from './server';
 import { pool } from './db';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../typings/marketplace';
 import { reportListingToDiscord } from './discord';
+import { MarketplaceEvents } from '../../typings/marketplace';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
@@ -62,11 +61,11 @@ async function doesReportExist(listingId: number, profile: string): Promise<bool
   return result.length > 0;
 }
 
-onNet(events.SELLOUT_FETCH_LISTING, async () => {
+onNet(MarketplaceEvents.FETCH_LISTING, async () => {
   const _source = getSource();
   try {
     const listings = await fetchAllListings();
-    emitNet(events.SELLOUT_SEND_LISTING, _source, listings);
+    emitNet(MarketplaceEvents.SEND_LISTING, _source, listings);
   } catch (e) {
     selloutLogger.error(`Failed to fetch listings, ${e.message}`, {
       source: _source,
@@ -74,7 +73,7 @@ onNet(events.SELLOUT_FETCH_LISTING, async () => {
   }
 });
 
-onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
+onNet(MarketplaceEvents.ADD_LISTING, async (listing: MarketplaceListing) => {
   const _source = getSource();
   try {
     const player = getPlayer(_source);
@@ -88,8 +87,8 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
       listing,
     );
 
-    emitNet(events.SELLOUT_ADD_LISTING_SUCCESS, _source);
-    emitNet(events.SELLOUT_ACTION_RESULT, _source, {
+    emitNet(MarketplaceEvents.ADD_LISTING_SUCCESS, _source);
+    emitNet(MarketplaceEvents.ACTION_RESULT, _source, {
       message: 'MARKETPLACE_CREATE_LISTING_SUCCESS',
       type: 'success',
     });
@@ -98,14 +97,14 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
       source: _source,
     });
 
-    emitNet(events.SELLOUT_ACTION_RESULT, _source, {
+    emitNet(MarketplaceEvents.ACTION_RESULT, _source, {
       message: 'MARKETPLACE_CREATE_LISTING_FAILED',
       type: 'error',
     });
   }
 });
 
-onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
+onNet(MarketplaceEvents.DELETE_LISTING, async (listingId: number) => {
   const pSource = getSource();
   try {
     const identifier = getIdentifier(pSource);
@@ -113,9 +112,9 @@ onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
     await deleteListing(listingId, identifier);
 
     // fetches the listings again
-    emitNet(events.SELLOUT_DELETE_LISTING_SUCCESS, pSource);
+    emitNet(MarketplaceEvents.DELETE_LISTING_SUCCESS, pSource);
 
-    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+    emitNet(MarketplaceEvents.ACTION_RESULT, pSource, {
       message: 'MARKETPLACE_DELETE_LISTING_SUCCESS',
       type: 'success',
     });
@@ -123,14 +122,14 @@ onNet(events.SELLOUT_DELETE_LISTING, async (listingId: number) => {
     selloutLogger.error(`Failed to delete listing ${e.message}`, {
       source: pSource,
     });
-    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+    emitNet(MarketplaceEvents.ACTION_RESULT, pSource, {
       message: 'MARKETPLACE_DELETE_LISTING_FAILED',
       type: 'error',
     });
   }
 });
 
-onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
+onNet(MarketplaceEvents.REPORT_LISTING, async (listing: MarketplaceListing) => {
   const pSource = getSource();
 
   try {
@@ -142,7 +141,7 @@ onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
     if (reportExists) {
       // send an info alert
       selloutLogger.error(`This listing has already been reported`);
-      return emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+      return emitNet(MarketplaceEvents.ACTION_RESULT, pSource, {
         message: 'MARKETPLACE_REPORT_LISTING_FAILED',
         type: 'info',
       });
@@ -151,7 +150,7 @@ onNet(events.SELLOUT_REPORT_LISTING, async (listing: MarketplaceListing) => {
     await reportListing(rListing.id, rListing.name);
     await reportListingToDiscord(rListing, reportingPlayer);
 
-    emitNet(events.SELLOUT_ACTION_RESULT, pSource, {
+    emitNet(MarketplaceEvents.ACTION_RESULT, pSource, {
       message: 'MARKETPLACE_REPORT_LISTING_SUCCESS',
       type: 'success',
     });
