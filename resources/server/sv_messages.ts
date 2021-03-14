@@ -1,5 +1,9 @@
-import events from '../utils/events';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/messages';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageGroup,
+  MessageEvents,
+} from '../../typings/messages';
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
@@ -404,104 +408,84 @@ async function setMessageRead(groupId: string, identifier: string) {
   await pool.query(query, [groupId, identifier]);
 }
 
-onNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, async () => {
+onNet(MessageEvents.FETCH_MESSAGE_GROUPS, async () => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     const messageGroups = await getFormattedMessageGroups(identifier);
-    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_SUCCESS, _source, messageGroups);
+    emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, _source, messageGroups);
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS_FAILED, _source);
+    emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_FAILED, _source);
     messageLogger.error(`Failed to fetch messages groups, ${e.message}`);
   }
 });
 
-onNet(
-  events.MESSAGES_CREATE_MESSAGE_GROUP,
-  async (phoneNumbers: string[], label: string = null) => {
-    const _source = getSource();
-    try {
-      const _identifier = getIdentifier(_source);
-      const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
+onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: string = null) => {
+  const _source = getSource();
+  try {
+    const _identifier = getIdentifier(_source);
+    const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
-      if (result.error && result.duplicate) {
-        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
-          type: 'error',
-        });
-      }
+    if (result.error && result.duplicate) {
+      return emitNet(MessageEvents.ACTION_RESULT, _source, {
+        message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
+        type: 'error',
+      });
+    }
 
-      // if the phoneNumber is invalid
-      if (result.error && result.phoneNumber) {
-        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_INVALID_PHONE_NUMBER',
-          type: 'error',
-        });
-      }
-
-      // if you are try to add yourself
-      if (result.error && result.mine) {
-        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: 'MESSAGES_MESSAGE_GROUP_CREATE_MINE',
-          type: 'error',
-        });
-      }
-
-      // if it just fails, welp
-      if (result.error) {
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source, result);
-        return emitNet(events.MESSAGES_ACTION_RESULT, _source, {
-          message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
-          type: 'error',
-        });
-      } else {
-        emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
-        if (result.duplicate) {
-          return;
-        }
-        if (result.identifiers) {
-          for (const participantId of result.identifiers) {
-            // we don't broadcast to the source of the event.
-            if (participantId !== _identifier) {
-              const participantPlayer = getPlayerFromIdentifier(participantId);
-              if (!participantPlayer) {
-                return;
-              }
-              emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
-            }
-          }
-        }
-      }
-    } catch (e) {
-      emitNet(events.MESSAGES_CREATE_MESSAGE_GROUP_FAILED, _source);
-
-      emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+    if (result.error) {
+      emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, _source, result);
+      return emitNet(MessageEvents.ACTION_RESULT, _source, {
         message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
         type: 'error',
       });
-      messageLogger.error(`Failed to create message group, ${e.message}`, {
-        source: _source,
-        e,
-      });
     }
-  },
-);
 
-onNet(events.MESSAGES_FETCH_MESSAGES, async (groupId: string) => {
+    emitNet(MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, _source, result);
+    if (result.duplicate) {
+      return;
+    }
+
+    if (result.identifiers) {
+      for (const participantId of result.identifiers) {
+        // we don't broadcast to the source of the event.
+        if (participantId !== _identifier) {
+          const participantPlayer = getPlayerFromIdentifier(participantId);
+          if (!participantPlayer) {
+            return;
+          }
+          emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
+        }
+      }
+    }
+  } catch (e) {
+    emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, _source);
+    emitNet(MessageEvents.ACTION_RESULT, _source, {
+      message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+      type: 'error',
+    });
+    messageLogger.error(`Failed to create message group, ${e.message}`, {
+      source: _source,
+      e,
+    });
+  }
+});
+
+onNet(MessageEvents.FETCH_MESSAGES, async (groupId: string) => {
   const _source = getSource();
   try {
     const _identifier = getIdentifier(_source);
     const messages = await getMessages(_identifier, groupId);
-    emitNet(events.MESSAGES_FETCH_MESSAGES_SUCCESS, _source, messages);
+    emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, _source, messages);
   } catch (e) {
-    emitNet(events.MESSAGES_FETCH_MESSAGES_FAILED, _source);
+    emitNet(MessageEvents.FETCH_MESSAGES_FAILED, _source);
     messageLogger.error(`Failed to fetch messages, ${e.message}`, {
       source: _source,
     });
   }
 });
 
-onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, groupName: string) => {
+onNet(MessageEvents.SEND_MESSAGE, async (groupId: string, message: string, groupName: string) => {
   const _source = getSource();
   try {
     const _identifier = getIdentifier(_source);
@@ -509,7 +493,7 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
 
     await createMessage(_identifier, groupId, message, userParticipants);
 
-    emitNet(events.MESSAGES_SEND_MESSAGE_SUCCESS, _source, groupId);
+    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, _source, groupId);
 
     // gets the identifiers foe the participants for current groupId.
 
@@ -520,8 +504,8 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
         if (!participantPlayer) {
           return;
         }
-        emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, participantPlayer.source);
-        emitNet(events.MESSAGES_CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+        emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
+        emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
           groupName,
           groupId,
           message,
@@ -531,11 +515,11 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
   } catch (e) {
     // Not really sure what this does? As I cant find any reference
     // of this in the ui part.
-    emitNet(events.MESSAGES_SEND_MESSAGE_FAILED, _source);
+    emitNet(MessageEvents.SEND_MESSAGE_FAILED, _source);
     // sending a new alert
     // The message property is always using the locale strings without
     // the APPS_ prefix.
-    emitNet(events.MESSAGES_ACTION_RESULT, _source, {
+    emitNet(MessageEvents.ACTION_RESULT, _source, {
       message: 'MESSAGES_NEW_MESSAGE_FAILED',
       type: 'error',
     });
@@ -545,12 +529,12 @@ onNet(events.MESSAGES_SEND_MESSAGE, async (groupId: string, message: string, gro
   }
 });
 
-onNet(events.MESSAGES_SET_MESSAGE_READ, async (groupId: string) => {
+onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
   const pSource = getSource();
   try {
     const identifier = getIdentifier(pSource);
     await setMessageRead(groupId, identifier);
-    emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS, pSource);
+    emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, pSource);
   } catch (e) {
     messageLogger.error(`Failed to set message as read, ${e.message}`, {
       source: pSource,
