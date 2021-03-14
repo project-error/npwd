@@ -1,7 +1,7 @@
 import { mainLogger } from '../sv_logger';
 import { pool } from '../db';
 import { generatePhoneNumber } from '../functions';
-import events from '../../utils/events';
+import { PhoneEvents } from '../../../typings/phone';
 
 export const playerLogger = mainLogger.child({
   module: 'player',
@@ -56,7 +56,7 @@ export async function handlePlayerAdd(pSource: number) {
     playerLogger.debug(newPlayer);
 
     // Emit to client that player is ready
-    emitNet(events.PLAYER_IS_READY, pSource);
+    emitNet(PhoneEvents.PLAYER_IS_READY, pSource);
   } catch (e) {
     playerLogger.error(`Failed to create a new player, ${e.message}`, {
       source: pSource,
