@@ -1,13 +1,8 @@
 import events from '../utils/events';
+import { sendContactsEvent } from '../utils/messages';
 
 onNet(events.CONTACTS_SEND_CONTACTS, (contacts: any) => {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CONTACTS',
-      method: 'setContacts',
-      data: contacts,
-    }),
-  );
+  sendContactsEvent('setContacts', contacts);
 });
 
 RegisterNuiCallbackType(events.CONTACTS_ADD_CONTACT);
@@ -41,11 +36,5 @@ onNet(events.CONTACTS_DELETE_CONTACT_SUCCESS, () => {
 });
 
 onNet(events.CONTACTS_ACTION_RESULT, (alert: any) => {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CONTACTS',
-      method: 'setAlert',
-      data: alert,
-    }),
-  );
+  sendContactsEvent('setAlert', alert);
 });

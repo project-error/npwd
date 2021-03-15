@@ -1,5 +1,6 @@
 import events from '../utils/events';
 import { Delay } from '../utils/fivem';
+import { sendMessage, sendCameraEvent } from '../utils/messages';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
@@ -8,26 +9,12 @@ let inCameraMode = false;
 
 function closePhoneTemp() {
   SetNuiFocus(false, false);
-  SendNuiMessage(
-    //Hides phone
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'setVisibility',
-      data: false,
-    }),
-  );
+  sendMessage('PHONE', 'setVisibility', false);
 }
 
 function openPhoneTemp() {
   SetNuiFocus(true, true);
-  SendNuiMessage(
-    //Opens phone
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'setVisibility',
-      data: true,
-    }),
-  );
+  sendMessage('PHONE', 'setVisibility', true);
 }
 
 function CellFrontCamActivate(activate: boolean) {
@@ -89,14 +76,7 @@ const handleCameraExit = () => {
 };
 
 onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
-  // console.log(photos);
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CAMERA',
-      method: 'setPhotos',
-      data: photos,
-    }),
-  );
+  sendCameraEvent('setPhotos', photos);
 });
 
 function takePhoto() {

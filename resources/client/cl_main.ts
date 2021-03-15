@@ -1,5 +1,6 @@
 import config from '../utils/config';
 import events from '../utils/events';
+import { sendMessage } from '../utils/messages';
 import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 
 let isPhoneOpen = false;
@@ -15,13 +16,7 @@ function fetchOnInitialize() {
   emitNet(events.CONTACTS_GET_CONTACTS);
   emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'setPhoneReady',
-      data: isPhoneReady,
-    }),
-  );
+  sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
 }
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
@@ -37,26 +32,13 @@ const showPhone = async (): Promise<void> => {
   await phoneOpenAnim(); // Animation starts before the phone is open
   emitNet('phone:getCredentials');
   SetCursorLocation(0.9, 0.922); //Experimental
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'setVisibility',
-      data: true,
-    }),
-  );
+  sendMessage('PHONE', 'setVisibility', true);
   SetNuiFocus(true, true);
 };
 
 const hidePhone = async (): Promise<void> => {
   isPhoneOpen = false;
-  SendNuiMessage(
-    //Hides phone
-    JSON.stringify({
-      app: 'PHONE',
-      method: 'setVisibility',
-      data: false,
-    }),
-  );
+  sendMessage('PHONE', 'setVisibility', false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
 };
@@ -79,13 +61,7 @@ RegisterCommand(
   'phone:restart',
   async () => {
     await hidePhone();
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'PHONE',
-        method: 'startRestart',
-        data: {},
-      }),
-    );
+    sendMessage('PHONE', 'phoneRestart', {});
   },
   false,
 );
@@ -115,13 +91,7 @@ onNet(events.PLAYER_IS_READY, fetchOnInitialize);
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'PHONE',
-        method: 'setVisibility',
-        data: false,
-      }),
-    );
+    sendMessage('PHONE', 'setVisibility', false);
     SetNuiFocus(false, false);
     removePhoneProp(); //Deletes the phone incase it was attached.
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
@@ -129,13 +99,7 @@ AddEventHandler('onResourceStop', function (resource: string) {
 });
 
 onNet('phone:sendCredentials', (number: string) => {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'SIMCARD',
-      method: 'setNumber',
-      data: number,
-    }),
-  );
+  sendMessage('SIMCARD', 'setNumber', number);
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP

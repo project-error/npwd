@@ -1,15 +1,10 @@
 import events from '../utils/events';
 import { MarketplaceListing } from '../../typings/marketplace';
 import { IAlertProps } from '../../typings/alerts';
+import { sendMarketplaceEvent } from '../utils/messages';
 
 onNet(events.SELLOUT_SEND_LISTING, (listing: MarketplaceListing) => {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'SELLOUT',
-      method: 'setListings',
-      data: listing,
-    }),
-  );
+  sendMarketplaceEvent('setListing', listing);
 });
 
 RegisterNuiCallbackType(events.SELLOUT_ADD_LISTING);
@@ -39,11 +34,5 @@ onNet(events.SELLOUT_DELETE_LISTING_SUCCESS, () => {
 });
 
 onNet(events.SELLOUT_ACTION_RESULT, (alert: IAlertProps) => {
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'SELLOUT',
-      method: 'setAlert',
-      data: alert,
-    }),
-  );
+  sendMarketplaceEvent('setAlert', alert);
 });
