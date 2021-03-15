@@ -1,6 +1,6 @@
 import apps from './apps';
 
-function sendMessage(app: string, method: string, data: any) {
+export function sendMessage(app: string, method: string, data: any) {
   return SendNuiMessage(
     JSON.stringify({
       app,
@@ -20,4 +20,16 @@ export function sendMessageEvent(method: string, data: any = {}) {
 
 export function sendNotesEvent(method: string, data: any = {}) {
   return sendMessage(apps.NOTES, method, data);
+}
+
+export function sendMarketplaceEvent(method: string, data: any = {}) {
+  sendMessage(apps.MARKETPLACE, method, data);
+}
+
+export function sendContactsEvent(method: string, data: any = {}) {
+  sendMessage(apps.CONTACTS, method, data);
+}
+
+export function sendCameraEvent(method: string, data: any = {}) {
+  sendMessage(apps.CAMERA, method, data);
 }
