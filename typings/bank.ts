@@ -11,3 +11,9 @@ export interface Transfer {
   transferAmount: number;
   message: string;
 }
+
+export interface ITransactions {
+  source: number;
+  type: string;
+  amount: number;
+}

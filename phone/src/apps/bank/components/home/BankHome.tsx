@@ -12,7 +12,7 @@ import useStyles from './home.styles';
 export const BankHome = () => {
   const classes = useStyles();
   const { setShowBankModal } = useBankModal();
-  const { credentials } = useCredentials();
+  const credentials = useCredentials();
   const { t } = useTranslation();
 
   const openTransactionsModal = () => {

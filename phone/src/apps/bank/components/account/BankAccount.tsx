@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const BankAccount = () => {
   const classes = useStyles();
-  const { credentials } = useCredentials();
+  const credentials = useCredentials();
   const { t } = useTranslation();
   return (
     <div className={classes.root}>

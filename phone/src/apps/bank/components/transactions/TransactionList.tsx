@@ -5,7 +5,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import { useTransactions } from '../../hooks/useTransactions';
 
 export const TransactionList = () => {
-  const { transactionList } = useTransactions();
+  const transactionList = useTransactions();
   const { t } = useTranslation();
   const classes = useStyles();
   const [page, setPage] = useState(0);
