@@ -13,7 +13,7 @@ export const AccountTransactions = (): any => {
     Transfer: classes.depositType,
   };
 
-  const { transactionList } = useTransactions();
+  const transactionList = useTransactions();
   const { t } = useTranslation();
   return (
     <div id="account-section">
