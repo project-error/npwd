@@ -29,6 +29,8 @@ import {
 
 import { ListSubheader } from '@material-ui/core';
 import { useSettings } from '../hooks/useSettings';
+import { setClipboard } from '../../../os/phone/hooks/useClipboard';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -42,8 +44,8 @@ export const SettingsApp = () => {
   const simcard = useSimcard();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
-  // TODO: Uncomment when #135 is merged
-  // const { addAlert } = useSnackbar();
+
+  const { addAlert } = useSnackbar();
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
@@ -85,15 +87,13 @@ export const SettingsApp = () => {
   );
 
   const handleCopyPhoneNumber = () => {
-    // TODO: Dependent on #132 merge
-    // setClipboard(simcard.number)
-    // TODO: Dependent on #135 merge
-    // addAlert({
-    //   message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
-    //     content: 'number',
-    //   }),
-    //   type: 'success',
-    // });
+    setClipboard(simcard.number);
+    addAlert({
+      message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+        content: 'number',
+      }),
+      type: 'success',
+    });
   };
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
