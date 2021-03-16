@@ -1,6 +1,5 @@
 import events from '../utils/events';
 import { getIdentifierByPhoneNumber, getPlayer, getSource } from './functions';
-
 import { getPlayerFromIdentifier } from './functions';
 import { ICall } from '../../typings/call';
 
@@ -30,8 +29,10 @@ async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
 
 let calls: Map<string, ICall> = new Map();
 
-onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: number) => {
+onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string) => {
   const _source = getSource();
+
+  const startCallTimeUnix = new Date().getTime() / 1000;
 
   const callIdentifier = uuidv4();
 
@@ -60,7 +61,7 @@ onNet(events.PHONE_INITIALIZE_CALL, async (phoneNumber: string, timestamp: numbe
     transmitterSource: _source,
     receiver: receiverNumber,
     receiverSource: xReceiver.source,
-    start: timestamp / 1000,
+    start: Math.floor(startCallTimeUnix),
     accepted: false,
   });
 
@@ -81,6 +82,10 @@ onNet(events.PHONE_ACCEPT_CALL, async (transmitterNumber: string) => {
   const pSource = getSource();
   try {
     const currentCall = calls.get(transmitterNumber);
+
+    // Sanity check if call exists in current set
+    if (!currentCall) new Error('Transmitter number does not exist in set.');
+
     const channelId = pSource;
 
     await updateCall(currentCall, true, null);
@@ -109,6 +114,9 @@ onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: n
   const pSource = getSource();
   try {
     const currentCall = calls.get(transmitterNumber);
+
+    // Sanity check if call exists in current set
+    if (!currentCall) new Error('Transmitter number does not exist in set.');
     await updateCall(currentCall, false, timestamp);
 
     // player who is called and initiasted the rejection.
@@ -124,13 +132,17 @@ onNet(events.PHONE_CALL_REJECTED, async (transmitterNumber: string, timestamp: n
   }
 });
 
-onNet(events.PHONE_END_CALL, async (transmitterNumber: string, timestamp: number) => {
+onNet(events.PHONE_END_CALL, async (transmitterNumber: string) => {
   const pSource = getSource();
   try {
+    const currentTimeUnix = new Date().getTime() / 1000;
+
     const currentCall = calls.get(transmitterNumber);
-    const endTime = timestamp / 1000;
-    await updateCall(currentCall, false, endTime);
-    const accepted = calls.get(pSource);
+
+    // Sanity check if call exists in current set
+    if (!currentCall) new Error('Transmitter number does not exist in set.');
+
+    await updateCall(currentCall, false, currentTimeUnix);
 
     // player who is being called
     emitNet(events.PHONE_CALL_WAS_ENDED, currentCall.receiverSource);

@@ -5,6 +5,7 @@ import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
+import { ResultSetHeader } from 'mysql2';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
@@ -95,6 +96,7 @@ async function fetchTweetsFiltered(profileId: number, searchValue: string): Prom
 
 /**
  * Retrieve a Tweet by ID
+ * @param profileId Unique id for the twitter profile (NOT user identifier)
  * @param tweetId - primary key of the tweet ID
  */
 async function getTweet(profileId: number, tweetId: number): Promise<Tweet> {
@@ -131,7 +133,11 @@ async function createTweet(identifier: string, tweet: NewTweet): Promise<Tweet> 
     tweet.images,
     tweet.retweet,
   ]);
-  const insertData = <any>results;
+  // This should not be an any type and instead should be
+  // a Tweet[] according to mysql2 documentation. But instead
+  // this exec promise returns the row itself, not an array of rows like it states
+  // Therefore type assertion doesn't work here for correctly typing this out.
+  const insertData = <ResultSetHeader>results;
   return await getTweet(profile.id, insertData.insertId);
 }
 
@@ -189,7 +195,8 @@ async function createDefaultProfile(identifier: string): Promise<Profile> {
     INSERT INTO npwd_twitter_profiles (identifier, profile_name)
     VALUES (?, ?)
     `;
-  const [result] = await pool.execute(query, [identifier, profileName]);
+
+  await pool.execute(query, [identifier, profileName]);
   return getProfile(identifier);
 }
 
@@ -251,7 +258,7 @@ async function deleteTweet(identifier: string, tweetId: number): Promise<void> {
     DELETE FROM npwd_twitter_tweets
     WHERE identifier = ? AND id = ?
   `;
-  const [result] = await pool.execute(query, [identifier, tweetId]);
+  await pool.execute(query, [identifier, tweetId]);
 }
 
 /**
@@ -428,11 +435,10 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
     // alert the player that they have already retweeted
     // this post (or that they are the original poster)
     if (await doesRetweetExist(tweetId, identifier)) {
-      emitNet(events.TWITTER_RETWEET_EXISTS, _source, {
+      return emitNet(events.TWITTER_RETWEET_EXISTS, _source, {
         message: 'TWITTER_RETWEET_EXISTS',
         type: 'error',
       });
-      return;
     }
 
     // our message for this row is blank because when we
@@ -460,12 +466,13 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
     const tweet = await getTweet(profile.id, tweetId);
 
     const reportExists = await doesReportExist(tweet.id, profile.id);
+
     if (reportExists) {
-      twitterLogger.warn('This profile has already reported this tweet');
-    } else {
-      await createTweetReport(tweet.id, profile.id);
-      await reportTweetToDiscord(tweet, profile);
+      return twitterLogger.warn('This profile has already reported this tweet');
     }
+
+    await createTweetReport(tweet.id, profile.id);
+    await reportTweetToDiscord(tweet, profile);
 
     emitNet(events.TWITTER_REPORT_SUCCESS, _source);
   } catch (e) {
