@@ -121,6 +121,7 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION_FILTER": "Notification Filters",
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
+    "APPS_SETTING_STREAMER_MODE_DESC": "Hide images before they are shown",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",

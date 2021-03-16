@@ -67,12 +67,13 @@ interface ISettingSwitch {
   value: boolean;
   onClick: any;
   icon: JSX.Element;
+  secondary: string;
 }
 
-export const SettingSwitch = ({ label, value, onClick, icon }: ISettingSwitch) => (
+export const SettingSwitch = ({ label, value, onClick, icon, secondary }: ISettingSwitch) => (
   <ListItem divider button>
     <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={label} />
+    <ListItemText primary={label} secondary={secondary} />
     <ListItemSecondaryAction>
       <Switch color="primary" checked={value} onChange={() => onClick(value)} />
     </ListItemSecondaryAction>

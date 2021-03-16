@@ -140,6 +140,7 @@ export const SettingsApp = () => {
           />
           <SettingSwitch
             label={t('APPS_SETTINGS_OPTION_STREAMER_MODE')}
+            secondary={t('APPS_SETTING_STREAMER_MODE_DESC')}
             icon={<VisibilityOffIcon />}
             value={settings.streamerMode}
             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
