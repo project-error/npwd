@@ -157,7 +157,7 @@ export const MessageModal = () => {
                 </Button>
               ) : null}
               {!activeMessageGroup?.isGroupChat &&
-              getDisplayByNumber(targetNumber) == targetNumber ? (
+              getDisplayByNumber(targetNumber) === targetNumber ? (
                 <Button>
                   <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
                 </Button>

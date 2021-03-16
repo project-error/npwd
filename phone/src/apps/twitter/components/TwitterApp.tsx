@@ -20,6 +20,7 @@ import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
+import DefaultProfilePrompt from './profile/DefaultProfilePrompt';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -42,11 +43,14 @@ export const TwitterApp = () => {
 
   // before any other action can be taken by the user we force
   // them have a profile name
-  const promptProfileName = profile && (!profile.profile_name || !profile.profile_name.trim());
+  let promptProfileName = profile && (!profile.profile_name || !profile.profile_name.trim());
+  promptProfileName = true;
 
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);
   const showTweetButton = !promptProfileName && activePage === 0;
+
+  const defaultProfileNames = ['test_user', '123-456-7890'];
 
   return (
     <TwitterThemeProvider>
@@ -56,7 +60,10 @@ export const TwitterApp = () => {
         <TwitterTitle />
         <AppContent>
           {promptProfileName ? (
-            <ProfilePrompt />
+            <DefaultProfilePrompt
+              updateEvent="phone:updateTwitterProfile"
+              defaultProfileNames={defaultProfileNames}
+            />
           ) : (
             <Switch>
               <Route path="/twitter" exact component={TweetListContainer} />
