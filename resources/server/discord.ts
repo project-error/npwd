@@ -35,7 +35,7 @@ const postToWebhook = async (content: DiscordMessage): Promise<AxiosResponse | v
   // If convar isnt set
   if (!DISCORD_WEBHOOK) {
     discordLogger.warn(
-      'Got a request to report a listing but discord is not configures. See README o how to configure discord endpoints.',
+      'Got a request to report a listing but discord is not configures. See README on how to configure discord endpoints.',
     );
     return;
   }
