@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Profile } from '../../../../../typings/twitter';
+import { Tweet, Profile } from '../../../../../typings/twitter';
 
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
@@ -27,7 +27,7 @@ export const useTwitterNotifications = () => {
   const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
   const profile: Profile | null = useRecoilValue(twitterState.profile);
 
-  const setNotification = ({ profile_name, message, isRetweet }) => {
+  const setNotification = ({ profile_name, message, isRetweet }: Tweet) => {
     const titleStr = isRetweet
       ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
       : 'APPS_TWITTER_NEW_BROADCAST';

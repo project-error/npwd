@@ -11,6 +11,7 @@ export interface Tweet extends NewTweet {
   profile_name: string;
   profile_id: number;
   id: number;
+  identifier: string;
   isMine: boolean;
   isLiked: boolean;
   isReported: boolean;
@@ -24,6 +25,14 @@ export interface Tweet extends NewTweet {
   retweetAvatarUrl: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Image {
+  id: string;
+  link: string;
+}
+export interface FormattedTweet extends Omit<Tweet, 'images'> {
+  images: Image[];
 }
 
 export interface Profile {
