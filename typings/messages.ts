@@ -2,7 +2,7 @@ export interface Message {
   id: number;
   message: string;
   user_identifier: string;
-  phone_number: string;
+  npwd_number: string;
   groupId?: string;
   display?: string;
   avatar?: string;
@@ -19,13 +19,13 @@ export interface MessageGroup {
   label?: string;
   updatedAt: string;
   unreadCount: number;
-  phoneNumbers: string[];
+  npwdNumbers: string[];
   participants: string[];
 }
 
 export interface CreateMessageGroupResult {
   error?: boolean;
-  phoneNumber?: string;
+  npwdNumber?: string;
   duplicate?: boolean;
   groupId?: string;
   mine?: boolean;
@@ -43,19 +43,19 @@ export interface SetMessageRead {
 }
 
 export enum MessageEvents {
-  FETCH_MESSAGE_GROUPS = 'phone:fetchMessageGroups',
-  FETCH_MESSAGE_GROUPS_SUCCESS = 'phone:fetchMessageGroupsSuccess',
-  FETCH_MESSAGE_GROUPS_FAILED = 'phone:fetchMessageGroupsFailed',
-  CREATE_MESSAGE_GROUP = 'phone:createMessageGroup',
-  CREATE_MESSAGE_GROUP_SUCCESS = 'phone:createMessageGroupSuccess',
-  CREATE_MESSAGE_GROUP_FAILED = 'phone:createMessageGroupFailed',
-  SEND_MESSAGE = 'phone:sendMessage',
-  SEND_MESSAGE_SUCCESS = 'phone:sendMessageSuccess',
-  SEND_MESSAGE_FAILED = 'phone:sendMessageFailed',
-  FETCH_MESSAGES = 'phone:fetchMessages',
-  FETCH_MESSAGES_SUCCESS = 'phone:fetchMessagesSuccess',
-  FETCH_MESSAGES_FAILED = 'phone:fetchMessagesFailed',
-  ACTION_RESULT = 'phone:setMessagesAlert',
+  FETCH_MESSAGE_GROUPS = 'npwd:fetchMessageGroups',
+  FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
+  FETCH_MESSAGE_GROUPS_FAILED = 'npwd:fetchMessageGroupsFailed',
+  CREATE_MESSAGE_GROUP = 'npwd:createMessageGroup',
+  CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
+  CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
+  SEND_MESSAGE = 'npwd:sendMessage',
+  SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
+  SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
+  FETCH_MESSAGES = 'npwd:fetchMessages',
+  FETCH_MESSAGES_SUCCESS = 'npwd:fetchMessagesSuccess',
+  FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',
+  ACTION_RESULT = 'npwd:setMessagesAlert',
   CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
-  SET_MESSAGE_READ = 'phone:setReadMessages',
+  SET_MESSAGE_READ = 'npwd:setReadMessages',
 }

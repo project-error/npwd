@@ -19,14 +19,13 @@ export interface Contact {
 }
 
 export enum ContactEvents {
-  SEND_CONTACTS = 'phone:sendContacts',
-  GET_CONTACTS = 'phone:getContacts',
-  ADD_CONTACT_NUI = 'contacts:add',
-  ADD_CONTACT = 'phone:addContacts',
+  SEND_CONTACTS = 'npwd:sendContacts',
+  GET_CONTACTS = 'npwd:getContacts',
+  ADD_CONTACT = 'npwd:addContacts',
   ADD_CONTACT_SUCCESS = 'contacts:addSuccess',
-  UPDATE_CONTACT = 'phone:updateContact',
-  DELETE_CONTACT = 'phone:deleteContact',
-  DELETE_CONTACT_SUCCESS = 'contacts:deleteSuccess',
-  UPDATE_CONTACT_SUCCESS = 'phone:updateContactSuccess',
-  ACTION_RESULT = 'phone:contactActionResult',
+  UPDATE_CONTACT = 'npwd:updateContact',
+  DELETE_CONTACT = 'npwd:deleteContact',
+  DELETE_CONTACT_SUCCESS = 'npwd:deleteSuccess',
+  UPDATE_CONTACT_SUCCESS = 'npwd:updateContactSuccess',
+  ACTION_RESULT = 'npwd:contactActionResult',
 }

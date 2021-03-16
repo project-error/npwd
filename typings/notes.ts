@@ -22,14 +22,14 @@ export interface NoteId {
 }
 
 export enum NotesEvents {
-  ADD_NOTE = 'phone:addNote',
-  FETCH_ALL_NOTES = 'phone:fetchAllNotes',
-  SEND_NOTE = 'phone:sendNote',
-  SEND_NOTE_SUCCESS = 'phone:sendNoteSuccess',
-  DELETE_NOTE = 'phone:deleteNote',
-  DELETE_NOTE_SUCCESS = 'phone:deleteNoteSuccess',
-  UPDATE_NOTE = 'phone:updateNote',
-  UPDATE_NOTE_SUCCESS = 'phone:updateNoteSuccess',
-  UPDATE_NOTE_FAILURE = 'phone:updateNoteFailure',
-  ACTION_RESULT = 'phone:notesActionResult',
+  ADD_NOTE = 'npwd:addNote',
+  FETCH_ALL_NOTES = 'npwd:fetchAllNotes',
+  SEND_NOTE = 'npwd:sendNote',
+  SEND_NOTE_SUCCESS = 'npwd:sendNoteSuccess',
+  DELETE_NOTE = 'npwd:deleteNote',
+  DELETE_NOTE_SUCCESS = 'npwd:deleteNoteSuccess',
+  UPDATE_NOTE = 'npwd:updateNote',
+  UPDATE_NOTE_SUCCESS = 'npwd:updateNoteSuccess',
+  UPDATE_NOTE_FAILURE = 'npwd:updateNoteFailure',
+  ACTION_RESULT = 'npwd:notesActionResult',
 }

@@ -19,12 +19,12 @@ export interface ITransactions {
 }
 
 export enum BankEvents {
-  ADD_TRANSFER = 'phone:addTransfer',
-  ADD_TRANSFER_SUCCESS = 'phone:addTransferSuccess',
-  FETCH_TRANSACTIONS = 'phone:fetchAllTransactions',
-  SEND_TRANSFERS = 'phone:sendTransfers',
-  TRANSACTION_ALERT = 'phone:bankTransactionAlert',
-  TRANSACTION_NOTIFICATION = 'phone:bankTransactionNotification',
-  SEND_CREDENTIALS = 'phone:sendBankCredentials',
-  GET_CREDENTIALS = 'phone:getBankCredentials',
+  ADD_TRANSFER = 'npwd:addTransfer',
+  ADD_TRANSFER_SUCCESS = 'npwd:addTransferSuccess',
+  FETCH_TRANSACTIONS = 'npwd:fetchAllTransactions',
+  SEND_TRANSFERS = 'npwd:sendTransfers',
+  TRANSACTION_ALERT = 'npwd:bankTransactionAlert',
+  TRANSACTION_NOTIFICATION = 'npwd:bankTransactionNotification',
+  SEND_CREDENTIALS = 'npwd:sendBankCredentials',
+  GET_CREDENTIALS = 'npwd:getBankCredentials',
 }
