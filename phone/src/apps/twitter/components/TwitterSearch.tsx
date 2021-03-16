@@ -7,6 +7,7 @@ import TweetList from './tweet/TweetList';
 import Nui from '../../../os/nui-events/utils/Nui';
 import SearchButton from './buttons/SearchButton';
 import { useFilteredTweets } from '../hooks/useFilteredTweets';
+import { TwitterEvents } from '../../../../../typings/twitter';
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +33,7 @@ function TwitterSearch() {
     const cleanedSearchValue = searchValue.trim();
     if (!cleanedSearchValue) return;
 
-    Nui.send('phone:fetchTweetsFiltered', cleanedSearchValue);
+    Nui.send(TwitterEvents.FETCH_TWEETS_FILTERED, cleanedSearchValue);
   };
 
   const filteredTweets = tweets || [];

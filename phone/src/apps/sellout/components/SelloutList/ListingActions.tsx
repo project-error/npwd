@@ -1,7 +1,7 @@
 import { Box, Tooltip, Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
-import { MarketplaceListing } from '../../../../../../typings/marketplace';
+import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReportIcon from '@material-ui/icons/Report';
@@ -10,6 +10,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
+import { CallEvents } from '../../../../../../typings/call';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -24,17 +25,17 @@ export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => 
   const history = useHistory();
 
   const handleDeleteListing = () => {
-    Nui.send('phone:marketplaceDeleteListing', {
+    Nui.send(MarketplaceEvents.DELETE_LISTING, {
       id: listing.id,
     });
   };
 
   const handleReportListing = () => {
-    Nui.send('phone:reportListing', listing);
+    Nui.send(MarketplaceEvents.REPORT_LISTING, listing);
   };
 
   const handleCall = () => {
-    Nui.send('phone:beginCall', {
+    Nui.send(CallEvents.INITIALIZE_CALL, {
       number: listing.number,
     });
   };

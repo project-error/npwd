@@ -10,6 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
+import { MessageEvents } from '../../../../../../typings/messages';
 
 interface IProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const sendImageMessage = useCallback(
     (m) => {
-      Nui.send('phone:sendMessage', {
+      Nui.send(MessageEvents.SEND_MESSAGE, {
         groupId: messageGroupId,
         message: m,
       });

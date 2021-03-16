@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
 import { useContacts } from '../../../contacts/hooks/useContacts';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
+import { MessageEvents } from '../../../../../../typings/messages';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -92,7 +93,7 @@ export const MessageModal = () => {
   // sends all unread messages
   useEffect(() => {
     if (activeMessageGroup?.groupId && activeMessageGroup.unreadCount > 0) {
-      Nui.send('phone:setReadMessages', {
+      Nui.send(MessageEvents.SET_MESSAGE_READ, {
         groupId: activeMessageGroup.groupId,
       });
     }

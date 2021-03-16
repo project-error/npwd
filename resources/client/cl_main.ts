@@ -150,8 +150,8 @@ on(`__cfx_nui:${PhoneEvents.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
   cb();
 });
 
-RegisterNuiCallbackType('phone:close');
-on(`__cfx_nui:phone:close`, async (data: any, cb: Function) => {
+RegisterNuiCallbackType(PhoneEvents.CLOSE_PHONE);
+on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
   await hidePhone();
   cb();
 }); // Called for when the phone is closed via the UI.

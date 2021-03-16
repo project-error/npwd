@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
+import { PhotoEvents } from '../../../../../../typings/photo';
 
 export const GalleryGrid = () => {
   const classes = useStyles();
@@ -19,7 +20,7 @@ export const GalleryGrid = () => {
   const photos = usePhotos();
 
   const handleCamera = () => {
-    Nui.send('phone:TakePhoto', {});
+    Nui.send(PhotoEvents.TAKE_PHOTO, {});
   };
 
   const handlePhotoOpen = (photo) => {

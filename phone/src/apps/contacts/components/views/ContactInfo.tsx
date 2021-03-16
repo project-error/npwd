@@ -8,6 +8,7 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { ContactEvents } from '../../../../../../typings/contact';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -79,7 +80,7 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send('phone:addContacts', {
+    Nui.send(ContactEvents.ADD_CONTACT, {
       display: name,
       number,
       avatar,
@@ -93,7 +94,7 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send('phone:updateContact', {
+    Nui.send(ContactEvents.UPDATE_CONTACT, {
       id: contact.id,
       display: name,
       number,
@@ -108,7 +109,7 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send('phone:deleteContact', {
+    Nui.send(ContactEvents.DELETE_CONTACT, {
       id: contact.id,
     });
     history.goBack();

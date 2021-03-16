@@ -8,7 +8,7 @@ import { ListItem } from '../../../../ui/components/ListItem';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContacts } from '../../../contacts/hooks/useContacts';
-import { ICall } from '../../../../../../typings/call';
+import { CallEvents, ICall } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -35,7 +35,7 @@ export const DialerHistory = ({ calls }) => {
   const { t } = useTranslation();
 
   const handleCall = (phoneNumber) => {
-    Nui.send('phone:beginCall', {
+    Nui.send(CallEvents.INITIALIZE_CALL, {
       number: phoneNumber,
     });
   };

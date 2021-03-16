@@ -6,4 +6,6 @@ export enum PhoneEvents {
   OPEN_APP_LISTINGS = 'phone:app:SELLOUT',
   OPEN_APP_CAMERA = 'phone:app:CAMERA',
   OPEN_APP_DAILER = 'phone:app:DIALER',
+  OPEN_PHONE = 'phone:open',
+  CLOSE_PHONE = 'phone:close',
 }

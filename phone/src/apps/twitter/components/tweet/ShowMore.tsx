@@ -5,6 +5,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import ReportButton from '../buttons/ReportButton';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 export const ShowMore = ({ id, isReported, isMine }) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -23,7 +24,7 @@ export const ShowMore = ({ id, isReported, isMine }) => {
   };
 
   const handleDeleteTweet = () => {
-    Nui.send('phone:deleteTweet', id);
+    Nui.send(TwitterEvents.DELETE_TWEET, id);
     handleClose();
   };
 

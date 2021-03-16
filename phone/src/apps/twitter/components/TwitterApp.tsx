@@ -20,6 +20,7 @@ import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
+import { TwitterEvents } from '../../../../../typings/twitter';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {

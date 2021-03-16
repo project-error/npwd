@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { useContacts } from '../../../contacts/hooks/useContacts';
 import { Contact } from '../../../../../../typings/contact';
+import { MessageEvents } from '../../../../../../typings/messages';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
@@ -32,7 +33,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     const labelValue = isGroupChat ? label.trim() : null;
 
     if (phoneNumbers.length) {
-      Nui.send('phone:createMessageGroup', {
+      Nui.send(MessageEvents.CREATE_MESSAGE_GROUP, {
         phoneNumbers,
         label: labelValue,
       });

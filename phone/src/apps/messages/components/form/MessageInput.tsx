@@ -4,6 +4,7 @@ import { Paper, Box, makeStyles, TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { MessageEvents } from '../../../../../../typings/messages';
 
 interface IProps {
   onAddImageClick(): void;
@@ -25,7 +26,7 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
     if (message.trim()) {
       // don't allow the user to submit white space
 
-      Nui.send('phone:sendMessage', {
+      Nui.send(MessageEvents.SEND_MESSAGE, {
         groupId: messageGroupId,
         message,
       });

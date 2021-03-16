@@ -33,7 +33,7 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     // if someone is retweeting something that is itself a retweet
     // then we want to retweet the original post (if we haven't already)
     const idToRetweet = isRetweet ? retweetId : tweetId;
-    Nui.send('phone:retweet', idToRetweet);
+    Nui.send(TwitterEvents.RETWEET, idToRetweet);
     setLoading(true);
     window.setTimeout(() => {
       setRetweeted(true);

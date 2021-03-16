@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles, Button, TextField } from '@material-ui/core';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { MarketplaceEvents } from '../../../../../../typings/marketplace';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ export const ListingForm = () => {
   const [description, setDescription] = useState('');
 
   const addListing = () => {
-    Nui.send('phone:addListing', {
+    Nui.send(MarketplaceEvents.ADD_LISTING, {
       title,
       url,
       description,

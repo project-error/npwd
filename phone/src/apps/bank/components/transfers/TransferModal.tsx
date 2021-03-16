@@ -5,6 +5,7 @@ import { Button, List, ListItem, TextField, makeStyles } from '@material-ui/core
 import Nui from '../../../../os/nui-events/utils/Nui';
 
 import { useBankModal } from '../../hooks/useBankModal';
+import { BankEvents } from '../../../../../../typings/bank';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -43,7 +44,7 @@ export const TransferModal = () => {
 
   const addTransfer = () => {
     const transferAmount = parseInt(amount);
-    Nui.send('phone:addTransfer', {
+    Nui.send(BankEvents.ADD_TRANSFER, {
       targetID,
       transferAmount,
       message,
