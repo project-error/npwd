@@ -80,14 +80,14 @@ function Phone() {
             <div
               className="PhoneFrame"
               style={{
-                backgroundImage: `url(./media/frames/${settings.frame.value})`,
+                backgroundImage: `url(media/frames/${settings.frame.value})`,
               }}
             />
             <div
               id="phone"
               className="PhoneScreen"
               style={{
-                backgroundImage: `url(./media/backgrounds/${settings.wallpaper.value})`,
+                backgroundImage: `url(media/backgrounds/${settings.wallpaper.value})`,
               }}
             >
               {isPhoneReady ? (

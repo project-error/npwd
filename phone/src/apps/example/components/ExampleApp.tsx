@@ -16,7 +16,7 @@ export const ExampleApp = () => {
   const exampleString = useExample();
   const example = useApp('EXAMPLE');
   const [soundName, setSound] = useState('pixel.ogg');
-  const { play, playing, stop } = useSound('./media/ringtones/' + soundName);
+  const { play, playing, stop } = useSound('media/ringtones/' + soundName);
 
   const toggleSound = () => {
     if (soundName === 'pixel.ogg') {
