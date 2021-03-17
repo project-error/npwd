@@ -4,6 +4,7 @@ const webpack = require('webpack');
 module.exports = (options) => ({
   mode: options.mode,
   entry: options.entry,
+  devtool: 'source-maps',
   output: {
     path: path.resolve(process.cwd(), '../resources/html'),
     filename: '[name].js',
