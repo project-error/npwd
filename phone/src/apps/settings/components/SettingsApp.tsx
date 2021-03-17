@@ -26,12 +26,14 @@ import {
   VolumeUp,
   FileCopy,
   Book,
+  DeleteForever,
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
-import { useSettings } from '../hooks/useSettings';
+import { useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { IContextMenuOption } from '../../../ui/components/ContextMenu';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -47,6 +49,8 @@ export const SettingsApp = () => {
   const { t } = useTranslation();
 
   const { addAlert } = useSnackbar();
+
+  const resetSettings = useResetSettings();
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
@@ -90,6 +94,23 @@ export const SettingsApp = () => {
   const languages = config.languages.map(
     MapSettingItem(settings.language, (val: SettingOption) => handleSettingChange('language', val)),
   );
+
+  const handleResetOptions = () => {
+    resetSettings();
+    addAlert({
+      message: t('SETTINGS.MESSAGES.SETTINGS_RESET'),
+      type: 'success',
+    });
+  };
+
+  const resetSettingsOpts: IContextMenuOption[] = [
+    {
+      selected: false,
+      onClick: () => handleResetOptions(),
+      key: 'RESET_SETTINGS',
+      label: t('SETTINGS.OPTIONS.RESET_SETTINGS'),
+    },
+  ];
 
   const handleCopyPhoneNumber = () => {
     setClipboard(simcard.number);
@@ -208,6 +229,15 @@ export const SettingsApp = () => {
             value={settings.TWITTER_notiSoundVol}
             onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
             icon={<VolumeUp />}
+          />
+        </List>
+        <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.ACTIONS')} />}>
+          <SettingItem
+            label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
+            value={`${t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}`}
+            icon={<DeleteForever />}
+            onClick={openMenu}
+            options={resetSettingsOpts}
           />
         </List>
       </AppContent>

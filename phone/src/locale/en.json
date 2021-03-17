@@ -3,13 +3,20 @@
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "SETTINGS": {
-        "CATEGORY": {
-            "APPEARANCE": "Appearance",
-            "PHONE": "Phone"
-        },
-        "OPTIONS": {
-            "LANGUAGE": "Language"
-        }
+      "CATEGORY": {
+        "APPEARANCE": "Appearance",
+        "PHONE": "Phone",
+        "ACTIONS": "Actions"
+      },
+      "OPTIONS": {
+        "LANGUAGE": "Language",
+        "RESET_SETTINGS": "Reset Settings",
+        "RESET_SETTINGS_DESC": "This will clear your locally stored data"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
+        "SETTINGS_RESET": "Settings have been reset!"
+      }
     },
     "RELATIVE_TIME": {
       "future": "in %s",

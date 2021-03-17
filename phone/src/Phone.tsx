@@ -20,7 +20,7 @@ import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
 import { usePhotoService } from './apps/camera/hooks/usePhotoService';
-import { useSettings } from './apps/settings/hooks/useSettings';
+import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from './os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
@@ -31,6 +31,7 @@ import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from './ui/hooks/useSnackbar';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -39,11 +40,25 @@ function Phone() {
 
   const [settings] = useSettings();
 
+  const { addAlert } = useSnackbar();
+
   // Set language from local storage
   // This will only trigger on first mount & settings changes
   useEffect(() => {
     i18n.changeLanguage(settings.language.value).catch((e) => console.error(e));
   }, [i18n, settings.language]);
+
+  useEffect(() => {
+    if (!isSettingsSchemaValid()) {
+      addAlert({
+        message: t('SETTINGS.MESSAGES.INVALID_SETTINGS'),
+        type: 'error',
+      });
+    }
+    // We only want to run this on first mount of the phone,
+    // so we leave an empty dep array. Otherwise, we hit a max depth error.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useNuiService();
   useKeyboardService();
