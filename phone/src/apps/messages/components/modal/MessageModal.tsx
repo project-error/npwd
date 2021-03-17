@@ -108,10 +108,11 @@ export const MessageModal = () => {
 
   const handleAddContact = (number) => {
     const exists = getContactByNumber(number);
+    const referal = encodeURIComponent(pathname);
     if (exists) {
-      return history.push(`/contacts/${exists.id}/?referal=${pathname}`);
+      return history.push(`/contacts/${exists.id}/?referal=${referal}`);
     }
-    return history.push(`/contacts/-1/?addNumber=${number}&referal=${pathname}`);
+    return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
   const phoneNumbers = activeMessageGroup?.phoneNumbers || [];
@@ -163,7 +164,7 @@ export const MessageModal = () => {
               ) : null}
             </Box>
           </Paper>
-          {isLoaded ? (
+          {isLoaded && activeMessageGroup ? (
             <Conversation
               onClickDisplay={handleAddContact}
               messages={messages}

@@ -33,6 +33,7 @@ interface UnformattedMessageGroup {
 interface MessageGroupMapping {
   [groupId: string]: {
     user_identifier: string;
+    // Participant displays
     participants: string[];
     phoneNumbers: string[];
     label?: string;
@@ -102,7 +103,6 @@ async function getMessageGroups(userIdentifier: string): Promise<UnformattedMess
   LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
   LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
   LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
-  WHERE npwd_messages_groups.participant_identifier != ?
   ORDER BY npwd_messages_groups.createdAt DESC
   `;
   const [results] = await pool.query(query, [userIdentifier, userIdentifier, userIdentifier]);
@@ -236,27 +236,45 @@ async function getConsolidatedMessageGroups(userIdentifier: string): Promise<Mes
     (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
       const groupId = messageGroup.group_id;
       const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
-
+      const isUser = messageGroup.participant_identifier === userIdentifier;
+      // Is already mapped?
       if (groupId in mapping) {
-        mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
+        // Add participant phone number
         mapping[groupId].phoneNumbers = mapping[groupId].phoneNumbers.concat(
           messageGroup.phone_number,
         );
-        if (messageGroup.participant_identifier === userIdentifier) {
+        if (isUser) {
+          // Add unread count if its user's message group
           mapping[groupId].unreadCount = messageGroup.unreadCount;
+          return mapping;
         }
-      } else {
+        // Add participant if its not user's message group
+        mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
+        return mapping;
+      }
+      if (isUser) {
+        // Group not mapped and its current user
         mapping[groupId] = {
           user_identifier: messageGroup.user_identifier,
-          unreadCount:
-            messageGroup.participant_identifier === userIdentifier ? messageGroup.unreadCount : 0,
-          avatar: messageGroup.avatar,
-          label: messageGroup.label,
-          participants: [displayTerm],
+          unreadCount: messageGroup.unreadCount,
+          avatar: null,
+          label: null,
+          participants: [],
           phoneNumbers: [messageGroup.phone_number],
           updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
         };
+        return mapping;
       }
+      // Group not mapped and its not current user
+      mapping[groupId] = {
+        user_identifier: messageGroup.user_identifier,
+        unreadCount: 0,
+        avatar: messageGroup.avatar,
+        label: messageGroup.label,
+        participants: [displayTerm],
+        phoneNumbers: [messageGroup.phone_number],
+        updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
+      };
       return mapping;
     },
     {},
@@ -292,7 +310,7 @@ async function getFormattedMessageGroups(userIdentifier: string): Promise<Messag
       ...group,
       groupId,
       groupDisplay: group.participants.join(', '),
-      // note that 1 here references how many participants besides the user
+      // note that the 1 here references how many participants besides the user
       isGroupChat: group.participants.length > 1,
     };
   });

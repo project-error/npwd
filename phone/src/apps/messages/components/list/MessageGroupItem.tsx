@@ -23,7 +23,7 @@ const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
     <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
       <ListItemAvatar>
         <Badge color="error" variant="dot" invisible={!hasUnread}>
-          <MuiAvatar src={messageGroup?.avatar} />
+          <MuiAvatar src={messageGroup.avatar} />
         </Badge>
       </ListItemAvatar>
       <ListItemText>{messageGroup.label || messageGroup.groupDisplay}</ListItemText>
