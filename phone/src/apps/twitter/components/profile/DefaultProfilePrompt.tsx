@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '15px',
   },
   formControl: {
-    // margin: theme.spacing(1),
     width: '100%',
   },
 }));

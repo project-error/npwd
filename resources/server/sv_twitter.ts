@@ -1,3 +1,5 @@
+import { ResultSetHeader } from 'mysql2';
+
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../typings/twitter';
@@ -5,9 +7,7 @@ import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
-import { ResultSetHeader } from 'mysql2';
-import { generateProfileName } from './players/sv_players';
-import { getDefaultProfileNames } from './players/sv_players';
+import { generateProfileName, getDefaultProfileNames } from './players/sv_players';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
