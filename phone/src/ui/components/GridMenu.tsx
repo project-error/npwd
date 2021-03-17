@@ -9,7 +9,7 @@ export const GridMenu = ({ items, Component = AppIcon, xs = undefined }) => {
       {items &&
         items.length &&
         items.map((item) => (
-          <Grid item xs={xs} key={item.id} alignItems="center" justify="center">
+          <Grid item xs={xs} key={item.id}>
             <Box textAlign="center">
               <Link to={item.path}>
                 <Component {...item} />
