@@ -1,5 +1,6 @@
 export default {
   TWITTER: 'TWITTER',
+  TINDER: 'TINDER',
   MESSAGES: 'MESSAGES',
   NOTES: 'NOTES',
   MARKETPLACE: 'SELLOUT',

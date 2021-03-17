@@ -94,6 +94,8 @@
     "APPS_TWITTER_NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
     "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
+    "APPS_MATCH": "Matchmaker",
+
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_BANK_HOME_TITLE": "Welcome",
     "APPS_BANK_ACCOUNT_LINK": "Account",

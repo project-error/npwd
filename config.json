@@ -27,6 +27,9 @@
     "enableImages": true,
     "maxImages": 3
   },
+  "match": {
+    "select": true
+  },
   "bank": {
     "showNotifications": true
   },
