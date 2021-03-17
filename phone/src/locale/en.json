@@ -3,13 +3,28 @@
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "SETTINGS": {
-      "CATEGORY": {
-        "APPEARANCE": "Appearance",
-        "PHONE": "Phone"
-      },
-      "OPTIONS": {
-        "LANGUAGE": "Language"
-      }
+        "CATEGORY": {
+            "APPEARANCE": "Appearance",
+            "PHONE": "Phone"
+        },
+        "OPTIONS": {
+            "LANGUAGE": "Language"
+        }
+    },
+    "RELATIVE_TIME": {
+      "future": "in %s",
+      "past": "%s ago",
+      "s": "a few seconds",
+      "m": "a minute",
+      "mm": "%d minutes",
+      "h": "an hour",
+      "hh": "%d hours",
+      "d": "a day",
+      "dd": "%d days",
+      "M": "a month",
+      "MM": "%d months",
+      "y": "a year",
+      "yy": "%d years"
     },
 
     "COMING_SOON": "Coming soon...",
@@ -34,6 +49,7 @@
     "APPS_DIALER_ACCEPT_CALL": "Accept",
     "APPS_DIALER_REJECT_CALL": "Reject",
     "APPS_DIALER_END_CALL": "End",
+    "APPS_DIALER_NO_HISTORY": "You have no call history",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",

@@ -5,6 +5,7 @@ export interface IDialInputCtx {
   add: (char: string | number) => void;
   removeOne: () => void;
   clear: () => void;
+  set: (val) => void;
 }
 
 export const DialInputCtx = createContext(null);

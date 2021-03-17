@@ -28,6 +28,7 @@ const DialPage = () => {
           add: (val: string) => setInputVal(inputVal + val),
           removeOne: () => setInputVal(inputVal.slice(0, -1)),
           clear: () => setInputVal(''),
+          set: (val: string) => setInputVal(val),
         }}
       >
         <DialerInput />
