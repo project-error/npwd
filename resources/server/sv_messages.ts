@@ -3,11 +3,6 @@ import { CreateMessageGroupResult, Message, MessageGroup } from '../../typings/m
 import { pool, withTransaction } from './db';
 import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
-<<<<<<< HEAD
-=======
-import { group } from 'console';
-import config from '../utils/config';
->>>>>>> 8aa3721... Handle offline messages | Fetch messages when broadcasted | Fetch message groups
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
