@@ -33,6 +33,7 @@ on(`__cfx_nui:${events.TWITTER_CREATE_PROFILE}`, (data: any) => {
 
 onNet(events.TWITTER_CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
   sendTwitterMessage(events.TWITTER_CREATE_PROFILE_RESULT, alert);
+  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, false);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
 });
 
@@ -47,6 +48,7 @@ on(`__cfx_nui:${events.TWITTER_UPDATE_PROFILE}`, (data: string) => {
 
 onNet(events.TWITTER_UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
   sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_RESULT, alert);
+  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, false);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
 });
 
