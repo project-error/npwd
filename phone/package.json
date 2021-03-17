@@ -24,6 +24,7 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "howler": "^2.2.1",
     "i18next": "^19.7.0",
+    "jsonschema": "^1.4.0",
     "parse-url": "^5.0.2",
     "qs": "^6.9.6",
     "react": "^16.13.1",
