@@ -2,6 +2,15 @@
   "translation": {
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "SETTINGS": {
+      "CATEGORY": {
+        "APPEARANCE": "Appearance",
+        "PHONE": "Phone"
+      },
+      "OPTIONS": {
+        "LANGUAGE": "Language"
+      }
+    },
 
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",
