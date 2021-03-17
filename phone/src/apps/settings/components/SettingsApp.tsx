@@ -25,6 +25,7 @@ import {
   LibraryMusic,
   VolumeUp,
   FileCopy,
+  Book,
 } from '@material-ui/icons';
 
 import { ListSubheader } from '@material-ui/core';
@@ -86,6 +87,10 @@ export const SettingsApp = () => {
     ),
   );
 
+  const languages = config.languages.map(
+    MapSettingItem(settings.language, (val: SettingOption) => handleSettingChange('language', val)),
+  );
+
   const handleCopyPhoneNumber = () => {
     setClipboard(simcard.number);
     addAlert({
@@ -101,7 +106,7 @@ export const SettingsApp = () => {
     <AppWrapper>
       <AppTitle app={settingsApp} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
-        <List disablePadding subheader={<SubHeaderComp text="Phone" />}>
+        <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
             labelSecondary={simcard.number}
@@ -146,7 +151,14 @@ export const SettingsApp = () => {
             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
           />
         </List>
-        <List disablePadding subheader={<SubHeaderComp text="Appearance" />}>
+        <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.APPEARANCE')} />}>
+          <SettingItem
+            label={t('SETTINGS.OPTIONS.LANGUAGE')}
+            value={settings.language.label}
+            options={languages}
+            onClick={openMenu}
+            icon={<Book />}
+          />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_THEME')}
             value={settings.theme.label}

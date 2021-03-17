@@ -26,6 +26,7 @@ export const settingsState = atom({
 });
 
 export interface IPhoneSettings {
+  language: SettingOption;
   wallpaper: SettingOption;
   frame: SettingOption;
   theme: SettingOption;

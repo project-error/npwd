@@ -1,6 +1,6 @@
 {
   "cellProvider": "AT&T",
-  "language": "en",
+  "defaultLanguage": "en",
   "wallpapers": [
     {
       "label": "Minimal",
@@ -67,6 +67,44 @@
       "value": 0.7
     }
   ],
+  "languages": [
+    {
+      "label": "English",
+      "value": "en"
+    },
+    {
+      "label": "Español",
+      "value": "es"
+    },
+    {
+      "label": "Français",
+      "value": "fr"
+    },
+    {
+      "label": "Türk",
+      "value": "tr"
+    },
+    {
+      "label": "Norsk",
+      "value": "no"
+    },
+    {
+      "label": "Svenska",
+      "value": "sv"
+    },
+    {
+      "label": "Português",
+      "value": "pt"
+    },
+    {
+      "label": "Português (BR)",
+      "value": "ptbr"
+    },
+    {
+      "label": "Bosanski",
+      "value": "ba"
+    }
+  ],
   "ringtones": [
     {
       "label": "Marimba",
@@ -98,6 +136,10 @@
     }
   ],
   "defaultSettings": {
+    "language": {
+      "label": "English",
+      "value": "en"
+    },
     "wallpaper": {
       "label": "Project Error",
       "value": "projecterror.jpg"
@@ -107,7 +149,7 @@
       "value": "default.png"
     },
     "theme": {
-      "label": "taso-dark",
+      "label": "Taso Dark",
       "value": "taso-dark"
     },
     "zoom": {
