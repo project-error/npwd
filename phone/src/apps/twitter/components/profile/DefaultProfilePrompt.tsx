@@ -11,8 +11,10 @@ import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 
 interface IProps {
+  handleUpdate: () => void;
+  profileName: string;
+  setProfileName: (name: string) => void;
   defaultProfileNames: string[];
-  updateEvent: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -28,25 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function DefaultProfilePrompt({ defaultProfileNames, updateEvent }: IProps): JSX.Element {
+export function DefaultProfilePrompt({
+  profileName,
+  setProfileName,
+  handleUpdate,
+  defaultProfileNames,
+}: IProps): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { profile } = useProfile();
-
-  const hasDefaults = defaultProfileNames.length > 0;
-  const defaultProfileName = hasDefaults ? defaultProfileNames[0] : '';
-
-  const [profileName, setProfileName] = useState(defaultProfileName);
-
-  const handleUpdate = () => {
-    const data = {
-      ...profile,
-      profile_name: profileName,
-    };
-    Nui.send(updateEvent, data);
-  };
 
   const handleChange = (event: React.ChangeEvent<any>): void => {
+    event.preventDefault();
     setProfileName(event.target.value);
   };
 
@@ -65,8 +59,10 @@ export function DefaultProfilePrompt({ defaultProfileNames, updateEvent }: IProp
           }}
         >
           <option value="" />
-          {defaultProfileNames.map((profileName) => (
-            <option value={profileName}>{profileName}</option>
+          {defaultProfileNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
           ))}
         </Select>
       </FormControl>

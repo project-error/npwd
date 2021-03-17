@@ -18,6 +18,24 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, () => {
   sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE);
 });
 
+onNet(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, (defaultProfileNames: string[]): void => {
+  sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, defaultProfileNames);
+});
+
+/**
+ * Twitter create profile
+ */
+RegisterNuiCallbackType(events.TWITTER_CREATE_PROFILE);
+on(`__cfx_nui:${events.TWITTER_CREATE_PROFILE}`, (data: any) => {
+  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, true);
+  emitNet(events.TWITTER_CREATE_PROFILE, data);
+});
+
+onNet(events.TWITTER_CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(events.TWITTER_CREATE_PROFILE_RESULT, alert);
+  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+});
+
 /**
  * Twitter update profile
  */

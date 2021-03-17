@@ -5,6 +5,10 @@ export const twitterState = {
     key: 'profile',
     default: null,
   }),
+  defaultProfileNames: atom({
+    key: 'defaultProfileNames',
+    default: null,
+  }),
   tweets: atom({
     key: 'tweets',
     default: null,

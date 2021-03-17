@@ -17,6 +17,7 @@ function fetchOnInitialize() {
   emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
   emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
   sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
+  sendMessage('PHONE', 'phoneConfig', config);
 }
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');

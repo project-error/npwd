@@ -81,6 +81,8 @@
     "APPS_TWITTER_EDIT_PROFILE_BIO": "Bio",
     "APPS_TWITTER_EDIT_PROFILE_LOCATION": "Location",
     "APPS_TWITTER_EDIT_PROFILE_JOB": "Job",
+    "APPS_TWITTER_CREATE_PROFILE_SUCCESS": "Successfully created your profile",
+    "APPS_TWITTER_CREATE_PROFILE_FAILURE": "Failed to create your profile",
     "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
     "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Failed to update your profile",
     "APPS_TWITTER_RETWEET_EXISTS": "You have already retweeted this tweet!",
