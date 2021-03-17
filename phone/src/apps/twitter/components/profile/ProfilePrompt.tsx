@@ -9,7 +9,6 @@ import DefaultProfilePrompt from './DefaultProfilePrompt';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
 import { twitterState } from '../../hooks/state';
-import { useSettings } from '../../../settings/hooks/useSettings';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 
 const useStyles = makeStyles((theme) => ({

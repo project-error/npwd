@@ -330,7 +330,7 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
     twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, _source, null);
+    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, _source);
   }
 });
 

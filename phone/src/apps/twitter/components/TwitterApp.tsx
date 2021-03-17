@@ -20,10 +20,6 @@ import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
-import DefaultProfilePrompt from './profile/DefaultProfilePrompt';
-import { useRecoilValue } from 'recoil';
-import { twitterState } from '../hooks/state';
-import { Profile } from '../../../../../typings/twitter';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
