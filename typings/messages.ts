@@ -2,7 +2,7 @@ export interface Message {
   id: number;
   message: string;
   user_identifier: string;
-  npwd_number: string;
+  phone_number: string;
   groupId?: string;
   display?: string;
   avatar?: string;
@@ -19,13 +19,13 @@ export interface MessageGroup {
   label?: string;
   updatedAt: string;
   unreadCount: number;
-  npwdNumbers: string[];
+  phoneNumbers: string[];
   participants: string[];
 }
 
 export interface CreateMessageGroupResult {
   error?: boolean;
-  npwdNumber?: string;
+  phoneNumber?: string;
   duplicate?: boolean;
   groupId?: string;
   mine?: boolean;

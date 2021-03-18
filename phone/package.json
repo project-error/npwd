@@ -33,7 +33,7 @@
     "react-i18next": "^11.7.1",
     "react-popper": "^2.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.1",
     "recoil": "^0.1.2"
   },
   "devDependencies": {
@@ -43,6 +43,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -63,6 +64,7 @@
     "cra-build-watch": "^3.2.0",
     "cross-env": "^7.0.2",
     "css-loader": "^2.1.1",
+    "customize-cra": "^1.0.0",
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
@@ -79,11 +81,11 @@
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "copy:config": "cp-cli ../config.json ./src/config.autogen.json",
-    "start": "yarn copy:config && react-scripts start",
+    "start": "craco start",
     "watch": "cra-build-watch --disable-chunks --build-path ../resources/html --output-filename dev.js",
     "build": "yarn copy:config && cross-env NODE_ENV=production webpack --config webpack/prod.config.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack/dev.config.js --color -p --progress --hide-modules --display-optimization-bailout --analyze",
-    "test": "react-scripts test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
+    "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "react-scripts test --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}",
     "eject": "react-scripts eject"
   },

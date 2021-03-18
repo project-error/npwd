@@ -3,6 +3,7 @@ import { CircularProgress, makeStyles, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 interface IProps {
   tweetId: number;
