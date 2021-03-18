@@ -24,8 +24,8 @@ const server = {
         include: [path.resolve(buildPath, 'server')],
       },
     }),
-    // Ignore useless cardinal/connection-string warnings
-    new webpack.IgnorePlugin(/cardinal|connection-string/, /./),
+    // Ignore cardinal as its optional
+    new webpack.IgnorePlugin(/^cardinal$/, /./),
   ],
   optimization: {
     minimize: true,
