@@ -16,7 +16,6 @@ const server = {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({ 'global.GENTLY': false }),
     new RemovePlugin({
       before: {
         include: [path.resolve(buildPath, 'server')],
@@ -25,6 +24,8 @@ const server = {
         include: [path.resolve(buildPath, 'server')],
       },
     }),
+    // Ignore useless cardinal/connection-string warnings
+    new webpack.IgnorePlugin(/cardinal|connection-string/, /./),
   ],
   optimization: {
     minimize: true,
