@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, TextField } from '@material-ui/core';
 
@@ -24,27 +24,22 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   const isGroupChat = participants.length > 1;
 
-  const handleSubmit = useCallback(
-    (event: FormEvent) => {
-      event.preventDefault();
+  const handleSubmit = useCallback(() => {
+    // handles phone numbers in a csv format and strips all spaces and
+    // external characters out of them:
+    // 123-4567, 987-6543, 333-4444
+    const phoneNumbers = participants.map(({ number }) => number.replace(/[^0-9]/g, ''));
+    const labelValue = isGroupChat ? label.trim() : null;
 
-      // handles phone numbers in a csv format and strips all spaces and
-      // external characters out of them:
-      // 123-4567, 987-6543, 333-4444
-      const phoneNumbers = participants.map(({ number }) => number.replace(/[^0-9]/g, ''));
-      const labelValue = isGroupChat ? label.trim() : null;
-
-      if (phoneNumbers.length) {
-        Nui.send('phone:createMessageGroup', {
-          phoneNumbers,
-          label: labelValue,
-        });
-        setParticipants([]);
-        history.push('/messages');
-      }
-    },
-    [history, label, participants, isGroupChat],
-  );
+    if (phoneNumbers.length) {
+      Nui.send('phone:createMessageGroup', {
+        phoneNumbers,
+        label: labelValue,
+      });
+      setParticipants([]);
+      history.push('/messages');
+    }
+  }, [history, label, participants, isGroupChat]);
 
   const onAutocompleteChange = (_e, value: any) => {
     const lastIdx = value.length - 1;
@@ -77,7 +72,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const submitDisabled = !participants.length || (isGroupChat && !label);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Box>
       <Box px={2} py={3}>
         <Autocomplete<Contact, boolean, boolean, boolean>
           value={participants}
@@ -102,6 +97,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       )}
       <Box px={2} py={3}>
         <Button
+          onClick={() => handleSubmit()}
           disabled={submitDisabled}
           variant="contained"
           fullWidth
@@ -111,7 +107,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
         </Button>
       </Box>
-    </form>
+    </Box>
   );
 };
 

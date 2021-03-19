@@ -15,7 +15,13 @@ const MessagesList = (): any => {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const { messageGroups, createMessageGroupResult, clearMessageGroupResult } = useMessages();
+  const {
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+    getMessageGroupById,
+    setActiveMessageGroup,
+  } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -32,18 +38,24 @@ const MessagesList = (): any => {
 
   useEffect(() => {
     if (createMessageGroupResult?.groupId) {
-      const findGroup = messageGroups.find((g) => g.groupId === createMessageGroupResult.groupId);
+      const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
         goToConversation(findGroup, history);
       }
     }
-  }, [messageGroups, createMessageGroupResult, clearMessageGroupResult, history]);
+  }, [
+    messageGroups,
+    createMessageGroupResult,
+    clearMessageGroupResult,
+    history,
+    setActiveMessageGroup,
+    getMessageGroupById,
+  ]);
 
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
-    Nui.send('phone:fetchMessages', { groupId: messageGroup.groupId });
     goToConversation(messageGroup, history);
   };
 
