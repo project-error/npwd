@@ -32,6 +32,7 @@ export const NotificationItem = ({
 }) => {
   const { title, icon, content, cantClose, onClick } = notification;
   const classes = useStyles({ cantClose });
+
   return (
     <ListItem
       divider

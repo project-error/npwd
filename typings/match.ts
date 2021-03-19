@@ -10,3 +10,13 @@ export interface Profile extends NewProfile {
   updatedAt: number;
   lastActive: number;
 }
+
+export interface FormattedProfile extends NewProfile {
+  id: number;
+  image: string;
+  bio: string;
+  createdAt: number;
+  updatedAt: number;
+  lastActive: string;
+  viewed: boolean;
+}

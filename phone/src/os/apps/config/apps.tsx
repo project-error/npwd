@@ -14,6 +14,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MessageIcon from '@material-ui/icons/Message';
+import FireIcon from '@material-ui/icons/Whatshot';
 import { CalculatorIcon } from '../../../apps/calculator/components/CalculatorIcon';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
@@ -125,8 +126,8 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MATCH',
     nameLocale: 'APPS_MATCH',
-    icon: <FontAwesomeIcon icon={faUserFriends} fixedWidth />,
-    notificationIcon: <FontAwesomeIcon icon={faUserFriends} fixedWidth size="xs" />,
+    icon: <FireIcon fontSize="large" />,
+    notificationIcon: <FireIcon fontSize="small" />,
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',

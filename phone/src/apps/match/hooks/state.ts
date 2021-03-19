@@ -5,4 +5,8 @@ export const matchState = {
     key: 'profiles',
     default: null,
   }),
+  errorLoadingProfiles: atom({
+    key: 'errorLoadingProfiles',
+    default: false,
+  }),
 };

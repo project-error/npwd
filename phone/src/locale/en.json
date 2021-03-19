@@ -95,6 +95,10 @@
     "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
 
     "APPS_MATCH": "Matchmaker",
+    "APPS_MATCH_LIKED": "LIKE",
+    "APPS_MATCH_NOPE": "NOPE",
+    "APPS_MATCH_NO_PROFILES": "No Recent Profiles Found",
+    "APPS_MATCH_PROFILES_ERROR": "Error loading profiles",
 
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_BANK_HOME_TITLE": "Welcome",

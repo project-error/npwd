@@ -3,8 +3,11 @@ import { useSetRecoilState } from 'recoil';
 import { matchState } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { Profile, FormattedProfile } from '../../../../../typings/match';
+import dayjs from 'dayjs';
 
-export const useContactsService = () => {
+export const useMatchService = () => {
+  const { t } = useTranslation();
   const setProfiles = useSetRecoilState(matchState.profiles);
   // const { addAlert } = useSnackbar();
   // const { t } = useTranslation();
@@ -16,6 +19,18 @@ export const useContactsService = () => {
   //   });
   // };
 
-  useNuiEvent('MATCH', 'setProfiles', setProfiles);
+  const _setProfiles = (profiles: Profile[]): void => {
+    setProfiles(
+      profiles.map((profile) => {
+        return {
+          ...profile,
+          lastActive: dayjs.unix(profile.lastActive).format(t('DATE_TIME_FORMAT')),
+          viewed: false,
+        };
+      }),
+    );
+  };
+
+  useNuiEvent('MATCH', 'setProfiles', _setProfiles);
   return {};
 };

@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
+
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import { Route } from 'react-router-dom';
-
 import { MatchThemeProvider } from '../providers/MatchThemeProvider';
+
 import MatchPage from '../components/views/MatchPage';
+import MatchBottomNavigation from '../components/BottomNavigation';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
+  const [activePage, setActivePage] = useState(0);
+
+  const handlePageChange = (e, page) => setActivePage(page);
 
   return (
     <MatchThemeProvider>
@@ -19,6 +24,7 @@ export const MatchApp = () => {
         <AppContent>
           <Route path="/match/" exact component={MatchPage} />
         </AppContent>
+        <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
       </AppWrapper>
     </MatchThemeProvider>
   );
@@ -63,5 +69,5 @@ InjectDebugData(
       ],
     },
   ],
-  6000,
+  200,
 );
