@@ -9,6 +9,12 @@ import './main.css';
 import PhoneConfig from './config/default.json';
 import { PhoneContainer } from './PhoneContainer';
 import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
+
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
 
 // Enable Sentry when config setting is true and when in prod
 if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {

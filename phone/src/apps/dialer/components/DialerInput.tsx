@@ -3,7 +3,7 @@ import { Box, IconButton, InputBase, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { DialInputCtx } from '../context/InputContext';
+import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ export const DialerInput = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { inputVal } = useContext(DialInputCtx);
+  const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
   const handleCall = (number: string) => {
     Nui.send('phone:beginCall', {
@@ -44,8 +44,13 @@ export const DialerInput = () => {
 
   return (
     <Box component={Paper} className={classes.root}>
-      <InputBase placeholder="Enter a number" className={classes.input} value={inputVal} />
-      <IconButton color="primary" className={classes.iconBtn}>
+      <InputBase
+        placeholder="Enter a number"
+        className={classes.input}
+        value={inputVal}
+        onChange={(e) => set(e.target.value)}
+      />
+      <IconButton color="primary" className={classes.iconBtn} disabled={inputVal <= ''}>
         <PhoneIcon fontSize="large" onClick={() => handleCall(inputVal)} />
       </IconButton>
       <IconButton className={classes.iconBtn}>

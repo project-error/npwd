@@ -28,7 +28,7 @@ export const DialerApp = () => {
             <Route exact path="/phone">
               <DialerHistory calls={history} />
             </Route>
-            <Route path="/phone/contacts" component={ContactList}></Route>
+            <Route path="/phone/contacts" component={ContactList} />
           </Switch>
         </AppContent>
         <DialerNavBar />
@@ -39,18 +39,18 @@ export const DialerApp = () => {
 
 InjectDebugData([
   {
-    app: 'DAILER',
+    app: 'DIALER',
     method: 'setHistory',
     data: [
       {
         id: 1,
         transmitter: '636-6496',
-        start: 1612301545782,
+        start: 1615946292,
       },
       {
         id: 2,
         transmitter: '777-7777',
-        start: 1612301545782,
+        start: 1615946292,
       },
     ],
   },

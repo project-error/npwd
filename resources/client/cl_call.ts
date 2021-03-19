@@ -121,7 +121,7 @@ function openCallModal(show: boolean) {
 onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICall) => {
   SendNuiMessage(
     JSON.stringify({
-      app: 'DAILER',
+      app: 'DIALER',
       method: 'setHistory',
       data: calls,
     }),
