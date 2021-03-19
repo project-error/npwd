@@ -10,6 +10,7 @@ import { MatchThemeProvider } from '../providers/MatchThemeProvider';
 
 import MatchPage from '../components/views/MatchPage';
 import MatchBottomNavigation from '../components/BottomNavigation';
+import ProfileEditor from './profile/ProfileEditor';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
@@ -23,6 +24,7 @@ export const MatchApp = () => {
         <AppTitle app={match} />
         <AppContent>
           <Route path="/match/" exact component={MatchPage} />
+          <Route path="/match/profile" exact component={ProfileEditor} />
         </AppContent>
         <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
       </AppWrapper>
@@ -46,6 +48,9 @@ InjectDebugData(
           createdAt: 1615932985,
           updatedAt: 1615932985,
           lastActive: 1616004986,
+          job: 'Gardener',
+          location: 'Grapeseed',
+          tags: 'gardening',
         },
         {
           id: 2,
@@ -56,6 +61,9 @@ InjectDebugData(
           createdAt: 1615846585,
           updatedAt: 1615846585,
           lastActive: 1615850185,
+          job: 'Mechanic',
+          location: 'Harmony',
+          tags: 'tinkering,robotics',
         },
         {
           id: 3,
@@ -65,8 +73,28 @@ InjectDebugData(
           createdAt: 1615850185,
           updatedAt: 1615850185,
           lastActive: 1613607385,
+          job: 'Lawyer',
+          location: 'Los Santos',
+          tags: 'reading,coolstuff, coffee',
         },
       ],
+    },
+    {
+      app: 'MATCH',
+      method: 'setMyProfile',
+      data: {
+        id: 4,
+        image:
+          'https://www.middlebury.edu/institute/sites/www.middlebury.edu.institute/files/styles/1040x585/public/2018-10/Nashville-skyline.jpg?fv=mS11EKrT&itok=HNhHqYUX',
+        name: 'Kire Says',
+        bio: "Kire's cool profile that has many cool things. And others.",
+        createdAt: 1615932985,
+        updatedAt: 1615932985,
+        lastActive: 1616004986,
+        job: 'Engineer',
+        location: 'Boston',
+        tags: 'code,books',
+      },
     },
   ],
   200,

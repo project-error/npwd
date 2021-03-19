@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useProfile } from '../../hooks/useProfile';
 import Avatar from '../Avatar';
-import ProfileField from './ProfileField';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
+import ProfileField from '../../../../ui/components/ProfileField';
 
 const useStyles = makeStyles((theme) => ({
   root: {

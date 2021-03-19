@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MINIMUM_LOAD_TIME = 0;
+const MINIMUM_LOAD_TIME = 1500;
 
 const MatchPage = () => {
   const classes = useStyles();

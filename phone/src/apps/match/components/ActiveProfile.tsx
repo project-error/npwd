@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FormattedProfile } from '../../../../../typings/match';
 import Draggable from './Draggable';
 import StatusDisplay from './StatusDisplay';
+import Profile from './profile/Profile';
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     zIndex: 20,
     padding: '5px 15px',
-    top: 25,
+    top: 40,
     fontSize: '28px',
     fontWeight: 'bold',
   },
@@ -42,14 +43,14 @@ const useStyles = makeStyles({
   like: {
     color: 'green',
     border: '6px solid green',
-    left: 15,
-    transform: 'rotate(-15deg)',
+    left: 30,
+    transform: 'rotate(-18deg)',
   },
   nope: {
     color: 'red',
     border: '6px solid red',
-    right: 15,
-    transform: 'rotate(15deg)',
+    right: 30,
+    transform: 'rotate(18deg)',
   },
 });
 
@@ -100,18 +101,7 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
       <Card raised className={c.root}>
         <StatusDisplay className={likeClass} text={t('APPS_MATCH_LIKED')} visible={isLiked} />
         <StatusDisplay className={nopeClass} text={t('APPS_MATCH_NOPE')} visible={notLiked} />
-        <CardMedia className={c.media} image={profile.image} title="Paella dish" />
-        <CardContent>
-          <Typography gutterBottom variant="h4" component="h2">
-            {profile.name}
-          </Typography>
-          <Typography gutterBottom color="textSecondary" component="p">
-            Last Active: {profile.lastActive}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {profile.bio}
-          </Typography>
-        </CardContent>
+        <Profile profile={profile} />
       </Card>
     </Draggable>
   );
