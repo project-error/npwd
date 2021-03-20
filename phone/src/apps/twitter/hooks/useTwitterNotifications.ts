@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Tweet, Profile } from '../../../../../typings/twitter';
 
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
@@ -11,7 +12,7 @@ import { twitterState } from './state';
 const NOTIFICATION_ID = 'twitter:broadcast';
 
 function isMentioned(profileName: string, message: string) {
-  return !message.toLowerCase().includes(profileName.toLowerCase());
+  return message.toLowerCase().includes(profileName.toLowerCase());
 }
 
 export const useTwitterNotifications = () => {
@@ -24,14 +25,19 @@ export const useTwitterNotifications = () => {
   const { icon, notificationIcon } = useApp('TWITTER');
 
   const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
-  const profile = useRecoilValue(twitterState.profile);
+  const profile: Profile | null = useRecoilValue(twitterState.profile);
 
-  const setNotification = ({ profile_name, message, isRetweet }) => {
+  const setNotification = ({ profile_name, message, isRetweet }: Tweet) => {
     const titleStr = isRetweet
       ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
       : 'APPS_TWITTER_NEW_BROADCAST';
 
+    // profile defaults to null, if for some reason it is not initialized
+    // defend against this case
+    if (!profile) return;
+
     const currentProfileName = profile.profile_name;
+
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
 
@@ -39,7 +45,7 @@ export const useTwitterNotifications = () => {
     // mentioned in
     if (
       settings.TWITTER_notiFilter.value === SETTING_MENTIONS &&
-      isMentioned(currentProfileName, message)
+      !isMentioned(currentProfileName, message)
     )
       return;
 
