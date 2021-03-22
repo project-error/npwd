@@ -1,5 +1,6 @@
 import { IAlertProps } from '../../typings/alerts';
 import { BankEvents } from '../../typings/bank';
+import { PhoneEvents } from '../../typings/phone';
 
 onNet(BankEvents.SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
@@ -35,7 +36,7 @@ onNet(BankEvents.TRANSACTION_ALERT, (result: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setAlert',
+      method: PhoneEvents.SET_ALERT,
       data: result,
     }),
   );
@@ -45,7 +46,7 @@ onNet(BankEvents.TRANSACTION_NOTIFICATION, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setNotification',
+      method: PhoneEvents.SET_NOTIFICATION,
       data: transfer,
     }),
   );
