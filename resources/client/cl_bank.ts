@@ -5,7 +5,7 @@ onNet(BankEvents.SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setTransaction',
+      method: BankEvents.SEND_TRANSFERS,
       data: transfer,
     }),
   );
@@ -15,7 +15,7 @@ onNet(BankEvents.SEND_CREDENTIALS, (credentials: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setCredentials',
+      method: BankEvents.SEND_CREDENTIALS,
       data: credentials,
     }),
   );
