@@ -59,6 +59,7 @@ export const useTwitterService = () => {
   const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
+  const setDefaultProfileNames = useSetRecoilState(twitterState.defaultProfileNames);
 
   const _setTweets = (tweets) => {
     setTweets(tweets.map(processTweet));
@@ -83,6 +84,8 @@ export const useTwitterService = () => {
   };
 
   useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', setProfile);
+  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfileNull', setDefaultProfileNames);
+  useNuiEvent(APP_TWITTER, 'phone:createProfileResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
   useNuiEvent(APP_TWITTER, 'updateProfileResult', handleAddAlert);
   useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);

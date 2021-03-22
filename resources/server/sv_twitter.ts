@@ -1,3 +1,5 @@
+import { ResultSetHeader } from 'mysql2';
+
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../typings/twitter';
@@ -5,7 +7,7 @@ import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
-import { ResultSetHeader } from 'mysql2';
+import { generateProfileName, getDefaultProfileNames } from './players/sv_players';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
@@ -165,23 +167,19 @@ async function getProfile(identifier: string): Promise<Profile | null> {
 }
 
 /**
- * Generate a twitter profile name by the player's name
+ * Create a twitter profile
  * @param identifier - player's identifier
+ * @param profileName - profile name to be created
+ * @returns
  */
-async function generateProfileName(identifier: string): Promise<string> {
-  const defaultProfileName = '';
-  if (!config.twitter.generateProfileNameFromUsers) return defaultProfileName;
-
+async function createProfile(identifier: string, profileName: string): Promise<Profile> {
   const query = `
-    SELECT CONCAT(firstname, '_', lastname) AS profile_name
-    FROM users
-    WHERE identifier = ? LIMIT 1
+    INSERT INTO npwd_twitter_profiles (identifier, profile_name)
+    VALUES (?, ?)
     `;
-  const [results] = await pool.query(query, [identifier]);
-  const profileNames = <ProfileName[]>results;
 
-  if (profileNames.length === 0) return defaultProfileName;
-  return profileNames[0].profile_name || defaultProfileName;
+  await pool.execute(query, [identifier, profileName]);
+  return await getProfile(identifier);
 }
 
 /**
@@ -189,15 +187,17 @@ async function generateProfileName(identifier: string): Promise<string> {
  * that all player's will receive and can then customize.
  * @param identifier - player's identifier
  */
-async function createDefaultProfile(identifier: string): Promise<Profile> {
-  const profileName = await generateProfileName(identifier);
-  const query = `
-    INSERT INTO npwd_twitter_profiles (identifier, profile_name)
-    VALUES (?, ?)
-    `;
+async function createDefaultProfile(identifier: string): Promise<Profile | null> {
+  // case where the server owner wants players to select their own names
+  if (!config.twitter.generateProfileNameFromUsers) return null;
 
-  await pool.execute(query, [identifier, profileName]);
-  return getProfile(identifier);
+  const defaultProfileName = await generateProfileName(identifier);
+  // case where we tried to generate a profile name but failed due to
+  // some database misconfiguration or error
+  if (!defaultProfileName) return null;
+
+  twitterLogger.info(`Creating default Twitter profile ${defaultProfileName} for ${identifier}`);
+  return await createProfile(identifier, defaultProfileName);
 }
 
 /**
@@ -316,12 +316,41 @@ onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
 
   try {
     const profile = await getOrCreateProfile(identifier);
-    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
+
+    // if we got null from getOrCreateProfile it means it doesn't exist and
+    // we failed to create it. In this case we pass the UI some default
+    // profile names it can choose from
+    if (!profile) {
+      const defaultProfileNames = await getDefaultProfileNames(identifier);
+      emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
+    } else {
+      emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
+    }
   } catch (e) {
     twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
       source: _source,
     });
     emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, _source);
+  }
+});
+
+onNet(events.TWITTER_CREATE_PROFILE, async (profile: Profile) => {
+  const _source = getSource();
+  try {
+    const identifier = getIdentifier(_source);
+    await createProfile(identifier, profile.profile_name);
+    emitNet(events.TWITTER_CREATE_PROFILE_RESULT, _source, {
+      message: 'TWITTER_CREATE_PROFILE_SUCCESS',
+      type: 'success',
+    });
+  } catch (e) {
+    twitterLogger.error(`Failed to create twitter profile: ${e.message}`, {
+      source: _source,
+    });
+    emitNet(events.TWITTER_CREATE_PROFILE_RESULT, _source, {
+      message: 'TWITTER_CREATE_PROFILE_FAILURE',
+      type: 'error',
+    });
   }
 });
 
@@ -350,6 +379,13 @@ onNet(events.TWITTER_FETCH_TWEETS, async () => {
   try {
     const identifier = getIdentifier(_source);
     const profile = await getProfile(identifier);
+    if (!profile) {
+      twitterLogger.warn(
+        `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
+      );
+      return;
+    }
+
     const tweets = await fetchAllTweets(profile.id);
     emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, _source, tweets);
   } catch (e) {

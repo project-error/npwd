@@ -41,8 +41,8 @@ export const TwitterApp = () => {
   const { profile } = useProfile();
 
   // before any other action can be taken by the user we force
-  // them have a profile name
-  const promptProfileName = profile && (!profile.profile_name || !profile.profile_name.trim());
+  // them have a profile name.
+  const promptProfileName = !profile || !profile.profile_name || !profile.profile_name.trim();
 
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);

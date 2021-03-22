@@ -36,7 +36,9 @@ export const useTwitterNotifications = () => {
     // defend against this case
     if (!profile) return;
 
-    const currentProfileName = profile.profile_name;
+    // Prevents a crash if there is no current profile
+    // set and a Twitter broadcast occurs.
+    const currentProfileName = profile?.profile_name;
 
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;

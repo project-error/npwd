@@ -1,5 +1,4 @@
 import { pool } from './db';
-import config from '../utils/config';
 import { getIdentifier, getSource } from './functions';
 import { mainLogger } from './sv_logger';
 

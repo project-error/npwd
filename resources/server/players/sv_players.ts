@@ -89,6 +89,54 @@ export async function getPlayerInfo(identifier: string): Promise<PlayerQueryResp
   return { firstname, lastname, phone_number };
 }
 
+const clean = (input: string) => (input ? input.replace(/[^0-9a-z]/gi, '') : input);
+
+async function getCleanedPlayerInfo(identifier: string): Promise<PlayerQueryResp> {
+  const { firstname, lastname, phone_number } = await getPlayerInfo(identifier);
+  return {
+    firstname: clean(firstname),
+    lastname: clean(lastname),
+    phone_number: clean(phone_number),
+  };
+}
+
+/**
+ * Generate a profile name by the player's name and/or phone number
+ * @param identifier - player's identifier
+ */
+export async function generateProfileName(identifier: string): Promise<string | null> {
+  const { firstname, lastname, phone_number } = await getCleanedPlayerInfo(identifier);
+
+  if (firstname && lastname) {
+    return `${firstname}_${lastname}`;
+  } else if (firstname) {
+    return firstname;
+  } else if (lastname) {
+    return lastname;
+  } else if (phone_number) {
+    return phone_number;
+  }
+  return null;
+}
+
+export async function getDefaultProfileNames(identifier: string): Promise<string[]> {
+  const { firstname, lastname, phone_number } = await getCleanedPlayerInfo(identifier);
+  let defaultProfileNames = [];
+
+  if (firstname && lastname) {
+    defaultProfileNames.push(`${firstname}_${lastname}`);
+  } else if (firstname) {
+    defaultProfileNames.push(firstname);
+  } else if (lastname) {
+    defaultProfileNames.push(lastname);
+  }
+
+  if (phone_number) {
+    defaultProfileNames.push(phone_number);
+  }
+  return defaultProfileNames;
+}
+
 // Attach to playerJoining event as this is when
 // the permanent source is assigned for the user
 
