@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useCallback } from 'react';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { useLocation } from 'react-router';
 
 export const useMessagesService = () => {
+  const { pathname } = useLocation();
   const [activeMessageGroup, setActiveMessageGroup] = useRecoilState(
     messageState.activeMessageGroup,
   );
@@ -32,10 +34,14 @@ export const useMessagesService = () => {
     ({ groupId, message }) => {
       if (groupId === activeMessageGroup?.groupId) {
         Nui.send('phone:fetchMessages', { groupId: activeMessageGroup.groupId });
+        if (pathname.includes('messages/conversations')) {
+          // Dont trigger notification if conversation is open.
+          return;
+        }
       }
       setNotification({ groupId, message });
     },
-    [activeMessageGroup, setNotification],
+    [activeMessageGroup, pathname, setNotification],
   );
 
   const _setMessageGroups = useCallback(
