@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 export interface AppContentTypes {
   children?: JSX.Element | JSX.Element[];
-  style?: CSSProperties;
+  paperStyle?: CSSProperties;
   backdrop?: boolean;
   onClickBackdrop?: (...args: any[]) => void;
 }
