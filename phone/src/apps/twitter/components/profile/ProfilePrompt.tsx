@@ -10,6 +10,7 @@ import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
 import { twitterState } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +34,8 @@ export function ProfilePrompt() {
 
   const showDefaultProfileNames = !config.twitter.allowEdtiableProfileName && !profile;
   const eventName = showDefaultProfileNames
-    ? 'phone:createTwitterProfile'
-    : 'phone:updateTwitterProfile';
+    ? TwitterEvents.CREATE_PROFILE
+    : TwitterEvents.UPDATE_PROFILE;
 
   const handleUpdate = () => {
     Nui.send(eventName, {

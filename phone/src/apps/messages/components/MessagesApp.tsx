@@ -11,13 +11,14 @@ import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
+import { MessageEvents } from '../../../../../typings/messages';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
   const history = useHistory();
 
   useEffect(() => {
-    Nui.send('phone:fetchMessageGroups');
+    Nui.send(MessageEvents.FETCH_MESSAGE_GROUPS);
   }, []);
 
   return (

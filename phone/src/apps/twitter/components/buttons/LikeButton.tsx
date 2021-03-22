@@ -4,6 +4,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const LOADING_TIME = 1250;
 
@@ -12,7 +13,7 @@ function LikeButton({ tweetId, isLiked }) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-    Nui.send('phone:toggleLike', tweetId);
+    Nui.send(TwitterEvents.TOGGLE_LIKE, tweetId);
     setLoading(true);
     window.setTimeout(() => {
       setLiked(!liked);

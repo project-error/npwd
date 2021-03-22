@@ -10,6 +10,7 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
+import { CallEvents } from '../../../../../../typings/call';
 
 export const ContactList = () => {
   const { filteredContacts } = useFilteredContacts();
@@ -27,7 +28,7 @@ export const ContactList = () => {
       level: 2,
       data: true,
     });
-    Nui.send('phone:beginCall', {
+    Nui.send(CallEvents.INITIALIZE_CALL, {
       number,
     });
   };

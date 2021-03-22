@@ -1,4 +1,4 @@
-import events from '../utils/events';
+import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
@@ -28,8 +28,8 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
-RegisterNuiCallbackType(events.CAMERA_TAKE_PHOTO);
-on(`__cfx_nui:${events.CAMERA_TAKE_PHOTO}`, async (data: any, cb: Function) => {
+RegisterNuiCallbackType(PhotoEvents.TAKE_PHOTO);
+on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
   // Create Phone Prop
   let frontCam = false;
@@ -75,7 +75,7 @@ const handleCameraExit = () => {
   inCameraMode = false;
 };
 
-onNet(events.CAMERA_SEND_PHOTOS, (photos: string[]) => {
+onNet(PhotoEvents.SEND_PHOTOS, (photos: string[]) => {
   sendCameraEvent('setPhotos', photos);
 });
 
@@ -95,23 +95,23 @@ function takePhoto() {
     },
     (data: string) => {
       const imageLink = JSON.parse(data).data.link;
-      emitNet(events.CAMERA_UPLOAD_PHOTO, imageLink);
+      emitNet(PhotoEvents.UPLOAD_PHOTO, imageLink);
     },
   );
 }
 
-onNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, () => {
-  emitNet(events.CAMERA_FETCH_PHOTOS);
+onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, () => {
+  emitNet(PhotoEvents.FETCH_PHOTOS);
 });
 
 // delete photo
 
-RegisterNuiCallbackType(events.CAMERA_DELETE_PHOTO);
-on(`__cfx_nui:${events.CAMERA_DELETE_PHOTO}`, (data: any, cb: Function) => {
-  emitNet(events.CAMERA_DELETE_PHOTO, data);
+RegisterNuiCallbackType(PhotoEvents.DELETE_PHOTO);
+on(`__cfx_nui:${PhotoEvents.DELETE_PHOTO}`, (data: any, cb: Function) => {
+  emitNet(PhotoEvents.DELETE_PHOTO, data);
   cb();
 });
 
-onNet(events.CAMERA_DELETE_PHOTO_SUCCESS, () => {
-  emitNet(events.CAMERA_FETCH_PHOTOS);
+onNet(PhotoEvents.DELETE_PHOTO_SUCCESS, () => {
+  emitNet(PhotoEvents.FETCH_PHOTOS);
 });

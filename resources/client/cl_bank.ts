@@ -1,7 +1,7 @@
 import { IAlertProps } from '../../typings/alerts';
-import events from '../utils/events';
+import { BankEvents } from '../../typings/bank';
 
-onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
+onNet(BankEvents.SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
@@ -11,7 +11,7 @@ onNet(events.BANK_SEND_TRANSFERS, (transfer: any) => {
   );
 });
 
-onNet(events.BANK_SEND_CREDENTIALS, (credentials: any) => {
+onNet(BankEvents.SEND_CREDENTIALS, (credentials: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
@@ -21,17 +21,17 @@ onNet(events.BANK_SEND_CREDENTIALS, (credentials: any) => {
   );
 });
 
-RegisterNuiCallbackType(events.BANK_ADD_TRANSFER);
-on(`__cfx_nui:${events.BANK_ADD_TRANSFER}`, (data: any, cb: Function) => {
-  emitNet(events.BANK_ADD_TRANSFER, data);
+RegisterNuiCallbackType(BankEvents.ADD_TRANSFER);
+on(`__cfx_nui:${BankEvents.ADD_TRANSFER}`, (data: any, cb: Function) => {
+  emitNet(BankEvents.ADD_TRANSFER, data);
   cb();
 });
 
-onNet(events.BANK_ADD_TRANSFER_SUCCESS, () => {
-  emitNet(events.BANK_FETCH_TRANSACTIONS);
+onNet(BankEvents.ADD_TRANSFER_SUCCESS, () => {
+  emitNet(BankEvents.FETCH_TRANSACTIONS);
 });
 
-onNet(events.BANK_TRANSACTION_ALERT, (result: IAlertProps) => {
+onNet(BankEvents.TRANSACTION_ALERT, (result: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
@@ -41,7 +41,7 @@ onNet(events.BANK_TRANSACTION_ALERT, (result: IAlertProps) => {
   );
 });
 
-onNet(events.BANK_TRANSACTION_NOTIFICATION, (transfer: any) => {
+onNet(BankEvents.TRANSACTION_NOTIFICATION, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',

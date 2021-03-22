@@ -1,16 +1,16 @@
-import events from '../utils/events';
+import { CallEvents } from '../../typings/call';
 import { ICall } from '../../typings/call';
 import { phoneCallStartAnim, phoneCallEndAnim } from './functions';
 
 const exp = (global as any).exports;
 
-RegisterNuiCallbackType(events.PHONE_INITIALIZE_CALL); // Fires when the call is started.
-on(`__cfx_nui:${events.PHONE_INITIALIZE_CALL}`, (data: any, cb: Function) => {
-  emitNet(events.PHONE_INITIALIZE_CALL, data.number);
+RegisterNuiCallbackType(CallEvents.INITIALIZE_CALL); // Fires when the call is started.
+on(`__cfx_nui:${CallEvents.INITIALIZE_CALL}`, (data: any, cb: Function) => {
+  emitNet(CallEvents.INITIALIZE_CALL, data.number);
   cb();
 });
 
-onNet(events.PHONE_START_CALL, (transmitter: string, receiver: string, isTransmitter: boolean) => {
+onNet(CallEvents.START_CALL, (transmitter: string, receiver: string, isTransmitter: boolean) => {
   openCallModal(true);
 
   SendNuiMessage(
@@ -28,40 +28,37 @@ onNet(events.PHONE_START_CALL, (transmitter: string, receiver: string, isTransmi
   );
 });
 
-RegisterNuiCallbackType(events.PHONE_ACCEPT_CALL); // Fires when the TARGET accepts.
-on(`__cfx_nui:${events.PHONE_ACCEPT_CALL}`, (data: any, cb: Function) => {
-  emitNet(events.PHONE_ACCEPT_CALL, data.transmitterNumber);
+RegisterNuiCallbackType(CallEvents.ACCEPT_CALL); // Fires when the TARGET accepts.
+on(`__cfx_nui:${CallEvents.ACCEPT_CALL}`, (data: any, cb: Function) => {
+  emitNet(CallEvents.ACCEPT_CALL, data.transmitterNumber);
   cb();
 });
 
-onNet(
-  events.PHONE_CALL_WAS_ACCEPTED,
-  (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
-    exp['mumble-voip'].SetCallChannel(channelId);
-    phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
-    SendNuiMessage(
-      JSON.stringify({
-        app: 'CALL',
-        method: 'setCaller',
-        data: {
-          active: true,
-          transmitter: currentCall.transmitter,
-          receiver: currentCall.receiver,
-          isTransmitter: isTransmitter,
-          accepted: true,
-        },
-      }),
-    );
-  },
-);
+onNet(CallEvents.WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
+  exp['mumble-voip'].SetCallChannel(channelId);
+  phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'CALL',
+      method: 'setCaller',
+      data: {
+        active: true,
+        transmitter: currentCall.transmitter,
+        receiver: currentCall.receiver,
+        isTransmitter: isTransmitter,
+        accepted: true,
+      },
+    }),
+  );
+});
 
-RegisterNuiCallbackType(events.PHONE_CALL_REJECTED); // Fires when cancelling and rejecting a call.
-on(`__cfx_nui:${events.PHONE_CALL_REJECTED}`, (data: any, cb: Function) => {
-  emitNet(events.PHONE_CALL_REJECTED, data.phoneNumber);
+RegisterNuiCallbackType(CallEvents.REJECTED); // Fires when cancelling and rejecting a call.
+on(`__cfx_nui:${CallEvents.REJECTED}`, (data: any, cb: Function) => {
+  emitNet(CallEvents.REJECTED, data.phoneNumber);
   cb();
 });
 
-onNet(events.PHONE_CALL_WAS_REJECTED, () => {
+onNet(CallEvents.WAS_REJECTED, () => {
   openCallModal(false);
   SendNuiMessage(
     JSON.stringify({
@@ -78,18 +75,18 @@ onNet(events.PHONE_CALL_WAS_REJECTED, () => {
   );
 });
 
-onNet(events.PHONE_CALL_SEND_HANGUP_ANIM, () => {
+onNet(CallEvents.SEND_HANGUP_ANIM, () => {
   phoneCallEndAnim();
 });
 
-RegisterNuiCallbackType(events.PHONE_END_CALL); // Fires when ending an ACTIVE call
-on(`__cfx_nui:${events.PHONE_END_CALL}`, (data: any, cb: Function) => {
+RegisterNuiCallbackType(CallEvents.END_CALL); // Fires when ending an ACTIVE call
+on(`__cfx_nui:${CallEvents.END_CALL}`, (data: any, cb: Function) => {
   const end = Date.now();
-  emitNet(events.PHONE_END_CALL, data.transmitterNumber, end);
+  emitNet(CallEvents.END_CALL, data.transmitterNumber, end);
   cb();
 });
 
-onNet(events.PHONE_CALL_WAS_ENDED, () => {
+onNet(CallEvents.WAS_ENDED, () => {
   exp['mumble-voip'].SetCallChannel(0);
   openCallModal(false);
 
@@ -118,7 +115,7 @@ function openCallModal(show: boolean) {
   );
 }
 
-onNet(events.PHONE_CALL_SEND_HISTORY, (calls: ICall) => {
+onNet(CallEvents.SEND_HISTORY, (calls: ICall) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'DIALER',

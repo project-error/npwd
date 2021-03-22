@@ -1,8 +1,7 @@
-import events from '../utils/events';
 import { ESX } from './server';
 import { getSource } from './functions';
 import { pool } from './db';
-import { Transfer, IBankCredentials } from '../../typings/bank';
+import { Transfer, IBankCredentials, BankEvents } from '../../typings/bank';
 import { getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
 
@@ -40,9 +39,9 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
 
   if (transfer.transferAmount > bankBalance) {
-    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), false);
+    emitNet(BankEvents.TRANSACTION_ALERT, getSource(), false);
   } else if (transfer.transferAmount < bankBalance) {
-    emitNet(events.BANK_TRANSACTION_ALERT, getSource(), true);
+    emitNet(BankEvents.TRANSACTION_ALERT, getSource(), true);
 
     xTarget.addAccountMoney('bank', transfer.transferAmount);
     xPlayer.removeAccountMoney('bank', transfer.transferAmount);
@@ -75,13 +74,13 @@ async function getTransfer(transferId: number): Promise<Transfer> {
   return { ...transfer };
 }
 
-onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
+onNet(BankEvents.FETCH_TRANSACTIONS, async () => {
   const _source = getSource();
   try {
     const _identifier = getIdentifier(_source);
     const transfer = await fetchAllTransactions(_identifier);
 
-    emitNet(events.BANK_SEND_TRANSFERS, _source, transfer);
+    emitNet(BankEvents.SEND_TRANSFERS, _source, transfer);
   } catch (e) {
     bankLogger.error(`Failed to fetch transactions, ${e.message}`, {
       source: _source,
@@ -89,7 +88,7 @@ onNet(events.BANK_FETCH_TRANSACTIONS, async () => {
   }
 });
 
-onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
+onNet(BankEvents.ADD_TRANSFER, async (transfer: Transfer) => {
   const _source = getSource();
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
   try {
@@ -101,8 +100,8 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
 
     //emitNet(events.BANK_TRANSACTION_NOTIFICATION, xTarget, transferNotify);
 
-    emitNet(events.BANK_ADD_TRANSFER_SUCCESS, _source);
-    emitNet(events.BANK_TRANSACTION_ALERT, _source, {
+    emitNet(BankEvents.ADD_TRANSFER_SUCCESS, _source);
+    emitNet(BankEvents.TRANSACTION_ALERT, _source, {
       message: 'BANK_ALERT_TRANSFER_SUCCESS',
       type: 'success',
     });
@@ -110,18 +109,18 @@ onNet(events.BANK_ADD_TRANSFER, async (transfer: Transfer) => {
     bankLogger.error(`Failed to add transaction, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.BANK_TRANSACTION_ALERT, _source, {
+    emitNet(BankEvents.TRANSACTION_ALERT, _source, {
       message: 'APPS_BANK_ALERT_TRANSFER_FAILURE',
       type: 'error',
     });
   }
 });
 
-onNet(events.BANK_GET_CREDENTIALS, () => {
+onNet(BankEvents.GET_CREDENTIALS, () => {
   const _source = getSource();
   try {
     const credentials = fetchCredentials();
-    emitNet(events.BANK_SEND_CREDENTIALS, _source, credentials);
+    emitNet(BankEvents.SEND_CREDENTIALS, _source, credentials);
   } catch (e) {
     bankLogger.error(`Failed to fetch credentials, ${e.message}`, {
       source: _source,

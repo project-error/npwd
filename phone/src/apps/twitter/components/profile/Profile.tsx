@@ -8,6 +8,7 @@ import Avatar from '../Avatar';
 import ProfileField from './ProfileField';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,7 @@ export function Profile() {
       location,
       job,
     };
-    Nui.send('phone:updateTwitterProfile', data);
+    Nui.send(TwitterEvents.UPDATE_PROFILE, data);
   };
 
   // fetching the config is an asynchronous call so defend against it

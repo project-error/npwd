@@ -3,6 +3,7 @@ import { CircularProgress, makeStyles, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 interface IProps {
   tweetId: number;
@@ -33,7 +34,7 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     // if someone is retweeting something that is itself a retweet
     // then we want to retweet the original post (if we haven't already)
     const idToRetweet = isRetweet ? retweetId : tweetId;
-    Nui.send('phone:retweet', idToRetweet);
+    Nui.send(TwitterEvents.RETWEET, idToRetweet);
     setLoading(true);
     window.setTimeout(() => {
       setRetweeted(true);

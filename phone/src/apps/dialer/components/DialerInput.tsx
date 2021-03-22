@@ -6,6 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
+import { CallEvents } from '../../../../../typings/call';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -33,7 +34,7 @@ export const DialerInput = () => {
   const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
   const handleCall = (number: string) => {
-    Nui.send('phone:beginCall', {
+    Nui.send(CallEvents.INITIALIZE_CALL, {
       number,
     });
   };

@@ -15,7 +15,7 @@ import ControlButtons from './buttons/ControlButtons';
 import IconButtons from './buttons/IconButtons';
 import { usePhone } from '../../../os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
-import { NewTweet } from '../../../../../typings/twitter';
+import { NewTweet, TwitterEvents } from '../../../../../typings/twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -110,7 +110,7 @@ export const AddTweetModal = () => {
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
     };
-    Nui.send('phone:createTweet', data);
+    Nui.send(TwitterEvents.CREATE_TWEET, data);
     _handleClose();
   };
 

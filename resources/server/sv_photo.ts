@@ -1,7 +1,6 @@
-import events from '../utils/events';
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { IPhoto } from '../../typings/photo';
+import { IPhoto, PhotoEvents } from '../../typings/photo';
 import { mainLogger } from './sv_logger';
 
 const photoLogger = mainLogger.child({ module: 'photo' });
@@ -22,12 +21,12 @@ async function deletePhoto(photo: IPhoto, identifier: string) {
   await pool.query(query, [photo.image, identifier]);
 }
 
-onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
+onNet(PhotoEvents.UPLOAD_PHOTO, async (image: string) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     await uploadPhoto(identifier, image);
-    emitNet(events.CAMERA_UPLOAD_PHOTO_SUCCESS, _source);
+    emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, _source);
   } catch (e) {
     photoLogger.error(`Failed to upload photo, ${e.message}`, {
       source: _source,
@@ -35,12 +34,12 @@ onNet(events.CAMERA_UPLOAD_PHOTO, async (image: string) => {
   }
 });
 
-onNet(events.CAMERA_FETCH_PHOTOS, async () => {
+onNet(PhotoEvents.FETCH_PHOTOS, async () => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     const photos = await getPhotosByIdentifier(identifier);
-    emitNet(events.CAMERA_SEND_PHOTOS, _source, photos);
+    emitNet(PhotoEvents.SEND_PHOTOS, _source, photos);
   } catch (e) {
     photoLogger.error(`Failed to fetch photos, ${e.message}`, {
       source: _source,
@@ -48,12 +47,12 @@ onNet(events.CAMERA_FETCH_PHOTOS, async () => {
   }
 });
 
-onNet(events.CAMERA_DELETE_PHOTO, async (photo: IPhoto) => {
+onNet(PhotoEvents.DELETE_PHOTO, async (photo: IPhoto) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     await deletePhoto(photo, identifier);
-    emitNet(events.CAMERA_DELETE_PHOTO_SUCCESS, _source);
+    emitNet(PhotoEvents.DELETE_PHOTO_SUCCESS, _source);
   } catch (e) {
     photoLogger.error(`Failed to fetch photos, ${e.message}`, {
       source: _source,

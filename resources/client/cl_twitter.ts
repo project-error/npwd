@@ -1,157 +1,157 @@
-import events from '../utils/events';
+import { TwitterEvents } from '../../typings/twitter';
 import { sendTwitterMessage } from '../utils/messages';
 import { IAlertProps } from '../../typings/alerts';
 
 /**
  * Twitter get or create profile
  */
-RegisterNuiCallbackType(events.TWITTER_GET_OR_CREATE_PROFILE);
-on(`__cfx_nui:${events.TWITTER_GET_OR_CREATE_PROFILE}`, () => {
-  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+RegisterNuiCallbackType(TwitterEvents.GET_OR_CREATE_PROFILE);
+on(`__cfx_nui:${TwitterEvents.GET_OR_CREATE_PROFILE}`, () => {
+  emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 });
 
-onNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, (profile: any) => {
-  sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, profile);
+onNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, (profile: any) => {
+  sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, profile);
 });
 
-onNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, () => {
-  sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE);
+onNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, () => {
+  sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE);
 });
 
-onNet(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, (defaultProfileNames: string[]): void => {
-  sendTwitterMessage(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, defaultProfileNames);
+onNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, (defaultProfileNames: string[]): void => {
+  sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, defaultProfileNames);
 });
 
 /**
  * Twitter create profile
  */
-RegisterNuiCallbackType(events.TWITTER_CREATE_PROFILE);
-on(`__cfx_nui:${events.TWITTER_CREATE_PROFILE}`, (data: any) => {
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, true);
-  emitNet(events.TWITTER_CREATE_PROFILE, data);
+RegisterNuiCallbackType(TwitterEvents.CREATE_PROFILE);
+on(`__cfx_nui:${TwitterEvents.CREATE_PROFILE}`, (data: any) => {
+  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, true);
+  emitNet(TwitterEvents.CREATE_PROFILE, data);
 });
 
-onNet(events.TWITTER_CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
-  sendTwitterMessage(events.TWITTER_CREATE_PROFILE_RESULT, alert);
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, false);
-  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+onNet(TwitterEvents.CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(TwitterEvents.CREATE_PROFILE_RESULT, alert);
+  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, false);
+  emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 });
 
 /**
  * Twitter update profile
  */
-RegisterNuiCallbackType(events.TWITTER_UPDATE_PROFILE);
-on(`__cfx_nui:${events.TWITTER_UPDATE_PROFILE}`, (data: string) => {
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, true);
-  emitNet(events.TWITTER_UPDATE_PROFILE, data);
+RegisterNuiCallbackType(TwitterEvents.UPDATE_PROFILE);
+on(`__cfx_nui:${TwitterEvents.UPDATE_PROFILE}`, (data: string) => {
+  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, true);
+  emitNet(TwitterEvents.UPDATE_PROFILE, data);
 });
 
-onNet(events.TWITTER_UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_RESULT, alert);
-  sendTwitterMessage(events.TWITTER_UPDATE_PROFILE_LOADING, false);
-  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_RESULT, alert);
+  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, false);
+  emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 });
 
 /**
  * Twitter fetch tweets
  */
-RegisterNuiCallbackType(events.TWITTER_FETCH_TWEETS);
-on(`__cfx_nui:${events.TWITTER_FETCH_TWEETS}`, () => {
-  emitNet(events.TWITTER_FETCH_TWEETS);
+RegisterNuiCallbackType(TwitterEvents.FETCH_TWEETS);
+on(`__cfx_nui:${TwitterEvents.FETCH_TWEETS}`, () => {
+  emitNet(TwitterEvents.FETCH_TWEETS);
 });
 
-onNet(events.TWITTER_FETCH_TWEETS_SUCCESS, (tweets: any) => {
-  sendTwitterMessage(events.TWITTER_FETCH_TWEETS_SUCCESS, tweets);
+onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
+  sendTwitterMessage(TwitterEvents.FETCH_TWEETS_SUCCESS, tweets);
 });
 
-onNet(events.TWITTER_FETCH_TWEETS_FAILURE, () => {
-  sendTwitterMessage(events.TWITTER_FETCH_TWEETS_FAILURE);
+onNet(TwitterEvents.FETCH_TWEETS_FAILURE, () => {
+  sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FAILURE);
 });
 
 /**
  * Twitter fetch filtered tweets
  */
-RegisterNuiCallbackType(events.TWITTER_FETCH_TWEETS_FILTERED);
-on(`__cfx_nui:${events.TWITTER_FETCH_TWEETS_FILTERED}`, (searchValue: string) => {
-  emitNet(events.TWITTER_FETCH_TWEETS_FILTERED, searchValue);
+RegisterNuiCallbackType(TwitterEvents.FETCH_TWEETS_FILTERED);
+on(`__cfx_nui:${TwitterEvents.FETCH_TWEETS_FILTERED}`, (searchValue: string) => {
+  emitNet(TwitterEvents.FETCH_TWEETS_FILTERED, searchValue);
 });
 
-onNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, (tweets: any) => {
-  sendTwitterMessage(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, tweets);
+onNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, (tweets: any) => {
+  sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, tweets);
 });
 
-onNet(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE, () => {
-  sendTwitterMessage(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE);
+onNet(TwitterEvents.FETCH_TWEETS_FILTERED_FAILURE, () => {
+  sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FILTERED_FAILURE);
 });
 
 /**
  * Twitter create tweet
  */
-RegisterNuiCallbackType(events.TWITTER_CREATE_TWEET);
-on(`__cfx_nui:${events.TWITTER_CREATE_TWEET}`, (data: string) => {
-  sendTwitterMessage(events.TWITTER_CREATE_TWEET_LOADING, true);
-  emitNet(events.TWITTER_CREATE_TWEET, data);
+RegisterNuiCallbackType(TwitterEvents.CREATE_TWEET);
+on(`__cfx_nui:${TwitterEvents.CREATE_TWEET}`, (data: string) => {
+  sendTwitterMessage(TwitterEvents.CREATE_TWEET_LOADING, true);
+  emitNet(TwitterEvents.CREATE_TWEET, data);
 });
 
-onNet(events.TWITTER_CREATE_TWEET_RESULT, (alert: IAlertProps) => {
-  sendTwitterMessage(events.TWITTER_CREATE_TWEET_RESULT, alert);
-  emitNet(events.TWITTER_FETCH_TWEETS);
+onNet(TwitterEvents.CREATE_TWEET_RESULT, (alert: IAlertProps) => {
+  sendTwitterMessage(TwitterEvents.CREATE_TWEET_RESULT, alert);
+  emitNet(TwitterEvents.FETCH_TWEETS);
 });
 
-onNet(events.TWITTER_CREATE_TWEET_FAILURE, () => {
-  sendTwitterMessage(events.TWITTER_CREATE_TWEET_FAILURE);
+onNet(TwitterEvents.CREATE_TWEET_FAILURE, () => {
+  sendTwitterMessage(TwitterEvents.CREATE_TWEET_FAILURE);
 });
 
-onNet(events.TWITTER_CREATE_TWEET_BROADCAST, (tweet: any) => {
-  sendTwitterMessage(events.TWITTER_CREATE_TWEET_BROADCAST, tweet);
+onNet(TwitterEvents.CREATE_TWEET_BROADCAST, (tweet: any) => {
+  sendTwitterMessage(TwitterEvents.CREATE_TWEET_BROADCAST, tweet);
 });
 
 /**
  * Twitter delete tweet
  */
-RegisterNuiCallbackType(events.TWITTER_DELETE_TWEET);
-on(`__cfx_nui:${events.TWITTER_DELETE_TWEET}`, (tweetId: number) => {
-  emitNet(events.TWITTER_DELETE_TWEET, tweetId);
+RegisterNuiCallbackType(TwitterEvents.DELETE_TWEET);
+on(`__cfx_nui:${TwitterEvents.DELETE_TWEET}`, (tweetId: number) => {
+  emitNet(TwitterEvents.DELETE_TWEET, tweetId);
 });
 
-onNet(events.TWITTER_DELETE_TWEET_SUCCESS, () => {
-  sendTwitterMessage(events.TWITTER_DELETE_TWEET_SUCCESS);
-  emitNet(events.TWITTER_FETCH_TWEETS);
+onNet(TwitterEvents.DELETE_TWEET_SUCCESS, () => {
+  sendTwitterMessage(TwitterEvents.DELETE_TWEET_SUCCESS);
+  emitNet(TwitterEvents.FETCH_TWEETS);
 });
 
-onNet(events.TWITTER_DELETE_TWEET_FAILURE, () => {
-  sendTwitterMessage(events.TWITTER_DELETE_TWEET_FAILURE);
+onNet(TwitterEvents.DELETE_TWEET_FAILURE, () => {
+  sendTwitterMessage(TwitterEvents.DELETE_TWEET_FAILURE);
 });
 
 /**
  * Twitter likes
  */
-RegisterNuiCallbackType(events.TWITTER_TOGGLE_LIKE);
-on(`__cfx_nui:${events.TWITTER_TOGGLE_LIKE}`, (tweetId: number) => {
-  emitNet(events.TWITTER_TOGGLE_LIKE, tweetId);
+RegisterNuiCallbackType(TwitterEvents.TOGGLE_LIKE);
+on(`__cfx_nui:${TwitterEvents.TOGGLE_LIKE}`, (tweetId: number) => {
+  emitNet(TwitterEvents.TOGGLE_LIKE, tweetId);
 });
 
 /**
  * Twitter retweets
  */
-RegisterNuiCallbackType(events.TWITTER_RETWEET);
-on(`__cfx_nui:${events.TWITTER_RETWEET}`, (tweetId: number, cb: Function) => {
-  emitNet(events.TWITTER_RETWEET, tweetId);
+RegisterNuiCallbackType(TwitterEvents.RETWEET);
+on(`__cfx_nui:${TwitterEvents.RETWEET}`, (tweetId: number, cb: Function) => {
+  emitNet(TwitterEvents.RETWEET, tweetId);
   cb();
 });
 
-onNet(events.TWITTER_RETWEET_EXISTS, (alert: IAlertProps) => {
-  sendTwitterMessage(events.TWITTER_RETWEET_EXISTS, alert);
+onNet(TwitterEvents.RETWEET_EXISTS, (alert: IAlertProps) => {
+  sendTwitterMessage(TwitterEvents.RETWEET_EXISTS, alert);
 });
 
 /**
  * Twitter reporting tweets
  */
-RegisterNuiCallbackType(events.TWITTER_REPORT);
-on(`__cfx_nui:${events.TWITTER_REPORT}`, (tweetId: number) => {
-  emitNet(events.TWITTER_REPORT, tweetId);
+RegisterNuiCallbackType(TwitterEvents.REPORT);
+on(`__cfx_nui:${TwitterEvents.REPORT}`, (tweetId: number) => {
+  emitNet(TwitterEvents.REPORT, tweetId);
 });
 
-onNet(events.TWITTER_REPORT_SUCCESS, () => {
-  emitNet(events.TWITTER_FETCH_TWEETS);
+onNet(TwitterEvents.REPORT_SUCCESS, () => {
+  emitNet(TwitterEvents.FETCH_TWEETS);
 });

@@ -4,6 +4,7 @@ import ServerConfig from '../../../config.autogen.json';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import Nui from '../../nui-events/utils/Nui';
 import { phoneState } from './state';
+import { PhoneEvents } from '../../../../../typings/phone';
 
 interface IUsePhone {
   config?: IServerConfig;
@@ -21,10 +22,10 @@ export const usePhone = (): IUsePhone => {
 
   const closePhone = () => {
     removeAlerts();
-    Nui.send('phone:close');
+    Nui.send(PhoneEvents.CLOSE_PHONE);
   };
   const openPhone = () => {
-    Nui.send('phone:open');
+    Nui.send(PhoneEvents.OPEN_PHONE);
   };
 
   return { config: ServerConfig as any, closePhone, openPhone, isPhoneOpen, isPhoneReady };

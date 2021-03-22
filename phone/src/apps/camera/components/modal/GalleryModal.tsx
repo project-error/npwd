@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ICameraPhoto } from '../../hooks/usePhotos';
 import { ShareModal } from './ShareModal';
+import { PhotoEvents } from '../../../../../../typings/photo';
 
 export const GalleryModal = () => {
   const classes = useStyles();
@@ -28,7 +29,7 @@ export const GalleryModal = () => {
   };
 
   const handleDeletePhoto = () => {
-    Nui.send('photo:deletePhoto', {
+    Nui.send(PhotoEvents.DELETE_PHOTO, {
       image: meta.image,
     });
     history.push(referal);

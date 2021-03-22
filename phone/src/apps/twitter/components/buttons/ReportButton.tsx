@@ -4,6 +4,7 @@ import { Button, CircularProgress, MenuItem } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
+import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const LOADING_TIME = 1250;
 
@@ -12,7 +13,7 @@ function ReportButton({ handleClose, tweetId, isReported }) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-    Nui.send('phone:reportTweet', tweetId);
+    Nui.send(TwitterEvents.REPORT, tweetId);
     setLoading(true);
     window.setTimeout(() => {
       setLoading(false);

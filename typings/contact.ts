@@ -17,3 +17,15 @@ export interface Contact {
   number: string;
   avatar?: string;
 }
+
+export enum ContactEvents {
+  SEND_CONTACTS = 'npwd:sendContacts',
+  GET_CONTACTS = 'npwd:getContacts',
+  ADD_CONTACT = 'npwd:addContacts',
+  ADD_CONTACT_SUCCESS = 'contacts:addSuccess',
+  UPDATE_CONTACT = 'npwd:updateContact',
+  DELETE_CONTACT = 'npwd:deleteContact',
+  DELETE_CONTACT_SUCCESS = 'npwd:deleteSuccess',
+  UPDATE_CONTACT_SUCCESS = 'npwd:updateContactSuccess',
+  ACTION_RESULT = 'npwd:contactActionResult',
+}

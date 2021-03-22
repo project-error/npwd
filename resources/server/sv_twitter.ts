@@ -1,13 +1,12 @@
 import { ResultSetHeader } from 'mysql2';
-
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../typings/twitter';
-import events from '../utils/events';
 import config from '../utils/config';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
 import { generateProfileName, getDefaultProfileNames } from './players/sv_players';
+import { TwitterEvents } from '../../typings/twitter';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
@@ -310,36 +309,35 @@ async function doesRetweetExist(tweetId: number, identifier: string): Promise<bo
   return counts[0].count > 0;
 }
 
-onNet(events.TWITTER_GET_OR_CREATE_PROFILE, async () => {
+onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
 
   try {
     const profile = await getOrCreateProfile(identifier);
-
     // if we got null from getOrCreateProfile it means it doesn't exist and
     // we failed to create it. In this case we pass the UI some default
     // profile names it can choose from
     if (!profile) {
       const defaultProfileNames = await getDefaultProfileNames(identifier);
-      emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
+      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
     } else {
-      emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
+      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
     }
   } catch (e) {
     twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_GET_OR_CREATE_PROFILE_FAILURE, _source);
+    emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_CREATE_PROFILE, async (profile: Profile) => {
+onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     await createProfile(identifier, profile.profile_name);
-    emitNet(events.TWITTER_CREATE_PROFILE_RESULT, _source, {
+    emitNet(TwitterEvents.CREATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_CREATE_PROFILE_SUCCESS',
       type: 'success',
     });
@@ -347,19 +345,19 @@ onNet(events.TWITTER_CREATE_PROFILE, async (profile: Profile) => {
     twitterLogger.error(`Failed to create twitter profile: ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_CREATE_PROFILE_RESULT, _source, {
+    emitNet(TwitterEvents.CREATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_CREATE_PROFILE_FAILURE',
       type: 'error',
     });
   }
 });
 
-onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
+onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     await updateProfile(identifier, profile);
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
+    emitNet(TwitterEvents.UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_SUCCESS',
       type: 'success',
     });
@@ -367,14 +365,14 @@ onNet(events.TWITTER_UPDATE_PROFILE, async (profile: Profile) => {
     twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_UPDATE_PROFILE_RESULT, _source, {
+    emitNet(TwitterEvents.UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_FAILURE',
       type: 'error',
     });
   }
 });
 
-onNet(events.TWITTER_FETCH_TWEETS, async () => {
+onNet(TwitterEvents.FETCH_TWEETS, async () => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
@@ -387,63 +385,63 @@ onNet(events.TWITTER_FETCH_TWEETS, async () => {
     }
 
     const tweets = await fetchAllTweets(profile.id);
-    emitNet(events.TWITTER_FETCH_TWEETS_SUCCESS, _source, tweets);
+    emitNet(TwitterEvents.FETCH_TWEETS_SUCCESS, _source, tweets);
   } catch (e) {
     twitterLogger.error(`Fetching tweets failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_FETCH_TWEETS_FAILURE, _source);
+    emitNet(TwitterEvents.FETCH_TWEETS_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_FETCH_TWEETS_FILTERED, async (searchValue: string) => {
+onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchTweetsFiltered(profile.id, searchValue);
-    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_SUCCESS, _source, tweets);
+    emitNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, _source, tweets);
   } catch (e) {
     twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_FETCH_TWEETS_FILTERED_FAILURE, _source);
+    emitNet(TwitterEvents.FETCH_TWEETS_FILTERED_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_CREATE_TWEET, async (tweet: Tweet) => {
+onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     const createdTweet = await createTweet(identifier, tweet);
-    emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, createdTweet);
+    emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
     twitterLogger.error(`Create tweet failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_CREATE_TWEET_RESULT, _source, {
+    emitNet(TwitterEvents.CREATE_TWEET_RESULT, _source, {
       message: 'TWITTER_CREATE_FAILED',
       type: 'error',
     });
   }
 });
 
-onNet(events.TWITTER_DELETE_TWEET, async (tweetId: number) => {
+onNet(TwitterEvents.DELETE_TWEET, async (tweetId: number) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
     await deleteTweet(identifier, tweetId);
 
-    emitNet(events.TWITTER_DELETE_TWEET_SUCCESS, _source);
+    emitNet(TwitterEvents.DELETE_TWEET_SUCCESS, _source);
   } catch (e) {
     twitterLogger.error(`Delete tweet failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_DELETE_TWEET_FAILURE, _source);
+    emitNet(TwitterEvents.DELETE_TWEET_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
+onNet(TwitterEvents.TOGGLE_LIKE, async (tweetId: number) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
@@ -454,16 +452,16 @@ onNet(events.TWITTER_TOGGLE_LIKE, async (tweetId: number) => {
     } else {
       await createLike(profile.id, tweetId);
     }
-    emitNet(events.TWITTER_TOGGLE_LIKE_SUCCESS, _source);
+    emitNet(TwitterEvents.TOGGLE_LIKE_SUCCESS, _source);
   } catch (e) {
     twitterLogger.error(`Like failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_TOGGLE_LIKE_FAILURE, _source);
+    emitNet(TwitterEvents.TOGGLE_LIKE_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
+onNet(TwitterEvents.RETWEET, async (tweetId: number) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
@@ -471,7 +469,7 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
     // alert the player that they have already retweeted
     // this post (or that they are the original poster)
     if (await doesRetweetExist(tweetId, identifier)) {
-      return emitNet(events.TWITTER_RETWEET_EXISTS, _source, {
+      return emitNet(TwitterEvents.RETWEET_EXISTS, _source, {
         message: 'TWITTER_RETWEET_EXISTS',
         type: 'error',
       });
@@ -485,16 +483,16 @@ onNet(events.TWITTER_RETWEET, async (tweetId: number) => {
 
     const profile = await getProfile(identifier);
     const tweet = await getTweet(profile.id, createdTweet.id);
-    emitNet(events.TWITTER_CREATE_TWEET_BROADCAST, -1, tweet);
+    emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, tweet);
   } catch (e) {
     twitterLogger.error(`Retweet failed, ${e.message}`, {
       source: _source,
     });
-    emitNet(events.TWITTER_RETWEET_FAILURE, _source);
+    emitNet(TwitterEvents.RETWEET_FAILURE, _source);
   }
 });
 
-onNet(events.TWITTER_REPORT, async (tweetId: number) => {
+onNet(TwitterEvents.REPORT, async (tweetId: number) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
@@ -510,9 +508,9 @@ onNet(events.TWITTER_REPORT, async (tweetId: number) => {
     await createTweetReport(tweet.id, profile.id);
     await reportTweetToDiscord(tweet, profile);
 
-    emitNet(events.TWITTER_REPORT_SUCCESS, _source);
+    emitNet(TwitterEvents.REPORT_SUCCESS, _source);
   } catch (e) {
-    emitNet(events.TWITTER_REPORT_FAILURE, _source);
+    emitNet(TwitterEvents.REPORT_FAILURE, _source);
     twitterLogger.error(`Twitter report failed, ${e.message}`, {
       source: _source,
     });

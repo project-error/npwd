@@ -1,7 +1,15 @@
 import config from '../utils/config';
-import events from '../utils/events';
 import { sendMessage } from '../utils/messages';
+import { PhoneEvents } from '../../typings/phone';
+import { TwitterEvents } from '../../typings/twitter';
+import { ContactEvents } from '../../typings/contact';
+import { MarketplaceEvents } from '../../typings/marketplace';
 import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
+import { MessageEvents } from '../../typings/messages';
+import { NotesEvents } from '../../typings/notes';
+import { BankEvents } from '../../typings/bank';
+import { PhotoEvents } from '../../typings/photo';
+import { CallEvents } from '../../typings/call';
 
 let isPhoneOpen = false;
 let isPhoneReady = false;
@@ -13,9 +21,9 @@ let isPhoneReady = false;
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
   isPhoneReady = true;
-  emitNet(events.CONTACTS_GET_CONTACTS);
-  emitNet(events.MESSAGES_FETCH_MESSAGE_GROUPS);
-  emitNet(events.TWITTER_GET_OR_CREATE_PROFILE);
+  emitNet(ContactEvents.GET_CONTACTS);
+  emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
+  emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
   sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
   sendMessage('PHONE', 'phoneConfig', config);
 }
@@ -88,7 +96,7 @@ async function Phone(): Promise<void> {
 }
 
 // triggerd when the player is ready
-onNet(events.PLAYER_IS_READY, fetchOnInitialize);
+onNet(PhoneEvents.PLAYER_IS_READY, fetchOnInitialize);
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
@@ -111,39 +119,39 @@ onNet('phone:sendCredentials', (number: string) => {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-RegisterNuiCallbackType(events.OPEN_APP_LISTINGS);
-on(`__cfx_nui:${events.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
-  emitNet(events.SELLOUT_FETCH_LISTING);
+RegisterNuiCallbackType(PhoneEvents.OPEN_APP_LISTINGS);
+on(`__cfx_nui:${PhoneEvents.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
+  emitNet(MarketplaceEvents.FETCH_LISTING);
   cb();
 });
 
-RegisterNuiCallbackType(events.OPEN_APP_NOTES);
-on(`__cfx_nui:${events.OPEN_APP_NOTES}`, (data: any, cb: Function) => {
-  emitNet(events.NOTE_FETCH_ALL_NOTES);
+RegisterNuiCallbackType(PhoneEvents.OPEN_APP_NOTES);
+on(`__cfx_nui:${PhoneEvents.OPEN_APP_NOTES}`, (data: any, cb: Function) => {
+  emitNet(NotesEvents.FETCH_ALL_NOTES);
   cb();
 });
 
-RegisterNuiCallbackType(events.OPEN_APP_BANK);
-on(`__cfx_nui:${events.OPEN_APP_BANK}`, (data: any, cb: Function) => {
-  emitNet(events.BANK_FETCH_TRANSACTIONS);
-  emitNet(events.BANK_GET_CREDENTIALS);
+RegisterNuiCallbackType(PhoneEvents.OPEN_APP_BANK);
+on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {
+  emitNet(BankEvents.FETCH_TRANSACTIONS);
+  emitNet(BankEvents.GET_CREDENTIALS);
   cb();
 });
 
-RegisterNuiCallbackType(events.OPEN_APP_CAMERA);
-on(`__cfx_nui:${events.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
-  emitNet(events.CAMERA_FETCH_PHOTOS);
+RegisterNuiCallbackType(PhoneEvents.OPEN_APP_CAMERA);
+on(`__cfx_nui:${PhoneEvents.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
+  emitNet(PhotoEvents.FETCH_PHOTOS);
   cb();
 });
 
-RegisterNuiCallbackType(events.OPEN_APP_DAILER);
-on(`__cfx_nui:${events.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
-  emitNet(events.PHONE_CALL_FETCH_CALLS);
+RegisterNuiCallbackType(PhoneEvents.OPEN_APP_DAILER);
+on(`__cfx_nui:${PhoneEvents.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
+  emitNet(CallEvents.FETCH_CALLS);
   cb();
 });
 
-RegisterNuiCallbackType('phone:close');
-on(`__cfx_nui:phone:close`, async (data: any, cb: Function) => {
+RegisterNuiCallbackType(PhoneEvents.CLOSE_PHONE);
+on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
   await hidePhone();
   cb();
 }); // Called for when the phone is closed via the UI.
