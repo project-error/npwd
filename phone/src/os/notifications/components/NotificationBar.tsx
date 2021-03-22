@@ -16,6 +16,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
+import usePhoneTime from '../../phone/hooks/usePhoneTime';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,6 +75,8 @@ export const NotificationBar = () => {
     setBarUncollapsed,
   } = useNotifications();
 
+  const time = usePhoneTime();
+
   return (
     <>
       <Grid
@@ -92,6 +95,13 @@ export const NotificationBar = () => {
             </Grid>
           ))}
         </Grid>
+        {time && (
+          <Grid item className={classes.item}>
+            <Typography className={classes.text} variant="button">
+              {time}
+            </Typography>
+          </Grid>
+        )}
         <Grid container item wrap="nowrap" justify="flex-end" alignItems="center">
           <Grid item>
             <SignalIcon fontSize="small" />
