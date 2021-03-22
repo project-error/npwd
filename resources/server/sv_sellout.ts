@@ -99,7 +99,7 @@ onNet(events.SELLOUT_ADD_LISTING, async (listing: MarketplaceListing) => {
     });
 
     emitNet(events.SELLOUT_ACTION_RESULT, _source, {
-      message: 'MARKETPALCE_CREATE_LISTING_FAILED',
+      message: 'MARKETPLACE_CREATE_LISTING_FAILED',
       type: 'error',
     });
   }
