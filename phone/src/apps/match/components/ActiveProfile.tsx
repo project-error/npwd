@@ -59,7 +59,7 @@ interface IProps {
   onSwipe: (id: number, liked: boolean) => void;
 }
 
-const DECISION_THRESHOLD_X_px = 75;
+const DECISION_THRESHOLD_X_px = 150;
 
 const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   const c = useStyles();

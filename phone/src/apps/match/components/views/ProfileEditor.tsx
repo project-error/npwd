@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Box, Card, FormControlLabel, Switch } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, FormControlLabel, Switch } from '@material-ui/core';
 
 import { useProfile } from '../../hooks/useProfile';
 import Loader from '../Loader';
-import ProfileForm from './ProfileForm';
-import Profile from './Profile';
+import ProfileForm from '../profile/ProfileForm';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   root: {
     height: '100%',
     width: '100%',
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   switch: {
     marginLeft: '15px',
   },
-}));
+});
 
 function ProfileEditor() {
   const { profile } = useProfile();

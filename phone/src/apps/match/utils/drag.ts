@@ -1,5 +1,3 @@
-const DECISION_THRESHOLD_X_px = 50;
-
 interface IDeltas {
   deltaX: number;
   deltaY: number;

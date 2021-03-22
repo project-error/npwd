@@ -1,3 +1,5 @@
+import { Contact } from './contact';
+
 export interface NewProfile {
   name: string;
   image: string;
@@ -9,16 +11,23 @@ export interface NewProfile {
 
 export interface Profile extends NewProfile {
   id: number;
+  identifier: string;
+  phoneNumber: string;
+  viewed: boolean;
   createdAt: number;
   updatedAt: number;
   lastActive: number;
 }
 
-export interface FormattedProfile extends NewProfile {
-  id: number;
-  createdAt: number;
-  updatedAt: number;
-  lastActive: string;
-  viewed: boolean;
+export interface FormattedProfile extends Profile {
+  lastActiveFormatted: string;
   tagList: string[];
+}
+
+export interface Match extends Profile {
+  matchedAt: number;
+}
+
+export interface FormattedMatch extends FormattedProfile {
+  matchedAtFormatted: string;
 }

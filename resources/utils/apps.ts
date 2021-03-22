@@ -1,6 +1,6 @@
 export default {
   TWITTER: 'TWITTER',
-  TINDER: 'TINDER',
+  MATCH: 'MATCH',
   MESSAGES: 'MESSAGES',
   NOTES: 'NOTES',
   MARKETPLACE: 'SELLOUT',

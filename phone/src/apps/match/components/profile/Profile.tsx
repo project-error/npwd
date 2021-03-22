@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, CardContent, CardMedia, Chip, Typography } from '@material-ui/core';
+import { CardContent, CardMedia, Chip, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
-import { FormattedProfile } from '../../../../../../typings/match';
+import { FormattedProfile, FormattedMatch } from '../../../../../../typings/match';
 
 const useStyles = makeStyles({
   root: {},
@@ -25,8 +25,10 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-  profile: FormattedProfile;
+  profile: FormattedProfile | FormattedMatch;
 }
+
+const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
 
 const Profile = ({ profile }: IProps) => {
   const c = useStyles();
@@ -50,13 +52,13 @@ const Profile = ({ profile }: IProps) => {
           <Chip className={c.tag} label={tag} color="primary" />
         ))}
       </CardContent>
-      <CardMedia className={c.media} image={profile.image} title="Paella dish" />
+      <CardMedia className={c.media} image={profile.image || DEFAULT_IMAGE} title={profile.name} />
       <CardContent className={c.content}>
         <Typography gutterBottom variant="h4" component="h2">
           {profile.name}
         </Typography>
         <Typography gutterBottom color="textSecondary" component="p">
-          {t('APPS_MATCH_PROFILE_LAST_ACTIVE', { lastActive: profile.lastActive })}
+          {t('APPS_MATCH_PROFILE_LAST_ACTIVE', { lastActive: profile.lastActiveFormatted })}
         </Typography>
         {bioSecondary && (
           <Typography gutterBottom variant="body1" color="textSecondary" component="p">
