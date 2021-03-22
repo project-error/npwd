@@ -7,6 +7,7 @@ import { useMessageNotifications } from './useMessageNotifications';
 import { useCallback } from 'react';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useLocation } from 'react-router';
+import { MessageEvents } from '../../../../../typings/messages';
 
 export const useMessagesService = () => {
   const { pathname } = useLocation();
@@ -33,7 +34,7 @@ export const useMessagesService = () => {
   const handleMessageBroadcast = useCallback(
     ({ groupId, message }) => {
       if (groupId === activeMessageGroup?.groupId) {
-        Nui.send('phone:fetchMessages', { groupId: activeMessageGroup.groupId });
+        Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: activeMessageGroup.groupId });
         if (pathname.includes('messages/conversations')) {
           // Dont trigger notification if conversation is open.
           return;
