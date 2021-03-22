@@ -57,10 +57,10 @@ export const useMessagesService = () => {
     [activeMessageGroup, setActiveMessageGroup, setMessageGroups],
   );
 
-  useNuiEvent('MESSAGES', 'phone:fetchMessageGroupsSuccess', _setMessageGroups);
-  useNuiEvent('MESSAGES', 'phone:fetchMessagesSuccess', setMessages);
-  useNuiEvent('MESSAGES', 'phone:createMessageGroupSuccess', setCreateMessageGroupResult);
-  useNuiEvent('MESSAGES', 'phone:createMessageGroupFailed', setCreateMessageGroupResult);
-  useNuiEvent('MESSAGES', 'createMessagesBroadcast', handleMessageBroadcast);
-  useNuiEvent('MESSAGES', 'phone:setMessagesAlert', handleAddAlert);
+  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, _setMessageGroups);
+  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGES_SUCCESS, setMessages);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, setCreateMessageGroupResult);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_FAILED, setCreateMessageGroupResult);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
+  useNuiEvent('MESSAGES', MessageEvents.ACTION_RESULT, handleAddAlert);
 };
