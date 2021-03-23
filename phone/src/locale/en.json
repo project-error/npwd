@@ -112,6 +112,10 @@
     "APPS_MATCH_EDIT_PROFILE_TAGS": "Tags",
     "APPS_MATCH_GET_MY_PROFILE_FAILED": "Failed to retrieve player's profile",
     "APPS_MATCH_GET_PROFILES_FAILED": "Failed to retrieve profiles",
+    "APPS_MATCH_GET_MATCHES_FAILED": "Failed to retrieve matches",
+    "APPS_MATCH_SAVE_LIKES_FAILED": "Failed to save likes",
+    "APPS_MATCH_SAVE_LIKES_SUCCEDED": "Successfully saved likes",
+    "APPS_MATCH_NEW_LIKE_FOUND": "New match found!",
 
     "APPS_BANK_TRANSFER": "Transfer",
     "APPS_BANK_HOME_TITLE": "Welcome",

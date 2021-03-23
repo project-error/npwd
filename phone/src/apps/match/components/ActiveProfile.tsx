@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Card, Fab, Box } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import CancelIcon from '@material-ui/icons/CancelOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
@@ -52,6 +54,8 @@ const useStyles = makeStyles({
     right: 30,
     transform: 'rotate(18deg)',
   },
+  buttons: {},
+  button: {},
 });
 
 interface IProps {
@@ -90,6 +94,16 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     setStatus(null);
   };
 
+  const handleLike = () => {
+    onSwipe(idRef.current, true);
+    setStatus(null);
+  };
+
+  const handleNope = () => {
+    onSwipe(idRef.current, false);
+    setStatus(null);
+  };
+
   const isLiked = status === true;
   const notLiked = status === false;
 
@@ -103,6 +117,26 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
         <StatusDisplay className={nopeClass} text={t('APPS_MATCH_NOPE')} visible={notLiked} />
         <Profile profile={profile} />
       </Card>
+      <Box className={c.buttons}>
+        <Fab
+          size="large"
+          color="secondary"
+          aria-label="cancel"
+          onClick={handleNope}
+          className={c.button}
+        >
+          <CancelIcon />
+        </Fab>
+        <Fab
+          size="large"
+          color="primary"
+          aria-label="add"
+          onClick={handleLike}
+          className={c.button}
+        >
+          <AddIcon />
+        </Fab>
+      </Box>
     </Draggable>
   );
 };

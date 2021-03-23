@@ -6,6 +6,7 @@ import { useMatches } from '../../hooks/useMatches';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import Match from '../matches/Match';
+import Nui from '../../../../os/nui-events/utils/Nui';
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +23,7 @@ function MatchList() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    Nui.send('phone:getMatches');
     window.setTimeout(() => {
       setLoaded(true);
     }, MINIMUM_LOAD_TIME);

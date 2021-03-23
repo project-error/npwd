@@ -31,3 +31,8 @@ export interface Match extends Profile {
 export interface FormattedMatch extends FormattedProfile {
   matchedAtFormatted: string;
 }
+
+export interface Like {
+  id: number; // profile id
+  liked: boolean;
+}

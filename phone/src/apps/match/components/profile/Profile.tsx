@@ -36,14 +36,17 @@ const Profile = ({ profile }: IProps) => {
 
   const { location, job, tagList, image, lastActive, name, bio } = profile;
 
-  let bioSecondary;
-  if (location && job) {
-    bioSecondary = `${profile.location} - ${profile.job}`;
-  } else if (location) {
-    bioSecondary = location;
-  } else if (job) {
-    bioSecondary = job;
+  function parseSecondaryBio(): string | undefined {
+    if (location && job) {
+      return `${location} - ${job}`;
+    } else if (location) {
+      return location;
+    } else if (job) {
+      return job;
+    }
   }
+
+  const bioSecondary = parseSecondaryBio();
 
   return (
     <>

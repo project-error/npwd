@@ -43,6 +43,12 @@ export default {
   MATCH_UPDATE_MY_PROFILE_SUCCESS: 'phone:updateMyProfileSuccess',
   MATCH_UPDATE_MY_PROFILE_FAILED: 'phone:updateMyProfileFailed',
   MATCH_GET_MATCHES: 'phone:getMatches',
+  MATCH_GET_MATCHES_SUCCESS: 'phone:getMatchesSuccess',
+  MATCH_GET_MATCHES_FAILED: 'phone:getMatchesFailed',
+  MATCH_SAVE_LIKES: 'phone:saveLikes',
+  MATCH_SAVE_LIKES_SUCCESS: 'phone:saveLikesSuccess',
+  MATCH_SAVE_LIKES_FAILED: 'phone:saveLikesFailed',
+  MATCH_NEW_MATCH: 'phone:newMatchFound',
 
   // Contacts
   CONTACTS_SEND_CONTACTS: 'phone:sendContacts',
