@@ -36,7 +36,7 @@ onNet(BankEvents.TRANSACTION_ALERT, (result: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: PhoneEvents.SET_ALERT,
+      method: BankEvents.SEND_ALERT,
       data: result,
     }),
   );
@@ -46,7 +46,7 @@ onNet(BankEvents.TRANSACTION_NOTIFICATION, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: PhoneEvents.SET_NOTIFICATION,
+      method: BankEvents.SEND_NOTIFICATION,
       data: transfer,
     }),
   );

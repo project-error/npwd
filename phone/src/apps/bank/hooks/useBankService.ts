@@ -25,7 +25,7 @@ export const useBankService = () => {
 
   useNuiEvent('BANK', BankEvents.SEND_TRANSFERS, setTransaction);
   useNuiEvent('BANK', BankEvents.SEND_CREDENTIALS, setCredentials);
-  useNuiEvent('BANK', PhoneEvents.SET_ALERT, handleAddAlert);
-  useNuiEvent('BANK', PhoneEvents.SET_NOTIFICATION, setNotification);
+  useNuiEvent('BANK', BankEvents.SEND_ALERT, handleAddAlert);
+  useNuiEvent('BANK', BankEvents.SEND_NOTIFICATION, setNotification);
   return { useTransactions, useCredentials, useBankNotification };
 };
