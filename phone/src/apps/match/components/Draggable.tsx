@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 interface IProps {
   id: string;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
   onDrag: (deltaX: number) => void;
   onDrop: () => void;
 }

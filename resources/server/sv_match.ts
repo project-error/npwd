@@ -19,7 +19,7 @@ async function getPotentialProfiles(identifier: string): Promise<Profile[]> {
   const query = `
     SELECT
     npwd_match_profiles.*,
-    UNIX_TIMESTAMP(npwd_match_profiles.lastActive) AS lastActive,
+    UNIX_TIMESTAMP(npwd_match_profiles.updatedAt) AS lastActive,
     MaxDates.lastSeen
     FROM npwd_match_profiles 
     LEFT OUTER JOIN (
@@ -30,7 +30,7 @@ async function getPotentialProfiles(identifier: string): Promise<Profile[]> {
     ) AS MaxDates ON npwd_match_profiles.id = MaxDates.profile
     WHERE npwd_match_profiles.identifier != ? AND
         (MaxDates.lastSeen IS NULL OR MaxDates.lastSeen < NOW() - INTERVAL 7 DAY)
-    ORDER BY npwd_match_profiles.lastActive DESC
+    ORDER BY npwd_match_profiles.updatedAt DESC
     LIMIT 25
   `;
   const [results] = await pool.query(query, [identifier, identifier]);
@@ -41,7 +41,7 @@ async function getPotentialProfiles(identifier: string): Promise<Profile[]> {
 async function getPlayerProfile(identifier: string): Promise<Profile> {
   const query = `
     SELECT *,
-    UNIX_TIMESTAMP(lastActive) AS lastActive
+    UNIX_TIMESTAMP(updatedAt) AS lastActive
     FROM npwd_match_profiles
     WHERE identifier = ?
     LIMIT 1
@@ -104,7 +104,7 @@ async function checkForMatchById(identifier: string, id: number): Promise<Profil
   const query = `
     SELECT
         targetProfile.*,
-        UNIX_TIMESTAMP(targetProfile.lastActive) AS lastActive
+        UNIX_TIMESTAMP(targetProfile.updatedAt) AS lastActive
     FROM npwd_match_views
     LEFT OUTER JOIN npwd_match_profiles AS playerProfile ON npwd_match_views.profile = playerProfile.id
     LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.identifier = targetProfile.identifier
@@ -132,7 +132,7 @@ async function findAllMatches(identifier: string): Promise<Match[]> {
   const query = `
     SELECT
         targetProfile.*,
-        UNIX_TIMESTAMP(targetProfile.lastActive) AS lastActive,
+        UNIX_TIMESTAMP(targetProfile.updatedAt) AS lastActive,
         UNIX_TIMESTAMP(GREATEST(npwd_match_views.createdAt, targetViews.createdAt)) AS matchedAt
     FROM npwd_match_views
     LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.profile = targetProfile.id
@@ -144,17 +144,60 @@ async function findAllMatches(identifier: string): Promise<Match[]> {
   return <Match[]>results;
 }
 
+async function updateProfile(identifier: string, profile: Profile): Promise<void> {
+  const { image, name, bio, location, job, tags } = profile;
+  const query = `
+      UPDATE npwd_match_profiles
+      SET image = ?, name = ?, bio = ?, location = ?, job = ?, tags = ?
+      WHERE identifier = ?
+      `;
+  await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
+}
+
+async function updateLastActive(identifier: string): Promise<void> {
+  const query = `
+    UPDATE npwd_match_profiles
+    SET updatedAt = CURRENT_TIMESTAMP()
+    WHERE identifier = ?
+  `;
+  await pool.execute(query, [identifier]);
+}
+
 onNet(events.MATCH_INITIALIZE, async () => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
+  matchLogger.debug(`Initializing match for identifier: ${identifier}`);
+
   await dispatchPlayerProfile(identifier, _source);
   await dispatchProfiles(identifier, _source);
+  await updateLastActive(identifier);
+});
+
+onNet(events.MATCH_UPDATE_MY_PROFILE, async (profile: Profile) => {
+  const _source = getSource();
+  const identifier = getIdentifier(_source);
+  matchLogger.debug(`Updating profile for identifier: ${identifier}`);
+  matchLogger.debug(profile);
+
+  try {
+    await updateProfile(identifier, profile);
+    emitNet(events.MATCH_UPDATE_MY_PROFILE_SUCCESS, _source, {
+      message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
+      type: 'success',
+    });
+  } catch (e) {
+    matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
+    emitNet(events.MATCH_UPDATE_MY_PROFILE_FAILED, _source, {
+      message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
+      type: 'error',
+    });
+  }
 });
 
 onNet(events.MATCH_SAVE_LIKES, async (likes: Like[]) => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
-  matchLogger.info(`Saving likes for identifier ${identifier}`);
+  matchLogger.debug(`Saving likes for identifier ${identifier}`);
 
   try {
     await saveLikes(identifier, likes);

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { FormattedProfile } from '../../../../../../typings/match';
+import { Profile as IProfile, FormattedProfile } from '../../../../../../typings/match';
 import ProfileField from '../../../../ui/components/ProfileField';
 import UpdateButton from '../../../../ui/components/UpdateButton';
 import { Card } from '@material-ui/core';
@@ -49,7 +49,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const [location, setLocation] = useState(profile.location || '');
   const [tags, setTags] = useState(profile.tags || '');
 
-  const update = {
+  const update: FormattedProfile = {
     ...profile,
     image,
     name,
@@ -60,8 +60,11 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   };
 
   const handleUpdate = () => {
-    console.log(update);
-    // Nui.send('phone:updateTwitterProfile', data);
+    const updatedProfile: IProfile = {
+      ...update,
+      tags: update.tagList.join(','),
+    };
+    Nui.send('phone:updateMyProfile', updatedProfile);
   };
 
   if (showPreview) {
@@ -97,16 +100,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         value={update.job}
         handleChange={setJob}
       />
-      <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_JOB')}
-        value={update.job}
-        handleChange={setJob}
-      />
-      <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_TAGS')}
-        value={update.tags}
-        handleChange={setTags}
-      />
+      <ProfileField label={t('APPS_MATCH_EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
       <UpdateButton handleClick={handleUpdate} loading={false} />
     </div>
   );

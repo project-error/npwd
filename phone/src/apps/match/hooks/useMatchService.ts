@@ -35,7 +35,6 @@ export const useMatchService = () => {
   };
   const _setProfile = (profile: Profile) => setProfile(formatProfile(profile));
   const _setMatches = (matches: Match[]): void => {
-    console.log(matches);
     setMatches(
       matches.map((match) => ({
         ...match,
@@ -54,5 +53,7 @@ export const useMatchService = () => {
   useNuiEvent('MATCH', 'phone:getMatchesFailed', handleAddAlert);
   useNuiEvent('MATCH', 'phone:saveLikesFailed', handleAddAlert);
   useNuiEvent('MATCH', 'phone:newMatchFound', handleAddAlert);
+  useNuiEvent('MATCH', 'phone:updateMyProfileSuccess', handleAddAlert);
+  useNuiEvent('MATCH', 'phone:updateMyProfileFailed', handleAddAlert);
   return {};
 };

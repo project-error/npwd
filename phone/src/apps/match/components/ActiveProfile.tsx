@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Card, Fab, Box } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import CancelIcon from '@material-ui/icons/CancelOutlined';
+import { Card, Fab, Box, Tooltip } from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Clear';
+import FireIcon from '@material-ui/icons/Whatshot';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   root: {
     position: 'absolute',
     margin: '15px 15px 25px 15px',
-    height: 'calc(100% - 50px)',
+    height: 'calc(100% - 90px)',
     width: 'calc(100% - 30px)',
     overflow: 'hidden',
     cursor: 'pointer',
@@ -54,8 +54,15 @@ const useStyles = makeStyles({
     right: 30,
     transform: 'rotate(18deg)',
   },
-  buttons: {},
-  button: {},
+  buttons: {
+    position: 'absolute',
+    bottom: '3px',
+    width: '100%',
+    height: '55px',
+  },
+  button: {
+    margin: '0px 15px',
+  },
 });
 
 interface IProps {
@@ -111,33 +118,39 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   const nopeClass = `${c.status} ${notLiked ? c.statusVisible : c.statusNull} ${c.nope}`;
 
   return (
-    <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
-      <Card raised className={c.root}>
-        <StatusDisplay className={likeClass} text={t('APPS_MATCH_LIKED')} visible={isLiked} />
-        <StatusDisplay className={nopeClass} text={t('APPS_MATCH_NOPE')} visible={notLiked} />
-        <Profile profile={profile} />
-      </Card>
-      <Box className={c.buttons}>
-        <Fab
-          size="large"
-          color="secondary"
-          aria-label="cancel"
-          onClick={handleNope}
-          className={c.button}
-        >
-          <CancelIcon />
-        </Fab>
-        <Fab
-          size="large"
-          color="primary"
-          aria-label="add"
-          onClick={handleLike}
-          className={c.button}
-        >
-          <AddIcon />
-        </Fab>
+    <>
+      <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
+        <Card raised className={c.root}>
+          <StatusDisplay className={likeClass} text={t('APPS_MATCH_LIKED')} visible={isLiked} />
+          <StatusDisplay className={nopeClass} text={t('APPS_MATCH_NOPE')} visible={notLiked} />
+          <Profile profile={profile} />
+        </Card>
+      </Draggable>
+      <Box className={c.buttons} display="flex" justifyContent="center">
+        <Tooltip title={t('APPS_MATCH_DISLIKE')} aria-label="dislike">
+          <Fab
+            size="large"
+            color="secondary"
+            aria-label="dislike"
+            onClick={handleNope}
+            className={c.button}
+          >
+            <CancelIcon />
+          </Fab>
+        </Tooltip>
+        <Tooltip title={t('APPS_MATCH_LIKE')} aria-label="like">
+          <Fab
+            size="large"
+            color="primary"
+            aria-label="like"
+            onClick={handleLike}
+            className={c.button}
+          >
+            <FireIcon />
+          </Fab>
+        </Tooltip>
       </Box>
-    </Draggable>
+    </>
   );
 };
 
