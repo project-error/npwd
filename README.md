@@ -2,7 +2,6 @@
 
 <img src="https://beta.iodine.gg/zVkK7.png" width="500" height="300" />
 
-
 NPWD is our current running project. Our team has been working on the project since Auguest, 2020. This resource isn’t complete yet and currently has no ETA for release. Feel free to test it out in a dev environment by following the installation guide.
 
 Written completely by the Project Error Dev Team in [React](https://reactjs.org/) with a [TypeScript](https://www.typescriptlang.org/) client/server environment.
@@ -46,3 +45,22 @@ Most of these apps have UI that does **not** represent the final product and are
 - [**Phone**](https://beta.iodine.gg/z0ii9.png)
 - [**Settings**](https://beta.iodine.gg/mZAIt.png)
 - [**Twitter**](https://beta.iodine.gg/rQZFR.png)
+
+## License
+
+New-Phone-Who-Dis (NPWD)
+
+Copyright (C) 2021 - Kidz, Chip, ROCKY_southpaw, Kire, TasoOneAsia
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
