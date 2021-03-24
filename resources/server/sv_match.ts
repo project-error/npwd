@@ -41,6 +41,12 @@ async function getPotentialProfiles(identifier: string): Promise<Profile[]> {
   return profiles;
 }
 
+/**
+ * Save a list of Like objects
+ * @param identifier - player's identifier
+ * @param likes - likes to be saved to the database
+ * @returns ResultSet
+ */
 async function saveLikes(identifier: string, likes: Like[]): Promise<ResultSetHeader[]> {
   const query = `INSERT INTO npwd_match_views (identifier, profile, liked) VALUES ?`;
   const formattedLikes = likes.map((like) => [identifier, like.id, like.liked]);
@@ -50,6 +56,13 @@ async function saveLikes(identifier: string, likes: Like[]): Promise<ResultSetHe
   return result;
 }
 
+/**
+ * Determines if a profile we just liked has already liked us in the past which
+ * indicates a match has occurred
+ * @param identifier - player's identifier
+ * @param id - profile ID we just liked
+ * @returns Profile[] - list of profiles that are a match
+ */
 async function checkForMatchById(identifier: string, id: number): Promise<Profile[]> {
   const query = `
     SELECT
@@ -65,8 +78,11 @@ async function checkForMatchById(identifier: string, id: number): Promise<Profil
 }
 
 /**
- * @param identifier
- * @param likes
+ * Given a list of likes determine if any of the profiles we liked have also
+ * liked us which indicates a match has occurred.
+ * @param identifier - player's identifier
+ * @param likes - list of new Likes
+ * @returns Profile[] - list of profiles we matched with
  */
 async function findNewMatches(identifier: string, likes: Like[]): Promise<Profile[]> {
   let matches: Profile[] = [];
@@ -78,6 +94,12 @@ async function findNewMatches(identifier: string, likes: Like[]): Promise<Profil
   return matches;
 }
 
+/**
+ * Return all matches associated with a player regardless of date/time. A
+ * match is a case where two profiles have liked each other.
+ * @param identifier - player's identifier
+ * @returns Match[] - all matches associated with the current player
+ */
 async function findAllMatches(identifier: string): Promise<Match[]> {
   const query = `
     SELECT
@@ -89,21 +111,17 @@ async function findAllMatches(identifier: string): Promise<Match[]> {
     LEFT OUTER JOIN npwd_match_profiles AS myProfile ON npwd_match_views.identifier = myProfile.identifier
     LEFT OUTER JOIN npwd_match_views AS targetViews ON targetProfile.identifier = targetViews.identifier AND targetViews.profile = myProfile.id
     WHERE npwd_match_views.identifier = ? AND npwd_match_views.liked = 1 AND targetViews.liked = 1 
+    ORDER BY matchedAt DESC
     `;
   const [results] = await pool.query(query, [identifier]);
   return <Match[]>results;
 }
 
-async function updateProfile(identifier: string, profile: Profile): Promise<void> {
-  const { image, name, bio, location, job, tags } = profile;
-  const query = `
-      UPDATE npwd_match_profiles
-      SET image = ?, name = ?, bio = ?, location = ?, job = ?, tags = ?
-      WHERE identifier = ?
-      `;
-  await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
-}
-
+/**
+ * Retrieve the current player's profile
+ * @param identifier - player's identifier
+ * @returns Profile - player's current profile
+ */
 async function getPlayerProfile(identifier: string): Promise<Profile> {
   const query = `
     SELECT *,
@@ -117,6 +135,12 @@ async function getPlayerProfile(identifier: string): Promise<Profile> {
   return profiles[0];
 }
 
+/**
+ * Create a profile and associate it with the current player
+ * @param identifier - player's identifier
+ * @param profile - profile we are going to create
+ * @returns Profile - the created profile
+ */
 async function createProfile(identifier: string, profile: NewProfile): Promise<Profile> {
   const { name, image, bio, location, job, tags } = profile;
   const query = `
@@ -128,6 +152,28 @@ async function createProfile(identifier: string, profile: NewProfile): Promise<P
   return await getPlayerProfile(identifier);
 }
 
+/**
+ * Update the current player's profile
+ * @param identifier - player's identifier
+ * @param profile Profile - player's updated profile
+ */
+async function updateProfile(identifier: string, profile: Profile): Promise<void> {
+  const { image, name, bio, location, job, tags } = profile;
+  const query = `
+      UPDATE npwd_match_profiles
+      SET image = ?, name = ?, bio = ?, location = ?, job = ?, tags = ?
+      WHERE identifier = ?
+      `;
+  await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
+}
+
+/**
+ * Create a default profile for a player based on information
+ * associated with them (name, phone number, etc.)
+ * @param identifier - player's identifier
+ * @returns Profile | null - the player's profile or null if it does not exist
+ * and could not be created
+ */
 async function createDefaultProfile(identifier: string): Promise<Profile | null> {
   // case where the server owner wants players to select their own names
   if (!config.match.generateProfileNameFromUsers) return null;
@@ -150,11 +196,22 @@ async function createDefaultProfile(identifier: string): Promise<Profile | null>
   return await createProfile(identifier, defaultProfile);
 }
 
+/**
+ * Retrieve the player's profile by their identifier if it exists. If
+ * not, create it and return it.
+ * @param identifier - player's identifier
+ * @returns Profile - player's profile
+ */
 export async function getOrCreateProfile(identifier: string): Promise<Profile> {
   const profile = await getPlayerProfile(identifier);
   return profile || (await createDefaultProfile(identifier));
 }
 
+/**
+ * We track when the player last used the app so other players can
+ * be aware of how active that player is when they are liking/disliking
+ * @param identifier - player's identifier
+ */
 async function updateLastActive(identifier: string): Promise<void> {
   const query = `
     UPDATE npwd_match_profiles

@@ -1,6 +1,13 @@
 import { Like, Profile, MatchEvents } from '../../typings/match';
 import { sendMatchEvent } from '../utils/messages';
 
+/**
+ * Many events that are just statuses are passed directly from
+ * the server to NUI and the client is just acting as a middle man.
+ * For those cases this function allows us to simply transfer all the
+ * data associated with the event.
+ * @param eventName - event we are propagating
+ */
 const transferEvent = (eventName: string) => (...args: any) => {
   sendMatchEvent(eventName, ...args);
 };

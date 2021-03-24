@@ -70,6 +70,9 @@ interface IProps {
   onSwipe: (id: number, liked: boolean) => void;
 }
 
+// this represents how far from the original mouse
+// click a user has to drag the profile in order for
+// it to be registered as a like or dislike
 const DECISION_THRESHOLD_X_px = 150;
 
 const ActiveProfile = ({ profile, onSwipe }: IProps) => {
@@ -96,16 +99,19 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     }
   }
 
+  // handles when user uses mouse to "swipe", or
+  // more specifically drag the card to one side or the other
   const handleSwipe = () => {
     onSwipe(idRef.current, statusRef.current);
     setStatus(null);
   };
 
+  // these handlers are explicit and used for when the
+  // user clicks on buttons
   const handleLike = () => {
     onSwipe(idRef.current, true);
     setStatus(null);
   };
-
   const handleNope = () => {
     onSwipe(idRef.current, false);
     setStatus(null);

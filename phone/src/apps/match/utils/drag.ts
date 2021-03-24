@@ -3,6 +3,26 @@ interface IDeltas {
   deltaY: number;
 }
 
+/**
+ * Given a React ref, which should point to some HTML element,
+ * add draggable functionality to that element so the user can
+ * interact with it.
+ *
+ * It should be noted that when using this in React that this
+ * class is directly mutating the DOM, not relying on React state
+ * to do so. This can cause some problems when relying on React
+ * state updates based on the values derived from this class. That
+ * is why we primarily use refs to interact with it.
+ *
+ * Order of operations:
+ * 1. User clicks "down" on element - this initializes event
+ * handlers and saves initial state
+ * 2. User moves mouse. Every mouse move event triggers a movement
+ * of the HTML element and also performs some logic to see how far
+ * we have moved
+ * 3. User "releases" mouse - cleanup event handlers and do logic
+ * to compare our final position to our initial position
+ */
 export class DraggableElement {
   private element: HTMLElement;
 
@@ -103,6 +123,10 @@ export class DraggableElement {
 
 type StatusChange = (deltaX: number) => void;
 
+/**
+ * This class adds hooks to the base DraggableElement class
+ * so we can update application state based on events
+ */
 export class LikeorDislikeDraggableElement extends DraggableElement {
   private onDrag: StatusChange;
   private onDrop: () => void;

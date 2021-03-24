@@ -23,6 +23,12 @@ function MatchList() {
   const { matches, error } = useMatches();
   const [loaded, setLoaded] = useState(false);
 
+  // We make the conscious descion here to fetch matches everytime
+  // a user loads this page because this list is dependent on
+  // other player's database interactions (i.e. their likes/dislikes)
+  // not just the current players.
+  // This is less performant but means that we will always have the
+  // correct state when the player views this page
   useEffect(() => {
     Nui.send(MatchEvents.MATCH_GET_MATCHES);
     window.setTimeout(() => {
