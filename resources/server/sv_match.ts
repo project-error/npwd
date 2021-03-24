@@ -1,9 +1,9 @@
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { Like, Match, Profile } from '../../typings/match';
-import events from '../utils/events';
+import { Like, Match, Profile, MatchEvents } from '../../typings/match';
 import { mainLogger } from './sv_logger';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 const matchLogger = mainLogger.child({ module: 'match' });
 
@@ -51,27 +51,13 @@ async function getPlayerProfile(identifier: string): Promise<Profile> {
   return profiles[0];
 }
 
-async function getPlayerProfileId(identifier: string): Promise<number> {
-  const query = `SELECT id npwd_match_profiles WHERE identifier = ?`;
-  const [results] = await pool.query(query, [identifier]);
-  const ids = <RowDataPacket>results;
-  return ids[0];
-}
-
-async function getIdentifierFromProfileId(id: number): Promise<string> {
-  const query = `SELECT identifier npwd_match_profiles WHERE id = ?`;
-  const [results] = await pool.query(query, [id]);
-  const identifiers = <RowDataPacket>results;
-  return identifiers[0];
-}
-
 async function dispatchPlayerProfile(identifier: string, source: number): Promise<void> {
   try {
     const profile = await getPlayerProfile(identifier);
-    emitNet(events.MATCH_GET_MY_PROFILE_SUCCESS, source, profile);
+    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS, source, profile);
   } catch (e) {
     matchLogger.error(`Failed to get player profile, ${e.message}`);
-    emitNet(events.MATCH_GET_MY_PROFILE_FAILED, source, {
+    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_FAILED, source, {
       message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
       type: 'error',
     });
@@ -81,10 +67,10 @@ async function dispatchPlayerProfile(identifier: string, source: number): Promis
 async function dispatchProfiles(identifier: string, source: number): Promise<void> {
   try {
     const profiles = await getPotentialProfiles(identifier);
-    emitNet(events.MATCH_GET_PROFILES_SUCCESS, source, profiles);
+    emitNet(MatchEvents.MATCH_GET_PROFILES_SUCCESS, source, profiles);
   } catch (e) {
     matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
-    emitNet(events.MATCH_GET_PROFILES_FAILED, source, {
+    emitNet(MatchEvents.MATCH_GET_PROFILES_FAILED, source, {
       message: 'APPS_MATCH_GET_PROFILES_FAILED',
       type: 'error',
     });
@@ -163,7 +149,7 @@ async function updateLastActive(identifier: string): Promise<void> {
   await pool.execute(query, [identifier]);
 }
 
-onNet(events.MATCH_INITIALIZE, async () => {
+onNet(MatchEvents.MATCH_INITIALIZE, async () => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
   matchLogger.debug(`Initializing match for identifier: ${identifier}`);
@@ -173,7 +159,7 @@ onNet(events.MATCH_INITIALIZE, async () => {
   await updateLastActive(identifier);
 });
 
-onNet(events.MATCH_UPDATE_MY_PROFILE, async (profile: Profile) => {
+onNet(MatchEvents.MATCH_UPDATE_MY_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
   matchLogger.debug(`Updating profile for identifier: ${identifier}`);
@@ -181,20 +167,20 @@ onNet(events.MATCH_UPDATE_MY_PROFILE, async (profile: Profile) => {
 
   try {
     await updateProfile(identifier, profile);
-    emitNet(events.MATCH_UPDATE_MY_PROFILE_SUCCESS, _source, {
+    emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS, _source, {
       message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
       type: 'success',
     });
   } catch (e) {
     matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
-    emitNet(events.MATCH_UPDATE_MY_PROFILE_FAILED, _source, {
+    emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED, _source, {
       message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
       type: 'error',
     });
   }
 });
 
-onNet(events.MATCH_SAVE_LIKES, async (likes: Like[]) => {
+onNet(MatchEvents.MATCH_SAVE_LIKES, async (likes: Like[]) => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
   matchLogger.debug(`Saving likes for identifier ${identifier}`);
@@ -203,7 +189,7 @@ onNet(events.MATCH_SAVE_LIKES, async (likes: Like[]) => {
     await saveLikes(identifier, likes);
   } catch (e) {
     matchLogger.error(`Failed to save likes, ${e.message}`);
-    emitNet(events.MATCH_SAVE_LIKES_FAILED, _source, {
+    emitNet(MatchEvents.MATCH_SAVE_LIKES_FAILED, _source, {
       message: 'APPS_MATCH_SAVE_LIKES_FAILED',
       type: 'error',
     });
@@ -211,9 +197,8 @@ onNet(events.MATCH_SAVE_LIKES, async (likes: Like[]) => {
 
   try {
     const newMatches = await findNewMatches(identifier, likes);
-    console.log(newMatches);
     if (newMatches.length > 0) {
-      emitNet(events.MATCH_NEW_MATCH, _source, {
+      emitNet(MatchEvents.MATCH_NEW_MATCH, _source, {
         message: 'APPS_MATCH_NEW_LIKE_FOUND',
         type: 'info',
       });
@@ -223,16 +208,16 @@ onNet(events.MATCH_SAVE_LIKES, async (likes: Like[]) => {
   }
 });
 
-onNet(events.MATCH_GET_MATCHES, async () => {
+onNet(MatchEvents.MATCH_GET_MATCHES, async () => {
   const _source = getSource();
   const identifier = getIdentifier(_source);
 
   try {
     const matchedProfiles = await findAllMatches(identifier);
-    emitNet(events.MATCH_GET_MATCHES_SUCCESS, _source, matchedProfiles);
+    emitNet(MatchEvents.MATCH_GET_MATCHES_SUCCESS, _source, matchedProfiles);
   } catch (e) {
     matchLogger.error(`Failed to retrieve matches, ${e.message}`);
-    emitNet(events.MATCH_GET_MATCHES_FAILED, _source, {
+    emitNet(MatchEvents.MATCH_GET_MATCHES_FAILED, _source, {
       message: 'APPS_MATCH_GET_MATCHES_FAILED',
       type: 'error',
     });

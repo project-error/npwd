@@ -1,43 +1,54 @@
-import events from '../utils/events';
-import { Like, Profile } from '../../typings/match';
+import { Like, Profile, MatchEvents } from '../../typings/match';
 import { sendMatchEvent } from '../utils/messages';
 
 const transferEvent = (eventName: string) => (...args: any) => {
   sendMatchEvent(eventName, ...args);
 };
 
-onNet(events.MATCH_GET_MY_PROFILE_SUCCESS, transferEvent(events.MATCH_GET_MY_PROFILE_SUCCESS));
-onNet(events.MATCH_GET_MY_PROFILE_FAILED, transferEvent(events.MATCH_GET_MY_PROFILE_FAILED));
-onNet(events.MATCH_GET_PROFILES_SUCCESS, transferEvent(events.MATCH_GET_PROFILES_SUCCESS));
-onNet(events.MATCH_GET_PROFILES_FAILED, transferEvent(events.MATCH_GET_PROFILES_FAILED));
-onNet(events.MATCH_SAVE_LIKES_SUCCESS, transferEvent(events.MATCH_SAVE_LIKES_SUCCESS));
-onNet(events.MATCH_SAVE_LIKES_FAILED, transferEvent(events.MATCH_SAVE_LIKES_FAILED));
-onNet(events.MATCH_GET_MATCHES_SUCCESS, transferEvent(events.MATCH_GET_MATCHES_SUCCESS));
-onNet(events.MATCH_GET_MATCHES_FAILED, transferEvent(events.MATCH_GET_MATCHES_FAILED));
+onNet(MatchEvents.MATCH_GET_PROFILES_FAILED, transferEvent(MatchEvents.MATCH_GET_PROFILES_FAILED));
+onNet(MatchEvents.MATCH_SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.MATCH_SAVE_LIKES_SUCCESS));
+onNet(MatchEvents.MATCH_SAVE_LIKES_FAILED, transferEvent(MatchEvents.MATCH_SAVE_LIKES_FAILED));
+onNet(MatchEvents.MATCH_GET_MATCHES_SUCCESS, transferEvent(MatchEvents.MATCH_GET_MATCHES_SUCCESS));
+onNet(MatchEvents.MATCH_GET_MATCHES_FAILED, transferEvent(MatchEvents.MATCH_GET_MATCHES_FAILED));
 onNet(
-  events.MATCH_UPDATE_MY_PROFILE_SUCCESS,
-  transferEvent(events.MATCH_UPDATE_MY_PROFILE_SUCCESS),
+  MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS,
+  transferEvent(MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS),
 );
-onNet(events.MATCH_UPDATE_MY_PROFILE_FAILED, transferEvent(events.MATCH_UPDATE_MY_PROFILE_FAILED));
-onNet(events.MATCH_NEW_MATCH, transferEvent(events.MATCH_NEW_MATCH));
+onNet(
+  MatchEvents.MATCH_GET_MY_PROFILE_FAILED,
+  transferEvent(MatchEvents.MATCH_GET_MY_PROFILE_FAILED),
+);
+onNet(
+  MatchEvents.MATCH_GET_PROFILES_SUCCESS,
+  transferEvent(MatchEvents.MATCH_GET_PROFILES_SUCCESS),
+);
+onNet(
+  MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS,
+  transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS),
+);
+onNet(
+  MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED,
+  transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED),
+);
+onNet(MatchEvents.MATCH_NEW_MATCH, transferEvent(MatchEvents.MATCH_NEW_MATCH));
 
-RegisterNuiCallbackType(events.MATCH_SAVE_LIKES);
-on(`__cfx_nui:${events.MATCH_SAVE_LIKES}`, (likes: Like[], cb: Function) => {
-  emitNet(events.MATCH_SAVE_LIKES, likes);
+RegisterNuiCallbackType(MatchEvents.MATCH_SAVE_LIKES);
+on(`__cfx_nui:${MatchEvents.MATCH_SAVE_LIKES}`, (likes: Like[], cb: Function) => {
+  emitNet(MatchEvents.MATCH_SAVE_LIKES, likes);
   cb();
 });
 
-RegisterNuiCallbackType(events.MATCH_GET_MATCHES);
-on(`__cfx_nui:${events.MATCH_GET_MATCHES}`, () => {
-  emitNet(events.MATCH_GET_MATCHES);
+RegisterNuiCallbackType(MatchEvents.MATCH_GET_MATCHES);
+on(`__cfx_nui:${MatchEvents.MATCH_GET_MATCHES}`, () => {
+  emitNet(MatchEvents.MATCH_GET_MATCHES);
 });
 
-RegisterNuiCallbackType(events.MATCH_INITIALIZE);
-on(`__cfx_nui:${events.MATCH_INITIALIZE}`, () => {
-  emitNet(events.MATCH_INITIALIZE);
+RegisterNuiCallbackType(MatchEvents.MATCH_INITIALIZE);
+on(`__cfx_nui:${MatchEvents.MATCH_INITIALIZE}`, () => {
+  emitNet(MatchEvents.MATCH_INITIALIZE);
 });
 
-RegisterNuiCallbackType(events.MATCH_UPDATE_MY_PROFILE);
-on(`__cfx_nui:${events.MATCH_UPDATE_MY_PROFILE}`, (profile: Profile) => {
-  emitNet(events.MATCH_UPDATE_MY_PROFILE, profile);
+RegisterNuiCallbackType(MatchEvents.MATCH_UPDATE_MY_PROFILE);
+on(`__cfx_nui:${MatchEvents.MATCH_UPDATE_MY_PROFILE}`, (profile: Profile) => {
+  emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE, profile);
 });

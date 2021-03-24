@@ -13,13 +13,14 @@ import MatchBottomNavigation from '../components/BottomNavigation';
 import MatchPage from './views/MatchPage';
 import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
+import { MatchEvents } from '../../../../../typings/match';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
 
   useEffect(() => {
-    Nui.send('phone:initializeMatch');
+    Nui.send(MatchEvents.MATCH_INITIALIZE);
   });
 
   const handlePageChange = (e, page) => setActivePage(page);

@@ -10,6 +10,7 @@ import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
+import { MatchEvents } from '../../typings/match';
 
 let isPhoneOpen = false;
 let isPhoneReady = false;
@@ -24,7 +25,7 @@ function fetchOnInitialize() {
   emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  emitNet(events.MATCH_INITIALIZE);
+  emitNet(MatchEvents.MATCH_INITIALIZE);
   sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
   sendMessage('PHONE', 'phoneConfig', config);
 }

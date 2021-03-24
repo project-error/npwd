@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { twitterState } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
+import DefaultProfilePrompt from './DefaultProfilePrompt';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { matchState } from './state';
 
-import { FormattedProfile } from '../../../../../typings/match';
+import { FormattedProfile, MatchEvents } from '../../../../../typings/match';
 import Nui from '../../../os/nui-events/utils/Nui';
 
 interface IUseProfiles {
@@ -23,7 +23,7 @@ export const useProfiles = (): IUseProfiles => {
       }),
     );
 
-    Nui.send('phone:saveLikes', [{ id, liked }]);
+    Nui.send(MatchEvents.MATCH_SAVE_LIKES, [{ id, liked }]);
   };
 
   const filteredProfiles = profiles ? profiles.filter((profile) => !profile.viewed) : null;

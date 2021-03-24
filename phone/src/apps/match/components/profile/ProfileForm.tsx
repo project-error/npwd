@@ -3,7 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
-import { Profile as IProfile, FormattedProfile } from '../../../../../../typings/match';
+import {
+  Profile as IProfile,
+  FormattedProfile,
+  MatchEvents,
+} from '../../../../../../typings/match';
 import ProfileField from '../../../../ui/components/ProfileField';
 import UpdateButton from '../../../../ui/components/UpdateButton';
 import { Card } from '@material-ui/core';
@@ -64,7 +68,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       ...update,
       tags: update.tagList.join(','),
     };
-    Nui.send('phone:updateMyProfile', updatedProfile);
+    Nui.send(MatchEvents.MATCH_UPDATE_MY_PROFILE, updatedProfile);
   };
 
   if (showPreview) {
