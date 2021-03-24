@@ -69,11 +69,11 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const handleUpdate = () => {
     const updatedProfile: IProfile = {
       ...update,
+      name: update.name.trim(),
+      image: update.image.trim(),
       tags: update.tagList.join(','),
     };
-    const event = profile
-      ? MatchEvents.MATCH_UPDATE_MY_PROFILE
-      : MatchEvents.MATCH_CREATE_MY_PROFILE;
+    const event = profile ? MatchEvents.UPDATE_MY_PROFILE : MatchEvents.CREATE_MY_PROFILE;
     Nui.send(event, updatedProfile);
   };
 

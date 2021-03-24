@@ -28,7 +28,7 @@
     "maxImages": 3
   },
   "match": {
-    "generateProfileNameFromUsers": false,
+    "generateProfileNameFromUsers": true,
     "allowEdtiableProfileName": true
   },
   "bank": {

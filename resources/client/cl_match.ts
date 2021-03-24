@@ -12,63 +12,42 @@ const transferEvent = (eventName: string) => (...args: any) => {
   sendMatchEvent(eventName, ...args);
 };
 
-onNet(MatchEvents.MATCH_GET_PROFILES_FAILED, transferEvent(MatchEvents.MATCH_GET_PROFILES_FAILED));
-onNet(MatchEvents.MATCH_SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.MATCH_SAVE_LIKES_SUCCESS));
-onNet(MatchEvents.MATCH_SAVE_LIKES_FAILED, transferEvent(MatchEvents.MATCH_SAVE_LIKES_FAILED));
-onNet(MatchEvents.MATCH_GET_MATCHES_SUCCESS, transferEvent(MatchEvents.MATCH_GET_MATCHES_SUCCESS));
-onNet(MatchEvents.MATCH_GET_MATCHES_FAILED, transferEvent(MatchEvents.MATCH_GET_MATCHES_FAILED));
-onNet(
-  MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS,
-  transferEvent(MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS),
-);
-onNet(
-  MatchEvents.MATCH_GET_MY_PROFILE_FAILED,
-  transferEvent(MatchEvents.MATCH_GET_MY_PROFILE_FAILED),
-);
-onNet(
-  MatchEvents.MATCH_GET_PROFILES_SUCCESS,
-  transferEvent(MatchEvents.MATCH_GET_PROFILES_SUCCESS),
-);
-onNet(
-  MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS,
-  transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS),
-);
-onNet(
-  MatchEvents.MATCH_CREATE_MY_PROFILE_SUCCESS,
-  transferEvent(MatchEvents.MATCH_CREATE_MY_PROFILE_SUCCESS),
-);
-onNet(
-  MatchEvents.MATCH_CREATE_MY_PROFILE_FAILED,
-  transferEvent(MatchEvents.MATCH_CREATE_MY_PROFILE_FAILED),
-);
-onNet(
-  MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED,
-  transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED),
-);
-onNet(MatchEvents.MATCH_NEW_MATCH, transferEvent(MatchEvents.MATCH_NEW_MATCH));
+onNet(MatchEvents.GET_PROFILES_FAILED, transferEvent(MatchEvents.GET_PROFILES_FAILED));
+onNet(MatchEvents.SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.SAVE_LIKES_SUCCESS));
+onNet(MatchEvents.SAVE_LIKES_FAILED, transferEvent(MatchEvents.SAVE_LIKES_FAILED));
+onNet(MatchEvents.GET_MATCHES_SUCCESS, transferEvent(MatchEvents.GET_MATCHES_SUCCESS));
+onNet(MatchEvents.GET_MATCHES_FAILED, transferEvent(MatchEvents.GET_MATCHES_FAILED));
+onNet(MatchEvents.GET_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.GET_MY_PROFILE_SUCCESS));
+onNet(MatchEvents.GET_MY_PROFILE_FAILED, transferEvent(MatchEvents.GET_MY_PROFILE_FAILED));
+onNet(MatchEvents.GET_PROFILES_SUCCESS, transferEvent(MatchEvents.GET_PROFILES_SUCCESS));
+onNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.UPDATE_MY_PROFILE_SUCCESS));
+onNet(MatchEvents.CREATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.CREATE_MY_PROFILE_SUCCESS));
+onNet(MatchEvents.CREATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.CREATE_MY_PROFILE_FAILED));
+onNet(MatchEvents.UPDATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.UPDATE_MY_PROFILE_FAILED));
+onNet(MatchEvents.NEW_MATCH, transferEvent(MatchEvents.NEW_MATCH));
 
-RegisterNuiCallbackType(MatchEvents.MATCH_SAVE_LIKES);
-on(`__cfx_nui:${MatchEvents.MATCH_SAVE_LIKES}`, (likes: Like[], cb: Function) => {
-  emitNet(MatchEvents.MATCH_SAVE_LIKES, likes);
+RegisterNuiCallbackType(MatchEvents.SAVE_LIKES);
+on(`__cfx_nui:${MatchEvents.SAVE_LIKES}`, (likes: Like[], cb: Function) => {
+  emitNet(MatchEvents.SAVE_LIKES, likes);
   cb();
 });
 
-RegisterNuiCallbackType(MatchEvents.MATCH_GET_MATCHES);
-on(`__cfx_nui:${MatchEvents.MATCH_GET_MATCHES}`, () => {
-  emitNet(MatchEvents.MATCH_GET_MATCHES);
+RegisterNuiCallbackType(MatchEvents.GET_MATCHES);
+on(`__cfx_nui:${MatchEvents.GET_MATCHES}`, () => {
+  emitNet(MatchEvents.GET_MATCHES);
 });
 
-RegisterNuiCallbackType(MatchEvents.MATCH_INITIALIZE);
-on(`__cfx_nui:${MatchEvents.MATCH_INITIALIZE}`, () => {
-  emitNet(MatchEvents.MATCH_INITIALIZE);
+RegisterNuiCallbackType(MatchEvents.INITIALIZE);
+on(`__cfx_nui:${MatchEvents.INITIALIZE}`, () => {
+  emitNet(MatchEvents.INITIALIZE);
 });
 
-RegisterNuiCallbackType(MatchEvents.MATCH_CREATE_MY_PROFILE);
-on(`__cfx_nui:${MatchEvents.MATCH_CREATE_MY_PROFILE}`, (profile: Profile) => {
-  emitNet(MatchEvents.MATCH_CREATE_MY_PROFILE, profile);
+RegisterNuiCallbackType(MatchEvents.CREATE_MY_PROFILE);
+on(`__cfx_nui:${MatchEvents.CREATE_MY_PROFILE}`, (profile: Profile) => {
+  emitNet(MatchEvents.CREATE_MY_PROFILE, profile);
 });
 
-RegisterNuiCallbackType(MatchEvents.MATCH_UPDATE_MY_PROFILE);
-on(`__cfx_nui:${MatchEvents.MATCH_UPDATE_MY_PROFILE}`, (profile: Profile) => {
-  emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE, profile);
+RegisterNuiCallbackType(MatchEvents.UPDATE_MY_PROFILE);
+on(`__cfx_nui:${MatchEvents.UPDATE_MY_PROFILE}`, (profile: Profile) => {
+  emitNet(MatchEvents.UPDATE_MY_PROFILE, profile);
 });

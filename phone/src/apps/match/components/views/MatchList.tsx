@@ -30,7 +30,7 @@ function MatchList() {
   // This is less performant but means that we will always have the
   // correct state when the player views this page
   useEffect(() => {
-    Nui.send(MatchEvents.MATCH_GET_MATCHES);
+    Nui.send(MatchEvents.GET_MATCHES);
     window.setTimeout(() => {
       setLoaded(true);
     }, MINIMUM_LOAD_TIME);

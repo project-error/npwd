@@ -22,7 +22,7 @@ export const MatchApp = () => {
   const { noProfileExists } = useProfile();
 
   useEffect(() => {
-    Nui.send(MatchEvents.MATCH_INITIALIZE);
+    Nui.send(MatchEvents.INITIALIZE);
   }, []);
 
   const handlePageChange = (e, page) => setActivePage(page);

@@ -23,7 +23,7 @@ export const useProfiles = (): IUseProfiles => {
       }),
     );
 
-    Nui.send(MatchEvents.MATCH_SAVE_LIKES, [{ id, liked }]);
+    Nui.send(MatchEvents.SAVE_LIKES, [{ id, liked }]);
   };
 
   const filteredProfiles = profiles ? profiles.filter((profile) => !profile.viewed) : null;

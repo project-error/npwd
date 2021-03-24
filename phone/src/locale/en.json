@@ -106,6 +106,7 @@
     "APPS_MATCH_PROFILE_CONFIGURATION": "App is incorrectly configured - cannot create profile. Please contact an administrator.",
     "APPS_MATCH_MY_PROFILE_ERROR": "Error loading profile",
     "APPS_MATCH_PROFILE_LAST_ACTIVE": "Last Active: {{ lastActive }}",
+    "APPS_MATCH_PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
     "APPS_MATCH_EDIT_PROFILE_PREVIEW": "Show Preview",
     "APPS_MATCH_EDIT_PROFILE_IMAGE": "Image URL",
     "APPS_MATCH_EDIT_PROFILE_NAME": "Profile name",

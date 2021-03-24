@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Box, Button, ListItem, makeStyles } from '@material-ui/core';
@@ -23,6 +24,7 @@ interface IProps {
 export const Match = ({ match }: IProps) => {
   const history = useHistory();
   const classes = useStyles();
+  const { t } = useTranslation();
   const [showProfile, setShowProfile] = useState(false);
 
   const handleMessage = () => {
@@ -33,10 +35,14 @@ export const Match = ({ match }: IProps) => {
     setShowProfile((show) => !show);
   };
 
+  const secondaryText = t('APPS_MATCH_PROFILE_MATCHED_AT', {
+    matchedAt: match.matchedAtFormatted,
+  });
+
   return (
     <>
       <ListItem divider>
-        <ListItemText primary={match.name} secondary={match.phoneNumber} />
+        <ListItemText primary={match.name} secondary={secondaryText} />
         <Button onClick={handleProfile}>
           <PersonIcon />
         </Button>
