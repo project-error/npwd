@@ -14,6 +14,8 @@ export const useMatchService = () => {
   const setProfiles = useSetRecoilState(matchState.profiles);
   const setProfile = useSetRecoilState(matchState.myProfile);
   const setMatches = useSetRecoilState(matchState.matches);
+  const setErrorLoadingMatches = useSetRecoilState(matchState.errorLoadingMatches);
+  const setErrorLoadingProfiles = useSetRecoilState(matchState.errorLoadingProfiles);
 
   const handleAddAlert = ({ message, type }: IAlert) => {
     addAlert({
@@ -42,6 +44,11 @@ export const useMatchService = () => {
       setProfile(formatProfile(profile));
     }
   };
+  const _handleGetProfilesFailed = (alert: IAlert): void => {
+    handleAddAlert(alert);
+    setErrorLoadingProfiles(true);
+  };
+
   const _setMatches = (matches: Match[]): void => {
     setMatches(
       matches.map((match) => ({
@@ -53,17 +60,22 @@ export const useMatchService = () => {
     );
   };
 
+  const _handleGetMatchesFailed = (alert: IAlert): void => {
+    handleAddAlert(alert);
+    setErrorLoadingMatches(true);
+  };
+
   const _handleUpdateProfile = (profile: Profile) => {
     _setProfile(profile);
     handleAddAlert({ message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED', type: 'info' });
   };
 
   useNuiEvent('MATCH', MatchEvents.MATCH_GET_PROFILES_SUCCESS, _setProfiles);
-  useNuiEvent('MATCH', MatchEvents.MATCH_GET_PROFILES_FAILED, handleAddAlert);
+  useNuiEvent('MATCH', MatchEvents.MATCH_GET_PROFILES_FAILED, _handleGetProfilesFailed);
   useNuiEvent('MATCH', MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS, _setProfile);
   useNuiEvent('MATCH', MatchEvents.MATCH_GET_MY_PROFILE_FAILED, handleAddAlert);
   useNuiEvent('MATCH', MatchEvents.MATCH_GET_MATCHES_SUCCESS, _setMatches);
-  useNuiEvent('MATCH', MatchEvents.MATCH_GET_MATCHES_FAILED, handleAddAlert);
+  useNuiEvent('MATCH', MatchEvents.MATCH_GET_MATCHES_FAILED, _handleGetMatchesFailed);
   useNuiEvent('MATCH', MatchEvents.MATCH_SAVE_LIKES_FAILED, handleAddAlert);
   useNuiEvent('MATCH', MatchEvents.MATCH_NEW_MATCH, handleAddAlert);
   useNuiEvent('MATCH', MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS, _handleUpdateProfile);

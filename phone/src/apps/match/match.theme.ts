@@ -1,4 +1,4 @@
-import { blue, common } from '@material-ui/core/colors';
+import { red, common } from '@material-ui/core/colors';
 
 export const MATCH_APP_PRIMARY_COLOR = '#FE3B73';
 export const MATCH_APP_TEXT_COLOR = common.white;
@@ -7,8 +7,8 @@ const theme = {
   palette: {
     primary: {
       main: MATCH_APP_PRIMARY_COLOR,
-      dark: blue[700],
-      light: blue[300],
+      dark: red[700],
+      light: red[300],
       contrastText: MATCH_APP_TEXT_COLOR,
     },
     secondary: {

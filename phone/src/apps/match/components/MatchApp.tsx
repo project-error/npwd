@@ -103,21 +103,20 @@ InjectDebugData(
     {
       app: 'MATCH',
       method: 'phone:getMyProfileSuccess',
-      data: null,
-      // data: {
-      //   id: 4,
-      //   image:
-      //     'https://www.middlebury.edu/institute/sites/www.middlebury.edu.institute/files/styles/1040x585/public/2018-10/Nashville-skyline.jpg?fv=mS11EKrT&itok=HNhHqYUX',
-      //   name: 'Kire Says',
-      //   bio: "Kire's cool profile that has many cool things. And others.",
-      //   createdAt: 1615932985,
-      //   updatedAt: 1615932985,
-      //   lastActive: 1616004986,
-      //   job: 'Engineer',
-      //   location: 'Boston',
-      //   tags: 'code,books',
-      //   phoneNumber: '999-9999',
-      // },
+      data: {
+        id: 4,
+        image:
+          'https://www.middlebury.edu/institute/sites/www.middlebury.edu.institute/files/styles/1040x585/public/2018-10/Nashville-skyline.jpg?fv=mS11EKrT&itok=HNhHqYUX',
+        name: 'Kire Says',
+        bio: "Kire's cool profile that has many cool things. And others.",
+        createdAt: 1615932985,
+        updatedAt: 1615932985,
+        lastActive: 1616004986,
+        job: 'Engineer',
+        location: 'Boston',
+        tags: 'code,books',
+        phoneNumber: '999-9999',
+      },
     },
     {
       app: 'MATCH',

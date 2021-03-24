@@ -16,7 +16,9 @@ const useStyles = makeStyles({
   },
 });
 
-const MINIMUM_LOAD_TIME = 1500;
+// set a minimum load time so the user doesn't see a flash
+// of the loader and then the matches themselves
+const MINIMUM_LOAD_TIME = 1250;
 
 const MatchPage = () => {
   const classes = useStyles();
