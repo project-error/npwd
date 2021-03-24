@@ -14,14 +14,16 @@ import MatchPage from './views/MatchPage';
 import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
+import { useProfile } from '../hooks/useProfile';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
+  const { noProfileExists } = useProfile();
 
   useEffect(() => {
     Nui.send(MatchEvents.MATCH_INITIALIZE);
-  });
+  }, []);
 
   const handlePageChange = (e, page) => setActivePage(page);
 
@@ -29,12 +31,20 @@ export const MatchApp = () => {
     <MatchThemeProvider>
       <AppWrapper id="contact-app">
         <AppTitle app={match} />
-        <AppContent>
-          <Route path="/match/" exact component={MatchPage} />
-          <Route path="/match/matches" exact component={MatchList} />
-          <Route path="/match/profile" exact component={ProfileEditor} />
-        </AppContent>
-        <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
+        {noProfileExists ? (
+          <AppContent>
+            <ProfileEditor />
+          </AppContent>
+        ) : (
+          <>
+            <AppContent>
+              <Route path="/match/" exact component={MatchPage} />
+              <Route path="/match/matches" exact component={MatchList} />
+              <Route path="/match/profile" exact component={ProfileEditor} />
+            </AppContent>
+            <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
+          </>
+        )}
       </AppWrapper>
     </MatchThemeProvider>
   );
@@ -93,20 +103,21 @@ InjectDebugData(
     {
       app: 'MATCH',
       method: 'phone:getMyProfileSuccess',
-      data: {
-        id: 4,
-        image:
-          'https://www.middlebury.edu/institute/sites/www.middlebury.edu.institute/files/styles/1040x585/public/2018-10/Nashville-skyline.jpg?fv=mS11EKrT&itok=HNhHqYUX',
-        name: 'Kire Says',
-        bio: "Kire's cool profile that has many cool things. And others.",
-        createdAt: 1615932985,
-        updatedAt: 1615932985,
-        lastActive: 1616004986,
-        job: 'Engineer',
-        location: 'Boston',
-        tags: 'code,books',
-        phoneNumber: '999-9999',
-      },
+      data: null,
+      // data: {
+      //   id: 4,
+      //   image:
+      //     'https://www.middlebury.edu/institute/sites/www.middlebury.edu.institute/files/styles/1040x585/public/2018-10/Nashville-skyline.jpg?fv=mS11EKrT&itok=HNhHqYUX',
+      //   name: 'Kire Says',
+      //   bio: "Kire's cool profile that has many cool things. And others.",
+      //   createdAt: 1615932985,
+      //   updatedAt: 1615932985,
+      //   lastActive: 1616004986,
+      //   job: 'Engineer',
+      //   location: 'Boston',
+      //   tags: 'code,books',
+      //   phoneNumber: '999-9999',
+      // },
     },
     {
       app: 'MATCH',

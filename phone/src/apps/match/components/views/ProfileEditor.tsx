@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 function ProfileEditor() {
-  const { profile } = useProfile();
+  const { profile, noProfileExists } = useProfile();
   const classes = useStyles();
   const { t } = useTranslation();
   const [showPreview, setShowPreview] = useState(false);
@@ -27,7 +27,7 @@ function ProfileEditor() {
     setShowPreview((preview) => !preview);
   };
 
-  if (!profile) return <Loader />;
+  if (!profile && !noProfileExists) return <Loader />;
 
   return (
     <Box className={classes.root}>

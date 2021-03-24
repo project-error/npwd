@@ -27,6 +27,14 @@ onNet(
   transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS),
 );
 onNet(
+  MatchEvents.MATCH_CREATE_MY_PROFILE_SUCCESS,
+  transferEvent(MatchEvents.MATCH_CREATE_MY_PROFILE_SUCCESS),
+);
+onNet(
+  MatchEvents.MATCH_CREATE_MY_PROFILE_FAILED,
+  transferEvent(MatchEvents.MATCH_CREATE_MY_PROFILE_FAILED),
+);
+onNet(
   MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED,
   transferEvent(MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED),
 );
@@ -46,6 +54,11 @@ on(`__cfx_nui:${MatchEvents.MATCH_GET_MATCHES}`, () => {
 RegisterNuiCallbackType(MatchEvents.MATCH_INITIALIZE);
 on(`__cfx_nui:${MatchEvents.MATCH_INITIALIZE}`, () => {
   emitNet(MatchEvents.MATCH_INITIALIZE);
+});
+
+RegisterNuiCallbackType(MatchEvents.MATCH_CREATE_MY_PROFILE);
+on(`__cfx_nui:${MatchEvents.MATCH_CREATE_MY_PROFILE}`, (profile: Profile) => {
+  emitNet(MatchEvents.MATCH_CREATE_MY_PROFILE, profile);
 });
 
 RegisterNuiCallbackType(MatchEvents.MATCH_UPDATE_MY_PROFILE);

@@ -12,6 +12,8 @@ import ProfileField from '../../../../ui/components/ProfileField';
 import UpdateButton from '../../../../ui/components/UpdateButton';
 import { Card } from '@material-ui/core';
 import Profile from './Profile';
+import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import PageText from '../PageText';
 
 const useStyles = makeStyles({
   root: {
@@ -40,18 +42,19 @@ interface IProps {
 export function ProfileForm({ profile, showPreview }: IProps) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { config } = usePhone();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
   // Annoyingling adding conditionals above this line to not render
   // when profile === null results in a react error that different
   // amounts of hooks are rendering
-  const [image, setImage] = useState(profile.image || '');
-  const [name, setName] = useState(profile.name || '');
-  const [bio, setBio] = useState(profile.bio || '');
-  const [job, setJob] = useState(profile.job || '');
-  const [location, setLocation] = useState(profile.location || '');
-  const [tags, setTags] = useState(profile.tags || '');
+  const [image, setImage] = useState(profile?.image || '');
+  const [name, setName] = useState(profile?.name || '');
+  const [bio, setBio] = useState(profile?.bio || '');
+  const [job, setJob] = useState(profile?.job || '');
+  const [location, setLocation] = useState(profile?.location || '');
+  const [tags, setTags] = useState(profile?.tags || '');
 
   const update: FormattedProfile = {
     ...profile,
@@ -68,8 +71,15 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       ...update,
       tags: update.tagList.join(','),
     };
-    Nui.send(MatchEvents.MATCH_UPDATE_MY_PROFILE, updatedProfile);
+    const event = profile
+      ? MatchEvents.MATCH_UPDATE_MY_PROFILE
+      : MatchEvents.MATCH_CREATE_MY_PROFILE;
+    Nui.send(event, updatedProfile);
   };
+
+  if (!profile && !config.match.allowEdtiableProfileName) {
+    return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
+  }
 
   if (showPreview) {
     return (
@@ -87,7 +97,12 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         handleChange={setImage}
         allowChange
       />
-      <ProfileField label={t('APPS_MATCH_EDIT_PROFILE_NAME')} value={name} handleChange={setName} />
+      <ProfileField
+        label={t('APPS_MATCH_EDIT_PROFILE_NAME')}
+        value={name}
+        handleChange={setName}
+        allowChange={config.match.allowEdtiableProfileName}
+      />
       <ProfileField
         label={t('APPS_MATCH_EDIT_PROFILE_BIO')}
         value={update.bio}

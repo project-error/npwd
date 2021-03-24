@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    paddingTop: '140px',
+    textAlign: 'center',
+    padding: '140px 15px 15px 15px',
   },
 }));
 

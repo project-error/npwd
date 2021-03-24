@@ -21,8 +21,8 @@ export const matchState = {
     key: 'myProfile',
     default: null,
   }),
-  errorLoadingMyProfile: atom({
-    key: 'errorLoadingMyProfile',
+  noProfileExists: atom({
+    key: 'noProfileExists',
     default: false,
   }),
 };

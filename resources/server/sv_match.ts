@@ -2,10 +2,13 @@ import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { Like, Match, Profile, MatchEvents } from '../../typings/match';
+import config from '../utils/config';
+import { Like, Match, Profile, MatchEvents, NewProfile } from '../../typings/match';
 import { mainLogger } from './sv_logger';
+import { generateProfileName } from './players/sv_players';
 
 const matchLogger = mainLogger.child({ module: 'match' });
+const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
 
 /**
  * Select profiles that:
@@ -36,45 +39,6 @@ async function getPotentialProfiles(identifier: string): Promise<Profile[]> {
   const [results] = await pool.query(query, [identifier, identifier]);
   const profiles = <Profile[]>results;
   return profiles;
-}
-
-async function getPlayerProfile(identifier: string): Promise<Profile> {
-  const query = `
-    SELECT *,
-    UNIX_TIMESTAMP(updatedAt) AS lastActive
-    FROM npwd_match_profiles
-    WHERE identifier = ?
-    LIMIT 1
-    `;
-  const [results] = await pool.query(query, [identifier]);
-  const profiles = <Profile[]>results;
-  return profiles[0];
-}
-
-async function dispatchPlayerProfile(identifier: string, source: number): Promise<void> {
-  try {
-    const profile = await getPlayerProfile(identifier);
-    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS, source, profile);
-  } catch (e) {
-    matchLogger.error(`Failed to get player profile, ${e.message}`);
-    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_FAILED, source, {
-      message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
-      type: 'error',
-    });
-  }
-}
-
-async function dispatchProfiles(identifier: string, source: number): Promise<void> {
-  try {
-    const profiles = await getPotentialProfiles(identifier);
-    emitNet(MatchEvents.MATCH_GET_PROFILES_SUCCESS, source, profiles);
-  } catch (e) {
-    matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
-    emitNet(MatchEvents.MATCH_GET_PROFILES_FAILED, source, {
-      message: 'APPS_MATCH_GET_PROFILES_FAILED',
-      type: 'error',
-    });
-  }
 }
 
 async function saveLikes(identifier: string, likes: Like[]): Promise<ResultSetHeader[]> {
@@ -140,6 +104,57 @@ async function updateProfile(identifier: string, profile: Profile): Promise<void
   await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
 }
 
+async function getPlayerProfile(identifier: string): Promise<Profile> {
+  const query = `
+    SELECT *,
+    UNIX_TIMESTAMP(updatedAt) AS lastActive
+    FROM npwd_match_profiles
+    WHERE identifier = ?
+    LIMIT 1
+    `;
+  const [results] = await pool.query(query, [identifier]);
+  const profiles = <Profile[]>results;
+  return profiles[0];
+}
+
+async function createProfile(identifier: string, profile: NewProfile): Promise<Profile> {
+  const { name, image, bio, location, job, tags } = profile;
+  const query = `
+    INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+  await pool.execute(query, [identifier, name, image, bio, location, job, tags]);
+  return await getPlayerProfile(identifier);
+}
+
+async function createDefaultProfile(identifier: string): Promise<Profile | null> {
+  // case where the server owner wants players to select their own names
+  if (!config.match.generateProfileNameFromUsers) return null;
+
+  const defaultProfileName = await generateProfileName(identifier, ' ');
+  // case where we tried to generate a profile name but failed due to
+  // some database misconfiguration or error
+  if (!defaultProfileName) return null;
+
+  const defaultProfile = {
+    name: defaultProfileName,
+    image: DEFAULT_IMAGE,
+    bio: '',
+    location: '',
+    job: '',
+    tags: '',
+  };
+
+  matchLogger.info(`Creating default match profile ${defaultProfileName} for ${identifier}`);
+  return await createProfile(identifier, defaultProfile);
+}
+
+export async function getOrCreateProfile(identifier: string): Promise<Profile> {
+  const profile = await getPlayerProfile(identifier);
+  return profile || (await createDefaultProfile(identifier));
+}
+
 async function updateLastActive(identifier: string): Promise<void> {
   const query = `
     UPDATE npwd_match_profiles
@@ -147,6 +162,32 @@ async function updateLastActive(identifier: string): Promise<void> {
     WHERE identifier = ?
   `;
   await pool.execute(query, [identifier]);
+}
+
+async function dispatchPlayerProfile(identifier: string, source: number): Promise<void> {
+  try {
+    const profile = await getOrCreateProfile(identifier);
+    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_SUCCESS, source, profile);
+  } catch (e) {
+    matchLogger.error(`Failed to get player profile, ${e.message}`);
+    emitNet(MatchEvents.MATCH_GET_MY_PROFILE_FAILED, source, {
+      message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
+      type: 'error',
+    });
+  }
+}
+
+async function dispatchProfiles(identifier: string, source: number): Promise<void> {
+  try {
+    const profiles = await getPotentialProfiles(identifier);
+    emitNet(MatchEvents.MATCH_GET_PROFILES_SUCCESS, source, profiles);
+  } catch (e) {
+    matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
+    emitNet(MatchEvents.MATCH_GET_PROFILES_FAILED, source, {
+      message: 'APPS_MATCH_GET_PROFILES_FAILED',
+      type: 'error',
+    });
+  }
 }
 
 onNet(MatchEvents.MATCH_INITIALIZE, async () => {
@@ -166,15 +207,30 @@ onNet(MatchEvents.MATCH_UPDATE_MY_PROFILE, async (profile: Profile) => {
   matchLogger.debug(profile);
 
   try {
-    await updateProfile(identifier, profile);
-    emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS, _source, {
-      message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
-      type: 'success',
-    });
+    const updatedProfile = await updateProfile(identifier, profile);
+    emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE_SUCCESS, _source, updatedProfile);
   } catch (e) {
     matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
     emitNet(MatchEvents.MATCH_UPDATE_MY_PROFILE_FAILED, _source, {
       message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
+      type: 'error',
+    });
+  }
+});
+
+onNet(MatchEvents.MATCH_CREATE_MY_PROFILE, async (profile: Profile) => {
+  const _source = getSource();
+  const identifier = getIdentifier(_source);
+  matchLogger.debug(`Creating profile for identifier: ${identifier}`);
+  matchLogger.debug(profile);
+
+  try {
+    const newProfile = await createProfile(identifier, profile);
+    emitNet(MatchEvents.MATCH_CREATE_MY_PROFILE_SUCCESS, _source, newProfile);
+  } catch (e) {
+    matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
+    emitNet(MatchEvents.MATCH_CREATE_MY_PROFILE_FAILED, _source, {
+      message: 'APPS_MATCH_CREATE_PROFILE_FAILED',
       type: 'error',
     });
   }
@@ -223,3 +279,11 @@ onNet(MatchEvents.MATCH_GET_MATCHES, async () => {
     });
   }
 });
+
+if (!config.match.allowEdtiableProfileName && !config.match.generateProfileNameFromUsers) {
+  const warning =
+    `Both allowEdtiableProfileName and generateProfileNameFromUsers ` +
+    `are set false - this means users will likely not have profile names ` +
+    `for the Match App and won't be able to use it!`;
+  matchLogger.warn(warning);
+}

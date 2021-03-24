@@ -25,7 +25,6 @@ function fetchOnInitialize() {
   emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  emitNet(MatchEvents.MATCH_INITIALIZE);
   sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
   sendMessage('PHONE', 'phoneConfig', config);
 }
