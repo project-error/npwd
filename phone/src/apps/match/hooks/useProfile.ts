@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { matchState } from './state';
 
 import { FormattedProfile } from '../../../../../typings/match';

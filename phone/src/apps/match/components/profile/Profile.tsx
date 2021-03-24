@@ -34,9 +34,8 @@ const Profile = ({ profile }: IProps) => {
   const c = useStyles();
   const { t } = useTranslation();
 
-  const { location, job, tagList, image, lastActive, name, bio } = profile;
-
   function parseSecondaryBio(): string | undefined {
+    const { location, job } = profile;
     if (location && job) {
       return `${location} - ${job}`;
     } else if (location) {

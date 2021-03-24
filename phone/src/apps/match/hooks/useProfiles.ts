@@ -1,7 +1,7 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { matchState } from './state';
 
-import { FormattedProfile, Like } from '../../../../../typings/match';
+import { FormattedProfile } from '../../../../../typings/match';
 import Nui from '../../../os/nui-events/utils/Nui';
 
 interface IUseProfiles {

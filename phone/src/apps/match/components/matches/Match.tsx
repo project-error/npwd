@@ -5,7 +5,6 @@ import { Box, Button, ListItem, makeStyles } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import ChatIcon from '@material-ui/icons/Chat';
 
-import Nui from '../../../../os/nui-events/utils/Nui';
 import { FormattedMatch } from '../../../../../../typings/match';
 import Profile from '../profile/Profile';
 

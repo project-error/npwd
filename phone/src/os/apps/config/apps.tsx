@@ -7,7 +7,6 @@ import {
   faPhoneAlt,
   faWonSign,
   faStickyNote,
-  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 

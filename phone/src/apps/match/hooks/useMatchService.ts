@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { matchState } from './state';
 import { useTranslation } from 'react-i18next';
 

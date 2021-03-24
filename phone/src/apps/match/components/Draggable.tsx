@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import React, { useEffect, useRef } from 'react';
+import { makeStyles } from '@material-ui/core';
 
 import { LikeorDislikeDraggableElement } from '../utils/drag';
 
@@ -47,7 +47,7 @@ function Draggable({ id, children, onDrag, onDrop }: IProps) {
   useEffect(() => {
     const drag = new LikeorDislikeDraggableElement(elementRef, MAX_ROTATION_DEG, onDrag, onDrop);
     return () => drag.cleanup();
-  }, [elementRef]);
+  }, [elementRef]); // eslint-disable-line
 
   return (
     <>
