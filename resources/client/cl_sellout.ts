@@ -2,12 +2,11 @@ import { MarketplaceEvents, MarketplaceListing } from '../../typings/marketplace
 import { IAlertProps } from '../../typings/alerts';
 import { sendMarketplaceEvent } from '../utils/messages';
 
-RegisterNuiCallbackType(MarketplaceEvents.ADD_LISTING);
-
-onNet(MarketplaceEvents.SEND_LISTING, (listing: MarketplaceListing) => {
-  sendMarketplaceEvent('setListing', listing);
+onNet(MarketplaceEvents.SEND_LISTING, (listings: MarketplaceListing[]) => {
+  sendMarketplaceEvent('setListings', listings);
 });
 
+RegisterNuiCallbackType(MarketplaceEvents.ADD_LISTING);
 on(`__cfx_nui:${MarketplaceEvents.ADD_LISTING}`, (data: MarketplaceListing, cb: Function) => {
   emitNet(MarketplaceEvents.ADD_LISTING, data);
   cb();

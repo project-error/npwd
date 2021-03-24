@@ -1,5 +1,6 @@
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { matchPath, useHistory } from 'react-router-dom';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
 import { goToConversation } from '../utils/goToConversation';
@@ -12,7 +13,20 @@ export const useMessageNotifications = () => {
   const history = useHistory();
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
-  const { getMessageGroupById } = useMessages();
+  const { getMessageGroupById, activeMessageGroup } = useMessages();
+
+  // Remove notifications from groups when opening them
+  history.listen((location) => {
+    if (
+      activeMessageGroup?.groupId &&
+      matchPath(location.pathname, {
+        path: `/messages/conversations/${activeMessageGroup.groupId}`,
+        exact: true,
+      })
+    ) {
+      removeId(`${NOTIFICATION_ID}:${activeMessageGroup.groupId}`);
+    }
+  });
 
   const setNotification = ({ groupId, message }) => {
     const group = getMessageGroupById(groupId);

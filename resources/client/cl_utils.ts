@@ -52,3 +52,10 @@ export default class ClientUtils {
     });
   }
 }
+
+export const NuiCallback = (event: string, callback: Function) => {
+  RegisterRawNuiCallback(event, (data: any) => {
+    const parsed = JSON.parse(data?.body);
+    callback(parsed);
+  });
+};

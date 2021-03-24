@@ -6,8 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useCallback } from 'react';
 import Nui from '../../../os/nui-events/utils/Nui';
+import { useLocation } from 'react-router';
+import { MessageEvents } from '../../../../../typings/messages';
 
 export const useMessagesService = () => {
+  const { pathname } = useLocation();
   const [activeMessageGroup, setActiveMessageGroup] = useRecoilState(
     messageState.activeMessageGroup,
   );
@@ -31,11 +34,15 @@ export const useMessagesService = () => {
   const handleMessageBroadcast = useCallback(
     ({ groupId, message }) => {
       if (groupId === activeMessageGroup?.groupId) {
-        Nui.send('phone:fetchMessages', { groupId: activeMessageGroup.groupId });
+        Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: activeMessageGroup.groupId });
+        if (pathname.includes('messages/conversations')) {
+          // Dont trigger notification if conversation is open.
+          return;
+        }
       }
       setNotification({ groupId, message });
     },
-    [activeMessageGroup, setNotification],
+    [activeMessageGroup, pathname, setNotification],
   );
 
   const _setMessageGroups = useCallback(
@@ -50,10 +57,10 @@ export const useMessagesService = () => {
     [activeMessageGroup, setActiveMessageGroup, setMessageGroups],
   );
 
-  useNuiEvent('MESSAGES', 'phone:fetchMessageGroupsSuccess', _setMessageGroups);
-  useNuiEvent('MESSAGES', 'phone:fetchMessagesSuccess', setMessages);
-  useNuiEvent('MESSAGES', 'phone:createMessageGroupSuccess', setCreateMessageGroupResult);
-  useNuiEvent('MESSAGES', 'phone:createMessageGroupFailed', setCreateMessageGroupResult);
-  useNuiEvent('MESSAGES', 'createMessagesBroadcast', handleMessageBroadcast);
-  useNuiEvent('MESSAGES', 'phone:setMessagesAlert', handleAddAlert);
+  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, _setMessageGroups);
+  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGES_SUCCESS, setMessages);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, setCreateMessageGroupResult);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_FAILED, setCreateMessageGroupResult);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
+  useNuiEvent('MESSAGES', MessageEvents.ACTION_RESULT, handleAddAlert);
 };
