@@ -3,7 +3,7 @@ import { IAlertProps } from '../../typings/alerts';
 import { sendMarketplaceEvent } from '../utils/messages';
 
 onNet(MarketplaceEvents.SEND_LISTING, (listings: MarketplaceListing[]) => {
-  sendMarketplaceEvent('setListings', listings);
+  sendMarketplaceEvent(MarketplaceEvents.SEND_LISTING, listings);
 });
 
 RegisterNuiCallbackType(MarketplaceEvents.ADD_LISTING);
@@ -33,5 +33,5 @@ onNet(MarketplaceEvents.DELETE_LISTING_SUCCESS, () => {
 });
 
 onNet(MarketplaceEvents.ACTION_RESULT, (alert: IAlertProps) => {
-  sendMarketplaceEvent('setAlert', alert);
+  sendMarketplaceEvent(MarketplaceEvents.SEND_ALERT, alert);
 });
