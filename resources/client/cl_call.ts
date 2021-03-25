@@ -16,7 +16,7 @@ onNet(CallEvents.START_CALL, (transmitter: string, receiver: string, isTransmitt
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
-      method: 'setCaller',
+      method: CallEvents.SET_CALLER,
       data: {
         active: true,
         transmitter: transmitter,
@@ -40,7 +40,7 @@ onNet(CallEvents.WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmi
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
-      method: 'setCaller',
+      method: CallEvents.SET_CALLER,
       data: {
         active: true,
         transmitter: currentCall.transmitter,
@@ -63,7 +63,7 @@ onNet(CallEvents.WAS_REJECTED, () => {
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
-      method: 'setCaller',
+      method: CallEvents.SET_CALLER,
       data: {
         transmitter: null,
         receiver: null,
@@ -93,7 +93,7 @@ onNet(CallEvents.WAS_ENDED, () => {
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
-      method: 'setCaller',
+      method: CallEvents.SET_CALLER,
       data: {
         transmitter: null,
         receiver: null,
@@ -109,7 +109,7 @@ function openCallModal(show: boolean) {
   SendNuiMessage(
     JSON.stringify({
       app: 'CALL',
-      method: 'callModal',
+      method: CallEvents.SET_CALL_MODAL,
       data: show,
     }),
   );
@@ -119,7 +119,7 @@ onNet(CallEvents.SEND_HISTORY, (calls: ICall) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'DIALER',
-      method: 'setHistory',
+      method: CallEvents.SET_CALL_HISTORY,
       data: calls,
     }),
   );
