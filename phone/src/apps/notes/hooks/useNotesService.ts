@@ -3,6 +3,7 @@ import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
 import { noteStates } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { NotesEvents } from '../../../../../typings/notes';
 
 export const useNotesService = () => {
   const { addAlert } = useSnackbar();
@@ -16,6 +17,6 @@ export const useNotesService = () => {
     });
   };
 
-  useNuiEvent('NOTES', 'setNotes', setNotes);
-  useNuiEvent('NOTES', 'setAlert', handleAddAlert);
+  useNuiEvent('NOTES', NotesEvents.SEND_NOTE, setNotes);
+  useNuiEvent('NOTES', NotesEvents.SEND_ALERT, handleAddAlert);
 };
