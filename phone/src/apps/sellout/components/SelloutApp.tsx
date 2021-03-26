@@ -35,8 +35,9 @@ InjectDebugData([
         id: 1,
         name: 'Some guy',
         number: '111-1134',
-        title: 'Car',
-        description: 'Selling this cool car',
+        title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
+        description:
+          'skldfsd sajsfjklsdfj sdajsklfjdsjklas jskj sdjsd jasdkl sdjsf jasdklsfjfj kljasdkf jkaf jsdkla jsk jdkla j kljasdkf jkld jasd kljk',
         url: 'https://beta.iodine.gg/706Y3.jpeg',
       },
       {

@@ -49,7 +49,10 @@ export const ListingForm = () => {
         className={classes.input}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title on listing.."
-        inputProps={{ className: classes.textFieldInput }}
+        inputProps={{
+          className: classes.textFieldInput,
+          maxLength: 25,
+        }}
         style={{ width: '80%' }}
         size="medium"
       />
@@ -68,7 +71,10 @@ export const ListingForm = () => {
         className={classes.input}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        inputProps={{ className: classes.multilineFieldInput }}
+        inputProps={{
+          className: classes.multilineFieldInput,
+          maxLength: 130,
+        }}
         style={{ width: '80%' }}
         size="medium"
         multiline
