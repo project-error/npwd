@@ -13,4 +13,8 @@ export const phoneState = {
     key: 'phoneReady',
     default: false,
   }),
+  phoneTime: atom({
+    key: 'phoneTime',
+    default: null,
+  }),
 };
