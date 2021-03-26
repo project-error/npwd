@@ -6,7 +6,7 @@ export interface IAlert {
   type: AlertType;
 }
 
-export type AlertType = 'success' | 'error' | 'info';
+export type AlertType = 'success' | 'error' | 'info' | 'warning';
 
 interface ISnackBar {
   addAlert: ({ message, type }: IAlert) => void;

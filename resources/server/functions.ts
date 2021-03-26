@@ -49,7 +49,7 @@ export async function getIdentifierByPhoneNumber(
  */
 export function getPlayerFromIdentifier(identifier: string) {
   const player = PlayersByIdentifier.get(identifier);
-  if (!player) mainLogger.error(`Could not find player from identifier: ${identifier}`);
+  if (!player) return null;
   return player;
 }
 

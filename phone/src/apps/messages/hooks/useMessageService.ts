@@ -8,6 +8,7 @@ import { useCallback } from 'react';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useLocation } from 'react-router';
 import { MessageEvents } from '../../../../../typings/messages';
+import { TOptionsBase } from 'i18next';
 
 export const useMessagesService = () => {
   const { pathname } = useLocation();
@@ -22,9 +23,9 @@ export const useMessagesService = () => {
   const { t } = useTranslation();
 
   const handleAddAlert = useCallback(
-    ({ message, type }: IAlert) => {
+    ({ message, type, options = {} }: IAlert & { options: TOptionsBase }) => {
       addAlert({
-        message: t(`APPS_${message}`),
+        message: t(`${message}`, options),
         type,
       });
     },
