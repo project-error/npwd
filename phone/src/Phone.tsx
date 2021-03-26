@@ -15,6 +15,7 @@ import { useApps } from './os/apps/hooks/useApps';
 
 import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
+import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useSelloutService } from './apps/sellout/hooks/useSelloutService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
@@ -66,6 +67,7 @@ function Phone() {
   useSimcardService();
   useContactsService();
   useTwitterService();
+  useMatchService();
   useSelloutService();
   useBankService();
   useMessagesService();

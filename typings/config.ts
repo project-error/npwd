@@ -12,6 +12,10 @@ interface TwitterConfig {
   maxImages: number;
 }
 
+interface MatchConfig {
+  generateProfileNameFromUsers: boolean;
+  allowEdtiableProfileName: boolean;
+}
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug';
   enabled: boolean;
@@ -40,6 +44,7 @@ export interface IServerConfig {
   DestoryChance: number;
   DestroyPhoneReCheck: number;
   twitter: TwitterConfig;
+  match: MatchConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;

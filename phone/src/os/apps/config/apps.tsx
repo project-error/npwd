@@ -13,6 +13,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MessageIcon from '@material-ui/icons/Message';
+import FireIcon from '@material-ui/icons/Whatshot';
 import { CalculatorIcon } from '../../../apps/calculator/components/CalculatorIcon';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
@@ -21,6 +22,7 @@ import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { BankApp } from '../../../apps/bank/components/BankApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
+import { MatchApp } from '../../../apps/match/components/MatchApp';
 import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
@@ -46,6 +48,7 @@ import {
   TWITTER_APP_PRIMARY_COLOR,
   TWITTER_APP_TEXT_COLOR,
 } from '../../../apps/twitter/twitter.theme';
+import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 
 export interface IAppConfig {
   id: string;
@@ -118,6 +121,16 @@ export const APPS: IAppConfig[] = [
     color: common.white,
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
+  },
+  {
+    id: 'MATCH',
+    nameLocale: 'APPS_MATCH',
+    icon: <FireIcon fontSize="large" />,
+    notificationIcon: <FireIcon fontSize="small" />,
+    backgroundColor: MATCH_APP_PRIMARY_COLOR,
+    color: MATCH_APP_TEXT_COLOR,
+    path: '/match',
+    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} />,
   },
   {
     id: 'TWITTER',

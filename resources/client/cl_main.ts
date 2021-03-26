@@ -10,6 +10,7 @@ import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
+import { MatchEvents } from '../../typings/match';
 
 let isPhoneOpen = false;
 let isPhoneReady = false;

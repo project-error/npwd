@@ -516,3 +516,11 @@ onNet(TwitterEvents.REPORT, async (tweetId: number) => {
     });
   }
 });
+
+if (!config.twitter.allowEdtiableProfileName && !config.twitter.generateProfileNameFromUsers) {
+  const warning =
+    `Both allowEdtiableProfileName and generateProfileNameFromUsers ` +
+    `are set false - this means users will likely not have profile names ` +
+    `for the Twitter App and won't be able to use it!`;
+  twitterLogger.warn(warning);
+}

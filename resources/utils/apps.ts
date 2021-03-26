@@ -1,5 +1,6 @@
 export default {
   TWITTER: 'TWITTER',
+  MATCH: 'MATCH',
   MESSAGES: 'MESSAGES',
   NOTES: 'NOTES',
   MARKETPLACE: 'SELLOUT',

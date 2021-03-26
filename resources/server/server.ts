@@ -9,6 +9,7 @@ import './sv_bank';
 import './sv_notes';
 import './sv_photo';
 import './sv_messages';
+import './sv_match';
 import './sv_call';
 import './players/sv_player_events';
 import { mainLogger } from './sv_logger';

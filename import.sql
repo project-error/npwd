@@ -54,6 +54,33 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
   CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `npwd_match_profiles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(255) NOT NULL,
+  `name` varchar(90) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `bio` varchar(512) DEFAULT NULL,
+  `location` varchar(45) DEFAULT NULL,
+  `job` varchar(45) DEFAULT NULL,
+  `tags` varchar(255) NOT NULL DEFAULT '',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  UNIQUE KEY `identifier_UNIQUE` (`identifier`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `npwd_match_views` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(40) NOT NULL,
+  `profile` int NOT NULL,
+  `liked` tinyint DEFAULT '0',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `match_profile_idx` (`profile`),
+  CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS npwd_notes (
   id int(11) NOT NULL AUTO_INCREMENT,

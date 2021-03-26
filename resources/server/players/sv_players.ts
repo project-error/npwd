@@ -104,11 +104,14 @@ async function getCleanedPlayerInfo(identifier: string): Promise<PlayerQueryResp
  * Generate a profile name by the player's name and/or phone number
  * @param identifier - player's identifier
  */
-export async function generateProfileName(identifier: string): Promise<string | null> {
+export async function generateProfileName(
+  identifier: string,
+  delimiter: string = '_',
+): Promise<string | null> {
   const { firstname, lastname, phone_number } = await getCleanedPlayerInfo(identifier);
 
   if (firstname && lastname) {
-    return `${firstname}_${lastname}`;
+    return `${firstname}${delimiter}${lastname}`;
   } else if (firstname) {
     return firstname;
   } else if (lastname) {
