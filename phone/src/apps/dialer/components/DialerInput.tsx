@@ -50,6 +50,7 @@ export const DialerInput = () => {
         className={classes.input}
         value={inputVal}
         onChange={(e) => set(e.target.value)}
+        type="number"
       />
       <IconButton color="primary" className={classes.iconBtn} disabled={inputVal <= ''}>
         <PhoneIcon fontSize="large" onClick={() => handleCall(inputVal)} />
