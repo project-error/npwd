@@ -6,7 +6,7 @@ import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { MarketplaceEvents } from '../../../../../typings/marketplace';
 
-export const useSelloutService = () => {
+export const useMarketplaceService = () => {
   const setSellout = useSetRecoilState(selloutState.listing);
   const { addAlert } = useSnackbar();
   const { t } = useTranslation();

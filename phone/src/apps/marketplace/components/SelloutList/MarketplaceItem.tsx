@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelloutItem = (listing: MarketplaceListing) => {
+export const MarketplaceItem = (listing: MarketplaceListing) => {
   const classes = useStyles();
 
   return (

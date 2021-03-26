@@ -4,6 +4,7 @@ import Nui from '../../../../os/nui-events/utils/Nui';
 import { MarketplaceEvents } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ export const ListingForm = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
+  const history = useHistory();
 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
@@ -45,6 +47,7 @@ export const ListingForm = () => {
         url,
         description,
       });
+      history.push('/marketplace');
     } else {
       addAlert({
         message: t('APPS_MARKETPLACE_REQUIRED_FIELDS'),

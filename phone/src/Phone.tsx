@@ -16,7 +16,7 @@ import { useApps } from './os/apps/hooks/useApps';
 import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMatchService } from './apps/match/hooks/useMatchService';
-import { useSelloutService } from './apps/sellout/hooks/useSelloutService';
+import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
@@ -68,7 +68,7 @@ function Phone() {
   useContactsService();
   useTwitterService();
   useMatchService();
-  useSelloutService();
+  useMarketplaceService();
   useBankService();
   useMessagesService();
   useNotesService();
