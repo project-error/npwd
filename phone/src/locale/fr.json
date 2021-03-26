@@ -2,6 +2,37 @@
   "translation": {
     "DATE_FORMAT": "DD/MM/AAAA",
     "DATE_TIME_FORMAT": "DD/MM/AAAA hh:mm A",
+    "SETTINGS": {
+      "CATEGORY": {
+        "APPEARANCE": "Apparence",
+        "PHONE": "Téléphone",
+        "ACTIONS": "Actions"
+      },
+      "OPTIONS": {
+        "LANGUAGE": "Langage",
+        "RESET_SETTINGS": "Réinitialiser",
+        "RESET_SETTINGS_DESC": "Cette action effacera toutes les données stockées"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
+        "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
+      }
+    },
+    "RELATIVE_TIME": {
+      "future": "dans %s",
+      "past": "%s plus tôt",
+      "s": "quelques secondes",
+      "m": "une minute",
+      "mm": "%d minutes",
+      "h": "une heure",
+      "hh": "%d heures",
+      "d": "un jour",
+      "dd": "%d jours",
+      "M": "un mois",
+      "MM": "%d mois",
+      "y": "un an",
+      "yy": "%d ans"
+    },
 
     "COMING_SOON": "En cours...",
     "INITIALIZING": "Initialisation",
@@ -25,6 +56,7 @@
     "APPS_DIALER_ACCEPT_CALL": "Accepter",
     "APPS_DIALER_REJECT_CALL": "Rejeter",
     "APPS_DIALER_END_CALL": "Raccrocher",
+    "APPS_DIALER_NO_HISTORY": "Aucun historique d'appel",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
@@ -44,10 +76,13 @@
     "APPS_TWITTER_CREATE_SUCCESS": "Tweet envoyé avec succès",
     "APPS_TWITTER_CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
     "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL Photo de profil",
-    "APPS_TWITTER_EDIT_PROFILE_NAME": "Nom de profil",
+    "APPS_TWITTER_EDIT_PROFILE_NAME": "Pseudonyme",
+    "APPS_TWITTER_EDIT_DEFAULT_PROFILE_NAME": "Choisir un pseudonyme",
     "APPS_TWITTER_EDIT_PROFILE_BIO": "Bio",
     "APPS_TWITTER_EDIT_PROFILE_LOCATION": "Localisation",
     "APPS_TWITTER_EDIT_PROFILE_JOB": "Job",
+    "APPS_TWITTER_CREATE_PROFILE_SUCCESS": "Profil créé avec succès",
+    "APPS_TWITTER_CREATE_PROFILE_FAILURE": "Erreur lors de la création de votre profil",
     "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès !",
     "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Erreur lors de la mise à jour de votre profil",
     "APPS_TWITTER_RETWEET_EXISTS": "Vous avez déjà retweeté ce tweet!",
@@ -115,11 +150,13 @@
     "APPS_SETTINGS_OPTION_FRAME": "Coque",
     "APPS_SETTINGS_OPTION_THEME": "Thème",
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
+    "APPS_SETTINGS_OPTION_STREAMER_MODE": "Mode streamer",
     "APPS_SETTINGS_OPTION_RINGTONE": "Sonnerie",
     "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume de la sonnerie",
     "APPS_SETTINGS_OPTION_NOTIFICATION_FILTER": "Filtre de notification",
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume des notifications",
+    "APPS_SETTING_STREAMER_MODE_DESC": "Masquer les images avant de les montrer",
     
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
@@ -128,6 +165,7 @@
     "APPS_MARKETPLACE_REPORT_LISTING_FAILED": "Cette liste a déjà été signalée",
     "APPS_MARKETPLACE_REPORT_LISTING_SUCCESS": "Liste signalée avec succès",
 
+    "GENERIC_CLICK_TO_REVEAL": "Cliquer pour afficher",
     "GENERIC_WAIT": "Veuillez patienter...",
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
