@@ -116,7 +116,7 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_ALL_NUMBERS_FAILED": "None of the phone numbers could be found!",
-    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "Some phone numbers could not be found: {{ numbers }}",
+    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "Inexistent number(s): {{ numbers }}",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
     "APPS_MESSAGES_UNREAD_MESSAGES": "You have {{ count }} unread messages",
     "APPS_MESSAGES_MEMBERS_TITLE": "Members",
