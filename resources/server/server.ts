@@ -4,7 +4,7 @@ import './db';
 import './sv_twitter';
 import './sv_main';
 import './sv_contacts';
-import './sv_sellout';
+import './sv_marketplace';
 import './sv_bank';
 import './sv_notes';
 import './sv_photo';
