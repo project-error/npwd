@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
-import { CallProps } from '../../../../../typings/call';
+import { CallEvents, CallProps } from '../../../../../typings/call';
 import InjectDebugData from '../../debug/InjectDebugData';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -61,6 +61,6 @@ export const useCallService = () => {
     setCall(_call);
     setNotification(_call);
   };
-  useNuiEvent<CallProps>('CALL', 'setCaller', _setCall, call);
-  useNuiEvent<boolean>('CALL', 'callModal', setModal);
+  useNuiEvent<CallProps>('CALL', CallEvents.SET_CALLER, _setCall, call);
+  useNuiEvent<boolean>('CALL', CallEvents.SET_CALL_MODAL, setModal);
 };

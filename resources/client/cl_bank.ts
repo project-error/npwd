@@ -1,11 +1,12 @@
 import { IAlertProps } from '../../typings/alerts';
 import { BankEvents } from '../../typings/bank';
+import { PhoneEvents } from '../../typings/phone';
 
 onNet(BankEvents.SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setTransaction',
+      method: BankEvents.SEND_TRANSFERS,
       data: transfer,
     }),
   );
@@ -15,7 +16,7 @@ onNet(BankEvents.SEND_CREDENTIALS, (credentials: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setCredentials',
+      method: BankEvents.SEND_CREDENTIALS,
       data: credentials,
     }),
   );
@@ -35,7 +36,7 @@ onNet(BankEvents.TRANSACTION_ALERT, (result: IAlertProps) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setAlert',
+      method: BankEvents.SEND_ALERT,
       data: result,
     }),
   );
@@ -45,7 +46,7 @@ onNet(BankEvents.TRANSACTION_NOTIFICATION, (transfer: any) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'BANK',
-      method: 'setNotification',
+      method: BankEvents.SEND_NOTIFICATION,
       data: transfer,
     }),
   );

@@ -20,4 +20,5 @@ export enum MarketplaceEvents {
   REPORT_LISTING = 'npwd:reportListing',
   REPORT_LISTING_SUCCESS = 'npwd:reportListingSuccess',
   REPORT_LISTING_SUCESS = 'npwd:reportListingFailed',
+  SEND_ALERT = 'nwpd:sendListingAlert',
 }

@@ -4,6 +4,7 @@ import { contactsState } from './state';
 import { useContacts } from './useContacts';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { ContactEvents } from '../../../../../typings/contact';
 
 export const useContactsService = () => {
   const setContacts = useSetRecoilState(contactsState.contacts);
@@ -17,7 +18,7 @@ export const useContactsService = () => {
     });
   };
 
-  useNuiEvent('CONTACTS', 'setContacts', setContacts);
-  useNuiEvent('CONTACTS', 'setAlert', handleAddAlert);
+  useNuiEvent('CONTACTS', ContactEvents.SEND_CONTACTS, setContacts);
+  useNuiEvent('CONTACTS', ContactEvents.SEND_ALERT, handleAddAlert);
   return useContacts();
 };

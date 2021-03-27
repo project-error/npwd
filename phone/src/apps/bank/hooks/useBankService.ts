@@ -6,6 +6,8 @@ import { useSetRecoilState } from 'recoil';
 import { useBankNotification } from './useBankNotification';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { BankEvents } from '../../../../../typings/bank';
+import { PhoneEvents } from '../../../../../typings/phone';
 
 export const useBankService = () => {
   const setTransaction = useSetRecoilState(bankState.transactions);
@@ -21,9 +23,9 @@ export const useBankService = () => {
     });
   };
 
-  useNuiEvent('BANK', 'setTransaction', setTransaction);
-  useNuiEvent('BANK', 'setCredentials', setCredentials);
-  useNuiEvent('BANK', 'setAlert', handleAddAlert);
-  useNuiEvent('BANK', 'setNotification', setNotification);
+  useNuiEvent('BANK', BankEvents.SEND_TRANSFERS, setTransaction);
+  useNuiEvent('BANK', BankEvents.SEND_CREDENTIALS, setCredentials);
+  useNuiEvent('BANK', BankEvents.SEND_ALERT, handleAddAlert);
+  useNuiEvent('BANK', BankEvents.SEND_NOTIFICATION, setNotification);
   return { useTransactions, useCredentials, useBankNotification };
 };

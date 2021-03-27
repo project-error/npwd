@@ -8,4 +8,6 @@ export enum PhoneEvents {
   OPEN_APP_DAILER = 'npwd:app:DIALER',
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',
+  SET_ALERT = 'npwd:setAlert',
+  SET_NOTIFICATION = 'npwd:setNotification',
 }

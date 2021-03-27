@@ -2,7 +2,7 @@ import { ContactEvents } from '../../typings/contact';
 import { sendContactsEvent } from '../utils/messages';
 
 onNet(ContactEvents.SEND_CONTACTS, (contacts: any) => {
-  sendContactsEvent('setContacts', contacts);
+  sendContactsEvent(ContactEvents.SEND_CONTACTS, contacts);
 });
 
 RegisterNuiCallbackType(ContactEvents.ADD_CONTACT);
@@ -36,5 +36,5 @@ onNet(ContactEvents.DELETE_CONTACT_SUCCESS, () => {
 });
 
 onNet(ContactEvents.ACTION_RESULT, (alert: any) => {
-  sendContactsEvent('setAlert', alert);
+  sendContactsEvent(ContactEvents.SEND_ALERT, alert);
 });

@@ -4,6 +4,7 @@ import { useListing } from './useListing';
 import { useSetRecoilState } from 'recoil';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { MarketplaceEvents } from '../../../../../typings/marketplace';
 
 export const useSelloutService = () => {
   const setSellout = useSetRecoilState(selloutState.listing);
@@ -17,7 +18,7 @@ export const useSelloutService = () => {
     });
   };
 
-  useNuiEvent('SELLOUT', 'setAlert', handleAddAlert);
-  useNuiEvent('SELLOUT', 'setListings', setSellout);
+  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_ALERT, handleAddAlert);
+  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_LISTING, setSellout);
   return useListing();
 };

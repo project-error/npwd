@@ -2,7 +2,7 @@ import { NotesEvents } from '../../typings/notes';
 import { sendNotesEvent } from '../utils/messages';
 
 onNet(NotesEvents.SEND_NOTE, (notes: any) => {
-  sendNotesEvent('setNotes', notes);
+  sendNotesEvent(NotesEvents.SEND_NOTE, notes);
 });
 
 RegisterNuiCallbackType(NotesEvents.ADD_NOTE);
@@ -35,5 +35,5 @@ onNet(NotesEvents.UPDATE_NOTE_SUCCESS, () => {
 });
 
 onNet(NotesEvents.ACTION_RESULT, (alert: any) => {
-  sendNotesEvent('setAlert', alert);
+  sendNotesEvent(NotesEvents.SEND_ALERT, alert);
 });
