@@ -150,7 +150,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
     path: '/marketplace',
-    Route: () => <AppRoute id="SELLOUT" path="/marketplace" component={MarketplaceApp} />,
+    Route: () => <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} />,
   },
   {
     id: 'NOTES',
