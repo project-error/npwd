@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelloutItem = (listing: MarketplaceListing) => {
+export const MarketplaceItem = (listing: MarketplaceListing) => {
   const classes = useStyles();
 
   return (
@@ -62,7 +62,7 @@ export const SelloutItem = (listing: MarketplaceListing) => {
             </Typography>
           )}
 
-          <Typography variant="h6" style={{ padding: 10 }}>
+          <Typography variant="body1" style={{ padding: 10 }}>
             {listing.description}
           </Typography>
           <ListingActions listing={listing} />

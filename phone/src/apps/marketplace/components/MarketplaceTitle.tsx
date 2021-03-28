@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelloutTitle = () => {
+export const MarketplaceTitle = () => {
   const classes = useStyles();
   return (
     <Paper className={classes.root} square variant="outlined" elevation={24}>

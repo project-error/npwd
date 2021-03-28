@@ -1,28 +1,28 @@
 import React from 'react';
 import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { AppContent } from '../../../ui/components/AppContent';
-import { SelloutTitle } from './SelloutTitle';
-import { SelloutListContainer } from './SelloutList/SelloutListContainer';
+import { MarketplaceTitle } from './MarketplaceTitle';
+import { MarketplaceListContainer } from './SelloutList/MarketplaceListContainer';
 import { NavigationBar } from './navigation/NavigationBar';
 import { Switch, Route } from 'react-router-dom';
 import { ListingFormContainer } from './form/ListingFormContainer';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
-import { SelloutThemeProvider } from '../providers/SelloutThemeProvider';
+import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
 
-export const SelloutApp = () => {
+export const MarketplaceApp = () => {
   return (
-    <SelloutThemeProvider>
+    <MarketplaceThemeProvider>
       <AppWrapper id="sellout-app">
-        <SelloutTitle />
+        <MarketplaceTitle />
         <AppContent>
           <Switch>
-            <Route path="/sellout" exact component={SelloutListContainer} />
-            <Route path="/sellout/new" component={ListingFormContainer} />
+            <Route path="/marketplace" exact component={MarketplaceListContainer} />
+            <Route path="/marketplace/new" component={ListingFormContainer} />
           </Switch>
         </AppContent>
         <NavigationBar />
       </AppWrapper>
-    </SelloutThemeProvider>
+    </MarketplaceThemeProvider>
   );
 };
 
@@ -35,8 +35,9 @@ InjectDebugData([
         id: 1,
         name: 'Some guy',
         number: '111-1134',
-        title: 'Car',
-        description: 'Selling this cool car',
+        title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
+        description:
+          'skldfsd sajsfjklsdfj sdajsklfjdsjklas jskj sdjsd jasdkl sdjsf jasdklsfjfj kljasdkf jkaf jsdkla jsk jdkla j kljasdkf jkld jasd kljk',
         url: 'https://beta.iodine.gg/706Y3.jpeg',
       },
       {

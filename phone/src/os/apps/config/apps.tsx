@@ -25,7 +25,7 @@ import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
-import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
+import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
@@ -41,7 +41,7 @@ import {
 import {
   SELLOUT_APP_PRIMARY_COLOR,
   SELLOUT_APP_ICON_COLOR,
-} from '../../../apps/sellout/sellout.theme';
+} from '../../../apps/marketplace/marketplace.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 import {
@@ -149,8 +149,8 @@ export const APPS: IAppConfig[] = [
     notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size="xs" />,
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
-    path: '/sellout',
-    Route: () => <AppRoute id="SELLOUT" path="/sellout" component={SelloutApp} />,
+    path: '/marketplace',
+    Route: () => <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} />,
   },
   {
     id: 'NOTES',
