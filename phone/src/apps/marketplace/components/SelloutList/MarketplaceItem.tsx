@@ -31,6 +31,14 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
     marginBottom: 20,
   },
+  listingContent: {
+    padding: 10,
+    minWidth: 100,
+    maxWidth: '100%',
+    width: '100%',
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
+  },
 }));
 
 export const MarketplaceItem = (listing: MarketplaceListing) => {
@@ -62,7 +70,7 @@ export const MarketplaceItem = (listing: MarketplaceListing) => {
             </Typography>
           )}
 
-          <Typography variant="body1" style={{ padding: 10 }}>
+          <Typography variant="body1" className={classes.listingContent}>
             {listing.description}
           </Typography>
           <ListingActions listing={listing} />

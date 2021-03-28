@@ -8,6 +8,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ListingFormContainer } from './form/ListingFormContainer';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
+import { MarketplaceEvents } from '../../../../../typings/marketplace';
 
 export const MarketplaceApp = () => {
   return (
@@ -29,7 +30,7 @@ export const MarketplaceApp = () => {
 InjectDebugData([
   {
     app: 'SELLOUT',
-    method: 'setListings',
+    method: MarketplaceEvents.SEND_LISTING,
     data: [
       {
         id: 1,
@@ -37,7 +38,7 @@ InjectDebugData([
         number: '111-1134',
         title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
         description:
-          'skldfsd sajsfjklsdfj sdajsklfjdsjklas jskj sdjsd jasdkl sdjsf jasdklsfjfj kljasdkf jkaf jsdkla jsk jdkla j kljasdkf jkld jasd kljk',
+          'skldfsdEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
         url: 'https://beta.iodine.gg/706Y3.jpeg',
       },
       {
