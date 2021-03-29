@@ -452,7 +452,15 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
       });
     }
 
-    if (result.failedNumbers.length) {
+    if (result.failedNumbers.length === 1) {
+      emitNet(MessageEvents.ACTION_RESULT, _source, {
+        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED`,
+        type: 'warning',
+        options: { number: result.failedNumbers[0] },
+      });
+    }
+
+    if (result.failedNumbers.length > 1) {
       emitNet(MessageEvents.ACTION_RESULT, _source, {
         message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED`,
         type: 'warning',
