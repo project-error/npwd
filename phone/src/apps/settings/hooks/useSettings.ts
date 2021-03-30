@@ -23,6 +23,7 @@ const settingsSchema: Schema = {
   properties: {
     language: { $ref: '/SettingOption' },
     wallpaper: { $ref: '/SettingOption' },
+    customWallpaper: { $ref: '/SettingOption' },
     frame: { $ref: '/SettingOption' },
     theme: { $ref: '/SettingOption' },
     zoom: { $ref: '/SettingOption' },
@@ -63,6 +64,7 @@ export function isSettingsSchemaValid(): boolean {
 export interface IPhoneSettings {
   language: SettingOption;
   wallpaper: SettingOption;
+  customWallpaper: string;
   frame: SettingOption;
   theme: SettingOption;
   zoom: SettingOption;
@@ -110,10 +112,20 @@ export const settingsState = atom({
   effects_UNSTABLE: [localStorageEffect(NPWD_STORAGE_KEY)],
 });
 
+const customWallpaperState = atom({
+  key: 'customWallpaperState',
+  default: false,
+});
+
 export const useSettings = () => {
   return useRecoilState(settingsState);
 };
 
 export const useResetSettings = () => {
   return useResetRecoilState(settingsState);
+};
+
+export const useCustomWallpaperModal = () => {
+  const [customWallpaperModal, setCustomWallpaperModal] = useRecoilState(customWallpaperState);
+  return { customWallpaperModal, setCustomWallpaperModal };
 };

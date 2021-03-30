@@ -180,6 +180,7 @@
 
     "APPS_SETTINGS_PHONE_NUMBER": "Phone Number",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Wallpaper",
+    "APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER": "Custom Wallpaper",
     "APPS_SETTINGS_OPTION_FRAME": "Frame",
     "APPS_SETTINGS_OPTION_THEME": "Theme",
     "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
@@ -190,6 +191,7 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
     "APPS_SETTING_STREAMER_MODE_DESC": "Hide images before they are shown",
+    "APPS_SETTINGS_SET_CUSTOM_WALLPAPER": "Set new wallpaper",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPLACE_CREATE_LISTING_FAILED": "Failed to create a new listing",

@@ -10,7 +10,10 @@ import {
   Tooltip,
   Typography,
   Switch,
+  TextField,
 } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
+import { PictureThumbnail } from '../../../ui/components/PictureThumbnail';
 
 interface ISettingItem {
   options?: any;
@@ -105,4 +108,16 @@ export const SettingItemIconAction = ({
       </ListItemSecondaryAction>
     </ListItem>
   </>
+);
+
+export const SettingItemModal = ({ icon, label, secondary, onClick }) => (
+  <ListItem divider>
+    <ListItemIcon>{icon}</ListItemIcon>
+    <ListItemText primary={label} secondary={secondary} />
+    <ListItemSecondaryAction>
+      <IconButton onClick={onClick}>
+        <CreateIcon />
+      </IconButton>
+    </ListItemSecondaryAction>
+  </ListItem>
 );
