@@ -7,7 +7,7 @@ const useStyles = makeStyles(() => ({
   root: {
     position: 'absolute',
     bottom: '75px',
-    right: '15px',
+    right: '10px',
   },
   button: {
     background: '#00acee',
