@@ -30,6 +30,8 @@ export interface CreateMessageGroupResult {
   groupId?: string;
   mine?: boolean;
   identifiers?: string[];
+  allNumbersFailed?: boolean;
+  failedNumbers: string[];
 }
 
 export interface CreateMessageBroadcast {

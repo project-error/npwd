@@ -47,9 +47,9 @@ export async function getIdentifierByPhoneNumber(
  * Returns the player phoneNumber for a passed identifier
  * @param identifier The players phone number
  */
-export function getPlayerFromIdentifier(identifier: string) {
+export function getPlayerFromIdentifier(identifier: string): Player | null {
   const player = PlayersByIdentifier.get(identifier);
-  if (!player) mainLogger.error(`Could not find player from identifier: ${identifier}`);
+  if (!player) return null;
   return player;
 }
 

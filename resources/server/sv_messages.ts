@@ -356,19 +356,29 @@ async function createMessageGroupsFromPhoneNumbers(
 ): Promise<CreateMessageGroupResult> {
   // we check that each phoneNumber exists before we create the group
   const identifiers: string[] = [];
+  const failedNumbers: string[] = [];
+
   for (const phoneNumber of phoneNumbers) {
-    const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
-    identifiers.push(identifier);
+    try {
+      const identifier = await getIdentifierFromPhoneNumber(phoneNumber);
+      identifiers.push(identifier);
+    } catch (e) {
+      failedNumbers.push(phoneNumber);
+    }
+  }
+
+  if (phoneNumbers.length === failedNumbers.length) {
+    return { error: true, allNumbersFailed: true, failedNumbers };
   }
 
   // don't allow explicitly adding yourself
   if (identifiers.some((identifier) => identifier === userIdentifier)) {
-    return { error: true, mine: true };
+    return { error: true, mine: true, failedNumbers };
   }
 
   const groupId = createGroupHashID([userIdentifier, ...identifiers]);
   if (await checkIfMessageGroupExists(groupId)) {
-    return { error: false, duplicate: true, groupId, identifiers };
+    return { error: false, duplicate: true, groupId, identifiers, failedNumbers };
   }
 
   const queryPromises = [
@@ -388,7 +398,7 @@ async function createMessageGroupsFromPhoneNumbers(
   // group exist while other are left off.
   await withTransaction(queryPromises);
 
-  return { error: false, groupId, identifiers };
+  return { error: false, groupId, identifiers, failedNumbers };
 }
 
 // getting the participants from groupId.
@@ -426,9 +436,10 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
     const _identifier = getIdentifier(_source);
     const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
-    if (result.error && result.duplicate) {
+    if (result.error && result.allNumbersFailed) {
+      emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, _source, result);
       return emitNet(MessageEvents.ACTION_RESULT, _source, {
-        message: 'MESSAGES_MESSAGE_GROUP_DUPLICATE',
+        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_ALL_NUMBERS_FAILED`,
         type: 'error',
       });
     }
@@ -436,8 +447,24 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
     if (result.error) {
       emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, _source, result);
       return emitNet(MessageEvents.ACTION_RESULT, _source, {
-        message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED`,
         type: 'error',
+      });
+    }
+
+    if (result.failedNumbers.length === 1) {
+      emitNet(MessageEvents.ACTION_RESULT, _source, {
+        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED`,
+        type: 'warning',
+        options: { number: result.failedNumbers[0] },
+      });
+    }
+
+    if (result.failedNumbers.length > 1) {
+      emitNet(MessageEvents.ACTION_RESULT, _source, {
+        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED`,
+        type: 'warning',
+        options: { numbers: result.failedNumbers.join(', ') },
       });
     }
 
@@ -461,7 +488,7 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
   } catch (e) {
     emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, _source);
     emitNet(MessageEvents.ACTION_RESULT, _source, {
-      message: `MESSAGES_MESSAGE_GROUP_CREATE_FAILED:`,
+      message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED`,
       type: 'error',
     });
     messageLogger.error(`Failed to create message group, ${e.message}`, {
@@ -513,14 +540,8 @@ onNet(MessageEvents.SEND_MESSAGE, async (groupId: string, message: string, group
       }
     }
   } catch (e) {
-    // Not really sure what this does? As I cant find any reference
-    // of this in the ui part.
-    emitNet(MessageEvents.SEND_MESSAGE_FAILED, _source);
-    // sending a new alert
-    // The message property is always using the locale strings without
-    // the APPS_ prefix.
     emitNet(MessageEvents.ACTION_RESULT, _source, {
-      message: 'MESSAGES_NEW_MESSAGE_FAILED',
+      message: 'APPS_MESSAGES_NEW_MESSAGE_FAILED',
       type: 'error',
     });
     messageLogger.error(`Failed to send message, ${e.message}`, {
