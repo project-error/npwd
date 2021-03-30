@@ -33,7 +33,6 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
-import set = Reflect.set;
 
 function Phone() {
   const { t, i18n } = useTranslation();
