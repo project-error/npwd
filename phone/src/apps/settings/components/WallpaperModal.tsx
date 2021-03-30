@@ -37,11 +37,8 @@ export default function WallpaperModal() {
   };
 
   const handleNewWallpaper = () => {
-    handleSettingChange('customWallpaper', value);
-  };
-
-  const handleRemoveWallpaper = () => {
-    handleSettingChange('customWallpaper', '');
+    handleSettingChange('wallpaper', { label: 'Custom Wallpaper', value });
+    setCustomWallpaperModal(false);
   };
 
   return (
@@ -59,6 +56,7 @@ export default function WallpaperModal() {
         <TextField
           value={value}
           variant="outlined"
+          size="small"
           className={classes.input}
           onChange={(e) => setValue(e.currentTarget.value)}
           inputProps={{
@@ -75,11 +73,6 @@ export default function WallpaperModal() {
         >
           {t('APPS_SETTINGS_SET_CUSTOM_WALLPAPER')}
         </Button>
-        {settings.customWallpaper && (
-          <StatusButton color="error" variant="contained" onClick={handleRemoveWallpaper}>
-            {t('GENERIC_DELETE')}
-          </StatusButton>
-        )}
       </Box>
     </Modal>
   );

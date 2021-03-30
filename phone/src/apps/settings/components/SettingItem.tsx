@@ -109,15 +109,3 @@ export const SettingItemIconAction = ({
     </ListItem>
   </>
 );
-
-export const SettingItemModal = ({ icon, label, secondary, onClick }) => (
-  <ListItem divider>
-    <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={label} secondary={secondary} />
-    <ListItemSecondaryAction>
-      <IconButton onClick={onClick}>
-        <CreateIcon />
-      </IconButton>
-    </ListItemSecondaryAction>
-  </ListItem>
-);
