@@ -23,7 +23,7 @@ const settingsSchema: Schema = {
   properties: {
     language: { $ref: '/SettingOption' },
     wallpaper: { $ref: '/SettingOption' },
-    customWallpaper: { $ref: '/SettingOption' },
+    customWallpaper: { type: 'string' },
     frame: { $ref: '/SettingOption' },
     theme: { $ref: '/SettingOption' },
     zoom: { $ref: '/SettingOption' },
