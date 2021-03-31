@@ -56,7 +56,11 @@
     "APPS_DIALER_ACCEPT_CALL": "Atender",
     "APPS_DIALER_REJECT_CALL": "Rejeitar",
     "APPS_DIALER_END_CALL": "Fim",
+    "APPS_DIALER_INPUT_PLACEHOLDER": "Insira um númeror",
     "APPS_DIALER_NO_HISTORY": "Você não tem histórico de chamadas",
+    "APPS_DIALER_NAVBAR_HISTORY": "Histórico",
+    "APPS_DIALER_NAVBAR_DIAL": "Discar",
+    "APPS_DIALER_NAVBAR_CONTACTS": "Contatos",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "O que está acontecendo?",
