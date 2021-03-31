@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `npwd_match_profiles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `identifier_UNIQUE` (`identifier`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_match_views` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `npwd_match_views` (
   PRIMARY KEY (`id`),
   KEY `match_profile_idx` (`profile`),
   CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE IF NOT EXISTS npwd_notes (
   id int(11) NOT NULL AUTO_INCREMENT,
