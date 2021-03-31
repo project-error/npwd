@@ -105,8 +105,8 @@ function Phone() {
               className="PhoneScreen"
               style={{
                 backgroundImage:
-                  settings.wallpaper.label === 'Custom Wallpaper'
-                    ? `url(${settings.customWallpaper})`
+                  settings.wallpaper.label === t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER')
+                    ? `url(${settings.wallpaper.value})`
                     : `url(media/backgrounds/${settings.wallpaper.value})`,
               }}
             >

@@ -73,10 +73,7 @@ export const SettingsApp = () => {
 
   const wallpapers = config.wallpapers.map(
     MapSettingItem(settings.wallpaper, (val: SettingOption) => {
-      if (val.label === 'Custom Wallpaper') {
-        setCustomWallpaperModal(true);
-      }
-      return handleSettingChange('wallpaper', val);
+      handleSettingChange('wallpaper', val);
     }),
   );
   const frames = config.frames.map(
@@ -129,6 +126,13 @@ export const SettingsApp = () => {
       label: t('SETTINGS.OPTIONS.RESET_SETTINGS'),
     },
   ];
+
+  const customWallpaper: IContextMenuOption = {
+    selected: false,
+    onClick: () => setCustomWallpaperModal(true),
+    key: 'CUSTOM_WALLPAPER',
+    label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
+  };
 
   const handleCopyPhoneNumber = () => {
     setClipboard(simcard.number);
@@ -211,7 +215,7 @@ export const SettingsApp = () => {
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
             value={settings.wallpaper.label}
-            options={wallpapers}
+            options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
