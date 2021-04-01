@@ -192,6 +192,7 @@
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
     "APPS_SETTING_STREAMER_MODE_DESC": "Hide images before they are shown",
     "APPS_SETTINGS_SET_CUSTOM_WALLPAPER": "Set new wallpaper",
+    "APPS_SETTINGS_INVALID_WALLPAPER": "Not a valid image or link!",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPLACE_CREATE_LISTING_FAILED": "Failed to create a new listing",

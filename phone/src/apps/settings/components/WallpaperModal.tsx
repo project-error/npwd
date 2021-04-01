@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Modal from '../../../ui/components/Modal';
 import { useCustomWallpaperModal, useSettings } from '../hooks/useSettings';
-import { Box, Button, TextField } from '@material-ui/core';
+import { Box, Button, TextField, Typography } from '@material-ui/core';
 import { PictureThumbnail } from '../../../ui/components/PictureThumbnail';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { StatusButton } from '../../../ui/components/StatusButton';
+import DialogForm from '../../../ui/components/DialogForm';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 
 const useStyles = makeStyles({
   input: {
@@ -21,15 +21,11 @@ export default function WallpaperModal() {
   const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
-  const [value, setValue] = useState(settings.customWallpaper ? settings.customWallpaper : '');
-  const classes = useStyles();
+  const [value, setValue] = useState('');
+  const { addAlert } = useSnackbar();
 
-  const isImage = (url) => {
+  const isImageAndUrl = (url) => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
-  };
-
-  const handleCloseModal = () => {
-    setCustomWallpaperModal(false);
   };
 
   const handleSettingChange = (key: string | number, value: unknown) => {
@@ -37,43 +33,31 @@ export default function WallpaperModal() {
   };
 
   const handleNewWallpaper = () => {
-    handleSettingChange('wallpaper', { label: 'Custom Wallpaper', value });
-    setCustomWallpaperModal(false);
+    if (isImageAndUrl(value)) {
+      handleSettingChange('wallpaper', {
+        label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
+        value,
+      });
+      setCustomWallpaperModal(false);
+    } else {
+      addAlert({ message: t('APPS_SETTINGS_INVALID_WALLPAPER'), type: 'error' });
+    }
   };
 
   return (
-    <Modal visible={customWallpaperModal} handleClose={handleCloseModal}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-        flexDirection="column"
-      >
-        {settings.customWallpaper && (
-          <PictureThumbnail src={settings.customWallpaper} alt="chipisbest" />
-        )}
-        <TextField
-          value={value}
-          variant="outlined"
-          size="small"
-          className={classes.input}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          inputProps={{
-            className: classes.inputProps,
-          }}
-          placeholder="Image URL"
-        />
-        <Button
-          color="primary"
-          variant="contained"
-          disabled={!isImage(value)}
-          onClick={handleNewWallpaper}
-          style={{ marginBottom: 10 }}
-        >
-          {t('APPS_SETTINGS_SET_CUSTOM_WALLPAPER')}
-        </Button>
-      </Box>
-    </Modal>
+    <DialogForm
+      open={customWallpaperModal}
+      handleClose={() => setCustomWallpaperModal(false)}
+      onSubmit={handleNewWallpaper}
+      title="Custom wallpaper"
+      content="Set a custom wallpaper by entering the URL of the image below!"
+    >
+      <TextField
+        value={value}
+        onChange={(e) => setValue(e.currentTarget.value)}
+        placeholder="Image URL"
+        fullWidth
+      />
+    </DialogForm>
   );
 }
