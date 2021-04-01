@@ -7,9 +7,10 @@ import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 import useStyles from './modal.styles';
 import { ICameraPhoto } from '../../hooks/useCamera';
 import { useHistory } from 'react-router-dom';
+import { IPhoto } from '../../../../../../typings/photo';
 
 interface IShareModalProps {
-  meta: ICameraPhoto;
+  meta: IPhoto;
   referal: string;
   onClose(): void;
 }
