@@ -191,6 +191,10 @@
     {
       "label": "Default Light",
       "value": "default-light"
+    },
+    {
+      "label": "Kiddo Dark",
+      "value": "kiddo-dark"
     }
   ],
   "debug": {
