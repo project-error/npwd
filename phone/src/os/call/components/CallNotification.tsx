@@ -24,7 +24,7 @@ export const CallNotification = ({ children }: { children: React.ReactNode }) =>
     <div className={classes.root}>
       <Box>{children}</Box>
       <Box className={classes.controls}>
-        <CallControls size="small" />
+        <CallControls isSmall />
       </Box>
     </div>
   );

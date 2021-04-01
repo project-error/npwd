@@ -3,7 +3,7 @@ import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
 import { CallEvents, CallProps } from '../../../../../typings/call';
-import InjectDebugData from '../../debug/InjectDebugData';
+// import InjectDebugData from '../../debug/InjectDebugData';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';
@@ -12,7 +12,7 @@ import { useCallNotifications } from './useCallNotifications';
 // InjectDebugData<CallProps | boolean>([
 //   {
 //     app: 'CALL',
-//     method: 'setCaller',
+//     method: CallEvents.SET_CALLER,
 //     data: {
 //       accepted: true,
 //       isTransmitter: false,
@@ -23,7 +23,7 @@ import { useCallNotifications } from './useCallNotifications';
 //   },
 //   {
 //     app: 'CALL',
-//     method: 'callModal',
+//     method: CallEvents.SET_CALL_MODAL,
 //     data: true,
 //   },
 // ]);

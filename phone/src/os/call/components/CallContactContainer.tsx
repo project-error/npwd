@@ -17,20 +17,20 @@ const CallContactContainer = () => {
 
   const { getDisplayByNumber, getPictureByNumber } = useContacts();
 
+  const getDisplayOrNumber = () =>
+    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+
   return (
     <Box display="flex" alignItems="center">
       <Box style={{ flexGrow: 1 }}>
         <Typography variant="body1">
           {call.isTransmitter ? 'OUTGOING CALL' : 'INCOMING CALL'}
         </Typography>
-        <Typography variant="h4">
-          {call.isTransmitter
-            ? getDisplayByNumber(call?.receiver)
-            : getDisplayByNumber(call?.transmitter)}
-        </Typography>
+        <Typography variant="h4">{getDisplayOrNumber()}</Typography>
       </Box>
       <Avatar
         className={classes.image}
+        alt={getDisplayOrNumber()}
         src={
           call.isTransmitter
             ? getPictureByNumber(call.receiver)

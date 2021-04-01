@@ -9,6 +9,7 @@ import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
 import { makeStyles } from '@material-ui/core/styles';
+import RingingText from './RingingText';
 
 const useStyles = makeStyles({
   root: {
@@ -36,9 +37,9 @@ export const CallModal = () => {
         <Box className={classes.root} padding={5}>
           <Box>
             <CallContactContainer />
-            {call.accepted && <CallTimer />}
+            {call.accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
           </Box>
-          <CallControls size="medium" />
+          <CallControls />
         </Box>
       </AppContent>
     </AppWrapper>

@@ -16,9 +16,13 @@ const useStyles = makeStyles((theme) => ({
     height: 60,
     width: 60,
   },
+  smallIconWrapper: {
+    height: 40,
+    width: 40,
+  },
 }));
 
-export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
+export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const classes = useStyles();
   const history = useHistory();
   const { setModal } = useCallModal();
@@ -42,16 +46,16 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
     endCall();
   };
 
-  const { accepted } = call;
-
-  if (accepted)
+  // We display only the hang up if the call is accepted
+  // or we are the one calling
+  if (call.accepted || call.isTransmitter)
     return (
       <Box display="flex" justifyContent="center" px={2} my={2}>
         <StatusIconButton
           color="error"
-          size={size}
+          size={isSmall ? 'small' : 'medium'}
           onClick={handleEndCall}
-          className={classes.iconWrapper}
+          className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
         >
           <CallEndIcon className={classes.icon} />
         </StatusIconButton>
@@ -62,17 +66,17 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
     <Box display="flex" alignItems="center" justifyContent="space-between" px={2} my={2}>
       <StatusIconButton
         color="error"
-        size={size}
+        size={isSmall ? 'small' : 'medium'}
         onClick={handleRejectCall}
-        className={classes.iconWrapper}
+        className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
       >
         <CallEndIcon className={classes.icon} />
       </StatusIconButton>
       <StatusIconButton
         color="success"
-        size={size}
+        size={isSmall ? 'small' : 'medium'}
         onClick={handleAcceptCall}
-        className={classes.iconWrapper}
+        className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
       >
         <CallIcon className={classes.icon} />
       </StatusIconButton>
