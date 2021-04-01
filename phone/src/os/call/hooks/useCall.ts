@@ -1,11 +1,11 @@
 import { useRecoilState } from 'recoil';
-import { CallProps } from '../../../../../typings/call';
+import { ActiveCall } from '../../../../../typings/call';
 import { callerState } from './state';
 import { CallEvents } from '../../../../../typings/call';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 
 interface CallHook {
-  call: CallProps;
+  call: ActiveCall;
   setCall: (details: any) => void;
   acceptCall(): void;
   rejectCall(): void;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { CallProps } from '../../../../../typings/call';
+import { ActiveCall } from '../../../../../typings/call';
 import { useApp } from '../../apps/hooks/useApps';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
@@ -27,7 +27,7 @@ export const useCallNotifications = () => {
     notificationIcon,
   };
 
-  const setNotification = (call: CallProps) => {
+  const setNotification = (call: ActiveCall) => {
     stop();
     if (!call || !call.active) {
       removeId(NOTIFICATION_ID);

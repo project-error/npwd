@@ -8,7 +8,7 @@ import { ListItem } from '../../../../ui/components/ListItem';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContacts } from '../../../contacts/hooks/useContacts';
-import { CallEvents, ICall } from '../../../../../../typings/call';
+import { CallEvents, CallHistoryItem } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -56,7 +56,7 @@ export const DialerHistory = ({ calls }) => {
 
   return (
     <List disablePadding>
-      {calls.map((call: ICall) =>
+      {calls.map((call: CallHistoryItem) =>
         call.transmitter === myNumber ? (
           <ListItem key={call.id} divider>
             <ListItemIcon>

@@ -1,4 +1,4 @@
-export interface CallProps {
+export interface ActiveCall {
   active: boolean;
   accepted: boolean;
   isTransmitter: boolean;
@@ -6,7 +6,7 @@ export interface CallProps {
   receiver: string;
 }
 
-export interface ICall {
+export interface CallHistoryItem {
   id?: number;
   identifier: string;
   transmitter: string;
@@ -16,13 +16,6 @@ export interface ICall {
   start: number;
   end?: number;
   accepted: boolean;
-}
-
-export interface ICallDuration {
-  ms: number;
-  s: number;
-  m: number;
-  h: number;
 }
 
 export enum CallEvents {

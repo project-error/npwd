@@ -1,11 +1,12 @@
 import { atom } from 'recoil';
+import { ActiveCall } from '../../../../../typings/call';
 
 export const callerState = {
-  currentCall: atom({
+  currentCall: atom<ActiveCall>({
     key: 'currentCall',
     default: null,
   }),
-  callModal: atom({
+  callModal: atom<boolean>({
     key: 'callingModal',
     default: false,
   }),
