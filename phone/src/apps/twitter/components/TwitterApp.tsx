@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Nui from '../../../os/nui-events/utils/Nui';
 import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
