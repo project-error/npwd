@@ -72,6 +72,6 @@ const useMessages = (): IUseMessages => {
     setActiveMessageGroup,
     goToConversation,
   };
-};
+}
 
 export default useMessages;
