@@ -55,7 +55,7 @@ export const useCallService = () => {
     }
   }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
-  const _setCall = (_call: CallProps) => {
+  const _setCall = (_call: ActiveCall) => {
     setCall({ ...call, ..._call });
     setNotification(_call);
   };

@@ -32,6 +32,7 @@ import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
+import dayjs from 'dayjs';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 
 function Phone() {
@@ -150,7 +151,7 @@ function Phone() {
 
 export default Phone;
 
-InjectDebugData([
+InjectDebugData<any>([
   {
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
@@ -160,5 +161,10 @@ InjectDebugData([
     app: 'PHONE',
     method: PhoneEvents.SET_PHONE_READY,
     data: true,
+  },
+  {
+    app: 'PHONE',
+    method: PhoneEvents.SET_TIME,
+    data: dayjs().format('hh:mm'),
   },
 ]);
