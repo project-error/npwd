@@ -112,7 +112,8 @@ export const APPS: IAppConfig[] = [
     path: '/settings',
     Route: () => <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} />,
   },
-  {
+  /* Hiding the bank app while the bank resource gets done */
+  /*{
     id: 'BANK',
     nameLocale: 'APPS_BANK',
     icon: <FontAwesomeIcon icon={faWonSign} />,
@@ -121,7 +122,7 @@ export const APPS: IAppConfig[] = [
     color: common.white,
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
-  },
+  },*/
   {
     id: 'MATCH',
     nameLocale: 'APPS_MATCH',
