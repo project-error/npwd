@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const RingingText = () => {
-  const [text, setText] = useState<string>('Ringing');
+  const { t } = useTranslation();
+  const [text, setText] = useState<string>(t('CALLS.MESSAGES.RINGING'));
   const [step, setStep] = useState<number>(0);
 
   useEffect(() => {
@@ -11,12 +13,12 @@ const RingingText = () => {
         setStep(step + 1);
         setText(text + '.');
       } else {
-        setText('Ringing');
+        setText(t('CALLS.MESSSAGES.RINGING'));
         setStep(0);
       }
     }, 500);
     return () => clearInterval(id);
-  }, [step, text]);
+  }, [step, text, t]);
 
   return <Typography>{text}</Typography>;
 };

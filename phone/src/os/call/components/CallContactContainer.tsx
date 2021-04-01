@@ -3,6 +3,7 @@ import { Avatar, Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useContacts } from '../../../apps/contacts/hooks/useContacts';
 import { useCall } from '../hooks/useCall';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   image: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles({
 });
 
 const CallContactContainer = () => {
+  const { t } = useTranslation();
   const { call } = useCall();
   const classes = useStyles();
 
@@ -24,7 +26,9 @@ const CallContactContainer = () => {
     <Box display="flex" alignItems="center">
       <Box style={{ flexGrow: 1 }}>
         <Typography variant="body1">
-          {call.isTransmitter ? 'OUTGOING CALL' : 'INCOMING CALL'}
+          {call.isTransmitter
+            ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
+            : t('CALLS.MESSAGES.INCOMING').toUpperCase()}
         </Typography>
         <Typography variant="h4">{getDisplayOrNumber()}</Typography>
       </Box>
