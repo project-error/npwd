@@ -1,6 +1,7 @@
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
 import { mainLogger } from './sv_logger';
+import { PhoneEvents } from '../../typings/phone';
 
 interface Credentials {
   phone_number: string;
@@ -19,7 +20,7 @@ onNet('phone:getCredentials', async () => {
   try {
     const identifier = getIdentifier(_source);
     const number = await getCredentials(identifier);
-    emitNet('phone:sendCredentials', _source, number);
+    emitNet(PhoneEvents.SEND_CREDENTIALS, _source, number);
   } catch (e) {
     mainLogger.error(`Failed to get a number, ${e.message}`, {
       source: _source,

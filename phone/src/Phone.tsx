@@ -32,6 +32,7 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
+import { PhoneEvents } from '../../typings/phone';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 
 function Phone() {
@@ -153,12 +154,12 @@ export default Phone;
 InjectDebugData([
   {
     app: 'PHONE',
-    method: 'setVisibility',
+    method: PhoneEvents.SET_VISIBILITY,
     data: true,
   },
   {
     app: 'PHONE',
-    method: 'setPhoneReady',
+    method: PhoneEvents.SET_PHONE_READY,
     data: true,
   },
 ]);

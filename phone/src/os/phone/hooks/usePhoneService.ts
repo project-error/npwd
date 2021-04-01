@@ -16,8 +16,8 @@ export const usePhoneService = () => {
   const setPhoneConfig = useSetRecoilState(phoneState.phoneConfig);
   const setPhoneReady = useSetRecoilState(phoneState.phoneReady);
   const setPhoneTime = useSetRecoilState(phoneState.phoneTime);
-  useNuiEvent('PHONE', 'setVisibility', setVisibility);
-  useNuiEvent('PHONE', 'setPhoneReady', setPhoneReady);
-  useNuiEvent('PHONE', 'phoneConfig', setPhoneConfig);
-  useNuiEvent('PHONE', 'setTime', setPhoneTime);
+  useNuiEvent('PHONE', PhoneEvents.SET_VISIBILITY, setVisibility);
+  useNuiEvent('PHONE', PhoneEvents.SET_PHONE_READY, setPhoneReady);
+  useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, setPhoneConfig);
+  useNuiEvent('PHONE', PhoneEvents.SET_TIME, setPhoneTime);
 };

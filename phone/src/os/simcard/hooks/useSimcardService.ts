@@ -3,6 +3,7 @@ import { simcardState } from './state';
 import { useSimcard } from './useSimcard';
 import InjectDebugData from '../../debug/InjectDebugData';
 import { useNuiEvent } from 'fivem-nui-react-lib';
+import { PhoneEvents } from '../../../../../typings/phone';
 
 InjectDebugData([
   {
@@ -14,6 +15,6 @@ InjectDebugData([
 
 export const useSimcardService = () => {
   const setNumber = useSetRecoilState(simcardState.number);
-  useNuiEvent('SIMCARD', 'setNumber', setNumber);
+  useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, setNumber);
   return useSimcard();
 };
