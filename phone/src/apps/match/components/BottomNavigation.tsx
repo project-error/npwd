@@ -15,8 +15,6 @@ const useStyles = makeStyles({
 export function MatchBottomNavigation({ activePage, handleChange }) {
   const classes = useStyles();
 
-  console.log(activePage);
-
   return (
     <BottomNavigation value={activePage} onChange={handleChange} className={classes.root}>
       <BottomNavigationAction component={Link} to="/match" icon={<HomeIcon />} />
