@@ -54,7 +54,7 @@ InjectDebugData(
   [
     {
       app: 'MATCH',
-      method: 'phone:getMatchProfilesSuccess',
+      method: MatchEvents.GET_PROFILES_SUCCESS,
       data: [
         {
           id: 1,
@@ -102,7 +102,7 @@ InjectDebugData(
     },
     {
       app: 'MATCH',
-      method: 'phone:getMyProfileSuccess',
+      method: MatchEvents.GET_MY_PROFILE_SUCCESS,
       data: {
         id: 4,
         image:
@@ -120,7 +120,7 @@ InjectDebugData(
     },
     {
       app: 'MATCH',
-      method: 'phone:getMatchesSuccess',
+      method: MatchEvents.GET_MATCHES_SUCCESS,
       data: [
         {
           id: 5,

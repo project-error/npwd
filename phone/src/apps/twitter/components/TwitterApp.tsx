@@ -78,7 +78,7 @@ export const TwitterApp = () => {
 InjectDebugData([
   {
     app: 'TWITTER',
-    method: 'getOrCreateTwitterProfile',
+    method: TwitterEvents.GET_OR_CREATE_PROFILE,
     data: {
       profile_name: 'Angular_Dev',
       bio: 'Angular FTW',
@@ -89,7 +89,7 @@ InjectDebugData([
   },
   {
     app: 'TWITTER',
-    method: 'fetchTweets',
+    method: TwitterEvents.FETCH_TWEETS,
     data: [
       {
         id: 59,
@@ -150,7 +150,7 @@ InjectDebugData(
   [
     {
       app: 'TWITTER',
-      method: 'createTweetBroadcast',
+      method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
         id: 111,
         profile_id: 111,
@@ -162,7 +162,7 @@ InjectDebugData(
     },
     {
       app: 'TWITTER',
-      method: 'createTweetBroadcast',
+      method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
         id: 111,
         profile_id: 111,

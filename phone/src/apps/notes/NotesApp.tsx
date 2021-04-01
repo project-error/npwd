@@ -12,6 +12,7 @@ import useStyles from './notes.styles';
 import InjectDebugData from '../../os/debug/InjectDebugData';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route, useHistory } from 'react-router-dom';
+import { NotesEvents } from '../../../../typings/notes';
 
 export const NotesApp = () => {
   const classes = useStyles();
@@ -43,7 +44,7 @@ export const NotesApp = () => {
 InjectDebugData([
   {
     app: 'NOTES',
-    method: 'setNotes',
+    method: NotesEvents.SEND_NOTE,
     data: [
       {
         id: 1,
