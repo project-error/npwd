@@ -34,5 +34,20 @@
       }
     },
     "divider": "rgba(255, 255, 255, 0.12)"
+  },
+  "kiddo-dark": {
+    "palette": {
+      "type": "dark",
+      "primary": {
+        "main": "#EBFEF3"
+      },
+      "secondary": {
+        "main": "#5E0035"
+      },
+      "background": {
+        "default": "#033A18",
+        "paper": "#011308"
+      }
+    }
   }
 }

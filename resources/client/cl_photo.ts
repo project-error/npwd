@@ -76,7 +76,7 @@ const handleCameraExit = () => {
 };
 
 onNet(PhotoEvents.SEND_PHOTOS, (photos: string[]) => {
-  sendCameraEvent('setPhotos', photos);
+  sendCameraEvent(PhotoEvents.SEND_PHOTOS, photos);
 });
 
 function takePhoto() {

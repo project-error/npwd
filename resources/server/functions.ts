@@ -70,7 +70,7 @@ function getRandomPhoneNumber() {
   return randomNumber;
 }
 
-export async function generatePhoneNumber(identifier: string): Promise<void> {
+export async function generatePhoneNumber(identifier: string): Promise<string> {
   const getQuery = `SELECT phone_number FROM users WHERE identifier = ?`;
   const [results] = await pool.query(getQuery, [identifier]);
   const result = <any[]>results;
@@ -90,5 +90,7 @@ export async function generatePhoneNumber(identifier: string): Promise<void> {
     mainLogger.debug(`Inserting number into Database: ${newNumber}`);
     const query = 'UPDATE users SET phone_number = ? WHERE identifier = ?';
     await pool.query(query, [newNumber, identifier]);
+    return newNumber;
   }
+  return phoneNumber;
 }

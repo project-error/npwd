@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Nui from '../../../os/nui-events/utils/Nui';
 import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
@@ -78,7 +77,7 @@ export const TwitterApp = () => {
 InjectDebugData([
   {
     app: 'TWITTER',
-    method: 'getOrCreateTwitterProfile',
+    method: TwitterEvents.GET_OR_CREATE_PROFILE,
     data: {
       profile_name: 'Angular_Dev',
       bio: 'Angular FTW',
@@ -89,7 +88,7 @@ InjectDebugData([
   },
   {
     app: 'TWITTER',
-    method: 'fetchTweets',
+    method: TwitterEvents.FETCH_TWEETS,
     data: [
       {
         id: 59,
@@ -150,7 +149,7 @@ InjectDebugData(
   [
     {
       app: 'TWITTER',
-      method: 'createTweetBroadcast',
+      method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
         id: 111,
         profile_id: 111,
@@ -162,7 +161,7 @@ InjectDebugData(
     },
     {
       app: 'TWITTER',
-      method: 'createTweetBroadcast',
+      method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
         id: 111,
         profile_id: 111,
