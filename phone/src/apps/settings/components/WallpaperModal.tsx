@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { useCustomWallpaperModal, useSettings } from '../hooks/useSettings';
-import { Box, Button, TextField, Typography } from '@material-ui/core';
-import { PictureThumbnail } from '../../../ui/components/PictureThumbnail';
+import { TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
 import DialogForm from '../../../ui/components/DialogForm';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
-
-const useStyles = makeStyles({
-  input: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  inputProps: {
-    fontSize: 18,
-  },
-});
 
 export default function WallpaperModal() {
   const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
@@ -40,7 +28,7 @@ export default function WallpaperModal() {
       });
       setCustomWallpaperModal(false);
     } else {
-      addAlert({ message: t('APPS_SETTINGS_INVALID_WALLPAPER'), type: 'error' });
+      addAlert({ message: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_ERROR'), type: 'error' });
     }
   };
 
@@ -49,13 +37,14 @@ export default function WallpaperModal() {
       open={customWallpaperModal}
       handleClose={() => setCustomWallpaperModal(false)}
       onSubmit={handleNewWallpaper}
-      title="Custom wallpaper"
-      content="Set a custom wallpaper by entering the URL of the image below!"
+      title={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE')}
+      content={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_CONTENT')}
     >
       <TextField
         value={value}
+        error={!isImageAndUrl(value) && true}
         onChange={(e) => setValue(e.currentTarget.value)}
-        placeholder="Image URL"
+        placeholder={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_PLACEHOLDER')}
         fullWidth
       />
     </DialogForm>
