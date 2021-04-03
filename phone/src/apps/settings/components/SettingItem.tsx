@@ -10,7 +10,6 @@ import {
   Tooltip,
   Typography,
   Switch,
-  TextField,
 } from '@material-ui/core';
 
 interface ISettingItem {
