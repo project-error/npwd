@@ -10,23 +10,23 @@ import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   icon: {
     color: theme.palette.secondary.contrastText,
+    boxShadow: '0 .5rem 3rem -.25em rgba(0,0,0,.3)',
+  },
+  iconWrapper: {
+    height: 60,
+    width: 60,
+  },
+  smallIconWrapper: {
+    height: 40,
+    width: 40,
   },
 }));
 
-const SIZES_SPACING = {
-  small: 1,
-  medium: 3,
-};
-
-export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
+export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const classes = useStyles();
   const history = useHistory();
   const { setModal } = useCallModal();
   const { call, endCall, acceptCall, rejectCall } = useCall();
-
-  if (!call) {
-    return null;
-  }
 
   const handleAcceptCall = (e) => {
     e.stopPropagation();
@@ -46,27 +46,40 @@ export const CallControls = ({ size }: { size?: 'small' | 'medium' }) => {
     endCall();
   };
 
-  const { accepted, isTransmitter } = call;
-
-  if (accepted || isTransmitter) {
+  // We display only the hang up if the call is accepted
+  // or we are the one calling
+  if (call.accepted || call.isTransmitter)
     return (
-      <StatusIconButton color="error" size={size} onClick={handleEndCall}>
-        <CallEndIcon />
-      </StatusIconButton>
-    );
-  }
-  return (
-    <>
-      <Box m={SIZES_SPACING[size] || 1} display="inline">
-        <StatusIconButton color="error" size={size} onClick={handleRejectCall}>
+      <Box display="flex" justifyContent="center" px={2} my={2}>
+        <StatusIconButton
+          color="error"
+          size={isSmall ? 'small' : 'medium'}
+          onClick={handleEndCall}
+          className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
+        >
           <CallEndIcon className={classes.icon} />
         </StatusIconButton>
       </Box>
-      <Box m={SIZES_SPACING[size] || 1} display="inline">
-        <StatusIconButton color="success" size={size} onClick={handleAcceptCall}>
-          <CallIcon className={classes.icon} />
-        </StatusIconButton>
-      </Box>
-    </>
+    );
+
+  return (
+    <Box display="flex" alignItems="center" justifyContent="space-between" px={2} my={2}>
+      <StatusIconButton
+        color="error"
+        size={isSmall ? 'small' : 'medium'}
+        onClick={handleRejectCall}
+        className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
+      >
+        <CallEndIcon className={classes.icon} />
+      </StatusIconButton>
+      <StatusIconButton
+        color="success"
+        size={isSmall ? 'small' : 'medium'}
+        onClick={handleAcceptCall}
+        className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
+      >
+        <CallIcon className={classes.icon} />
+      </StatusIconButton>
+    </Box>
   );
 };

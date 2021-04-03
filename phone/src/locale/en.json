@@ -2,6 +2,13 @@
   "translation": {
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Ringing",
+        "OUTGOING": "Outgoing call",
+        "INCOMING": "Incoming call"
+      }
+    },
     "SETTINGS": {
       "CATEGORY": {
         "APPEARANCE": "Appearance",

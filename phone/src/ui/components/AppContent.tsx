@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 
 export const AppContent = ({
   children,
-  style,
+  paperStyle,
   backdrop,
   onClickBackdrop,
   ...props
@@ -38,7 +38,7 @@ export const AppContent = ({
     >
       <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
       <Box flexGrow={1} className={classes.box} {...props}>
-        <Paper square elevation={0} className={classes.paper}>
+        <Paper square elevation={0} className={classes.paper} style={paperStyle}>
           {children}
         </Paper>
       </Box>
