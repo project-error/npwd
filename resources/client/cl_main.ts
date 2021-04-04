@@ -11,6 +11,7 @@ import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
 import { MatchEvents } from '../../typings/match';
+import { Delay } from '../utils/fivem';
 
 let isPhoneOpen = false;
 let isPhoneReady = false;
@@ -51,6 +52,7 @@ const getCurrentGameTime = () => {
 
 const showPhone = async (): Promise<void> => {
   isPhoneOpen = true;
+  disableControls();
   const time = getCurrentGameTime();
   await phoneOpenAnim(); // Animation starts before the phone is open
   emitNet('phone:getCredentials');
@@ -58,6 +60,7 @@ const showPhone = async (): Promise<void> => {
   sendMessage('PHONE', 'setVisibility', true);
   sendMessage('PHONE', 'setTime', time);
   SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(true);
 };
 
 const hidePhone = async (): Promise<void> => {
@@ -65,6 +68,7 @@ const hidePhone = async (): Promise<void> => {
   sendMessage('PHONE', 'setVisibility', false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
 };
 
 /* * * * * * * * * * * * *
@@ -196,3 +200,30 @@ on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
 //   const time = getCurrentGameTime()
 //   sendMessage('PHONE', 'setTime', time)
 // }, 2000);
+
+function disableControls(): void {
+  let timeoutFinished = false;
+
+  const loopTick = setTick(
+    async (useTimeout = false): Promise<void> => {
+      if (!isPhoneOpen) {
+        clearTick(loopTick);
+        return;
+      }
+
+      if (isPhoneOpen) {
+        DisableControlAction(0, 1, true);
+        DisableControlAction(0, 2, true);
+        DisableControlAction(0, 16, true);
+        DisableControlAction(0, 17, true);
+        if (useTimeout) {
+          setTimeout(() => {
+            timeoutFinished = true;
+          }, 5000);
+        }
+      } else {
+        await Delay(30000);
+      }
+    },
+  );
+}
