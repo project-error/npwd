@@ -1,6 +1,5 @@
 import { IAlertProps } from '../../typings/alerts';
 import { BankEvents } from '../../typings/bank';
-import { PhoneEvents } from '../../typings/phone';
 
 onNet(BankEvents.SEND_TRANSFERS, (transfer: any) => {
   SendNuiMessage(
