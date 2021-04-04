@@ -46,7 +46,8 @@ InjectDebugData([
       {
         id: 3,
         display: 'Chip',
-        number: '111-1111',
+        number: '603-275-8373',
+        avatar: 'http://i.tasoagc.dev/2QYV',
       },
       {
         id: 4,

@@ -2,29 +2,45 @@ import React from 'react';
 import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
-import useStyles from './modal.styles';
-import CallTimer from './CallTimer';
+import { CallTimer } from './CallTimer';
 import { CallControls } from './CallControls';
 import { Box } from '@material-ui/core';
-import { useSimcard } from '../../simcard/hooks/useSimcard';
+import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
+import CallContactContainer from './CallContactContainer';
+import { makeStyles } from '@material-ui/core/styles';
+import RingingText from './RingingText';
+
+const useStyles = makeStyles({
+  root: {
+    height: '100%',
+    backdropFilter: 'blur(20px) brightness(0.6)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+});
 
 export const CallModal = () => {
-  const classes = useStyles();
+  const [settings] = useSettings();
   const { call } = useCall();
-  const { number: myNumber } = useSimcard();
+
+  const classes = useStyles();
 
   return (
     <AppWrapper>
-      <AppContent>
-        <Box pt={24}>
-          <h1 style={{ textAlign: 'center' }}>
-            {myNumber === call?.transmitter ? call?.receiver : call?.transmitter}
-          </h1>
-          <CallTimer isAccepted={call?.accepted} />
+      <AppContent
+        paperStyle={{
+          backgroundImage: `url(${getBackgroundPath(settings.wallpaper.value)})`,
+        }}
+      >
+        <Box className={classes.root} padding={5}>
+          <Box>
+            <CallContactContainer />
+            {call.accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+          </Box>
+          <CallControls />
         </Box>
-        <div className={classes.actions}>
-          <CallControls size="medium" />
-        </div>
       </AppContent>
     </AppWrapper>
   );

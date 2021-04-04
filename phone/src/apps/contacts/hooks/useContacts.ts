@@ -9,15 +9,24 @@ interface IUseContacts {
   getDisplayByNumber: (number: string) => string;
   getContactByNumber: (number: string) => Contact | null;
   getContact: (id: number) => Contact | null;
+  getPictureByNumber: (number: string) => string | null;
 }
 
 export const useContacts = (): IUseContacts => {
-  const contacts = useRecoilValue(contactsState.contacts);
+  const contacts = useRecoilValue<Contact[]>(contactsState.contacts);
 
   const getDisplayByNumber = useCallback(
     (number: string) => {
       const found = contacts.find((contact) => contact.number === number);
       return found ? found.display : number;
+    },
+    [contacts],
+  );
+
+  const getPictureByNumber = useCallback(
+    (number: string) => {
+      const found = contacts.find((contact) => contact.number === number);
+      return found ? found.avatar : null;
     },
     [contacts],
   );
@@ -42,5 +51,5 @@ export const useContacts = (): IUseContacts => {
     [contacts],
   );
 
-  return { contacts, getDisplayByNumber, getContact, getContactByNumber };
+  return { contacts, getDisplayByNumber, getContact, getContactByNumber, getPictureByNumber };
 };
