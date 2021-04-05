@@ -5,9 +5,10 @@ import { mainLogger } from './sv_logger';
 
 const photoLogger = mainLogger.child({ module: 'photo' });
 
-async function uploadPhoto(identifier: string, image: string) {
+async function uploadPhoto(identifier: string, image: string): Promise<IPhoto> {
   const query = 'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';
-  await pool.query(query, [identifier, image]);
+  const [results] = (await pool.query(query, [identifier, image])) as any;
+  return { id: results.insertId, image };
 }
 
 async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
@@ -25,8 +26,8 @@ onNet(PhotoEvents.UPLOAD_PHOTO, async (image: string) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);
-    await uploadPhoto(identifier, image);
-    emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, _source);
+    const photo = await uploadPhoto(identifier, image);
+    emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, _source, photo);
   } catch (e) {
     photoLogger.error(`Failed to upload photo, ${e.message}`, {
       source: _source,

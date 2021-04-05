@@ -62,6 +62,8 @@
     "APPS_SELLOUT": "Market",
     "APPS_CAMERA": "Camera",
 
+    "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "Photo could not be saved :(",
+
     "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
     "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
@@ -221,6 +223,7 @@
     "APPS_MARKETPLACE_FORM_DESCRIPTION": "Description",
 
     "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
+    "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
     "GENERIC_UPDATE": "Update",

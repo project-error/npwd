@@ -1,4 +1,4 @@
-import { PhotoEvents } from '../../typings/photo';
+import { IPhoto, PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
@@ -65,6 +65,7 @@ const handleTakePicture = async () => {
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  sendCameraEvent(PhotoEvents.UPLOAD_PHOTO, true);
   inCameraMode = false;
 };
 
@@ -72,6 +73,7 @@ const handleCameraExit = () => {
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, false);
   inCameraMode = false;
 };
 
@@ -94,14 +96,21 @@ function takePhoto() {
       },
     },
     (data: string) => {
-      const imageLink = JSON.parse(data).data.link;
-      emitNet(PhotoEvents.UPLOAD_PHOTO, imageLink);
+      try {
+        const imageLink = JSON.parse(data).data.link;
+        emitNet(PhotoEvents.UPLOAD_PHOTO, imageLink);
+      } catch (e) {
+        sendCameraEvent(PhotoEvents.TAKE_PHOTO_ERROR, 'APPS_CAMERA_FAILED_TO_TAKE_PHOTO');
+      }
     },
   );
 }
 
-onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, () => {
-  emitNet(PhotoEvents.FETCH_PHOTOS);
+onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (photo: IPhoto) => {
+  if (photo && photo.image) {
+    return sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, photo);
+  }
+  sendCameraEvent(PhotoEvents.TAKE_PHOTO_ERROR, 'APPS_CAMERA_FAILED_TO_TAKE_PHOTO');
 });
 
 // delete photo
