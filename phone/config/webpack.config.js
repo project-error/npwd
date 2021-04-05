@@ -356,7 +356,7 @@ module.exports = function (webpackEnv) {
               options: {
                 limit: imageInlineSizeLimit,
                 mimetype: 'image/avif',
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[ext]',
               },
             },
             // "url" loader works like "file" loader except that it embeds assets
@@ -367,8 +367,16 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[ext]',
               },
+            },
+            // We need to add this is on order to compile files outside
+            // of the current module scope. This should happen right before babel
+            // transpilation
+            {
+              test: /\.tsx?$/,
+              loader: require.resolve('ts-loader'),
+              options: { transpileOnly: true },
             },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.

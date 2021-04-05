@@ -95,6 +95,7 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.13.12",
     "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -107,21 +108,23 @@
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.7",
+    "babel-plugin-polyfill-corejs2": "^0.2.0",
     "copy-webpack-plugin": "6.2.1",
     "cra-build-watch": "^3.2.0",
     "cross-env": "^7.0.2",
     "customize-cra": "^1.0.0",
     "react-test-renderer": "^16.13.1",
     "svg-url-loader": "^2.3.2",
+    "ts-loader": "^8.1.0",
     "typescript": "3.9.7",
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "copy:config": "cp-cli ../config.json ./src/config.autogen.json",
-    "start": "craco start",
+    "start": "node scripts/start.js",
     "watch": "cra-build-watch --disable-chunks --build-path ../resources/html --output-filename dev.js",
-    "build": "yarn copy:config && cross-env NODE_ENV=production webpack --config webpack/prod.config.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "node scripts/build.js",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack/dev.config.js --color -p --progress --hide-modules --display-optimization-bailout --analyze",
     "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}",
     "test:watch": "node scripts/test.js --watchAll --testMatch **/src/**/*.test.{ts,js,tsx}"
