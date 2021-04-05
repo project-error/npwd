@@ -15,7 +15,9 @@ ui_page 'resources/html/index.html'
 
 files {
     'resources/html/index.html',
-    'resources/html/*.js',
-    'resources/html/*.map',
+    'resources/html/static/js/*.js',
+    'resources/html/static/js/*.map',
+    'resources/html/static/css/*.css',
+    'resources/html/static/css/*.css.map',
     'resources/html/media/**/*'
 }
