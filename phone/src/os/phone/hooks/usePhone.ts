@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { IServerConfig } from '../../../../../typings/config';
-import ServerConfig from '../../../config.autogen.json';
+import ServerConfig from '../../../../../config.json';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { phoneState } from './state';
