@@ -2,8 +2,7 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SetterOrUpdater, useRecoilState } from 'recoil';
 import { PhotoEvents } from '../../../../../typings/photo';
-import { useNuiEvent } from 'fivem-nui-react-lib';
-import { useNuiEventCallback } from 'fivem-nui-react-lib';
+import { useNuiEvent, useNuiCallback } from 'fivem-nui-react-lib/dist/index';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { photoState } from './state';
 
@@ -44,7 +43,7 @@ export const useCamera = (): IUseCamera => {
     [addAlert, t],
   );
 
-  const [takePhoto] = useNuiEventCallback<void, ICameraPhoto>(
+  const [takePhoto] = useNuiCallback<void, ICameraPhoto>(
     'CAMERA',
     PhotoEvents.TAKE_PHOTO,
     onPhotoSuccess,

@@ -4,13 +4,13 @@ import { NotificationsProvider } from './os/notifications/providers/Notification
 import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './ui/providers/SnackbarProvider';
 import Phone from './Phone';
-import { NuiServiceProvider } from 'fivem-nui-react-lib';
+import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from './os/sound/providers/SoundProvider';
 
 export const PhoneContainer = () => {
   const currentTheme = usePhoneTheme();
   return (
-    <NuiServiceProvider resource="new-phone-who-dis">
+    <NuiProvider resource="new-phone-who-dis">
       <ThemeProvider theme={currentTheme}>
         <SoundProvider>
           <NotificationsProvider>
@@ -20,6 +20,6 @@ export const PhoneContainer = () => {
           </NotificationsProvider>
         </SoundProvider>
       </ThemeProvider>
-    </NuiServiceProvider>
+    </NuiProvider>
   );
 };
