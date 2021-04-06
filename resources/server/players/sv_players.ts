@@ -32,10 +32,21 @@ export async function handlePlayerAdd(pSource: number) {
     const username = GetPlayerName(pSource.toString());
     playerLogger.info(`Started loading for ${username} (${pSource})`);
     // Ensure phone number exists or generate
-    await generatePhoneNumber(playerIdentifer);
+    const phone_number = await generatePhoneNumber(playerIdentifer);
 
     // Get player info to populate class instance
-    const { firstname, lastname, phone_number } = await getPlayerInfo(playerIdentifer);
+    let playerInfo = { firstname: '', lastname: '' };
+    try {
+      playerInfo = await getPlayerInfo(playerIdentifer);
+    } catch (e) {
+      playerLogger.debug(
+        `Failed to get player info, defaulting to phone number as profile, ${e.message}`,
+        {
+          source: pSource,
+        },
+      );
+    }
+    const { firstname, lastname } = playerInfo;
 
     const newPlayer = new Player({
       identifier: playerIdentifer,
@@ -104,11 +115,14 @@ async function getCleanedPlayerInfo(identifier: string): Promise<PlayerQueryResp
  * Generate a profile name by the player's name and/or phone number
  * @param identifier - player's identifier
  */
-export async function generateProfileName(identifier: string): Promise<string | null> {
+export async function generateProfileName(
+  identifier: string,
+  delimiter: string = '_',
+): Promise<string | null> {
   const { firstname, lastname, phone_number } = await getCleanedPlayerInfo(identifier);
 
   if (firstname && lastname) {
-    return `${firstname}_${lastname}`;
+    return `${firstname}${delimiter}${lastname}`;
   } else if (firstname) {
     return firstname;
   } else if (lastname) {

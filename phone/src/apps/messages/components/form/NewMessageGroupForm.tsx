@@ -1,17 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, TextField } from '@material-ui/core';
-
 import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { useContacts } from '../../../contacts/hooks/useContacts';
 import { Contact } from '../../../../../../typings/contact';
 import { MessageEvents } from '../../../../../../typings/messages';
+import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
   const { t } = useTranslation();
+  const { addAlert } = useSnackbar();
   const [participants, setParticipants] = useState([]);
   const [label, setLabel] = useState('');
   const { getContactByNumber, contacts } = useContacts();
@@ -45,6 +47,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const onAutocompleteChange = (_e, value: any) => {
     const lastIdx = value.length - 1;
     if (typeof value[lastIdx] === 'string') {
+      const isValid = PHONE_NUMBER_REGEX.test(value[lastIdx]);
+      if (!isValid) {
+        return addAlert({ message: t('APPS_MESSAGES_INVALID_PHONE_NUMBER'), type: 'error' });
+      }
       value.splice(lastIdx, 1, { number: value[lastIdx] });
       setParticipants(value);
       return;

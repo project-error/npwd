@@ -53,7 +53,7 @@ export const MessagesApp = () => {
 InjectDebugData([
   {
     app: 'MESSAGES',
-    method: 'phone:fetchMessageGroupsSuccess',
+    method: MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS,
     data: [
       {
         groupId: '2',
@@ -93,7 +93,7 @@ InjectDebugData(
   [
     {
       app: 'MESSAGES',
-      method: 'phone:fetchMessagesSuccess',
+      method: MessageEvents.FETCH_MESSAGES_SUCCESS,
       data: [
         {
           id: 1,

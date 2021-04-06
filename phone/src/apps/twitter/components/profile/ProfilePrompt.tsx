@@ -3,14 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Nui from '../../../../os/nui-events/utils/Nui';
+import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
-import ProfileField from './ProfileField';
-import DefaultProfilePrompt from './DefaultProfilePrompt';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
 import { twitterState } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
+import DefaultProfilePrompt from './DefaultProfilePrompt';
 
 const useStyles = makeStyles((theme) => ({
   root: {

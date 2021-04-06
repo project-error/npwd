@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
+import { ContactEvents } from '../../../../../typings/contact';
 
 export const ContactsApp = () => {
   const contacts = useApp('CONTACTS');
@@ -29,7 +30,7 @@ export const ContactsApp = () => {
 InjectDebugData([
   {
     app: 'CONTACTS',
-    method: 'setContacts',
+    method: ContactEvents.SEND_CONTACTS,
     data: [
       {
         id: 1,
@@ -45,7 +46,8 @@ InjectDebugData([
       {
         id: 3,
         display: 'Chip',
-        number: '111-1111',
+        number: '603-275-8373',
+        avatar: 'http://i.tasoagc.dev/2QYV',
       },
       {
         id: 4,

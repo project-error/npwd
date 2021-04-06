@@ -8,7 +8,7 @@ import { twitterState } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
-import { Tweet, FormattedTweet, Profile } from '../../../../../typings/twitter';
+import { Tweet, FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -83,15 +83,15 @@ export const useTwitterService = () => {
     });
   };
 
-  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfile', setProfile);
-  useNuiEvent(APP_TWITTER, 'getOrCreateTwitterProfileNull', setDefaultProfileNames);
-  useNuiEvent(APP_TWITTER, 'phone:createProfileResult', handleAddAlert);
-  useNuiEvent(APP_TWITTER, 'updateProfileLoading', setUpdateProfileLoading);
-  useNuiEvent(APP_TWITTER, 'updateProfileResult', handleAddAlert);
-  useNuiEvent(APP_TWITTER, 'fetchTweets', _setTweets);
-  useNuiEvent(APP_TWITTER, 'fetchTweetsFiltered', _setFilteredTweets);
-  useNuiEvent(APP_TWITTER, 'createTweetLoading', setCreateLoading);
-  useNuiEvent(APP_TWITTER, 'createTweetResult', handleAddAlert);
-  useNuiEvent(APP_TWITTER, 'createTweetBroadcast', handleTweetBroadcast);
-  useNuiEvent(APP_TWITTER, 'phone:retweetExists', handleAddAlert);
+  useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE, setProfile);
+  useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE_NULL, setDefaultProfileNames);
+  useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_PROFILE_RESULT, handleAddAlert);
+  useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_LOADING, setUpdateProfileLoading);
+  useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_RESULT, handleAddAlert);
+  useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS, _setTweets);
+  useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
+  useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_LOADING, setCreateLoading);
+  useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_RESULT, handleAddAlert);
+  useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_BROADCAST, handleTweetBroadcast);
+  useNuiEvent(APP_TWITTER, TwitterEvents.RETWEET_EXISTS, handleAddAlert);
 };

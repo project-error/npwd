@@ -3,9 +3,7 @@ import qs from 'qs';
 import Nui from '../../../../os/nui-events/utils/Nui';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import { Box, Typography, TextField, Button } from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import useStyles from './modal.styles';
+import { Box, Typography, Button } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
@@ -20,12 +18,8 @@ interface IProps {
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
-  const classes = useStyles();
   const history = useHistory();
   const { pathname, search } = useLocation();
-
-  const [message, setMessage] = useState('');
-  const [pasteVisible, setPasteVisible] = useState(false);
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
 
   const removeQueryParamImage = useCallback(() => {
@@ -55,21 +49,10 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   useEffect(() => {
     if (!image) return;
     setQueryParamImagePreview(image);
-  }, [image, sendFromQueryParam]);
-
-  const sendFromClipboard = (event) => {
-    if (event.key === 'Enter') {
-      sendImageMessage(message);
-    }
-  };
+  }, [image]);
 
   const menuOptions = useMemo(
     () => [
-      {
-        label: 'Paste from clipboard',
-        icon: <FileCopyIcon />,
-        onClick: () => setPasteVisible(true),
-      },
       {
         label: 'Camera / Gallery',
         icon: <PhotoLibraryIcon />,
@@ -90,7 +73,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
         <Box py={1}>
           <Typography paragraph>Do you want to share this image?</Typography>
-          <PictureResponsive src={queryParamImagePreview} alt={'Share gallery image preview'} />
+          <PictureResponsive src={queryParamImagePreview} alt="Share gallery image preview" />
           <Button
             fullWidth
             variant="contained"
@@ -99,21 +82,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           >
             Share
           </Button>
-        </Box>
-      </Modal>
-      <Modal visible={pasteVisible} handleClose={() => setPasteVisible(false)}>
-        <Box p={1}>
-          <TextField
-            placeholder="A link to your image or gif"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-            fullWidth
-            inputProps={{
-              className: classes.messagesInput,
-            }}
-            inputRef={(input) => input && input.focus()}
-            onKeyPress={sendFromClipboard}
-          />
         </Box>
       </Modal>
     </>

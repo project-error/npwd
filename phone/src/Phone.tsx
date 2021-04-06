@@ -15,7 +15,8 @@ import { useApps } from './os/apps/hooks/useApps';
 
 import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
-import { useSelloutService } from './apps/sellout/hooks/useSelloutService';
+import { useMatchService } from './apps/match/hooks/useMatchService';
+import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNotesService } from './apps/notes/hooks/useNotesService';
@@ -66,7 +67,8 @@ function Phone() {
   useSimcardService();
   useContactsService();
   useTwitterService();
-  useSelloutService();
+  useMatchService();
+  useMarketplaceService();
   useBankService();
   useMessagesService();
   useNotesService();
@@ -102,7 +104,9 @@ function Phone() {
               id="phone"
               className="PhoneScreen"
               style={{
-                backgroundImage: `url(media/backgrounds/${settings.wallpaper.value})`,
+                backgroundImage: settings.customWallpaper
+                  ? `url(${settings.customWallpaper})`
+                  : `url(media/backgrounds/${settings.wallpaper.value})`,
               }}
             >
               {isPhoneReady ? (

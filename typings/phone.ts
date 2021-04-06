@@ -1,3 +1,5 @@
+export const PHONE_NUMBER_REGEX = /^([0-9]{3}-[0-9]{4})|([0-9]{7})$/;
+
 export enum PhoneEvents {
   PLAYER_IS_READY = 'npwd:playerIsReady',
   OPEN_APP_CONTACTS = 'npwd:app:CONTACTS',
@@ -8,4 +10,6 @@ export enum PhoneEvents {
   OPEN_APP_DAILER = 'npwd:app:DIALER',
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',
+  SET_ALERT = 'npwd:setAlert',
+  SET_NOTIFICATION = 'npwd:setNotification',
 }

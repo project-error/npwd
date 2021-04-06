@@ -10,6 +10,7 @@ import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
+import { MatchEvents } from '../../typings/match';
 
 let isPhoneOpen = false;
 let isPhoneReady = false;
@@ -30,6 +31,18 @@ function fetchOnInitialize() {
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
+const getCurrentGameTime = () => {
+  let hour: string | number = GetClockHours();
+
+  let minute: string | number = GetClockMinutes();
+
+  // Format time if need be
+  if (hour < 10) hour = `0${hour}`;
+  if (minute < 10) minute = `0${minute}`;
+
+  return `${hour}:${minute}`;
+};
+
 /* * * * * * * * * * * * *
  *
  *  Phone Visibility Handling
@@ -38,10 +51,12 @@ RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
 const showPhone = async (): Promise<void> => {
   isPhoneOpen = true;
+  const time = getCurrentGameTime();
   await phoneOpenAnim(); // Animation starts before the phone is open
   emitNet('phone:getCredentials');
   SetCursorLocation(0.9, 0.922); //Experimental
   sendMessage('PHONE', 'setVisibility', true);
+  sendMessage('PHONE', 'setTime', time);
   SetNuiFocus(true, true);
 };
 
@@ -175,3 +190,9 @@ on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
 //     }
 //   }
 // });
+
+// Will update the phone's time even while its open
+// setInterval(() => {
+//   const time = getCurrentGameTime()
+//   sendMessage('PHONE', 'setTime', time)
+// }, 2000);

@@ -32,4 +32,5 @@ export enum NotesEvents {
   UPDATE_NOTE_SUCCESS = 'npwd:updateNoteSuccess',
   UPDATE_NOTE_FAILURE = 'npwd:updateNoteFailure',
   ACTION_RESULT = 'npwd:notesActionResult',
+  SEND_ALERT = 'npwd:notesSetAlert',
 }

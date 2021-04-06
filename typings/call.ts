@@ -37,4 +37,7 @@ export enum CallEvents {
   FETCH_CALLS = 'npwd:fetchCalls',
   SEND_HISTORY = 'npwd:sendCallHistory',
   SEND_HANGUP_ANIM = 'npwd:sendHangupAnim',
+  SET_CALLER = 'npwd:setCaller',
+  SET_CALL_MODAL = 'npwd:callModal',
+  SET_CALL_HISTORY = 'npwd:setCallHistory',
 }

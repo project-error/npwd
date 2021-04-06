@@ -27,4 +27,6 @@ export enum BankEvents {
   TRANSACTION_NOTIFICATION = 'npwd:bankTransactionNotification',
   SEND_CREDENTIALS = 'npwd:sendBankCredentials',
   GET_CREDENTIALS = 'npwd:getBankCredentials',
+  SEND_ALERT = 'npwd:sendBankAlert',
+  SEND_NOTIFICATION = 'npwd:sendBankNotification',
 }

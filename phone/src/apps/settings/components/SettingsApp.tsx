@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -12,6 +12,7 @@ import {
   SettingItemIconAction,
   SettingItemSlider,
   SettingSwitch,
+  SettingItemModal,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -28,12 +29,13 @@ import {
   Book,
   DeleteForever,
 } from '@material-ui/icons';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { ListSubheader } from '@material-ui/core';
-import { useResetSettings, useSettings } from '../hooks/useSettings';
+import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { IContextMenuOption } from '../../../ui/components/ContextMenu';
+import WallpaperModal from './WallpaperModal';
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -41,12 +43,26 @@ const SubHeaderComp = (props: { text: string }) => (
   </ListSubheader>
 );
 
+const useStyles = makeStyles({
+  backgroundModal: {
+    background: 'black',
+    opacity: '0.6',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5,
+  },
+});
+
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = useConfig();
   const simcard = useSimcard();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
+  const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
 
   const { addAlert } = useSnackbar();
 
@@ -123,9 +139,12 @@ export const SettingsApp = () => {
   };
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
+  const classes = useStyles();
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
+      <WallpaperModal />
+      <div className={customWallpaperModal ? classes.backgroundModal : undefined} />
       <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
@@ -193,6 +212,13 @@ export const SettingsApp = () => {
             options={wallpapers}
             onClick={openMenu}
             icon={<Wallpaper />}
+          />
+          {/* CUSTOM BACKGROUND */}
+          <SettingItemModal
+            icon={<Wallpaper />}
+            label={t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER')}
+            secondary={settings.customWallpaper}
+            onClick={() => setCustomWallpaperModal(true)}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_FRAME')}

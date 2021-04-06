@@ -1,45 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Fab } from '@material-ui/core';
-import PublishIcon from '@material-ui/icons/Publish';
+import React from 'react';
 
+import UpdateButton from '../../../../ui/components/UpdateButton';
 import { useProfile } from '../../hooks/useProfile';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    bottom: '15px',
-    right: '15px',
-  },
-  button: {
-    background: '#00acee',
-  },
-}));
+interface IProps {
+  handleClick: () => void;
+}
 
-const MINIMUM_LOAD_TIME = 750;
-
-export function ProfileUpdateButton({ handleClick }) {
-  const classes = useStyles();
-  const [minimumLoadPassed, setMimimumLoadPassed] = useState(true);
+export function ProfileUpdateButton({ handleClick }: IProps) {
   const { updateProfileLoading } = useProfile();
 
-  useEffect(() => {
-    setMimimumLoadPassed(false);
-    const timeout = window.setTimeout(() => {
-      setMimimumLoadPassed(true);
-    }, MINIMUM_LOAD_TIME);
-    return () => window.clearTimeout(timeout);
-  }, [updateProfileLoading]);
-
-  const isLoading = updateProfileLoading || !minimumLoadPassed;
-
-  return (
-    <div className={classes.root}>
-      <Fab className={classes.button} color="primary" onClick={handleClick} disabled={isLoading}>
-        <PublishIcon />
-      </Fab>
-    </div>
-  );
+  return <UpdateButton loading={updateProfileLoading} handleClick={handleClick} />;
 }
 
 export default ProfileUpdateButton;

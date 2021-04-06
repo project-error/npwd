@@ -28,4 +28,5 @@ export enum ContactEvents {
   DELETE_CONTACT_SUCCESS = 'npwd:deleteSuccess',
   UPDATE_CONTACT_SUCCESS = 'npwd:updateContactSuccess',
   ACTION_RESULT = 'npwd:contactActionResult',
+  SEND_ALERT = 'npwd:contactSetAlert',
 }

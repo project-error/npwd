@@ -7,6 +7,7 @@ import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import Nui from '../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { CallEvents } from '../../../../../typings/call';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DialerInput = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
@@ -46,7 +48,7 @@ export const DialerInput = () => {
   return (
     <Box component={Paper} className={classes.root}>
       <InputBase
-        placeholder="Enter a number"
+        placeholder={t('APPS_DIALER_INPUT_PLACEHOLDER')}
         className={classes.input}
         value={inputVal}
         onChange={(e) => set(e.target.value)}

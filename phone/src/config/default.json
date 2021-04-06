@@ -144,6 +144,7 @@
       "label": "Project Error",
       "value": "projecterror.jpg"
     },
+    "customWallpaper": "",
     "frame": {
       "label": "Default",
       "value": "default.png"
@@ -190,6 +191,10 @@
     {
       "label": "Default Light",
       "value": "default-light"
+    },
+    {
+      "label": "Kiddo Dark",
+      "value": "kiddo-dark"
     }
   ],
   "debug": {

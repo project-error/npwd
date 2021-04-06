@@ -37,7 +37,12 @@ export const ShowMore = ({ id, isReported, isMine }) => {
 
   return (
     <>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={_handleClick}>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={_handleClick}
+        style={{ marginRight: 15 }}
+      >
         <MoreIcon />
       </Button>
       <Menu

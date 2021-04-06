@@ -5,6 +5,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PersonIcon from '@material-ui/icons/Person';
 import HistoryIcon from '@material-ui/icons/History';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -20,6 +21,7 @@ const DialerNavBar = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [page, setPage] = useState(pathname);
+  const { t } = useTranslation();
 
   const handleChange = (_e, newPage) => {
     setPage(newPage);
@@ -28,14 +30,14 @@ const DialerNavBar = () => {
   return (
     <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
       <BottomNavigationAction
-        label="History"
+        label={t('APPS_DIALER_NAVBAR_HISTORY')}
         value="/phone"
         component={NavLink}
         icon={<HistoryIcon />}
         to="/phone"
       />
       <BottomNavigationAction
-        label="Dial"
+        label={t('APPS_DIALER_NAVBAR_DIAL')}
         value="/phone/dial"
         color="secondary"
         component={NavLink}
@@ -43,7 +45,7 @@ const DialerNavBar = () => {
         to="/phone/dial"
       />
       <BottomNavigationAction
-        label="Contacts"
+        label={t('APPS_DIALER_NAVBAR_CONTACTS')}
         value="/phone/contacts"
         color="secondary"
         component={NavLink}

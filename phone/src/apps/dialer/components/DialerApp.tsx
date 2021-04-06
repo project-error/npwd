@@ -11,6 +11,7 @@ import { useDialHistory } from '../hooks/useDialHistory';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
+import { CallEvents } from '../../../../../typings/call';
 
 export const DialerApp = () => {
   const history = useDialHistory();
@@ -40,7 +41,7 @@ export const DialerApp = () => {
 InjectDebugData([
   {
     app: 'DIALER',
-    method: 'setHistory',
+    method: CallEvents.SET_CALL_HISTORY,
     data: [
       {
         id: 1,

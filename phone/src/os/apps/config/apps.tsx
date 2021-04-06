@@ -13,6 +13,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MessageIcon from '@material-ui/icons/Message';
+import FireIcon from '@material-ui/icons/Whatshot';
 import { CalculatorIcon } from '../../../apps/calculator/components/CalculatorIcon';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
@@ -21,9 +22,10 @@ import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { BankApp } from '../../../apps/bank/components/BankApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
+import { MatchApp } from '../../../apps/match/components/MatchApp';
 import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
-import { SelloutApp } from '../../../apps/sellout/components/SelloutApp';
+import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
@@ -39,13 +41,14 @@ import {
 import {
   SELLOUT_APP_PRIMARY_COLOR,
   SELLOUT_APP_ICON_COLOR,
-} from '../../../apps/sellout/sellout.theme';
+} from '../../../apps/marketplace/marketplace.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 import {
   TWITTER_APP_PRIMARY_COLOR,
   TWITTER_APP_TEXT_COLOR,
 } from '../../../apps/twitter/twitter.theme';
+import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 
 export interface IAppConfig {
   id: string;
@@ -109,7 +112,8 @@ export const APPS: IAppConfig[] = [
     path: '/settings',
     Route: () => <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} />,
   },
-  {
+  /* Hiding the bank app while the bank resource gets done */
+  /*{
     id: 'BANK',
     nameLocale: 'APPS_BANK',
     icon: <FontAwesomeIcon icon={faWonSign} />,
@@ -118,6 +122,16 @@ export const APPS: IAppConfig[] = [
     color: common.white,
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
+  },*/
+  {
+    id: 'MATCH',
+    nameLocale: 'APPS_MATCH',
+    icon: <FireIcon fontSize="large" />,
+    notificationIcon: <FireIcon fontSize="small" />,
+    backgroundColor: MATCH_APP_PRIMARY_COLOR,
+    color: MATCH_APP_TEXT_COLOR,
+    path: '/match',
+    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} />,
   },
   {
     id: 'TWITTER',
@@ -136,8 +150,8 @@ export const APPS: IAppConfig[] = [
     notificationIcon: <FontAwesomeIcon icon={faAd} fixedWidth size="xs" />,
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
-    path: '/sellout',
-    Route: () => <AppRoute id="SELLOUT" path="/sellout" component={SelloutApp} />,
+    path: '/marketplace',
+    Route: () => <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} />,
   },
   {
     id: 'NOTES',

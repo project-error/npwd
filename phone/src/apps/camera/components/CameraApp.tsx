@@ -5,11 +5,12 @@ import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { Route, Switch } from 'react-router-dom';
+import { PhotoEvents } from '../../../../../typings/photo';
 
 InjectDebugData([
   {
     app: 'CAMERA',
-    method: 'setPhotos',
+    method: PhotoEvents.SEND_PHOTOS,
     data: [
       {
         id: 1,

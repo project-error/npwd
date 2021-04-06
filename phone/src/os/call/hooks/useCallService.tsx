@@ -2,32 +2,31 @@ import { useEffect, useState } from 'react';
 import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
-import { CallProps } from '../../../../../typings/call';
-import InjectDebugData from '../../debug/InjectDebugData';
+import { CallEvents, CallProps } from '../../../../../typings/call';
+// import InjectDebugData from '../../debug/InjectDebugData';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';
 import { useCallNotifications } from './useCallNotifications';
-import { useDuration } from './useDuration';
 
-InjectDebugData<CallProps | boolean>([
-  /*   {
-    app: 'CALL',
-    method: 'setCaller',
-    data: {
-      accepted: true,
-      isTransmitter: false,
-      transmitter: 'Chip',
-      receiver: 'Taso',
-      active: true,
-    },
-  },
-  {
-    app: 'CALL',
-    method: 'callModal',
-    data: true,
-  }, */
-]);
+// InjectDebugData<CallProps | boolean>([
+//   {
+//     app: 'CALL',
+//     method: CallEvents.SET_CALLER,
+//     data: {
+//       accepted: true,
+//       isTransmitter: false,
+//       transmitter: '603-275-8373',
+//       receiver: '603-275-4747',
+//       active: true,
+//     },
+//   },
+//   {
+//     app: 'CALL',
+//     method: CallEvents.SET_CALL_MODAL,
+//     data: true,
+//   },
+// ]);
 
 export const useCallService = () => {
   const { modal } = useCallModal();
@@ -35,7 +34,6 @@ export const useCallService = () => {
   const { pathname } = useLocation();
 
   const { call, setCall } = useCall();
-  const { resetDuration } = useDuration();
 
   const { setNotification } = useCallNotifications();
 
@@ -57,10 +55,9 @@ export const useCallService = () => {
   }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
   const _setCall = (_call: CallProps) => {
-    resetDuration();
     setCall(_call);
     setNotification(_call);
   };
-  useNuiEvent<CallProps>('CALL', 'setCaller', _setCall, call);
-  useNuiEvent<boolean>('CALL', 'callModal', setModal);
+  useNuiEvent<CallProps>('CALL', CallEvents.SET_CALLER, _setCall, call);
+  useNuiEvent<boolean>('CALL', CallEvents.SET_CALL_MODAL, setModal);
 };
