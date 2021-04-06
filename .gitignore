@@ -20,3 +20,6 @@ yarn-error.log*
 
 # Debug logs
 sv_npwd.log
+
+# FXServer Yarn
+.yarn.installed
