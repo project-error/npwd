@@ -4,14 +4,15 @@ import { Button, Paper } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
-import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ICameraPhoto } from '../../hooks/usePhotos';
 import { ShareModal } from './ShareModal';
 import { PhotoEvents } from '../../../../../../typings/photo';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const GalleryModal = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const query = useQueryParams();

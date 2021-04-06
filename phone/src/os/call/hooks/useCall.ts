@@ -1,8 +1,8 @@
 import { useRecoilState } from 'recoil';
 import { CallProps } from '../../../../../typings/call';
-import Nui from '../../nui-events/utils/Nui';
 import { callerState } from './state';
 import { CallEvents } from '../../../../../typings/call';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 interface CallHook {
   call: CallProps;
@@ -13,6 +13,7 @@ interface CallHook {
 }
 
 export const useCall = (): CallHook => {
+  const Nui = useNuiRequest();
   const [call, setCall] = useRecoilState(callerState.currentCall);
 
   const acceptCall = () => {

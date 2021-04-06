@@ -1,8 +1,8 @@
-import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { simcardState } from './state';
 import { useSimcard } from './useSimcard';
 import InjectDebugData from '../../debug/InjectDebugData';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 
 InjectDebugData([
   {

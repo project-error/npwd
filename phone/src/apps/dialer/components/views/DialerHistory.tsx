@@ -5,7 +5,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContacts } from '../../../contacts/hooks/useContacts';
 import { CallEvents, ICall } from '../../../../../../typings/call';
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const DialerHistory = ({ calls }) => {
+  const Nui = useNuiRequest();
   const { number: myNumber } = useSimcard();
   const { getDisplayByNumber } = useContacts();
 

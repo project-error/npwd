@@ -1,8 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
-
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { isImageValid } from '../../../common/utils/isImageValid';
@@ -51,6 +50,7 @@ interface Image {
 }
 
 export const AddTweetModal = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
   const { config } = usePhone();

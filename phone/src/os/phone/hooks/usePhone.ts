@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { IServerConfig } from '../../../../../typings/config';
 import ServerConfig from '../../../config.autogen.json';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
-import Nui from '../../nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { phoneState } from './state';
 import { PhoneEvents } from '../../../../../typings/phone';
 
@@ -15,6 +15,7 @@ interface IUsePhone {
 }
 
 export const usePhone = (): IUsePhone => {
+  const Nui = useNuiRequest();
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
   const isPhoneReady = useRecoilValue(phoneState.phoneReady);
 

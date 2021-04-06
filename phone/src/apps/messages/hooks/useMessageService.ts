@@ -1,16 +1,16 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { messageState } from './state';
-import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { useNuiEvent, useNuiRequest } from 'fivem-nui-react-lib';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useCallback } from 'react';
-import Nui from '../../../os/nui-events/utils/Nui';
 import { useLocation } from 'react-router';
 import { MessageEvents } from '../../../../../typings/messages';
 import { TOptionsBase } from 'i18next';
 
 export const useMessagesService = () => {
+  const Nui = useNuiRequest();
   const { pathname } = useLocation();
   const [activeMessageGroup, setActiveMessageGroup] = useRecoilState(
     messageState.activeMessageGroup,
@@ -43,7 +43,7 @@ export const useMessagesService = () => {
       }
       setNotification({ groupId, message });
     },
-    [activeMessageGroup, pathname, setNotification],
+    [activeMessageGroup, pathname, setNotification, Nui],
   );
 
   const _setMessageGroups = useCallback(

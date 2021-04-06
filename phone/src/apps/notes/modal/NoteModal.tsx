@@ -12,13 +12,14 @@ import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useNoteDetail } from '../hooks/useNoteDetail';
 import useStyles from './modal.styles';
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { StatusButton } from '../../../ui/components/StatusButton';
 import { NotesEvents } from '../../../../../typings/notes';
 
 export const NoteModal = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();

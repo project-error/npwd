@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, CircularProgress, MenuItem } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
-
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const LOADING_TIME = 1250;
 
 function ReportButton({ handleClose, tweetId, isReported }) {
+  const Nui = useNuiRequest();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 

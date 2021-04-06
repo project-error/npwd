@@ -6,7 +6,7 @@ import { useMatches } from '../../hooks/useMatches';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import Match from '../matches/Match';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MatchEvents } from '../../../../../../typings/match';
 
 const useStyles = makeStyles({
@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 const MINIMUM_LOAD_TIME = 1500;
 
 function MatchList() {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { matches, error } = useMatches();
@@ -34,7 +35,7 @@ function MatchList() {
     window.setTimeout(() => {
       setLoaded(true);
     }, MINIMUM_LOAD_TIME);
-  }, []);
+  }, [Nui]);
 
   if (error) return <PageText text={t('APPS_MATCH_MATCHES_ERROR')} />;
   if (!loaded || !matches) return <Loader />;

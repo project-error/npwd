@@ -17,7 +17,7 @@ import useStyles from './modal.styles';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
@@ -48,6 +48,7 @@ const memberDisplay = (display, number, myNumber, t) => {
 };
 
 export const MessageModal = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const { number: myNumber } = useSimcard();
@@ -97,7 +98,7 @@ export const MessageModal = () => {
         groupId: activeMessageGroup.groupId,
       });
     }
-  }, [activeMessageGroup]);
+  }, [activeMessageGroup, Nui]);
 
   // don't allow too many characters, it takes too much room
   let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import Nui from '../../nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const AppWithStartup = ({ children, id }) => {
+  const Nui = useNuiRequest();
   useEffect(() => {
     Nui.send(`npwd:app:${id}`);
-  }, [id]);
+  }, [Nui, id]);
   return children;
 };

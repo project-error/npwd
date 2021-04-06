@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { dialState } from './state';
 import { CallEvents } from '../../../../../typings/call';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Snackbar, Typography } from '@material-ui/core';
-import { useNuiEvent } from '../../os/nui-events/hooks/useNuiEvent';
 import { Alert } from './Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 
 const useStyles = makeStyles({
   root: {

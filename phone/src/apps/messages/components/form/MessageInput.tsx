@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Paper, Box, makeStyles, TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ImageIcon from '@material-ui/icons/Image';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessageEvents } from '../../../../../../typings/messages';
 
 interface IProps {
@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 });
 
 const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
+  const Nui = useNuiRequest();
   const { t } = useTranslation();
   const classes = useStyles();
   const [message, setMessage] = useState('');

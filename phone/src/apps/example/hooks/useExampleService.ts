@@ -1,4 +1,4 @@
-import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useSetRecoilState } from 'recoil';
 import { exampleState } from './state';
 import { useExample } from './useExample';

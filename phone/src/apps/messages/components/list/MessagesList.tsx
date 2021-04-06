@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, List } from '@material-ui/core';
-import { MessageEvents, MessageGroup } from '../../../../../../typings/messages';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { MessageGroup } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { useHistory } from 'react-router-dom';
-import { goToConversation } from '../../utils/goToConversation';
 import { SearchField } from '../../../../ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +15,7 @@ const MessagesList = (): any => {
 
   const {
     messageGroups,
+    goToConversation,
     createMessageGroupResult,
     clearMessageGroupResult,
     getMessageGroupById,
@@ -41,7 +40,7 @@ const MessagesList = (): any => {
       const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
       if (findGroup) {
-        goToConversation(findGroup, history);
+        goToConversation(findGroup);
       }
     }
   }, [
@@ -51,12 +50,13 @@ const MessagesList = (): any => {
     history,
     setActiveMessageGroup,
     getMessageGroupById,
+    goToConversation,
   ]);
 
   if (!messageGroups) return null;
 
   const handleClick = (messageGroup: MessageGroup) => () => {
-    goToConversation(messageGroup, history);
+    goToConversation(messageGroup);
   };
 
   return (

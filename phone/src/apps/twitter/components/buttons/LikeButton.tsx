@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Button, CircularProgress } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 const LOADING_TIME = 1250;
 
 function LikeButton({ tweetId, isLiked }) {
+  const Nui = useNuiRequest();
   const [liked, setLiked] = useState(isLiked);
   const [loading, setLoading] = useState(false);
 

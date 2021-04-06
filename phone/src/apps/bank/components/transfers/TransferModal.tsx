@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import Modal from '../../../../ui/components/Modal';
 import { Button, List, ListItem, TextField, makeStyles } from '@material-ui/core';
-
-import Nui from '../../../../os/nui-events/utils/Nui';
-
 import { useBankModal } from '../../hooks/useBankModal';
 import { BankEvents } from '../../../../../../typings/bank';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -30,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TransferModal = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
 
   const [targetID, setTargetID] = useState('');
