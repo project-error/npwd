@@ -43,7 +43,7 @@ export const useCamera = (): IUseCamera => {
     [addAlert, t],
   );
 
-  const [takePhoto] = useNuiCallback<void, ICameraPhoto>(
+  const [_takePhoto] = useNuiCallback<void, ICameraPhoto>(
     'CAMERA',
     PhotoEvents.TAKE_PHOTO,
     onPhotoSuccess,
@@ -51,6 +51,11 @@ export const useCamera = (): IUseCamera => {
   );
 
   useNuiEvent('CAMERA', PhotoEvents.UPLOAD_PHOTO, () => setUploading(true));
+
+  const takePhoto = () => {
+    // Timeout at 1 minute
+    _takePhoto(undefined, { timeout: 60000 });
+  };
 
   return {
     photos,
