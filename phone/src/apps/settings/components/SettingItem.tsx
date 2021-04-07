@@ -15,7 +15,7 @@ import {
 interface ISettingItem {
   options?: any;
   label: string;
-  value?: string | number | null;
+  value?: string | object | number | null;
   onClick?: any;
   icon: JSX.Element;
 }

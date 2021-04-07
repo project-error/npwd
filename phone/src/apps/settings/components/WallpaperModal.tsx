@@ -23,7 +23,7 @@ export default function WallpaperModal() {
   const handleNewWallpaper = () => {
     if (isImageAndUrl(value)) {
       handleSettingChange('wallpaper', {
-        label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
+        label: 'APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER',
         value,
       });
       setCustomWallpaperModal(false);

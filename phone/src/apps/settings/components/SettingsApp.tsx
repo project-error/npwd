@@ -214,7 +214,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
-            value={settings.wallpaper.label}
+            value={t(settings.wallpaper.label)}
             options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
