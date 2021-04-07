@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContacts } from '../../hooks/useContacts';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
@@ -48,12 +48,12 @@ const useStyles = makeStyles({
 });
 
 const ContactsInfoPage = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
-
   const history = useHistory();
-
+  
   const { getContact } = useContacts();
-
+  
   const { id } = useParams<ContactInfoRouteParams>();
   const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({
     referal: '/contacts',

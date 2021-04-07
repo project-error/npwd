@@ -7,8 +7,7 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { MatchThemeProvider } from '../providers/MatchThemeProvider';
-
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import MatchBottomNavigation from '../components/BottomNavigation';
 import MatchPage from './views/MatchPage';
 import ProfileEditor from './views/ProfileEditor';
@@ -17,13 +16,14 @@ import { MatchEvents } from '../../../../../typings/match';
 import { useProfile } from '../hooks/useProfile';
 
 export const MatchApp = () => {
+  const Nui = useNuiRequest();
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
   const { noProfileExists } = useProfile();
 
   useEffect(() => {
     Nui.send(MatchEvents.INITIALIZE);
-  }, []);
+  }, [Nui]);
 
   const handlePageChange = (e, page) => setActivePage(page);
 

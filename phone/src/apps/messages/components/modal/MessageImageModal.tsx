@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { Box, Typography, Button } from '@material-ui/core';
@@ -18,6 +18,7 @@ interface IProps {
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
+  const Nui = useNuiRequest();
   const history = useHistory();
   const { pathname, search } = useLocation();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
@@ -35,7 +36,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       });
       onClose();
     },
-    [messageGroupId, onClose],
+    [messageGroupId, onClose, Nui],
   );
 
   const sendFromQueryParam = useCallback(

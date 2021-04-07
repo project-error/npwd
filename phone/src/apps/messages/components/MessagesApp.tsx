@@ -9,17 +9,18 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { MessageEvents } from '../../../../../typings/messages';
 
 export const MessagesApp = () => {
+  const Nui = useNuiRequest();
   const messages = useApp('MESSAGES');
   const history = useHistory();
-
+  
   useEffect(() => {
     Nui.send(MessageEvents.FETCH_MESSAGE_GROUPS);
-  }, []);
+  }, [Nui]);
 
   return (
     <MessagesThemeProvider>

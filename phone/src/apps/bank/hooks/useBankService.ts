@@ -1,4 +1,4 @@
-import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { bankState } from './state';
 import { useTransactions } from './useTransactions';
 import { useCredentials } from './useCredentials';
@@ -7,7 +7,6 @@ import { useBankNotification } from './useBankNotification';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { BankEvents } from '../../../../../typings/bank';
-import { PhoneEvents } from '../../../../../typings/phone';
 
 export const useBankService = () => {
   const setTransaction = useSetRecoilState(bankState.transactions);

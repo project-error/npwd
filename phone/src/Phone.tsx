@@ -8,7 +8,6 @@ import { Box, Paper, Slide, Typography } from '@material-ui/core';
 import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
-import { useNuiService } from './os/nui-events/hooks/useNuiService';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
@@ -62,7 +61,6 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useNuiService();
   useKeyboardService();
   usePhoneService();
   useSimcardService();

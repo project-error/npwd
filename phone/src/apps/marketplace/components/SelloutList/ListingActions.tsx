@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ReportIcon from '@material-ui/icons/Report';
 import ChatIcon from '@material-ui/icons/Chat';
 import PhoneIcon from '@material-ui/icons/Phone';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { CallEvents } from '../../../../../../typings/call';
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { number: myNumber } = useSimcard();
   const { t } = useTranslation();

@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import TweetList from './tweet/TweetList';
-
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import SearchButton from './buttons/SearchButton';
 import { useFilteredTweets } from '../hooks/useFilteredTweets';
 import { TwitterEvents } from '../../../../../typings/twitter';
@@ -22,6 +21,7 @@ const useStyles = makeStyles({
 });
 
 function TwitterSearch() {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');

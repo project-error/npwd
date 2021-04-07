@@ -3,7 +3,7 @@ import { matchState } from './state';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
-import { useNuiEvent } from '../../../os/nui-events/hooks/useNuiEvent';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { Profile, FormattedProfile, Match, MatchEvents } from '../../../../../typings/match';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 

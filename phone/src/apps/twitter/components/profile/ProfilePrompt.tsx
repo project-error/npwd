@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
@@ -25,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function ProfilePrompt() {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { profile } = useProfile();

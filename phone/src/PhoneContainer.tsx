@@ -4,19 +4,22 @@ import { NotificationsProvider } from './os/notifications/providers/Notification
 import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './ui/providers/SnackbarProvider';
 import Phone from './Phone';
+import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from './os/sound/providers/SoundProvider';
 
 export const PhoneContainer = () => {
   const currentTheme = usePhoneTheme();
   return (
-    <ThemeProvider theme={currentTheme}>
-      <SoundProvider>
-        <NotificationsProvider>
-          <SnackbarProvider>
-            <Phone />
-          </SnackbarProvider>
-        </NotificationsProvider>
-      </SoundProvider>
-    </ThemeProvider>
+    <NuiProvider resource="new-phone-who-dis">
+      <ThemeProvider theme={currentTheme}>
+        <SoundProvider>
+          <NotificationsProvider>
+            <SnackbarProvider>
+              <Phone />
+            </SnackbarProvider>
+          </NotificationsProvider>
+        </SoundProvider>
+      </ThemeProvider>
+    </NuiProvider>
   );
 };

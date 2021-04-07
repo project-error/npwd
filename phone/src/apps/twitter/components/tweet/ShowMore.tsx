@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import ReportButton from '../buttons/ReportButton';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 export const ShowMore = ({ id, isReported, isMine }) => {
-  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const Nui = useNuiRequest();
   const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { config } = usePhone();
 
   if (!config) return null;

@@ -6,15 +6,16 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useContacts } from '../../hooks/useContacts';
-import Nui from '../../../../os/nui-events/utils/Nui';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { CallEvents } from '../../../../../../typings/call';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const ContactList = () => {
   const { filteredContacts } = useFilteredContacts();
   const history = useHistory();
+  const Nui = useNuiRequest();
 
   const { contacts } = useContacts();
 

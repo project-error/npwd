@@ -4,7 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
-import Nui from '../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { CallEvents } from '../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const DialerInput = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();

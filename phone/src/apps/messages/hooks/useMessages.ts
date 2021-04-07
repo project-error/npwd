@@ -1,7 +1,14 @@
 import { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../../../typings/messages';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageEvents,
+  MessageGroup,
+} from '../../../../../typings/messages';
 import { messageState } from './state';
+import { useNuiRequest } from 'fivem-nui-react-lib';
+import { useHistory } from 'react-router';
 
 interface IUseMessages {
   messages?: Message[] | null;
@@ -12,9 +19,13 @@ interface IUseMessages {
   getMessageGroupById: (id: string) => MessageGroup | null;
   setActiveMessageGroup: (groupId: string) => MessageGroup | null;
   activeMessageGroup: MessageGroup | null;
+  goToConversation(g: Pick<MessageGroup, 'groupId'>): void;
 }
 
-export default (): IUseMessages => {
+const useMessages = (): IUseMessages => {
+  const Nui = useNuiRequest();
+  const history = useHistory();
+
   const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
   const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
   const [activeMessageGroup, _setActiveMessageGroup] = useRecoilState<MessageGroup | null>(
@@ -44,6 +55,12 @@ export default (): IUseMessages => {
     [_setActiveMessageGroup, getMessageGroupById],
   );
 
+  const goToConversation = (messageGroup) => {
+    if (!messageGroup?.groupId || !history) return;
+    history.push(`/messages/conversations/${messageGroup.groupId}`);
+    Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: messageGroup.groupId });
+  };
+
   return {
     messages,
     setMessages,
@@ -53,5 +70,8 @@ export default (): IUseMessages => {
     getMessageGroupById,
     activeMessageGroup,
     setActiveMessageGroup,
+    goToConversation,
   };
 };
+
+export default useMessages;

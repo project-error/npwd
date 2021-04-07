@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNuiEvent } from '../../nui-events/hooks/useNuiEvent';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
 import { CallEvents, CallProps } from '../../../../../typings/call';
@@ -8,6 +7,7 @@ import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';
 import { useCallNotifications } from './useCallNotifications';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 
 // InjectDebugData<CallProps | boolean>([
 //   {
@@ -55,9 +55,9 @@ export const useCallService = () => {
   }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
   const _setCall = (_call: CallProps) => {
-    setCall(_call);
+    setCall({ ...call, ..._call });
     setNotification(_call);
   };
-  useNuiEvent<CallProps>('CALL', CallEvents.SET_CALLER, _setCall, call);
-  useNuiEvent<boolean>('CALL', CallEvents.SET_CALL_MODAL, setModal);
+  useNuiEvent('CALL', CallEvents.SET_CALLER, _setCall);
+  useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, setModal);
 };

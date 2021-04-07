@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CircularProgress, makeStyles, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 interface IProps {
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const LOADING_TIME = 1250;
 
 export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
+  const Nui = useNuiRequest();
   const [retweeted, setRetweeted] = useState(false);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();

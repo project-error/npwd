@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, TextField } from '@material-ui/core';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
 import { useContacts } from '../../../contacts/hooks/useContacts';
@@ -11,6 +11,7 @@ import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
+  const Nui = useNuiRequest();
   const history = useHistory();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
@@ -42,7 +43,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       setParticipants([]);
       history.push('/messages');
     }
-  }, [history, label, participants, isGroupChat]);
+  }, [history, label, participants, isGroupChat, Nui]);
 
   const onAutocompleteChange = (_e, value: any) => {
     const lastIdx = value.length - 1;

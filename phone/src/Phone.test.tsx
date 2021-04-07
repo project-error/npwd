@@ -1,12 +1,12 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { shallow } from 'enzyme';
-import Phone from './Phone';
+import { PhoneContainer } from './PhoneContainer';
 
 it('renders Phone', () => {
   shallow(
     <RecoilRoot>
-      <Phone />
+      <PhoneContainer />
     </RecoilRoot>,
   );
 });

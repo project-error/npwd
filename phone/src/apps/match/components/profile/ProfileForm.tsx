@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import {
   Profile as IProfile,
   FormattedProfile,
@@ -40,10 +39,11 @@ interface IProps {
 }
 
 export function ProfileForm({ profile, showPreview }: IProps) {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { config } = usePhone();
-
+  
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
   // Annoyingling adding conditionals above this line to not render

@@ -3,14 +3,15 @@ import { Box, Button } from '@material-ui/core';
 import useStyles from './grid.styles';
 import { usePhotos } from '../../hooks/usePhotos';
 import AddIcon from '@material-ui/icons/Add';
-import Nui from '../../../../os/nui-events/utils/Nui';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
 import { PhotoEvents } from '../../../../../../typings/photo';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const GalleryGrid = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const query = useQueryParams();

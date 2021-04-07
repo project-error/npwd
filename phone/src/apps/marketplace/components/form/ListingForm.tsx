@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, Button, TextField, Typography } from '@material-ui/core';
-import Nui from '../../../../os/nui-events/utils/Nui';
+import { makeStyles, Button, TextField } from '@material-ui/core';
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MarketplaceEvents } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ListingForm = () => {
+  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
