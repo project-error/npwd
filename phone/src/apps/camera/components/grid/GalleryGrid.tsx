@@ -7,22 +7,15 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
-import { PhotoEvents } from '../../../../../../typings/photo';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const GalleryGrid = () => {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
   const query = useQueryParams();
 
   const referal = query.referal ? decodeURIComponent(query.referal) : '/camera/image';
 
-  const { photos, isLoading } = useCamera();
-
-  const handleCamera = () => {
-    Nui.send(PhotoEvents.TAKE_PHOTO, {});
-  };
+  const { photos, isLoading, takePhoto } = useCamera();
 
   const handlePhotoOpen = (photo) => {
     history.push(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
@@ -45,7 +38,7 @@ export const GalleryGrid = () => {
         <Box>
           <Button
             disabled={isLoading}
-            onClick={handleCamera}
+            onClick={takePhoto}
             style={{ borderRadius: 0 }}
             className={classes.photo}
           >
