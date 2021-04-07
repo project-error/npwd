@@ -11,7 +11,13 @@
       "OPTIONS": {
         "LANGUAGE": "Språk",
         "RESET_SETTINGS": "Reset Settings",
-        "RESET_SETTINGS_DESC": "Dette vil slette all lagret data"
+        "RESET_SETTINGS_DESC": "Dette vil slette all lagret data",
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Tilpasset bakgrunn",
+          "DIALOG_CONTENT": "Velg en tilpasset bakgrunn ved å kopiere en lenke av bilde!",
+          "DIALOG_PLACEHOLDER": "Bilde URL",
+          "DIALOG_ERROR": "Feil bilde eller link!"
+        }
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
@@ -177,6 +183,7 @@
 
     "APPS_SETTINGS_PHONE_NUMBER": "Telefonnummer",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Bakgrunn",
+    "APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER": "Tilpasset bakgrunn",
     "APPS_SETTINGS_OPTION_FRAME": "Deksel",
     "APPS_SETTINGS_OPTION_THEME": "Tema",
     "APPS_SETTINGS_OPTION_ZOOM": "Forstørrelse",

@@ -29,8 +29,8 @@ const useStyles = makeStyles({
 interface DialogFormProps {
   children: React.ReactNode;
   open: boolean;
-  handleClose: any; // No idea what those types are
-  onSubmit: any;
+  handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // No idea what those types are
+  onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: string;
   content: string;
 }
