@@ -6718,10 +6718,10 @@ findup-sync@^3.0.0:
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
 
-fivem-nui-react-lib@2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/fivem-nui-react-lib/-/fivem-nui-react-lib-2.1.5.tgz#4d74836a2895e2865cab7b5b6845f084eba9de03"
-  integrity sha512-5FJqZOBqRNGZxeCL0/QUkzTWIvcl9vzbQaDLDlZSGVDWR4rTEykNxXPsd5129/tcynwhcs/vcS7lL0GKv8F8Tw==
+fivem-nui-react-lib@2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/fivem-nui-react-lib/-/fivem-nui-react-lib-2.2.5.tgz#8f2d1343f251ee4a69e4a0914b7a6fd48a80773f"
+  integrity sha512-fPsDcVhOPkeFmb7WPh0kQ64Nxrg238Uh2bM4Myv10ZlOHafD+ZmzKfDjf4cOuUcHigxkEEWg1v0C7gQsJLt32w==
   dependencies:
     typescript "^4.1.2"
 
