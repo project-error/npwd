@@ -33,6 +33,7 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
+import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -104,8 +105,8 @@ function Phone() {
               id="phone"
               className="PhoneScreen"
               style={{
-                backgroundImage: settings.customWallpaper
-                  ? `url(${settings.customWallpaper})`
+                backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
+                  ? `url(${settings.wallpaper.value})`
                   : `url(media/backgrounds/${settings.wallpaper.value})`,
               }}
             >

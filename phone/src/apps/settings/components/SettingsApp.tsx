@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
@@ -12,7 +12,6 @@ import {
   SettingItemIconAction,
   SettingItemSlider,
   SettingSwitch,
-  SettingItemModal,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -73,9 +72,9 @@ export const SettingsApp = () => {
   };
 
   const wallpapers = config.wallpapers.map(
-    MapSettingItem(settings.wallpaper, (val: SettingOption) =>
-      handleSettingChange('wallpaper', val),
-    ),
+    MapSettingItem(settings.wallpaper, (val: SettingOption) => {
+      handleSettingChange('wallpaper', val);
+    }),
   );
   const frames = config.frames.map(
     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
@@ -127,6 +126,13 @@ export const SettingsApp = () => {
       label: t('SETTINGS.OPTIONS.RESET_SETTINGS'),
     },
   ];
+
+  const customWallpaper: IContextMenuOption = {
+    selected: false,
+    onClick: () => setCustomWallpaperModal(true),
+    key: 'CUSTOM_WALLPAPER',
+    label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
+  };
 
   const handleCopyPhoneNumber = () => {
     setClipboard(simcard.number);
@@ -208,17 +214,10 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
-            value={settings.wallpaper.label}
-            options={wallpapers}
+            value={t(settings.wallpaper.label)}
+            options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
-          />
-          {/* CUSTOM BACKGROUND */}
-          <SettingItemModal
-            icon={<Wallpaper />}
-            label={t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER')}
-            secondary={settings.customWallpaper}
-            onClick={() => setCustomWallpaperModal(true)}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_FRAME')}

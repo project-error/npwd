@@ -18,7 +18,13 @@
       "OPTIONS": {
         "LANGUAGE": "Language",
         "RESET_SETTINGS": "Reset Settings",
-        "RESET_SETTINGS_DESC": "This will clear your locally stored data"
+        "RESET_SETTINGS_DESC": "This will clear your locally stored data",
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Custom Wallpaper",
+          "DIALOG_CONTENT": "Set a custom wallpaper by entering the URL of the image below!",
+          "DIALOG_PLACEHOLDER": "Image URL",
+          "DIALOG_ERROR": "Invalid image or link"
+        }
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
@@ -202,7 +208,6 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
     "APPS_SETTING_STREAMER_MODE_DESC": "Hide images before they are shown",
-    "APPS_SETTINGS_SET_CUSTOM_WALLPAPER": "Set new wallpaper",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
     "APPS_MARKETPLACE_CREATE_LISTING_FAILED": "Failed to create a new listing",
