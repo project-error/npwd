@@ -43,6 +43,8 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
         <Box display="flex">
           <Box pl={1} flexGrow={1}>
             <TextField
+              multiline
+              aria-multiline="true"
               fullWidth
               inputProps={{ style: { fontSize: '1.3em' } }}
               value={message}
