@@ -13,7 +13,8 @@ import { CallEvents } from '../../typings/call';
 import { MatchEvents } from '../../typings/match';
 
 let isPhoneOpen = false;
-let isPhoneReady = false;
+let isPlayerReady = false;
+let isUiReady = false;
 
 /* * * * * * * * * * * * *
  *
@@ -21,11 +22,10 @@ let isPhoneReady = false;
  *
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
-  isPhoneReady = true;
   emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  sendMessage('PHONE', 'setPhoneReady', isPhoneReady);
+  sendMessage('PHONE', 'setPhoneReady', true);
   sendMessage('PHONE', 'phoneConfig', config);
 }
 
@@ -97,7 +97,6 @@ RegisterCommand(
  * * * * * * * * * * * * */
 
 async function Phone(): Promise<void> {
-  fetchOnInitialize();
   if (config.PhoneAsItem) {
     // TODO: Do promise callback here
     // const hasPhoneItem = await emitNetPromise('phone:hasPhoneItem')
@@ -111,7 +110,12 @@ async function Phone(): Promise<void> {
 }
 
 // triggerd when the player is ready
-onNet(PhoneEvents.PLAYER_IS_READY, fetchOnInitialize);
+onNet(PhoneEvents.PLAYER_IS_READY, () => {
+  isPlayerReady = true;
+  if (isUiReady) {
+    fetchOnInitialize();
+  }
+});
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
@@ -124,6 +128,15 @@ AddEventHandler('onResourceStop', function (resource: string) {
 
 onNet('phone:sendCredentials', (number: string) => {
   sendMessage('SIMCARD', 'setNumber', number);
+});
+
+RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
+on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
+  isUiReady = true;
+  if (isPlayerReady) {
+    fetchOnInitialize();
+  }
+  cb();
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
