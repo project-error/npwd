@@ -9,7 +9,7 @@ export default function WallpaperModal() {
   const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(settings.wallpaper.value ? settings.wallpaper.value : '');
   const { addAlert } = useSnackbar();
 
   const isImageAndUrl = (url) => {
