@@ -17,6 +17,10 @@
     {
       "label": "Project Error",
       "value": "projecterror.jpg"
+    },
+    {
+      "label": "Default",
+      "value": "default.jpg"
     }
   ],
   "frames": [
@@ -141,8 +145,8 @@
       "value": "en"
     },
     "wallpaper": {
-      "label": "Project Error",
-      "value": "projecterror.jpg"
+      "label": "Default",
+      "value": "default.jpg"
     },
     "customWallpaper": "",
     "frame": {

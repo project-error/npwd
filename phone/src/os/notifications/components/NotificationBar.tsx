@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   makeStyles,
   Typography,
@@ -77,6 +77,12 @@ export const NotificationBar = () => {
 
   const time = usePhoneTime();
 
+  useEffect(() => {
+    if (notifications.length === 0) {
+      setBarUncollapsed(false);
+    }
+  }, [notifications, setBarUncollapsed]);
+
   return (
     <>
       <Grid
@@ -116,7 +122,7 @@ export const NotificationBar = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction="down" in={barUncollapsed}>
+      <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
           <Box py={2}>
             <List>
@@ -128,9 +134,6 @@ export const NotificationBar = () => {
                   onClose={(e) => {
                     e.stopPropagation();
                     notification.onClose?.(notification);
-                    if (notifications.length === 1) {
-                      setBarUncollapsed(false);
-                    }
                     removeNotification(idx);
                   }}
                   onClickClose={() => {

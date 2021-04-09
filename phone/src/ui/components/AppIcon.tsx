@@ -21,12 +21,17 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
     height: theme.spacing(8),
     fontSize: theme.typography.h4.fontSize,
   },
+  icon: {
+    fontSize: theme.typography.h4.fontSize,
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+  },
   tooltip: {
     fontSize: 12,
   },
 }));
 
-export const AppIcon = ({ id, nameLocale, name, icon, backgroundColor, color, notification }) => {
+export const AppIcon = ({ id, nameLocale, name, Icon, backgroundColor, color, notification }) => {
   const { t } = useTranslation();
   const classes = useStyles({
     backgroundColor: backgroundColor || green[50],
@@ -48,7 +53,11 @@ export const AppIcon = ({ id, nameLocale, name, icon, backgroundColor, color, no
           badgeContent={notification?.badge}
           invisible={!notification || notification.badge < 2}
         >
-          <Avatar className={classes.avatar}>{icon || name[0].toUpperCase()}</Avatar>
+          {Icon ? (
+            <Icon className={classes.icon} fontSize="large" />
+          ) : (
+            <Avatar className={classes.avatar}>{name[0].toUpperCase()}</Avatar>
+          )}
         </Badge>
       </Button>
     </Tooltip>
