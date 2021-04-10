@@ -80,7 +80,7 @@ onNet(MarketplaceEvents.ADD_LISTING, async (listing: MarketplaceListing) => {
 
     // This is used as username for the reports
     await addListing(
-      player.identifier,
+      player.getIdentifier(),
       player.username,
       player.getName(),
       player.getPhoneNumber(),

@@ -18,7 +18,7 @@ export const getSource = () => (global as any).source;
  * @param source The source/netId for the player in question
  **/
 export function getIdentifier(source: number): string {
-  return getPlayer(source).identifier;
+  return getPlayer(source).getIdentifier();
 }
 
 /**
@@ -31,7 +31,7 @@ export async function getIdentifierByPhoneNumber(
   fetch?: boolean,
 ): Promise<string | null> {
   for (const [source, player] of Players) {
-    if (player.getPhoneNumber() === phoneNumber) return player.identifier;
+    if (player.getPhoneNumber() === phoneNumber) return player.getIdentifier();
   }
   // Whether we fetch from database if not found in online players
   if (fetch) {

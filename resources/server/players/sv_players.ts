@@ -16,15 +16,15 @@ export async function handlePlayerAdd(pSource: number) {
   const playerIdentifiers = getPlayerIdentifiers(pSource.toString());
 
   // Parse specifically for license identifier as its
-  // guranteed
-  let playerIdentifer;
+  // guaranteed
+  let playerIdentifier;
   for (const identifier of playerIdentifiers) {
     if (identifier.includes('license:')) {
-      playerIdentifer = identifier.split(':')[1];
+      playerIdentifier = identifier.split(':')[1];
     }
   }
 
-  if (!playerIdentifer) {
+  if (!playerIdentifier) {
     throw new Error('License identifier could not be found.');
   }
 
@@ -32,12 +32,12 @@ export async function handlePlayerAdd(pSource: number) {
     const username = GetPlayerName(pSource.toString());
     playerLogger.info(`Started loading for ${username} (${pSource})`);
     // Ensure phone number exists or generate
-    const phone_number = await generatePhoneNumber(playerIdentifer);
+    const phone_number = await generatePhoneNumber(playerIdentifier);
 
     // Get player info to populate class instance
     let playerInfo = { firstname: '', lastname: '' };
     try {
-      playerInfo = await getPlayerInfo(playerIdentifer);
+      playerInfo = await getPlayerInfo(playerIdentifier);
     } catch (e) {
       playerLogger.debug(
         `Failed to get player info, defaulting to phone number as profile, ${e.message}`,
@@ -49,7 +49,7 @@ export async function handlePlayerAdd(pSource: number) {
     const { firstname, lastname } = playerInfo;
 
     const newPlayer = new Player({
-      identifier: playerIdentifer,
+      identifier: playerIdentifier,
       source: pSource,
       username,
       firstname,
@@ -58,7 +58,7 @@ export async function handlePlayerAdd(pSource: number) {
     });
 
     // Add to players by identifier map
-    PlayersByIdentifier.set(newPlayer.identifier, newPlayer);
+    PlayersByIdentifier.set(newPlayer.getIdentifier(), newPlayer);
 
     // Add to players by source map
     Players.set(pSource, newPlayer);
@@ -168,7 +168,7 @@ interface PlayerClassArgs {
 
 export class Player {
   public readonly source: number;
-  public readonly identifier: string;
+  private _identifier: string;
   public readonly username: string;
   private _firstname: string;
   private _lastname: string;
@@ -176,7 +176,7 @@ export class Player {
 
   constructor({ source, firstname, lastname, identifier, phoneNumber, username }: PlayerClassArgs) {
     this.source = source;
-    this.identifier = identifier;
+    this._identifier = identifier;
     this._firstname = firstname;
     this._lastname = lastname;
     this._phoneNumber = phoneNumber;
@@ -189,12 +189,27 @@ export class Player {
     return this._firstname;
   }
 
+  public getIdentifier(): string {
+    return this._identifier;
+  }
+
+  /**
+   * Set the identifier for a player, useful in systems with multicharacter
+   * players
+   * @param identifier {string} - Set the identifier for a player
+   */
+  public setIdentifier(identifier: string): Player {
+    this._identifier = identifier;
+    return this;
+  }
+
   /**
    * Set the first name for a user
    * @param firstname {string} The first name to set for the user
    **/
-  public setFirstName(firstname: string): void {
+  public setFirstName(firstname: string): Player {
     this._firstname = firstname;
+    return this;
   }
 
   /**
@@ -208,8 +223,9 @@ export class Player {
    * Set the last name for a user
    * @param lastname {string} The last name to set for the user
    **/
-  public setLastName(lastname: string): void {
+  public setLastName(lastname: string): Player {
     this._lastname = lastname;
+    return this;
   }
 
   /**
@@ -229,7 +245,8 @@ export class Player {
   /**
    * Set the stored phone number for a user
    **/
-  public setPhoneNumber(number: string): void {
+  public setPhoneNumber(number: string): Player {
     this._phoneNumber = number;
+    return this;
   }
 }
