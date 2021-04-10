@@ -1,4 +1,10 @@
 import { Server } from 'esx.js';
+import { IServerConfig } from '../../typings/config';
+
+// Setup and export config loaded at runtime
+export const config: IServerConfig = JSON.parse(
+  LoadResourceFile(GetCurrentResourceName(), 'config.json'),
+);
 
 import './db';
 import './sv_twitter';

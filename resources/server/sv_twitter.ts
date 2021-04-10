@@ -2,7 +2,7 @@ import { ResultSetHeader } from 'mysql2';
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../typings/twitter';
-import config from '../utils/config';
+import { config } from './server';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
 import { generateProfileName, getDefaultProfileNames } from './players/sv_players';
