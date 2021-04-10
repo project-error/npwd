@@ -49,15 +49,14 @@ const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 export const useKeyboardService = () => {
   const history = useHistory();
   const { closePhone } = usePhone();
-  const getters = {
-    ArrowRight: useRecoilValue(keyboardState.ArrowRight),
-    ArrowLeft: useRecoilValue(keyboardState.ArrowLeft),
-    ArrowUp: useRecoilValue(keyboardState.ArrowUp),
-    ArrowDown: useRecoilValue(keyboardState.ArrowDown),
-    Backspace: useRecoilValue(keyboardState.Backspace),
-    Enter: useRecoilValue(keyboardState.Enter),
-    Escape: useRecoilValue(keyboardState.Escape),
-  };
+
+  const ArrowRight = useRecoilValue(keyboardState.ArrowRight);
+  const ArrowLeft = useRecoilValue(keyboardState.ArrowLeft);
+  const ArrowUp = useRecoilValue(keyboardState.ArrowUp);
+  const ArrowDown = useRecoilValue(keyboardState.ArrowDown);
+  const Backspace = useRecoilValue(keyboardState.Backspace);
+  const Enter = useRecoilValue(keyboardState.Enter);
+  const Escape = useRecoilValue(keyboardState.Escape);
 
   const handlers = useRef(new Map());
   const setEscape = useSetRecoilState<any>(keyboardState.Escape);
@@ -65,28 +64,29 @@ export const useKeyboardService = () => {
 
   useEffect(
     function registerCustomKeys() {
-      Object.keys(getters).forEach((g) => {
-        handlers.current.set(g, getters[g]);
-      });
+      handlers.current.set('ArrowRight', ArrowRight);
+      handlers.current.set('ArrowLeft', ArrowLeft);
+      handlers.current.set('ArrowUp', ArrowUp);
+      handlers.current.set('ArrowDown', ArrowDown);
+      handlers.current.set('Backspace', Backspace);
+      handlers.current.set('Enter', Enter);
+      handlers.current.set('Escape', Escape);
     },
-    [getters],
+    [ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Backspace, Enter, Escape],
   );
 
-  useEffect(
-    function handleNUIKeyboardMessage() {
-      function onKeyUp(event) {
-        const { key } = event;
-        const callback = handlers.current.get(key);
-        if (isKeyValid(key) && callback && callback.call) {
-          return callback(event);
-        }
+  useEffect(function handleNUIKeyboardMessage() {
+    function onKeyUp(event) {
+      const { key } = event;
+      const callback = handlers.current.get(key);
+      if (isKeyValid(key) && callback && callback.call) {
+        return callback(event);
       }
+    }
 
-      window.addEventListener('keyup', onKeyUp);
-      return () => window.removeEventListener('keyup', onKeyUp);
-    },
-    [getters],
-  );
+    window.addEventListener('keyup', onKeyUp);
+    return () => window.removeEventListener('keyup', onKeyUp);
+  }, []);
 
   const backspaceHandler = useCallback(
     (event) => {
