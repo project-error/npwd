@@ -26,7 +26,7 @@ type INotificationAlert = INotification & {
   resolve(): void;
 };
 
-interface INotificationIcon {
+export interface INotificationIcon {
   key: string;
   icon: JSX.Element;
   badge: number;
