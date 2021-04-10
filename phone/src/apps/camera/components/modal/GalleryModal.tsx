@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ICameraPhoto } from '../../hooks/useCamera';
 import { ShareModal } from './ShareModal';
-import { PhotoEvents } from '../../../../../../typings/photo';
+import { IPhoto, PhotoEvents } from '../../../../../../typings/photo';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const GalleryModal = () => {
