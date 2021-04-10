@@ -2,7 +2,7 @@ import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import config from '../utils/config';
+import { config } from './server';
 import { Like, Match, Profile, MatchEvents, NewProfile } from '../../typings/match';
 import { mainLogger } from './sv_logger';
 import { generateProfileName } from './players/sv_players';

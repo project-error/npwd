@@ -1,4 +1,3 @@
-import config from '../utils/config';
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
@@ -11,6 +10,7 @@ import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
 import { MatchEvents } from '../../typings/match';
+import { config } from './client';
 
 let isPhoneOpen = false;
 let isPlayerReady = false;

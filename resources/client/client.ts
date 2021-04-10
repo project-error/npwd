@@ -1,4 +1,10 @@
 import ClientUtils from './cl_utils';
+import { IServerConfig } from '../../typings/config';
+
+// Setup and export the config for the resource
+export const config: IServerConfig = JSON.parse(
+  LoadResourceFile(GetCurrentResourceName(), 'config.json'),
+);
 
 import './cl_main';
 import './cl_twitter';

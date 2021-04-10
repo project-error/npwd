@@ -1,5 +1,5 @@
 import winston from 'winston';
-import config from '../utils/config';
+import { config } from './server';
 import path from 'path';
 
 // Needed to manually apply a color to componenent property of log
@@ -13,8 +13,7 @@ const formatLogs = (log: winston.Logform.TransformableInfo): string => {
   return `${log.label} [${log.level}]: ${log.message}`;
 };
 
-const findLogPath = () =>
-  `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
+const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
 // Initiate the main logger for NPWD
 
 export const mainLogger = winston.createLogger({

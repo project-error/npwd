@@ -1,5 +1,5 @@
 import { pool } from './db';
-import config from '../utils/config';
+import { config } from './server';
 import { mainLogger } from './sv_logger';
 import { Player, Players, PlayersByIdentifier } from './players/sv_players';
 
