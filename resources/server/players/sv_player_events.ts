@@ -47,13 +47,17 @@ on('onServerResourceStart', async (resource: string) => {
   }
 });
 
+// We need to alias this as webpack or something
+// is being a PITA
+const exp = global.exports;
+
 /**
  * This sets the identifier for an NPWD player using source as the target
  *
  * @param source {number} - The source of the player to target
  * @param identifier {string} - The identifier for this player to receive
  */
-exports('setNpwdIdentifier', (source: number, identifier: string) => {
+exp('setNpwdIdentifier', (source: number, identifier: string) => {
   if (typeof source !== 'number') {
     playerLogger.error('Source must be passed as a number to setNpwdIdentifier');
     return;
@@ -78,7 +82,7 @@ exports('setNpwdIdentifier', (source: number, identifier: string) => {
  * @param firstname {string} - The RP first name for this player
  * @param lastname {string} - The RP last name for this player
  */
-exports('setNpwdName', (source: number, firstname: string, lastname: string) => {
+exp('setNpwdName', (source: number, firstname: string, lastname: string) => {
   if (typeof source !== 'number') {
     playerLogger.error('Source must be passed as a number to setNpwdIdentifier');
     return;
