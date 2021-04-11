@@ -23,6 +23,7 @@ interface Debug {
 
 interface General {
   useDashNumber: boolean;
+  enableMultiChar: boolean;
 }
 
 interface NotificationConfig {
@@ -34,7 +35,13 @@ interface BankConfig {
   showNotifications: boolean;
 }
 
+interface DatabaseConfig {
+  playerTable: string;
+  identifierColumn: string;
+}
+
 export interface IServerConfig {
+  database: DatabaseConfig;
   Locale: string;
   KeyTogglePhone: number;
   KeyTakeCall: number;

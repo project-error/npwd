@@ -5,7 +5,7 @@ import { NewTweet, Tweet, Profile } from '../../typings/twitter';
 import { config } from './server';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
-import { generateProfileName, getDefaultProfileNames } from './players/sv_players';
+import { generateProfileName, getDefaultProfileNames } from './players/player.service';
 import { TwitterEvents } from '../../typings/twitter';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
