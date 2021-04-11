@@ -34,6 +34,7 @@ import { useSnackbar } from './ui/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
 import dayjs from 'dayjs';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
+import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -62,6 +63,7 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useKeyboardService();
   usePhoneService();
   useSimcardService();
   useContactsService();
