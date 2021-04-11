@@ -1,4 +1,4 @@
-import { IPhoto, PhotoEvents } from '../../typings/photo';
+import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
@@ -107,7 +107,7 @@ function takePhoto() {
   );
 }
 
-onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (photo: IPhoto) => {
+onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (photo: GalleryPhoto) => {
   if (photo && photo.image) {
     return sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, photo);
   }

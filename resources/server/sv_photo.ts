@@ -5,7 +5,7 @@ import { mainLogger } from './sv_logger';
 
 const photoLogger = mainLogger.child({ module: 'photo' });
 
-async function uploadPhoto(identifier: string, image: string): Promise<IPhoto> {
+async function uploadPhoto(identifier: string, image: string): Promise<GalleryPhoto> {
   const query = 'INSERT INTO npwd_phone_gallery (identifier, image) VALUES (?, ?)';
   const [results] = (await pool.query(query, [identifier, image])) as any;
   return { id: results.insertId, image };
