@@ -53,7 +53,7 @@ export async function handleNewPlayerJoined(pSource: number) {
     playerLogger.debug(newPlayer);
 
     // Emit to client that player is ready
-    emitNet(PhoneEvents.PLAYER_IS_READY, pSource);
+    emitNet(PhoneEvents.PLAYER_IS_READY, pSource, true);
   } catch (e) {
     playerLogger.error(`Failed to create a new player, ${e.message}`, {
       source: pSource,
@@ -93,6 +93,9 @@ export async function handleNewPlayerEvent({
 
     playerLogger.info(`New NPWD Player added through event (${source}) (${identifier})`);
     playerLogger.debug(player);
+
+    // Emit to client that player is ready
+    emitNet(PhoneEvents.PLAYER_IS_READY, source, true);
   } catch (e) {
     playerLogger.error(`Failed to create a new player through event, ${e.message}`, {
       source,
@@ -100,9 +103,16 @@ export async function handleNewPlayerEvent({
   }
 }
 
-export function handleUnloadPlayerEvent(source: number) {
+/**
+ * Unloads an NPWD player and emits to the client that the phone is not yet ready
+ * if the player wasn't dropped
+ *
+ * @param source - The source of the player to unload
+ * @param playerDropped - Whether the player was dropped
+ */
+export function handleUnloadPlayerEvent(source: number, playerDropped?: boolean) {
   if (typeof source !== 'number') {
-    return playerLogger.error('Source must be passed as a number to npwd:handleUnloadPlayer');
+    return playerLogger.error('Source must be passed as a number when unloading a player');
   }
   const identifier = getPlayer(source).getIdentifier();
 
@@ -111,6 +121,10 @@ export function handleUnloadPlayerEvent(source: number) {
   PlayersByIdentifier.delete(identifier);
 
   playerLogger.info(`Unloaded NPWD Player, source: (${source})`);
+
+  if (!playerDropped) {
+    emitNet(PhoneEvents.PLAYER_IS_READY, source, false);
+  }
 }
 
 const clean = (input: string) => (input ? input.replace(/[^0-9a-z]/gi, '') : input);

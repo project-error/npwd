@@ -28,7 +28,7 @@ if (!config.general.enableMultiChar) {
 on('playerDropped', () => {
   const source = getSource();
   // Get identifier for player to remove
-  handleUnloadPlayerEvent(source);
+  handleUnloadPlayerEvent(source, true);
 });
 
 // Can use this to debug the player table if needed. Disabled by default
