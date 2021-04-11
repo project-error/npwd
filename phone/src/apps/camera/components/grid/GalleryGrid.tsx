@@ -25,7 +25,7 @@ export const GalleryGrid = () => {
     return (
       <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
         <Box>
-          <Button onClick={handleCamera} style={{ borderRadius: 0 }} className={classes.photo}>
+          <Button onClick={takePhoto} style={{ borderRadius: 0 }} className={classes.photo}>
             <AddIcon fontSize="large" />
           </Button>
         </Box>
