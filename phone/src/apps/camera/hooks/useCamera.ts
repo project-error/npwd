@@ -1,19 +1,14 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SetterOrUpdater, useRecoilState } from 'recoil';
-import { PhotoEvents } from '../../../../../typings/photo';
-import { useNuiEvent, useNuiCallback } from 'fivem-nui-react-lib/dist/index';
+import { GalleryPhoto, PhotoEvents } from '../../../../../typings/photo';
+import { useNuiEvent, useNuiCallback } from 'fivem-nui-react-lib/';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { photoState } from './state';
 
-export interface ICameraPhoto {
-  id: string;
-  image: string;
-}
-
 interface IUseCamera {
-  photos: ICameraPhoto[];
-  setPhotos: SetterOrUpdater<ICameraPhoto[]>;
+  photos: GalleryPhoto[];
+  setPhotos: SetterOrUpdater<GalleryPhoto[]>;
   takePhoto: () => void;
   isLoading: boolean;
 }
@@ -22,7 +17,7 @@ export const useCamera = (): IUseCamera => {
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
 
-  const [photos, setPhotos] = useRecoilState<ICameraPhoto[] | null>(photoState.photos);
+  const [photos, setPhotos] = useRecoilState<GalleryPhoto[]>(photoState.photos);
 
   const [isUploading, setUploading] = useState(false);
 
@@ -43,7 +38,7 @@ export const useCamera = (): IUseCamera => {
     [addAlert, t],
   );
 
-  const [_takePhoto] = useNuiCallback<void, ICameraPhoto>(
+  const [_takePhoto] = useNuiCallback<void, GalleryPhoto>(
     'CAMERA',
     PhotoEvents.TAKE_PHOTO,
     onPhotoSuccess,

@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
-import { IPhoto } from '../../../../../typings/photo';
+import { GalleryPhoto } from '../../../../../typings/photo';
 
 export const photoState = {
-  photos: atom<IPhoto[]>({
+  photos: atom<GalleryPhoto[]>({
     key: 'galleryPhotos',
     default: [],
   }),
