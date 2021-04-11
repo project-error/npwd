@@ -6,9 +6,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { ICameraPhoto } from '../../hooks/useCamera';
 import { ShareModal } from './ShareModal';
-import { PhotoEvents } from '../../../../../../typings/photo';
+import { GalleryPhoto, PhotoEvents } from '../../../../../../typings/photo';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 
 export const GalleryModal = () => {
@@ -20,8 +19,8 @@ export const GalleryModal = () => {
 
   const [shareOpen, setShareOpen] = useState(null);
 
-  const meta: ICameraPhoto = useMemo(
-    () => ({ id: query.id as string, image: query.image as string }),
+  const meta: GalleryPhoto = useMemo(
+    () => ({ id: parseInt(query.id), image: query.image as string }),
     [query],
   );
 

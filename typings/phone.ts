@@ -12,5 +12,11 @@ export enum PhoneEvents {
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',
   SET_ALERT = 'npwd:setAlert',
+  SET_VISIBILITY = 'npwd:setVisibility',
   SET_NOTIFICATION = 'npwd:setNotification',
+  SET_NUMBER = 'npwd:setNumber',
+  SET_PHONE_READY = 'npwd:phoneReady',
+  SET_CONFIG = 'npwd:setPhoneConfig',
+  SET_TIME = 'npwd:setGameTime',
+  SEND_CREDENTIALS = 'npwd:sendCredentials',
 }

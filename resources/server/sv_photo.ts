@@ -1,6 +1,6 @@
 import { pool } from './db';
 import { getIdentifier, getSource } from './functions';
-import { IPhoto, PhotoEvents } from '../../typings/photo';
+import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
 import { mainLogger } from './sv_logger';
 
 const photoLogger = mainLogger.child({ module: 'photo' });
@@ -11,13 +11,13 @@ async function uploadPhoto(identifier: string, image: string): Promise<IPhoto> {
   return { id: results.insertId, image };
 }
 
-async function getPhotosByIdentifier(identifier: string): Promise<IPhoto[]> {
+async function getPhotosByIdentifier(identifier: string): Promise<GalleryPhoto[]> {
   const query = 'SELECT id, image FROM npwd_phone_gallery WHERE identifier = ? ORDER BY id DESC';
   const [results] = await pool.query(query, [identifier]);
-  return <IPhoto[]>results;
+  return <GalleryPhoto[]>results;
 }
 
-async function deletePhoto(photo: IPhoto, identifier: string) {
+async function deletePhoto(photo: GalleryPhoto, identifier: string) {
   const query = 'DELETE FROM npwd_phone_gallery WHERE image = ? AND identifier = ?';
   await pool.query(query, [photo.image, identifier]);
 }
@@ -48,7 +48,7 @@ onNet(PhotoEvents.FETCH_PHOTOS, async () => {
   }
 });
 
-onNet(PhotoEvents.DELETE_PHOTO, async (photo: IPhoto) => {
+onNet(PhotoEvents.DELETE_PHOTO, async (photo: GalleryPhoto) => {
   const _source = getSource();
   try {
     const identifier = getIdentifier(_source);

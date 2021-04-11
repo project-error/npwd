@@ -1,5 +1,5 @@
 import { CallEvents } from '../../typings/call';
-import { ICall } from '../../typings/call';
+import { CallHistoryItem } from '../../typings/call';
 import { phoneCallStartAnim, phoneCallEndAnim } from './functions';
 
 const exp = (global as any).exports;
@@ -34,23 +34,26 @@ on(`__cfx_nui:${CallEvents.ACCEPT_CALL}`, (data: any, cb: Function) => {
   cb();
 });
 
-onNet(CallEvents.WAS_ACCEPTED, (channelId: number, currentCall: ICall, isTransmitter: boolean) => {
-  exp['mumble-voip'].SetCallChannel(channelId);
-  phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
-  SendNuiMessage(
-    JSON.stringify({
-      app: 'CALL',
-      method: CallEvents.SET_CALLER,
-      data: {
-        active: true,
-        transmitter: currentCall.transmitter,
-        receiver: currentCall.receiver,
-        isTransmitter: isTransmitter,
-        accepted: true,
-      },
-    }),
-  );
-});
+onNet(
+  CallEvents.WAS_ACCEPTED,
+  (channelId: number, currentCall: CallHistoryItem, isTransmitter: boolean) => {
+    exp['mumble-voip'].SetCallChannel(channelId);
+    phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
+    SendNuiMessage(
+      JSON.stringify({
+        app: 'CALL',
+        method: CallEvents.SET_CALLER,
+        data: {
+          active: true,
+          transmitter: currentCall.transmitter,
+          receiver: currentCall.receiver,
+          isTransmitter: isTransmitter,
+          accepted: true,
+        },
+      }),
+    );
+  },
+);
 
 RegisterNuiCallbackType(CallEvents.REJECTED); // Fires when cancelling and rejecting a call.
 on(`__cfx_nui:${CallEvents.REJECTED}`, (data: any, cb: Function) => {
@@ -115,7 +118,7 @@ function openCallModal(show: boolean) {
   );
 }
 
-onNet(CallEvents.SEND_HISTORY, (calls: ICall) => {
+onNet(CallEvents.SEND_HISTORY, (calls: CallHistoryItem[]) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'DIALER',

@@ -1,6 +1,7 @@
 import { IPhoto, PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
+import { PhoneEvents } from '../../typings/phone';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
@@ -9,12 +10,12 @@ let inCameraMode = false;
 
 function closePhoneTemp() {
   SetNuiFocus(false, false);
-  sendMessage('PHONE', 'setVisibility', false);
+  sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
 }
 
 function openPhoneTemp() {
   SetNuiFocus(true, true);
-  sendMessage('PHONE', 'setVisibility', true);
+  sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
 }
 
 function CellFrontCamActivate(activate: boolean) {

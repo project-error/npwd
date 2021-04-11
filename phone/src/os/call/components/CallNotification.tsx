@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { CallControls } from './CallControls';
 
-interface ICallNotificationProps {
-  onAccept(): void;
-  onReject(): void;
-}
+// interface ICallNotificationProps {
+//   onAccept(): void;
+//   onReject(): void;
+// }
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import { CallModal } from './os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
 import { Box, Paper, Slide, Typography } from '@material-ui/core';
-import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
@@ -32,7 +31,10 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
+import { PhoneEvents } from '../../typings/phone';
+import dayjs from 'dayjs';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
+import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -150,15 +152,20 @@ function Phone() {
 
 export default Phone;
 
-InjectDebugData([
+InjectDebugData<any>([
   {
     app: 'PHONE',
-    method: 'setVisibility',
+    method: PhoneEvents.SET_VISIBILITY,
     data: true,
   },
   {
     app: 'PHONE',
-    method: 'setPhoneReady',
+    method: PhoneEvents.SET_PHONE_READY,
     data: true,
+  },
+  {
+    app: 'PHONE',
+    method: PhoneEvents.SET_TIME,
+    data: dayjs().format('hh:mm'),
   },
 ]);

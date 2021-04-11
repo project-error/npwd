@@ -1,4 +1,4 @@
-export interface IPhoto {
+export interface GalleryPhoto {
   image: string;
   id: number;
 }

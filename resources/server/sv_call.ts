@@ -1,7 +1,7 @@
 import { CallEvents } from '../../typings/call';
 import { getIdentifierByPhoneNumber, getPlayer, getSource } from './functions';
 import { getPlayerFromIdentifier } from './functions';
-import { ICall } from '../../typings/call';
+import { CallHistoryItem } from '../../typings/call';
 
 import { pool } from './db';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,25 +9,25 @@ import { mainLogger } from './sv_logger';
 
 const callLogger = mainLogger.child({ module: 'calls' });
 
-async function saveCall(call: ICall) {
+async function saveCall(call: CallHistoryItem) {
   const query =
     'INSERT INTO npwd_calls (identifier, transmitter, receiver, start) VALUES (?, ?, ?, ?)';
   await pool.query(query, [call.identifier, call.transmitter, call.receiver, call.start]);
 }
 
-async function updateCall(call: ICall, isAccepted: boolean, end: number) {
+async function updateCall(call: CallHistoryItem, isAccepted: boolean, end: number) {
   const query = 'UPDATE npwd_calls SET is_accepted=?, end=? WHERE identifier = ?';
   await pool.query(query, [isAccepted, end, call.identifier]);
 }
 
-async function fetchCalls(phoneNumber: string): Promise<ICall[]> {
+async function fetchCalls(phoneNumber: string): Promise<CallHistoryItem[]> {
   const query = 'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC';
   const [result] = await pool.query(query, [phoneNumber, phoneNumber]);
-  const calls = <ICall[]>result;
+  const calls = <CallHistoryItem[]>result;
   return calls;
 }
 
-let calls: Map<string, ICall> = new Map();
+let calls: Map<string, CallHistoryItem> = new Map();
 
 onNet(CallEvents.INITIALIZE_CALL, async (phoneNumber: string) => {
   const _source = getSource();

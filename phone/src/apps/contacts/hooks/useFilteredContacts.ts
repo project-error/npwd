@@ -3,7 +3,7 @@ import { contactsState } from './state';
 
 interface FilterdContactsProps {
   filteredContacts: string;
-  setFilteredContacts: (contact: any) => void;
+  setFilteredContacts: (searchTerm: string) => void;
 }
 
 export const useFilteredContacts = (): FilterdContactsProps => {

@@ -55,14 +55,14 @@ const showPhone = async (): Promise<void> => {
   await phoneOpenAnim(); // Animation starts before the phone is open
   emitNet('phone:getCredentials');
   SetCursorLocation(0.9, 0.922); //Experimental
-  sendMessage('PHONE', 'setVisibility', true);
-  sendMessage('PHONE', 'setTime', time);
+  sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
+  sendMessage('PHONE', PhoneEvents.SET_TIME, time);
   SetNuiFocus(true, true);
 };
 
 const hidePhone = async (): Promise<void> => {
   isPhoneOpen = false;
-  sendMessage('PHONE', 'setVisibility', false);
+  sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
 };
@@ -119,15 +119,15 @@ onNet(PhoneEvents.PLAYER_IS_READY, () => {
 
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
-    sendMessage('PHONE', 'setVisibility', false);
+    sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
     SetNuiFocus(false, false);
     removePhoneProp(); //Deletes the phone incase it was attached.
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
   }
 });
 
-onNet('phone:sendCredentials', (number: string) => {
-  sendMessage('SIMCARD', 'setNumber', number);
+onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
+  sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
 });
 
 RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
