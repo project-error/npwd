@@ -44,6 +44,7 @@
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.7",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "cp-cli": "^2.0.0",
     "cra-build-watch": "^3.2.0",
     "cross-env": "^7.0.2",
