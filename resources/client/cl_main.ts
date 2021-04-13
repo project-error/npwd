@@ -25,8 +25,8 @@ function fetchOnInitialize() {
   emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  sendMessage('PHONE', 'setPhoneReady', true);
-  sendMessage('PHONE', 'phoneConfig', config);
+  sendMessage('PHONE', PhoneEvents.SET_PHONE_READY, true);
+  sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
