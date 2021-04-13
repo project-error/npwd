@@ -8,7 +8,7 @@ import { PhoneEvents } from '../../../../../typings/phone';
 InjectDebugData([
   {
     app: 'SIMCARD',
-    method: 'setNumber',
+    method: PhoneEvents.SET_NUMBER,
     data: '111-1134',
   },
 ]);
