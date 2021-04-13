@@ -1,3 +1,5 @@
+const path = require('path')
+
 const {
   addAfterLoader,
   removeLoaders,
@@ -51,6 +53,8 @@ module.exports = {
       );
 
       if (!babelLoaderIsAdded) throwError('failed to add back babel-loader for non-application JS');
+
+      paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html')
 
       return webpackConfig;
     },

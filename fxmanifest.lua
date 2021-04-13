@@ -16,7 +16,5 @@ ui_page 'resources/html/index.html'
 files {
     'config.json',
     'resources/html/index.html',
-    'resources/html/*.js',
-    'resources/html/*.map',
-    'resources/html/media/**/*'
+    'resources/html/**/*',
 }
