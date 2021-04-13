@@ -71,7 +71,7 @@ interface ISettingSwitch {
 }
 
 export const SettingSwitch = ({ label, value, onClick, icon, secondary }: ISettingSwitch) => (
-  <ListItem divider button>
+  <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={label} secondary={secondary} />
     <ListItemSecondaryAction>
