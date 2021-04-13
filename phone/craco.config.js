@@ -59,4 +59,8 @@ module.exports = {
       return webpackConfig;
     },
   },
+  devServer: (devServerConfig) => {
+    devServerConfig.writeToDisk = true
+    return devServerConfig
+  }
 };
