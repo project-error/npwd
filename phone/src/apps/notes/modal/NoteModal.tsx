@@ -40,9 +40,7 @@ export const NoteModal = () => {
 
   const handleDeleteNote = () => {
     const id = detail.id;
-    Nui.send(NotesEvents.DELETE_NOTE, {
-      id,
-    });
+    Nui.send(NotesEvents.DELETE_NOTE, id);
     setDetail(null);
     onClose();
   };

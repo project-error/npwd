@@ -1,3 +1,5 @@
+import { IAlertProps } from './alerts';
+
 export type AlertCategory =
   | 'NOTES_ADD_SUCCESS'
   | 'NOTES_ADD_FAILED'
@@ -17,10 +19,6 @@ export interface Note {
   content: string;
 }
 
-export interface NoteId {
-  id: number;
-}
-
 export enum NotesEvents {
   ADD_NOTE = 'npwd:addNote',
   FETCH_ALL_NOTES = 'npwd:fetchAllNotes',
@@ -33,4 +31,13 @@ export enum NotesEvents {
   UPDATE_NOTE_FAILURE = 'npwd:updateNoteFailure',
   ACTION_RESULT = 'npwd:notesActionResult',
   SEND_ALERT = 'npwd:notesSetAlert',
+  SERVER_RESP = 'npwd:notesServerResp',
+}
+
+export interface NoteServerResponse<T = unknown> {
+  alert?: IAlertProps;
+  action: 'SEND' | 'UPDATE' | 'DELETE' | 'ADD';
+  suceeded: boolean;
+  refetch?: boolean;
+  data?: T;
 }
