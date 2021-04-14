@@ -1,11 +1,6 @@
-import { getSource } from '../functions';
-import {
-  handleNewPlayerEvent,
-  handleNewPlayerJoined,
-  handleUnloadPlayerEvent,
-  playerLogger,
-} from './player.service';
-import config from '../../utils/config';
+import { getSource } from '../utils/miscUtils';
+import PlayerService, { playerLogger } from './player.service';
+import { config } from '../server';
 import { PlayerAddData } from './player.interfaces';
 
 /**
@@ -19,16 +14,16 @@ import { PlayerAddData } from './player.interfaces';
 
 if (!config.general.enableMultiChar) {
   on('playerJoining', async () => {
-    const _source = getSource();
-    await handleNewPlayerJoined(_source);
+    const src = getSource();
+    await PlayerService.handleNewPlayerJoined(src);
   });
 }
 
 // Handle removing from player maps when player disconnects
 on('playerDropped', () => {
-  const source = getSource();
+  const src = getSource();
   // Get identifier for player to remove
-  handleUnloadPlayerEvent(source, true);
+  PlayerService.handleUnloadPlayerEvent(src, true);
 });
 
 // Can use this to debug the player table if needed. Disabled by default
@@ -50,7 +45,7 @@ if (!config.general.enableMultiChar) {
       // @ts-ignore
       const onlinePlayers: string[] = getPlayers();
       for (const player of onlinePlayers) {
-        await handleNewPlayerJoined(parseInt(player));
+        await PlayerService.handleNewPlayerJoined(parseInt(player));
       }
     }
   });
@@ -62,13 +57,18 @@ if (!config.general.enableMultiChar) {
 if (config.general.enableMultiChar) {
   // This has to be an event as FXServer does not yet support exports which return a promise.
   on('npwd:newPlayer', async (playerDTO: PlayerAddData) => {
+    if (typeof playerDTO.source !== 'number') {
+      return playerLogger.error('Source must be passed as a number when unloading a player');
+    }
     playerLogger.debug('Receive newPlayer event, data:');
     playerLogger.debug(playerDTO);
-    await handleNewPlayerEvent(playerDTO);
   });
 
-  on('npwd:unloadPlayer', (source: number) => {
-    playerLogger.debug(`Received unloadPlayer event for ${source}`);
-    handleUnloadPlayerEvent(source);
+  on('npwd:unloadPlayer', (src: number) => {
+    if (typeof src !== 'number') {
+      return playerLogger.error('Source must be passed as a number when unloading a player');
+    }
+    playerLogger.debug(`Received unloadPlayer event for ${src}`);
+    PlayerService.handleUnloadPlayerEvent(src);
   });
 }
