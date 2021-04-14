@@ -6,6 +6,11 @@ export const config: IServerConfig = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'config.json'),
 );
 
+// Setup controllers
+import './db';
+import 'players/player.controller';
+import 'calls/calls.controller';
+
 import './db';
 import './sv_twitter';
 import './sv_main';
@@ -17,7 +22,6 @@ import './sv_photo';
 import './sv_messages';
 import './sv_match';
 import './sv_call';
-import './players/sv_player_events';
 import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;
