@@ -1,4 +1,4 @@
-import { ContactEvents } from '../../typings/contact';
+import { ContactEvents, PreDBContact } from '../../typings/contact';
 import { sendContactsEvent } from '../utils/messages';
 
 onNet(ContactEvents.SEND_CONTACTS, (contacts: any) => {
@@ -6,8 +6,8 @@ onNet(ContactEvents.SEND_CONTACTS, (contacts: any) => {
 });
 
 RegisterNuiCallbackType(ContactEvents.ADD_CONTACT);
-on(`__cfx_nui:${ContactEvents.ADD_CONTACT}`, (data: any, cb: Function) => {
-  emitNet(ContactEvents.ADD_CONTACT, data.number, data.display, data.avatar);
+on(`__cfx_nui:${ContactEvents.ADD_CONTACT}`, (data: PreDBContact, cb: Function) => {
+  emitNet(ContactEvents.ADD_CONTACT, data);
   cb();
 });
 

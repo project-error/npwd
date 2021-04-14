@@ -11,11 +11,14 @@ export interface IContactAlert {
   setAlert: (type: string) => void;
 }
 
-export interface Contact {
-  id: number;
+export interface PreDBContact {
   display: string;
   number: string;
   avatar?: string;
+}
+
+export interface Contact extends PreDBContact {
+  id: number;
 }
 
 export enum ContactEvents {
@@ -29,4 +32,5 @@ export enum ContactEvents {
   UPDATE_CONTACT_SUCCESS = 'npwd:updateContactSuccess',
   ACTION_RESULT = 'npwd:contactActionResult',
   SEND_ALERT = 'npwd:contactSetAlert',
+  MAIN_CLIENT_LISTER = 'npwd:contactMainListener',
 }
