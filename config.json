@@ -5,7 +5,7 @@
   "PhoneAsItem": false,
   "SwimDestroy": false,
   "RunRate": 10,
-  "DestoryChance": 100,
+  "DestroyChance": 100,
   "DestroyPhoneReCheck": 3,
   "notificationPosition": {
     "horizontal": "right",
@@ -17,7 +17,7 @@
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,
-    "allowEdtiableProfileName": true,
+    "allowEditableProfileName": true,
     "allowDeleteTweets": true,
     "allowReportTweets": true,
     "characterLimit": 160,
@@ -29,7 +29,7 @@
   },
   "match": {
     "generateProfileNameFromUsers": true,
-    "allowEdtiableProfileName": true
+    "allowEditableProfileName": true
   },
   "bank": {
     "showNotifications": true
