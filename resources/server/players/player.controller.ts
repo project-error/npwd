@@ -1,7 +1,8 @@
 import { getSource } from '../utils/miscUtils';
-import PlayerService, { playerLogger } from './player.service';
+import PlayerService from './player.service';
 import { config } from '../server';
 import { PlayerAddData } from './player.interfaces';
+import { playerLogger } from './player.utils';
 
 /**
  * Essentially this whole file acts as a controller layer
