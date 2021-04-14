@@ -1,6 +1,7 @@
 import { CallEvents } from '../../../typings/call';
 import { getSource } from '../utils/miscUtils';
-import CallService, { callLogger } from './calls.service';
+import CallService from './calls.service';
+import { callLogger } from './calls.utils';
 
 onNet(CallEvents.INITIALIZE_CALL, (receivingNumber: string) => {
   const src = getSource();

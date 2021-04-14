@@ -1,11 +1,9 @@
 import Collection from '@discordjs/collection';
 import { CallEvents, CallHistoryItem } from '../../../typings/call';
-import { mainLogger } from '../sv_logger';
 import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
-
-export const callLogger = mainLogger.child({ module: 'calls' });
+import { callLogger } from './calls.utils';
 
 class CallsService {
   private callMap: Collection<string, CallHistoryItem>;
