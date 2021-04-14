@@ -30,9 +30,9 @@ export function ProfilePrompt() {
   const { profile } = useProfile();
   const defaultProfileNames = useRecoilValue(twitterState.defaultProfileNames);
   const [profileName, setProfileName] = useState(profile?.profile_name || '');
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
-  const showDefaultProfileNames = !config.twitter.allowEdtiableProfileName && !profile;
+  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName && !profile;
   const eventName = showDefaultProfileNames
     ? TwitterEvents.CREATE_PROFILE
     : TwitterEvents.UPDATE_PROFILE;

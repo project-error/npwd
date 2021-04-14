@@ -17,12 +17,12 @@ const useStyles = makeStyles({
 function Avatar({ avatarUrl, showInvalidImage, height, width }) {
   const classes = useStyles();
   const [showImageError, setShowImageError] = useState(false);
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
   const handleImageError = () => setShowImageError(true);
   const handleImageLoad = () => setShowImageError(false);
 
-  if (!config || !config.twitter.enableAvatars) return null;
+  if (!ResourceConfig || !ResourceConfig.twitter.enableAvatars) return null;
 
   return (
     <div className={classes.root}>

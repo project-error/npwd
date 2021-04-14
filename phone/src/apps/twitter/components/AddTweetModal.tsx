@@ -53,14 +53,14 @@ export const AddTweetModal = () => {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
   const [link, setLink] = useState('');
 
   const [images, setImages] = useState<Image[]>([]);
-  const { characterLimit, newLineLimit } = config.twitter;
+  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
   const reset = () => {
     setShowImagePrompt(false);
@@ -93,7 +93,7 @@ export const AddTweetModal = () => {
     window.addEventListener('keydown', _handleEscape, true);
     return () => window.removeEventListener('keydown', _handleEscape);
   });
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
@@ -154,7 +154,7 @@ export const AddTweetModal = () => {
     setMessage(message.concat(emojiObject.native));
   };
 
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>
@@ -172,7 +172,9 @@ export const AddTweetModal = () => {
       />
       <div className={classes.buttonsContainer}>
         <IconButtons
-          onImageClick={images.length < config.twitter.maxImages ? toggleShowImagePrompt : null}
+          onImageClick={
+            images.length < ResourceConfig.twitter.maxImages ? toggleShowImagePrompt : null
+          }
           onEmojiClick={toggleShowEmoji}
         />
         <ControlButtons

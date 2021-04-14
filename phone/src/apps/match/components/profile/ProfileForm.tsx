@@ -42,8 +42,8 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
-  const { config } = usePhone();
-  
+  const { ResourceConfig } = usePhone();
+
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
   // Annoyingling adding conditionals above this line to not render
@@ -77,7 +77,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     Nui.send(event, updatedProfile);
   };
 
-  if (!profile && !config.match.allowEdtiableProfileName) {
+  if (!profile && !ResourceConfig.match.allowEditableProfileName) {
     return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
   }
 
@@ -101,7 +101,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         label={t('APPS_MATCH_EDIT_PROFILE_NAME')}
         value={name}
         handleChange={setName}
-        allowChange={config.match.allowEdtiableProfileName}
+        allowChange={ResourceConfig.match.allowEditableProfileName}
       />
       <ProfileField
         label={t('APPS_MATCH_EDIT_PROFILE_BIO')}
