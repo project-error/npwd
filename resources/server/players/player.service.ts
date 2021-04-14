@@ -1,4 +1,3 @@
-import { mainLogger } from '../sv_logger';
 import { generatePhoneNumber } from '../functions';
 import { PhoneEvents } from '../../../typings/phone';
 import { Player } from './player.class';
@@ -6,12 +5,9 @@ import { PlayerAddData } from './player.interfaces';
 import Collection from '@discordjs/collection';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import playerDB, { PlayerRepo } from './player.db';
+import { playerLogger } from './player.utils';
 
-export const playerLogger = mainLogger.child({
-  module: 'player',
-});
-
-class PlayerService {
+class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
   private readonly playersByIdentifier: Collection<string, Player>;
   private readonly playerDB: PlayerRepo;
@@ -53,7 +49,7 @@ class PlayerService {
   }
 
   /**
-   * Returns the player instance for a given source
+   * Returns the player identifier for a given source
    * Will return null if no player is found online with that source
    **/
   getIdentifier(source: number): string {
@@ -221,4 +217,6 @@ class PlayerService {
   }
 }
 
-export default new PlayerService();
+const PlayerService = new _PlayerService();
+
+export default PlayerService;
