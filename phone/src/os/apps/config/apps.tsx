@@ -67,7 +67,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
-    Route: () => <AppRoute id="MESSAGE" path="/messages" component={MessagesApp} />,
+    Route: () => <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} />,
   },
   {
     id: 'CONTACTS',
