@@ -3,7 +3,7 @@ import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks/useContextMenu';
-import { useConfig } from '../../../config/hooks/useConfig';
+import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
 import { useApp } from '../../../os/apps/hooks/useApps';
@@ -57,7 +57,7 @@ const useStyles = makeStyles({
 
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
-  const [config] = useConfig();
+  const [config] = usePhoneConfig();
   const simcard = useSimcard();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
