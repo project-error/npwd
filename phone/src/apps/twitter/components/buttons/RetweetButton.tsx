@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { CircularProgress, makeStyles, Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { useNuiRequest } from 'fivem-nui-react-lib';
+import { Repeat } from '@material-ui/icons';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 interface IProps {
@@ -55,7 +54,7 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
 
   return (
     <Button onClick={handleClick}>
-      <FontAwesomeIcon icon={faRetweet} className={className} size="lg" />
+      <Repeat className={className} />
     </Button>
   );
 };

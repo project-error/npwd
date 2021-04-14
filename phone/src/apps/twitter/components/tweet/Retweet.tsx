@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet } from '@fortawesome/free-solid-svg-icons';
+import { Repeat } from '@material-ui/icons';
 
 interface IProps {
   profileName: string;
@@ -25,7 +24,7 @@ function Retweet({ profileName }: IProps) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <FontAwesomeIcon icon={faRetweet} /> {profileName} {t('APPS_TWITTER_RETWEETED')}
+      <Repeat /> {profileName} {t('APPS_TWITTER_RETWEETED')}
     </div>
   );
 }
