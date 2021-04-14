@@ -28,7 +28,7 @@ interface DebugEvent<P = any> {
  * ])
  **/
 const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 1000) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_IN_GAME) {
     for (const event of events) {
       setTimeout(() => {
         window.dispatchEvent(

@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 const {
   addAfterLoader,
@@ -54,13 +54,13 @@ module.exports = {
 
       if (!babelLoaderIsAdded) throwError('failed to add back babel-loader for non-application JS');
 
-      paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html')
+      paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html');
 
       return webpackConfig;
     },
   },
   devServer: (devServerConfig) => {
-    devServerConfig.writeToDisk = true
-    return devServerConfig
-  }
+    devServerConfig.writeToDisk = true;
+    return devServerConfig;
+  },
 };
