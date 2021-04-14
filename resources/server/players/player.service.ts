@@ -22,23 +22,40 @@ class PlayerService {
     this.playerDB = playerDB;
   }
 
+  /**
+   * Adds a Player instance to the source & identifier maps
+   * @param source - The player's source
+   * @param player - The player instance to use as a value
+   */
+
   addPlayerToMaps(source: number, player: Player) {
     this.playersBySource.set(source, player);
     this.playersByIdentifier.set(player.getIdentifier(), player);
   }
 
+  /**
+   * Deletes a player from both map by source & identifier
+   * @param source - The player's source
+   */
   deletePlayerFromMaps(source: number) {
     const identifier = this.playersBySource.get(source).getIdentifier();
     this.playersByIdentifier.delete(identifier);
     this.playersBySource.delete(source);
   }
-
-  getPlayer(source: number): Player {
+  /**
+   * Returns the player instance for a given source
+   * Will return null if no player is found online with that source
+   **/
+  getPlayer(source: number): Player | null {
     const player = this.playersBySource.get(source);
-    if (!player) throw new Error(`Could not find player associated with source: ${source}`);
+    if (!player) return null;
     return player;
   }
 
+  /**
+   * Returns the player instance for a given source
+   * Will return null if no player is found online with that source
+   **/
   getIdentifier(source: number): string {
     return this.getPlayer(source).getIdentifier();
   }
@@ -54,7 +71,32 @@ class PlayerService {
     return player;
   }
 
-  getIdentifierFromPhoneNumber(phoneNumber: string) {}
+  /**
+   * Will return the given identifier from a phone number
+   * @param phoneNumber - The phone number of the player
+   * @param fetch - Whether to fetch for the identifier if they are offline
+   **/
+  async getIdentifierFromPhoneNumber(phoneNumber: string, fetch?: boolean): Promise<string | null> {
+    const onlinePlayer = this.playersBySource.find(
+      (player: Player) => player.getPhoneNumber() === phoneNumber,
+    );
+    // Return the player if they are online
+    if (onlinePlayer) return onlinePlayer.getIdentifier();
+    if (fetch) {
+      const fetchResult: string | null = await this.playerDB
+        .fetchIdentifierFromPhoneNumber(phoneNumber)
+        .catch((e) => {
+          playerLogger.error(
+            `Failed to fetch identifier from phone number for ${phoneNumber}, error: ${e.message}`,
+          );
+          return null;
+        });
+
+      return fetchResult;
+    }
+    // Return null if all else doesn't return
+    return null;
+  }
 
   /**
    * We call this function on the event `playerJoined`,
@@ -95,6 +137,13 @@ class PlayerService {
     emitNet(PhoneEvents.PLAYER_IS_READY, pSource, true);
   }
 
+  /**
+   * Instantiate a basic Player instance from the constructor
+   * @param src - The player source
+   * @param identifier - The primary identifier
+   *
+   */
+
   async createNewPlayer({
     src,
     identifier,
@@ -121,7 +170,9 @@ class PlayerService {
 
   /**
    * We call this function whenever we receive a `npwd:newPlayer`
-   * event while mutlchar is enabled.
+   * event while multichar is enabled.
+   * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
+   *
    */
   async handleNewPlayerEvent({ source: src, identifier, firstname, lastname }: PlayerAddData) {
     const player = await this.createNewPlayer({ src, identifier });
@@ -153,11 +204,17 @@ class PlayerService {
     }
   }
 
+  /**
+   * Unload event handler
+   * @param src - Source of player being unloaded
+   * @param playerDropped - Whether the player disconnected or is being unloaded for multichar
+   **/
   handleUnloadPlayerEvent(src: number, playerDropped?: boolean) {
     this.deletePlayerFromMaps(src);
 
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
 
+    // We emit PLAYER_IS_READY false if the player wasn't disconnected
     if (!playerDropped) {
       emitNet(PhoneEvents.PLAYER_IS_READY, src, false);
     }
