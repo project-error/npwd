@@ -17,7 +17,7 @@ interface MatchConfig {
   allowEdtiableProfileName: boolean;
 }
 interface Debug {
-  level: 'error' | 'warn' | 'info' | 'verbose' | 'debug';
+  level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
 }
 
