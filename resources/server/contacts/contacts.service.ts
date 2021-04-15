@@ -35,7 +35,7 @@ class _ContactService {
       this.responseBuilder(src, {
         action: ContactEvents.UPDATE_CONTACT,
         error: {
-          errorKey: ErrorStringKeys.UPDATE_FAILED,
+          errorCode: ErrorStringKeys.UPDATE_FAILED,
           message: `Failed to update contact ${contact.id}`,
         },
       });
@@ -52,7 +52,7 @@ class _ContactService {
       this.responseBuilder(src, {
         action: ContactEvents.DELETE_CONTACT,
         error: {
-          errorKey: ErrorStringKeys.DELETE_FAILED,
+          errorCode: ErrorStringKeys.DELETE_FAILED,
           message: `Failed to delete contactId ${contactId}`,
         },
       });
@@ -72,7 +72,7 @@ class _ContactService {
       this.responseBuilder(src, {
         action: ContactEvents.ADD_CONTACT,
         error: {
-          errorKey: ErrorStringKeys.ADD_FAILED,
+          errorCode: ErrorStringKeys.ADD_FAILED,
           message: 'Unable to add contacts',
         },
       });
@@ -92,7 +92,7 @@ class _ContactService {
       this.responseBuilder(src, {
         action: ContactEvents.SEND_CONTACTS,
         error: {
-          errorKey: ErrorStringKeys.SERVER_ERROR,
+          errorCode: ErrorStringKeys.SERVER_ERROR,
           message: 'Unable to fetch contacts',
         },
       });

@@ -31,7 +31,7 @@ export enum ErrorStringKeys {
 }
 
 export interface FxServerRespError {
-  errorKey: ErrorStringKeys;
+  errorCode: ErrorStringKeys;
   message: string;
 }
 
