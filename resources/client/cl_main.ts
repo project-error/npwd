@@ -58,6 +58,7 @@ const showPhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
   sendMessage('PHONE', PhoneEvents.SET_TIME, time);
   SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(true);
 };
 
 const hidePhone = async (): Promise<void> => {
@@ -65,6 +66,7 @@ const hidePhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
 };
 
 /* * * * * * * * * * * * *
@@ -104,8 +106,10 @@ async function Phone(): Promise<void> {
   }
   if (isPhoneOpen) {
     await hidePhone();
+    emit('npwd:disableEnableInput');
   } else {
     await showPhone();
+    emit('npwd:disableEnableInput');
   }
 }
 
