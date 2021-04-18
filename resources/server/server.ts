@@ -8,10 +8,10 @@ export const config: IServerConfig = JSON.parse(
 
 // Setup controllers
 import './db';
-import 'players/player.controller';
-import 'calls/calls.controller';
-import 'notes/notes.controller';
-import 'contacts/contacts.controller';
+import './players/player.controller';
+import './calls/calls.controller';
+import './notes/notes.controller';
+import './contacts/contacts.controller';
 
 import './sv_twitter';
 import './sv_main';
