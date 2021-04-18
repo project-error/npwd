@@ -8,39 +8,30 @@ class _NotesService {
 
   constructor() {
     this.notesDB = NotesDB;
+    notesLogger.debug('Notes service started');
   }
 
   async handleAddNote(src: number, note: Note): Promise<void> {
     notesLogger.debug('Handling add note, note:');
     notesLogger.debug(note);
+
     const identifer = PlayerService.getIdentifier(src);
+
     try {
       await this.notesDB.addNote(identifer, note);
 
-      const serverRespObj: NoteServerResponse = {
-        action: 'ADD',
-        suceeded: true,
-        refetch: true,
-        alert: {
-          message: 'NOTES_ADD_SUCCESS',
-          type: 'success',
-        },
-      };
-
-      emitNet(NotesEvents.SERVER_RESP, src, serverRespObj);
+      emitNet(NotesEvents.SEND_NOTE_SUCCESS, src);
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_ADD_SUCCESS',
+        type: 'success',
+      });
     } catch (e) {
       notesLogger.error(`Error in handleAddNote, ${e.message}`);
 
-      const serverRespObj: NoteServerResponse = {
-        action: 'ADD',
-        suceeded: false,
-        alert: {
-          message: 'NOTES_ADD_FAILED',
-          type: 'success',
-        },
-      };
-
-      emitNet(NotesEvents.SERVER_RESP, src, serverRespObj);
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_ADD_FAILED',
+        type: 'error',
+      });
     }
   }
 
@@ -48,13 +39,7 @@ class _NotesService {
     const identifier = PlayerService.getIdentifier(src);
     try {
       const notes = await this.notesDB.fetchNotes(identifier, limit);
-      const serverRespObj: NoteServerResponse = {
-        action: 'SEND',
-        suceeded: false,
-        data: notes,
-        refetch: false,
-      };
-      emitNet(NotesEvents.SEND_NOTE, src, serverRespObj);
+      emitNet(NotesEvents.SEND_NOTE, src, notes);
     } catch (e) {
       notesLogger.error(`Error in handleFetchNote, ${e.message}`);
     }
@@ -64,12 +49,18 @@ class _NotesService {
     const identifier = PlayerService.getIdentifier(src);
     try {
       await this.notesDB.updateNote(note, identifier);
-      const serverRespObj: NoteServerResponse = {
-        action: 'UPDATE',
-        suceeded: true,
-        refetch: true,
-      };
+      emitNet(NotesEvents.UPDATE_NOTE_SUCCESS, src);
+
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_UPDATE_SUCCESS',
+        type: 'success',
+      });
     } catch (e) {
+      emitNet(NotesEvents.UPDATE_NOTE_FAILURE, src);
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_UPDATE_FAILED',
+        type: 'error',
+      });
       notesLogger.error(`Error in handleUpdateNote, ${e.message}`);
     }
   }
@@ -83,29 +74,18 @@ class _NotesService {
     try {
       await this.notesDB.deleteNote(noteId, identifier);
 
-      const serverRespObj: NoteServerResponse = {
-        action: 'DELETE',
-        suceeded: true,
-        refetch: true,
-        alert: {
-          message: 'NOTES_DELETE_SUCCESS',
-          type: 'success',
-        },
-      };
+      emitNet(NotesEvents.DELETE_NOTE_SUCCESS, src);
 
-      emitNet(NotesEvents.DELETE_NOTE, src, serverRespObj);
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_DELETE_SUCCESS',
+        type: 'success',
+      });
     } catch (e) {
       notesLogger.error(`Error in handleDeleteNote, ${e.message}`);
-      const serverRespObj: NoteServerResponse = {
-        action: 'DELETE',
-        suceeded: false,
-        alert: {
-          message: 'NOTES_DELETE_FAILED',
-          type: 'error',
-        },
-      };
-
-      emitNet(NotesEvents.DELETE_NOTE, src, serverRespObj);
+      emitNet(NotesEvents.ACTION_RESULT, src, {
+        message: 'NOTES_DELETE_FAILED',
+        type: 'error',
+      });
     }
   }
 }

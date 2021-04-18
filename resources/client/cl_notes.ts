@@ -1,4 +1,4 @@
-import { Note, NoteServerResponse, NotesEvents } from '../../typings/notes';
+import { Note, NotesEvents } from '../../typings/notes';
 import { sendNotesEvent } from '../utils/messages';
 
 onNet(NotesEvents.SEND_NOTE, (notes: any) => {
@@ -20,22 +20,14 @@ on(`__cfx_nui:${NotesEvents.UPDATE_NOTE}`, (note: Note) => {
   emitNet(NotesEvents.UPDATE_NOTE, note);
 });
 
-// Trying out this response structure
-onNet(
-  NotesEvents.SERVER_RESP,
-  ({ alert, action, suceeded, refetch, data }: NoteServerResponse<Note[] | Note>) => {
-    if (alert) {
-      sendNotesEvent(NotesEvents.SEND_ALERT, alert);
-    }
+onNet(NotesEvents.UPDATE_NOTE_SUCCESS, () => {
+  emitNet(NotesEvents.FETCH_ALL_NOTES);
+});
 
-    switch (action) {
-      case 'SEND':
-        sendNotesEvent(NotesEvents.SEND_NOTE, data);
-        break;
-    }
+onNet(NotesEvents.ACTION_RESULT, (alert: any) => {
+  sendNotesEvent(NotesEvents.SEND_ALERT, alert);
+});
 
-    if (refetch && suceeded) {
-      emitNet(NotesEvents.FETCH_ALL_NOTES);
-    }
-  },
-);
+onNet(NotesEvents.DELETE_NOTE_SUCCESS, () => {
+  emitNet(NotesEvents.FETCH_ALL_NOTES);
+});
