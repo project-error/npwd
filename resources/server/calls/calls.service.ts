@@ -12,6 +12,7 @@ class CallsService {
   constructor() {
     this.callMap = new Collection();
     this.callsDB = CallsDB;
+    callLogger.debug('Call service started');
   }
 
   private setCallInMap(transmitterNumber: string, callObj: CallHistoryItem): void {
