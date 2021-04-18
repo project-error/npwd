@@ -10,6 +10,7 @@ class _ContactService {
 
   constructor() {
     this.contactsDB = ContactsDB;
+    contactsLogger.debug('Contacts service started');
   }
 
   private responseBuilder(src: number, { data, action, error }: ContactServerResp): void {
@@ -27,17 +28,18 @@ class _ContactService {
     const identifier = PlayerService.getIdentifier(src);
     try {
       await this.contactsDB.updateContact(contact, identifier);
-      this.responseBuilder(src, {
-        action: ContactEvents.UPDATE_CONTACT,
+
+      emitNet(ContactEvents.UPDATE_CONTACT_SUCCESS, src);
+
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_UPDATE_SUCCESS',
+        type: 'success',
       });
     } catch (e) {
       contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);
-      this.responseBuilder(src, {
-        action: ContactEvents.UPDATE_CONTACT,
-        error: {
-          errorCode: ErrorStringKeys.UPDATE_FAILED,
-          message: `Failed to update contact ${contact.id}`,
-        },
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_UPDATE_FAILED',
+        type: 'error',
       });
     }
   }
@@ -45,16 +47,15 @@ class _ContactService {
     const identifier = PlayerService.getIdentifier(src);
     try {
       await this.contactsDB.deleteContact(contactId, identifier);
-      this.responseBuilder(src, {
-        action: ContactEvents.DELETE_CONTACT,
+      emitNet(ContactEvents.DELETE_CONTACT_SUCCESS, src);
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_DELETE_SUCCESS',
+        type: 'success',
       });
     } catch (e) {
-      this.responseBuilder(src, {
-        action: ContactEvents.DELETE_CONTACT,
-        error: {
-          errorCode: ErrorStringKeys.DELETE_FAILED,
-          message: `Failed to delete contactId ${contactId}`,
-        },
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_DELETE_FAILED',
+        type: 'error',
       });
       contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.message}`);
     }
@@ -64,17 +65,16 @@ class _ContactService {
     try {
       await this.contactsDB.addContact(identifier, contact);
 
-      this.responseBuilder(src, {
-        action: ContactEvents.ADD_CONTACT,
+      emitNet(ContactEvents.ADD_CONTACT_SUCCESS, src);
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_ADD_SUCCESS',
+        type: 'success',
       });
     } catch (e) {
       contactsLogger.error(`Error in handleAddContact, ${e.message}`);
-      this.responseBuilder(src, {
-        action: ContactEvents.ADD_CONTACT,
-        error: {
-          errorCode: ErrorStringKeys.ADD_FAILED,
-          message: 'Unable to add contacts',
-        },
+      emitNet(ContactEvents.ACTION_RESULT, src, {
+        message: 'CONTACT_ADD_FAILED',
+        type: 'error',
       });
     }
   }
@@ -84,18 +84,8 @@ class _ContactService {
     try {
       const contacts = await this.contactsDB.fetchAllContacts(identifier, limit);
 
-      this.responseBuilder(src, {
-        data: contacts,
-        action: ContactEvents.SEND_CONTACTS,
-      });
+      emitNet(ContactEvents.SEND_CONTACTS, src, contacts);
     } catch (e) {
-      this.responseBuilder(src, {
-        action: ContactEvents.SEND_CONTACTS,
-        error: {
-          errorCode: ErrorStringKeys.SERVER_ERROR,
-          message: 'Unable to fetch contacts',
-        },
-      });
       contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.message}`);
     }
   }
