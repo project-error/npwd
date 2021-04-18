@@ -1,12 +1,13 @@
 import { ResultSetHeader } from 'mysql2';
 import { pool } from './db';
-import { getIdentifier, getSource } from './functions';
 import { NewTweet, Tweet, Profile } from '../../typings/twitter';
 import { config } from './server';
 import { reportTweetToDiscord } from './discord';
 import { mainLogger } from './sv_logger';
-import { generateProfileName, getDefaultProfileNames } from './players/player.service';
+import PlayerService from './players/player.service';
 import { TwitterEvents } from '../../typings/twitter';
+import { getSource } from './utils/miscUtils';
+import { generateProfileName } from './utils/generateProfileName';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
@@ -311,19 +312,23 @@ async function doesRetweetExist(tweetId: number, identifier: string): Promise<bo
 
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
 
   try {
     const profile = await getOrCreateProfile(identifier);
     // if we got null from getOrCreateProfile it means it doesn't exist and
     // we failed to create it. In this case we pass the UI some default
-    // profile names it can choose from
-    if (!profile) {
-      const defaultProfileNames = await getDefaultProfileNames(identifier);
-      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
-    } else {
-      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
-    }
+    // profile names it can choose from.
+
+    // We should be able to comment this out as profile **should** be guranteed,
+    // as we create a default profile in that process.
+
+    // if (!profile) {
+    //   const defaultProfileNames = await getDefaultProfileNames(identifier);
+    //   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
+    // } else {
+    emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, _source, profile);
+    // }
   } catch (e) {
     twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
       source: _source,
@@ -335,7 +340,7 @@ onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
 onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     await createProfile(identifier, profile.profile_name);
     emitNet(TwitterEvents.CREATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_CREATE_PROFILE_SUCCESS',
@@ -355,7 +360,7 @@ onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
 onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     await updateProfile(identifier, profile);
     emitNet(TwitterEvents.UPDATE_PROFILE_RESULT, _source, {
       message: 'TWITTER_EDIT_PROFILE_SUCCESS',
@@ -375,7 +380,7 @@ onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
 onNet(TwitterEvents.FETCH_TWEETS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const profile = await getProfile(identifier);
     if (!profile) {
       twitterLogger.warn(
@@ -397,7 +402,7 @@ onNet(TwitterEvents.FETCH_TWEETS, async () => {
 onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweets = await fetchTweetsFiltered(profile.id, searchValue);
     emitNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, _source, tweets);
@@ -412,7 +417,7 @@ onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
 onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const createdTweet = await createTweet(identifier, tweet);
     emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
   } catch (e) {
@@ -429,7 +434,7 @@ onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
 onNet(TwitterEvents.DELETE_TWEET, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     await deleteTweet(identifier, tweetId);
 
     emitNet(TwitterEvents.DELETE_TWEET_SUCCESS, _source);
@@ -444,7 +449,7 @@ onNet(TwitterEvents.DELETE_TWEET, async (tweetId: number) => {
 onNet(TwitterEvents.TOGGLE_LIKE, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const profile = await getOrCreateProfile(identifier);
     const likeExists = await doesLikeExist(profile.id, tweetId);
     if (likeExists) {
@@ -464,7 +469,7 @@ onNet(TwitterEvents.TOGGLE_LIKE, async (tweetId: number) => {
 onNet(TwitterEvents.RETWEET, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
 
     // alert the player that they have already retweeted
     // this post (or that they are the original poster)
@@ -495,7 +500,7 @@ onNet(TwitterEvents.RETWEET, async (tweetId: number) => {
 onNet(TwitterEvents.REPORT, async (tweetId: number) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const profile = await getProfile(identifier);
     const tweet = await getTweet(profile.id, tweetId);
 

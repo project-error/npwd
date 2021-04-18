@@ -1,9 +1,10 @@
-import { getIdentifier, getPlayer, getSource } from './functions';
 import { pool } from './db';
 import { mainLogger } from './sv_logger';
 import { MarketplaceListing } from '../../typings/marketplace';
 import { reportListingToDiscord } from './discord';
 import { MarketplaceEvents } from '../../typings/marketplace';
+import { getSource } from './utils/miscUtils';
+import PlayerService from './players/player.service';
 
 const selloutLogger = mainLogger.child({ module: 'sellout' });
 
@@ -76,7 +77,7 @@ onNet(MarketplaceEvents.FETCH_LISTING, async () => {
 onNet(MarketplaceEvents.ADD_LISTING, async (listing: MarketplaceListing) => {
   const _source = getSource();
   try {
-    const player = getPlayer(_source);
+    const player = PlayerService.getPlayer(_source);
 
     // This is used as username for the reports
     await addListing(
@@ -107,7 +108,7 @@ onNet(MarketplaceEvents.ADD_LISTING, async (listing: MarketplaceListing) => {
 onNet(MarketplaceEvents.DELETE_LISTING, async (listingId: number) => {
   const pSource = getSource();
   try {
-    const identifier = getIdentifier(pSource);
+    const identifier = PlayerService.getIdentifier(pSource);
 
     await deleteListing(listingId, identifier);
 
