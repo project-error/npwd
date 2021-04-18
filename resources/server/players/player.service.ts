@@ -16,6 +16,7 @@ class _PlayerService {
     this.playersBySource = new Collection<number, Player>();
     this.playersByIdentifier = new Collection<string, Player>();
     this.playerDB = playerDB;
+    playerLogger.debug('Player Service started');
   }
 
   /**
