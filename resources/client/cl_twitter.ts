@@ -11,7 +11,7 @@ on(`__cfx_nui:${TwitterEvents.GET_OR_CREATE_PROFILE}`, () => {
 });
 
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, (profile: any) => {
-  sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, profile);
+  sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE, profile);
 });
 
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, () => {
@@ -61,7 +61,7 @@ on(`__cfx_nui:${TwitterEvents.FETCH_TWEETS}`, () => {
 });
 
 onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
-  sendTwitterMessage(TwitterEvents.FETCH_TWEETS_SUCCESS, tweets);
+  sendTwitterMessage(TwitterEvents.FETCH_TWEETS, tweets);
 });
 
 onNet(TwitterEvents.FETCH_TWEETS_FAILURE, () => {
