@@ -1,9 +1,9 @@
 import { ESX } from './server';
-import { getSource } from './functions';
 import { pool } from './db';
 import { Transfer, IBankCredentials, BankEvents } from '../../typings/bank';
-import { getIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
+import { getSource } from './utils/miscUtils';
+import PlayerService from './players/player.service';
 
 const bankLogger = mainLogger.child({ module: 'bank' });
 
@@ -77,7 +77,7 @@ async function getTransfer(transferId: number): Promise<Transfer> {
 onNet(BankEvents.FETCH_TRANSACTIONS, async () => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = PlayerService.getIdentifier(_source);
     const transfer = await fetchAllTransactions(_identifier);
 
     emitNet(BankEvents.SEND_TRANSFERS, _source, transfer);
@@ -92,7 +92,7 @@ onNet(BankEvents.ADD_TRANSFER, async (transfer: Transfer) => {
   const _source = getSource();
   const xTarget = ESX.GetPlayerFromId(transfer.targetID);
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = PlayerService.getIdentifier(_source);
     await addTransfer(_identifier, transfer);
 
     // we need to create a notification for bank. that's why i have commented out.

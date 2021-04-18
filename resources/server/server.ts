@@ -10,18 +10,16 @@ export const config: IServerConfig = JSON.parse(
 import './db';
 import 'players/player.controller';
 import 'calls/calls.controller';
+import 'notes/notes.controller';
+import 'contacts/contacts.controller';
 
-import './db';
 import './sv_twitter';
 import './sv_main';
-import './sv_contacts';
 import './sv_marketplace';
 import './sv_bank';
-import './sv_notes';
 import './sv_photo';
 import './sv_messages';
 import './sv_match';
-import './sv_call';
 import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;

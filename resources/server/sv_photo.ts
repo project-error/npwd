@@ -1,7 +1,8 @@
 import { pool } from './db';
-import { getIdentifier, getSource } from './functions';
 import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
 import { mainLogger } from './sv_logger';
+import { getSource } from './utils/miscUtils';
+import PlayerService from './players/player.service';
 
 const photoLogger = mainLogger.child({ module: 'photo' });
 
@@ -25,7 +26,7 @@ async function deletePhoto(photo: GalleryPhoto, identifier: string) {
 onNet(PhotoEvents.UPLOAD_PHOTO, async (image: string) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const photo = await uploadPhoto(identifier, image);
     emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, _source, photo);
   } catch (e) {
@@ -38,7 +39,7 @@ onNet(PhotoEvents.UPLOAD_PHOTO, async (image: string) => {
 onNet(PhotoEvents.FETCH_PHOTOS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const photos = await getPhotosByIdentifier(identifier);
     emitNet(PhotoEvents.SEND_PHOTOS, _source, photos);
   } catch (e) {
@@ -51,7 +52,7 @@ onNet(PhotoEvents.FETCH_PHOTOS, async () => {
 onNet(PhotoEvents.DELETE_PHOTO, async (photo: GalleryPhoto) => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     await deletePhoto(photo, identifier);
     emitNet(PhotoEvents.DELETE_PHOTO_SUCCESS, _source);
   } catch (e) {

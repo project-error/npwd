@@ -5,8 +5,9 @@ import {
   MessageEvents,
 } from '../../typings/messages';
 import { pool, withTransaction } from './db';
-import { getIdentifier, getSource, getPlayerFromIdentifier } from './functions';
 import { mainLogger } from './sv_logger';
+import PlayerService from './players/player.service';
+import { getSource } from './utils/miscUtils';
 
 const messageLogger = mainLogger.child({ module: 'messages' });
 
@@ -421,7 +422,7 @@ async function setMessageRead(groupId: string, identifier: string) {
 onNet(MessageEvents.FETCH_MESSAGE_GROUPS, async () => {
   const _source = getSource();
   try {
-    const identifier = getIdentifier(_source);
+    const identifier = PlayerService.getIdentifier(_source);
     const messageGroups = await getFormattedMessageGroups(identifier);
     emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, _source, messageGroups);
   } catch (e) {
@@ -433,7 +434,7 @@ onNet(MessageEvents.FETCH_MESSAGE_GROUPS, async () => {
 onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: string = null) => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = PlayerService.getIdentifier(_source);
     const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
 
     if (result.error && result.allNumbersFailed) {
@@ -477,7 +478,7 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
       for (const participantId of result.identifiers) {
         // we don't broadcast to the source of the event.
         if (participantId !== _identifier) {
-          const participantPlayer = getPlayerFromIdentifier(participantId);
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
           if (!participantPlayer) {
             return;
           }
@@ -501,7 +502,7 @@ onNet(MessageEvents.CREATE_MESSAGE_GROUP, async (phoneNumbers: string[], label: 
 onNet(MessageEvents.FETCH_MESSAGES, async (groupId: string) => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = PlayerService.getIdentifier(_source);
     const messages = await getMessages(_identifier, groupId);
     emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, _source, messages);
   } catch (e) {
@@ -515,7 +516,7 @@ onNet(MessageEvents.FETCH_MESSAGES, async (groupId: string) => {
 onNet(MessageEvents.SEND_MESSAGE, async (groupId: string, message: string, groupName: string) => {
   const _source = getSource();
   try {
-    const _identifier = getIdentifier(_source);
+    const _identifier = PlayerService.getIdentifier(_source);
     const userParticipants = getIdentifiersFromParticipants(groupId);
 
     await createMessage(_identifier, groupId, message, userParticipants);
@@ -527,7 +528,7 @@ onNet(MessageEvents.SEND_MESSAGE, async (groupId: string, message: string, group
     for (const participantId of userParticipants) {
       // we don't broadcast to the source of the event.
       if (participantId !== _identifier) {
-        const participantPlayer = getPlayerFromIdentifier(participantId);
+        const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
         if (!participantPlayer) {
           return;
         }
@@ -553,7 +554,7 @@ onNet(MessageEvents.SEND_MESSAGE, async (groupId: string, message: string, group
 onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
   const pSource = getSource();
   try {
-    const identifier = getIdentifier(pSource);
+    const identifier = PlayerService.getIdentifier(pSource);
     await setMessageRead(groupId, identifier);
     emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, pSource);
   } catch (e) {
