@@ -4,7 +4,7 @@ import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from './os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { Box, Paper, Slide, Typography } from '@material-ui/core';
+import { Box, Paper, Typography } from '@material-ui/core';
 import { NotificationBar } from './os/notifications/components/NotificationBar';
 import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
@@ -23,7 +23,6 @@ import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSet
 import { useCallService } from './os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 import { PhoneSnackbar } from './ui/components/PhoneSnackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { useCallModal } from './os/call/hooks/useCallModal';
@@ -33,8 +32,8 @@ import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
 import dayjs from 'dayjs';
-import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
+import PhoneWrapper from './PhoneWrapper';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -78,74 +77,45 @@ function Phone() {
   useDialService();
 
   const { modal: callModal } = useCallModal();
-  const { bottom, visibility } = usePhoneVisibility();
   const { isPhoneReady } = usePhone();
 
   return (
     <div>
       <WindowSnackbar />
-      <Slide direction="up" timeout={{ enter: 500, exit: 500 }} in={visibility}>
-        <div className="PhoneWrapper">
-          <div
-            className="Phone"
-            style={{
-              position: 'fixed',
-              transformOrigin: 'right bottom',
-              transform: `scale(${settings.zoom.value}`,
-              bottom,
-            }}
-          >
-            <div
-              className="PhoneFrame"
-              style={{
-                backgroundImage: `url(media/frames/${settings.frame.value})`,
-              }}
-            />
-            <div
-              id="phone"
-              className="PhoneScreen"
-              style={{
-                backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
-                  ? `url(${settings.wallpaper.value})`
-                  : `url(media/backgrounds/${settings.wallpaper.value})`,
-              }}
-            >
-              {isPhoneReady ? (
-                <>
-                  <NotificationBar />
-                  <div className="PhoneAppContainer">
-                    <>
-                      <Route exact path="/" component={HomeApp} />
-                      {callModal && <Route exact path="/call" component={CallModal} />}
-                      {apps.map((App) => (
-                        <App.Route key={App.id} />
-                      ))}
-                    </>
-                    <NotificationAlert />
-                    <PhoneSnackbar />
-                  </div>
-                  <Navigation />
-                </>
-              ) : (
-                <Box
-                  component={Paper}
-                  height="100%"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Typography paragraph variant="h6">
-                    NPWD {t('INITIALIZING')}
-                  </Typography>
-                  <Typography paragraph>{t('GENERIC_WAIT')}</Typography>
-                </Box>
-              )}
+      <PhoneWrapper>
+        {isPhoneReady ? (
+          <>
+            <NotificationBar />
+            <div className="PhoneAppContainer">
+              <>
+                <Route exact path="/" component={HomeApp} />
+                {callModal && <Route exact path="/call" component={CallModal} />}
+                {apps.map((App) => (
+                  <App.Route key={App.id} />
+                ))}
+              </>
+              <NotificationAlert />
+              <PhoneSnackbar />
             </div>
-          </div>
-        </div>
-      </Slide>
+            <Navigation />
+          </>
+        ) : (
+          <Box
+            component={Paper}
+            height="100%"
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Typography paragraph variant="h6">
+              NPWD {t('INITIALIZING')}
+            </Typography>
+            <Typography paragraph>{t('GENERIC_WAIT')}</Typography>
+          </Box>
+        )}
+      </PhoneWrapper>
     </div>
   );
 }
