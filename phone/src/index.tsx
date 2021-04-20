@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './main.css';
 import PhoneConfig from './config/default.json';
-import { PhoneContainer } from './PhoneContainer';
+import { PhoneProviders } from './PhoneProviders';
 import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'development') attachMockNuiEvent();
 ReactDOM.render(
   <HashRouter>
     <RecoilRoot>
-      <PhoneContainer />
+      <PhoneProviders />
     </RecoilRoot>
   </HashRouter>,
   document.getElementById('root'),

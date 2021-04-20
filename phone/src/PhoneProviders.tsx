@@ -7,7 +7,7 @@ import Phone from './Phone';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from './os/sound/providers/SoundProvider';
 
-export const PhoneContainer = () => {
+export const PhoneProviders = () => {
   const currentTheme = usePhoneTheme();
   return (
     <NuiProvider resource="new-phone-who-dis">

@@ -14,46 +14,38 @@ import { useNoteDetail } from '../hooks/useNoteDetail';
 import useStyles from './modal.styles';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { StatusButton } from '../../../ui/components/StatusButton';
 import { NotesEvents } from '../../../../../typings/notes';
 
 export const NoteModal = () => {
   const Nui = useNuiRequest();
   const classes = useStyles();
-  const history = useHistory();
   const { t } = useTranslation();
   const { detail, setDetail } = useNoteDetail();
 
-  const onClose = () => history.goBack();
-
   const _handleClose = () => {
     setDetail(null);
-    onClose();
   };
 
   const handleNoteSave = () => {
     Nui.send(NotesEvents.ADD_NOTE, detail);
     setDetail(null);
-    onClose();
   };
 
   const handleDeleteNote = () => {
     const id = detail.id;
     Nui.send(NotesEvents.DELETE_NOTE, id);
     setDetail(null);
-    onClose();
   };
 
   const handleUpdateNote = () => {
     Nui.send(NotesEvents.UPDATE_NOTE, detail);
     setDetail(null);
-    onClose();
   };
 
   return (
-    <Slide direction="left" in={!!detail}>
-      <Paper className={classes.modalRoot}>
+    <Slide direction="left" in={!!detail} mountOnEnter unmountOnExit>
+      <Paper className={classes.modalRoot} square>
         {!detail ? (
           <CircularProgress />
         ) : (
