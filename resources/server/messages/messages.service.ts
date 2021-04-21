@@ -97,7 +97,7 @@ class _MessagesService {
   async handleFetchMessages(src: number, groupId: string) {
     try {
       const _identifier = PlayerService.getIdentifier(src);
-      const messages = await MessagesDB.getMessages(_identifier, groupId);
+      const messages = await this.messagesDB.getMessages(_identifier, groupId);
       emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, src, messages);
     } catch (e) {
       emitNet(MessageEvents.FETCH_MESSAGES_FAILED, src);
@@ -112,7 +112,7 @@ class _MessagesService {
       const _identifier = PlayerService.getIdentifier(src);
       const userParticipants = getIdentifiersFromParticipants(groupId);
 
-      await MessagesDB.createMessage(_identifier, groupId, message, userParticipants);
+      await this.messagesDB.createMessage(_identifier, groupId, message, userParticipants);
 
       emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, src, groupId);
 
@@ -147,7 +147,7 @@ class _MessagesService {
   async handleSetMessageRead(src: number, groupId: string) {
     try {
       const identifier = PlayerService.getIdentifier(src);
-      await MessagesDB.setMessageRead(groupId, identifier);
+      await this.messagesDB.setMessageRead(groupId, identifier);
       emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, src);
     } catch (e) {
       messagesLogger.error(`Failed to set message as read, ${e.message}`, {
