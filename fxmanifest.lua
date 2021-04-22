@@ -5,7 +5,7 @@ authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
 client_scripts {
     'resources/dist/client/*.client.js',
-    'futile.lua'
+    'resources/client/*.lua'
 }
 
 server_script {
