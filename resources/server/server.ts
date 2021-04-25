@@ -15,10 +15,7 @@ import './contacts/contacts.controller';
 
 import './sv_twitter';
 import './sv_main';
-import './sv_marketplace';
 import './sv_bank';
-import './sv_photo';
-import './sv_messages';
 import './sv_match';
 import { mainLogger } from './sv_logger';
 
