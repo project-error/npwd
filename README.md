@@ -3,7 +3,7 @@
 <img src="https://beta.iodine.gg/zVkK7.png" width="500" height="300" />
 
 
-NPWD is our flagship and current running project. Our team has been working on the project since August, 2020. This resource isn’t complete yet and currently has no ETA for release. Feel free to test it out in a dev environment by following the installation guide.
+NPWD is our flagship and current running project. The team has been working on the project since August, 2020. This resource isn’t complete yet and currently has no ETA for release. Feel free to test it out in a dev environment by following the installation guide.
 
 Written completely by the Project Error Dev Team in [React](https://reactjs.org/) with a [TypeScript](https://www.typescriptlang.org/) client/server environment.
 
