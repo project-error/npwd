@@ -12,7 +12,7 @@ export function TweetListContainer() {
 
   useEffect(() => {
     Nui.send(TwitterEvents.FETCH_TWEETS, {});
-  }, []);
+  }, [Nui]);
 
   useEffect(() => {
     if (tweets?.length) {

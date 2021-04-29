@@ -16,7 +16,7 @@
     "dompurify": "^2.2.6",
     "emoji-mart": "^3.0.1",
     "enzyme": "^3.11.0",
-    "fivem-nui-react-lib": "2.2.6",
+    "fivem-nui-react-lib": "^2.2.8",
     "howler": "^2.2.1",
     "i18next": "^19.7.0",
     "jsonschema": "^1.4.0",
