@@ -23,7 +23,7 @@ export const MatchApp = () => {
 
   useEffect(() => {
     Nui.send(MatchEvents.INITIALIZE);
-  }, []);
+  }, [Nui]);
 
   const handlePageChange = (e, page) => setActivePage(page);
 
