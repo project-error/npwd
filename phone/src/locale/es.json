@@ -5,7 +5,7 @@
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Llamando",
-        "OUTGOING": "Llamado saliente",
+        "OUTGOING": "Llamada saliente",
         "INCOMING": "Llamada entrante"
       }
     },
