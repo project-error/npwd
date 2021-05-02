@@ -2,6 +2,50 @@
   "translation": {
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Llamando",
+        "OUTGOING": "Llamada saliente",
+        "INCOMING": "Llamada entrante"
+      }
+    },
+    "SETTINGS": {
+      "CATEGORY": {
+        "APPEARANCE": "Apariencia",
+        "PHONE": "Celular",
+        "ACTIONS": "Acciones"
+      },
+      "OPTIONS": {
+        "LANGUAGE": "Lenguaje",
+        "RESET_SETTINGS": "Restablecer configuraciones",
+        "RESET_SETTINGS_DESC": "Esto borrara tus datos almacenados localmente",
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Wallpaper personalizado",
+          "DIALOG_CONTENT": "Define un wallpaper personalizado ingresando la URL de la imagen abajo!",
+          "DIALOG_PLACEHOLDER": "URL imagen",
+          "DIALOG_ERROR": "Imagen o link invalido"
+        }
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Configuracion invalida! Restablece la configuracion del dispositivo.",
+        "SETTINGS_RESET": "Se restablecieron las configuraciones!"
+      }
+    },
+    "RELATIVE_TIME": {
+      "future": "en %s",
+      "past": "hace %s",
+      "s": "hace unos segundos",
+      "m": "hace un minuto",
+      "mm": "%d minutos",
+      "h": "hace una hora",
+      "hh": "%d horas",
+      "d": "hace un dia",
+      "dd": "%d dias",
+      "M": "hace un mes",
+      "MM": "%d meses",
+      "y": "hace un año",
+      "yy": "%d años"
+    },
 
     "COMING_SOON": "Próximamente...",
 
