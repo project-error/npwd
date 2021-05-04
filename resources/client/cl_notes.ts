@@ -20,6 +20,10 @@ on(`__cfx_nui:${NotesEvents.UPDATE_NOTE}`, (note: Note) => {
   emitNet(NotesEvents.UPDATE_NOTE, note);
 });
 
+onNet(NotesEvents.SEND_NOTE_SUCCESS, () => {
+  emitNet(NotesEvents.FETCH_ALL_NOTES);
+});
+
 onNet(NotesEvents.UPDATE_NOTE_SUCCESS, () => {
   emitNet(NotesEvents.FETCH_ALL_NOTES);
 });
