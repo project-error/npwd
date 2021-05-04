@@ -23,6 +23,38 @@ export interface MessageGroup {
   participants: string[];
 }
 
+/**
+ * Used for the raw npwd_messages_groups row responses
+ */
+export interface UnformattedMessageGroup {
+  group_id: string;
+  user_identifier: string;
+  participant_identifier: string;
+  phone_number: string;
+  label?: string;
+  avatar?: string;
+  display?: string;
+  updatedAt: string;
+  unreadCount: number;
+}
+
+/**
+ * Used to help consolidate raw npwd_messages_groups rows into
+ * a mapping of a single message group
+ */
+export interface MessageGroupMapping {
+  [groupId: string]: {
+    user_identifier: string;
+    // Participant displays
+    participants: string[];
+    phoneNumbers: string[];
+    label?: string;
+    avatar?: string;
+    updatedAt: string;
+    unreadCount: number;
+  };
+}
+
 export interface CreateMessageGroupResult {
   error?: boolean;
   phoneNumber?: string;

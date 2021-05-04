@@ -118,7 +118,7 @@ function openCallModal(show: boolean) {
   );
 }
 
-onNet(CallEvents.SEND_HISTORY, (calls: CallHistoryItem[]) => {
+onNet(CallEvents.FETCH_CALLS, (calls: CallHistoryItem[]) => {
   SendNuiMessage(
     JSON.stringify({
       app: 'DIALER',

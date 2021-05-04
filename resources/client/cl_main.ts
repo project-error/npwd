@@ -9,7 +9,6 @@ import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
-import { MatchEvents } from '../../typings/match';
 import { config } from './client';
 
 let isPhoneOpen = false;
@@ -109,12 +108,9 @@ async function Phone(): Promise<void> {
   }
 }
 
-// triggerd when the player is ready
-onNet(PhoneEvents.PLAYER_IS_READY, () => {
-  isPlayerReady = true;
-  if (isUiReady) {
-    fetchOnInitialize();
-  }
+// Set the global depending on the response from event
+onNet(PhoneEvents.PLAYER_IS_READY, (ready: boolean) => {
+  isPlayerReady = ready;
 });
 
 AddEventHandler('onResourceStop', function (resource: string) {

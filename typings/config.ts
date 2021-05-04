@@ -17,12 +17,13 @@ interface MatchConfig {
   allowEdtiableProfileName: boolean;
 }
 interface Debug {
-  level: 'error' | 'warn' | 'info' | 'verbose' | 'debug';
+  level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
 }
 
 interface General {
   useDashNumber: boolean;
+  enableMultiChar: boolean;
 }
 
 interface NotificationConfig {
@@ -34,7 +35,13 @@ interface BankConfig {
   showNotifications: boolean;
 }
 
+interface DatabaseConfig {
+  playerTable: string;
+  identifierColumn: string;
+}
+
 export interface IServerConfig {
+  database: DatabaseConfig;
   Locale: string;
   KeyTogglePhone: number;
   KeyTakeCall: number;

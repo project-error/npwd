@@ -51,9 +51,9 @@ const ContactsInfoPage = () => {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
-  
+
   const { getContact } = useContacts();
-  
+
   const { id } = useParams<ContactInfoRouteParams>();
   const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({
     referal: '/contacts',
@@ -109,9 +109,7 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send(ContactEvents.DELETE_CONTACT, {
-      id: contact.id,
-    });
+    Nui.send(ContactEvents.DELETE_CONTACT, contact.id);
     history.goBack();
   };
 

@@ -12,7 +12,12 @@
     "vertical": "top"
   },
   "general": {
-    "useDashNumber": true
+    "useDashNumber": true,
+    "enableMultiChar": false
+  },
+  "database": {
+    "playerTable": "users",
+    "identifierColumn": "identifier"
   },
   "twitter": {
     "showNotifications": true,
