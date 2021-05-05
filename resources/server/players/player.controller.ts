@@ -63,6 +63,7 @@ if (config.general.enableMultiChar) {
     }
     playerLogger.debug('Receive newPlayer event, data:');
     playerLogger.debug(playerDTO);
+    await PlayerService.handleNewPlayerEvent(playerDTO);
   });
 
   on('npwd:unloadPlayer', (src: number) => {
