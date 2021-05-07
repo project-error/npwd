@@ -2,6 +2,13 @@
   "translation": {
     "DATE_FORMAT": "DD/MM/YYYY",
     "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Tocando",
+        "OUTGOING": "Enviando chamada",
+        "INCOMING": "Chamada recebida"
+      }
+    },
     "SETTINGS": {
       "CATEGORY": {
         "APPEARANCE": "Aparência",
@@ -11,7 +18,13 @@
       "OPTIONS": {
         "LANGUAGE": "Idioma",
         "RESET_SETTINGS": "Redefinir as configurações",
-        "RESET_SETTINGS_DESC": "Isso limpará seus dados armazenados localmente"
+        "RESET_SETTINGS_DESC": "Isso limpará seus dados armazenados localmente",
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Plano de Fundo customizado",
+          "DIALOG_CONTENT": "Defina um Plano de Fundo customizado inserindo a URL da imagem abaixo!",
+          "DIALOG_PLACEHOLDER": "URL da Imagem",
+          "DIALOG_ERROR": "Imagem ou link inválido"
+        }
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Configurações armazenadas inválidas! Redefina no aplicativo Configurações.",
@@ -49,10 +62,12 @@
     "APPS_SELLOUT": "Mercado",
     "APPS_CAMERA": "Camera",
 
+    "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "Não foi possível salvar a foto :(",
+
     "APPS_DIALER_INCOMING_CALL_TITLE": "Ligação",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Chamada atual",
     "APPS_DIALER_CURRENT_CALL_WITH": "Em ligação com {{ transmitter }}",
-    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} Esta te ligando!",
+    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} esta te ligando!",
     "APPS_DIALER_ACCEPT_CALL": "Atender",
     "APPS_DIALER_REJECT_CALL": "Rejeitar",
     "APPS_DIALER_END_CALL": "Fim",
@@ -180,7 +195,7 @@
     "APPS_NOTES_DELETE_SUCCESS": "Nota deletada com sucesso.",
     "APPS_NOTES_DELETE_FAILED": "Falha em deletar nota.",
 
-    "APPS_CALCULATOR_COPIED": "Resultado foi copiado para a área de transferência!",
+    "APPS_CALCULATOR_COPIED": "Resultado copiado para a área de transferência!",
 
     "APPS_SETTINGS_PHONE_NUMBER": "Número de telefone",
     "APPS_SETTINGS_OPTION_WALLPAPER": "Papel de parede",
@@ -195,7 +210,6 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notificação",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume das notificações",
     "APPS_SETTING_STREAMER_MODE_DESC": "Ocultar as imagens antes de serem mostradas",
-    "APPS_SETTINGS_SET_CUSTOM_WALLPAPER": "Definir novo papel de parede",
 
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Lista sendo criada com sucesso",
     "APPS_MARKETPLACE_CREATE_LISTING_FAILED": "Falha em criar nova lista",
@@ -209,6 +223,7 @@
     "APPS_MARKETPLACE_FORM_DESCRIPTION": "Descrição",
 
     "GENERIC_CLICK_TO_REVEAL": "Clique para revelar",
+    "GENERIC_LOADING": "Carregando",
     "GENERIC_WAIT": "Por favor, espere...",
     "GENERIC_SAVE": "Salvar",
     "GENERIC_UPDATE": "Atualizar",
