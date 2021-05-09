@@ -72,6 +72,13 @@ class CallsService {
       );
 
     emitNet(CallEvents.START_CALL, src, transmitterNumber, receivingNumber, true);
+    emitNet(
+      CallEvents.START_CALL,
+      receivingPlayer.source,
+      transmitterNumber,
+      receivingNumber,
+      false,
+    );
   }
 
   async handleAcceptCall(src: number, transmitterNumber: string): Promise<void> {
@@ -80,8 +87,27 @@ class CallsService {
     // We update its reference
     curCallAccepted.accepted = true;
 
+    const channelId = src;
+
     await this.callsDB.saveCall(curCallAccepted);
     callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
+
+    // player who is being called
+    emitNet(
+      CallEvents.WAS_ACCEPTED,
+      curCallAccepted.receiverSource,
+      channelId,
+      curCallAccepted,
+      false,
+    );
+    // player who is calling
+    emitNet(
+      CallEvents.WAS_ACCEPTED,
+      curCallAccepted.transmitterSource,
+      channelId,
+      curCallAccepted,
+      true,
+    );
   }
 
   async handleFetchCalls(src: number, limit: number): Promise<void> {
