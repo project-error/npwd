@@ -85,6 +85,7 @@ RegisterCommand(
   async () => {
     await hidePhone();
     sendMessage('PHONE', 'phoneRestart', {});
+    fetchOnInitialize();
   },
   false,
 );

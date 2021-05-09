@@ -93,7 +93,7 @@ export class _MessagesDB {
     const messages = <Message[]>results;
     return messages.map((message) => ({
       ...message,
-      isMine: message.user_identifier === userIdentifier,
+      isMine: message.user_identifier == userIdentifier,
       updatedAt: message.updatedAt.toString(),
     }));
   }

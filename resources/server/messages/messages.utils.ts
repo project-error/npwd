@@ -26,7 +26,7 @@ export async function getConsolidatedMessageGroups(
     (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
       const groupId = messageGroup.group_id;
       const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
-      const isUser = messageGroup.participant_identifier === userIdentifier;
+      const isUser = messageGroup.participant_identifier == userIdentifier;
       // Is already mapped?
       if (groupId in mapping) {
         // Add participant phone number
@@ -77,7 +77,7 @@ export async function getGroupIds(
 ): Promise<string[]> {
   const groupIds: string[] = [];
   for (const groupId of Object.keys(groupMapping)) {
-    const isMine = groupMapping[groupId].user_identifier === userIdentifier;
+    const isMine = groupMapping[groupId].user_identifier == userIdentifier;
     if (isMine || (await MessagesDB.getMessageCountByGroup(groupId)) > 0) {
       groupIds.push(groupId);
     }
@@ -163,7 +163,7 @@ export async function createMessageGroupsFromPhoneNumbers(
   }
 
   // don't allow explicitly adding yourself
-  if (identifiers.some((identifier) => identifier === userIdentifier)) {
+  if (identifiers.some((identifier) => identifier == userIdentifier)) {
     return { error: true, mine: true, failedNumbers };
   }
 
