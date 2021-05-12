@@ -38,7 +38,6 @@ CreateThread(function()
     end
 end)
 
-RegisterNetEvent('npwd:disableControlActions')
 AddEventHandler('npwd:disableControlActions', function(bool)
   disableKeys = bool
 end) 
