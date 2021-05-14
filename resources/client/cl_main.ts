@@ -57,6 +57,8 @@ const showPhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
   sendMessage('PHONE', PhoneEvents.SET_TIME, time);
   SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(true);
+  emit('npwd:disableControlActions', true);
 };
 
 const hidePhone = async (): Promise<void> => {
@@ -64,6 +66,8 @@ const hidePhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
+  emit('npwd:disableControlActions', false);
 };
 
 /* * * * * * * * * * * * *
