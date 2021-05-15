@@ -33,4 +33,6 @@ export enum CallEvents {
   SET_CALLER = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
   SET_CALL_HISTORY = 'npwd:setCallHistory',
+  ACTION_RESULT = 'npwd:callsActionResult',
+  SEND_ALERT = 'npwd:callSetAlert',
 }

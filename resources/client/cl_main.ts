@@ -9,7 +9,6 @@ import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
-import { MatchEvents } from '../../typings/match';
 import { config } from './client';
 
 let isPhoneOpen = false;
@@ -58,6 +57,8 @@ const showPhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
   sendMessage('PHONE', PhoneEvents.SET_TIME, time);
   SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(true);
+  emit('npwd:disableControlActions', true);
 };
 
 const hidePhone = async (): Promise<void> => {
@@ -65,6 +66,8 @@ const hidePhone = async (): Promise<void> => {
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await phoneCloseAnim();
   SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
+  emit('npwd:disableControlActions', false);
 };
 
 /* * * * * * * * * * * * *
@@ -86,6 +89,7 @@ RegisterCommand(
   async () => {
     await hidePhone();
     sendMessage('PHONE', 'phoneRestart', {});
+    fetchOnInitialize();
   },
   false,
 );
@@ -109,12 +113,9 @@ async function Phone(): Promise<void> {
   }
 }
 
-// triggerd when the player is ready
-onNet(PhoneEvents.PLAYER_IS_READY, () => {
-  isPlayerReady = true;
-  if (isUiReady) {
-    fetchOnInitialize();
-  }
+// Set the global depending on the response from event
+onNet(PhoneEvents.PLAYER_IS_READY, (ready: boolean) => {
+  isPlayerReady = ready;
 });
 
 AddEventHandler('onResourceStop', function (resource: string) {

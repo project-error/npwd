@@ -6,7 +6,7 @@ export enum PhoneEvents {
   OPEN_APP_CONTACTS = 'npwd:app:CONTACTS',
   OPEN_APP_BANK = 'npwd:app:BANK',
   OPEN_APP_NOTES = 'npwd:app:NOTES',
-  OPEN_APP_LISTINGS = 'npwd:app:SELLOUT',
+  OPEN_APP_LISTINGS = 'npwd:app:MARKETPLACE',
   OPEN_APP_CAMERA = 'npwd:app:CAMERA',
   OPEN_APP_DAILER = 'npwd:app:DIALER',
   OPEN_PHONE = 'npwd:open',
@@ -19,4 +19,26 @@ export enum PhoneEvents {
   SET_CONFIG = 'npwd:setPhoneConfig',
   SET_TIME = 'npwd:setGameTime',
   SEND_CREDENTIALS = 'npwd:sendCredentials',
+}
+
+// Used to standardize the server response
+export enum ErrorStringKeys {
+  SERVER_ERROR = 'GENERAL_SERVER_ERROR',
+  DELETE_FAILED = 'DELETE_FAILED',
+  ADD_FAILED = 'ADD_FAILED',
+  UPDATE_FAILED = 'UPDATED_FAILED',
+  FETCH_FAILED = 'FETCH_FAILED',
+}
+
+export interface FxServerRespError {
+  errorCode: ErrorStringKeys;
+  message: string;
+}
+
+export interface FxServerResponse {
+  data?: unknown;
+  action: string;
+  status: 'success' | 'failure';
+  app: string;
+  error?: FxServerRespError;
 }

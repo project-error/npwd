@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@discordjs/collection": "^0.1.6",
     "axios": "^0.21.1",
     "connection-string-parser": "^1.0.3",
     "dayjs": "^1.10.4",

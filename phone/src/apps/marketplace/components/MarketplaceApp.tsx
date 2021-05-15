@@ -1,7 +1,6 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components/AppWrapper';
+import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
-import { MarketplaceTitle } from './MarketplaceTitle';
 import { MarketplaceListContainer } from './SelloutList/MarketplaceListContainer';
 import { NavigationBar } from './navigation/NavigationBar';
 import { Switch, Route } from 'react-router-dom';
@@ -9,12 +8,16 @@ import { ListingFormContainer } from './form/ListingFormContainer';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
 import { MarketplaceEvents } from '../../../../../typings/marketplace';
+import { AppTitle } from '../../../ui/components/AppTitle';
+import { useApp } from '../../../os/apps/hooks/useApps';
 
 export const MarketplaceApp = () => {
+  const marketplaceApp = useApp('SELLOUT');
+
   return (
     <MarketplaceThemeProvider>
       <AppWrapper id="sellout-app">
-        <MarketplaceTitle />
+        <AppTitle app={marketplaceApp} />
         <AppContent>
           <Switch>
             <Route path="/marketplace" exact component={MarketplaceListContainer} />

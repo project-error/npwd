@@ -1,11 +1,12 @@
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { ResultSetHeader } from 'mysql2';
 
 import { pool } from './db';
-import { getIdentifier, getSource } from './functions';
 import { config } from './server';
 import { Like, Match, Profile, MatchEvents, NewProfile } from '../../typings/match';
 import { mainLogger } from './sv_logger';
-import { generateProfileName } from './players/sv_players';
+import { generateProfileName } from './utils/generateProfileName';
+import { getSource } from './utils/miscUtils';
+import PlayerService from './players/player.service';
 
 const matchLogger = mainLogger.child({ module: 'match' });
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
@@ -252,7 +253,7 @@ async function dispatchProfiles(identifier: string, source: number): Promise<voi
 
 onNet(MatchEvents.INITIALIZE, async () => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
   matchLogger.debug(`Initializing match for identifier: ${identifier}`);
 
   await dispatchPlayerProfile(identifier, _source);
@@ -262,7 +263,7 @@ onNet(MatchEvents.INITIALIZE, async () => {
 
 onNet(MatchEvents.CREATE_MY_PROFILE, async (profile: Profile) => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
   matchLogger.debug(`Creating profile for identifier: ${identifier}`);
   matchLogger.debug(profile);
 
@@ -284,7 +285,7 @@ onNet(MatchEvents.CREATE_MY_PROFILE, async (profile: Profile) => {
 
 onNet(MatchEvents.UPDATE_MY_PROFILE, async (profile: Profile) => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
   matchLogger.debug(`Updating profile for identifier: ${identifier}`);
   matchLogger.debug(profile);
 
@@ -306,7 +307,7 @@ onNet(MatchEvents.UPDATE_MY_PROFILE, async (profile: Profile) => {
 
 onNet(MatchEvents.SAVE_LIKES, async (likes: Like[]) => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
   matchLogger.debug(`Saving likes for identifier ${identifier}`);
 
   try {
@@ -334,7 +335,7 @@ onNet(MatchEvents.SAVE_LIKES, async (likes: Like[]) => {
 
 onNet(MatchEvents.GET_MATCHES, async () => {
   const _source = getSource();
-  const identifier = getIdentifier(_source);
+  const identifier = PlayerService.getIdentifier(_source);
 
   try {
     const matchedProfiles = await findAllMatches(identifier);

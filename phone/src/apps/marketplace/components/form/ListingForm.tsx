@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { makeStyles, Button, TextField } from '@material-ui/core';
+import React, { useEffect, useState, useCallback } from 'react';
+import { makeStyles, Button, TextField, Box } from '@material-ui/core';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MarketplaceEvents } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import ImageIcon from '@material-ui/icons/Image';
+import { useHistory, useLocation } from 'react-router-dom';
+import qs from 'qs';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +40,8 @@ export const ListingForm = () => {
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
   const history = useHistory();
+  const { pathname, search } = useLocation();
+  const query = useQueryParams();
 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
@@ -57,6 +63,26 @@ export const ListingForm = () => {
     }
   };
 
+  /*const handleChooseImage = () => {
+		history.push(`/camera?${qs.stringify({
+			referal: encodeURIComponent(pathname + search),
+		})}`)
+	}*/
+
+  const handleChooseImage = useCallback(() => {
+    history.push(
+      `/camera?${qs.stringify({
+        referal: encodeURIComponent(pathname + search),
+      })}`,
+    );
+  }, [history, pathname, search]);
+
+  useEffect(() => {
+    if (!query?.image) return;
+    setUrl(query?.image);
+    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+  }, [query?.image, history, pathname, search]);
+
   return (
     <div className={classes.root}>
       <h1>New Listing</h1>
@@ -76,10 +102,19 @@ export const ListingForm = () => {
         }}
       />
 
+      <Box display="flex" alignItems="center" paddingLeft={5}>
+        <div>
+          <ImageIcon />
+        </div>
+        <div>
+          <Button onClick={handleChooseImage}>Choose a image</Button>
+        </div>
+      </Box>
       <TextField
         className={classes.input}
         placeholder={t('APPS_MARKETPLACE_FORM_IMAGE')}
-        onChange={(e) => setUrl(e.target.value)}
+        value={url}
+        onChange={(e) => setUrl(e.currentTarget.value)}
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: '80%' }}
         size="medium"

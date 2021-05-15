@@ -3,8 +3,9 @@ game "gta5"
 description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
-client_script {
-    'resources/dist/client/*.client.js'
+client_scripts {
+    'resources/dist/client/*.client.js',
+    'resources/client/*.lua'
 }
 
 server_script {
