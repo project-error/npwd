@@ -4,6 +4,7 @@ import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
+import { ContactEvents } from '../../../typings/contact';
 
 class CallsService {
   private callMap: Collection<string, CallHistoryItem>;
@@ -58,6 +59,12 @@ class CallsService {
 
     if (!receivingPlayer) {
       // TODO: handle offline player
+
+      // FIXME: Add actual localization for this.
+      emitNet(CallEvents.ACTION_RESULT, src, {
+        message: 'Could not reach player',
+        type: 'error',
+      });
       return;
     }
 
