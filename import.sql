@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_contacts` (
   `identifier` varchar(48) DEFAULT NULL,
   `avatar` varchar(512) DEFAULT NULL,
   `number` varchar(10) DEFAULT NULL,
-  `display` varchar(60) NOT NULL DEFAULT '',
+  `display` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 );
 
