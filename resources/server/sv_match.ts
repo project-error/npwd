@@ -349,7 +349,7 @@ onNet(MatchEvents.GET_MATCHES, async () => {
   }
 });
 
-if (!config.match.allowEdtiableProfileName && !config.match.generateProfileNameFromUsers) {
+if (!config.match.allowEditableProfileName && !config.match.generateProfileNameFromUsers) {
   const warning =
     `Both allowEdtiableProfileName and generateProfileNameFromUsers ` +
     `are set false - this means users will likely not have profile names ` +

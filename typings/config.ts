@@ -1,7 +1,7 @@
 interface TwitterConfig {
   showNotifications: boolean;
   generateProfileNameFromUsers: boolean;
-  allowEdtiableProfileName: boolean;
+  allowEditableProfileName: boolean;
   allowDeleteTweets: boolean;
   allowReportTweets: boolean;
   characterLimit: number;
@@ -14,7 +14,7 @@ interface TwitterConfig {
 
 interface MatchConfig {
   generateProfileNameFromUsers: boolean;
-  allowEdtiableProfileName: boolean;
+  allowEditableProfileName: boolean;
 }
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
@@ -35,12 +35,13 @@ interface BankConfig {
   showNotifications: boolean;
 }
 
+
 interface DatabaseConfig {
   playerTable: string;
   identifierColumn: string;
 }
 
-export interface IServerConfig {
+export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
   KeyTogglePhone: number;
@@ -48,8 +49,6 @@ export interface IServerConfig {
   PhoneAsItem: boolean;
   SwimDestroy: boolean;
   RunRate: number;
-  DestoryChance: number;
-  DestroyPhoneReCheck: number;
   twitter: TwitterConfig;
   match: MatchConfig;
   bank: BankConfig;

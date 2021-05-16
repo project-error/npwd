@@ -20,10 +20,10 @@ const useStyles = makeStyles({
 
 export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const classes = useStyles();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
-  if (!config) return null;
-  const { enableImages, enableEmojis } = config.twitter;
+  if (!ResourceConfig) return null;
+  const { enableImages, enableEmojis } = ResourceConfig.twitter;
 
   return (
     <div className={classes.buttons}>

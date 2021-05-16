@@ -21,13 +21,13 @@ const useStyles = makeStyles({
 
 function Notification({ children, handleClose, open }) {
   const classes = useStyles();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
   const currentTheme = usePhoneTheme();
 
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
-  const { horizontal, vertical } = config.notificationPosition;
+  const { horizontal, vertical } = ResourceConfig.notificationPosition;
 
   return (
     <ThemeProvider theme={currentTheme}>

@@ -23,10 +23,10 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
   const textFieldRef = useRef(null);
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
   const { t } = useTranslation();
 
-  const { characterLimit, newLineLimit } = config.twitter;
+  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
   useEffect(() => {
     textFieldInputRef.current && textFieldInputRef.current.focus();
@@ -46,7 +46,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
     [handleChange],
   );
 
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
   let errorMessage = null;
 

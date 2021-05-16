@@ -26,7 +26,7 @@ export function Profile() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { profile } = useProfile();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -51,9 +51,9 @@ export function Profile() {
   };
 
   // fetching the config is an asynchronous call so defend against it
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
-  const { enableAvatars, allowEdtiableProfileName } = config.twitter;
+  const { enableAvatars, allowEditableProfileName } = ResourceConfig.twitter;
 
   return (
     <div className={classes.root}>
@@ -69,7 +69,7 @@ export function Profile() {
         label={t('APPS_TWITTER_EDIT_PROFILE_NAME')}
         value={name}
         handleChange={handleNameChange}
-        allowChange={allowEdtiableProfileName}
+        allowChange={allowEditableProfileName}
       />
       <ProfileField
         label={t('APPS_TWITTER_EDIT_PROFILE_BIO')}

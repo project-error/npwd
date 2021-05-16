@@ -81,10 +81,10 @@ export const Tweet = (tweet: ITweet) => {
   } = tweet;
   const classes = useStyles();
   const { t } = useTranslation();
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
-  if (!config) return null;
-  const { enableAvatars, enableImages } = config.twitter;
+  if (!ResourceConfig) return null;
+  const { enableAvatars, enableImages } = ResourceConfig.twitter;
 
   // this is a workaround to transfer string new lines and returns that
   // are stored into the database into html for the UI to render

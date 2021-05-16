@@ -31,9 +31,12 @@ import { usePhone } from './os/phone/hooks/usePhone';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
-import dayjs from 'dayjs';
+import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import PhoneWrapper from './PhoneWrapper';
+
+import dayjs from 'dayjs';
+import DefaultConfig from '../../config.json';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -137,5 +140,10 @@ InjectDebugData<any>([
     app: 'PHONE',
     method: PhoneEvents.SET_TIME,
     data: dayjs().format('hh:mm'),
+  },
+  {
+    app: 'PHONE',
+    method: PhoneEvents.SET_CONFIG,
+    data: DefaultConfig,
   },
 ]);

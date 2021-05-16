@@ -1,13 +1,13 @@
 import { atom } from 'recoil';
-import { IServerConfig } from '../../../../../typings/config';
+import { ResourceConfig } from '../../../../../typings/config';
 
 export const phoneState = {
   visibility: atom<boolean>({
     key: 'phoneVisibility',
     default: false,
   }),
-  phoneConfig: atom<IServerConfig>({
-    key: 'phoneConfig',
+  resourceConfig: atom<ResourceConfig>({
+    key: 'resourceConfig',
     default: null,
   }),
   phoneReady: atom<boolean>({

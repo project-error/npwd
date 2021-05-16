@@ -11,9 +11,9 @@ export const ShowMore = ({ id, isReported, isMine }) => {
   const Nui = useNuiRequest();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-  const { config } = usePhone();
+  const { ResourceConfig } = usePhone();
 
-  if (!config) return null;
+  if (!ResourceConfig) return null;
 
   const handleClick = (event: React.MouseEvent) => {
     const element = event.currentTarget;
@@ -29,8 +29,8 @@ export const ShowMore = ({ id, isReported, isMine }) => {
     handleClose();
   };
 
-  const allowedToDelete = config.twitter.allowDeleteTweets && isMine;
-  const allowedToReport = config.twitter.allowReportTweets && !isMine;
+  const allowedToDelete = ResourceConfig.twitter.allowDeleteTweets && isMine;
+  const allowedToReport = ResourceConfig.twitter.allowReportTweets && !isMine;
 
   // if the user cannot perform any actions in show more then don't
   // allow them to interact with it

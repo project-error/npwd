@@ -41,17 +41,15 @@
     "@types/react-router-dom": "^5.1.7",
     "@welldone-software/why-did-you-render": "^6.1.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
-    "cp-cli": "^2.0.0",
     "cross-env": "^7.0.2",
     "ts-loader": "^8.1.0",
     "typescript": "3.9.7"
   },
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
-    "copy:config": "cp-cli ../config.json ./src/config.autogen.json",
     "start": "cross-env PUBLIC_URL=/ craco start",
     "watch": "cross-env REACT_APP_IN_GAME=1 craco start",
-    "build": "yarn copy:config && craco build",
+    "build": "craco build",
     "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"
   },
   "eslintConfig": {
