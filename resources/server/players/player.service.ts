@@ -131,7 +131,7 @@ class _PlayerService {
     playerLogger.debug(newPlayer);
 
     // Emit to client that player is ready
-    emitNet(PhoneEvents.PLAYER_IS_READY, pSource, true);
+    emitNet(PhoneEvents.ON_INIT, pSource);
   }
 
   /**
@@ -183,7 +183,7 @@ class _PlayerService {
     playerLogger.debug(player);
 
     // Emit to client that player is ready
-    emitNet(PhoneEvents.PLAYER_IS_READY, src, true);
+    emitNet(PhoneEvents.ON_INIT, src);
   }
 
   /**
@@ -210,11 +210,6 @@ class _PlayerService {
     this.deletePlayerFromMaps(src);
 
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
-
-    // We emit PLAYER_IS_READY false if the player wasn't disconnected
-    if (!playerDropped) {
-      emitNet(PhoneEvents.PLAYER_IS_READY, src, false);
-    }
   }
 }
 

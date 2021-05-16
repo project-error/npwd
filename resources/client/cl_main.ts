@@ -131,13 +131,8 @@ onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
 });
 
-RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
-on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
-  isUiReady = true;
-  if (isPlayerReady) {
-    fetchOnInitialize();
-  }
-  cb();
+onNet(PhoneEvents.ON_INIT, () => {
+  fetchOnInitialize();
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP

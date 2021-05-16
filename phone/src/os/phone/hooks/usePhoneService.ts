@@ -1,17 +1,9 @@
-import { useNuiEvent, useNuiRequest } from 'fivem-nui-react-lib';
-import { useEffect } from 'react';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useSetRecoilState } from 'recoil';
 import { PhoneEvents } from '../../../../../typings/phone';
 import { phoneState } from './state';
 
 export const usePhoneService = () => {
-  const { send } = useNuiRequest();
-
-  // Let client know UI is ready to accept events
-  useEffect(() => {
-    send(PhoneEvents.UI_IS_READY);
-  }, [send]);
-
   const setVisibility = useSetRecoilState(phoneState.visibility);
   const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
   const setPhoneReady = useSetRecoilState(phoneState.phoneReady);
