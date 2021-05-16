@@ -112,7 +112,7 @@ async function findAllMatches(identifier: string): Promise<Match[]> {
   LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.profile = targetProfile.id
   LEFT OUTER JOIN npwd_match_profiles AS myProfile ON npwd_match_views.identifier = myProfile.identifier
   LEFT OUTER JOIN npwd_match_views AS targetViews ON targetProfile.identifier = targetViews.identifier AND targetViews.profile = myProfile.id
-  LEFT OUTER JOIN users AS targetUser ON targetProfile.identifier = targetUser.identifier
+  LEFT OUTER JOIN ${config.database.playerTable} AS targetUser ON targetProfile.identifier = targetUser.${config.database.identifierColumn}
   WHERE npwd_match_views.identifier = ? AND npwd_match_views.liked = 1 AND targetViews.liked = 1 
   ORDER BY matchedAt DESC
     `;

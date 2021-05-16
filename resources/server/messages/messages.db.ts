@@ -1,5 +1,6 @@
 import { pool } from '../db';
 import { UnformattedMessageGroup, Message } from '../../../typings/messages';
+import { config } from '../server';
 
 export class _MessagesDB {
   /**
@@ -44,7 +45,7 @@ export class _MessagesDB {
       npwd_messages_groups.participant_identifier,
       npwd_messages_groups.user_identifier,
       npwd_messages_labels.label,
-      users.phone_number,
+      ${config.database.playerTable}.phone_number,
       npwd_phone_contacts.avatar,
       npwd_phone_contacts.display
     FROM (
@@ -53,9 +54,9 @@ export class _MessagesDB {
       WHERE npwd_messages_groups.participant_identifier = ?
     ) as t
     LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
-    LEFT OUTER JOIN users on users.identifier = npwd_messages_groups.participant_identifier
+    LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_groups.participant_identifier
     LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     ORDER BY npwd_messages_groups.createdAt DESC
     `;
 
@@ -79,12 +80,12 @@ export class _MessagesDB {
       npwd_messages.user_identifier,
       npwd_messages.isRead,
       npwd_messages.updatedAt,
-      users.phone_number,
+      ${config.database.playerTable}.phone_number,
       npwd_phone_contacts.display,
       npwd_phone_contacts.avatar
     FROM npwd_messages
-    LEFT OUTER JOIN users on users.identifier = npwd_messages.user_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(users.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages.user_identifier
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     WHERE npwd_messages.group_id = ?
     ORDER BY createdAt ASC;
     `;
@@ -139,8 +140,8 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-      SELECT identifier
-      FROM users
+      SELECT ${config.database.identifierColumn}
+      FROM ${config.database.playerTable}
       WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
       LIMIT 1
     `;
