@@ -96,7 +96,7 @@ class CallsService {
 
     const channelId = src;
 
-    await this.callsDB.saveCall(curCallAccepted);
+    await this.callsDB.updateCall(curCallAccepted, true, null);
     callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
 
     // player who is being called
@@ -171,6 +171,8 @@ class CallsService {
       emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.receiverSource);
       emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.transmitterSource);
     }
+
+	await this.callsDB.updateCall(currentCall, true, endCallTimeUnix);
 
     // Clear from memory
     this.callMap.delete(transmitterNumber);
