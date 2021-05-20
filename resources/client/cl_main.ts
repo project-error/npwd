@@ -179,6 +179,14 @@ on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
   cb();
 }); // Called for when the phone is closed via the UI.
 
+RegisterNuiCallbackType(PhoneEvents.TOGGLE_KEYS);
+on(`__cfx_nui:${PhoneEvents.TOGGLE_KEYS}`, async (data: any, cb: Function) => {
+  if (isPhoneOpen) {
+		SetNuiFocusKeepInput(!data.bool);
+  }
+  cb();
+});
+
 // setTick(async () => {
 //   while (config.SwimDestroy) {
 //     await Delay(config.RunRate * 1000);

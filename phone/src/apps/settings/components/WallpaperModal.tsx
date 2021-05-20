@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useCustomWallpaperModal, useSettings } from '../hooks/useSettings';
-import { TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DialogForm from '../../../ui/components/DialogForm';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { TextField } from '../../../ui/components/Input';
 
 export default function WallpaperModal() {
   const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();

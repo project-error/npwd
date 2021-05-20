@@ -1,6 +1,5 @@
 import {
   Button,
-  TextField,
   Slide,
   Paper,
   Typography,
@@ -16,6 +15,7 @@ import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { StatusButton } from '../../../ui/components/StatusButton';
 import { NotesEvents } from '../../../../../typings/notes';
+import { TextField } from '../../../ui/components/Input';
 
 export const NoteModal = () => {
   const Nui = useNuiRequest();

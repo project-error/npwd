@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, IconButton, InputBase, Paper } from '@material-ui/core';
+import { Box, IconButton, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -8,6 +8,7 @@ import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { CallEvents } from '../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
+import { InputBase } from '../../../ui/components/Input';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

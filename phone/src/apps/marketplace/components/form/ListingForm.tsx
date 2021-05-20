@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { makeStyles, Button, TextField, Box } from '@material-ui/core';
+import { makeStyles, Button, Box } from '@material-ui/core';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MarketplaceEvents } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
+import { TextField } from '../../../../ui/components/Input';
 
 const useStyles = makeStyles((theme) => ({
   root: {

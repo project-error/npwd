@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, TextField } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
@@ -9,6 +9,7 @@ import { Contact } from '../../../../../../typings/contact';
 import { MessageEvents } from '../../../../../../typings/messages';
 import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { TextField } from '../../../../ui/components/Input';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const Nui = useNuiRequest();
