@@ -21,19 +21,12 @@ let isUiReady = false;
  *
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
-  sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
   emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
+  sendMessage('PHONE', PhoneEvents.SET_PHONE_READY, true);
+  sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
-
-if (!config.general.enableMultiChar) {
-  on('playerSpawned', fetchOnInitialize);
-}
-
-onNet(PhoneEvents.ON_INIT, () => {
-  fetchOnInitialize();
-});
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
@@ -134,8 +127,17 @@ AddEventHandler('onResourceStop', function (resource: string) {
   }
 });
 
-onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
-  sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
+RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
+on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
+  isUiReady = true;
+  if (isPlayerReady) {
+    fetchOnInitialize();
+  }
+  cb();
+});
+
+onNet(PhoneEvents.ON_INIT, () => {
+  fetchOnInitialize();
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP

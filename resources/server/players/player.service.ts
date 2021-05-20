@@ -131,7 +131,8 @@ class _PlayerService {
     playerLogger.debug(newPlayer);
 
     // Emit to client that player is ready
-    /*emitNet(PhoneEvents.ON_INIT, pSource);*/
+    console.log('init baby', pSource);
+    emitNet(PhoneEvents.PLAYER_IS_READY, pSource, true);
   }
 
   /**
@@ -183,7 +184,7 @@ class _PlayerService {
     playerLogger.debug(player);
 
     // Emit to client that player is ready
-    emitNet(PhoneEvents.ON_INIT, src);
+    emitNet(PhoneEvents.PLAYER_IS_READY, src, true);
   }
 
   /**
