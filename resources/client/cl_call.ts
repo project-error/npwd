@@ -37,7 +37,7 @@ on(`__cfx_nui:${CallEvents.ACCEPT_CALL}`, (data: any, cb: Function) => {
 onNet(
   CallEvents.WAS_ACCEPTED,
   (channelId: number, currentCall: CallHistoryItem, isTransmitter: boolean) => {
-    exp['mumble-voip'].SetCallChannel(channelId);
+    exp['pma-voice'].setCallChannel(channelId);
     phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
     SendNuiMessage(
       JSON.stringify({
@@ -90,7 +90,7 @@ on(`__cfx_nui:${CallEvents.END_CALL}`, (data: any, cb: Function) => {
 });
 
 onNet(CallEvents.WAS_ENDED, () => {
-  exp['mumble-voip'].SetCallChannel(0);
+  exp['pma-voice'].setCallChannel(0);
   openCallModal(false);
 
   SendNuiMessage(
