@@ -131,7 +131,7 @@ class _PlayerService {
     playerLogger.debug(newPlayer);
 
     // Emit to client that player is ready
-    emitNet(PhoneEvents.ON_INIT, pSource);
+    /*emitNet(PhoneEvents.ON_INIT, pSource);*/
   }
 
   /**
