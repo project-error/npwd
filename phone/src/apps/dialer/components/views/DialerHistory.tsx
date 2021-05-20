@@ -72,10 +72,10 @@ export const DialerHistory = ({ calls }) => {
             />
             <IconButton onClick={() => handleCall(call.receiver)}>{<PhoneIcon />}</IconButton>
 
-            {getDisplayByNumber(call.transmitter) === call.transmitter && (
+            {getDisplayByNumber(call.receiver) === call.receiver && (
               <IconButton
                 onClick={() =>
-                  history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
+                  history.push(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)
                 }
               >
                 <PersonAddIcon />
