@@ -81,28 +81,28 @@ function Phone() {
 
   const { modal: callModal } = useCallModal();
 
-  const { isPhoneReady } = usePhone();
+  //const { isPhoneReady } = usePhone();
 
   return (
     <div>
       <WindowSnackbar />
       <PhoneWrapper>
-        {isPhoneReady ? (
+        {/*{isPhoneReady ? (
+          <>*/}
+        <NotificationBar />
+        <div className="PhoneAppContainer">
           <>
-            <NotificationBar />
-            <div className="PhoneAppContainer">
-              <>
-                <Route exact path="/" component={HomeApp} />
-                {callModal && <Route exact path="/call" component={CallModal} />}
-                {apps.map((App) => (
-                  <App.Route key={App.id} />
-                ))}
-              </>
-              <NotificationAlert />
-              <PhoneSnackbar />
-            </div>
-            <Navigation />
+            <Route exact path="/" component={HomeApp} />
+            {callModal && <Route exact path="/call" component={CallModal} />}
+            {apps.map((App) => (
+              <App.Route key={App.id} />
+            ))}
           </>
+          <NotificationAlert />
+          <PhoneSnackbar />
+        </div>
+        <Navigation />
+        {/*</>
         ) : (
           <Box
             component={Paper}
@@ -118,7 +118,7 @@ function Phone() {
             </Typography>
             <Typography paragraph>{t('GENERIC_WAIT')}</Typography>
           </Box>
-        )}
+        )}*/}
       </PhoneWrapper>
     </div>
   );

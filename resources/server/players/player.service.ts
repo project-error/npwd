@@ -129,10 +129,6 @@ class _PlayerService {
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
-
-    // Emit to client that player is ready
-    console.log('init baby', pSource);
-    emitNet(PhoneEvents.PLAYER_IS_READY, pSource, true);
   }
 
   /**
@@ -182,9 +178,6 @@ class _PlayerService {
 
     playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
     playerLogger.debug(player);
-
-    // Emit to client that player is ready
-    emitNet(PhoneEvents.PLAYER_IS_READY, src, true);
   }
 
   /**
