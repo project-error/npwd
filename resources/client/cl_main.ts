@@ -118,6 +118,9 @@ onNet(PhoneEvents.PLAYER_IS_READY, (ready: boolean) => {
   isPlayerReady = ready;
 });
 
+onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
+	sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number)
+})
 AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);

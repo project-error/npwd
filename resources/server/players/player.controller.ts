@@ -59,7 +59,7 @@ if (config.general.enableMultiChar) {
   // This has to be an event as FXServer does not yet support exports which return a promise.
   on('npwd:newPlayer', async (playerDTO: PlayerAddData) => {
     if (typeof playerDTO.source !== 'number') {
-      return playerLogger.error('Source must be passed as a number when unloading a player');
+      return playerLogger.error('Source must be passed as a number when loading a player');
     }
     playerLogger.debug('Receive newPlayer event, data:');
     playerLogger.debug(playerDTO);
