@@ -10,10 +10,6 @@ export const phoneState = {
     key: 'resourceConfig',
     default: null,
   }),
-  /*phoneReady: atom<boolean>({
-    key: 'phoneReady',
-    default: false,
-  }),*/
   phoneTime: atom<string>({
     key: 'phoneTime',
     default: null,
