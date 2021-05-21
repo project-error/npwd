@@ -178,6 +178,8 @@ class _PlayerService {
 
     playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
     playerLogger.debug(player);
+
+    emitNet(PhoneEvents.ON_INIT, src);
   }
 
   /**
