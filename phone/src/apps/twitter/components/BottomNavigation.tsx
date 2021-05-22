@@ -17,9 +17,9 @@ export function TwitterBottomNavigation({ activePage, handleChange }) {
 
   return (
     <BottomNavigation value={activePage} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction component={Link} to="/twitter" icon={<HomeIcon />} />
-      <BottomNavigationAction component={Link} to="/twitter/search" icon={<SearchIcon />} />
-      <BottomNavigationAction component={Link} to="/twitter/profile" icon={<ProfileIcon />} />
+      <BottomNavigationAction value="/twitter"         component={Link} to="/twitter" icon={<HomeIcon />} />
+      <BottomNavigationAction value="/twitter/search"  component={Link} to="/twitter/search" icon={<SearchIcon />} />
+      <BottomNavigationAction value="/twitter/profile" component={Link} to="/twitter/profile" icon={<ProfileIcon />} />
     </BottomNavigation>
   );
 }

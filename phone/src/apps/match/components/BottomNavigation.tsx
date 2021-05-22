@@ -17,9 +17,9 @@ export function MatchBottomNavigation({ activePage, handleChange }) {
 
   return (
     <BottomNavigation value={activePage} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction component={Link} to="/match" icon={<HomeIcon />} />
-      <BottomNavigationAction component={Link} to="/match/matches" icon={<GroupIcon />} />
-      <BottomNavigationAction component={Link} to="/match/profile" icon={<ProfileIcon />} />
+      <BottomNavigationAction value="/match" component={Link} to="/match" icon={<HomeIcon />} />
+      <BottomNavigationAction value="/match/matches" component={Link} to="/match/matches" icon={<GroupIcon />} />
+      <BottomNavigationAction value="/match/profile" component={Link} to="/match/profile" icon={<ProfileIcon />} />
     </BottomNavigation>
   );
 }

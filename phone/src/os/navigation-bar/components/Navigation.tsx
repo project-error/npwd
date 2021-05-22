@@ -24,6 +24,7 @@ export const Navigation = () => {
     <BottomNavigation
       className={classes.root}
       onChange={(_e, value) => {
+        _e.preventDefault()
         setBarUncollapsed(false);
         value();
       }}

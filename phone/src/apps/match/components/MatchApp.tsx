@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
@@ -16,6 +16,7 @@ import { MatchEvents } from '../../../../../typings/match';
 import { useProfile } from '../hooks/useProfile';
 
 export const MatchApp = () => {
+  const history = useHistory()
   const Nui = useNuiRequest();
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
@@ -25,7 +26,11 @@ export const MatchApp = () => {
     Nui.send(MatchEvents.INITIALIZE);
   }, [Nui]);
 
-  const handlePageChange = (e, page) => setActivePage(page);
+  const handlePageChange = (e, page) => {
+    e.preventDefault()
+    history.push(page)
+    setActivePage(page)
+  }
 
   return (
     <MatchThemeProvider>

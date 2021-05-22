@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AppWrapper } from '../../../ui/components';
@@ -35,9 +35,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const TwitterApp = () => {
+  const history = useHistory();
   const classes = useStyles();
   const { modalVisible, setModalVisible } = useModal();
-  const [activePage, setActivePage] = useState(0);
+  const [activePage, setActivePage] = useState("/twitter");
   const { profile } = useProfile();
 
   // before any other action can be taken by the user we force
@@ -45,8 +46,12 @@ export const TwitterApp = () => {
   const promptProfileName = !profile || !profile.profile_name || !profile.profile_name.trim();
 
   const openModal = () => setModalVisible(true);
-  const handlePageChange = (e, page) => setActivePage(page);
-  const showTweetButton = !promptProfileName && activePage === 0;
+  const handlePageChange = (e, page) => {
+    e.preventDefault()
+    history.push(page)
+    setActivePage(page)
+  }
+  const showTweetButton = !promptProfileName && activePage === "/twitter";
 
   return (
     <TwitterThemeProvider>
