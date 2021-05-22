@@ -13,6 +13,7 @@ CreateThread(function()
             DisableControlAction(0, 24, true)   -- Attack
             DisableControlAction(0, 25, true)   -- Aim
             DisableControlAction(0, 26, true)   -- Look Behind
+            DisableControlAction(0, 36, true)   -- Input Duck/Sneak
             DisableControlAction(0, 37, true)   -- Weapon Wheel
             DisableControlAction(0, 44, true)   -- Cover
             DisableControlAction(0, 47, true)   -- Detonate
