@@ -29,6 +29,7 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from './ui/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
+import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import PhoneWrapper from './PhoneWrapper';
 
 import dayjs from 'dayjs';
