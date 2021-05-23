@@ -69,7 +69,6 @@ function Phone() {
 
   useEffect(() => {
     Nui.send(PhoneEvents.UI_IS_READY);
-    console.log('when are you firing the UI_IS_READY?');
   }, [Nui]);
 
   useKeyboardService();

@@ -53,37 +53,6 @@ if (!config.general.enableMultiChar) {
   });
 }
 
-//// comment out this if you're not using ESX, idk. Testing purpose
-
-if (config.general.enableMultiChar) {
-  on('onServerResourceStart', async (resource: string) => {
-    if (resource === GetCurrentResourceName()) {
-      // Workaround till https://github.com/citizenfx/fivem/pull/682
-      // is merged
-      // @ts-ignore
-      const onlinePlayers: XPlayer[] = ESX.GetPlayers();
-      console.log(onlinePlayers);
-      for (const id of onlinePlayers) {
-        const Player = ESX.GetPlayerFromId(id);
-        const source = Player.source;
-        const identifier = Player.getIdentifier();
-        const firstname = Player.getName();
-        await PlayerService.handleNewPlayerEvent({ source, identifier, firstname });
-      }
-    }
-  });
-}
-
-on('esx:playerLoaded', (playerId: number, xPlayer: XPlayer) => {
-  emit('npwd:newPlayer', {
-    source: playerId,
-    identifier: xPlayer.getIdentifier(),
-    firstname: xPlayer.getName(),
-  });
-});
-
-////
-
 // For multicharacter frameworks, we enable these events for
 // instantiating/deleting a player. The config option must be set to true
 // for these to be available
