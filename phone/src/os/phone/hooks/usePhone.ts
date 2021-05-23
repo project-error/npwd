@@ -16,7 +16,6 @@ interface IUsePhone {
 export const usePhone = (): IUsePhone => {
   const Nui = useNuiRequest();
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
-  //const isPhoneReady = useRecoilValue(phoneState.phoneReady);
   const config = useRecoilValue(phoneState.resourceConfig);
 
   const { removeAlerts } = useNotifications();
@@ -34,6 +33,5 @@ export const usePhone = (): IUsePhone => {
     closePhone,
     openPhone,
     isPhoneOpen,
-    //isPhoneReady,
   };
 };

@@ -1,8 +1,9 @@
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
-import { config } from '../server';
+import { config, ESX } from '../server';
 import { PlayerAddData } from './player.interfaces';
 import { playerLogger } from './player.utils';
+import { XPlayer } from 'esx.js/@types/server';
 
 /**
  * Essentially this whole file acts as a controller layer

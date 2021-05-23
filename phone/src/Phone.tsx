@@ -10,7 +10,7 @@ import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
-
+import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMatchService } from './apps/match/hooks/useMatchService';
@@ -47,6 +47,8 @@ function Phone() {
 
   const { addAlert } = useSnackbar();
 
+  const Nui = useNuiRequest();
+
   // Set language from local storage
   // This will only trigger on first mount & settings changes
   useEffect(() => {
@@ -65,6 +67,10 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    Nui.send(PhoneEvents.UI_IS_READY);
+  }, [Nui]);
+
   useKeyboardService();
   usePhoneService();
   useSimcardService();
@@ -81,14 +87,10 @@ function Phone() {
 
   const { modal: callModal } = useCallModal();
 
-  //const { isPhoneReady } = usePhone();
-
   return (
     <div>
       <WindowSnackbar />
       <PhoneWrapper>
-        {/*{isPhoneReady ? (
-          <>*/}
         <NotificationBar />
         <div className="PhoneAppContainer">
           <>
@@ -102,23 +104,6 @@ function Phone() {
           <PhoneSnackbar />
         </div>
         <Navigation />
-        {/*</>
-        ) : (
-          <Box
-            component={Paper}
-            height="100%"
-            width="100%"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Typography paragraph variant="h6">
-              NPWD {t('INITIALIZING')}
-            </Typography>
-            <Typography paragraph>{t('GENERIC_WAIT')}</Typography>
-          </Box>
-        )}*/}
       </PhoneWrapper>
     </div>
   );
