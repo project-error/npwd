@@ -78,6 +78,7 @@ export const AddTweetModal = () => {
 
   // when the user presses escape we should close the modal
   const _handleEscape = (e) => {
+    e.stopPropagation();
     const isEscapeKey = e.key === 'Escape' || e.key === 'Esc';
     if (isEscapeKey) {
       e.preventDefault();
@@ -90,9 +91,9 @@ export const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   useEffect(() => {
-    window.addEventListener('keydown', _handleEscape, true);
-    return () => window.removeEventListener('keydown', _handleEscape);
-  });
+    window.addEventListener('keyup', _handleEscape, true);
+    return () => window.removeEventListener('keyup', _handleEscape, true);
+  }, []);
   if (!ResourceConfig) return null;
 
   const isValidMessage = (message) => {
