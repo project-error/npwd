@@ -44,6 +44,7 @@ interface DatabaseConfig {
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
+  useIdentifierPrefix: boolean;
   KeyTogglePhone: number;
   KeyTakeCall: number;
   PhoneAsItem: boolean;
