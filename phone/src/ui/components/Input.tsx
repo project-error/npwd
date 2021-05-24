@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import MUITextField from '@material-ui/core/TextField';
 import MUIInputBase from '@material-ui/core/InputBase';
 import { useNuiRequest } from 'fivem-nui-react-lib';
@@ -6,7 +6,7 @@ import { PhoneEvents } from '../../../../typings/phone';
 
 const useToggleFocus = () => {
   const Nui = useNuiRequest();
-  return React.useCallback(
+  return useCallback(
     (keepGameFocus: boolean) => {
       Nui.send(PhoneEvents.TOGGLE_KEYS, {
         keepGameFocus,

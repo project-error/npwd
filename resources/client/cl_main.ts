@@ -182,7 +182,7 @@ on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
 RegisterNuiCallbackType(PhoneEvents.TOGGLE_KEYS);
 on(`__cfx_nui:${PhoneEvents.TOGGLE_KEYS}`, async (data: any, cb: Function) => {
   if (isPhoneOpen) {
-		SetNuiFocusKeepInput(data.keepGameFocus);
+    SetNuiFocusKeepInput(data.keepGameFocus);
   }
   cb();
 });
