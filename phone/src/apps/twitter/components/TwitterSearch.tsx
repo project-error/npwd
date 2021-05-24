@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
 import TweetList from './tweet/TweetList';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import SearchButton from './buttons/SearchButton';
 import { useFilteredTweets } from '../hooks/useFilteredTweets';
 import { TwitterEvents } from '../../../../../typings/twitter';
+import { TextField } from '../../../ui/components/Input';
 
 const useStyles = makeStyles({
   root: {

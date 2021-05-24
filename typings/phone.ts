@@ -20,6 +20,7 @@ export enum PhoneEvents {
   SET_TIME = 'npwd:setGameTime',
   SEND_CREDENTIALS = 'npwd:sendCredentials',
   ON_INIT = 'npwd:onInit',
+  TOGGLE_KEYS = 'npwd:toggleAllControls',
 }
 
 // Used to standardize the server response
