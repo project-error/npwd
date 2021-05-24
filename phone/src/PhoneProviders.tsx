@@ -10,7 +10,7 @@ import { SoundProvider } from './os/sound/providers/SoundProvider';
 export const PhoneProviders = () => {
   const currentTheme = usePhoneTheme();
   return (
-    <NuiProvider resource="new-phone-who-dis">
+    <NuiProvider resource="npwd">
       <ThemeProvider theme={currentTheme}>
         <SoundProvider>
           <NotificationsProvider>
