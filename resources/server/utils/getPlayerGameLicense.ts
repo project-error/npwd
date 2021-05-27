@@ -8,10 +8,8 @@ export const getPlayerGameLicense = (src: number): null | string => {
   let playerIdentifier;
   for (const identifier of playerIdentifiers) {
     if (identifier.includes('license:')) {
-      if (config.useIdentifierPrefix)
-        playerIdentifier = identifier;
-      else
-        playerIdentifier = identifier.split(':')[1];
+      if (config.database.useIdentifierPrefix) playerIdentifier = identifier;
+      else playerIdentifier = identifier.split(':')[1];
     }
   }
 

@@ -17,6 +17,7 @@
     "enableMultiChar": false
   },
   "database": {
+    "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier"
   },
