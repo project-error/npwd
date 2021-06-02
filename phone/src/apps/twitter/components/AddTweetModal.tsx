@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 import { useNuiRequest } from 'fivem-nui-react-lib';
@@ -76,23 +76,10 @@ export const AddTweetModal = () => {
     setModalVisible(false);
   };
 
-  // when the user presses escape we should close the modal
-  const _handleEscape = (e) => {
-    const isEscapeKey = e.key === 'Escape' || e.key === 'Esc';
-    if (isEscapeKey) {
-      e.preventDefault();
-      _handleClose();
-    }
-  };
-
   const handleimageChange = useCallback((link) => setLink(link), []);
 
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
-  useEffect(() => {
-    window.addEventListener('keydown', _handleEscape, true);
-    return () => window.removeEventListener('keydown', _handleEscape);
-  });
   if (!ResourceConfig) return null;
 
   const isValidMessage = (message) => {
