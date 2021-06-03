@@ -133,16 +133,6 @@ CREATE TABLE IF NOT EXISTS `npwd_messages_groups` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `npwd_messages_labels` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_identifier` varchar(48) NOT NULL,
-  `label` varchar(60) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `group_id` varchar(512) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
 CREATE TABLE IF NOT EXISTS `npwd_messages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `message` varchar(512) NOT NULL,
