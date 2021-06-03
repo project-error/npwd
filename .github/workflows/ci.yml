@@ -64,3 +64,21 @@ jobs:
         run: yarn test
         env:
           CI: true
+
+  lint:
+    name: Lint Lua scripts
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: resources
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+      - name: Lint
+        uses: GoatG33k/fivem-lua-lint-action@v1
