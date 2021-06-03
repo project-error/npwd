@@ -41,4 +41,4 @@ end)
 
 AddEventHandler('npwd:disableControlActions', function(bool)
   disableKeys = bool
-end) 
+end)
