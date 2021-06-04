@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, Button, Box } from '@material-ui/core';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { MarketplaceEvents } from '../../../../../../typings/marketplace';
+import { MarketplaceActionResp, MarketplaceEvents } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@material-ui/icons/Image';
@@ -10,6 +9,7 @@ import qs from 'qs';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { TextField } from '../../../../ui/components/Input';
+import { fetchNui } from '../../../../utils/fetchNui';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ListingForm = () => {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
@@ -50,12 +49,24 @@ export const ListingForm = () => {
 
   const addListing = () => {
     if (title !== '' && description !== '') {
-      Nui.send(MarketplaceEvents.ADD_LISTING, {
+      fetchNui<MarketplaceActionResp>(MarketplaceEvents.ADD_LISTING, {
         title,
-        url,
         description,
+        url,
+      }).then(({ err, errMsg }) => {
+        if (err) {
+          return addAlert({
+            message: t(errMsg),
+            type: 'error',
+          });
+        }
+
+        addAlert({
+          message: t('APPS_MARKETPLACE_CREATE_LISTING_SUCCESS'),
+          type: 'success',
+        });
+        history.push('/marketplace');
       });
-      history.push('/marketplace');
     } else {
       addAlert({
         message: t('APPS_MARKETPLACE_REQUIRED_FIELDS'),

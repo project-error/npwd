@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const MarketplaceItem = (listing: MarketplaceListing) => {
+export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
   const classes = useStyles();
 
   return (
@@ -73,7 +73,7 @@ export const MarketplaceItem = (listing: MarketplaceListing) => {
           <Typography variant="body1" className={classes.listingContent}>
             {listing.description}
           </Typography>
-          <ListingActions listing={listing} />
+          <ListingActions {...listing} />
         </Paper>
       </div>
     </ListItem>

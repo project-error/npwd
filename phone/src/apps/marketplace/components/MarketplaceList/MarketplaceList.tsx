@@ -1,10 +1,10 @@
 import React from 'react';
 import { List } from '../../../../ui/components/List';
-import { useListing } from '../../hooks/useListing';
+import { useListingValue } from '../../hooks/state';
 import { MarketplaceItem } from './MarketplaceItem';
 
-export const MarketplaceList = () => {
-  const listings = useListing();
+export const MarketplaceList: React.FC = () => {
+  const listings = useListingValue();
 
   return (
     <List>

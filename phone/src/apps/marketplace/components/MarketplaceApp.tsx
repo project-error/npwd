@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
-import { MarketplaceListContainer } from './SelloutList/MarketplaceListContainer';
+import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListContainer';
 import { NavigationBar } from './navigation/NavigationBar';
 import { Switch, Route } from 'react-router-dom';
 import { ListingFormContainer } from './form/ListingFormContainer';

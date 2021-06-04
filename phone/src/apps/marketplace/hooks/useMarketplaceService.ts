@@ -1,24 +1,32 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { selloutState } from './state';
-import { useListing } from './useListing';
-import { useSetRecoilState } from 'recoil';
-import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
-import { MarketplaceEvents } from '../../../../../typings/marketplace';
+import {
+  MarketPlaceBroadcastData,
+  MarketplaceDeleteDTO,
+  MarketplaceEvents,
+  MarketplaceListing,
+} from '../../../../../typings/marketplace';
+import { useSetListings } from './state';
 
 export const useMarketplaceService = () => {
-  const setSellout = useSetRecoilState(selloutState.listing);
-  const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const setListings = useSetListings();
 
-  const handleAddAlert = ({ message, type }: IAlert) => {
-    addAlert({
-      message: t(`APPS_${message}`),
-      type,
-    });
-  };
+  useNuiEvent<MarketPlaceBroadcastData>(
+    'SELLOUT',
+    MarketplaceEvents.BROADCAST_EVENT,
+    ({ type, listing }) => {
+      if (type === 'ADD') {
+        const typeCastListing = listing as MarketplaceListing;
+        return setListings((curState) => [...curState, typeCastListing]);
+      }
 
-  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_ALERT, handleAddAlert);
-  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_LISTING, setSellout);
-  return useListing();
+      if (type === 'DELETE') {
+        const deleteDTO = listing as MarketplaceDeleteDTO;
+        return setListings((currVal) => {
+          const arrayPos = currVal.map((item) => item.id).indexOf(deleteDTO.id);
+
+          return [...currVal].splice(arrayPos);
+        });
+      }
+    },
+  );
 };
