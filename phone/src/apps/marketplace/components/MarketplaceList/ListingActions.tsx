@@ -51,21 +51,21 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   };
 
   const handleReportListing = () => {
-    fetchNui<MarketplaceActionResp>(MarketplaceEvents.DELETE_LISTING, listing).then(
-      ({ err, errMsg }) => {
-        if (err) {
-          return addAlert({
-            message: t(errMsg),
-            type: 'error',
-          });
-        }
-
-        addAlert({
-          message: t('APPS_MARKETPLACE_REPORT_LISTING_SUCCESS'),
-          type: 'success',
+    fetchNui<MarketplaceActionResp>(MarketplaceEvents.REPORT_LISTING, {
+      listingId: listing.id,
+    }).then(({ err, errMsg }) => {
+      if (err) {
+        return addAlert({
+          message: t(errMsg),
+          type: 'error',
         });
-      },
-    );
+      }
+
+      addAlert({
+        message: t('APPS_MARKETPLACE_REPORT_LISTING_SUCCESS'),
+        type: 'success',
+      });
+    });
   };
 
   const handleCall = () => {

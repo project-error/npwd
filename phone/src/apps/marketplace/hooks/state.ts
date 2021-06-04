@@ -1,5 +1,9 @@
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MarketplaceEvents, MarketplaceListing } from '../../../../../typings/marketplace';
+import {
+  MarketplaceEvents,
+  MarketplaceFetchResp,
+  MarketplaceListing,
+} from '../../../../../typings/marketplace';
 import { fetchNui } from '../../../utils/fetchNui';
 
 const defaultData: MarketplaceListing[] = [
@@ -30,7 +34,7 @@ const listingState = atom<MarketplaceListing[]>({
     key: 'defaultListings',
     get: async () => {
       try {
-        return await fetchNui<MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING);
+        return (await fetchNui<MarketplaceFetchResp>(MarketplaceEvents.FETCH_LISTING)).data;
       } catch (e) {
         if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_IN_GAME) {
           return defaultData;

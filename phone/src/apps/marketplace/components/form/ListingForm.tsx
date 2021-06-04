@@ -56,7 +56,7 @@ export const ListingForm = () => {
       }).then(({ err, errMsg }) => {
         if (err) {
           return addAlert({
-            message: t(errMsg),
+            message: t('errMsg'),
             type: 'error',
           });
         }

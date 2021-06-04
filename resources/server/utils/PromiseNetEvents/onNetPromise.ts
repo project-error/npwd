@@ -4,7 +4,7 @@ import { CBSignature, PromiseEventReturnFunc, PromiseRequest } from './promise.t
 
 const netEventLogger = mainLogger.child({ module: 'events' });
 
-export function onNetPromise<T>(eventName: string, cb: CBSignature<T>): void {
+export function onNetPromise<T = undefined>(eventName: string, cb: CBSignature<T>): void {
   onNet(eventName, async (respEventName: string, data: T) => {
     const src = getSource();
 
