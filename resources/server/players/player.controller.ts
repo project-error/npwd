@@ -25,7 +25,11 @@ if (!config.general.enableMultiChar) {
 on('playerDropped', () => {
   const src = getSource();
   // Get identifier for player to remove
-  PlayerService.handleUnloadPlayerEvent(src, true);
+  try {
+    PlayerService.handleUnloadPlayerEvent(src, true);
+  } catch (e) {
+    playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`)
+  }
 });
 
 // Can use this to debug the player table if needed. Disabled by default

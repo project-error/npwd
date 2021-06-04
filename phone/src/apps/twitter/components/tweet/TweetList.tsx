@@ -14,7 +14,7 @@ export function TweetList({ tweets }) {
       setMimimumLoadPassed(true);
     }, MINIMUM_LOAD_TIME);
     return () => window.clearTimeout(timeout);
-  });
+  }, []);
 
   // we add a minimum (but short) load time here so that
   // there isn't a quick flash of loading and immediately

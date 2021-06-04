@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 });
 
 export const TweetMessage = ({ modalVisible, message, handleChange }) => {
-  const textFieldRef = useRef(null);
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
@@ -40,7 +39,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
       // so that we always have the latest line and error message
       // in view
       e.preventDefault();
-      textFieldRef.current.scrollTop = textFieldRef.current.scrollHeight;
+      textFieldInputRef.current.scrollTop = textFieldInputRef.current.scrollHeight;
       handleChange(e.target.value);
     },
     [handleChange],
@@ -77,7 +76,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-      ref={textFieldRef}
+      // ref={textFieldRef}
     />
   );
 };
