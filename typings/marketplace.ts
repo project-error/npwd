@@ -12,6 +12,10 @@ export interface MarketplaceListingBase {
   description: string;
 }
 
+export interface MarketplaceFetchResp extends MarketplaceActionResp {
+  data: MarketplaceListing[];
+}
+
 export interface MarketplaceActionResp {
   err: boolean;
   errMsg?: string;
@@ -33,6 +37,10 @@ export enum MarketplaceEvents {
 }
 
 export interface MarketplaceDeleteDTO {
+  id: number;
+}
+
+export interface MarketplaceReportDTO {
   id: number;
 }
 

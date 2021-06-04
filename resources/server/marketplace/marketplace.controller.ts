@@ -1,42 +1,59 @@
-import { MarketplaceEvents, MarketplaceListing } from '../../../typings/marketplace';
-import { getSource } from '../utils/miscUtils';
+import {
+  MarketplaceEvents,
+  MarketplaceListingBase,
+  MarketplaceReportDTO,
+} from '../../../typings/marketplace';
 import PlayerService from '../players/player.service';
 import { selloutLogger } from './marketplace.utils';
 import MarketplaceService from './marketplace.service';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { MarketplaceDeleteDTO } from '../../../typings/marketplace';
 
-onNet(MarketplaceEvents.FETCH_LISTING, async () => {
-  const src = getSource();
-  MarketplaceService.handleFetchListings(src).catch((e) =>
-    selloutLogger.error(`Error occurred in fetch listing event (${src}), Error: ${e.message}`),
-  );
+onNetPromise(MarketplaceEvents.FETCH_LISTING, async (reqObj, resp) => {
+  MarketplaceService.handleFetchListings(resp, reqObj.source).catch((e) => {
+    selloutLogger.error(
+      `Error occurred in fetch listing event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ error: true, errorMsg: '`Error occurred in fetch listing event' });
+  });
 });
 
-onNet(MarketplaceEvents.ADD_LISTING, async (listing: MarketplaceListing) => {
-  const src = getSource();
-  const Player = PlayerService.getPlayer(src);
-
+onNetPromise<MarketplaceListingBase>(MarketplaceEvents.ADD_LISTING, async (reqObj, resp) => {
+  const player = PlayerService.getPlayer(reqObj.source);
   MarketplaceService.handleAddListing(
-    src,
-    Player.getFirstName(),
-    Player.username,
-    Player.getName(),
-    Player.getPhoneNumber(),
-    listing,
-  ).catch((e) =>
-    selloutLogger.error(`Error occurred in add listing event (${src}), Error: ${e.message}`),
-  );
+    {
+      src: reqObj.source,
+      name: player.getName(),
+      username: player.username,
+      number: player.getPhoneNumber(),
+      listing: reqObj.data,
+      identifier: player.getIdentifier(),
+    },
+    resp,
+  ).catch((e) => {
+    selloutLogger.error(
+      `Error occurred in add listing event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ error: true, errorMsg: 'Error occurred in add listing event' });
+  });
 });
 
-onNet(MarketplaceEvents.DELETE_LISTING, async (listingId: number) => {
-  const src = getSource();
-  MarketplaceService.handleDeleteListing(src, listingId).catch((e) =>
-    selloutLogger.error(`Error occurred in delete listing event (${src}), Error: ${e.message}`),
-  );
+onNetPromise<MarketplaceDeleteDTO>(MarketplaceEvents.DELETE_LISTING, async (reqObj, resp) => {
+  // TODO: Needs a permission check of some sort here eventually
+  MarketplaceService.handleDeleteListing(reqObj, resp).catch((e) => {
+    selloutLogger.error(
+      `Error occurred in delete listing event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ error: true, errorMsg: 'Error occurred in delete listing event' });
+  });
 });
 
-onNet(MarketplaceEvents.REPORT_LISTING, async (listing: MarketplaceListing) => {
-  const src = getSource();
-  MarketplaceService.handleReportListing(src, listing).catch((e) =>
-    selloutLogger.error(`Error occurred in report listing event (${src}), Error: ${e.message}`),
-  );
+onNetPromise<MarketplaceReportDTO>(MarketplaceEvents.REPORT_LISTING, async (reqObj, resp) => {
+  // TODO: Needs a permission check of some sort here eventually
+  MarketplaceService.handleReportListing(reqObj, resp).catch((e) => {
+    selloutLogger.error(
+      `Error occurred in report listing event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ error: true, errorMsg: 'Error occured in report listing event' });
+  });
 });

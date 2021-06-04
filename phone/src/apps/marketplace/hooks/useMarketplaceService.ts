@@ -23,7 +23,6 @@ export const useMarketplaceService = () => {
         const deleteDTO = listing as MarketplaceDeleteDTO;
         return setListings((currVal) => {
           const arrayPos = currVal.map((item) => item.id).indexOf(deleteDTO.id);
-
           return [...currVal].splice(arrayPos);
         });
       }
