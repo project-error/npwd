@@ -1,4 +1,5 @@
 import { uuidv4 } from '../utils/fivem';
+import { ClUtils } from './client';
 
 interface ISettings {
   promiseTimeout: number;
@@ -42,10 +43,9 @@ export default class ClientUtils {
 
       emitNet(eventName, listenEventName, ...args);
 
-      const handleListenEvent = (data: T, err: unknown) => {
+      const handleListenEvent = (data: T) => {
         removeEventListener(listenEventName, handleListenEvent);
         if (hasTimedOut) return;
-        if (err) reject(err);
         resolve(data);
       };
       onNet(listenEventName, handleListenEvent);
@@ -53,9 +53,44 @@ export default class ClientUtils {
   }
 }
 
-export const NuiCallback = (event: string, callback: Function) => {
-  RegisterRawNuiCallback(event, (data: any) => {
-    const parsed = JSON.parse(data?.body);
-    callback(parsed);
+type CallbackFn<T> = (data: T, cb: Function) => void;
+
+/**
+ * A wrapper for handling NUI Callbacks
+ *  @param event - The event name to listen for
+ *  @param callback - The callback function
+ */
+export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) => {
+  RegisterNuiCallbackType(event);
+  on(`__cfx_nui:${event}`, callback);
+};
+
+/**
+ *  Will Register an NUI event listener that will immediately
+ *  proxy to a server side event of the same name and wait
+ *  for the response.
+ *  @param event - The event name to listen for
+ */
+export const RegisterNuiProxy = <T = any>(event: string) => {
+  RegisterNuiCallbackType(event);
+  on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
+    try {
+      const res = await ClUtils.emitNetPromise(event, data);
+      cb(res);
+    } catch (e) {
+      console.error('Error encountered while listening to resp. Error:', e);
+      cb({ err: e });
+    }
   });
+};
+
+type WrapperNetEventCb = <T extends any[]>(...args: T) => void;
+
+/**
+ * Wrapped onNet so we can use generic types on return values from server
+ * @param event - The event name to listen to
+ * @param cb - The callback function to execute
+ */
+export const onNpwdEvent = <T = any>(event: string, cb: WrapperNetEventCb) => {
+  onNet(event, cb);
 };
