@@ -9,6 +9,7 @@ class _TwitterService {
 
   constructor() {
     this.twitterDB = TwitterDB;
+    twitterLogger.debug('Twitter service started');
   }
 
   async handleGetOrCreateProfile(src: number) {
