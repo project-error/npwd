@@ -4,7 +4,6 @@ import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
-import { ContactEvents } from '../../../typings/contact';
 
 class CallsService {
   private callMap: Collection<string, CallHistoryItem>;
@@ -30,7 +29,7 @@ class CallsService {
     return obj;
   }
 
-  async handleInititializeCall(src: number, receivingNumber: string): Promise<void> {
+  async handleInitializeCall(src: number, receivingNumber: string): Promise<void> {
     // Create initial call data
     const transmittingPlayer = PlayerService.getPlayer(src);
     const transmitterNumber = transmittingPlayer.getPhoneNumber();
@@ -172,7 +171,7 @@ class CallsService {
       emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.transmitterSource);
     }
 
-	await this.callsDB.updateCall(currentCall, true, endCallTimeUnix);
+    await this.callsDB.updateCall(currentCall, true, endCallTimeUnix);
 
     // Clear from memory
     this.callMap.delete(transmitterNumber);
