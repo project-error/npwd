@@ -71,6 +71,7 @@
     "APPS_DIALER_ACCEPT_CALL": "Accept",
     "APPS_DIALER_REJECT_CALL": "Reject",
     "APPS_DIALER_END_CALL": "End",
+    "APPS_DIALER_INVALID_NUMBER": "Invalid number",
     "APPS_DIALER_INPUT_PLACEHOLDER": "Enter a number",
     "APPS_DIALER_NO_HISTORY": "You have no call history",
     "APPS_DIALER_NAVBAR_HISTORY": "History",

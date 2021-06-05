@@ -4,6 +4,7 @@ import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
+import { NotesEvents } from '../../../typings/notes';
 
 class CallsService {
   private callMap: Collection<string, CallHistoryItem>;
@@ -40,6 +41,14 @@ class CallsService {
       receivingNumber,
       true,
     );
+
+    if (!receiverIdentifier) {
+      emitNet(CallEvents.SEND_ALERT, src, {
+        message: 'DIALER_INVALID_NUMBER',
+        type: 'error',
+      });
+    }
+
     // Will be null if the player is offline
     const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
 
@@ -60,7 +69,7 @@ class CallsService {
       // TODO: handle offline player
 
       // FIXME: Add actual localization for this.
-      emitNet(CallEvents.ACTION_RESULT, src, {
+      emitNet(CallEvents.SEND_ALERT, src, {
         message: 'Could not reach player',
         type: 'error',
       });
