@@ -59,7 +59,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
-    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} />,
+    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
   },
   {
     id: 'MESSAGES',
@@ -67,7 +67,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
-    Route: () => <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} />,
+    Route: () => (
+      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={true} />
+    ),
   },
   {
     id: 'CONTACTS',
@@ -75,7 +77,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
-    Route: () => <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} />,
+    Route: () => (
+      <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false} />
+    ),
   },
   {
     id: 'CALCULATOR',
@@ -83,7 +87,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: purple[500],
     color: grey[50],
     path: '/calculator',
-    Route: () => <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} />,
+    Route: () => (
+      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} emitOnOpen={false} />
+    ),
   },
   {
     id: 'SETTINGS',
@@ -91,7 +97,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: '#383838',
     color: grey[50],
     path: '/settings',
-    Route: () => <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} />,
+    Route: () => (
+      <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false} />
+    ),
   },
   /* Hiding the bank app while the bank resource gets done */
   /*{
@@ -108,7 +116,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
-    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} />,
+    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />,
   },
   {
     id: 'TWITTER',
@@ -116,7 +124,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} />,
+    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} emitOnOpen={true} />,
   },
   {
     id: 'SELLOUT',
@@ -124,7 +132,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
     path: '/marketplace',
-    Route: () => <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} />,
+    Route: () => (
+      <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={true} />
+    ),
   },
   {
     id: 'NOTES',
@@ -132,7 +142,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
-    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} />,
+    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true} />,
   },
   {
     id: 'CAMERA',
@@ -140,7 +150,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: grey['A400'],
     color: common.white,
     path: '/camera',
-    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} />,
+    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true} />,
   },
 ];
 
@@ -152,6 +162,8 @@ if (process.env.NODE_ENV === 'development') {
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
-    Route: () => <AppRoute id="EXAMPLE" path="/example" component={ExampleApp} />,
+    Route: () => (
+      <AppRoute id="EXAMPLE" path="/example" component={ExampleApp} emitOnOpen={false} />
+    ),
   });
 }
