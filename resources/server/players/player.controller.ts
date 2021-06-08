@@ -45,10 +45,7 @@ on('playerDropped', () => {
 if (!config.general.enableMultiChar) {
   on('onServerResourceStart', async (resource: string) => {
     if (resource === GetCurrentResourceName()) {
-      // Workaround till https://github.com/citizenfx/fivem/pull/682
-      // is merged
-      // @ts-ignore
-      const onlinePlayers: string[] = getPlayers();
+      const onlinePlayers = getPlayers();
       for (const player of onlinePlayers) {
         await PlayerService.handleNewPlayerJoined(parseInt(player));
       }
