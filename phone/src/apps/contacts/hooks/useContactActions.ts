@@ -54,28 +54,30 @@ export const useContactActions = (): UseContactsValue => {
 
   const deleteContact = useCallback(
     (id: number): void => {
-      const newContacts = [...contacts].filter((contact) => contact.id !== id);
-      setContacts(newContacts);
+      setContacts((curContacts) => [...curContacts].filter((contact) => contact.id !== id));
     },
-    [contacts, setContacts],
+    [setContacts],
   );
 
   const addContact = useCallback(
     (contact: Contact) => {
-      const newContactState = [...contacts, contact];
-      setContacts(newContactState);
+      setContacts((curContacts) => [...curContacts, contact]);
     },
-    [contacts, setContacts],
+    [setContacts],
   );
 
   const updateContact = useCallback(
     (updatedContact: Contact) => {
-      const targetContactIndex = contacts.findIndex((contact) => contact.id === updatedContact.id);
-      const newContactsArray = [...contacts];
-      newContactsArray[targetContactIndex] = updatedContact;
-      setContacts(newContactsArray);
+      setContacts((curContacts) => {
+        const targetContactIndex = curContacts.findIndex(
+          (contact) => contact.id === updatedContact.id,
+        );
+        const newContactsArray = [...curContacts];
+        newContactsArray[targetContactIndex] = updatedContact;
+        return newContactsArray;
+      });
     },
-    [contacts, setContacts],
+    [setContacts],
   );
 
   return {
