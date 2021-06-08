@@ -54,8 +54,7 @@ export const useContactActions = (): UseContactsValue => {
 
   const deleteContact = useCallback(
     (id: number): void => {
-      const contactIndex = contacts.findIndex((contact) => contact.id === id);
-      const newContacts = [...contacts].slice(contactIndex);
+      const newContacts = [...contacts].filter((contact) => contact.id !== id);
       setContacts(newContacts);
     },
     [contacts, setContacts],

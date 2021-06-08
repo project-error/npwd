@@ -1,9 +1,8 @@
 import PlayerService from '../players/player.service';
 import { contactsLogger } from './contacts.utils';
 import ContactsDB, { _ContactsDB } from './contacts.db';
-import { Contact, ContactEvents, PreDBContact } from '../../../typings/contact';
-import { FxServerResponse } from '../../../typings/phone';
-import { ContactServerResp } from './contacts.interfaces';
+import { Contact, ContactDeleteDTO, PreDBContact } from '../../../typings/contact';
+import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
 class _ContactService {
   private readonly contactsDB: _ContactsDB;
