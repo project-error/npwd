@@ -7,7 +7,7 @@ import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
-import { useContacts } from '../../../contacts/hooks/useContacts';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { CallEvents, CallHistoryItem } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DialerHistory = ({ calls }) => {
   const Nui = useNuiRequest();
   const { number: myNumber } = useSimcard();
-  const { getDisplayByNumber } = useContacts();
+  const { getDisplayByNumber } = useContactActions();
 
   const classes = useStyles();
 

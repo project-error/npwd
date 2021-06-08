@@ -12,6 +12,13 @@ import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
 import { CallEvents } from '../../../../../typings/call';
+import { Box, CircularProgress } from '@material-ui/core';
+
+const LoadingSpinner: React.FC = () => (
+  <Box>
+    <CircularProgress />
+  </Box>
+);
 
 export const DialerApp = () => {
   const history = useDialHistory();
@@ -27,7 +34,9 @@ export const DialerApp = () => {
               <DialPage />
             </Route>
             <Route exact path="/phone">
-              <DialerHistory calls={history} />
+              <React.Suspense fallback={<LoadingSpinner />}>
+                <DialerHistory calls={history} />
+              </React.Suspense>
             </Route>
             <Route path="/phone/contacts" component={ContactList} />
           </Switch>

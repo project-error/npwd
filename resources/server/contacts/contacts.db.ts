@@ -1,23 +1,29 @@
 import { pool } from '../db';
 import { Contact, PreDBContact } from '../../../typings/contact';
-import { FetchDefaultLimits } from '../utils/ServerConstants';
+import { ResultSetHeader } from 'mysql2';
 
 export class _ContactsDB {
-  async fetchAllContacts(
-    identifier: string,
-    limit = FetchDefaultLimits.CONTACTS_FETCH_LIMIT,
-  ): Promise<Contact[]> {
-    const query =
-      'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
-    const [results] = await pool.query(query, [identifier, limit]);
+  async fetchAllContacts(identifier: string): Promise<Contact[]> {
+    const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
+    const [results] = await pool.query(query, [identifier]);
     return <Contact[]>results;
   }
 
-  async addContact(identifier: string, { display, avatar, number }: PreDBContact): Promise<void> {
+  async addContact(
+    identifier: string,
+    { display, avatar, number }: PreDBContact,
+  ): Promise<Contact> {
     const query =
       'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
 
-    await pool.query(query, [identifier, number, display, avatar]);
+    const [setResult] = await pool.query(query, [identifier, number, display, avatar]);
+
+    return {
+      id: (<ResultSetHeader>setResult).insertId,
+      number,
+      avatar,
+      display,
+    };
   }
 
   async updateContact(contact: Contact, identifier: string): Promise<any> {

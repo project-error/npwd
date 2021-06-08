@@ -10,7 +10,6 @@ import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { useContactsService } from './apps/contacts/hooks/useContactsService';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
@@ -71,7 +70,6 @@ function Phone() {
   useKeyboardService();
   usePhoneService();
   useSimcardService();
-  useContactsService();
   useTwitterService();
   useMatchService();
   useMarketplaceService();

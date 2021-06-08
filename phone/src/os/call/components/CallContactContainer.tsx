@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useContacts } from '../../../apps/contacts/hooks/useContacts';
+import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
 import { useCall } from '../hooks/useCall';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +17,7 @@ const CallContactContainer = () => {
   const { call } = useCall();
   const classes = useStyles();
 
-  const { getDisplayByNumber, getPictureByNumber } = useContacts();
+  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
   const getDisplayOrNumber = () =>
     call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);

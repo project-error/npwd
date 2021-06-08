@@ -4,12 +4,13 @@ import { Box, Button } from '@material-ui/core';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@material-ui/lab';
-import { useContacts } from '../../../contacts/hooks/useContacts';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
 import { MessageEvents } from '../../../../../../typings/messages';
 import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { TextField } from '../../../../ui/components/Input';
+import { useContactsValue } from '../../../contacts/hooks/state';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const Nui = useNuiRequest();
@@ -18,7 +19,8 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const { addAlert } = useSnackbar();
   const [participants, setParticipants] = useState([]);
   const [label, setLabel] = useState('');
-  const { getContactByNumber, contacts } = useContacts();
+  const { getContactByNumber } = useContactActions();
+  const contacts = useContactsValue();
 
   useEffect(() => {
     if (phoneNumber) {

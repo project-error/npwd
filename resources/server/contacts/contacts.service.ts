@@ -13,79 +13,57 @@ class _ContactService {
     contactsLogger.debug('Contacts service started');
   }
 
-  private responseBuilder(src: number, { data, action, error }: ContactServerResp): void {
-    const serverRespObj: FxServerResponse = {
-      app: 'CONTACTS',
-      error,
-      status: data ? 'success' : 'failure',
-      action,
-    };
-
-    emitNet(ContactEvents.MAIN_CLIENT_LISTER, src, serverRespObj);
-  }
-
-  async handleUpdateContact(src: number, contact: Contact): Promise<void> {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleUpdateContact(
+    reqObj: PromiseRequest<Contact>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      await this.contactsDB.updateContact(contact, identifier);
+      await this.contactsDB.updateContact(reqObj.data, identifier);
 
-      emitNet(ContactEvents.UPDATE_CONTACT_SUCCESS, src);
-
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_UPDATE_SUCCESS',
-        type: 'success',
-      });
+      resp({ status: 'ok' });
     } catch (e) {
       contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_UPDATE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
-  async handleDeleteContact(src: number, contactId: number): Promise<void> {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleDeleteContact(
+    reqObj: PromiseRequest<ContactDeleteDTO>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      await this.contactsDB.deleteContact(contactId, identifier);
-      emitNet(ContactEvents.DELETE_CONTACT_SUCCESS, src);
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_DELETE_SUCCESS',
-        type: 'success',
-      });
+      await this.contactsDB.deleteContact(reqObj.data.id, identifier);
+      resp({ status: 'ok' });
     } catch (e) {
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_DELETE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
       contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.message}`);
     }
   }
-  async handleAddContact(src: number, contact: PreDBContact): Promise<void> {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleAddContact(
+    reqObj: PromiseRequest<PreDBContact>,
+    resp: PromiseEventResp<Contact>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      await this.contactsDB.addContact(identifier, contact);
+      const contact = await this.contactsDB.addContact(identifier, reqObj.data);
 
-      emitNet(ContactEvents.ADD_CONTACT_SUCCESS, src);
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_ADD_SUCCESS',
-        type: 'success',
-      });
+      resp({ status: 'ok', data: contact });
     } catch (e) {
       contactsLogger.error(`Error in handleAddContact, ${e.message}`);
-      emitNet(ContactEvents.ACTION_RESULT, src, {
-        message: 'CONTACT_ADD_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
-  async handleFetchContact(src: number, limit?: number): Promise<void> {
-    const identifier = PlayerService.getIdentifier(src);
-
+  async handleFetchContacts(
+    reqObj: PromiseRequest,
+    resp: PromiseEventResp<Contact[]>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      const contacts = await this.contactsDB.fetchAllContacts(identifier, limit);
-
-      emitNet(ContactEvents.SEND_CONTACTS, src, contacts);
+      const contacts = await this.contactsDB.fetchAllContacts(identifier);
+      resp({ status: 'ok', data: contacts });
     } catch (e) {
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
       contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.message}`);
     }
   }

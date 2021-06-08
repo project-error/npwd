@@ -1,32 +1,40 @@
-import { Contact, ContactEvents, PreDBContact } from '../../../typings/contact';
-import { getSource } from '../utils/miscUtils';
+import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
 import ContactService from './contacts.service';
 import { contactsLogger } from './contacts.utils';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNet(ContactEvents.GET_CONTACTS, async (limit: number) => {
-  const src = getSource();
-  ContactService.handleFetchContact(src, limit).catch((e) =>
-    contactsLogger.error(`Error occured in fetch contacts event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<void, Contact[]>(ContactEvents.GET_CONTACTS, (reqObj, resp) => {
+  ContactService.handleFetchContacts(reqObj, resp).catch((e) => {
+    contactsLogger.error(
+      `Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
 });
 
-onNet(ContactEvents.ADD_CONTACT, async (contact: PreDBContact) => {
-  const src = getSource();
-  ContactService.handleAddContact(src, contact).catch((e) =>
-    contactsLogger.error(`Error occured in fetch contacts event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<PreDBContact, Contact>(ContactEvents.ADD_CONTACT, (reqObj, resp) => {
+  ContactService.handleAddContact(reqObj, resp).catch((e) => {
+    contactsLogger.error(
+      `Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
 });
 
-onNet(ContactEvents.UPDATE_CONTACT, async (contact: Contact) => {
-  const src = getSource();
-  ContactService.handleUpdateContact(src, contact).catch((e) =>
-    contactsLogger.error(`Error occured in update contact event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<Contact, void>(ContactEvents.UPDATE_CONTACT, (reqObj, resp) => {
+  ContactService.handleUpdateContact(reqObj, resp).catch((e) => {
+    contactsLogger.error(
+      `Error occured in update contact event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
 });
 
-onNet(ContactEvents.DELETE_CONTACT, async (contactId: number) => {
-  const src = getSource();
-  ContactService.handleDeleteContact(src, contactId).catch((e) =>
-    contactsLogger.error(`Error occured in delete contact event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<ContactDeleteDTO, void>(ContactEvents.DELETE_CONTACT, (reqObj, resp) => {
+  ContactService.handleDeleteContact(reqObj, resp).catch((e) => {
+    contactsLogger.error(
+      `Error occured in delete contact event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
 });
