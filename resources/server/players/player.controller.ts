@@ -24,7 +24,11 @@ if (!config.general.enableMultiChar) {
 on('playerDropped', () => {
   const src = getSource();
   // Get identifier for player to remove
-  PlayerService.handleUnloadPlayerEvent(src, true);
+  try {
+    PlayerService.handleUnloadPlayerEvent(src);
+  } catch (e) {
+    playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`);
+  }
 });
 
 // Can use this to debug the player table if needed. Disabled by default
@@ -41,10 +45,7 @@ on('playerDropped', () => {
 if (!config.general.enableMultiChar) {
   on('onServerResourceStart', async (resource: string) => {
     if (resource === GetCurrentResourceName()) {
-      // Workaround till https://github.com/citizenfx/fivem/pull/682
-      // is merged
-      // @ts-ignore
-      const onlinePlayers: string[] = getPlayers();
+      const onlinePlayers = getPlayers();
       for (const player of onlinePlayers) {
         await PlayerService.handleNewPlayerJoined(parseInt(player));
       }

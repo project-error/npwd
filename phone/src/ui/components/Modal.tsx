@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@material-ui/core';
@@ -35,20 +35,6 @@ const useStyles = makeStyles({
 
 export const Modal = ({ children, visible, handleClose }) => {
   const classes = useStyles();
-
-  // when the user presses escape we should close the modal
-  const _handleEscape = (e) => {
-    e.stopPropagation();
-    const isEscapeKey = e.key === 'Escape' || e.key === 'Esc';
-    if (isEscapeKey) {
-      e.preventDefault();
-      handleClose();
-    }
-  };
-  useEffect(() => {
-    window.addEventListener('keydown', _handleEscape, true);
-    return () => window.removeEventListener('keydown', _handleEscape);
-  });
 
   const showHideClassName = visible ? classes.displayBlock : classes.displayNone;
 

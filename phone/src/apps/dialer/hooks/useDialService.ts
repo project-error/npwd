@@ -18,5 +18,5 @@ export const useDialService = () => {
 
   const setHistory = useSetRecoilState(dialState.history);
   useNuiEvent('DIALER', CallEvents.SET_CALL_HISTORY, setHistory);
-  useNuiEvent('DAILER', CallEvents.SEND_ALERT, handleAddAlert);
+  useNuiEvent('DIALER', CallEvents.SEND_ALERT, handleAddAlert);
 };

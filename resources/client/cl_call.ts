@@ -1,6 +1,7 @@
 import { CallEvents } from '../../typings/call';
 import { CallHistoryItem } from '../../typings/call';
 import { phoneCallStartAnim, phoneCallEndAnim } from './functions';
+import { IAlertProps } from '../../typings/alerts';
 
 const exp = (global as any).exports;
 
@@ -124,6 +125,17 @@ onNet(CallEvents.FETCH_CALLS, (calls: CallHistoryItem[]) => {
       app: 'DIALER',
       method: CallEvents.SET_CALL_HISTORY,
       data: calls,
+    }),
+  );
+});
+
+onNet(CallEvents.SEND_ALERT, (alert: IAlertProps) => {
+  console.log(alert);
+  SendNuiMessage(
+    JSON.stringify({
+      app: 'DIALER',
+      method: CallEvents.SEND_ALERT,
+      data: alert,
     }),
   );
 });

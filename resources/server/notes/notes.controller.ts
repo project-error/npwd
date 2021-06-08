@@ -13,7 +13,7 @@ onNet(NotesEvents.ADD_NOTE, (note: Note) => {
 onNet(NotesEvents.FETCH_ALL_NOTES, async (limit?: number) => {
   const src = getSource();
   NotesService.handleFetchNotes(src, limit).catch((e) =>
-    notesLogger.error(`Error occured in fetch note event (${src}), Error:  ${e.message}`),
+    notesLogger.error(`Error occurred in fetch note event (${src}), Error:  ${e.message}`),
   );
 });
 

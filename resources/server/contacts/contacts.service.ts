@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import { contactsLogger } from './contacts.utils';
 import ContactsDB, { _ContactsDB } from './contacts.db';
 import { Contact, ContactEvents, PreDBContact } from '../../../typings/contact';
-import { ErrorStringKeys, FxServerResponse } from '../../../typings/phone';
+import { FxServerResponse } from '../../../typings/phone';
 import { ContactServerResp } from './contacts.interfaces';
 
 class _ContactService {

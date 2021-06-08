@@ -1,11 +1,11 @@
 import { memo, useEffect } from 'react';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 
-const Component = ({ children, id }) => {
+const Component = ({ children, id, emitOnOpen }) => {
   const Nui = useNuiRequest();
   useEffect(() => {
-    Nui.send(`npwd:app:${id}`);
-  }, [Nui, id]);
+    if (emitOnOpen) Nui.send(`npwd:app:${id}`);
+  }, [Nui, id, emitOnOpen]);
   return children;
 };
 

@@ -5,7 +5,7 @@ import { callLogger } from './calls.utils';
 
 onNet(CallEvents.INITIALIZE_CALL, (receivingNumber: string) => {
   const src = getSource();
-  CallService.handleInititializeCall(src, receivingNumber).catch((e) =>
+  CallService.handleInitializeCall(src, receivingNumber).catch((e) =>
     callLogger.error(
       `Error occured in intialize (${receivingNumber}) call event, Error: ${e.message}`,
     ),
