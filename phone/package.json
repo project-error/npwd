@@ -27,7 +27,7 @@
     "react-i18next": "^11.7.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "recoil": "^0.2.0"
+    "recoil": "^0.3.1"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -43,7 +43,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "cross-env": "^7.0.2",
     "ts-loader": "^8.1.0",
-    "typescript": "3.9.7"
+    "typescript": "^4.3.2"
   },
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
