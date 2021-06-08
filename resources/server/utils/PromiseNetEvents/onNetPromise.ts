@@ -14,10 +14,13 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
       data,
     };
 
+    netEventLogger.silly(`netPromise > ${eventName} > RequestObj`);
+    netEventLogger.silly(promiseRequest);
+
     const promiseResp: PromiseEventResp<P> = (data: ServerPromiseResp<P>) => {
       emitNet(respEventName, src, data);
-      netEventLogger.debug(`Response Promise Event ${respEventName}, Data >>`);
-      netEventLogger.debug(data);
+      netEventLogger.silly(`Response Promise Event ${respEventName}, Data >>`);
+      netEventLogger.silly(data);
     };
 
     // In case the cb is a promise, we use Promise.resolve
@@ -26,7 +29,7 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
         `An error occured for a onNetPromise (${eventName}), Error: ${e.message}`,
       );
 
-      promiseResp({ status: 'error', errorMsg: 'Server error occurred' });
+      promiseResp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
     });
   });
 }
