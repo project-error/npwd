@@ -1,13 +1,13 @@
 import apps from './apps';
 
 export function sendMessage(app: string, method: string, data: any): void {
-  return SendNuiMessage(
-    JSON.stringify({
-      app,
-      method,
-      data,
-    }),
-  );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return SendNUIMessage({
+    app,
+    method,
+    data,
+  });
 }
 
 export function sendTwitterMessage(method: string, data: any = {}): void {

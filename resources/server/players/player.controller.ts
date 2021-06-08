@@ -25,7 +25,7 @@ on('playerDropped', () => {
   const src = getSource();
   // Get identifier for player to remove
   try {
-    PlayerService.handleUnloadPlayerEvent(src, true);
+    PlayerService.handleUnloadPlayerEvent(src);
   } catch (e) {
     playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`);
   }
