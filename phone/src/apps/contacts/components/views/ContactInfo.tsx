@@ -3,13 +3,15 @@ import { Avatar as MuiAvatar, Box, Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useContacts } from '../../hooks/useContacts';
-import { useNuiRequest } from 'fivem-nui-react-lib';
+import { useContactActions } from '../../hooks/useContactActions';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { ContactEvents } from '../../../../../../typings/contact';
+import { Contact, ContactEvents } from '../../../../../../typings/contact';
 import { TextField } from '../../../../ui/components/Input';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -49,11 +51,12 @@ const useStyles = makeStyles({
 });
 
 const ContactsInfoPage = () => {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
 
-  const { getContact } = useContacts();
+  const { getContact, addContact, updateContact, deleteContact } = useContactActions();
+
+  const { addAlert } = useSnackbar();
 
   const { id } = useParams<ContactInfoRouteParams>();
   const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({
@@ -81,12 +84,27 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send(ContactEvents.ADD_CONTACT, {
+    fetchNui<ServerPromiseResp<Contact>>(ContactEvents.ADD_CONTACT, {
       display: name,
       number,
       avatar,
+    }).then((serverResp) => {
+      if (serverResp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_CONTACT_ADD_FAILED'),
+          type: 'error',
+        });
+      }
+
+      // Sanity checks maybe?
+
+      addContact(serverResp.data);
+      addAlert({
+        message: t('APPS_CONTACT_ADD_SUCCESS'),
+        type: 'error',
+      });
+      history.replace(referal);
     });
-    history.replace(referal);
   };
 
   const handleContactSave = () => {
@@ -95,13 +113,33 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send(ContactEvents.UPDATE_CONTACT, {
+    fetchNui<ServerPromiseResp>(ContactEvents.UPDATE_CONTACT, {
       id: contact.id,
       display: name,
       number,
       avatar,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_CONTACT_UPDATE_FAILED'),
+          type: 'error',
+        });
+      }
+
+      updateContact({
+        id: contact.id,
+        display: name,
+        number,
+        avatar,
+      });
+
+      addAlert({
+        message: t('APPS_CONTACT_UPDATE_SUCCESS'),
+        type: 'success',
+      });
+
+      history.goBack();
     });
-    history.goBack();
   };
 
   const handleContactDelete = () => {
@@ -110,8 +148,20 @@ const ContactsInfoPage = () => {
       data: contact,
       level: 2,
     });
-    Nui.send(ContactEvents.DELETE_CONTACT, contact.id);
-    history.goBack();
+    fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id: contact.id }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_CONTACT_DELETE_FAILED'),
+          type: 'error',
+        });
+      }
+      history.goBack();
+      deleteContact(contact.id);
+      addAlert({
+        message: t('APPS_CONTACT_DELETE_SUCCESS'),
+        type: 'error',
+      });
+    });
   };
 
   return (

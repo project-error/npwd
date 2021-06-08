@@ -21,6 +21,10 @@ export interface Contact extends PreDBContact {
   id: number;
 }
 
+export interface ContactDeleteDTO {
+  id: number;
+}
+
 export enum ContactEvents {
   SEND_CONTACTS = 'npwd:sendContacts',
   GET_CONTACTS = 'npwd:getContacts',

@@ -21,7 +21,7 @@ import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
-import { useContacts } from '../../../contacts/hooks/useContacts';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { MessageEvents } from '../../../../../../typings/messages';
 
@@ -56,7 +56,7 @@ export const MessageModal = () => {
   const { t } = useTranslation();
   const { groupId } = useParams<{ groupId: string }>();
   const { messages, setMessages, activeMessageGroup, setActiveMessageGroup } = useMessages();
-  const { getContactByNumber, getDisplayByNumber } = useContacts();
+  const { getContactByNumber, getDisplayByNumber } = useContactActions();
 
   const [isLoaded, setLoaded] = useState(false);
 
