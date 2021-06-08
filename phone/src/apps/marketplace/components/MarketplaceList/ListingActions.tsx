@@ -1,11 +1,7 @@
 import { Box, Tooltip, Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
-import {
-  MarketplaceActionResp,
-  MarketplaceEvents,
-  MarketplaceListing,
-} from '../../../../../../typings/marketplace';
+import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReportIcon from '@material-ui/icons/Report';
@@ -17,6 +13,7 @@ import { useHistory } from 'react-router';
 import { CallEvents } from '../../../../../../typings/call';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { ServerPromiseResp } from '../../../../../../typings/common';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -33,12 +30,12 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   const { addAlert } = useSnackbar();
 
   const handleDeleteListing = () => {
-    fetchNui<MarketplaceActionResp>(MarketplaceEvents.DELETE_LISTING, {
+    fetchNui<ServerPromiseResp>(MarketplaceEvents.DELETE_LISTING, {
       id: listing.id,
-    }).then(({ err, errMsg }) => {
-      if (err) {
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
         return addAlert({
-          message: t(errMsg),
+          message: t('APPS_MARKETPLACE_DELETE_LISTING_FAILED'),
           type: 'error',
         });
       }
@@ -51,12 +48,12 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   };
 
   const handleReportListing = () => {
-    fetchNui<MarketplaceActionResp>(MarketplaceEvents.REPORT_LISTING, {
+    fetchNui<ServerPromiseResp>(MarketplaceEvents.REPORT_LISTING, {
       listingId: listing.id,
-    }).then(({ err, errMsg }) => {
-      if (err) {
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
         return addAlert({
-          message: t(errMsg),
+          message: t('APPS_MARKETPLACE_REPORT_LISTING_FAILED'),
           type: 'error',
         });
       }

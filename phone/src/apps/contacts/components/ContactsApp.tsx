@@ -3,13 +3,15 @@ import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { Route } from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
-import { ContactEvents } from '../../../../../typings/contact';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router';
+import { Fab, Theme } from '@material-ui/core';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const useStyles = makeStyles((theme: Theme) => ({
   absolute: {

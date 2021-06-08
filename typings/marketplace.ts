@@ -33,7 +33,12 @@ export enum MarketplaceEvents {
   REPORT_LISTING_SUCCESS = 'npwd:reportListingSuccess',
   REPORT_LISTING_SUCESS = 'npwd:reportListingFailed',
   SEND_ALERT = 'nwpd:sendListingAlert',
-  BROADCAST_EVENT = 'npwd:sendMarketplaceBroadcast',
+  BROADCAST_ADD = 'npwd:sendMarketplaceBroadcastAdd',
+  BROADCAST_DELETE = 'npwd:sendMarketplaceBroadcastDelete',
+}
+
+export interface MarketplaceBroadcastAddDTO {
+  listing: MarketplaceListing;
 }
 
 export interface MarketplaceDeleteDTO {
@@ -43,13 +48,3 @@ export interface MarketplaceDeleteDTO {
 export interface MarketplaceReportDTO {
   id: number;
 }
-
-export type MarketPlaceBroadcastData =
-  | {
-      type: 'ADD';
-      listing: MarketplaceListing;
-    }
-  | {
-      type: 'DELETE';
-      listing: MarketplaceDeleteDTO;
-    };

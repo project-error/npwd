@@ -1,31 +1,31 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import {
-  MarketPlaceBroadcastData,
+  MarketplaceBroadcastAddDTO,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
-  MarketplaceListing,
 } from '../../../../../typings/marketplace';
-import { useSetListings } from './state';
+import { useMarketplaceActions } from './useMarketplaceActions';
 
 export const useMarketplaceService = () => {
-  const setListings = useSetListings();
+  const { addListing, deleteListing } = useMarketplaceActions();
 
-  useNuiEvent<MarketPlaceBroadcastData>(
-    'SELLOUT',
-    MarketplaceEvents.BROADCAST_EVENT,
-    ({ type, listing }) => {
-      if (type === 'ADD') {
-        const typeCastListing = listing as MarketplaceListing;
-        return setListings((curState) => [...curState, typeCastListing]);
-      }
+  const addListingHandler = (resp: MarketplaceBroadcastAddDTO) => {
+    addListing(resp.listing);
+  };
 
-      if (type === 'DELETE') {
-        const deleteDTO = listing as MarketplaceDeleteDTO;
-        return setListings((currVal) => {
-          const arrayPos = currVal.map((item) => item.id).indexOf(deleteDTO.id);
-          return [...currVal].splice(arrayPos);
-        });
-      }
-    },
+  const deleteListingHandler = (listing: MarketplaceDeleteDTO) => {
+    deleteListing(listing.id);
+  };
+
+  useNuiEvent<MarketplaceBroadcastAddDTO>(
+    'MARKETPLACE',
+    MarketplaceEvents.BROADCAST_ADD,
+    addListingHandler,
+  );
+
+  useNuiEvent<MarketplaceDeleteDTO>(
+    'MARKETPLACE',
+    MarketplaceEvents.BROADCAST_DELETE,
+    deleteListingHandler,
   );
 };

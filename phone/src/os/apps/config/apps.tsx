@@ -127,13 +127,18 @@ export const APPS: IAppConfig[] = [
     Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} emitOnOpen={true} />,
   },
   {
-    id: 'SELLOUT',
-    nameLocale: 'APPS_SELLOUT',
+    id: 'MARKETPLACE',
+    nameLocale: 'APPS_MARKETPLACE',
     backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
     color: SELLOUT_APP_ICON_COLOR,
     path: '/marketplace',
     Route: () => (
-      <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={true} />
+      <AppRoute
+        id="MARKETPLACE"
+        path="/marketplace"
+        component={MarketplaceApp}
+        emitOnOpen={false}
+      />
     ),
   },
   {

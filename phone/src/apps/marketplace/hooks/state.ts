@@ -1,10 +1,11 @@
-import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   MarketplaceEvents,
   MarketplaceFetchResp,
   MarketplaceListing,
 } from '../../../../../typings/marketplace';
 import { fetchNui } from '../../../utils/fetchNui';
+import { isEnvBrowser } from '../../../utils/misc';
 
 const defaultData: MarketplaceListing[] = [
   {
@@ -36,9 +37,11 @@ const listingState = atom<MarketplaceListing[]>({
       try {
         return (await fetchNui<MarketplaceFetchResp>(MarketplaceEvents.FETCH_LISTING)).data;
       } catch (e) {
-        if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_IN_GAME) {
+        if (isEnvBrowser()) {
           return defaultData;
         }
+        console.error(e);
+        return [];
       }
     },
   }),
@@ -46,3 +49,4 @@ const listingState = atom<MarketplaceListing[]>({
 
 export const useListingValue = () => useRecoilValue(listingState);
 export const useSetListings = () => useSetRecoilState(listingState);
+export const useListings = () => useRecoilState(listingState);

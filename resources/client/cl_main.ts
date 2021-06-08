@@ -143,12 +143,6 @@ on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_LISTINGS);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_LISTINGS}`, (data: any, cb: Function) => {
-  emitNet(MarketplaceEvents.FETCH_LISTING);
-  cb();
-});
-
 RegisterNuiCallbackType(PhoneEvents.OPEN_APP_NOTES);
 on(`__cfx_nui:${PhoneEvents.OPEN_APP_NOTES}`, (data: any, cb: Function) => {
   emitNet(NotesEvents.FETCH_ALL_NOTES);
