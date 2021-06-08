@@ -11,8 +11,18 @@ import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
 import { ContactEvents } from '../../../../../typings/contact';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  absolute: {
+    position: 'absolute',
+    right: theme.spacing(3),
+    bottom: theme.spacing(2),
+  },
+}));
+
 export const ContactsApp = () => {
   const contacts = useApp('CONTACTS');
+  const history = useHistory();
+  const classes = useStyles();
 
   return (
     <ContactsThemeProvider>
@@ -24,6 +34,13 @@ export const ContactsApp = () => {
             <Route path="/contacts/:id" exact component={ContactsInfoPage} />
           </React.Suspense>
         </AppContent>
+        <Fab
+          color="primary"
+          onClick={() => history.push('/contacts/-1')}
+          className={classes.absolute}
+        >
+          <PersonAddIcon />
+        </Fab>
       </AppWrapper>
     </ContactsThemeProvider>
   );

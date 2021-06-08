@@ -30,10 +30,10 @@ export const NotesApp = () => {
         <NoteModal />
         <AppContent>
           <Route path="/notes" component={NoteList} />
-          <Fab className={classes.absolute} onClick={onClickCreate} color="primary">
-            <AddIcon />
-          </Fab>
         </AppContent>
+        <Fab className={classes.absolute} onClick={onClickCreate} color="primary">
+          <AddIcon />
+        </Fab>
       </AppWrapper>
     </NotesThemeProvider>
   );
