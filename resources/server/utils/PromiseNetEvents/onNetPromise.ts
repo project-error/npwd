@@ -1,10 +1,11 @@
 import { getSource } from '../miscUtils';
 import { mainLogger } from '../../sv_logger';
-import { CBSignature, PromiseEventReturnFunc, PromiseRequest } from './promise.types';
+import { CBSignature, PromiseEventResp, PromiseRequest } from './promise.types';
+import { ServerPromiseResp } from '../../../../typings/common';
 
 const netEventLogger = mainLogger.child({ module: 'events' });
 
-export function onNetPromise<T>(eventName: string, cb: CBSignature<T>): void {
+export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignature<T, P>): void {
   onNet(eventName, async (respEventName: string, data: T) => {
     const src = getSource();
 
@@ -13,7 +14,7 @@ export function onNetPromise<T>(eventName: string, cb: CBSignature<T>): void {
       data,
     };
 
-    const promiseResp: PromiseEventReturnFunc = (data: unknown) => {
+    const promiseResp: PromiseEventResp<P> = (data: ServerPromiseResp<P>) => {
       emitNet(respEventName, src, data);
       netEventLogger.debug(`Response Promise Event ${respEventName}, Data >>`);
       netEventLogger.debug(data);
@@ -25,7 +26,7 @@ export function onNetPromise<T>(eventName: string, cb: CBSignature<T>): void {
         `An error occured for a onNetPromise (${eventName}), Error: ${e.message}`,
       );
 
-      promiseResp({ err: true, errMsg: 'Server error occurred' });
+      promiseResp({ status: 'error', errorMsg: 'Server error occurred' });
     });
   });
 }
