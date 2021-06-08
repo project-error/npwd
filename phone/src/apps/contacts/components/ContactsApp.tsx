@@ -10,9 +10,23 @@ import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
 import { ContactEvents } from '../../../../../typings/contact';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Fab from '@material-ui/core/Fab';
+import { useHistory } from 'react-router';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  absolute: {
+    position: 'absolute',
+    right: theme.spacing(3),
+    bottom: theme.spacing(2),
+  },
+}));
 
 export const ContactsApp = () => {
   const contacts = useApp('CONTACTS');
+  const history = useHistory();
+  const classes = useStyles();
 
   return (
     <ContactsThemeProvider>
@@ -22,6 +36,13 @@ export const ContactsApp = () => {
           <Route path="/contacts/" exact component={ContactPage} />
           <Route path="/contacts/:id" exact component={ContactsInfoPage} />
         </AppContent>
+        <Fab
+          color="primary"
+          onClick={() => history.push('/contacts/-1')}
+          className={classes.absolute}
+        >
+          <PersonAddIcon />
+        </Fab>
       </AppWrapper>
     </ContactsThemeProvider>
   );
