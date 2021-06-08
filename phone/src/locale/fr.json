@@ -20,10 +20,10 @@
         "RESET_SETTINGS": "Réinitialiser",
         "RESET_SETTINGS_DESC": "Cette action effacera toutes les données stockées",
         "CUSTOM_WALLPAPER": {
-        "DIALOG_TITLE": "Fond personnalisé",
-        "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
-        "DIALOG_PLACEHOLDER": "Lien de l'image",
-        "DIALOG_ERROR": "Image ou lien invalide"
+          "DIALOG_TITLE": "Fond personnalisé",
+          "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
+          "DIALOG_PLACEHOLDER": "Lien de l'image",
+          "DIALOG_ERROR": "Image ou lien invalide"
         }
       },
       "MESSAGES": {
@@ -59,7 +59,7 @@
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "App test",
     "APPS_TWITTER": "Twitter",
-    "APPS_SELLOUT": "Marché",
+    "APPS_MARKETPLACE": "Marché",
     "APPS_CAMERA": "Caméra",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Appel entrant",
@@ -73,7 +73,7 @@
     "APPS_DIALER_NO_HISTORY": "Aucun historique d'appel",
     "APPS_DIALER_NAVBAR_HISTORY": "Historique",
     "APPS_DIALER_NAVBAR_DIAL": "Composer",
-    "APPS_DIALER_NAVBAR_CONTACTS": "Contacts",    
+    "APPS_DIALER_NAVBAR_CONTACTS": "Contacts",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
@@ -110,7 +110,7 @@
     "APPS_TWITTER_NEW_BROADCAST": "Nouveau tweet de @{{ profile_name }}!",
     "APPS_TWITTER_NEW_RETWEET_BROADCAST": "@{{ profile_name }} a rewteeté quelqu'un!",
     "APPS_TWITTER_UNREAD_MESSAGES": "Vous avez {{ count }} nouveaux tweets dans votre fil d'actualité!",
-    
+
     "APPS_MATCH": "Matchmaker",
     "APPS_MATCH_LIKED": "LIKE",
     "APPS_MATCH_NOPE": "NOPE",
@@ -208,7 +208,7 @@
     "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
     "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Volume des notifications",
     "APPS_SETTING_STREAMER_MODE_DESC": "Masquer les images avant de les montrer",
-    
+
     "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
     "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
     "APPS_MARKETPLACE_DELETE_LISTING_SUCCESS": "Liste supprimée avec succès",

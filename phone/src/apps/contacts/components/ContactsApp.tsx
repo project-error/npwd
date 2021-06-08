@@ -3,7 +3,6 @@ import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { Route } from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';

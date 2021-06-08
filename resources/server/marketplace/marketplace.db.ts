@@ -1,5 +1,6 @@
 import { pool } from '../db';
-import { MarketplaceListing } from '../../../typings/marketplace';
+import { MarketplaceListing, MarketplaceListingBase } from '../../../typings/marketplace';
+import { ResultSetHeader } from 'mysql2';
 
 export class _MarketplaceDB {
   async addListing(
@@ -7,12 +8,12 @@ export class _MarketplaceDB {
     username: string,
     name: string,
     number: any,
-    listing: MarketplaceListing,
-  ): Promise<void> {
+    listing: MarketplaceListingBase,
+  ): Promise<number> {
     const query =
       'INSERT INTO npwd_marketplace_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-    await pool.query(query, [
+    const [result] = await pool.query(query, [
       identifier,
       username,
       name,
@@ -21,6 +22,10 @@ export class _MarketplaceDB {
       listing.url,
       listing.description,
     ]);
+
+    const resultCast = result as ResultSetHeader;
+
+    return resultCast.insertId;
   }
 
   async fetchListings(): Promise<MarketplaceListing[]> {

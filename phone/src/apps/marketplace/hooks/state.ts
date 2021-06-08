@@ -1,9 +1,52 @@
-import { atom } from 'recoil';
-import { MarketplaceListing } from '../../../../../typings/marketplace';
+import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  MarketplaceEvents,
+  MarketplaceFetchResp,
+  MarketplaceListing,
+} from '../../../../../typings/marketplace';
+import { fetchNui } from '../../../utils/fetchNui';
+import { isEnvBrowser } from '../../../utils/misc';
 
-export const selloutState = {
-  listing: atom<MarketplaceListing[]>({
-    key: 'listing',
-    default: [],
+const defaultData: MarketplaceListing[] = [
+  {
+    id: 1,
+    name: 'Some guy',
+    number: '111-1134',
+    username: 'Taso',
+    title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
+    description:
+      'skldfsdEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+    url: 'https://beta.iodine.gg/706Y3.jpeg',
+  },
+  {
+    id: 2,
+    name: 'Some other dude',
+    number: '666-6666',
+    username: 'Taso',
+    title: 'Material',
+    description: 'Selling my wife',
+    url: '',
+  },
+];
+
+const listingState = atom<MarketplaceListing[]>({
+  key: 'listings',
+  default: selector({
+    key: 'defaultListings',
+    get: async () => {
+      try {
+        return (await fetchNui<MarketplaceFetchResp>(MarketplaceEvents.FETCH_LISTING)).data;
+      } catch (e) {
+        if (isEnvBrowser()) {
+          return defaultData;
+        }
+        console.error(e);
+        return [];
+      }
+    },
   }),
-};
+});
+
+export const useListingValue = () => useRecoilValue(listingState);
+export const useSetListings = () => useSetRecoilState(listingState);
+export const useListings = () => useRecoilState(listingState);

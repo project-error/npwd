@@ -11,6 +11,9 @@ import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { CallEvents } from '../../../../../../typings/call';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { ServerPromiseResp } from '../../../../../../typings/common';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -18,21 +21,48 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => {
+export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const { number: myNumber } = useSimcard();
   const { t } = useTranslation();
   const history = useHistory();
+  const { addAlert } = useSnackbar();
 
   const handleDeleteListing = () => {
-    Nui.send(MarketplaceEvents.DELETE_LISTING, {
+    fetchNui<ServerPromiseResp>(MarketplaceEvents.DELETE_LISTING, {
       id: listing.id,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_MARKETPLACE_DELETE_LISTING_FAILED'),
+          type: 'error',
+        });
+      }
+
+      addAlert({
+        message: t('APPS_MARKETPLACE_DELETE_LISTING_SUCCESS'),
+        type: 'success',
+      });
     });
   };
 
   const handleReportListing = () => {
-    Nui.send(MarketplaceEvents.REPORT_LISTING, listing);
+    fetchNui<ServerPromiseResp>(MarketplaceEvents.REPORT_LISTING, {
+      listingId: listing.id,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_MARKETPLACE_REPORT_LISTING_FAILED'),
+          type: 'error',
+        });
+      }
+
+      addAlert({
+        message: t('APPS_MARKETPLACE_REPORT_LISTING_SUCCESS'),
+        type: 'success',
+      });
+    });
   };
 
   const handleCall = () => {
@@ -46,9 +76,9 @@ export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => 
   };
 
   return (
-    <Box flex justifyContent="space-between" alignItems="center">
+    <Box justifyContent="space-between" alignItems="center">
       <div style={{ float: 'left' }}>
-        {listing.number !== myNumber ? (
+        {listing.number !== myNumber && (
           <>
             <Tooltip title={t('GENERIC_MESSAGE')}>
               <Button onClick={handleMessage}>
@@ -61,7 +91,7 @@ export const ListingActions = ({ listing }: { listing: MarketplaceListing }) => 
               </Button>
             </Tooltip>
           </>
-        ) : null}
+        )}
       </div>
 
       <div style={{ float: 'right' }}>

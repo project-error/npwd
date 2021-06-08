@@ -1,24 +1,31 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { selloutState } from './state';
-import { useListing } from './useListing';
-import { useSetRecoilState } from 'recoil';
-import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
-import { MarketplaceEvents } from '../../../../../typings/marketplace';
+import {
+  MarketplaceBroadcastAddDTO,
+  MarketplaceDeleteDTO,
+  MarketplaceEvents,
+} from '../../../../../typings/marketplace';
+import { useMarketplaceActions } from './useMarketplaceActions';
 
 export const useMarketplaceService = () => {
-  const setSellout = useSetRecoilState(selloutState.listing);
-  const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const { addListing, deleteListing } = useMarketplaceActions();
 
-  const handleAddAlert = ({ message, type }: IAlert) => {
-    addAlert({
-      message: t(`APPS_${message}`),
-      type,
-    });
+  const addListingHandler = (resp: MarketplaceBroadcastAddDTO) => {
+    addListing(resp.listing);
   };
 
-  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_ALERT, handleAddAlert);
-  useNuiEvent('SELLOUT', MarketplaceEvents.SEND_LISTING, setSellout);
-  return useListing();
+  const deleteListingHandler = (listing: MarketplaceDeleteDTO) => {
+    deleteListing(listing.id);
+  };
+
+  useNuiEvent<MarketplaceBroadcastAddDTO>(
+    'MARKETPLACE',
+    MarketplaceEvents.BROADCAST_ADD,
+    addListingHandler,
+  );
+
+  useNuiEvent<MarketplaceDeleteDTO>(
+    'MARKETPLACE',
+    MarketplaceEvents.BROADCAST_DELETE,
+    deleteListingHandler,
+  );
 };
