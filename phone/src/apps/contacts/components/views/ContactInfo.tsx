@@ -101,7 +101,7 @@ const ContactsInfoPage = () => {
       addContact(serverResp.data);
       addAlert({
         message: t('APPS_CONTACT_ADD_SUCCESS'),
-        type: 'error',
+        type: 'success',
       });
       history.replace(referal);
     });
