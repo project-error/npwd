@@ -12,7 +12,7 @@ import { AppTitle } from '../../../ui/components/AppTitle';
 import { useApp } from '../../../os/apps/hooks/useApps';
 
 export const MarketplaceApp = () => {
-  const marketplaceApp = useApp('SELLOUT');
+  const marketplaceApp = useApp('MARKETPLACE');
 
   return (
     <MarketplaceThemeProvider>
