@@ -96,7 +96,6 @@ const handleOpenNormalAnim = async (playerPed: number): Promise<void> => {
 
 const handleCloseVehicleAnim = async (playerPed: number): Promise<void> => {
   const DICT = 'anim@cellphone@in_car@ps';
-  const ANIM = 'cellphone_text_out';
   StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); // Do both incase they were on the phone.
   StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
   removePhoneProp();

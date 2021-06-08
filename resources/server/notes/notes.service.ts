@@ -1,4 +1,4 @@
-import { Note, NotesEvents, NoteServerResponse } from '../../../typings/notes';
+import { Note, NotesEvents } from '../../../typings/notes';
 import PlayerService from '../players/player.service';
 import NotesDB, { _NotesDB } from './notes.db';
 import { notesLogger } from './notes.utils';
@@ -65,9 +65,9 @@ class _NotesService {
     }
   }
 
-  async handleShareNote(src: number) {
-    // To implement someday
-  }
+  // async handleShareNote(src: number) {
+  //   // To implement someday
+  // }
 
   async handleDeleteNote(src: number, noteId: number) {
     const identifier = PlayerService.getIdentifier(src);

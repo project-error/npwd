@@ -4,7 +4,6 @@ import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
-import { NotesEvents } from '../../../typings/notes';
 
 class CallsService {
   private callMap: Collection<string, CallHistoryItem>;

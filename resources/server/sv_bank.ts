@@ -90,7 +90,7 @@ onNet(BankEvents.FETCH_TRANSACTIONS, async () => {
 
 onNet(BankEvents.ADD_TRANSFER, async (transfer: Transfer) => {
   const _source = getSource();
-  const xTarget = ESX.GetPlayerFromId(transfer.targetID);
+  // const xTarget = ESX.GetPlayerFromId(transfer.targetID);
   try {
     const _identifier = PlayerService.getIdentifier(_source);
     await addTransfer(_identifier, transfer);

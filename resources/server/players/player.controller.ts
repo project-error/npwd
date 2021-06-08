@@ -1,9 +1,8 @@
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
-import { config, ESX } from '../server';
+import { config } from '../server';
 import { PlayerAddData } from './player.interfaces';
 import { playerLogger } from './player.utils';
-import { XPlayer } from 'esx.js/@types/server';
 
 /**
  * Essentially this whole file acts as a controller layer
@@ -28,7 +27,7 @@ on('playerDropped', () => {
   try {
     PlayerService.handleUnloadPlayerEvent(src, true);
   } catch (e) {
-    playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`)
+    playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`);
   }
 });
 

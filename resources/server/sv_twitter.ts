@@ -11,10 +11,6 @@ import { generateProfileName } from './utils/generateProfileName';
 
 const twitterLogger = mainLogger.child({ module: 'twitter' });
 
-interface ProfileName {
-  profile_name: string;
-}
-
 const formatTweets = (profileId: number) => (tweet: Tweet): Tweet => ({
   ...tweet,
   isMine: tweet.profile_id === profileId,

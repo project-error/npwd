@@ -188,7 +188,8 @@ class _PlayerService {
    * @param fetch Whether or not to query the database if a given player is offline
    **/
   async getIdentifierByPhoneNumber(phoneNumber: string, fetch?: boolean): Promise<string | null> {
-    for (const [source, player] of this.playersBySource) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_, player] of this.playersBySource) {
       if (player.getPhoneNumber() === phoneNumber) return player.getIdentifier();
     }
     // Whether we fetch from database if not found in online players
@@ -200,9 +201,8 @@ class _PlayerService {
   /**
    * Unload event handler
    * @param src - Source of player being unloaded
-   * @param playerDropped - Whether the player disconnected or is being unloaded for multichar
    **/
-  handleUnloadPlayerEvent(src: number, playerDropped?: boolean) {
+  handleUnloadPlayerEvent(src: number) {
     this.deletePlayerFromMaps(src);
 
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);

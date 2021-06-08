@@ -7,7 +7,7 @@ import { clean } from './miscUtils';
  */
 export async function generateProfileName(
   identifier: string,
-  delimiter: string = '_',
+  delimiter = '_',
 ): Promise<string | null> {
   const player = PlayerService.getPlayerFromIdentifier(identifier);
 

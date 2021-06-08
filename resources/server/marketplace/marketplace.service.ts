@@ -3,7 +3,6 @@ import { selloutLogger } from './marketplace.utils';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import { MarketplaceEvents, MarketplaceListing } from '../../../typings/marketplace';
 import { notesLogger } from '../notes/notes.utils';
-import { listenerCount } from 'cluster';
 import { reportListingToDiscord } from '../discord';
 
 class _MarketplaceService {

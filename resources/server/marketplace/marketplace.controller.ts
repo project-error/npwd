@@ -1,7 +1,6 @@
 import { MarketplaceEvents, MarketplaceListing } from '../../../typings/marketplace';
 import { getSource } from '../utils/miscUtils';
 import PlayerService from '../players/player.service';
-import { reportListingToDiscord } from '../discord';
 import { selloutLogger } from './marketplace.utils';
 import MarketplaceService from './marketplace.service';
 

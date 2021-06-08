@@ -71,7 +71,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
  *  for the response.
  *  @param event - The event name to listen for
  */
-export const RegisterNuiProxy = <T = any>(event: string) => {
+export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
     try {
@@ -91,6 +91,6 @@ type WrapperNetEventCb = <T extends any[]>(...args: T) => void;
  * @param event - The event name to listen to
  * @param cb - The callback function to execute
  */
-export const onNpwdEvent = <T = any>(event: string, cb: WrapperNetEventCb) => {
+export const onNpwdEvent = (event: string, cb: WrapperNetEventCb) => {
   onNet(event, cb);
 };
