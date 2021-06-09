@@ -7,7 +7,6 @@
   "RunRate": 10,
   "DestroyChance": 100,
   "DestroyPhoneReCheck": 3,
-  "useIdentifierPrefix": false,
   "notificationPosition": {
     "horizontal": "right",
     "vertical": "top"
