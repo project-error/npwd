@@ -104,7 +104,7 @@ export class _MessagesDB {
    * @param groupId - groupId this label is attached to
    * @param label - the label itself
    */
-  async createLabel(userIdentifier: string, groupId: string, label: string): Promise<void> {
+  async setLabel(userIdentifier: string, groupId: string, label: string): Promise<void> {
     const query = `
     UPDATE
       npwd_messages_groups

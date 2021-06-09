@@ -183,7 +183,7 @@ export async function createMessageGroupsFromPhoneNumbers(
 
   // we allow users to attach labels to name their group chats
   if (groupLabel) {
-    queryPromises.push(MessagesDB.createLabel(userIdentifier, groupId, groupLabel));
+    queryPromises.push(MessagesDB.setLabel(userIdentifier, groupId, groupLabel));
   }
 
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
