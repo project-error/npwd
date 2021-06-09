@@ -1,8 +1,9 @@
-import { atom, DefaultValue, useRecoilState, useResetRecoilState } from 'recoil';
+import { atom, DefaultValue, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '../../../../../typings/twitter';
 import config from '../../../config/default.json';
 import { SettingOption } from '../../../ui/hooks/useContextMenu';
 import { Schema, Validator } from 'jsonschema';
+import { IconSetObject } from '../../../os/apps/hooks/useApps';
 
 const NPWD_STORAGE_KEY = 'npwd_settings';
 
@@ -18,9 +19,33 @@ const settingOptionSchema: Schema = {
   required: true,
 };
 
+const iconSetValueSchema: Schema = {
+  id: '/IconSetValue',
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+    custom: { type: 'boolean' },
+  },
+  required: true,
+};
+
+const settingOptionIconSet: Schema = {
+  id: '/SettingOptionIconSet',
+  type: 'object',
+  properties: {
+    label: { type: 'string' },
+    val: { $ref: '/IconSetValue' },
+  },
+  required: true,
+};
+
+v.addSchema(iconSetValueSchema, '/IconSetValue');
+v.addSchema(settingOptionIconSet, '/SettingOptionIconSet');
+
 const settingsSchema: Schema = {
   type: 'object',
   properties: {
+    iconSet: { $ref: '/SettingOptionIconSet' },
     language: { $ref: '/SettingOption' },
     wallpaper: { $ref: '/SettingOption' },
     frame: { $ref: '/SettingOption' },
@@ -62,6 +87,7 @@ export function isSettingsSchemaValid(): boolean {
 
 export interface IPhoneSettings {
   language: SettingOption;
+  iconSet: SettingOption<IconSetObject>;
   wallpaper: SettingOption;
   frame: SettingOption;
   theme: SettingOption;
@@ -115,13 +141,10 @@ const customWallpaperState = atom({
   default: false,
 });
 
-export const useSettings = () => {
-  return useRecoilState(settingsState);
-};
+export const useSettings = () => useRecoilState(settingsState);
+export const useSettingsValue = () => useRecoilValue(settingsState);
 
-export const useResetSettings = () => {
-  return useResetRecoilState(settingsState);
-};
+export const useResetSettings = () => useResetRecoilState(settingsState);
 
 export const useCustomWallpaperModal = () => {
   const [customWallpaperModal, setCustomWallpaperModal] = useRecoilState(customWallpaperState);

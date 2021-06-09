@@ -4,27 +4,31 @@ import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core';
+import { useSettings, useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 
-const DEFAULT_ICONSET = 'default';
+export interface IconSetObject {
+  custom: boolean;
+  name: string;
+}
 
 export const useApps = () => {
   const { icons } = useNotifications();
   const theme = useTheme();
-  const iconset = DEFAULT_ICONSET;
-  const apps: IApp[] = useMemo(
-    () =>
-      APPS.map((app) => {
-        
-        const SvgIcon = React.lazy<SvgIconComponent>(
-          () => import(`${__dirname}/../icons/${iconset}/svg/${app.id}`),
-        );
-        const AppIcon = React.lazy<SvgIconComponent>(
-          () => import(`${__dirname}/../icons/${iconset}/app/${app.id}`),
-        );
+  const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
 
-        const NotificationIcon = createLazyAppIcon(SvgIcon);
-        const Icon = createLazyAppIcon(AppIcon);
+  const apps: IApp[] = useMemo(() => {
+    return APPS.map((app) => {
+      const SvgIcon = React.lazy<SvgIconComponent>(
+        () => import(`${__dirname}/../icons/${curIconSet.name}/svg/${app.id}`),
+      );
+      const AppIcon = React.lazy<SvgIconComponent>(
+        () => import(`${__dirname}/../icons/${curIconSet.name}/app/${app.id}`),
+      );
 
+      const NotificationIcon = createLazyAppIcon(SvgIcon);
+      const Icon = createLazyAppIcon(AppIcon);
+
+      if (curIconSet.custom) {
         return {
           ...app,
           notification: icons.find((i) => i.key === app.id),
@@ -35,9 +39,18 @@ export const useApps = () => {
           ),
           icon: <Icon />,
         };
-      }),
-    [icons, iconset, theme],
-  );
+      }
+
+      return {
+        ...app,
+        notification: icons.find((i) => i.key === app.id),
+        NotificationIcon,
+        notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
+        icon: <Icon />,
+      };
+    });
+  }, [icons, curIconSet, theme]);
+
   const getApp = useCallback((id: string): IApp => apps.find((a) => a.id === id) || null, [apps]);
   return { apps, getApp };
 };

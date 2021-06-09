@@ -148,6 +148,13 @@
       "label": "English",
       "value": "en"
     },
+    "iconSet": {
+      "label": "NPWD Icons",
+      "value": {
+        "custom": true,
+        "name": "npwd_icons"
+      }
+    },
     "wallpaper": {
       "label": "Default",
       "value": "default.jpg"
@@ -187,6 +194,22 @@
     "TWITTER_notiSoundVol": 50,
     "TWITTER_notifyNewFeedTweet": true
   },
+  "iconSet": [
+    {
+      "label": "NPWD Icons",
+      "value": {
+        "custom": true,
+        "name": "npwd_icons"
+      }
+    },
+    {
+      "label": "Material",
+      "value": {
+        "custom": false,
+        "name": "material"
+      }
+    }
+  ],
   "themes": [
     {
       "label": "Taso Dark",

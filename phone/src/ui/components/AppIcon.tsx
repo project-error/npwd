@@ -1,9 +1,9 @@
 import React from 'react';
 import { darken, makeStyles, Theme } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import { green } from '@material-ui/core/colors';
-import { Badge, Button, Tooltip, Zoom } from '@material-ui/core';
+import { Avatar, Badge, Button, Tooltip, Zoom } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { INotificationIcon } from '../../os/notifications/providers/NotificationsProvider';
 
 const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
   root: {
@@ -31,7 +31,25 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
   },
 }));
 
-export const AppIcon = ({ id, nameLocale, name, Icon, backgroundColor, color, notification }) => {
+export interface AppIconProps {
+  id: string;
+  nameLocale: string;
+  Icon: React.ElementType;
+  icon: React.ElementType;
+  backgroundColor: string;
+  color: string;
+  notification: INotificationIcon;
+}
+
+export const AppIcon: React.FC<AppIconProps> = ({
+  id,
+  nameLocale,
+  Icon,
+  backgroundColor,
+  color,
+  icon,
+  notification,
+}) => {
   const { t } = useTranslation();
   const classes = useStyles({
     backgroundColor: backgroundColor || green[50],
@@ -56,7 +74,7 @@ export const AppIcon = ({ id, nameLocale, name, Icon, backgroundColor, color, no
           {Icon ? (
             <Icon className={classes.icon} fontSize="large" />
           ) : (
-            <Avatar className={classes.avatar}>{name[0].toUpperCase()}</Avatar>
+            <Avatar className={classes.avatar}>{icon || t(nameLocale)}</Avatar>
           )}
         </Badge>
       </Button>

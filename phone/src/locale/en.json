@@ -16,6 +16,7 @@
         "ACTIONS": "Actions"
       },
       "OPTIONS": {
+        "ICONSET": "Icon Set",
         "LANGUAGE": "Language",
         "RESET_SETTINGS": "Reset Settings",
         "RESET_SETTINGS_DESC": "This will clear your locally stored data",

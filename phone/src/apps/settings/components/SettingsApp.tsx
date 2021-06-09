@@ -6,7 +6,7 @@ import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { List } from '../../../ui/components/List';
 import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
-import { useApp } from '../../../os/apps/hooks/useApps';
+import { IconSetObject, useApp } from '../../../os/apps/hooks/useApps';
 import {
   SettingItem,
   SettingItemIconAction,
@@ -27,6 +27,7 @@ import {
   FileCopy,
   Book,
   DeleteForever,
+  Apps,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListSubheader } from '@material-ui/core';
@@ -70,6 +71,12 @@ export const SettingsApp = () => {
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
   };
+
+  const iconSets = config.iconSet.map(
+    MapSettingItem(settings.iconSet, (val: SettingOption<IconSetObject>) =>
+      handleSettingChange('iconSet', val),
+    ),
+  );
 
   const wallpapers = config.wallpapers.map(
     MapSettingItem(settings.wallpaper, (val: SettingOption) => {
@@ -211,6 +218,13 @@ export const SettingsApp = () => {
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
+          />
+          <SettingItem
+            label={t('SETTINGS.OPTIONS.ICONSET')}
+            value={settings.iconSet.label}
+            options={iconSets}
+            onClick={openMenu}
+            icon={<Apps />}
           />
           <SettingItem
             label={t('APPS_SETTINGS_OPTION_WALLPAPER')}

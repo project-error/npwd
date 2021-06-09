@@ -49,7 +49,7 @@ export type IApp = IAppConfig & {
   icon: JSX.Element;
   notificationIcon: JSX.Element;
   NotificationIcon: React.FC<SvgIconProps>;
-  Icon: React.FC<SvgIconProps>;
+  Icon?: React.FC<SvgIconProps>;
 };
 
 export const APPS: IAppConfig[] = [
