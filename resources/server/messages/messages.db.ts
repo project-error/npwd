@@ -44,7 +44,7 @@ export class _MessagesDB {
       npwd_messages_groups.group_id,
       npwd_messages_groups.participant_identifier,
       npwd_messages_groups.user_identifier,
-      npwd_messages_labels.label,
+      npwd_messages_groups.label,
       ${config.database.playerTable}.phone_number,
       npwd_phone_contacts.avatar,
       npwd_phone_contacts.display
@@ -55,7 +55,6 @@ export class _MessagesDB {
     ) as t
     LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
     LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_groups.participant_identifier
-    LEFT OUTER JOIN npwd_messages_labels on npwd_messages_labels.group_id = npwd_messages_groups.group_id
     LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     ORDER BY npwd_messages_groups.createdAt DESC
     `;
@@ -105,13 +104,17 @@ export class _MessagesDB {
    * @param groupId - groupId this label is attached to
    * @param label - the label itself
    */
-  async createLabel(userIdentifier: string, groupId: string, label: string): Promise<void> {
+  async setLabel(userIdentifier: string, groupId: string, label: string): Promise<void> {
     const query = `
-    INSERT INTO npwd_messages_labels
-    (user_identifier, group_id, label)
-    VALUES (?, ?, ?)
+    UPDATE
+      npwd_messages_groups
+    SET
+      label = ?
+    WHERE
+      group_id = ?
+			AND user_identifier = ?
     `;
-    await pool.query(query, [userIdentifier, groupId, label]);
+    await pool.query(query, [label, groupId, userIdentifier]);
   }
 
   /**
