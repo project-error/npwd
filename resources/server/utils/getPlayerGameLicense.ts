@@ -1,3 +1,5 @@
+import { config } from '../server';
+
 export const getPlayerGameLicense = (src: number): null | string => {
   // Parse specifically for license identifier as its
   // guaranteed
@@ -6,7 +8,8 @@ export const getPlayerGameLicense = (src: number): null | string => {
   let playerIdentifier;
   for (const identifier of playerIdentifiers) {
     if (identifier.includes('license:')) {
-      playerIdentifier = identifier.split(':')[1];
+      if (config.database.useIdentifierPrefix) playerIdentifier = identifier;
+      else playerIdentifier = identifier.split(':')[1];
     }
   }
 

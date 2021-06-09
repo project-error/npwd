@@ -16,6 +16,7 @@ interface MatchConfig {
   generateProfileNameFromUsers: boolean;
   allowEditableProfileName: boolean;
 }
+
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
@@ -35,10 +36,10 @@ interface BankConfig {
   showNotifications: boolean;
 }
 
-
 interface DatabaseConfig {
   playerTable: string;
   identifierColumn: string;
+  useIdentifierPrefix: boolean;
 }
 
 export interface ResourceConfig {
