@@ -1,20 +1,19 @@
-import { Note } from '../../../typings/notes';
+import { BeforeDBNote, NoteItem } from '../../../typings/notes';
 import { pool } from '../db';
 import { FetchDefaultLimits } from '../utils/ServerConstants';
+import { ResultSetHeader } from 'mysql2';
 
 export class _NotesDB {
-  async addNote(identifier: string, note: Note): Promise<void> {
+  async addNote(identifier: string, note: BeforeDBNote): Promise<number> {
     const query = 'INSERT INTO npwd_notes (identifier, title, content) VALUES (?, ?, ?)';
-    await pool.query(query, [identifier, note.title, note.content]);
+    const [result] = await pool.query(query, [identifier, note.title, note.content]);
+    return (<ResultSetHeader>result).insertId;
   }
 
-  async fetchNotes(
-    identifier: string,
-    limit = FetchDefaultLimits.NOTES_FETCH_LIMIT,
-  ): Promise<Note[]> {
-    const query = 'SELECT * FROM npwd_notes WHERE identifier = ? ORDER BY id DESC LIMIT ?';
-    const [result] = await pool.query(query, [identifier, limit]);
-    return <Note[]>result;
+  async fetchNotes(identifier: string): Promise<NoteItem[]> {
+    const query = 'SELECT * FROM npwd_notes WHERE identifier = ? ORDER BY id DESC';
+    const [result] = await pool.query(query, [identifier]);
+    return <NoteItem[]>result;
   }
 
   async deleteNote(noteId: number, identifier: string): Promise<void> {
@@ -22,7 +21,7 @@ export class _NotesDB {
     await pool.query(query, [noteId, identifier]);
   }
 
-  async updateNote(note: Note, identifier: string): Promise<void> {
+  async updateNote(note: NoteItem, identifier: string): Promise<void> {
     const query = 'UPDATE npwd_notes SET title = ?, content = ? WHERE id = ? AND identifier = ?';
     await pool.query(query, [note.title, note.content, note.id, identifier]);
   }

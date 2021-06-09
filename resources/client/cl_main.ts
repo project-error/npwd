@@ -1,11 +1,8 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
-import { ContactEvents } from '../../typings/contact';
-import { MarketplaceEvents } from '../../typings/marketplace';
 import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 import { MessageEvents } from '../../typings/messages';
-import { NotesEvents } from '../../typings/notes';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
@@ -19,7 +16,6 @@ let isPhoneOpen = false;
  *
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
-  emitNet(ContactEvents.GET_CONTACTS);
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
   sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
@@ -143,11 +139,6 @@ on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_NOTES);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_NOTES}`, (data: any, cb: Function) => {
-  emitNet(NotesEvents.FETCH_ALL_NOTES);
-  cb();
-});
 
 RegisterNuiCallbackType(PhoneEvents.OPEN_APP_BANK);
 on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {

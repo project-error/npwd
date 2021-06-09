@@ -1,32 +1,36 @@
-import { Note, NotesEvents } from '../../../typings/notes';
-import { getSource } from '../utils/miscUtils';
+import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '../../../typings/notes';
 import NotesService from './notes.service';
 import { notesLogger } from './notes.utils';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNet(NotesEvents.ADD_NOTE, (note: Note) => {
-  const src = getSource();
-  NotesService.handleAddNote(src, note).catch((e) =>
-    notesLogger.error(`Error occured in add note event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<BeforeDBNote, NoteItem>(NotesEvents.ADD_NOTE, (reqObj, resp) => {
+  NotesService.handleAddNote(reqObj, resp).catch((e) => {
+    notesLogger.error(`Error occured in add note event (${reqObj.source}), Error:  ${e.message}`);
+    resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
+  });
 });
 
-onNet(NotesEvents.FETCH_ALL_NOTES, async (limit?: number) => {
-  const src = getSource();
-  NotesService.handleFetchNotes(src, limit).catch((e) =>
-    notesLogger.error(`Error occurred in fetch note event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<void, NoteItem[]>(NotesEvents.FETCH_ALL_NOTES, (reqObj, resp) => {
+  NotesService.handleFetchNotes(reqObj, resp).catch((e) => {
+    notesLogger.error(
+      `Error occurred in fetch note event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
+  });
 });
 
-onNet(NotesEvents.DELETE_NOTE, async (noteId: number) => {
-  const src = getSource();
-  NotesService.handleDeleteNote(src, noteId).catch((e) =>
-    notesLogger.error(`Error occured in delete note event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<DeleteNoteDTO, DeleteNoteDTO>(NotesEvents.DELETE_NOTE, async (reqObj, resp) => {
+  NotesService.handleDeleteNote(reqObj, resp).catch((e) => {
+    notesLogger.error(
+      `Error occured in delete note event (${reqObj.source}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
+  });
 });
 
-onNet(NotesEvents.UPDATE_NOTE, async (note: Note) => {
-  const src = getSource();
-  NotesService.handleUpdateNote(src, note).catch((e) =>
-    notesLogger.error(`Error occured in fetch note event (${src}), Error:  ${e.message}`),
-  );
+onNetPromise<NoteItem, void>(NotesEvents.UPDATE_NOTE, async (reqObj, resp) => {
+  NotesService.handleUpdateNote(reqObj, resp).catch((e) => {
+    notesLogger.error(`Error occured in fetch note event (${reqObj.source}), Error:  ${e.message}`);
+    resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
+  });
 });

@@ -1,128 +1,192 @@
-import {
-  Button,
-  Slide,
-  Paper,
-  Typography,
-  Container,
-  CircularProgress,
-  Box,
-} from '@material-ui/core';
-import React from 'react';
+import { Button, Slide, Paper, Typography, Container, Box } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { useNoteDetail } from '../hooks/useNoteDetail';
 import useStyles from './modal.styles';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { StatusButton } from '../../../ui/components/StatusButton';
-import { NotesEvents } from '../../../../../typings/notes';
+import { DeleteNoteDTO, NoteItem, NotesEvents } from '../../../../../typings/notes';
 import { TextField } from '../../../ui/components/Input';
+import { fetchNui } from '../../../utils/fetchNui';
+import { useSelectedNote } from '../hooks/state';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useNotesActions } from '../hooks/useNotesActions';
 
 export const NoteModal = () => {
-  const Nui = useNuiRequest();
   const classes = useStyles();
+  const { addNote, deleteNote, updateNote } = useNotesActions();
   const { t } = useTranslation();
-  const { detail, setDetail } = useNoteDetail();
+  const [selectedNote, setSelectedNote] = useSelectedNote();
+  const [noteTitle, setNoteTitle] = useState('');
+  const [noteContent, setNoteContent] = useState('');
+  const { addAlert } = useSnackbar();
 
-  const _handleClose = () => {
-    setDetail(null);
-  };
+  const isNewNote = !Boolean(selectedNote?.id);
+
+  useEffect(() => {
+    if (selectedNote !== null) {
+      setNoteContent(selectedNote.content);
+      setNoteTitle(selectedNote.title);
+    }
+  }, [selectedNote]);
 
   const handleNoteSave = () => {
-    Nui.send(NotesEvents.ADD_NOTE, detail);
-    setDetail(null);
+    fetchNui<ServerPromiseResp<NoteItem>>(NotesEvents.ADD_NOTE, {
+      title: noteTitle,
+      content: noteContent,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_NOTES_ADD_FAILED'),
+          type: 'error',
+        });
+      }
+
+      addNote(resp.data);
+
+      addAlert({
+        message: t('APPS_NOTES_ADD_SUCCESS'),
+        type: 'success',
+      });
+      setSelectedNote(null);
+    });
   };
 
   const handleDeleteNote = () => {
-    const id = detail.id;
-    Nui.send(NotesEvents.DELETE_NOTE, id);
-    setDetail(null);
+    fetchNui<ServerPromiseResp<DeleteNoteDTO>>(NotesEvents.DELETE_NOTE, selectedNote).then(
+      (resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('APPS_NOTES_DELETE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        deleteNote(resp.data.id);
+
+        addAlert({
+          message: t('APPS_NOTES_DELETE_SUCCESS'),
+          type: 'success',
+        });
+      },
+    );
+    setSelectedNote(null);
   };
 
   const handleUpdateNote = () => {
-    Nui.send(NotesEvents.UPDATE_NOTE, detail);
-    setDetail(null);
+    fetchNui<ServerPromiseResp>(NotesEvents.ADD_NOTE, selectedNote).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_NOTES_UPDATE_FAILED'),
+          type: 'error',
+        });
+      }
+
+      updateNote({ id: selectedNote.id, title: noteTitle, content: noteContent });
+
+      addAlert({
+        message: t('APPS_NOTES_UPDATE_SUCCESS'),
+        type: 'success',
+      });
+    });
+    setSelectedNote(null);
   };
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNoteTitle(e.target.value);
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNoteContent(e.target.value);
+  };
+
+  const _handleClose = () => {
+    setSelectedNote(null);
+  };
+
+  if (selectedNote === null) return null;
+
   return (
-    <Slide direction="left" in={!!detail} mountOnEnter unmountOnExit>
+    <Slide direction="left" in={Boolean(selectedNote)} mountOnEnter unmountOnExit>
       <Paper className={classes.modalRoot} square>
-        {!detail ? (
-          <CircularProgress />
-        ) : (
-          <Container>
-            <Box>
-              <Box py={2}>
-                <Button
-                  color="primary"
-                  size="large"
-                  startIcon={<ArrowBackIcon fontSize="large" />}
-                  onClick={_handleClose}
-                >
-                  {t('APPS_NOTES')}
-                </Button>
-              </Box>
-              <TextField
-                className={classes.input}
-                rowsMax={1}
-                label={t('GENERIC_TITLE')}
-                inputProps={{
-                  className: classes.inputPropsTitle,
-                  maxLength: 25,
-                }}
-                fullWidth
-                value={detail.title}
-                onChange={(e) => setDetail((d) => ({ ...d, title: e.target.value }))}
-              />
-              <TextField
-                className={classes.input}
-                inputProps={{
-                  className: classes.inputPropsContent,
-                  maxLength: 250,
-                }}
-                label={t('GENERIC_CONTENT')}
-                multiline
-                fullWidth
-                rows={16}
-                variant="outlined"
-                value={detail.content}
-                onChange={(e) => setDetail((d) => ({ ...d, content: e.target.value }))}
-              />
-              <Typography paragraph>{detail.content.length}/250</Typography>
-              {!detail.id ? (
-                <>
-                  <Box display="inline" p={1}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      disabled={detail.title.length > 0 ? false : true}
-                      onClick={handleNoteSave}
-                    >
-                      {t('GENERIC_SAVE')}
-                    </Button>
-                  </Box>
-                  <Box display="inline" p={1}>
-                    <StatusButton color="error" variant="contained" onClick={_handleClose}>
-                      {t('GENERIC_CANCEL')}
-                    </StatusButton>
-                  </Box>
-                </>
-              ) : (
-                <>
-                  <Box display="inline" p={1}>
-                    <Button color="primary" variant="contained" onClick={handleUpdateNote}>
-                      {t('GENERIC_UPDATE')}
-                    </Button>
-                  </Box>
-                  <Box display="inline" p={1}>
-                    <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
-                      {t('GENERIC_DELETE')}
-                    </StatusButton>
-                  </Box>
-                </>
-              )}
+        <Container>
+          <Box>
+            <Box py={2}>
+              <Button
+                color="primary"
+                size="large"
+                startIcon={<ArrowBackIcon fontSize="large" />}
+                onClick={_handleClose}
+              >
+                {t('APPS_NOTES')}
+              </Button>
             </Box>
-          </Container>
-        )}
+            <TextField
+              className={classes.input}
+              rowsMax={1}
+              label={t('GENERIC_TITLE')}
+              inputProps={{
+                className: classes.inputPropsTitle,
+                maxLength: 25,
+              }}
+              fullWidth
+              value={noteTitle}
+              onChange={handleTitleChange}
+            />
+            <TextField
+              className={classes.input}
+              inputProps={{
+                className: classes.inputPropsContent,
+                maxLength: 250,
+              }}
+              label={t('GENERIC_CONTENT')}
+              multiline
+              fullWidth
+              rows={16}
+              variant="outlined"
+              value={noteContent}
+              onChange={handleContentChange}
+            />
+            <Typography paragraph>{noteContent.length}/250</Typography>
+            {isNewNote ? (
+              <>
+                <Box display="inline" p={1}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    disabled={noteTitle.length <= 0}
+                    onClick={handleNoteSave}
+                  >
+                    {t('GENERIC_SAVE')}
+                  </Button>
+                </Box>
+                <Box display="inline" p={1}>
+                  <StatusButton color="error" variant="contained" onClick={_handleClose}>
+                    {t('GENERIC_CANCEL')}
+                  </StatusButton>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Box display="inline" p={1}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleUpdateNote}
+                    disabled={noteTitle.length <= 0}
+                  >
+                    {t('GENERIC_UPDATE')}
+                  </Button>
+                </Box>
+                <Box display="inline" p={1}>
+                  <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
+                    {t('GENERIC_DELETE')}
+                  </StatusButton>
+                </Box>
+              </>
+            )}
+          </Box>
+        </Container>
       </Paper>
     </Slide>
   );

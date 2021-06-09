@@ -13,25 +13,26 @@ export interface INotesAlert {
   setAlert: (type: AlertCategory) => void;
 }
 
-export interface Note {
-  id?: number;
+export interface BeforeDBNote {
   title: string;
   content: string;
+}
+
+export interface NoteItem extends BeforeDBNote {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export interface DeleteNoteDTO {
+  id: number;
 }
 
 export enum NotesEvents {
   ADD_NOTE = 'npwd:addNote',
   FETCH_ALL_NOTES = 'npwd:fetchAllNotes',
-  SEND_NOTE = 'npwd:sendNote',
-  SEND_NOTE_SUCCESS = 'npwd:sendNoteSuccess',
   DELETE_NOTE = 'npwd:deleteNote',
-  DELETE_NOTE_SUCCESS = 'npwd:deleteNoteSuccess',
   UPDATE_NOTE = 'npwd:updateNote',
-  UPDATE_NOTE_SUCCESS = 'npwd:updateNoteSuccess',
-  UPDATE_NOTE_FAILURE = 'npwd:updateNoteFailure',
-  ACTION_RESULT = 'npwd:notesActionResult',
-  SEND_ALERT = 'npwd:notesSetAlert',
-  SERVER_RESP = 'npwd:notesServerResp',
 }
 
 export interface NoteServerResponse<T = unknown> {
