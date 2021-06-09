@@ -16,11 +16,10 @@ import './photo/photo.controller';
 import './messages/messages.controller';
 import './marketplace/marketplace.controller';
 import './twitter/twitter.controller';
+import './match/match.controller';
 
-/*import './sv_twitter';*/
 import './sv_main';
 import './sv_bank';
-import './sv_match';
 import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;
