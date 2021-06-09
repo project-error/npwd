@@ -56,6 +56,10 @@ module.exports = {
 
       paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html');
 
+      if (webpackConfig.mode === 'development') {
+        webpackConfig.devtool = 'eval-source-map';
+      }
+
       return webpackConfig;
     },
   },
