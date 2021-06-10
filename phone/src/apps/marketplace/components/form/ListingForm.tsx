@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, Button, Box } from '@material-ui/core';
-import { MarketplaceActionResp, MarketplaceEvents } from '../../../../../../typings/marketplace';
+import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@material-ui/icons/Image';
@@ -10,6 +10,7 @@ import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,14 +50,14 @@ export const ListingForm = () => {
 
   const addListing = () => {
     if (title !== '' && description !== '') {
-      fetchNui<MarketplaceActionResp>(MarketplaceEvents.ADD_LISTING, {
+      fetchNui<ServerPromiseResp<MarketplaceListing[]>>(MarketplaceEvents.ADD_LISTING, {
         title,
         description,
         url,
-      }).then(({ err, errMsg }) => {
-        if (err) {
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
           return addAlert({
-            message: t('errMsg'),
+            message: t('APPS_MARKETPLACE_CREATE_LISTING_FAILED'),
             type: 'error',
           });
         }

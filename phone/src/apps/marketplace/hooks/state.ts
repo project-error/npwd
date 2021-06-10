@@ -1,9 +1,6 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  MarketplaceEvents,
-  MarketplaceFetchResp,
-  MarketplaceListing,
-} from '../../../../../typings/marketplace';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import { MarketplaceEvents, MarketplaceListing } from '../../../../../typings/marketplace';
 import { fetchNui } from '../../../utils/fetchNui';
 import { isEnvBrowser } from '../../../utils/misc';
 
@@ -35,7 +32,11 @@ const listingState = atom<MarketplaceListing[]>({
     key: 'defaultListings',
     get: async () => {
       try {
-        return (await fetchNui<MarketplaceFetchResp>(MarketplaceEvents.FETCH_LISTING)).data;
+        const resp = await fetchNui<ServerPromiseResp<MarketplaceListing[]>>(
+          MarketplaceEvents.FETCH_LISTING,
+        );
+
+        return resp.data;
       } catch (e) {
         if (isEnvBrowser()) {
           return defaultData;

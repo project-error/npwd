@@ -7,7 +7,7 @@ export class _MarketplaceDB {
     identifier: string,
     username: string,
     name: string,
-    number: any,
+    number: string,
     listing: MarketplaceListingBase,
   ): Promise<number> {
     const query =

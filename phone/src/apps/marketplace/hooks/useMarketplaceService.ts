@@ -5,17 +5,24 @@ import {
   MarketplaceEvents,
 } from '../../../../../typings/marketplace';
 import { useMarketplaceActions } from './useMarketplaceActions';
+import { useCallback } from 'react';
 
 export const useMarketplaceService = () => {
   const { addListing, deleteListing } = useMarketplaceActions();
 
-  const addListingHandler = (resp: MarketplaceBroadcastAddDTO) => {
-    addListing(resp.listing);
-  };
+  const addListingHandler = useCallback(
+    (resp: MarketplaceBroadcastAddDTO) => {
+      addListing(resp.listing);
+    },
+    [addListing],
+  );
 
-  const deleteListingHandler = (listing: MarketplaceDeleteDTO) => {
-    deleteListing(listing.id);
-  };
+  const deleteListingHandler = useCallback(
+    (listing: MarketplaceDeleteDTO) => {
+      deleteListing(listing.id);
+    },
+    [deleteListing],
+  );
 
   useNuiEvent<MarketplaceBroadcastAddDTO>(
     'MARKETPLACE',
