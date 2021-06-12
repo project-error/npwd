@@ -39,18 +39,20 @@ export class _TwitterDB {
    */
   async fetchAllTweets(profileId: number): Promise<Tweet[]> {
     const query = `
-  SELECT
-    ${SELECT_FIELDS}
-  FROM npwd_twitter_tweets
-  LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
-  LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = ?
-  LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id  AND npwd_twitter_reports.profile_id = ?
-  LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
-  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles ON retweets.identifier = retweets_profiles.identifier
-  WHERE  npwd_twitter_tweets.visible = 1
-  ORDER BY npwd_twitter_tweets.createdAt DESC
-  LIMIT 100
-  `;
+        SELECT ${SELECT_FIELDS}
+        FROM npwd_twitter_tweets
+                 LEFT OUTER JOIN npwd_twitter_profiles
+                                 ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+                 LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id AND
+                                                       npwd_twitter_likes.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id AND
+                                                         npwd_twitter_reports.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
+                 LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
+                                 ON retweets.identifier = retweets_profiles.identifier
+        WHERE npwd_twitter_tweets.visible = 1
+        ORDER BY npwd_twitter_tweets.id DESC LIMIT 50
+		`;
     const [results] = await pool.query(query, [profileId, profileId]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId));
@@ -65,18 +67,21 @@ export class _TwitterDB {
   async fetchTweetsFiltered(profileId: number, searchValue: string): Promise<Tweet[]> {
     const parameterizedSearchValue = `%${searchValue}%`;
     const query = `
-    SELECT
-      ${SELECT_FIELDS}
-    FROM npwd_twitter_tweets
-    LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
-    LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = ?
-    LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id  AND npwd_twitter_reports.profile_id = ?
-    LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
-    LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles ON retweets.identifier = retweets_profiles.identifier
-    WHERE npwd_twitter_tweets.visible = 1 AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
-    ORDER BY npwd_twitter_tweets.createdAt DESC 
-    LIMIT 100
-    `;
+        SELECT ${SELECT_FIELDS}
+        FROM npwd_twitter_tweets
+                 LEFT OUTER JOIN npwd_twitter_profiles
+                                 ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+                 LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id AND
+                                                       npwd_twitter_likes.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id AND
+                                                         npwd_twitter_reports.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
+                 LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
+                                 ON retweets.identifier = retweets_profiles.identifier
+        WHERE npwd_twitter_tweets.visible = 1
+          AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
+        ORDER BY npwd_twitter_tweets.id DESC LIMIT 100
+		`;
     const [results] = await pool.query(query, [
       profileId,
       profileId,
@@ -94,16 +99,19 @@ export class _TwitterDB {
    */
   async getTweet(profileId: number, tweetId: number): Promise<Tweet> {
     const query = `
-  SELECT
-    ${SELECT_FIELDS}
-  FROM npwd_twitter_tweets
-  LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id  AND npwd_twitter_likes.profile_id = ?
-  LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id  AND npwd_twitter_reports.profile_id = ?
-  LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
-  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles ON retweets.identifier = retweets_profiles.identifier
-  LEFT OUTER JOIN npwd_twitter_profiles ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
-  WHERE npwd_twitter_tweets.id = ?
-  `;
+        SELECT ${SELECT_FIELDS}
+        FROM npwd_twitter_tweets
+                 LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id AND
+                                                       npwd_twitter_likes.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_reports ON npwd_twitter_tweets.id = npwd_twitter_reports.tweet_id AND
+                                                         npwd_twitter_reports.profile_id = ?
+                 LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
+                 LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
+                                 ON retweets.identifier = retweets_profiles.identifier
+                 LEFT OUTER JOIN npwd_twitter_profiles
+                                 ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
+        WHERE npwd_twitter_tweets.id = ?
+		`;
     const [results] = await pool.query(query, [profileId, profileId, tweetId]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId))[0];
