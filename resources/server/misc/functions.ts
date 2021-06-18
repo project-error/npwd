@@ -1,8 +1,8 @@
-import { pool } from './db';
-import { config } from './server';
-import { mainLogger } from './sv_logger';
-import { getRandomPhoneNumber } from './utils/getRandomPhoneNumber';
-import PlayerService from './players/player.service';
+import { pool } from '../db';
+import { config } from '../server';
+import { mainLogger } from '../sv_logger';
+import { getRandomPhoneNumber } from '../utils/getRandomPhoneNumber';
+import PlayerService from '../players/player.service';
 
 export async function generatePhoneNumber(identifier: string): Promise<string> {
   const getQuery = `SELECT phone_number FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ?`;

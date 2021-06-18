@@ -1,4 +1,4 @@
-import { generatePhoneNumber } from '../functions';
+import { generatePhoneNumber } from '../misc/functions';
 import { PhoneEvents } from '../../../typings/phone';
 import { Player } from './player.class';
 import { PlayerAddData } from './player.interfaces';

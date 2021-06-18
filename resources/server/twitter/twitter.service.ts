@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import TwitterDB, { _TwitterDB } from './twitter.db';
 import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { twitterLogger } from './twitter.utils';
-import { reportTweetToDiscord } from '../discord';
+import { reportTweetToDiscord } from '../misc/discord';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;

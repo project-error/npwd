@@ -9,7 +9,7 @@ import {
   MarketplaceReportDTO,
 } from '../../../typings/marketplace';
 import { notesLogger } from '../notes/notes.utils';
-import { reportListingToDiscord } from '../discord';
+import { reportListingToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
 class _MarketplaceService {
