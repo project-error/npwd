@@ -1,9 +1,9 @@
-import { ESX } from './server';
-import { pool } from './db';
-import { Transfer, IBankCredentials, BankEvents } from '../../typings/bank';
-import { mainLogger } from './sv_logger';
-import { getSource } from './utils/miscUtils';
-import PlayerService from './players/player.service';
+import { ESX } from '../server';
+import { pool } from '../db';
+import { Transfer, IBankCredentials, BankEvents } from '../../../typings/bank';
+import { mainLogger } from '../sv_logger';
+import { getSource } from '../utils/miscUtils';
+import PlayerService from '../players/player.service';
 
 const bankLogger = mainLogger.child({ module: 'bank' });
 
