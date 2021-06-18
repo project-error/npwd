@@ -17,9 +17,9 @@ import './messages/messages.controller';
 import './marketplace/marketplace.controller';
 import './twitter/twitter.controller';
 import './match/match.controller';
+import './bank/bank.controller';
 
 import './sv_main';
-import './sv_bank';
 import { mainLogger } from './sv_logger';
 
 export let ESX: Server = null;
