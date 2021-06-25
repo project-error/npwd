@@ -67,7 +67,7 @@ export const DialerHistory = ({ calls }) => {
               primary={getDisplayByNumber(call.receiver)}
               secondary={
                 // TODO: Locale changes are pending #168 merge
-                dayjs().to(dayjs.unix(call.start))
+                dayjs().to(dayjs.unix(parseInt(call.start)))
               }
             />
             <IconButton onClick={() => handleCall(call.receiver)}>{<PhoneIcon />}</IconButton>
@@ -92,7 +92,7 @@ export const DialerHistory = ({ calls }) => {
               primary={getDisplayByNumber(call.transmitter)}
               secondary={
                 // TODO: Locale changes are pending #168 merge
-                dayjs().to(dayjs.unix(call.start))
+                dayjs().to(dayjs.unix(parseInt(call.start)))
               }
             />
             <IconButton onClick={() => handleCall(call.transmitter)}>

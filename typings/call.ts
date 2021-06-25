@@ -13,9 +13,9 @@ export interface CallHistoryItem {
   transmitterSource?: number;
   receiver: string;
   receiverSource?: number;
-  start: number;
+  start: string;
   end?: number;
-  accepted: boolean;
+  is_accepted: number;
 }
 
 export enum CallEvents {
