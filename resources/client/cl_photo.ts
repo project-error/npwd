@@ -2,6 +2,7 @@ import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
+import { config } from './client';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
@@ -84,13 +85,15 @@ onNet(PhotoEvents.SEND_PHOTOS, (photos: string[]) => {
 
 function takePhoto() {
   // Return and log error if screenshot basic token not found
-  if (SCREENSHOT_BASIC_TOKEN === 'none') {
+  if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.url.includes('imgur')) {
     return console.error('Screenshot basic token not found. Please set in server.cfg');
   }
+
   exp['screenshot-basic'].requestScreenshotUpload(
-    'https://api.imgur.com/3/image',
-    'imgur',
+    config.images.url,
+    config.images.type,
     {
+      encoding: 'jpg',
       headers: {
         authorization: `Client-ID ${SCREENSHOT_BASIC_TOKEN}`,
         'content-type': 'multipart/form-data',
@@ -98,7 +101,13 @@ function takePhoto() {
     },
     (data: string) => {
       try {
-        const imageLink = JSON.parse(data).data.link;
+        let imageLink: string;
+        if (config.images.isCustomImageServer) {
+         imageLink = `${config.images.url.includes('https') ? 'https' : 'http'}://${JSON.parse(data).files[0].url}`;
+        } else {
+          imageLink = JSON.parse(data).data.link;
+        }
+        
         emitNet(PhotoEvents.UPLOAD_PHOTO, imageLink);
       } catch (e) {
         sendCameraEvent(PhotoEvents.TAKE_PHOTO_ERROR, 'APPS_CAMERA_FAILED_TO_TAKE_PHOTO');

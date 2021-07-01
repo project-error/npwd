@@ -42,6 +42,12 @@ interface DatabaseConfig {
   useIdentifierPrefix: boolean;
 }
 
+interface ImageConfig {
+  isCustomImageServer: boolean;
+  url: string;
+  type: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -56,4 +62,5 @@ export interface ResourceConfig {
   notificationPosition: NotificationConfig;
   general: General;
   debug: Debug;
+  images: ImageConfig;
 }

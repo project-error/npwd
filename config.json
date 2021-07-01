@@ -20,6 +20,11 @@
     "playerTable": "users",
     "identifierColumn": "identifier"
   },
+  "images": {
+    "isCustomImageServer": false,
+    "url": "https://api.imgur.com/3/image",
+    "type": "imgur"
+  },
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,
