@@ -61,7 +61,7 @@ class CallsService {
       receiver: receivingNumber,
       receiverSource: receivingPlayer.source,
       start: startCallTimeUnix,
-      accepted: false,
+      is_accepted: false,
     };
 
     if (!receivingPlayer) {
@@ -99,7 +99,7 @@ class CallsService {
     // We retrieve the call that was accepted from the current calls map
     const curCallAccepted = this.callMap.get(transmitterNumber);
     // We update its reference
-    curCallAccepted.accepted = true;
+    curCallAccepted.is_accepted = true;
 
     const channelId = src;
 
@@ -174,7 +174,7 @@ class CallsService {
     // ends animations if call is active
     // TODO: This animation flow needs to be taken a look at. We should be able to
     // to just attach this to the WAS_ENDED event without another net event.
-    if (currentCall.accepted) {
+    if (currentCall.is_accepted) {
       emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.receiverSource);
       emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.transmitterSource);
     }
