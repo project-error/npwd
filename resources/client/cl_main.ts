@@ -125,12 +125,6 @@ AddEventHandler('onResourceStop', function (resource: string) {
   }
 });
 
-RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
-on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
-  fetchOnInitialize();
-  cb();
-});
-
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
 // ^ AND WHAT ARE YOU GOING TO DO HUH? - KIDZ
 
