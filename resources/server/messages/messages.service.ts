@@ -75,7 +75,7 @@ class _MessagesService {
           if (participantId !== _identifier) {
             const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
             if (!participantPlayer) {
-              return;
+              continue;
             }
             emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
           }
@@ -123,7 +123,7 @@ class _MessagesService {
         if (participantId !== _identifier) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
           if (!participantPlayer) {
-            return;
+            continue;
           }
           emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {

@@ -63,8 +63,6 @@ class _PlayerService {
    */
   getPlayerFromIdentifier(identifier: string): Player | null {
     const player = this.playersByIdentifier.get(identifier);
-    if (!player)
-      throw new Error(`Could not find corresponding player for identifier: ${identifier}`);
     return player;
   }
 

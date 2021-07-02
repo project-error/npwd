@@ -150,7 +150,7 @@ export class _MessagesDB {
     `;
     const [results] = await pool.query(query, [phoneNumber]);
     const identifiers = <any>results;
-    return identifiers[0]['identifier'];
+    return identifiers[0][config.database.identifierColumn];
   }
 
   /**
