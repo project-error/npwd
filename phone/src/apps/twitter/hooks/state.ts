@@ -11,11 +11,11 @@ export const twitterState = {
   }),
   tweets: atom({
     key: 'tweets',
-    default: null,
+    default: [],
   }),
   filteredTweets: atom({
     key: 'filteredTweets',
-    default: null,
+    default: [],
   }),
   showCreateTweetModal: atom({
     key: 'showCreateTweetModal',
