@@ -13,7 +13,7 @@ export interface CallHistoryItem {
   transmitterSource?: number;
   receiver: string;
   receiverSource?: number;
-  start: string|number;
+  start: string;
   end?: number;
   is_accepted: boolean;
 }

@@ -47,7 +47,7 @@ if (!config.general.enableMultiChar) {
     if (resource === GetCurrentResourceName()) {
       const onlinePlayers = getPlayers();
       for (const player of onlinePlayers) {
-        await PlayerService.handleNewPlayerJoined(parseInt(player));
+        await PlayerService.handleNewPlayerJoined(player);
       }
     }
   });

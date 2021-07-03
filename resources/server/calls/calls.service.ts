@@ -60,7 +60,7 @@ class CallsService {
       transmitterSource: transmittingPlayer.source,
       receiver: receivingNumber,
       receiverSource: receivingPlayer.source,
-      start: startCallTimeUnix,
+      start: startCallTimeUnix.toString(),
       is_accepted: false,
     };
 
