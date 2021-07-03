@@ -1,7 +1,6 @@
 import { matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
 import { Like, MatchEvents, Profile } from '../../../typings/match';
-import { getOrCreateProfile } from '../sv_match';
 import PlayerService from '../players/player.service';
 
 class _MatchService {
