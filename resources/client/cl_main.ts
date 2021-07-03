@@ -21,11 +21,9 @@ function fetchOnInitialize() {
   sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
 
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.ON_INIT, () => {
-    fetchOnInitialize();
-  });
-}
+onNet(PhoneEvents.ON_INIT, () => {
+  fetchOnInitialize();
+});
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
