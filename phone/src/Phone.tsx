@@ -62,10 +62,6 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    Nui.send(PhoneEvents.UI_IS_READY);
-  }, [Nui]);
-
   useKeyboardService();
   usePhoneService();
   useSimcardService();

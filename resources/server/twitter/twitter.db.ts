@@ -34,13 +34,15 @@ const formatTweets = (profileId: number) => (tweet: Tweet): Tweet => ({
 
 export class _TwitterDB {
   /**
-   * Retrieve the latest 100 tweets
+   * Retrieve the latest 50 tweets
    * @param profileId - twitter profile id of the player
    */
   async fetchAllTweets(profileId: number): Promise<Tweet[]> {
     const query = `
         SELECT ${SELECT_FIELDS}
-        FROM npwd_twitter_tweets
+        FROM (
+          SELECT * FROM npwd_twitter_tweets ORDER BY id DESC LIMIT 50
+        ) npwd_twitter_tweets
                  LEFT OUTER JOIN npwd_twitter_profiles
                                  ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
                  LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id AND
@@ -51,7 +53,6 @@ export class _TwitterDB {
                  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
                                  ON retweets.identifier = retweets_profiles.identifier
         WHERE npwd_twitter_tweets.visible = 1
-        ORDER BY npwd_twitter_tweets.id DESC LIMIT 50
 		`;
     const [results] = await pool.query(query, [profileId, profileId]);
     const tweets = <Tweet[]>results;

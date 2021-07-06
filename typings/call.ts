@@ -15,7 +15,12 @@ export interface CallHistoryItem {
   receiverSource?: number;
   start: string;
   end?: number;
-  is_accepted: number;
+  is_accepted: boolean;
+}
+
+export enum CallRejectReasons {
+  DECLINED,
+  BUSY_LINE
 }
 
 export enum CallEvents {

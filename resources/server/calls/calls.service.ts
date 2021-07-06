@@ -1,5 +1,5 @@
 import Collection from '@discordjs/collection';
-import { CallEvents, CallHistoryItem } from '../../../typings/call';
+import { CallEvents, CallHistoryItem, CallRejectReasons } from '../../../typings/call';
 import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
@@ -60,8 +60,8 @@ class CallsService {
       transmitterSource: transmittingPlayer.source,
       receiver: receivingNumber,
       receiverSource: receivingPlayer.source,
-      start: startCallTimeUnix,
-      accepted: false,
+      start: startCallTimeUnix.toString(),
+      is_accepted: false,
     };
 
     if (!receivingPlayer) {
@@ -99,7 +99,7 @@ class CallsService {
     // We retrieve the call that was accepted from the current calls map
     const curCallAccepted = this.callMap.get(transmitterNumber);
     // We update its reference
-    curCallAccepted.accepted = true;
+    curCallAccepted.is_accepted = true;
 
     const channelId = src;
 
@@ -131,7 +131,7 @@ class CallsService {
     emitNet(CallEvents.FETCH_CALLS, src, calls);
   }
 
-  async handleRejectCall(src: number, transmitterNumber: string): Promise<void> {
+  async handleRejectCall(src: number, transmitterNumber: string, reason: CallRejectReasons): Promise<void> {
     const currentCall = this.callMap.get(transmitterNumber);
 
     const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
@@ -148,6 +148,13 @@ class CallsService {
 
     // player who is calling and recieved the rejection.
     emitNet(CallEvents.WAS_REJECTED, currentCall.transmitterSource);
+
+    if (reason && CallRejectReasons[reason]) {
+      emitNet(CallEvents.SEND_ALERT, src, {
+        message: `DIALER_${reason}`,
+        type: 'error',
+      });
+    }
 
     await this.callsDB.updateCall(currentCall, false, endCallTimeUnix);
 
@@ -166,18 +173,11 @@ class CallsService {
       return;
     }
 
-    // player who is being called
-    emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
+    if (currentCall.is_accepted) {
+      emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
+    }
     // player who is calling
     emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
-
-    // ends animations if call is active
-    // TODO: This animation flow needs to be taken a look at. We should be able to
-    // to just attach this to the WAS_ENDED event without another net event.
-    if (currentCall.accepted) {
-      emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.receiverSource);
-      emitNet(CallEvents.SEND_HANGUP_ANIM, currentCall.transmitterSource);
-    }
 
     await this.callsDB.updateCall(currentCall, true, endCallTimeUnix);
 

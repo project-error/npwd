@@ -129,6 +129,7 @@ class _PlayerService {
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
+    emitNet(PhoneEvents.ON_INIT, pSource);
   }
 
   /**

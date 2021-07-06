@@ -78,6 +78,7 @@
     "APPS_DIALER_NAVBAR_HISTORY": "History",
     "APPS_DIALER_NAVBAR_DIAL": "Dial",
     "APPS_DIALER_NAVBAR_CONTACTS": "Contacts",
+    "APPS_DIALER_BUSY_LINE": "The line was busy.",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
