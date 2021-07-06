@@ -18,6 +18,11 @@ export interface CallHistoryItem {
   is_accepted: number;
 }
 
+export enum CallRejectReasons {
+  DECLINED,
+  BUSY_LINE
+}
+
 export enum CallEvents {
   INITIALIZE_CALL = 'npwd:beginCall',
   START_CALL = 'npwd:startCall',
