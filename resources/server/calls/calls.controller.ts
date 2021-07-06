@@ -1,4 +1,4 @@
-import { CallEvents } from '../../../typings/call';
+import { CallEvents, CallRejectReasons } from '../../../typings/call';
 import { getSource } from '../utils/miscUtils';
 import CallService from './calls.service';
 import { callLogger } from './calls.utils';
@@ -21,9 +21,9 @@ onNet(CallEvents.ACCEPT_CALL, (transmitterNumber: string) => {
   );
 });
 
-onNet(CallEvents.REJECTED, (transmitterNumber: string) => {
+onNet(CallEvents.REJECTED, (transmitterNumber: string, reason?: CallRejectReasons) => {
   const src = getSource();
-  CallService.handleRejectCall(src, transmitterNumber).catch((e) =>
+  CallService.handleRejectCall(src, transmitterNumber, reason).catch((e) =>
     callLogger.error(
       `Error occured in rejectcall event (${transmitterNumber}), Error:  ${e.message}`,
     ),

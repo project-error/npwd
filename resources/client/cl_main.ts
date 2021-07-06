@@ -1,13 +1,12 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
-import { phoneCloseAnim, phoneOpenAnim, removePhoneProp } from './functions';
 import { MessageEvents } from '../../typings/messages';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
 import { config } from './client';
-
+import { animationService } from './animations/animation.controller';
 let isPhoneOpen = false;
 
 /* * * * * * * * * * * * *
@@ -50,7 +49,7 @@ const getCurrentGameTime = () => {
 const showPhone = async (): Promise<void> => {
   isPhoneOpen = true;
   const time = getCurrentGameTime();
-  await phoneOpenAnim(); // Animation starts before the phone is open
+  await animationService.openPhone(); // Animation starts before the phone is open
   emitNet('phone:getCredentials');
   SetCursorLocation(0.9, 0.922); //Experimental
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
@@ -63,7 +62,7 @@ const showPhone = async (): Promise<void> => {
 const hidePhone = async (): Promise<void> => {
   isPhoneOpen = false;
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
-  await phoneCloseAnim();
+  await animationService.closePhone();
   SetNuiFocus(false, false);
   SetNuiFocusKeepInput(false);
   emit('npwd:disableControlActions', false);
@@ -120,7 +119,8 @@ AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
     SetNuiFocus(false, false);
-    removePhoneProp(); //Deletes the phone incase it was attached.
+    animationService.endPhoneCall();
+    animationService.closePhone();
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
   }
 });
