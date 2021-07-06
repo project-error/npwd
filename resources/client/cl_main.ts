@@ -1,7 +1,6 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
-import { removePhoneProp } from './functions';
 import { MessageEvents } from '../../typings/messages';
 import { BankEvents } from '../../typings/bank';
 import { PhotoEvents } from '../../typings/photo';
@@ -120,7 +119,8 @@ AddEventHandler('onResourceStop', function (resource: string) {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
     SetNuiFocus(false, false);
-    removePhoneProp(); //Deletes the phone incase it was attached.
+    animationService.endPhoneCall();
+    animationService.closePhone();
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
   }
 });

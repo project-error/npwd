@@ -13,7 +13,7 @@ export class AnimationService {
   private phoneOpen: boolean = false;
   private onCamera: boolean = false;
 
-  createAnimationInterval() {
+  private createAnimationInterval() {
     this.animationInterval = setInterval(async () => {
       const playerPed = PlayerPedId();
       if (this.onCall) {
@@ -24,7 +24,7 @@ export class AnimationService {
     }, 250);
   }
 
-  setPhoneState(state: AnimationState, stateValue: boolean) {
+  private setPhoneState(state: AnimationState, stateValue: boolean) {
     switch (state) {
       case AnimationState.ON_CALL:
         this.onCall = stateValue;
@@ -47,7 +47,7 @@ export class AnimationService {
     }
   }
 
-  handleCallAnimation(playerPed: number) {
+  private handleCallAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
       this.handleOnCallInVehicle(playerPed);
     } else {
@@ -55,7 +55,7 @@ export class AnimationService {
     }
   }
 
-  handleOpenAnimation(playerPed: number) {
+  private handleOpenAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
       this.handleOpenVehicleAnim(playerPed);
     } else {
@@ -63,7 +63,7 @@ export class AnimationService {
     }
   }
 
-  handleCallEndAnimation(playerPed: number) {
+  private handleCallEndAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
       this.handleCallEndVehicleAnim(playerPed);
     } else {
@@ -71,7 +71,7 @@ export class AnimationService {
     }
   }
 
-  handleCloseAnimation(playerPed: number) {
+  private handleCloseAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
       this.handleCloseVehicleAnim(playerPed);
     } else {
@@ -105,7 +105,7 @@ export class AnimationService {
     this.setPhoneState(AnimationState.ON_CALL, false);
   }
 
-  async loadAnimDict(dict: any) {
+  private async loadAnimDict(dict: any) {
     //-- Loads the animation dict. Used in the anim functions.
     RequestAnimDict(dict);
     while (!HasAnimDictLoaded(dict)) {
@@ -113,7 +113,7 @@ export class AnimationService {
     }
   }
 
-  async handleOpenVehicleAnim(playerPed: number): Promise<void> {
+  private async handleOpenVehicleAnim(playerPed: number): Promise<void> {
     const dict = 'anim@cellphone@in_car@ps';
     const anim = 'cellphone_text_in';
     await this.loadAnimDict(dict);
@@ -124,7 +124,7 @@ export class AnimationService {
     }
   }
 
-  async handleOpenNormalAnim(playerPed: number): Promise<void> {
+  private async handleOpenNormalAnim(playerPed: number): Promise<void> {
     //While not in a vehicle it will use this dict.
     const dict = 'cellphone@';
     const anim = 'cellphone_text_in';
@@ -136,14 +136,14 @@ export class AnimationService {
     }
   }
 
-  async handleCloseVehicleAnim(playerPed: number): Promise<void> {
+  private async handleCloseVehicleAnim(playerPed: number): Promise<void> {
     const DICT = 'anim@cellphone@in_car@ps';
     StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); // Do both incase they were on the phone.
     StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
     removePhoneProp();
   }
 
-  async handleCloseNormalAnim(playerPed: number): Promise<void> {
+  private async handleCloseNormalAnim(playerPed: number): Promise<void> {
     const DICT = 'cellphone@';
     const ANIM = 'cellphone_text_out';
     StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
@@ -155,7 +155,7 @@ export class AnimationService {
     removePhoneProp();
   }
 
-  async handleOnCallInVehicle(playerPed: number): Promise<void> {
+  private async handleOnCallInVehicle(playerPed: number): Promise<void> {
     const DICT = 'anim@cellphone@in_car@ps';
     const ANIM = 'cellphone_call_listen_base';
 
@@ -165,7 +165,7 @@ export class AnimationService {
     }
   }
 
-  async handleOnCallNormal(playerPed: number): Promise<void> {
+  private async handleOnCallNormal(playerPed: number): Promise<void> {
     const DICT = 'cellphone@';
     const ANIM = 'cellphone_call_listen_base';
     if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
@@ -174,7 +174,7 @@ export class AnimationService {
     }
   }
 
-  async handleCallEndVehicleAnim(playerPed: number): Promise<void> {
+  private async handleCallEndVehicleAnim(playerPed: number): Promise<void> {
     const DICT = 'anim@cellphone@in_car@ps';
     const ANIM = 'cellphone_call_to_text';
     StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
@@ -182,7 +182,7 @@ export class AnimationService {
     TaskPlayAnim(playerPed, DICT, ANIM, 1.3, 5.0, -1, 50, 0, false, false, false);
   }
 
-  handleCallEndNormalAnim = async (playerPed: number): Promise<void> => {
+  private async handleCallEndNormalAnim(playerPed: number): Promise<void> {
     const DICT = 'cellphone@';
     const ANIM = 'cellphone_call_to_text';
 
