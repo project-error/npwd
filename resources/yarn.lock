@@ -929,15 +929,15 @@
   resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-1.0.3281-1.tgz#e26d85cb3686f8e0c85fdb86dca159e027358418"
   integrity sha512-hZ82+Z1CfFFWYqTohDc9K2Cn00NAGQ4Hv34JH9kQpMsA2talHVUXjZOZ78/Dtk0DcGVA2beSYfA8fMm6ZrKmHg==
 
-"@citizenfx/client@^2.0.4035-1":
-  version "2.0.4035-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.4035-1.tgz#3b8527b1a1411e93835ee9b77672f9d492c5ad00"
-  integrity sha512-+cTYEBCabs9QdHBMT1pn6YzlggATktvds/yWiJv+OGtqY/zKpQE1anBDMfHrGuw92WxveR1VNndInTKY88O0bg==
+"@citizenfx/client@^2.0.4170-1":
+  version "2.0.4170-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.4170-1.tgz#66d03899f387b160e28a057c5810fed1476998b6"
+  integrity sha512-5Wj6k/zUmNKCpOsZCbUbTaWYqnSBQJPztvx7ln51DAktTRO2l29mRMfcBZNVQ2L3tJt144w9iTrlmytojuzrdQ==
 
-"@citizenfx/server@^2.0.4035-1":
-  version "2.0.4035-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.4035-1.tgz#517a91a7d189330d194b442a0f9a8ec858b4541b"
-  integrity sha512-D8ZtB7jhcGoLAbW0BZjxHGtuLrFiRAfaN2HjSbaBxJaYk5c4Fobg0RkS2tCr+PlidpARPaW1eq/maqYtNB2c0g==
+"@citizenfx/server@^2.0.4167-1":
+  version "2.0.4167-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.4167-1.tgz#c5450eff0ab38e98ffed592831d004c9ad7d535e"
+  integrity sha512-hVusU0cemvfFBXcDS+BRdMWa59hdCTQK51iva1dAC0KPGnhkqs5XC3BAVhCwjDbv2Fx3Vy1Oasz3KU6/RG6EkQ==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"

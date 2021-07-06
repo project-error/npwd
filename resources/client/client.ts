@@ -6,6 +6,7 @@ export const config: ResourceConfig = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'config.json'),
 );
 
+
 import './cl_main';
 import './cl_twitter';
 import './cl_contacts';
@@ -14,7 +15,7 @@ import './cl_bank';
 import './cl_notes';
 import './cl_photo';
 import './cl_messages';
-import './cl_call';
+import './calls/cl_calls.controller';
 import './cl_match';
 import './functions';
 
