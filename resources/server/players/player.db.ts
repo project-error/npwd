@@ -6,7 +6,7 @@ export class PlayerRepo {
     const query = `SELECT ${config.database.identifierColumn} FROM ${config.database.playerTable} WHERE phone_number = ?`;
     const [results] = await pool.query(query, [phoneNumber]);
     // Get identifier from results
-    return (results as { identifier: string }[])[0].identifier || null;
+    return (results as any[])[0][config.database.identifierColumn] || null;
   }
 }
 

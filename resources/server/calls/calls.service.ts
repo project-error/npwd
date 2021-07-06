@@ -60,8 +60,8 @@ class CallsService {
       transmitterSource: transmittingPlayer.source,
       receiver: receivingNumber,
       receiverSource: receivingPlayer.source,
-      start: startCallTimeUnix,
-      accepted: false,
+      start: startCallTimeUnix.toString(),
+      is_accepted: false,
     };
 
     if (!receivingPlayer) {
@@ -99,7 +99,7 @@ class CallsService {
     // We retrieve the call that was accepted from the current calls map
     const curCallAccepted = this.callMap.get(transmitterNumber);
     // We update its reference
-    curCallAccepted.accepted = true;
+    curCallAccepted.is_accepted = true;
 
     const channelId = src;
 

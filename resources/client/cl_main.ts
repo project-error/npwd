@@ -20,11 +20,9 @@ function fetchOnInitialize() {
   sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
 
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.ON_INIT, () => {
-    fetchOnInitialize();
-  });
-}
+onNet(PhoneEvents.ON_INIT, () => {
+  fetchOnInitialize();
+});
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
 
@@ -123,12 +121,6 @@ AddEventHandler('onResourceStop', function (resource: string) {
     animationService.closePhone();
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
   }
-});
-
-RegisterNuiCallbackType(PhoneEvents.UI_IS_READY);
-on(`__cfx_nui:${PhoneEvents.UI_IS_READY}`, (_data: any, cb: Function) => {
-  fetchOnInitialize();
-  cb();
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP

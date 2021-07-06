@@ -29,9 +29,11 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
+
 RegisterNuiCallbackType(PhotoEvents.TAKE_PHOTO);
 on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
+  emit('npwd:disableControlActions', false);
   // Create Phone Prop
   let frontCam = false;
   CreateMobilePhone(1);
@@ -46,7 +48,6 @@ on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
 
   while (inCameraMode) {
     await Delay(0);
-    displayHelperText();
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;
       CellFrontCamActivate(frontCam);
@@ -55,12 +56,16 @@ on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
     } else if (IsControlJustPressed(1, 177)) {
       handleCameraExit();
       break;
-    }
+    } 
+    displayHelperText();
   }
   ClearHelp(true);
+  emit('npwd:disableControlActions', true);
 });
 
 const handleTakePicture = async () => {
+  // Wait a frame so we don't draw the display helper text
+  await Delay(0);
   takePhoto();
   await Delay(200);
   DestroyMobilePhone();
