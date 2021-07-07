@@ -18,7 +18,8 @@
     "prepare": "husky install",
     "bootstrap": "lerna bootstrap",
     "format:staged": "pretty-quick --staged",
-    "postinstall": "husky install && yarn bootstrap"
+    "postinstall": "husky install && yarn bootstrap",
+    "test": "lerna run test"
   },
   "husky": {
     "hooks": {
