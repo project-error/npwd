@@ -79,7 +79,7 @@ export const RegisterNuiProxy = (event: string) => {
       cb(res);
     } catch (e) {
       console.error('Error encountered while listening to resp. Error:', e);
-      cb({ err: e });
+      cb({ status: 'error' });
     }
   });
 };
