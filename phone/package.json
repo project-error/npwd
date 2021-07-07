@@ -20,7 +20,7 @@
     "howler": "^2.2.1",
     "i18next": "^19.7.0",
     "jsonschema": "^1.4.0",
-    "parse-url": "^5.0.2",
+    "parse-url": "^5.0.7",
     "qs": "^6.9.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
