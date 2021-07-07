@@ -63,7 +63,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            "npwd-${{ steps.get_vars.outputs.VERSION_TAG }}/"
+            "npwd-${{ steps.get_vars.outputs.VERSION_TAG }}"
           id: auto_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
