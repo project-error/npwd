@@ -1,4 +1,4 @@
-name: NPM Publisher
+name: Prerelease Publisher
 on:
   push:
     branches:
@@ -36,8 +36,6 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: Run tests
-        run: yarn test
       - name: Run build
         run: npm run build
       - name: Create Release
