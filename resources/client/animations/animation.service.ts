@@ -105,7 +105,15 @@ export class AnimationService {
     this.setPhoneState(AnimationState.ON_CALL, false);
   }
 
-  private async loadAnimDict(dict: any) {
+  async openCamera() {
+    this.setPhoneState(AnimationState.ON_CAMERA, true);
+  }
+
+  async closeCamera() {
+    this.setPhoneState(AnimationState.ON_CAMERA, false)
+  }
+
+  async loadAnimDict(dict: any) {
     //-- Loads the animation dict. Used in the anim functions.
     RequestAnimDict(dict);
     while (!HasAnimDictLoaded(dict)) {

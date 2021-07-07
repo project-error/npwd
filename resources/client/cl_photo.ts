@@ -2,6 +2,7 @@ import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendMessage, sendCameraEvent } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
+import { animationService } from './animations/animation.controller';
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
@@ -33,6 +34,7 @@ const displayHelperText = () => {
 RegisterNuiCallbackType(PhotoEvents.TAKE_PHOTO);
 on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
   cb();
+  animationService.openCamera();
   emit('npwd:disableControlActions', false);
   // Create Phone Prop
   let frontCam = false;
@@ -61,6 +63,7 @@ on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
   }
   ClearHelp(true);
   emit('npwd:disableControlActions', true);
+  animationService.closeCamera();
 });
 
 const handleTakePicture = async () => {
