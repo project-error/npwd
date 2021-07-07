@@ -1,14 +1,14 @@
 name: Tagged Release Publisher
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - "v*"
 jobs:
  create-tagged-release:
     runs-on: ubuntu-latest
 
     outputs:
-      VERSION_TAG: v0.1.1-ci
+      VERSION_TAG: ${{ steps.get_vars.outputs.VERSION_TAG }}
     steps:
       - name: Install archive tools
         run: sudo apt-get install zip gzip tar
@@ -36,8 +36,6 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: Run tests
-        run: yarn test
       - name: Run build
         run: npm run build
       - name: Bundle built files
@@ -55,7 +53,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            npwd-${{ steps.get_vars.outputs.VERSION_TAG }}
+            "npwd-${{ steps.get_vars.outputs.VERSION_TAG }}/"
           id: auto_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
