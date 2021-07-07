@@ -25,3 +25,4 @@ sv_npwd.log
 
 # FXServer Yarn
 .yarn.installed
+phone/.env
