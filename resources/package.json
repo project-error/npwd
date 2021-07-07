@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.12.1",
     "@citizenfx/client": "^2.0.4170-1",
     "@citizenfx/server": "^2.0.4167-1",
