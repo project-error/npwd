@@ -38,6 +38,16 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run build
         run: npm run build
+      - name: Create Sentry Release
+        uses: getsentry/action-release@v1.1.5
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: production
+          version: ${{ steps.get_vars.outputs.VERSION_TAG }}
+          sourcemaps: './resources/html/static/js'
       - name: Bundle built files
         run: |
           mkdir npwd_temp
