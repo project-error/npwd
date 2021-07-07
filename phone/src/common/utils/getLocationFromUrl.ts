@@ -1,6 +1,11 @@
 import parseUrl from 'parse-url';
 
-export const getLocationFromUrl = (url: String) => {
+interface GetLocationFromUrlValue {
+  pathname: string;
+  search: string;
+}
+
+export const getLocationFromUrl = (url: string): GetLocationFromUrlValue => {
   const { pathname, search } = parseUrl(url);
   const searchStr = '?' + (search || '');
   return { pathname, search: searchStr };
