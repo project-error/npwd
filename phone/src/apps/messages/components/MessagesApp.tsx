@@ -12,6 +12,7 @@ import NewMessageGroupButton from './form/NewMessageGroupButton';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { MessageEvents } from '../../../../../typings/messages';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const MessagesApp = () => {
   const Nui = useNuiRequest();
@@ -29,9 +30,9 @@ export const MessagesApp = () => {
         <AppContent>
           <Switch>
             <Route path="/messages/conversations/:groupId">
-              <div>
+              <React.Suspense fallback={<LoadingSpinner />}>
                 <MessageModal />
-              </div>
+              </React.Suspense>
             </Route>
             <Route exact path="/messages">
               <MessagesList />
