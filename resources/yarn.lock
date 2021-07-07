@@ -1184,6 +1184,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@project-error/pe-utils@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@project-error/pe-utils/-/pe-utils-0.1.6.tgz#a1ab78ea4b7610dcc6794a664f4f41309f2bd863"
+  integrity sha512-jNjNtfpjvnVosG8u8/YutBk1/91NagfgQ+D022lyhTKaKJxotdkWpte1KnTPiZ2hxLr0Wbnh3Q5iBdMecED1qA==
+  dependencies:
+    uuid "^8.3.2"
+
 "@sindresorhus/df@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sindresorhus/df/-/df-1.0.1.tgz#c69b66f52f6fcdd287c807df210305dbaf78500d"
