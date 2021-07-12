@@ -27,7 +27,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
+    "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@citizenfx/client": "^2.0.4170-1",
