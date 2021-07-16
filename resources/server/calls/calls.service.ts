@@ -131,7 +131,11 @@ class CallsService {
     emitNet(CallEvents.FETCH_CALLS, src, calls);
   }
 
-  async handleRejectCall(src: number, transmitterNumber: string, reason: CallRejectReasons): Promise<void> {
+  async handleRejectCall(
+    src: number,
+    transmitterNumber: string,
+    reason: CallRejectReasons,
+  ): Promise<void> {
     const currentCall = this.callMap.get(transmitterNumber);
 
     const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
