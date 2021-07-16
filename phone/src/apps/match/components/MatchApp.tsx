@@ -60,15 +60,14 @@ InjectDebugData(
           id: 1,
           image:
             'https://cdn.vox-cdn.com/thumbor/9xCALlkm2Mc0HQk8kMr1Ui3YNbc=/0x0:5464x3070/920x613/filters:focal(2295x1098:3169x1972):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/67031748/shutterstock_1450403549.0.jpg',
-          name: 'Person Alpha',
-          bio:
-            'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+          name: 'Evan You',
+          bio: 'Husband, father of two, independent open source developer. Creator / project lead of @vuejs, @vite_js and connoisseur of sushi.',
           createdAt: 1615932985,
           updatedAt: 1615932985,
           lastActive: 1616004986,
           job: 'Gardener',
           location: 'Grapeseed',
-          tags: 'gardening',
+          tags: 'shit framework, vue sucks',
           phoneNumber: '987-6543',
         },
         {

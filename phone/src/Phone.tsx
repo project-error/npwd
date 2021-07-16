@@ -70,7 +70,7 @@ function Phone() {
   useMarketplaceService();
   useBankService();
   useMessagesService();
-  usePhotoService();
+  /*usePhotoService();*/
   useCallService();
   useDialService();
 
