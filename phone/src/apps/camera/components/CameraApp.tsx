@@ -6,6 +6,7 @@ import { GalleryModal } from './modal/GalleryModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { Route, Switch } from 'react-router-dom';
 import { PhotoEvents } from '../../../../../typings/photo';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 InjectDebugData([
   {
@@ -29,8 +30,10 @@ const CameraApp = () => {
     <AppWrapper id="camera-app">
       <AppContent>
         <Switch>
-          <Route path="/camera" exact component={GalleryGrid} />
-          <Route path="/camera/image" exact component={GalleryModal} />
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <Route path="/camera" exact component={GalleryGrid} />
+            <Route path="/camera/image" exact component={GalleryModal} />
+          </React.Suspense>
         </Switch>
       </AppContent>
     </AppWrapper>

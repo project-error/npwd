@@ -2,6 +2,7 @@ import PlayerService from '../players/player.service';
 import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
 import PhotoDB, { _PhotoDB } from './photo.db';
 import { photoLogger } from './photo.utils';
+import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
 class _PhotoService {
   private readonly photoDB: _PhotoDB;
@@ -11,39 +12,51 @@ class _PhotoService {
     photoLogger.debug('Photo service started');
   }
 
-  async handleUploadPhoto(src: number, image: string) {
+  async handleUploadPhoto(
+    reqObj: PromiseRequest<string>,
+    resp: PromiseEventResp<GalleryPhoto>,
+  ): Promise<void> {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      const photo = await this.photoDB.uploadPhoto(identifier, image);
-      emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, src, photo);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
+
+      resp({ status: 'ok', data: photo });
     } catch (e) {
       photoLogger.error(`Failed to upload photo, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 
-  async handleFetchPhotos(src: number) {
+  async handleFetchPhotos(reqObj: PromiseRequest<void>, resp: PromiseEventResp<GalleryPhoto[]>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
       const photos = await this.photoDB.getPhotosByIdentifier(identifier);
-      emitNet(PhotoEvents.SEND_PHOTOS, src, photos);
+
+      resp({ status: 'ok', data: photos });
     } catch (e) {
       photoLogger.error(`Failed to fetch photos, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 
-  async handleDeletePhoto(src: number, photo: GalleryPhoto) {
+  async handleDeletePhoto(
+    reqObj: PromiseRequest<GalleryPhoto>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      await this.photoDB.deletePhoto(photo, identifier);
-      emitNet(PhotoEvents.DELETE_PHOTO_SUCCESS, src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      await this.photoDB.deletePhoto(reqObj.data, identifier);
+
+      resp({ status: 'ok' });
     } catch (e) {
-      photoLogger.error(`Failed to fetch photos, ${e.message}`, {
-        source: src,
+      photoLogger.error(`Failed to delete photo, ${e.message}`, {
+        source: reqObj.source,
       });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 }

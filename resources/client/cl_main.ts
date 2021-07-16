@@ -139,12 +139,6 @@ on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {
   cb();
 });
 
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_CAMERA);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
-  emitNet(PhotoEvents.FETCH_PHOTOS);
-  cb();
-});
-
 RegisterNuiCallbackType(PhoneEvents.OPEN_APP_DAILER);
 on(`__cfx_nui:${PhoneEvents.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
   emitNet(CallEvents.FETCH_CALLS);

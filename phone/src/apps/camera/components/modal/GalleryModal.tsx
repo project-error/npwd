@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import useStyles from './modal.styles';
 import { Button, Paper } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -9,30 +9,47 @@ import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
 import { GalleryPhoto, PhotoEvents } from '../../../../../../typings/photo';
 import { useNuiRequest } from 'fivem-nui-react-lib';
+import { usePhotoActions } from '../../hooks/usePhotoActions';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useTranslation } from 'react-i18next';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 export const GalleryModal = () => {
-  const Nui = useNuiRequest();
+  const [shareOpen, setShareOpen] = useState(null);
+
   const classes = useStyles();
   const history = useHistory();
   const query = useQueryParams();
-  const referal = query.referal || '/camera';
+  const { deletePhoto } = usePhotoActions();
+  const { addAlert } = useSnackbar();
+  const { t } = useTranslation();
 
-  const [shareOpen, setShareOpen] = useState(null);
+  const referal = query.referal || '/camera';
 
   const meta: GalleryPhoto = useMemo(
     () => ({ id: parseInt(query.id), image: query.image as string }),
     [query],
   );
 
+  console.log('meta', meta);
+
   const _handleClose = () => {
     history.push(referal);
   };
 
   const handleDeletePhoto = () => {
-    Nui.send(PhotoEvents.DELETE_PHOTO, {
+    fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.DELETE_PHOTO, {
       image: meta.image,
+    }).then((serverResp) => {
+      if (serverResp.status !== 'ok') {
+        return addAlert({ message: t('APPS_CAMERA_FAILED_TO_DELETE_PHOTO'), type: 'error' });
+      }
+
+      deletePhoto(meta.image);
+
+      history.push(referal);
     });
-    history.push(referal);
   };
 
   const handleSharePhoto = useCallback(() => {
