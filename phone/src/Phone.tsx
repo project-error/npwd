@@ -32,6 +32,7 @@ import PhoneWrapper from './PhoneWrapper';
 
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
+import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -78,22 +79,24 @@ function Phone() {
 
   return (
     <div>
-      <WindowSnackbar />
-      <PhoneWrapper>
-        <NotificationBar />
-        <div className="PhoneAppContainer">
-          <>
-            <Route exact path="/" component={HomeApp} />
-            {callModal && <Route exact path="/call" component={CallModal} />}
-            {apps.map((App) => (
-              <App.Route key={App.id} />
-            ))}
-          </>
-          <NotificationAlert />
-          <PhoneSnackbar />
-        </div>
-        <Navigation />
-      </PhoneWrapper>
+      <TopLevelErrorComponent>
+        <WindowSnackbar />
+        <PhoneWrapper>
+          <NotificationBar />
+          <div className="PhoneAppContainer">
+            <>
+              <Route exact path="/" component={HomeApp} />
+              {callModal && <Route exact path="/call" component={CallModal} />}
+              {apps.map((App) => (
+                <App.Route key={App.id} />
+              ))}
+            </>
+            <NotificationAlert />
+            <PhoneSnackbar />
+          </div>
+          <Navigation />
+        </PhoneWrapper>
+      </TopLevelErrorComponent>
     </div>
   );
 }

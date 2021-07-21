@@ -1,5 +1,10 @@
 {
   "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Fatal Error",
+      "TOP_LEVEL_ERR_ACTION": "Reload",
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+    },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
