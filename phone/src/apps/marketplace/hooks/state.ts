@@ -26,7 +26,7 @@ const defaultData: MarketplaceListing[] = [
   },
 ];
 
-const listingState = atom<MarketplaceListing[]>({
+export const listingState = atom<MarketplaceListing[]>({
   key: 'listings',
   default: selector({
     key: 'defaultListings',
