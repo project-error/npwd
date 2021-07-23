@@ -7,7 +7,7 @@ import { useContactActions } from '../../hooks/useContactActions';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { Contact, ContactEvents } from '../../../../../../typings/contact';
+import { Contact, ContactEvents, ContactsDatabaseLimits } from '../../../../../../typings/contact';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
@@ -71,6 +71,24 @@ const ContactsInfoPage = () => {
   const [avatar, setAvatar] = useState(contact ? contact.avatar : '');
 
   const { t } = useTranslation();
+
+  const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.target.value;
+    if (inputVal.length === ContactsDatabaseLimits.number) return;
+    setNumber(e.target.value);
+  };
+
+  const handleDisplayChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.target.value;
+    if (inputVal.length === ContactsDatabaseLimits.display) return;
+    setName(e.target.value);
+  };
+
+  const handleAvatarChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.target.value;
+    if (inputVal.length === ContactsDatabaseLimits.avatar) return;
+    setAvatar(e.target.value);
+  };
 
   useEffect(() => {
     if (addNumber) {
@@ -173,9 +191,10 @@ const ContactsInfoPage = () => {
         <MuiAvatar className={classes.avatar} src={avatar} />
         <TextField
           autoFocus
+          error={name.length === ContactsDatabaseLimits.display}
           className={classes.input}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleDisplayChange}
           label={t('APPS_CONTACT_FORM_NAME')}
           fullWidth
           inputProps={{
@@ -184,8 +203,8 @@ const ContactsInfoPage = () => {
         />
         <TextField
           className={classes.input}
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
+          value={number.length === ContactsDatabaseLimits.number}
+          onChange={handleNumberChange}
           label={t('APPS_CONTACT_FORM_NUMBER')}
           fullWidth
           inputProps={{
@@ -193,11 +212,12 @@ const ContactsInfoPage = () => {
           }}
         />
         <TextField
+          error={avatar.length === ContactsDatabaseLimits.avatar}
           className={classes.input}
           label={t('APPS_CONTACT_FORM_AVATAR')}
           fullWidth
           value={avatar}
-          onChange={(e) => setAvatar(e.target.value)}
+          onChange={handleAvatarChange}
           inputProps={{
             className: classes.inputProps,
           }}
