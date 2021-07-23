@@ -16,6 +16,7 @@
         "ACTIONS": "Actions"
       },
       "OPTIONS": {
+        "ICONSET": "Pack d'icones",
         "LANGUAGE": "Langage",
         "RESET_SETTINGS": "Réinitialiser",
         "RESET_SETTINGS_DESC": "Cette action effacera toutes les données stockées",
@@ -61,6 +62,8 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marché",
     "APPS_CAMERA": "Caméra",
+    
+    "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Appel entrant",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Appel en cours",
@@ -69,11 +72,13 @@
     "APPS_DIALER_ACCEPT_CALL": "Accepter",
     "APPS_DIALER_REJECT_CALL": "Rejeter",
     "APPS_DIALER_END_CALL": "Raccrocher",
+    "APPS_DIALER_INVALID_NUMBER": "Ce numéro n'est pas valide",
     "APPS_DIALER_INPUT_PLACEHOLDER": "Entrer un numéro",
     "APPS_DIALER_NO_HISTORY": "Aucun historique d'appel",
     "APPS_DIALER_NAVBAR_HISTORY": "Historique",
     "APPS_DIALER_NAVBAR_DIAL": "Composer",
     "APPS_DIALER_NAVBAR_CONTACTS": "Contacts",
+    "APPS_DIALER_BUSY_LINE": "La ligne sonne occupée",
 
     "APPS_TWITTER_TWEET": "Tweet",
     "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
@@ -221,6 +226,7 @@
     "APPS_MARKETPLACE_FORM_DESCRIPTION": "Description",
 
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour afficher",
+    "GENERIC_LOADING": "Chargement...",
     "GENERIC_WAIT": "Veuillez patienter...",
     "GENERIC_SAVE": "Sauvegarder",
     "GENERIC_UPDATE": "Mettre à jour",
