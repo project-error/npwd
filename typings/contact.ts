@@ -20,6 +20,12 @@ export interface ContactDeleteDTO {
   id: number;
 }
 
+export enum ContactsDatabaseLimits {
+  avatar = 512,
+  number = 12,
+  display = 255,
+}
+
 export enum ContactEvents {
   GET_CONTACTS = 'npwd:getContacts',
   ADD_CONTACT = 'npwd:addContacts',

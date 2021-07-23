@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import MUITextField from '@material-ui/core/TextField';
-import MUIInputBase from '@material-ui/core/InputBase';
+import MUIInputBase, { InputBaseProps } from '@material-ui/core/InputBase';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { PhoneEvents } from '../../../../typings/phone';
+import { TextFieldProps } from '@material-ui/core/TextField/TextField';
 
 const useToggleFocus = () => {
   const Nui = useNuiRequest();
@@ -16,7 +17,7 @@ const useToggleFocus = () => {
   );
 };
 
-export const TextField = (props) => {
+export const TextField: React.FC<TextFieldProps> = (props) => {
   const toggleKeys = useToggleFocus();
   return (
     <MUITextField
@@ -37,7 +38,7 @@ export const TextField = (props) => {
   );
 };
 
-export const InputBase = (props) => {
+export const InputBase: React.FC<InputBaseProps> = (props) => {
   const toggleKeys = useToggleFocus();
   return (
     <MUIInputBase
