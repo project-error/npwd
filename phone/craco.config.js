@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 
 const {
@@ -7,6 +8,8 @@ const {
   getLoaders,
   throwUnexpectedConfigError,
 } = require('@craco/craco');
+
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 const throwError = (message) =>
   throwUnexpectedConfigError({
@@ -19,6 +22,28 @@ const throwError = (message) =>
 module.exports = {
   webpack: {
     configure: (webpackConfig, { paths }) => {
+      const releaseVersion = process.env.npm_package_version;
+
+      process.env.REACT_APP_SENTRY_RELEASE = releaseVersion;
+
+      if (process.env.SENTRY_RELEASE) {
+        webpackConfig.plugins.push(
+          new SentryCliPlugin({
+            url: 'https://sentry.projecterror.dev',
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            org: 'project-error',
+            project: 'npwd',
+
+            release: releaseVersion,
+            validate: true,
+            urlPrefix: '~/resources/html',
+            // webpack-specific configuration
+            include: ['../resources/html'],
+            ignore: ['node_modules'],
+          }),
+        );
+      }
+
       const { hasFoundAny, matches } = getLoaders(webpackConfig, loaderByName('babel-loader'));
       if (!hasFoundAny) throwError('failed to find babel-loader');
 

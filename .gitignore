@@ -6,6 +6,7 @@ npwd_temp
 resources/html
 
 phone/.eslintcache
+.env
 
 # Node Modules and Built Folders
 node_modules
