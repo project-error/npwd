@@ -1212,6 +1212,7 @@
   dependencies:
     uuid "^8.3.2"
 
+<<<<<<< HEAD
 "@sentry/cli@^1.67.1":
   version "1.67.2"
   resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.67.2.tgz#dbb5631cb3637e10298f67915013592cb22f04ff"
@@ -1224,6 +1225,8 @@
     progress "^2.0.3"
     proxy-from-env "^1.1.0"
 
+=======
+>>>>>>> 23c8ef521 (ci(sentry): update sentry to use new hosted instance)
 "@sentry/core@6.10.0":
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-6.10.0.tgz#70af9dc72bb6a5b59062a31b7de023f7f1878357"
@@ -1244,6 +1247,7 @@
     "@sentry/utils" "6.10.0"
     tslib "^1.9.3"
 
+<<<<<<< HEAD
 "@sentry/integrations@^6.10.0":
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-6.10.0.tgz#f8f9e7efd55ec44d0408bd4493df1c9ceabaaa63"
@@ -1254,6 +1258,8 @@
     localforage "^1.8.1"
     tslib "^1.9.3"
 
+=======
+>>>>>>> 23c8ef521 (ci(sentry): update sentry to use new hosted instance)
 "@sentry/minimal@6.10.0":
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.10.0.tgz#9404b93fae649b6c48e1da8f0991b87cf9999561"
@@ -1302,6 +1308,7 @@
     "@sentry/types" "6.10.0"
     tslib "^1.9.3"
 
+<<<<<<< HEAD
 "@sentry/webpack-plugin@^1.16.0":
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.16.0.tgz#f9b15b5bb485995e776729b71bcf2d9fad7dca7a"
@@ -1309,6 +1316,8 @@
   dependencies:
     "@sentry/cli" "^1.67.1"
 
+=======
+>>>>>>> 23c8ef521 (ci(sentry): update sentry to use new hosted instance)
 "@sindresorhus/df@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sindresorhus/df/-/df-1.0.1.tgz#c69b66f52f6fcdd287c807df210305dbaf78500d"
