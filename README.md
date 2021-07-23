@@ -1,6 +1,6 @@
 # New-Phone-Who-Dis (NPWD)
 
-<img src="https://beta.iodine.gg/zVkK7.png" width="500" height="300" />
+<img src="https://i.file.glass/zVkK7.png" width="500" height="300" />
 
 
 NPWD is our flagship and current running project. The team has been working on the project since August, 2020. This resource isn’t complete yet and currently has a pre-release. There is however no ETA for a stable release, yet. Feel free to test it out in a dev environment by following the installation guide.
@@ -36,13 +36,13 @@ We do not want issues opened that are due to the phone being **WIP** as this slo
 
 Most of these apps have UI that does **not** represent the final product and are subject to change.
 
-- [**Bank**](https://beta.iodine.gg/Eh53X.png)
-- [**Calculator**](https://beta.iodine.gg/s6VQV.png)
-- [**Camera**](https://beta.iodine.gg/vW0y9.png)
-- [**Contacts**](https://beta.iodine.gg/3fujR.png)
-- [**Marketplace**](https://beta.iodine.gg/5bUa8.png)
-- [**Messages**](https://beta.iodine.gg/S4Lia.png)
-- [**Notes**](https://beta.iodine.gg/qTkBb.png)
-- [**Phone**](https://beta.iodine.gg/z0ii9.png)
-- [**Settings**](https://beta.iodine.gg/mZAIt.png)
-- [**Twitter**](https://beta.iodine.gg/rQZFR.png)
+- [**Bank**](https://i.file.glass/Eh53X.png)
+- [**Calculator**](https://i.file.glass/s6VQV.png)
+- [**Camera**](https://i.file.glass/vW0y9.png)
+- [**Contacts**](https://i.file.glass/3fujR.png)
+- [**Marketplace**](https://i.file.glass/5bUa8.png)
+- [**Messages**](https://i.file.glass/S4Lia.png)
+- [**Notes**](https://i.file.glass/qTkBb.png)
+- [**Phone**](https://i.file.glass/z0ii9.png)
+- [**Settings**](https://i.file.glass/mZAIt.png)
+- [**Twitter**](https://i.file.glass/rQZFR.png)
