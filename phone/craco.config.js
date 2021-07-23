@@ -33,7 +33,10 @@ module.exports = {
             authToken: process.env.SENTRY_AUTH_TOKEN,
             org: 'project-error',
             project: 'npwd',
+<<<<<<< HEAD
 
+=======
+>>>>>>> 23c8ef52 (ci(sentry): update sentry to use new hosted instance)
             release: releaseVersion,
             validate: true,
             urlPrefix: '~/resources/html',
