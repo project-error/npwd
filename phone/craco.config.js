@@ -33,6 +33,7 @@ module.exports = {
             authToken: process.env.SENTRY_AUTH_TOKEN,
             org: 'project-error',
             project: 'npwd',
+
             release: releaseVersion,
             validate: true,
             urlPrefix: '~/resources/html',
