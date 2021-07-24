@@ -18,7 +18,7 @@
     "enzyme": "^3.11.0",
     "fivem-nui-react-lib": "^2.2.8",
     "howler": "^2.2.1",
-    "i18next": "^19.7.0",
+    "i18next": "^20.3.4",
     "jsonschema": "^1.4.0",
     "parse-url": "^5.0.7",
     "qs": "^6.9.6",
