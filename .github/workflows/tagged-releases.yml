@@ -39,15 +39,16 @@ jobs:
       - name: Run build
         run: npm run build
       - name: Create Sentry Release
-        uses: getsentry/action-release@v1.1.5
+        uses: tclindner/sentry-releases-action@v1.2.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_URL: https://sentry.projecterror.dev/
         with:
           environment: production
-          version: ${{ steps.get_vars.outputs.VERSION_TAG }}
-          sourcemaps: './resources/html/static/js'
+          tagName: ${{ steps.get_vars.outputs.VERSION_TAG }}
+          sourceMapOptions: './resources/html/static/js'
       - name: Bundle built files
         run: |
           mkdir npwd_temp
