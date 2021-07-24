@@ -30,7 +30,7 @@
     "@craco/craco": "^6.1.1",
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
-    "@types/enzyme": "^3.10.7",
+    "@types/enzyme": "^3.10.9",
     "@types/howler": "^2.2.1",
     "@types/node": "^14.11.5",
     "@types/qs": "^6.9.5",
