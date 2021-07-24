@@ -39,7 +39,7 @@
     "@sentry/webpack-plugin": "^1.16.0",
     "@types/jest": "^26.0.14",
     "@types/md5": "^2.2.1",
-    "@types/node": "^14.11.10",
+    "@types/node": "^16.4.1",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
