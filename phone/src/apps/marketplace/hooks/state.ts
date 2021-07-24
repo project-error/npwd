@@ -13,7 +13,7 @@ const defaultData: MarketplaceListing[] = [
     title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
     description:
       'skldfsdEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-    url: 'https://beta.iodine.gg/706Y3.jpeg',
+    url: 'https://i.file.glass/706Y3.jpeg',
   },
   {
     id: 2,
