@@ -13,7 +13,7 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "@discordjs/collection": "^0.1.6",
+    "@discordjs/collection": "^0.2.0",
     "@project-error/pe-utils": "^0.1.6",
     "axios": "^0.21.1",
     "connection-string-parser": "^1.0.3",
