@@ -14,6 +14,7 @@ import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
 import { useProfile } from '../hooks/useProfile';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const MatchApp = () => {
   const Nui = useNuiRequest();
@@ -21,9 +22,9 @@ export const MatchApp = () => {
   const [activePage, setActivePage] = useState(0);
   const { noProfileExists } = useProfile();
 
-  useEffect(() => {
+  /*useEffect(() => {
     Nui.send(MatchEvents.INITIALIZE);
-  }, [Nui]);
+  }, [Nui]);*/
 
   const handlePageChange = (e, page) => setActivePage(page);
 
@@ -38,9 +39,11 @@ export const MatchApp = () => {
         ) : (
           <>
             <AppContent>
-              <Route path="/match/" exact component={MatchPage} />
-              <Route path="/match/matches" exact component={MatchList} />
-              <Route path="/match/profile" exact component={ProfileEditor} />
+              <React.Suspense fallback={<LoadingSpinner />}>
+                <Route path="/match/" exact component={MatchPage} />
+                <Route path="/match/matches" exact component={MatchList} />
+                <Route path="/match/profile" exact component={ProfileEditor} />
+              </React.Suspense>
             </AppContent>
             <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
           </>
@@ -52,7 +55,7 @@ export const MatchApp = () => {
 
 InjectDebugData(
   [
-    {
+    /*{
       app: 'MATCH',
       method: MatchEvents.GET_PROFILES_SUCCESS,
       data: [
@@ -98,7 +101,7 @@ InjectDebugData(
           phoneNumber: '123-4567',
         },
       ],
-    },
+    },*/
     {
       app: 'MATCH',
       method: MatchEvents.GET_MY_PROFILE_SUCCESS,

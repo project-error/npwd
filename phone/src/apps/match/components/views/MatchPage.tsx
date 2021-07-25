@@ -7,6 +7,8 @@ import { useProfiles } from '../../hooks/useProfiles';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import ActiveProfile from '../ActiveProfile';
+import { useMatchService } from '../../hooks/useMatchService';
+import { useMatchActions } from '../../hooks/useMatchActions';
 
 const useStyles = makeStyles({
   root: {

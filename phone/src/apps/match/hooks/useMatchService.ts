@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { Profile, FormattedProfile, Match, MatchEvents } from '../../../../../typings/match';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useEffect } from 'react';
 
 export const useMatchService = () => {
   const { addAlert } = useSnackbar();
@@ -16,13 +17,6 @@ export const useMatchService = () => {
   const setMatches = useSetRecoilState(matchState.matches);
   const setErrorLoadingMatches = useSetRecoilState(matchState.errorLoadingMatches);
   const setErrorLoadingProfiles = useSetRecoilState(matchState.errorLoadingProfiles);
-
-  const handleAddAlert = ({ message, type }: IAlert) => {
-    addAlert({
-      message: t(message),
-      type,
-    });
-  };
 
   function formatProfile(profile: Profile): FormattedProfile | null {
     return {
@@ -36,6 +30,14 @@ export const useMatchService = () => {
   const _setProfiles = (profiles: Profile[]): void => {
     setProfiles(profiles.map(formatProfile));
   };
+
+  const handleAddAlert = ({ message, type }: IAlert) => {
+    addAlert({
+      message: t(message),
+      type,
+    });
+  };
+
   const _setProfile = (profile: Profile) => {
     if (!profile) {
       setNoProfileExists(true);

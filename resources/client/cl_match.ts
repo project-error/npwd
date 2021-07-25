@@ -1,5 +1,6 @@
 import { Like, Profile, MatchEvents } from '../../typings/match';
 import { sendMatchEvent } from '../utils/messages';
+import { RegisterNuiProxy } from './cl_utils';
 
 /**
  * Many events that are just statuses are passed directly from
@@ -8,18 +9,22 @@ import { sendMatchEvent } from '../utils/messages';
  * data associated with the event.
  * @param eventName - event we are propagating
  */
-const transferEvent = (eventName: string) => (...args: any) => {
-  sendMatchEvent(eventName, ...args);
-};
+const transferEvent =
+  (eventName: string) =>
+  (...args: any) => {
+    sendMatchEvent(eventName, ...args);
+  };
 
-onNet(MatchEvents.GET_PROFILES_FAILED, transferEvent(MatchEvents.GET_PROFILES_FAILED));
+RegisterNuiProxy(MatchEvents.GET_PROFILES);
+
+/*onNet(MatchEvents.GET_PROFILES_FAILED, transferEvent(MatchEvents.GET_PROFILES_FAILED));*/
 onNet(MatchEvents.SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.SAVE_LIKES_SUCCESS));
 onNet(MatchEvents.SAVE_LIKES_FAILED, transferEvent(MatchEvents.SAVE_LIKES_FAILED));
 onNet(MatchEvents.GET_MATCHES_SUCCESS, transferEvent(MatchEvents.GET_MATCHES_SUCCESS));
 onNet(MatchEvents.GET_MATCHES_FAILED, transferEvent(MatchEvents.GET_MATCHES_FAILED));
 onNet(MatchEvents.GET_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.GET_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.GET_MY_PROFILE_FAILED, transferEvent(MatchEvents.GET_MY_PROFILE_FAILED));
-onNet(MatchEvents.GET_PROFILES_SUCCESS, transferEvent(MatchEvents.GET_PROFILES_SUCCESS));
+/*onNet(MatchEvents.GET_PROFILES_SUCCESS, transferEvent(MatchEvents.GET_PROFILES_SUCCESS));*/
 onNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.UPDATE_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.CREATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.CREATE_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.CREATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.CREATE_MY_PROFILE_FAILED));

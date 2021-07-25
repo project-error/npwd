@@ -1,10 +1,12 @@
-import { matchLogger } from './match.utils';
+import { formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import { Like, MatchEvents, Profile } from '../../../typings/match';
+import { FormattedProfile, Like, MatchEvents, Profile } from '../../../typings/match';
 import PlayerService from '../players/player.service';
+import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
 class _MatchService {
   private readonly matchDB: _MatchDB;
+
   constructor() {
     this.matchDB = MatchDB;
     matchLogger.debug('Match service started');
@@ -23,16 +25,31 @@ class _MatchService {
     }
   }
 
-  async dispatchProfiles(identifier: string, source: number): Promise<void> {
+  async dispatchProfiles(identifier: string): Promise<FormattedProfile[]> {
     try {
       const profiles = await this.matchDB.getPotentialProfiles(identifier);
-      emitNet(MatchEvents.GET_PROFILES_SUCCESS, source, profiles);
+      return profiles.map(formatProfile);
+      /*emitNet(MatchEvents.GET_PROFILES_SUCCESS, source, formattedProfiles);*/
     } catch (e) {
       matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
-      emitNet(MatchEvents.GET_PROFILES_FAILED, source, {
-        message: 'APPS_MATCH_GET_PROFILES_FAILED',
-        type: 'error',
-      });
+      /*emitNet(MatchEvents.GET_PROFILES_FAILED, source, {
+				message: 'APPS_MATCH_GET_PROFILES_FAILED',
+				type: 'error',
+			});*/
+    }
+  }
+
+  async handleGetProfiles(
+    reqObj: PromiseRequest<void>,
+    resp: PromiseEventResp<FormattedProfile[]>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    try {
+      const profiles = await this.dispatchProfiles(identifier);
+      resp({ status: 'ok', data: profiles });
+    } catch (e) {
+      matchLogger.error(`Error in handleGetProfiles, ${e.message}`);
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 
@@ -41,7 +58,7 @@ class _MatchService {
     matchLogger.debug(`Initializing match for identifier: ${identifier}`);
 
     await this.dispatchPlayerProfile(identifier, src);
-    await this.dispatchProfiles(identifier, src);
+    await this.dispatchProfiles(identifier);
     await this.matchDB.updateLastActive(identifier);
   }
 

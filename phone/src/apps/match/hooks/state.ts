@@ -1,10 +1,32 @@
-import { atom } from 'recoil';
-import { FormattedMatch, FormattedProfile } from '../../../../../typings/match';
+import { atom, selector, useRecoilState } from 'recoil';
+import { FormattedMatch, FormattedProfile, MatchEvents } from '../../../../../typings/match';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import LogDebugEvent from '../../../os/debug/LogDebugEvents';
+import { isEnvBrowser } from '../../../utils/misc';
+import { MockProfilesData } from '../utils/constants';
 
 export const matchState = {
-  profiles: atom<FormattedProfile[]>({
+  profiles: atom<FormattedProfile[] | any>({
     key: 'profiles',
-    default: null,
+    default: selector({
+      key: 'matchDefaultProfiles',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<FormattedProfile[]>>(
+            MatchEvents.GET_PROFILES,
+          );
+          LogDebugEvent({ action: 'fetchProfiles', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockProfilesData;
+          }
+          console.error(e);
+          return [];
+        }
+      },
+    }),
   }),
   errorLoadingProfiles: atom({
     key: 'errorLoadingProfiles',
@@ -27,3 +49,5 @@ export const matchState = {
     default: false,
   }),
 };
+
+export const useFormattedProfiles = () => useRecoilState(matchState.profiles);
