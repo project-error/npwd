@@ -12,16 +12,17 @@ class _MatchService {
     matchLogger.debug('Match service started');
   }
 
-  async dispatchPlayerProfile(identifier: string, source: number): Promise<void> {
+  async dispatchPlayerProfile(identifier: string): Promise<FormattedProfile> {
     try {
       const profile = await this.matchDB.getOrCreateProfile(identifier);
-      emitNet(MatchEvents.GET_MY_PROFILE_SUCCESS, source, profile);
+      return formatProfile(profile);
+      /*emitNet(MatchEvents.GET_MY_PROFILE_SUCCESS, source, profile);*/
     } catch (e) {
       matchLogger.error(`Failed to get player profile, ${e.message}`);
-      emitNet(MatchEvents.GET_MY_PROFILE_FAILED, source, {
-        message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
-        type: 'error',
-      });
+      /*emitNet(MatchEvents.GET_MY_PROFILE_FAILED, source, {
+				message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
+				type: 'error',
+			});*/
     }
   }
 
@@ -53,12 +54,23 @@ class _MatchService {
     }
   }
 
+  async handleGetMyProfile(
+    reqObj: PromiseRequest<void>,
+    resp: PromiseEventResp<FormattedProfile>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    try {
+      const profile = await this.dispatchPlayerProfile(identifier);
+      resp({ status: 'ok', data: profile });
+    } catch (e) {
+      matchLogger.error(`Error in handleGetMyProfile, ${e.message}`);
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+    }
+  }
+
   async handleInitialize(src: number) {
     const identifier = PlayerService.getIdentifier(src);
     matchLogger.debug(`Initializing match for identifier: ${identifier}`);
-
-    await this.dispatchPlayerProfile(identifier, src);
-    await this.dispatchProfiles(identifier);
     await this.matchDB.updateLastActive(identifier);
   }
 

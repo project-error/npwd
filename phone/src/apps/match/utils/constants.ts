@@ -69,8 +69,8 @@ export const MockMyProfileData: FormattedProfile = {
   lastActive: 1616004986,
   job: 'Engineer',
   location: 'Boston',
-  tags: 'code,books',
+  tags: 'code,javascript',
   phoneNumber: '999-9999',
-  tagList: ['reading', 'coolstuff', 'coffee'],
+  tagList: ['code', 'javascript'],
   lastActiveFormatted: '12332425',
 };

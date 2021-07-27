@@ -1,5 +1,5 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { matchState } from './state';
+import { useRecoilValue } from 'recoil';
+import { matchState, useFormattedProfiles } from './state';
 
 import { FormattedProfile, MatchEvents } from '../../../../../typings/match';
 import { useNuiRequest } from 'fivem-nui-react-lib';
@@ -13,7 +13,7 @@ interface IUseProfiles {
 
 export const useProfiles = (): IUseProfiles => {
   const Nui = useNuiRequest();
-  const [profiles, setProfiles] = useRecoilState(matchState.profiles);
+  const [profiles, setProfiles] = useFormattedProfiles();
   const error = useRecoilValue(matchState.errorLoadingProfiles);
 
   const setViewed = (id: number, liked: boolean) => {

@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { matchState } from './state';
+import { matchState, useMyFormattedProfile } from './state';
 
 import { FormattedProfile } from '../../../../../typings/match';
 
@@ -10,7 +10,7 @@ interface IUseProfiles {
 }
 
 export const useProfile = (): IUseProfiles => {
-  const [profile, setProfile] = useRecoilState<FormattedProfile>(matchState.myProfile);
+  const [profile, setProfile] = useMyFormattedProfile();
   const noProfileExists = useRecoilValue(matchState.noProfileExists);
   return { profile, setProfile, noProfileExists };
 };

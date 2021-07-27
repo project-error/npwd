@@ -14,6 +14,15 @@ onNetPromise<void, FormattedProfile[]>(MatchEvents.GET_PROFILES, (reqObj, resp) 
   });
 });
 
+onNetPromise<void, FormattedProfile>(MatchEvents.GET_MY_PROFILE, (reqObj, resp) => {
+  MatchService.handleGetMyProfile(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in fetch my profile event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
 onNet(MatchEvents.INITIALIZE, () => {
   const _source = getSource();
   MatchService.handleInitialize(_source).catch((e) =>

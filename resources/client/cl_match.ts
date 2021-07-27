@@ -16,14 +16,15 @@ const transferEvent =
   };
 
 RegisterNuiProxy(MatchEvents.GET_PROFILES);
+RegisterNuiProxy(MatchEvents.GET_MY_PROFILE);
 
 /*onNet(MatchEvents.GET_PROFILES_FAILED, transferEvent(MatchEvents.GET_PROFILES_FAILED));*/
 onNet(MatchEvents.SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.SAVE_LIKES_SUCCESS));
 onNet(MatchEvents.SAVE_LIKES_FAILED, transferEvent(MatchEvents.SAVE_LIKES_FAILED));
 onNet(MatchEvents.GET_MATCHES_SUCCESS, transferEvent(MatchEvents.GET_MATCHES_SUCCESS));
 onNet(MatchEvents.GET_MATCHES_FAILED, transferEvent(MatchEvents.GET_MATCHES_FAILED));
-onNet(MatchEvents.GET_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.GET_MY_PROFILE_SUCCESS));
-onNet(MatchEvents.GET_MY_PROFILE_FAILED, transferEvent(MatchEvents.GET_MY_PROFILE_FAILED));
+/*onNet(MatchEvents.GET_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.GET_MY_PROFILE_SUCCESS));
+onNet(MatchEvents.GET_MY_PROFILE_FAILED, transferEvent(MatchEvents.GET_MY_PROFILE_FAILED));*/
 /*onNet(MatchEvents.GET_PROFILES_SUCCESS, transferEvent(MatchEvents.GET_PROFILES_SUCCESS));*/
 onNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.UPDATE_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.CREATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.CREATE_MY_PROFILE_SUCCESS));

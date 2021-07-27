@@ -4,7 +4,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
-import { MockProfilesData } from '../utils/constants';
+import { MockMyProfileData, MockProfilesData } from '../utils/constants';
 
 export const matchState = {
   profiles: atom<FormattedProfile[] | any>({
@@ -42,12 +42,30 @@ export const matchState = {
   }),
   myProfile: atom<FormattedProfile | null>({
     key: 'myProfile',
-    default: null,
+    default: selector({
+      key: 'myProfileDefault',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<FormattedProfile>>(
+            MatchEvents.GET_MY_PROFILE,
+          );
+          LogDebugEvent({ action: 'fetchMyProfile', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockMyProfileData;
+          }
+          console.error(e);
+          return null;
+        }
+      },
+    }),
   }),
   noProfileExists: atom<boolean>({
     key: 'noProfileExists',
-    default: false,
+    default: true,
   }),
 };
 
 export const useFormattedProfiles = () => useRecoilState(matchState.profiles);
+export const useMyFormattedProfile = () => useRecoilState(matchState.myProfile);
