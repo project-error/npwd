@@ -12,6 +12,9 @@
         "RINGING": "Ringing",
         "OUTGOING": "Outgoing call",
         "INCOMING": "Incoming call"
+      },
+      "FEEDBACK": {
+        "ERROR": "Error occurred while completing this call"
       }
     },
     "SETTINGS": {

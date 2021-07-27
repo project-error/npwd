@@ -6,6 +6,36 @@ export interface ActiveCall {
   receiver: string;
 }
 
+export interface InitializeCallDTO {
+  receiverNumber: string;
+}
+
+export interface InitializeCallResp {
+  available: boolean;
+}
+
+export interface StartCallEventData {
+  transmitter: string;
+  receiver: string;
+  isTransmitter: boolean;
+  isUnavailable?: boolean;
+}
+
+export interface EndCallDTO {
+  transmitter: string;
+  isTransmitter: boolean;
+}
+
+export interface TransmitterNumDTO {
+  transmitterNumber: string;
+}
+
+export interface CallWasAcceptedEvent {
+  channelId: number;
+  currentCall: CallHistoryItem;
+  isTransmitter: boolean;
+}
+
 export interface CallHistoryItem {
   id?: number;
   identifier: string;
@@ -20,7 +50,7 @@ export interface CallHistoryItem {
 
 export enum CallRejectReasons {
   DECLINED,
-  BUSY_LINE
+  BUSY_LINE,
 }
 
 export enum CallEvents {
@@ -33,11 +63,8 @@ export enum CallEvents {
   REJECTED = 'npwd:rejectCall',
   WAS_REJECTED = 'npwd:callRejected',
   FETCH_CALLS = 'npwd:fetchCalls',
-  SEND_HISTORY = 'npwd:sendCallHistory',
-  SEND_HANGUP_ANIM = 'npwd:sendHangupAnim',
   SET_CALLER = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
   SET_CALL_HISTORY = 'npwd:setCallHistory',
-  ACTION_RESULT = 'npwd:callsActionResult',
   SEND_ALERT = 'npwd:callSetAlert',
 }

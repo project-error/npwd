@@ -2,7 +2,10 @@ import { useRecoilState } from 'recoil';
 import { ActiveCall } from '../../../../../typings/call';
 import { callerState } from './state';
 import { CallEvents } from '../../../../../typings/call';
-import { useNuiRequest } from 'fivem-nui-react-lib';
+import { fetchNui } from '../../../utils/fetchNui';
+import { useCallback } from 'react';
+import { useMyPhoneNumber } from '../../simcard/hooks/useMyPhoneNumber';
+import { useDialingSound } from './useDialingSound';
 
 interface CallHook {
   call: ActiveCall;
@@ -13,26 +16,28 @@ interface CallHook {
 }
 
 export const useCall = (): CallHook => {
-  const Nui = useNuiRequest();
   const [call, setCall] = useRecoilState(callerState.currentCall);
+  const myPhoneNumber = useMyPhoneNumber();
+  const { endDialTone, startDialTone } = useDialingSound();
 
-  const acceptCall = () => {
-    Nui.send(CallEvents.ACCEPT_CALL, {
+  const acceptCall = useCallback(() => {
+    fetchNui(CallEvents.ACCEPT_CALL, {
       transmitterNumber: call.transmitter,
     });
-  };
+  }, [call]);
 
-  const rejectCall = () => {
-    Nui.send(CallEvents.REJECTED, {
-      phoneNumber: call.transmitter,
-    });
-  };
-
-  const endCall = () => {
-    Nui.send(CallEvents.END_CALL, {
+  const rejectCall = useCallback(() => {
+    fetchNui(CallEvents.REJECTED, {
       transmitterNumber: call.transmitter,
     });
-  };
+  }, [call]);
+
+  const endCall = useCallback(() => {
+    fetchNui(CallEvents.END_CALL, {
+      transmitterNumber: call.transmitter,
+      isTransmitter: call.transmitter === myPhoneNumber,
+    });
+  }, [call, myPhoneNumber]);
 
   return { call, setCall, acceptCall, rejectCall, endCall };
 };

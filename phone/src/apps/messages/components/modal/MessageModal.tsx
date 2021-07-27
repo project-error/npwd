@@ -22,7 +22,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
+import { useSimcard } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { MessageEvents } from '../../../../../../typings/messages';
 
 const LARGE_HEADER_CHARS = 30;

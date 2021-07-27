@@ -1,18 +1,24 @@
-import { CallEvents, CallRejectReasons } from '../../../typings/call';
-import { getSource } from '../utils/miscUtils';
+import {
+  CallEvents,
+  CallHistoryItem,
+  TransmitterNumDTO,
+  EndCallDTO,
+  InitializeCallDTO,
+  StartCallEventData,
+} from '../../../typings/call';
+import { getSource, onNetTyped } from '../utils/miscUtils';
 import CallService from './calls.service';
 import { callLogger } from './calls.utils';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNet(CallEvents.INITIALIZE_CALL, (receivingNumber: string) => {
-  const src = getSource();
-  CallService.handleInitializeCall(src, receivingNumber).catch((e) =>
-    callLogger.error(
-      `Error occured in intialize (${receivingNumber}) call event, Error: ${e.message}`,
-    ),
-  );
+onNetPromise<InitializeCallDTO, StartCallEventData>(CallEvents.INITIALIZE_CALL, (reqObj, resp) => {
+  CallService.handleInitializeCall(reqObj, resp).catch((e) => {
+    resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
+    callLogger.error(`Error occured handling init call: ${e.message}`);
+  });
 });
 
-onNet(CallEvents.ACCEPT_CALL, (transmitterNumber: string) => {
+onNetTyped(CallEvents.ACCEPT_CALL, (transmitterNumber: string) => {
   const src = getSource();
   CallService.handleAcceptCall(src, transmitterNumber).catch((e) =>
     callLogger.error(
@@ -21,27 +27,29 @@ onNet(CallEvents.ACCEPT_CALL, (transmitterNumber: string) => {
   );
 });
 
-onNet(CallEvents.REJECTED, (transmitterNumber: string, reason?: CallRejectReasons) => {
+// Fire and forget event, client doesn't care what response is we reject no matter what
+// thats the reason its not promise
+onNetTyped<TransmitterNumDTO>(CallEvents.REJECTED, (data) => {
   const src = getSource();
-  CallService.handleRejectCall(src, transmitterNumber, reason).catch((e) =>
+  CallService.handleRejectCall(src, data.transmitterNumber).catch((e) =>
     callLogger.error(
-      `Error occured in rejectcall event (${transmitterNumber}), Error:  ${e.message}`,
+      `Error occured in rejectcall event (${data.transmitterNumber}), Error:  ${e.message}`,
     ),
   );
 });
 
-onNet(CallEvents.END_CALL, (transmitterNumber: string) => {
-  const src = getSource();
-  CallService.handleEndCall(src, transmitterNumber).catch((e) =>
+onNetPromise<EndCallDTO, void>(CallEvents.END_CALL, (reqObj, resp) => {
+  CallService.handleEndCall(reqObj, resp).catch((e) => {
     callLogger.error(
-      `Error occured in end call event (${transmitterNumber}), Error:  ${e.message}`,
-    ),
-  );
+      `Error occured in end call event (${reqObj.data.transmitter}), Error:  ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
+  });
 });
 
-onNet(CallEvents.FETCH_CALLS, (limit?: number) => {
-  const src = getSource();
-  CallService.handleFetchCalls(src, limit).catch((e) =>
-    callLogger.error(`Error occured in fetch call event (${limit}), Error: ${e.message}`),
-  );
+onNetPromise<void, CallHistoryItem[]>(CallEvents.FETCH_CALLS, (reqObj, resp) => {
+  CallService.handleFetchCalls(reqObj, resp).catch((e) => {
+    resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
+    callLogger.error(`Error occured in fetch call event, Error: ${e.message}`);
+  });
 });

@@ -5,8 +5,6 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { CallEvents, CallHistoryItem } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +12,10 @@ import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 
 const useStyles = makeStyles((theme: Theme) => ({
   callForward: {
@@ -25,8 +27,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const DialerHistory = ({ calls }) => {
-  const Nui = useNuiRequest();
-  const { number: myNumber } = useSimcard();
+  const { addAlert } = useSnackbar();
+  const myNumber = useMyPhoneNumber();
   const { getDisplayByNumber } = useContactActions();
 
   const classes = useStyles();
@@ -34,10 +36,14 @@ export const DialerHistory = ({ calls }) => {
   const history = useHistory();
 
   const { t } = useTranslation();
-
   const handleCall = (phoneNumber) => {
-    Nui.send(CallEvents.INITIALIZE_CALL, {
-      number: phoneNumber,
+    fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
+      receiverNumber: phoneNumber,
+    }).then((resp) => {
+      if (resp.status === 'error') {
+        addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
+        console.error(resp.errorMsg);
+      }
     });
   };
 

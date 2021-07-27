@@ -43,6 +43,7 @@ export class CallService {
     // If we're already in a call we want to automatically reject
     if (this.isInCall())
       return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+
     this.openCallModal(true);
 
     SendNUIMessage({

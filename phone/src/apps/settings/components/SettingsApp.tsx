@@ -5,7 +5,7 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks/useContextMenu';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { List } from '../../../ui/components/List';
-import { useSimcard } from '../../../os/simcard/hooks/useSimcard';
+import { useSimcard } from '../../../os/simcard/hooks/useMyPhoneNumber';
 import { IconSetObject, useApp } from '../../../os/apps/hooks/useApps';
 import {
   SettingItem,

@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export const simcardState = {
-  number: atom({
+  number: atom<string | null>({
     key: 'simcardNumber',
     default: null,
   }),
