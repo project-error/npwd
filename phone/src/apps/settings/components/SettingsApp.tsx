@@ -5,7 +5,7 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks/useContextMenu';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { List } from '../../../ui/components/List';
-import { useSimcard } from '../../../os/simcard/hooks/useMyPhoneNumber';
+import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
 import { IconSetObject, useApp } from '../../../os/apps/hooks/useApps';
 import {
   SettingItem,
@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = usePhoneConfig();
-  const simcard = useSimcard();
+  const myNumber = useMyPhoneNumber();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
   const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
@@ -142,7 +142,7 @@ export const SettingsApp = () => {
   };
 
   const handleCopyPhoneNumber = () => {
-    setClipboard(simcard.number);
+    setClipboard(myNumber);
     addAlert({
       message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
         content: 'number',
@@ -162,7 +162,7 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
-            labelSecondary={simcard.number}
+            labelSecondary={myNumber}
             actionLabel={t('GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP', {
               content: 'number',
             })}

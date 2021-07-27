@@ -8,7 +8,6 @@ import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { CallEvents } from '../../../../../../typings/call';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useFilteredContacts } from '../../hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';

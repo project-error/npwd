@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import useStyles from './modal.styles';
 import { Button, Paper } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
 import { GalleryPhoto, PhotoEvents } from '../../../../../../typings/photo';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';

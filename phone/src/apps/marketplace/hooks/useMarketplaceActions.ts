@@ -31,7 +31,7 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
       if (valueLoading !== 'hasValue') return;
       setListings((curListings) => [...curListings, listing]);
     },
-    [setListings, valueLoading, contents],
+    [setListings, valueLoading],
   );
 
   return { deleteListing, addListing };

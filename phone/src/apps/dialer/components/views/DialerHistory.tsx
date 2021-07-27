@@ -16,6 +16,7 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import { useDialHistory } from '../../hooks/useDialHistory';
 
 const useStyles = makeStyles((theme: Theme) => ({
   callForward: {
@@ -26,10 +27,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const DialerHistory = ({ calls }) => {
+export const DialerHistory: React.FC = () => {
   const { addAlert } = useSnackbar();
   const myNumber = useMyPhoneNumber();
   const { getDisplayByNumber } = useContactActions();
+  const calls = useDialHistory();
 
   const classes = useStyles();
 

@@ -9,7 +9,6 @@ import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
@@ -41,8 +40,6 @@ function Phone() {
   const [settings] = useSettings();
 
   const { addAlert } = useSnackbar();
-
-  const Nui = useNuiRequest();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes

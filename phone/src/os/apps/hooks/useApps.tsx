@@ -4,7 +4,7 @@ import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core';
-import { useSettings, useSettingsValue } from '../../../apps/settings/hooks/useSettings';
+import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 
 export interface IconSetObject {
   custom: boolean;

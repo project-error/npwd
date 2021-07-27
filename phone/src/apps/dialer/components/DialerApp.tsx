@@ -21,8 +21,6 @@ const LoadingSpinner: React.FC = () => (
 );
 
 export const DialerApp = () => {
-  const history = useDialHistory();
-
   const dialer = useApp('DIALER');
   return (
     <DialerThemeProvider>
@@ -35,7 +33,7 @@ export const DialerApp = () => {
             </Route>
             <Route exact path="/phone">
               <React.Suspense fallback={<LoadingSpinner />}>
-                <DialerHistory calls={history} />
+                <DialerHistory />
               </React.Suspense>
             </Route>
             <Route path="/phone/contacts" component={ContactList} />
@@ -46,22 +44,3 @@ export const DialerApp = () => {
     </DialerThemeProvider>
   );
 };
-
-InjectDebugData([
-  {
-    app: 'DIALER',
-    method: CallEvents.SET_CALL_HISTORY,
-    data: [
-      {
-        id: 1,
-        transmitter: '636-6496',
-        start: 1615946292,
-      },
-      {
-        id: 2,
-        transmitter: '777-7777',
-        start: 1615946292,
-      },
-    ],
-  },
-]);
