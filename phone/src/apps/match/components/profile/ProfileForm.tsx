@@ -77,7 +77,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     Nui.send(event, updatedProfile);
   };
 
-  if (!profile && !ResourceConfig.match.allowEditableProfileName) {
+  if (!profile /* && !ResourceConfig.match.allowEditableProfileName*/) {
     return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
   }
 

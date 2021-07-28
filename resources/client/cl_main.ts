@@ -17,7 +17,6 @@ let isPhoneOpen = false;
 function fetchOnInitialize() {
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
 
 onNet(PhoneEvents.ON_INIT, () => {
@@ -131,6 +130,11 @@ AddEventHandler('onResourceStop', function (resource: string) {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
+
+RegisterNuiCallbackType(PhoneEvents.SET_CONFIG);
+on(`__cfx_nui:${PhoneEvents.SET_CONFIG}`, (data: any, cb: Function) => {
+  cb({ data: config });
+});
 
 RegisterNuiCallbackType(PhoneEvents.OPEN_APP_BANK);
 on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {

@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilState } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { FormattedMatch, FormattedProfile, MatchEvents } from '../../../../../typings/match';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
@@ -63,9 +63,11 @@ export const matchState = {
   }),
   noProfileExists: atom<boolean>({
     key: 'noProfileExists',
-    default: true,
+    default: false,
   }),
 };
 
 export const useFormattedProfiles = () => useRecoilState(matchState.profiles);
 export const useMyFormattedProfile = () => useRecoilState(matchState.myProfile);
+export const useProfileExistsValue = () => useRecoilValue(matchState.noProfileExists);
+export const useProfileExists = () => useRecoilState(matchState.noProfileExists);

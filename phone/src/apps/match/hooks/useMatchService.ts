@@ -27,9 +27,9 @@ export const useMatchService = () => {
     };
   }
 
-  /*const _setProfiles = (profiles: Profile[]): void => {
+  const _setProfiles = (profiles: Profile[]): void => {
     setProfiles(profiles.map(formatProfile));
-  };*/
+  };
 
   const handleAddAlert = ({ message, type }: IAlert) => {
     addAlert({
@@ -38,14 +38,14 @@ export const useMatchService = () => {
     });
   };
 
-  /*const _setProfile = (profile: Profile) => {
+  const _setProfile = (profile: Profile) => {
     if (!profile) {
       setNoProfileExists(true);
     } else {
       setNoProfileExists(false);
       setProfile(formatProfile(profile));
     }
-  };*/
+  };
   const _handleGetProfilesFailed = (alert: IAlert): void => {
     handleAddAlert(alert);
     setErrorLoadingProfiles(true);
@@ -68,13 +68,13 @@ export const useMatchService = () => {
   };
 
   const _handleUpdateProfile = (profile: Profile) => {
-    /*_setProfile(profile);*/
+    _setProfile(profile);
     handleAddAlert({ message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED', type: 'info' });
   };
 
   /*useNuiEvent('MATCH', MatchEvents.GET_PROFILES_SUCCESS, _setProfiles);*/
   useNuiEvent('MATCH', MatchEvents.GET_PROFILES_FAILED, _handleGetProfilesFailed);
-  /*useNuiEvent('MATCH', MatchEvents.GET_MY_PROFILE_SUCCESS, _setProfile);*/
+  useNuiEvent('MATCH', MatchEvents.GET_MY_PROFILE_SUCCESS, _setProfile);
   useNuiEvent('MATCH', MatchEvents.GET_MY_PROFILE_FAILED, handleAddAlert);
   useNuiEvent('MATCH', MatchEvents.GET_MATCHES_SUCCESS, _setMatches);
   useNuiEvent('MATCH', MatchEvents.GET_MATCHES_FAILED, _handleGetMatchesFailed);

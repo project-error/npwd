@@ -33,6 +33,13 @@ import PhoneWrapper from './PhoneWrapper';
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
+import { fetchNui } from './utils/fetchNui';
+import { ServerPromiseResp } from '../../typings/common';
+import { ResourceConfig } from '../../typings/config';
+import { useSetRecoilState } from 'recoil';
+import { phoneState } from './os/phone/hooks/state';
+import { isEnvBrowser } from './utils/misc';
+import { Resource } from 'i18next';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -42,6 +49,8 @@ function Phone() {
   const [settings] = useSettings();
 
   const { addAlert } = useSnackbar();
+
+  const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
 
   const Nui = useNuiRequest();
 
@@ -61,6 +70,16 @@ function Phone() {
     // We only want to run this on first mount of the phone,
     // so we leave an empty dep array. Otherwise, we hit a max depth error.
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!isEnvBrowser()) {
+      const resourceName = (window as any)?.GetParentResourceName() || 'npwd';
+      fetch(`https://cfx-nui-${resourceName}/config.json`).then(async (res) => {
+        const config = await res.json();
+        setResourceConfig(config);
+      });
+    }
   }, []);
 
   useKeyboardService();

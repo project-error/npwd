@@ -14,13 +14,13 @@ import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
-import { useProfile } from '../hooks/useProfile';
+import { useProfileExistsValue } from '../hooks/state';
 
 export const MatchApp = () => {
   const Nui = useNuiRequest();
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
-  const { noProfileExists } = useProfile();
+  const noProfileExists = useProfileExistsValue();
 
   useEffect(() => {
     Nui.send(MatchEvents.INITIALIZE);
@@ -34,9 +34,7 @@ export const MatchApp = () => {
         <AppTitle app={match} />
         {noProfileExists ? (
           <AppContent>
-            <React.Suspense fallback={<LoadingSpinner />}>
-              <ProfileEditor />
-            </React.Suspense>
+            <ProfileEditor />
           </AppContent>
         ) : (
           <>
@@ -47,9 +45,9 @@ export const MatchApp = () => {
                 <Route path="/match/profile" exact component={ProfileEditor} />
               </React.Suspense>
             </AppContent>
-            <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
           </>
         )}
+        <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
       </AppWrapper>
     </MatchThemeProvider>
   );
