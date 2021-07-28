@@ -7,7 +7,11 @@ import { PhotoEvents } from '../../typings/photo';
 import { CallEvents } from '../../typings/call';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
+import { RegisterNuiCB } from './cl_utils';
+
 let isPhoneOpen = false;
+
+const exps = global.exports;
 
 /* * * * * * * * * * * * *
  *
@@ -75,7 +79,7 @@ RegisterCommand(
   'phone',
   async () => {
     //-- Toggles Phone
-    await Phone();
+    await togglePhone();
   },
   false,
 );
@@ -96,17 +100,22 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-async function Phone(): Promise<void> {
-  if (config.PhoneAsItem) {
-    // TODO: Do promise callback here
-    // const hasPhoneItem = await emitNetPromise('phone:hasPhoneItem')
-    // if (!hasPhoneItem) return
+const checkExportCanOpen = (): boolean => {
+  const exportResp = exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction]();
+  if (typeof exportResp !== 'number' && typeof exportResp !== 'boolean') {
+    throw new Error('You must return either a boolean or number from your export function');
   }
-  if (isPhoneOpen) {
-    await hidePhone();
-  } else {
-    await showPhone();
+
+  return !!exportResp;
+};
+
+async function togglePhone(): Promise<void> {
+  if (config.PhoneAsItem.enabled) {
+    const canAccess = checkExportCanOpen();
+    if (!canAccess) return;
   }
+  if (isPhoneOpen) return await hidePhone();
+  await showPhone();
 }
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
