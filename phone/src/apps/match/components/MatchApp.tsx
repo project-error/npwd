@@ -13,17 +13,26 @@ import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
-import { useProfileExistsValue } from '../hooks/state';
+import { useMyProfileValue, useProfileExists, useProfileExistsValue } from '../hooks/state';
 import { fetchNui } from '../../../utils/fetchNui';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
-  const noProfileExists = useProfileExistsValue();
+  const [noProfileExists, setNoProfileExists] = useProfileExists();
+  const myProfile = useMyProfileValue();
 
   useEffect(() => {
     fetchNui(MatchEvents.INITIALIZE).then(() => console.log('Updated last activity'));
   }, []);
+
+  useEffect(() => {
+    if (!myProfile) {
+      setNoProfileExists(true);
+    } else {
+      setNoProfileExists(false);
+    }
+  }, [myProfile, setNoProfileExists]);
 
   const handlePageChange = (e, page) => setActivePage(page);
 

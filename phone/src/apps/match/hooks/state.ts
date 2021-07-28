@@ -5,7 +5,6 @@ import { ServerPromiseResp } from '../../../../../typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { MockMatchesData, MockMyProfileData, MockProfilesData } from '../utils/constants';
-import { match } from 'assert';
 
 export const matchState = {
   profiles: atom<FormattedProfile[] | any>({
@@ -29,7 +28,7 @@ export const matchState = {
       },
     }),
   }),
-  errorLoadingProfiles: atom({
+  errorLoadingProfiles: atom<boolean>({
     key: 'errorLoadingProfiles',
     default: false,
   }),
