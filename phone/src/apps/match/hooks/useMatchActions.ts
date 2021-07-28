@@ -3,14 +3,13 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
-import { useFormattedProfiles } from './state';
+import { useSetFormattedProfiles } from './state';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useCallback } from 'react';
-import Match from '../components/matches/Match';
 
 export const useMatchActions = () => {
   const { t } = useTranslation();
-  const [profiles, setProfiles] = useFormattedProfiles();
+  const setProfiles = useSetFormattedProfiles();
   const { addAlert } = useSnackbar();
 
   const formatProfile = (profile: Profile): FormattedProfile | null => {
