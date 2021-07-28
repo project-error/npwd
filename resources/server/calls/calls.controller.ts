@@ -18,7 +18,7 @@ onNetPromise<InitializeCallDTO, StartCallEventData>(CallEvents.INITIALIZE_CALL, 
   });
 });
 
-onNetTyped(CallEvents.ACCEPT_CALL, (transmitterNumber: string) => {
+onNetTyped<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, ({ transmitterNumber }) => {
   const src = getSource();
   CallService.handleAcceptCall(src, transmitterNumber).catch((e) =>
     callLogger.error(
@@ -41,7 +41,7 @@ onNetTyped<TransmitterNumDTO>(CallEvents.REJECTED, (data) => {
 onNetPromise<EndCallDTO, void>(CallEvents.END_CALL, (reqObj, resp) => {
   CallService.handleEndCall(reqObj, resp).catch((e) => {
     callLogger.error(
-      `Error occured in end call event (${reqObj.data.transmitter}), Error:  ${e.message}`,
+      `Error occured in end call event (${reqObj.data.transmitterNumber}), Error:  ${e.message}`,
     );
     resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
   });

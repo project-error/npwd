@@ -1,6 +1,6 @@
 export interface ActiveCall {
   active: boolean;
-  accepted: boolean;
+  is_accepted: boolean;
   isTransmitter: boolean;
   transmitter: string;
   receiver: string;
@@ -22,7 +22,7 @@ export interface StartCallEventData {
 }
 
 export interface EndCallDTO {
-  transmitter: string;
+  transmitterNumber: string;
   isTransmitter: boolean;
 }
 

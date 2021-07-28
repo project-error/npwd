@@ -7,11 +7,8 @@ import { useApp } from '../../../os/apps/hooks/useApps';
 import { Switch, Route } from 'react-router-dom';
 import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
-import { useDialHistory } from '../hooks/useDialHistory';
-import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
-import { CallEvents } from '../../../../../typings/call';
 import { Box, CircularProgress } from '@material-ui/core';
 
 const LoadingSpinner: React.FC = () => (

@@ -196,7 +196,7 @@ class CallsService {
   }
 
   async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
-    const transmitterNumber = reqObj.data.transmitter;
+    const transmitterNumber = reqObj.data.transmitterNumber;
     const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
 
     const currentCall = this.callMap.get(transmitterNumber);

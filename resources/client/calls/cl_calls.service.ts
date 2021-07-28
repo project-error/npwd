@@ -1,5 +1,6 @@
 import { IAlertProps } from '../../../typings/alerts';
 import { CallEvents, CallHistoryItem, CallRejectReasons } from '../../../typings/call';
+import { animationService } from '../animations/animation.controller';
 
 const exp = (global as any).exports;
 
@@ -45,6 +46,7 @@ export class CallService {
       return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
 
     this.openCallModal(true);
+    animationService.startPhoneCall();
 
     SendNUIMessage({
       app: 'CALL',

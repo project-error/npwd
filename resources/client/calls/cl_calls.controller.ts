@@ -1,6 +1,7 @@
 import {
   CallEvents,
   CallWasAcceptedEvent,
+  EndCallDTO,
   InitializeCallDTO,
   StartCallEventData,
   TransmitterNumDTO,
@@ -57,7 +58,7 @@ onNetTyped<CallWasAcceptedEvent>(
 
 // Rejected call
 RegisterNuiCB<TransmitterNumDTO>(CallEvents.REJECTED, (data, cb: NuiCallbackFunc) => {
-  emitNet(CallEvents.REJECTED, data.transmitterNumber);
+  emitNetTyped<TransmitterNumDTO>(CallEvents.REJECTED, data);
   cb({});
 });
 
@@ -66,7 +67,7 @@ onNet(CallEvents.WAS_REJECTED, async () => {
   animationService.endPhoneCall();
 });
 
-RegisterNuiCB<TransmitterNumDTO>(CallEvents.END_CALL, async (data, cb) => {
+RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
   try {
     const serverRes: ServerPromiseResp<void> = await ClUtils.emitNetPromise(
       CallEvents.END_CALL,
