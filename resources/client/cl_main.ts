@@ -2,9 +2,6 @@ import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
 import { MessageEvents } from '../../typings/messages';
-import { BankEvents } from '../../typings/bank';
-import { PhotoEvents } from '../../typings/photo';
-import { CallEvents } from '../../typings/call';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
@@ -122,7 +119,7 @@ onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
 });
 
-AddEventHandler('onResourceStop', function (resource: string) {
+on('onResourceStop', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
     SetNuiFocus(false, false);
@@ -140,33 +137,21 @@ AddEventHandler('onResourceStop', function (resource: string) {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_BANK);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {
-  emitNet(BankEvents.FETCH_TRANSACTIONS);
-  emitNet(BankEvents.GET_CREDENTIALS);
-  cb();
-});
-
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_DAILER);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
-  emitNet(CallEvents.FETCH_CALLS);
-  cb();
-});
-
-RegisterNuiCallbackType(PhoneEvents.CLOSE_PHONE);
-on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
+RegisterNuiCB<void>(PhoneEvents.CLOSE_PHONE, async (_, cb) => {
   await hidePhone();
   cb();
-}); // Called for when the phone is closed via the UI.
-
-RegisterNuiCallbackType(PhoneEvents.TOGGLE_KEYS);
-on(`__cfx_nui:${PhoneEvents.TOGGLE_KEYS}`, async (data: any, cb: Function) => {
-  if (isPhoneOpen) {
-    SetNuiFocusKeepInput(data.keepGameFocus);
-  }
-  cb();
 });
+
+// NOTE: This probably has an edge case when phone is closed for some reason
+// and we need to toggle keep input off
+RegisterNuiCB<{ keepGameFocus: boolean }>(
+  PhoneEvents.TOGGLE_KEYS,
+  async ({ keepGameFocus }, cb) => {
+    // We will only
+    if (isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+    cb({});
+  },
+);
 
 // setTick(async () => {
 //   while (config.SwimDestroy) {
