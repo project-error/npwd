@@ -2,7 +2,11 @@
   "Locale": "en",
   "KeyTogglePhone": 288,
   "KeyTakeCall": 38,
-  "PhoneAsItem": false,
+  "PhoneAsItem": {
+    "enabled": false,
+    "exportResource": "my-core-resource",
+    "exportName": "myCheckerFunction"
+  },
   "SwimDestroy": false,
   "RunRate": 10,
   "DestroyChance": 100,

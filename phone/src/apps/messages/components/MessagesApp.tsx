@@ -12,12 +12,13 @@ import NewMessageGroupButton from './form/NewMessageGroupButton';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { MessageEvents } from '../../../../../typings/messages';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const MessagesApp = () => {
   const Nui = useNuiRequest();
   const messages = useApp('MESSAGES');
   const history = useHistory();
-  
+
   useEffect(() => {
     Nui.send(MessageEvents.FETCH_MESSAGE_GROUPS);
   }, [Nui]);
@@ -27,21 +28,23 @@ export const MessagesApp = () => {
       <AppWrapper id="messages-app">
         <AppTitle app={messages} />
         <AppContent>
-          <Switch>
-            <Route path="/messages/conversations/:groupId">
-              <div>
-                <MessageModal />
-              </div>
-            </Route>
-            <Route exact path="/messages">
-              <MessagesList />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
-              <MessageGroupModal />
-            </Route>
-          </Switch>
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <Switch>
+              <Route path="/messages/conversations/:groupId">
+                <div>
+                  <MessageModal />
+                </div>
+              </Route>
+              <Route exact path="/messages">
+                <MessagesList />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
+                <MessageGroupModal />
+              </Route>
+            </Switch>
+          </React.Suspense>
         </AppContent>
         <Route exact path="/messages">
           <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
