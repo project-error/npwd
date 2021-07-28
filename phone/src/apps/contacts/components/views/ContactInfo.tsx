@@ -203,7 +203,8 @@ const ContactsInfoPage = () => {
         />
         <TextField
           className={classes.input}
-          value={number.length === ContactsDatabaseLimits.number}
+          error={number.length === ContactsDatabaseLimits.number}
+          value={number}
           onChange={handleNumberChange}
           label={t('APPS_CONTACT_FORM_NUMBER')}
           fullWidth
