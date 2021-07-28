@@ -7,18 +7,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
-import { CallEvents } from '../../../../../../typings/call';
 import { useFilteredContacts } from '../../hooks/state';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
+import { useCall } from '../../../../os/call/hooks/useCall';
 
 export const ContactList = () => {
   const filteredContacts = useFilteredContacts();
   const history = useHistory();
-  const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const { initializeCall } = useCall();
 
   const openContactInfo = (contactId: number) => {
     history.push(`/contacts/${contactId}`);
@@ -30,14 +25,7 @@ export const ContactList = () => {
       level: 2,
       data: true,
     });
-    fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
-      receiverNumber: number,
-    }).then((resp) => {
-      if (resp.status === 'error') {
-        addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-        console.error(resp.errorMsg);
-      }
-    });
+    initializeCall(number);
   };
 
   const handleMessage = (phoneNumber: string) => {

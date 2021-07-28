@@ -8,11 +8,11 @@ import ChatIcon from '@material-ui/icons/Chat';
 import PhoneIcon from '@material-ui/icons/Phone';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { CallEvents } from '../../../../../../typings/call';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import { useCall } from '../../../../os/call/hooks/useCall';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -25,6 +25,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   const myNumber = useMyPhoneNumber();
   const { t } = useTranslation();
   const history = useHistory();
+  const { initializeCall } = useCall();
   const { addAlert } = useSnackbar();
 
   const handleDeleteListing = () => {
@@ -64,14 +65,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   };
 
   const handleCall = () => {
-    fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
-      receiverNumber: listing.number,
-    }).then((resp) => {
-      if (resp.status === 'error') {
-        addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-        console.error(resp.errorMsg);
-      }
-    });
+    initializeCall(listing.number);
   };
 
   const handleMessage = () => {

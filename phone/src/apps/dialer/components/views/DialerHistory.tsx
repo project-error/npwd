@@ -12,11 +12,9 @@ import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { useDialHistory } from '../../hooks/useDialHistory';
+import { useCall } from '../../../../os/call/hooks/useCall';
 
 const useStyles = makeStyles((theme: Theme) => ({
   callForward: {
@@ -28,25 +26,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const DialerHistory: React.FC = () => {
-  const { addAlert } = useSnackbar();
   const myNumber = useMyPhoneNumber();
   const { getDisplayByNumber } = useContactActions();
+  const { initializeCall } = useCall();
   const calls = useDialHistory();
-
   const classes = useStyles();
-
   const history = useHistory();
-
   const { t } = useTranslation();
+
   const handleCall = (phoneNumber) => {
-    fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
-      receiverNumber: phoneNumber,
-    }).then((resp) => {
-      if (resp.status === 'error') {
-        addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-        console.error(resp.errorMsg);
-      }
-    });
+    initializeCall(phoneNumber);
   };
 
   if (!calls?.length) {

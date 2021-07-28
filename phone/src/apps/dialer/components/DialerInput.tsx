@@ -5,12 +5,9 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import { useHistory } from 'react-router-dom';
-import { CallEvents } from '../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
 import { InputBase } from '../../../ui/components/Input';
-import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useCall } from '../../../os/call/hooks/useCall';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,19 +32,12 @@ export const DialerInput = () => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
-  const { addAlert } = useSnackbar();
+  const { initializeCall } = useCall();
 
   const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
   const handleCall = (number: string) => {
-    fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
-      receiverNumber: number,
-    }).then((resp) => {
-      if (resp.status === 'error') {
-        addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-        console.error(resp.errorMsg);
-      }
-    });
+    initializeCall(number);
   };
 
   const handleNewContact = (number: string) => {
