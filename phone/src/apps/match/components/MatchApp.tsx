@@ -13,7 +13,7 @@ import ProfileEditor from './views/ProfileEditor';
 import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
-import { useMyProfileValue, useProfileExists, useProfileExistsValue } from '../hooks/state';
+import { useMyProfileValue, useProfileExists } from '../hooks/state';
 import { fetchNui } from '../../../utils/fetchNui';
 
 export const MatchApp = () => {

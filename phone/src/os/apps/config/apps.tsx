@@ -34,6 +34,7 @@ import {
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 import { SvgIconProps } from '@material-ui/core';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export interface IAppConfig {
   id: string;
@@ -116,7 +117,13 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
-    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />,
+    Route: () => {
+      return (
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />
+        </React.Suspense>
+      );
+    },
   },
   {
     id: 'TWITTER',
