@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, FormControlLabel, Switch } from '@material-ui/core';
 
-import { useProfile } from '../../hooks/useProfile';
 import Loader from '../Loader';
 import ProfileForm from '../profile/ProfileForm';
+import { useMyProfileValue, useProfileExistsValue } from '../../hooks/state';
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +18,8 @@ const useStyles = makeStyles({
 });
 
 function ProfileEditor() {
-  const { profile, noProfileExists } = useProfile();
+  const profile = useMyProfileValue();
+  const noProfileExists = useProfileExistsValue();
   const classes = useStyles();
   const { t } = useTranslation();
   const [showPreview, setShowPreview] = useState(false);

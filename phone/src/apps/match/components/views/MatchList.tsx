@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, makeStyles } from '@material-ui/core';
 
-import { useMatches } from '../../hooks/useMatches';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import Match from '../matches/Match';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { MatchEvents } from '../../../../../../typings/match';
+/*import { MatchEvents } from '../../../../../../typings/match';*/
+import { useRecoilValue } from 'recoil';
+import { matchState, useMatchesValue } from '../../hooks/state';
 
 const useStyles = makeStyles({
   root: {
@@ -21,7 +22,8 @@ function MatchList() {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
-  const { matches, error } = useMatches();
+  const matches = useMatchesValue();
+  const error = useRecoilValue(matchState.errorLoadingMatches);
   const [loaded, setLoaded] = useState(false);
 
   // We make the conscious descion here to fetch matches everytime
@@ -31,7 +33,7 @@ function MatchList() {
   // This is less performant but means that we will always have the
   // correct state when the player views this page
   useEffect(() => {
-    Nui.send(MatchEvents.GET_MATCHES);
+    /*Nui.send(MatchEvents.GET_MATCHES);*/
     window.setTimeout(() => {
       setLoaded(true);
     }, MINIMUM_LOAD_TIME);

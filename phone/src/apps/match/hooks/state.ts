@@ -1,10 +1,11 @@
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { FormattedMatch, FormattedProfile, MatchEvents } from '../../../../../typings/match';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
-import { MockMyProfileData, MockProfilesData } from '../utils/constants';
+import { MockMatchesData, MockMyProfileData, MockProfilesData } from '../utils/constants';
+import { match } from 'assert';
 
 export const matchState = {
   profiles: atom<FormattedProfile[] | any>({
@@ -34,7 +35,22 @@ export const matchState = {
   }),
   matches: atom<FormattedMatch[]>({
     key: 'matches',
-    default: null,
+    default: selector({
+      key: 'defaultMatches',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES);
+          LogDebugEvent({ action: 'fetchMatches', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockMatchesData;
+          }
+          console.log(e);
+          return [];
+        }
+      },
+    }),
   }),
   errorLoadingMatches: atom<boolean>({
     key: 'errorLoadingMatches',
@@ -68,6 +84,16 @@ export const matchState = {
 };
 
 export const useFormattedProfiles = () => useRecoilState(matchState.profiles);
-export const useMyFormattedProfile = () => useRecoilState(matchState.myProfile);
+export const useFormattedProfilesValue = () => useRecoilValue(matchState.profiles);
+export const useSetFormattedProfiles = () => useSetRecoilState(matchState.profiles);
+
+export const useMyProfile = () => useRecoilState(matchState.myProfile);
+export const useMyProfileValue = () => useRecoilValue(matchState.myProfile);
+export const useSetMyProfile = () => useSetRecoilState(matchState.myProfile);
+
 export const useProfileExistsValue = () => useRecoilValue(matchState.noProfileExists);
 export const useProfileExists = () => useRecoilState(matchState.noProfileExists);
+
+export const useMatches = () => useRecoilState(matchState.matches);
+export const useMatchesValue = () => useRecoilValue(matchState.matches);
+export const useSetMatchesValue = () => useSetRecoilState(matchState.matches);

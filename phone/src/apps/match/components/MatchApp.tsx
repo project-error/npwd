@@ -7,7 +7,6 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { MatchThemeProvider } from '../providers/MatchThemeProvider';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import MatchBottomNavigation from '../components/BottomNavigation';
 import MatchPage from './views/MatchPage';
 import ProfileEditor from './views/ProfileEditor';
@@ -15,16 +14,16 @@ import MatchList from './views/MatchList';
 import { MatchEvents } from '../../../../../typings/match';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 import { useProfileExistsValue } from '../hooks/state';
+import { fetchNui } from '../../../utils/fetchNui';
 
 export const MatchApp = () => {
-  const Nui = useNuiRequest();
   const match = useApp('MATCH');
   const [activePage, setActivePage] = useState(0);
   const noProfileExists = useProfileExistsValue();
 
   useEffect(() => {
-    Nui.send(MatchEvents.INITIALIZE);
-  }, [Nui]);
+    fetchNui(MatchEvents.INITIALIZE).then(() => console.log('Updated last activity'));
+  }, []);
 
   const handlePageChange = (e, page) => setActivePage(page);
 
@@ -34,7 +33,9 @@ export const MatchApp = () => {
         <AppTitle app={match} />
         {noProfileExists ? (
           <AppContent>
-            <ProfileEditor />
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <ProfileEditor />
+            </React.Suspense>
           </AppContent>
         ) : (
           <>
@@ -45,9 +46,9 @@ export const MatchApp = () => {
                 <Route path="/match/profile" exact component={ProfileEditor} />
               </React.Suspense>
             </AppContent>
+            <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
           </>
         )}
-        <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
       </AppWrapper>
     </MatchThemeProvider>
   );
@@ -120,7 +121,7 @@ InjectDebugData(
 				phoneNumber: '999-9999',
 			},
 		},*/
-    {
+    /*{
       app: 'MATCH',
       method: MatchEvents.GET_MATCHES_SUCCESS,
       data: [
@@ -154,7 +155,7 @@ InjectDebugData(
           matchedAt: 1613607385,
         },
       ],
-    },
+    },*/
   ],
   200,
 );

@@ -11,7 +11,6 @@ import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
-import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
@@ -86,7 +85,6 @@ function Phone() {
   usePhoneService();
   useSimcardService();
   useTwitterService();
-  useMatchService();
   useMarketplaceService();
   useBankService();
   useMessagesService();

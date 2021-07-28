@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import {
   Profile as IProfile,
   FormattedProfile,
@@ -13,6 +12,10 @@ import { Card } from '@material-ui/core';
 import Profile from './Profile';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import PageText from '../PageText';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSetMyProfile } from '../../hooks/state';
 
 const useStyles = makeStyles({
   root: {
@@ -39,10 +42,11 @@ interface IProps {
 }
 
 export function ProfileForm({ profile, showPreview }: IProps) {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const { t } = useTranslation();
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
+  const setMyProfile = useSetMyProfile();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -74,7 +78,21 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       tags: update.tagList.join(','),
     };
     const event = profile ? MatchEvents.UPDATE_MY_PROFILE : MatchEvents.CREATE_MY_PROFILE;
-    Nui.send(event, updatedProfile);
+    fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
+          type: 'error',
+        });
+      }
+
+      setMyProfile(resp.data);
+
+      addAlert({
+        message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
+        type: 'success',
+      });
+    });
   };
 
   if (!profile /* && !ResourceConfig.match.allowEditableProfileName*/) {

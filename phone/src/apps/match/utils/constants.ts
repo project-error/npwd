@@ -1,4 +1,4 @@
-import { FormattedProfile, Profile } from '../../../../../typings/match';
+import { FormattedMatch, FormattedProfile, Profile } from '../../../../../typings/match';
 
 export const MockProfilesData = [
   {
@@ -74,3 +74,43 @@ export const MockMyProfileData: FormattedProfile = {
   tagList: ['code', 'javascript'],
   lastActiveFormatted: '12332425',
 };
+
+export const MockMatchesData: FormattedMatch[] = [
+  {
+    id: 5,
+    identifier: '4785656',
+    viewed: true,
+    image:
+      'https://media.cntraveler.com/photos/5f8f09c3a078e9112956774d/16:9/w_1600%2Cc_limit/Chicago-GettyImages-1065188752.jpg',
+    name: 'Taso',
+    bio: 'l impedit quo minus id quod maxime placeat facere possimus',
+    createdAt: 1615846585,
+    updatedAt: 1615846585,
+    lastActive: 1615850185,
+    job: 'Mechanic',
+    location: 'Harmony',
+    tags: 'tinkering,robotics',
+    tagList: ['tinkering', 'robotics'],
+    lastActiveFormatted: '525343252',
+    matchedAtFormatted: '3452355',
+    phoneNumber: '654-3219',
+  },
+  {
+    id: 6,
+    identifier: '4785656',
+    viewed: true,
+    image: 'https://www.langan.com/wp-content/uploads/2019/02/Boston-996x554.jpg',
+    name: 'Chip',
+    bio: 'ut aut reiciendis voluptatibus',
+    createdAt: 1615850185,
+    updatedAt: 1615850185,
+    lastActive: 1613607385,
+    job: 'Lawyer',
+    location: 'Los Santos',
+    tags: 'reading,coolstuff, coffee',
+    tagList: ['reading', 'coolstuff', 'coffee'],
+    phoneNumber: '123-4567',
+    lastActiveFormatted: '525343252',
+    matchedAtFormatted: '3452355',
+  },
+];

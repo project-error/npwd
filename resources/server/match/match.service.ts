@@ -1,6 +1,12 @@
-import { formatProfile, matchLogger } from './match.utils';
+import { formatMatches, formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import { FormattedProfile, Like, MatchEvents, Profile } from '../../../typings/match';
+import {
+  FormattedMatch,
+  FormattedProfile,
+  Like,
+  MatchEvents,
+  Profile,
+} from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
@@ -10,34 +16,6 @@ class _MatchService {
   constructor() {
     this.matchDB = MatchDB;
     matchLogger.debug('Match service started');
-  }
-
-  async dispatchPlayerProfile(identifier: string): Promise<FormattedProfile> {
-    try {
-      const profile = await this.matchDB.getOrCreateProfile(identifier);
-      return formatProfile(profile);
-      /*emitNet(MatchEvents.GET_MY_PROFILE_SUCCESS, source, profile);*/
-    } catch (e) {
-      matchLogger.error(`Failed to get player profile, ${e.message}`);
-      /*emitNet(MatchEvents.GET_MY_PROFILE_FAILED, source, {
-				message: 'APPS_MATCH_GET_MY_PROFILE_FAILED',
-				type: 'error',
-			});*/
-    }
-  }
-
-  async dispatchProfiles(identifier: string): Promise<FormattedProfile[]> {
-    try {
-      const profiles = await this.matchDB.getPotentialProfiles(identifier);
-      return profiles.map(formatProfile);
-      /*emitNet(MatchEvents.GET_PROFILES_SUCCESS, source, formattedProfiles);*/
-    } catch (e) {
-      matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
-      /*emitNet(MatchEvents.GET_PROFILES_FAILED, source, {
-				message: 'APPS_MATCH_GET_PROFILES_FAILED',
-				type: 'error',
-			});*/
-    }
   }
 
   async handleGetProfiles(
@@ -68,14 +46,46 @@ class _MatchService {
     }
   }
 
-  async handleInitialize(src: number) {
-    const identifier = PlayerService.getIdentifier(src);
-    matchLogger.debug(`Initializing match for identifier: ${identifier}`);
-    await this.matchDB.updateLastActive(identifier);
+  async handleSaveLikes(reqObj: PromiseRequest<Like[]>, resp: PromiseEventResp<boolean>) {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    matchLogger.debug(`Saving likes for identifier ${identifier}`);
+
+    try {
+      await this.matchDB.saveLikes(identifier, reqObj.data);
+    } catch (e) {
+      matchLogger.error(`Failed to save likes, ${e.message}`);
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+    }
+
+    try {
+      const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
+      if (newMatches.length > 0) {
+        resp({ status: 'ok', data: true });
+      }
+    } catch (e) {
+      matchLogger.error(`Failed to find new matches, ${e.message}`);
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+    }
   }
 
-  async handleCreateMyProfile(src: number, profile: Profile) {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleGetMatches(reqObj: PromiseRequest<void>, resp: PromiseEventResp<FormattedMatch[]>) {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    try {
+      const matchedProfiles = await this.matchDB.findAllMatches(identifier);
+      const formattedMatches = matchedProfiles.map(formatMatches);
+      resp({ status: 'ok', data: formattedMatches });
+    } catch (e) {
+      matchLogger.error(`Failed to retrieve matches, ${e.message}`);
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+    }
+  }
+
+  async handleCreateMyProfile(
+    reqObj: PromiseRequest<Profile>,
+    resp: PromiseEventResp<FormattedProfile>,
+  ) {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    const profile = reqObj.data;
 
     matchLogger.debug(`Creating profile for identifier: ${identifier}`);
     matchLogger.debug(profile);
@@ -86,18 +96,22 @@ class _MatchService {
       }
 
       const newProfile = await this.matchDB.createProfile(identifier, profile);
-      emitNet(MatchEvents.CREATE_MY_PROFILE_SUCCESS, src, newProfile);
+      const formattedProfile = formatProfile(newProfile);
+
+      resp({ status: 'ok', data: formattedProfile });
     } catch (e) {
       matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
-      emitNet(MatchEvents.CREATE_MY_PROFILE_FAILED, src, {
-        message: 'APPS_MATCH_CREATE_PROFILE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 
-  async handleUpdateMyProfile(src: number, profile: Profile) {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleUpdateMyProfile(
+    reqObj: PromiseRequest<Profile>,
+    resp: PromiseEventResp<FormattedProfile>,
+  ) {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    const profile = reqObj.data;
+
     matchLogger.debug(`Updating profile for identifier: ${identifier}`);
     matchLogger.debug(profile);
 
@@ -107,56 +121,37 @@ class _MatchService {
       }
 
       const updatedProfile = await this.matchDB.updateProfile(identifier, profile);
-      emitNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, src, updatedProfile);
+      const formattedProfile = formatProfile(updatedProfile);
+
+      resp({ status: 'ok', data: formattedProfile });
     } catch (e) {
       matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
-      emitNet(MatchEvents.UPDATE_MY_PROFILE_FAILED, src, {
-        message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
     }
   }
 
-  async handleSaveLikes(src: number, likes: Like[]) {
-    const identifier = PlayerService.getIdentifier(src);
-    matchLogger.debug(`Saving likes for identifier ${identifier}`);
-
+  async dispatchPlayerProfile(identifier: string): Promise<FormattedProfile> {
     try {
-      await this.matchDB.saveLikes(identifier, likes);
+      const profile = await this.matchDB.getOrCreateProfile(identifier);
+      return formatProfile(profile);
     } catch (e) {
-      matchLogger.error(`Failed to save likes, ${e.message}`);
-      emitNet(MatchEvents.SAVE_LIKES_FAILED, src, {
-        message: 'APPS_MATCH_SAVE_LIKES_FAILED',
-        type: 'error',
-      });
-    }
-
-    try {
-      const newMatches = await this.matchDB.findNewMatches(identifier, likes);
-      if (newMatches.length > 0) {
-        emitNet(MatchEvents.NEW_MATCH, src, {
-          message: 'APPS_MATCH_NEW_LIKE_FOUND',
-          type: 'info',
-        });
-      }
-    } catch (e) {
-      matchLogger.error(`Failed to find new matches, ${e.message}`);
+      matchLogger.error(`Failed to get player profile, ${e.message}`);
     }
   }
 
-  async handleGetMatches(src: number) {
-    const identifier = PlayerService.getIdentifier(src);
-
+  async dispatchProfiles(identifier: string): Promise<FormattedProfile[]> {
     try {
-      const matchedProfiles = await this.matchDB.findAllMatches(identifier);
-      emitNet(MatchEvents.GET_MATCHES_SUCCESS, src, matchedProfiles);
+      const profiles = await this.matchDB.getPotentialProfiles(identifier);
+      return profiles.map(formatProfile);
     } catch (e) {
-      matchLogger.error(`Failed to retrieve matches, ${e.message}`);
-      emitNet(MatchEvents.GET_MATCHES_FAILED, src, {
-        message: 'APPS_MATCH_GET_MATCHES_FAILED',
-        type: 'error',
-      });
+      matchLogger.error(`Failed to retrieve profiles, ${e.message}`);
     }
+  }
+
+  async handleInitialize(src: number) {
+    const identifier = PlayerService.getIdentifier(src);
+    matchLogger.debug(`Initializing match for identifier: ${identifier}`);
+    await this.matchDB.updateLastActive(identifier);
   }
 }
 

@@ -1,6 +1,8 @@
-import { Like, Profile, MatchEvents } from '../../typings/match';
+import { Like, Profile, MatchEvents, FormattedProfile } from '../../typings/match';
 import { sendMatchEvent } from '../utils/messages';
-import { RegisterNuiProxy } from './cl_utils';
+import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
+import { onNetPromise } from '../server/utils/PromiseNetEvents/onNetPromise';
+import { ClUtils } from './client';
 
 /**
  * Many events that are just statuses are passed directly from
@@ -17,33 +19,35 @@ const transferEvent =
 
 RegisterNuiProxy(MatchEvents.GET_PROFILES);
 RegisterNuiProxy(MatchEvents.GET_MY_PROFILE);
+RegisterNuiProxy(MatchEvents.GET_MATCHES);
 
-/*onNet(MatchEvents.GET_PROFILES_FAILED, transferEvent(MatchEvents.GET_PROFILES_FAILED));*/
-onNet(MatchEvents.SAVE_LIKES_SUCCESS, transferEvent(MatchEvents.SAVE_LIKES_SUCCESS));
-onNet(MatchEvents.SAVE_LIKES_FAILED, transferEvent(MatchEvents.SAVE_LIKES_FAILED));
-onNet(MatchEvents.GET_MATCHES_SUCCESS, transferEvent(MatchEvents.GET_MATCHES_SUCCESS));
-onNet(MatchEvents.GET_MATCHES_FAILED, transferEvent(MatchEvents.GET_MATCHES_FAILED));
-/*onNet(MatchEvents.GET_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.GET_MY_PROFILE_SUCCESS));
-onNet(MatchEvents.GET_MY_PROFILE_FAILED, transferEvent(MatchEvents.GET_MY_PROFILE_FAILED));*/
-/*onNet(MatchEvents.GET_PROFILES_SUCCESS, transferEvent(MatchEvents.GET_PROFILES_SUCCESS));*/
-onNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.UPDATE_MY_PROFILE_SUCCESS));
+RegisterNuiCB<Like[]>(MatchEvents.SAVE_LIKES, async (likes, cb) => {
+  const resp = await ClUtils.emitNetPromise<boolean>(MatchEvents.SAVE_LIKES, likes);
+  cb({ resp });
+});
+
+RegisterNuiCB<Profile>(MatchEvents.CREATE_MY_PROFILE, async (profile, cb) => {
+  const resp = await ClUtils.emitNetPromise<FormattedProfile>(
+    MatchEvents.CREATE_MY_PROFILE,
+    profile,
+  );
+  cb({ resp });
+});
+
+RegisterNuiCB<Profile>(MatchEvents.UPDATE_MY_PROFILE, async (profile, cb) => {
+  const resp = await ClUtils.emitNetPromise<FormattedProfile>(
+    MatchEvents.UPDATE_MY_PROFILE,
+    profile,
+  );
+  cb({ resp });
+});
+
+/*onNet(MatchEvents.UPDATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.UPDATE_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.CREATE_MY_PROFILE_SUCCESS, transferEvent(MatchEvents.CREATE_MY_PROFILE_SUCCESS));
 onNet(MatchEvents.CREATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.CREATE_MY_PROFILE_FAILED));
-onNet(MatchEvents.UPDATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.UPDATE_MY_PROFILE_FAILED));
-onNet(MatchEvents.NEW_MATCH, transferEvent(MatchEvents.NEW_MATCH));
+onNet(MatchEvents.UPDATE_MY_PROFILE_FAILED, transferEvent(MatchEvents.UPDATE_MY_PROFILE_FAILED));*/
 
-RegisterNuiCallbackType(MatchEvents.SAVE_LIKES);
-on(`__cfx_nui:${MatchEvents.SAVE_LIKES}`, (likes: Like[], cb: Function) => {
-  emitNet(MatchEvents.SAVE_LIKES, likes);
-  cb();
-});
-
-RegisterNuiCallbackType(MatchEvents.GET_MATCHES);
-on(`__cfx_nui:${MatchEvents.GET_MATCHES}`, () => {
-  emitNet(MatchEvents.GET_MATCHES);
-});
-
-RegisterNuiCallbackType(MatchEvents.INITIALIZE);
+/*RegisterNuiCallbackType(MatchEvents.INITIALIZE);
 on(`__cfx_nui:${MatchEvents.INITIALIZE}`, () => {
   emitNet(MatchEvents.INITIALIZE);
 });
@@ -51,7 +55,7 @@ on(`__cfx_nui:${MatchEvents.INITIALIZE}`, () => {
 RegisterNuiCallbackType(MatchEvents.CREATE_MY_PROFILE);
 on(`__cfx_nui:${MatchEvents.CREATE_MY_PROFILE}`, (profile: Profile) => {
   emitNet(MatchEvents.CREATE_MY_PROFILE, profile);
-});
+});*/
 
 RegisterNuiCallbackType(MatchEvents.UPDATE_MY_PROFILE);
 on(`__cfx_nui:${MatchEvents.UPDATE_MY_PROFILE}`, (profile: Profile) => {
