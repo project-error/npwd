@@ -9,9 +9,9 @@ export enum AnimationState {
 
 export class AnimationService {
   private animationInterval: NodeJS.Timeout;
-  private onCall: boolean = false;
-  private phoneOpen: boolean = false;
-  private onCamera: boolean = false;
+  private onCall = false;
+  private phoneOpen = false;
+  private onCamera = false;
 
   private createAnimationInterval() {
     this.animationInterval = setInterval(async () => {
