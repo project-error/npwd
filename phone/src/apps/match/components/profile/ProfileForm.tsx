@@ -126,6 +126,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         value={update.bio}
         handleChange={setBio}
         multiline
+        maxLength={250}
       />
       <ProfileField
         label={t('APPS_MATCH_EDIT_PROFILE_LOCATION')}
@@ -136,6 +137,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         label={t('APPS_MATCH_EDIT_PROFILE_JOB')}
         value={update.job}
         handleChange={setJob}
+        maxLength={50}
       />
       <ProfileField label={t('APPS_MATCH_EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
       <UpdateButton handleClick={handleUpdate} loading={false} />
