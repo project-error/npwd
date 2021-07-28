@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components/AppWrapper';
+import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
@@ -37,7 +37,7 @@ export const CallModal = () => {
         <Box className={classes.root} padding={5}>
           <Box>
             <CallContactContainer />
-            {call.accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+            {call.is_accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
           </Box>
           <CallControls />
         </Box>

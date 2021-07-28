@@ -33,7 +33,7 @@ export const useCallNotifications = () => {
       removeId(NOTIFICATION_ID);
       return;
     }
-    if (call.accepted) {
+    if (call.is_accepted) {
       removeId(NOTIFICATION_ID);
       addNotification({
         ...callNotificationBase,
@@ -47,7 +47,7 @@ export const useCallNotifications = () => {
         title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
       });
     }
-    if (!call.isTransmitter && !call.accepted) {
+    if (!call.isTransmitter && !call.is_accepted) {
       play();
       removeId(NOTIFICATION_ID);
       addNotificationAlert(

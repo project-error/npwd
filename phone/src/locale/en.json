@@ -12,6 +12,10 @@
         "RINGING": "Ringing",
         "OUTGOING": "Outgoing call",
         "INCOMING": "Incoming call"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "You cannot call your own phone number!",
+        "ERROR": "Error occurred while completing this call"
       }
     },
     "SETTINGS": {

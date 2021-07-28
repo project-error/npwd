@@ -22,7 +22,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { useSimcard } from '../../../../os/simcard/hooks/useSimcard';
+import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { MessageEvents } from '../../../../../../typings/messages';
 
 const LARGE_HEADER_CHARS = 30;
@@ -51,7 +51,7 @@ export const MessageModal = () => {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
-  const { number: myNumber } = useSimcard();
+  const myNumber = useMyPhoneNumber();
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const { groupId } = useParams<{ groupId: string }>();

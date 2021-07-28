@@ -1,5 +1,6 @@
 import { IAlertProps } from '../../../typings/alerts';
 import { CallEvents, CallHistoryItem, CallRejectReasons } from '../../../typings/call';
+import { animationService } from '../animations/animation.controller';
 
 const exp = (global as any).exports;
 
@@ -43,7 +44,9 @@ export class CallService {
     // If we're already in a call we want to automatically reject
     if (this.isInCall())
       return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+
     this.openCallModal(true);
+    animationService.startPhoneCall();
 
     SendNUIMessage({
       app: 'CALL',

@@ -43,12 +43,18 @@ interface DatabaseConfig {
   useIdentifierPrefix: boolean;
 }
 
+interface PhoneAsItemConfig {
+  enabled: boolean;
+  exportResource: string;
+  exportFunction: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
   KeyTogglePhone: number;
   KeyTakeCall: number;
-  PhoneAsItem: boolean;
+  PhoneAsItem: PhoneAsItemConfig;
   SwimDestroy: boolean;
   RunRate: number;
   twitter: TwitterConfig;
