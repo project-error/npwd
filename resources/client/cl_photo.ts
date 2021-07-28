@@ -1,10 +1,10 @@
-import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
+import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendCameraEvent, sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { ClUtils } from './client';
 import { animationService } from './animations/animation.controller';
-import { RegisterNuiProxy } from './cl_utils';
+import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
@@ -33,9 +33,7 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
-RegisterNuiCallbackType(PhotoEvents.TAKE_PHOTO);
-on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
-  /*cb();*/
+RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   await animationService.openCamera();
   emit('npwd:disableControlActions', false);
   // Create Phone Prop
@@ -56,9 +54,14 @@ on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
       frontCam = !frontCam;
       CellFrontCamActivate(frontCam);
     } else if (IsControlJustPressed(1, 176)) {
-      const resp = await handleTakePicture();
-
-      cb(resp);
+      if (SCREENSHOT_BASIC_TOKEN !== 'none') {
+        const resp = await handleTakePicture();
+        cb(resp);
+        break;
+      }
+      console.error(
+        'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
+      );
     } else if (IsControlJustPressed(1, 177)) {
       handleCameraExit();
       break;
@@ -79,21 +82,21 @@ const handleTakePicture = async () => {
   CellCamActivate(false, false);
   openPhoneTemp();
   inCameraMode = false;
+  ClearHelp(true);
 
   return resp;
 };
 
-const handleCameraExit = () => {
+const handleCameraExit = async () => {
+  ClearHelp(true);
+  animationService.closeCamera();
+  emit('npwd:disableControlActions', true);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
   sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, false);
   inCameraMode = false;
 };
-
-onNet(PhotoEvents.SEND_PHOTOS, (photos: string[]) => {
-  sendCameraEvent(PhotoEvents.SEND_PHOTOS, photos);
-});
 
 const takePhoto = () =>
   new Promise((res, rej) => {
@@ -113,7 +116,6 @@ const takePhoto = () =>
       async (data: any) => {
         try {
           const imageLink = JSON.parse(data).data.link;
-
           const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, imageLink);
           console.log('export shit', resp);
           res(resp);
@@ -125,11 +127,4 @@ const takePhoto = () =>
   });
 
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
-
-RegisterNuiCallbackType(PhotoEvents.DELETE_PHOTO);
-on(`__cfx_nui:${PhotoEvents.DELETE_PHOTO}`, async (data: GalleryPhoto, cb: Function) => {
-  console.log('my data', data);
-  /*emitNet(PhotoEvents.DELETE_PHOTO, data);*/
-  const resp = await ClUtils.emitNetPromise(PhotoEvents.DELETE_PHOTO, data);
-  cb(resp);
-});
+RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);

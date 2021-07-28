@@ -1,8 +1,8 @@
-import { usePhotos } from './state';
+import { useSetPhotos } from './state';
 import { useCallback } from 'react';
 
 export const usePhotoActions = () => {
-  const [photos, setPhotos] = usePhotos();
+  const setPhotos = useSetPhotos();
 
   const takePhoto = useCallback(
     (photo) => {
@@ -18,49 +18,5 @@ export const usePhotoActions = () => {
     [setPhotos],
   );
 
-  return {
-    takePhoto,
-    deletePhoto,
-  };
-
-  /*const { t } = useTranslation();
-	const { addAlert } = useSnackbar();
-
-	const [photos, setPhotos] = usePhotoService();
-	const [isUploading, setUploading] = useState(false);*/
-  /*
-		const onPhotoSuccess = useCallback(
-			(photo) => {
-				setUploading(false);
-				if (!photo?.image) return;
-				setPhotos((curr) => [photo, ...curr]);
-			},
-			[setPhotos],
-		);
-	
-		const onPhotoError = useCallback(
-			(i18nKey) => {
-				setUploading(false);
-				addAlert({ type: 'error', message: t(i18nKey) });
-			},
-			[addAlert, t],
-		);
-	
-		const [_takePhoto] = useNuiCallback<void, GalleryPhoto>(
-			'CAMERA',
-			PhotoEvents.TAKE_PHOTO,
-			onPhotoSuccess,
-			onPhotoError,
-		);
-	
-		const takePhoto = () => {
-			_takePhoto(undefined, { timeout: 60000 });
-		};
-	
-		return {
-			photos,
-			setPhotos,
-			takePhoto,
-			isLoading: isUploading,
-		};*/
+  return { takePhoto, deletePhoto };
 };

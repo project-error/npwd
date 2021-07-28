@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Button, CircularProgress } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import useStyles from './grid.styles';
-import { useCamera } from '../../hooks/useCamera';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
