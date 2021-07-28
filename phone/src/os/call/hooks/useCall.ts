@@ -5,7 +5,6 @@ import { CallEvents } from '../../../../../typings/call';
 import { fetchNui } from '../../../utils/fetchNui';
 import { useCallback } from 'react';
 import { useMyPhoneNumber } from '../../simcard/hooks/useMyPhoneNumber';
-import { useDialingSound } from './useDialingSound';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { ServerPromiseResp } from '../../../../../typings/common';
@@ -19,12 +18,15 @@ interface CallHook {
   initializeCall(number: string): void;
 }
 
+// const TIME_TILL_AUTO_HANGUP = 15000;
+
 export const useCall = (): CallHook => {
   const [call, setCall] = useRecoilState(callerState.currentCall);
+  // const [dialRing, setDialRing] = useState(false);
   const myPhoneNumber = useMyPhoneNumber();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
-  const { endDialTone, startDialTone } = useDialingSound();
+  // const { endDialTone, startDialTone } = useDialingSound();
 
   const initializeCall = useCallback(
     (number) => {

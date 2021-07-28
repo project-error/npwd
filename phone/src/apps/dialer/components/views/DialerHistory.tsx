@@ -6,7 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { CallEvents, CallHistoryItem } from '../../../../../../typings/call';
+import { CallHistoryItem } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
