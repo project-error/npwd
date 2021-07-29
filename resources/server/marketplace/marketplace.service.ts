@@ -1,5 +1,5 @@
 import PlayerService from '../players/player.service';
-import { selloutLogger } from './marketplace.utils';
+import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import {
   MarketplaceDeleteDTO,
@@ -17,15 +17,15 @@ class _MarketplaceService {
 
   constructor() {
     this.marketplaceDB = MarketplaceDB;
-    selloutLogger.debug('Marketplace service started');
+    marketplaceLogger.debug('Marketplace service started');
   }
 
   async handleAddListing(
     reqObj: PromiseRequest<MarketplaceListingBase>,
     resp: PromiseEventResp<void>,
   ): Promise<void> {
-    selloutLogger.debug('Handling add listing, listing:');
-    selloutLogger.debug(reqObj.data);
+    marketplaceLogger.debug('Handling add listing, listing:');
+    marketplaceLogger.debug(reqObj.data);
 
     const player = PlayerService.getPlayer(reqObj.source);
 
@@ -53,7 +53,7 @@ class _MarketplaceService {
       // Broadcast to everyone we are adding a listing
       emitNet(MarketplaceEvents.BROADCAST_ADD, -1, { type: 'ADD', listing: returnObj });
     } catch (e) {
-      selloutLogger.error(`Failed to add listing ${e.message}`, {
+      marketplaceLogger.error(`Failed to add listing ${e.message}`, {
         source: reqObj.source,
       });
 
@@ -70,7 +70,7 @@ class _MarketplaceService {
 
       resp({ data: listings, status: 'ok' });
     } catch (e) {
-      selloutLogger.error(`Failed to fetch listings, ${e.message}`, {
+      marketplaceLogger.error(`Failed to fetch listings, ${e.message}`, {
         source: req.source,
       });
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -113,14 +113,14 @@ class _MarketplaceService {
       const reportingPlayer = GetPlayerName(reqObj.source.toString());
 
       if (reportExists) {
-        selloutLogger.error(`This listing has already been reported`);
+        marketplaceLogger.error(`This listing has already been reported`);
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
       }
 
       await this.marketplaceDB.reportListing(rListing.id, rListing.name);
       await reportListingToDiscord(rListing, reportingPlayer);
     } catch (e) {
-      selloutLogger.error(`Failed to report listing ${e.message}`, {
+      marketplaceLogger.error(`Failed to report listing ${e.message}`, {
         source: reqObj.source,
       });
       resp({ status: 'error', errorMsg: 'DB_ERROR' });

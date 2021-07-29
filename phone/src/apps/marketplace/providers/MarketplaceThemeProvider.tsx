@@ -1,5 +1,5 @@
 import { createAppThemeProvider } from '../../../os/apps/utils/createAppThemeProvider';
 
-import selloutTheme from '../marketplace.theme';
+import marketplaceTheme from '../marketplace.theme';
 
-export const MarketplaceThemeProvider = createAppThemeProvider(selloutTheme);
+export const MarketplaceThemeProvider = createAppThemeProvider(marketplaceTheme);
