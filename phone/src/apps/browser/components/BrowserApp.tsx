@@ -94,8 +94,10 @@ export const BrowserApp: React.FC = () => {
         />
         <Box flexGrow={1}>
           <iframe
+            is="x-frame-bypass"
             src={browserUrl}
-            className={classes.iframe}
+            // @ts-ignore
+            class={classes.iframe}
             title="npwd-browser"
             ref={iframeRef}
           />
