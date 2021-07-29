@@ -38,7 +38,12 @@ export const AppContent = ({
     >
       <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
       <Box flexGrow={1} className={classes.box} {...props}>
-        <Paper square elevation={0} className={classes.paper} style={paperStyle}>
+        <Paper
+          square
+          elevation={0}
+          className={`${classes.paper} ${props.className}`}
+          style={paperStyle}
+        >
           {children}
         </Paper>
       </Box>
