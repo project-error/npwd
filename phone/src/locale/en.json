@@ -18,6 +18,9 @@
         "ERROR": "Error occurred while completing this call"
       }
     },
+    "BROWSER": {
+      "NAME": "Browser"
+    },
     "SETTINGS": {
       "CATEGORY": {
         "APPEARANCE": "Appearance",

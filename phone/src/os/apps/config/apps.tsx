@@ -34,6 +34,7 @@ import {
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 import { SvgIconProps } from '@material-ui/core';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
+import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 
 export interface IAppConfig {
   id: string;
@@ -60,6 +61,16 @@ export const APPS: IAppConfig[] = [
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
+  },
+  {
+    id: 'BROWSER',
+    nameLocale: 'BROWSER.NAME',
+    backgroundColor: blue['300'],
+    path: '/browser',
+    color: common.white,
+    Route: () => (
+      <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
+    ),
   },
   {
     id: 'MESSAGES',
