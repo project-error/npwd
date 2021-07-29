@@ -1,6 +1,7 @@
 import React, { FocusEventHandler, useRef, useState } from 'react';
-import { makeStyles, Theme, Box, InputBase, IconButton } from '@material-ui/core';
+import { makeStyles, Theme, Box, IconButton } from '@material-ui/core';
 import { Cached, KeyboardArrowLeft } from '@material-ui/icons';
+import { InputBase } from '../../../ui/components/Input';
 
 const useStyles = makeStyles((theme: Theme) => ({
   urlInput: {
