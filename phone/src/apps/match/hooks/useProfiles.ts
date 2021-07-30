@@ -3,13 +3,13 @@ import { matchState, useFormattedProfiles } from './state';
 
 import { FormattedProfile } from '../../../../../typings/match';
 
-interface IUseProfiles {
+interface UseProfilesProps {
   profiles: FormattedProfile[];
   activeProfile: FormattedProfile | null;
   error: boolean;
 }
 
-export const useProfiles = (): IUseProfiles => {
+export const useProfiles = (): UseProfilesProps => {
   const [profiles] = useFormattedProfiles();
   const error = useRecoilValue(matchState.errorLoadingProfiles);
 

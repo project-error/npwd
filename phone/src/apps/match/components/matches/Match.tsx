@@ -22,7 +22,6 @@ interface IProps {
 }
 
 export const Match = ({ match }: IProps) => {
-  console.log('the match', match);
   const history = useHistory();
   const classes = useStyles();
   const { t } = useTranslation();

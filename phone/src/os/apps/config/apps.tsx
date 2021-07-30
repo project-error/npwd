@@ -5,7 +5,6 @@ import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { MatchApp } from '../../../apps/match/components/MatchApp';
 import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
@@ -35,7 +34,8 @@ import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/mat
 import { SvgIconProps } from '@material-ui/core';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import MatchContainer from '../../../apps/match/components/MatchContainer';
+import { MatchApp } from '../../../apps/match/components/MatchApp';
 
 export interface IAppConfig {
   id: string;
@@ -128,13 +128,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
-    Route: () => {
-      return (
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />
-        </React.Suspense>
-      );
-    },
+    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />,
   },
   {
     id: 'TWITTER',

@@ -1,6 +1,6 @@
 import { FormattedMatch, FormattedProfile } from '../../../../../typings/match';
 
-export const MockProfilesData = [
+export const MockProfilesData: FormattedProfile[] = [
   {
     id: 1,
     identifier: '3r523242',
@@ -22,7 +22,7 @@ export const MockProfilesData = [
   {
     id: 2,
     identifier: '3r523242',
-    /*viewed: false,*/
+    viewed: false,
     image:
       'https://media.cntraveler.com/photos/5f8f09c3a078e9112956774d/16:9/w_1600%2Cc_limit/Chicago-GettyImages-1065188752.jpg',
     name: 'Person Beta',

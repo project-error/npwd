@@ -5,9 +5,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import Match from '../matches/Match';
-/*import { MatchEvents } from '../../../../../../typings/match';*/
-import { useRecoilValue } from 'recoil';
-import { matchState, useMatchesValue } from '../../hooks/state';
+import { useMatches } from '../../hooks/useMatches';
 
 const useStyles = makeStyles({
   root: {
@@ -18,8 +16,7 @@ const useStyles = makeStyles({
 function MatchList() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const matches = useMatchesValue();
-  const error = useRecoilValue(matchState.errorLoadingMatches);
+  const { matches, error } = useMatches();
 
   if (error) return <PageText text={t('APPS_MATCH_MATCHES_ERROR')} />;
   if (!matches) return <Loader />;

@@ -1,25 +1,14 @@
-import { FormattedProfile, MatchEvents, Profile } from '../../../../../typings/match';
-import dayjs from 'dayjs';
-import { useTranslation } from 'react-i18next';
+import { FormattedMatch, MatchEvents } from '../../../../../typings/match';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
-import { useSetFormattedProfiles } from './state';
+import { useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useCallback } from 'react';
 
 export const useMatchActions = () => {
-  const { t } = useTranslation();
   const setProfiles = useSetFormattedProfiles();
+  const setMatches = useSetMatches();
   const { addAlert } = useSnackbar();
-
-  const formatProfile = (profile: Profile): FormattedProfile | null => {
-    return {
-      ...profile,
-      tagList: profile.tags.split(',').filter((t) => t), // remove any empty tags
-      lastActiveFormatted: dayjs.unix(profile.lastActive).format(t('DATE_TIME_FORMAT')),
-      viewed: false,
-    };
-  };
 
   const setViewed = useCallback(
     (id: number, liked: boolean) => {
@@ -47,15 +36,16 @@ export const useMatchActions = () => {
             message: 'APPS_MATCH_NEW_LIKE_FOUND',
             type: 'info',
           });
-          fetchNui(MatchEvents.GET_MATCHES);
+          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
+            setMatches(resp.data);
+          });
         }
       });
     },
-    [setProfiles, addAlert],
+    [setProfiles, addAlert, setMatches],
   );
 
   return {
-    formatProfile,
     setViewed,
   };
 };

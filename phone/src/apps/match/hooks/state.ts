@@ -7,7 +7,7 @@ import { isEnvBrowser } from '../../../utils/misc';
 import { MockMatchesData, MockMyProfileData, MockProfilesData } from '../utils/constants';
 
 export const matchState = {
-  profiles: atom<FormattedProfile[] | any>({
+  profiles: atom<FormattedProfile[]>({
     key: 'profiles',
     default: selector({
       key: 'matchDefaultProfiles',
@@ -93,6 +93,6 @@ export const useSetMyProfile = () => useSetRecoilState(matchState.myProfile);
 export const useProfileExistsValue = () => useRecoilValue(matchState.noProfileExists);
 export const useProfileExists = () => useRecoilState(matchState.noProfileExists);
 
-export const useMatches = () => useRecoilState(matchState.matches);
+export const useFormattedMatches = () => useRecoilState(matchState.matches);
 export const useMatchesValue = () => useRecoilValue(matchState.matches);
-export const useSetMatchesValue = () => useSetRecoilState(matchState.matches);
+export const useSetMatches = () => useSetRecoilState(matchState.matches);
