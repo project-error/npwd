@@ -4,14 +4,14 @@ import {
   TransmitterNumDTO,
   EndCallDTO,
   InitializeCallDTO,
-  StartCallEventData,
+  ActiveCall,
 } from '../../../typings/call';
 import { getSource, onNetTyped } from '../utils/miscUtils';
 import CallService from './calls.service';
 import { callLogger } from './calls.utils';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNetPromise<InitializeCallDTO, StartCallEventData>(CallEvents.INITIALIZE_CALL, (reqObj, resp) => {
+onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, (reqObj, resp) => {
   CallService.handleInitializeCall(reqObj, resp).catch((e) => {
     resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
     callLogger.error(`Error occured handling init call: ${e.message}`);
@@ -27,7 +27,7 @@ onNetTyped<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, ({ transmitterNumber }) =>
   );
 });
 
-// Fire and forget event, client doesn't care what response is we reject no matter what
+// Fire and forget event, client doesn't care what response is we reject no matter what.
 // thats the reason its not promise
 onNetTyped<TransmitterNumDTO>(CallEvents.REJECTED, (data) => {
   const src = getSource();

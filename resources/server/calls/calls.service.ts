@@ -2,11 +2,10 @@ import Collection from '@discordjs/collection';
 import {
   CallEvents,
   CallHistoryItem,
-  InitializeCallResp,
   InitializeCallDTO,
   EndCallDTO,
-  StartCallEventData,
-  CallWasAcceptedEvent,
+  ActiveCall,
+  ActiveCallRaw,
 } from '../../../typings/call';
 import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,9 +13,10 @@ import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 import { emitNetTyped } from '../utils/miscUtils';
+import { mainLogger } from '../sv_logger';
 
 class CallsService {
-  private callMap: Collection<string, CallHistoryItem>;
+  private callMap: Collection<string, ActiveCallRaw>;
   private readonly callsDB: CallsRepo;
 
   constructor() {
@@ -25,7 +25,7 @@ class CallsService {
     callLogger.debug('Call service started');
   }
 
-  private setCallInMap(transmitterNumber: string, callObj: CallHistoryItem): void {
+  private setCallInMap(transmitterNumber: string, callObj: ActiveCallRaw): void {
     this.callMap.set(transmitterNumber, callObj);
     callLogger.debug(`Call obj set with key ${transmitterNumber}, value:`);
     callLogger.debug(callObj);
@@ -33,7 +33,7 @@ class CallsService {
 
   async handleInitializeCall(
     reqObj: PromiseRequest<InitializeCallDTO>,
-    resp: PromiseEventResp<StartCallEventData>,
+    resp: PromiseEventResp<ActiveCall>,
   ): Promise<void> {
     // Create initial call data
     const transmittingPlayer = PlayerService.getPlayer(reqObj.source);
@@ -53,6 +53,7 @@ class CallsService {
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
+          is_accepted: false,
         },
       });
     }
@@ -66,7 +67,7 @@ class CallsService {
     callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
     callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
 
-    const callObj: CallHistoryItem = {
+    const callObj: ActiveCallRaw = {
       identifier: callIdentifier,
       transmitter: transmitterNumber,
       transmitterSource: transmittingPlayer.source,
@@ -82,6 +83,7 @@ class CallsService {
       return resp({
         status: 'ok',
         data: {
+          is_accepted: false,
           transmitter: transmitterNumber,
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
@@ -107,15 +109,17 @@ class CallsService {
     resp({
       status: 'ok',
       data: {
+        is_accepted: false,
         transmitter: transmitterNumber,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: true,
       },
     });
 
-    emitNetTyped<StartCallEventData>(
+    emitNetTyped<ActiveCall>(
       CallEvents.START_CALL,
       {
+        is_accepted: false,
         transmitter: transmitterNumber,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: false,
@@ -126,35 +130,41 @@ class CallsService {
 
   async handleAcceptCall(src: number, transmitterNumber: string): Promise<void> {
     // We retrieve the call that was accepted from the current calls map
-    const curCallAccepted = this.callMap.get(transmitterNumber);
+    const targetCallItem = this.callMap.get(transmitterNumber);
     // We update its reference
-    curCallAccepted.is_accepted = true;
+    targetCallItem.is_accepted = true;
 
     const channelId = src;
 
-    await this.callsDB.updateCall(curCallAccepted, true, null);
+    await this.callsDB.updateCall(targetCallItem, true, null);
     callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
 
     // player who is being called
-    emitNetTyped<CallWasAcceptedEvent>(
+    emitNetTyped<ActiveCall>(
       CallEvents.WAS_ACCEPTED,
       {
-        currentCall: curCallAccepted,
+        is_accepted: true,
+        transmitter: transmitterNumber,
+        receiver: targetCallItem.receiver,
         isTransmitter: false,
         channelId,
       },
-      curCallAccepted.receiverSource,
+      targetCallItem.receiverSource,
     );
 
+    mainLogger.debug(targetCallItem);
+
     // player who is calling
-    emitNetTyped<CallWasAcceptedEvent>(
+    emitNetTyped<ActiveCall>(
       CallEvents.WAS_ACCEPTED,
       {
-        currentCall: curCallAccepted,
+        is_accepted: true,
+        transmitter: transmitterNumber,
+        receiver: targetCallItem.receiver,
         isTransmitter: true,
         channelId,
       },
-      curCallAccepted.transmitterSource,
+      targetCallItem.transmitterSource,
     );
   }
 

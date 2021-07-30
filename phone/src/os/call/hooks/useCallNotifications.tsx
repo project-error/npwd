@@ -27,12 +27,18 @@ export const useCallNotifications = () => {
     notificationIcon,
   };
 
+  const clearNotification = (): void => {
+    removeId(NOTIFICATION_ID);
+    stop();
+  };
+
   const setNotification = (call: ActiveCall) => {
     stop();
-    if (!call || !call.active) {
+    if (!call) {
       removeId(NOTIFICATION_ID);
       return;
     }
+
     if (call.is_accepted) {
       removeId(NOTIFICATION_ID);
       addNotification({
@@ -70,5 +76,5 @@ export const useCallNotifications = () => {
     }
   };
 
-  return { setNotification };
+  return { setNotification, clearNotification };
 };

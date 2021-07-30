@@ -21,11 +21,13 @@ const useStyles = makeStyles({
   },
 });
 
-export const CallModal = () => {
+export const CallModal: React.FC = () => {
   const [settings] = useSettings();
   const { call } = useCall();
 
   const classes = useStyles();
+
+  if (!call) return null;
 
   return (
     <AppWrapper>

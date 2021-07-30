@@ -1,6 +1,6 @@
 import {
+  ActiveCall,
   CallEvents,
-  CallWasAcceptedEvent,
   EndCallDTO,
   InitializeCallDTO,
   StartCallEventData,
@@ -11,27 +11,32 @@ import { CallService } from './cl_calls.service';
 import { animationService } from '../animations/animation.controller';
 import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
-import { NuiCallbackFunc } from '@project-error/pe-utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '../../../typings/common';
 
 const callService = new CallService();
 
+// Will trigger whenever somebody initializes a call to any number
 RegisterNuiCB<InitializeCallDTO>(CallEvents.INITIALIZE_CALL, async (data, cb) => {
+  // If they are already in a call return without initializing a new one.
+  if (callService.isInCall()) return;
+
   try {
-    const serverRes = await ClUtils.emitNetPromise<ServerPromiseResp<StartCallEventData>>(
+    const serverRes = await ClUtils.emitNetPromise<ServerPromiseResp<ActiveCall>>(
       CallEvents.INITIALIZE_CALL,
       data,
     );
+
+    // If something went wrong lets inform the client
     if (serverRes.status !== 'ok') {
-      cb(serverRes);
+      return cb(serverRes);
     }
 
     const { transmitter, isTransmitter, receiver } = serverRes.data;
-
+    // Start the process of giving NUI feedback by opening NUI modal
     callService.handleStartCall(transmitter, receiver, isTransmitter);
 
-    cb({});
+    cb({ status: 'ok' });
   } catch (e) {
     console.error(e);
     cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
@@ -49,15 +54,12 @@ RegisterNuiCB<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, (data, cb) => {
   cb({});
 });
 
-onNetTyped<CallWasAcceptedEvent>(
-  CallEvents.WAS_ACCEPTED,
-  ({ channelId, currentCall, isTransmitter }) => {
-    callService.handleCallAccepted(channelId, currentCall, isTransmitter);
-  },
-);
+onNetTyped<ActiveCall>(CallEvents.WAS_ACCEPTED, (callData) => {
+  callService.handleCallAccepted(callData);
+});
 
 // Rejected call
-RegisterNuiCB<TransmitterNumDTO>(CallEvents.REJECTED, (data, cb: NuiCallbackFunc) => {
+RegisterNuiCB<TransmitterNumDTO>(CallEvents.REJECTED, (data, cb) => {
   emitNetTyped<TransmitterNumDTO>(CallEvents.REJECTED, data);
   cb({});
 });

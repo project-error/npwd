@@ -1,6 +1,5 @@
-import { useRecoilState } from 'recoil';
 import { ActiveCall } from '../../../../../typings/call';
-import { callerState } from './state';
+import { useCurrentCall } from './state';
 import { CallEvents } from '../../../../../typings/call';
 import { fetchNui } from '../../../utils/fetchNui';
 import { useCallback } from 'react';
@@ -11,7 +10,7 @@ import { ServerPromiseResp } from '../../../../../typings/common';
 
 interface CallHook {
   call: ActiveCall;
-  setCall: (details: any) => void;
+  setCall: (call: ActiveCall) => void;
   acceptCall(): void;
   rejectCall(): void;
   endCall(): void;
@@ -21,7 +20,7 @@ interface CallHook {
 // const TIME_TILL_AUTO_HANGUP = 15000;
 
 export const useCall = (): CallHook => {
-  const [call, setCall] = useRecoilState(callerState.currentCall);
+  const [call, setCall] = useCurrentCall();
   // const [dialRing, setDialRing] = useState(false);
   const myPhoneNumber = useMyPhoneNumber();
   const { t } = useTranslation();

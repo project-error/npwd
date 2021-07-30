@@ -1,17 +1,14 @@
 export interface ActiveCall {
-  active: boolean;
   is_accepted: boolean;
   isTransmitter: boolean;
   transmitter: string;
   receiver: string;
+  channelId?: number;
+  isUnavailable?: boolean;
 }
 
 export interface InitializeCallDTO {
   receiverNumber: string;
-}
-
-export interface InitializeCallResp {
-  available: boolean;
 }
 
 export interface StartCallEventData {
@@ -34,6 +31,16 @@ export interface CallWasAcceptedEvent {
   channelId: number;
   currentCall: CallHistoryItem;
   isTransmitter: boolean;
+}
+
+export interface ActiveCallRaw {
+  identifier: string;
+  transmitter: string;
+  transmitterSource: number;
+  receiver: string;
+  receiverSource: number;
+  start: string;
+  is_accepted: boolean;
 }
 
 export interface CallHistoryItem {
@@ -65,6 +72,5 @@ export enum CallEvents {
   FETCH_CALLS = 'npwd:fetchCalls',
   SET_CALLER = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
-  SET_CALL_HISTORY = 'npwd:setCallHistory',
   SEND_ALERT = 'npwd:callSetAlert',
 }
