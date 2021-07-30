@@ -1,19 +1,9 @@
 {
   "Locale": "en",
-  "KeyTogglePhone": 288,
-  "KeyTakeCall": 38,
   "PhoneAsItem": {
     "enabled": false,
     "exportResource": "my-core-resource",
     "exportName": "myCheckerFunction"
-  },
-  "SwimDestroy": false,
-  "RunRate": 10,
-  "DestroyChance": 100,
-  "DestroyPhoneReCheck": 3,
-  "notificationPosition": {
-    "horizontal": "right",
-    "vertical": "top"
   },
   "general": {
     "useDashNumber": true,

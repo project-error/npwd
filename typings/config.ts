@@ -52,10 +52,7 @@ interface PhoneAsItemConfig {
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
-  KeyTogglePhone: number;
-  KeyTakeCall: number;
   PhoneAsItem: PhoneAsItemConfig;
-  SwimDestroy: boolean;
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;
