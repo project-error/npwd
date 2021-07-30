@@ -4,12 +4,10 @@ import ProfileEditor from './views/ProfileEditor';
 import { Route } from 'react-router-dom';
 import MatchPage from './views/MatchPage';
 import MatchList from './views/MatchList';
-import { useProfileExists } from '../hooks/state';
 import { useProfile } from '../hooks/useProfile';
 
 const MatchContainer: React.FC = () => {
-  const [noProfileExists, setNoProfileExists] = useProfileExists();
-  const { profile } = useProfile();
+  const { profile, noProfileExists, setNoProfileExists } = useProfile();
 
   useEffect(() => {
     if (!profile) {
