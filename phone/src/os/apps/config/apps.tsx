@@ -34,7 +34,6 @@ import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/mat
 import { SvgIconProps } from '@material-ui/core';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
-import MatchContainer from '../../../apps/match/components/MatchContainer';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 
 export interface IAppConfig {
