@@ -13,7 +13,7 @@ const RingingText = () => {
         setStep(step + 1);
         setText(text + '.');
       } else {
-        setText(t('CALLS.MESSSAGES.RINGING'));
+        setText(t('CALLS.MESSAGES.RINGING'));
         setStep(0);
       }
     }, 500);
