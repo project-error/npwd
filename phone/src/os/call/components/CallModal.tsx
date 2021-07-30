@@ -10,6 +10,7 @@ import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import RingingText from './RingingText';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 const useStyles = makeStyles({
   root: {
@@ -36,13 +37,15 @@ export const CallModal: React.FC = () => {
           backgroundImage: `url(${getBackgroundPath(settings.wallpaper.value)})`,
         }}
       >
-        <Box className={classes.root} padding={5}>
-          <Box>
-            <CallContactContainer />
-            {call.is_accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <Box className={classes.root} padding={5}>
+            <Box>
+              <CallContactContainer />
+              {call.is_accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+            </Box>
+            <CallControls />
           </Box>
-          <CallControls />
-        </Box>
+        </React.Suspense>
       </AppContent>
     </AppWrapper>
   );
