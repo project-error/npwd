@@ -1,15 +1,16 @@
+import { matchState, useFormattedMatches } from './state';
 import { useRecoilValue } from 'recoil';
-import { matchState } from './state';
-
 import { FormattedMatch } from '../../../../../typings/match';
 
-interface IUseMatches {
+interface UseMatchProps {
   matches: FormattedMatch[];
+  setMatches: (matches: FormattedMatch[]) => void;
   error: boolean;
 }
 
-export const useMatches = (): IUseMatches => {
-  const matches = useRecoilValue<FormattedMatch[]>(matchState.matches);
+export const useMatches = (): UseMatchProps => {
+  const [matches, setMatches] = useFormattedMatches();
   const error = useRecoilValue(matchState.errorLoadingMatches);
-  return { matches, error };
+
+  return { matches, setMatches, error };
 };

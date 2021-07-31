@@ -49,16 +49,6 @@ export const TransactionList = () => {
               </div>
             </div>
           ))}
-        <TablePagination
-          rowsPerPageOptions={[3, 5]}
-          className={classes.pagination}
-          component="div"
-          count={transactionList.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </div>
     </div>
   );

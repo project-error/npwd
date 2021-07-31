@@ -10,7 +10,6 @@ import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
-import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
@@ -31,6 +30,7 @@ import PhoneWrapper from './PhoneWrapper';
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
+import { useConfig } from './os/phone/hooks/useConfig';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -59,11 +59,12 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useConfig();
+
   useKeyboardService();
   usePhoneService();
   useSimcardService();
   useTwitterService();
-  useMatchService();
   useMarketplaceService();
   useBankService();
   useMessagesService();

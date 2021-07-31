@@ -1,41 +1,72 @@
-import { Like, MatchEvents, Profile } from '../../../typings/match';
+import {
+  FormattedMatch,
+  FormattedProfile,
+  Like,
+  MatchEvents,
+  Profile,
+} from '../../../typings/match';
 import MatchService from './match.service';
 import { getSource } from '../utils/miscUtils';
 import { matchLogger } from './match.utils';
 import { config } from '../server';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+
+onNetPromise<void, FormattedProfile[]>(MatchEvents.GET_PROFILES, (reqObj, resp) => {
+  MatchService.handleGetProfiles(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in fetch profiles event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+onNetPromise<void, FormattedProfile>(MatchEvents.GET_MY_PROFILE, (reqObj, resp) => {
+  MatchService.handleGetMyProfile(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in fetch my profile event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+onNetPromise<void, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => {
+  MatchService.handleGetMatches(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in fetch matches event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+onNetPromise<Like[], boolean>(MatchEvents.SAVE_LIKES, (reqObj, resp) => {
+  MatchService.handleSaveLikes(reqObj, resp).catch((e) => {
+    matchLogger.error(`Error occurred in save likes event (${reqObj.source}), Error: ${e.message}`);
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+onNetPromise<Profile, FormattedProfile>(MatchEvents.CREATE_MY_PROFILE, (reqObj, resp) => {
+  MatchService.handleCreateMyProfile(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in create my profile event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+onNetPromise<Profile, FormattedProfile>(MatchEvents.UPDATE_MY_PROFILE, (reqObj, resp) => {
+  MatchService.handleUpdateMyProfile(reqObj, resp).catch((e) => {
+    matchLogger.error(
+      `Error occurred in update my profile event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
 
 onNet(MatchEvents.INITIALIZE, () => {
   const _source = getSource();
   MatchService.handleInitialize(_source).catch((e) =>
     matchLogger.error(`Error occurred in initialize event (${_source}), Error: ${e.message}`),
-  );
-});
-
-onNet(MatchEvents.CREATE_MY_PROFILE, (profile: Profile) => {
-  const _source = getSource();
-  MatchService.handleCreateMyProfile(_source, profile).catch((e) =>
-    matchLogger.error(`Error occurred in createMyProfile event (${_source}), Error: ${e.message}`),
-  );
-});
-
-onNet(MatchEvents.UPDATE_MY_PROFILE, (profile: Profile) => {
-  const _source = getSource();
-  MatchService.handleUpdateMyProfile(_source, profile).catch((e) =>
-    matchLogger.error(`Error occurred in updateMyProfile event (${_source}), Error: ${e.message}`),
-  );
-});
-
-onNet(MatchEvents.SAVE_LIKES, (likes: Like[]) => {
-  const _source = getSource();
-  MatchService.handleSaveLikes(_source, likes).catch((e) =>
-    matchLogger.error(`Error occurred in saveLikes event (${_source}), Error: ${e.message}`),
-  );
-});
-
-onNet(MatchEvents.GET_MATCHES, () => {
-  const _source = getSource();
-  MatchService.handleGetMatches(_source).catch((e) =>
-    matchLogger.error(`Error occurred in getMatches event (${_source}), Error: ${e.message}`),
   );
 });
 

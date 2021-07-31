@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, FormControlLabel, Switch } from '@material-ui/core';
-
-import { useProfile } from '../../hooks/useProfile';
 import Loader from '../Loader';
 import ProfileForm from '../profile/ProfileForm';
+import { useProfile } from '../../hooks/useProfile';
 
 const useStyles = makeStyles({
   root: {

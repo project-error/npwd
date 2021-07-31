@@ -18,7 +18,9 @@ export async function fetchNui<T = any>(eventName: string, data?: any): Promise<
 
   LogDebugEvent({ data, action: 'fetchNui' });
 
-  const resourceName = (window as any)?.GetParentResourceName() || 'npwd';
+  const resourceName = (window as any).GetParentResourceName
+    ? (window as any).GetParentResourceName()
+    : 'npwd';
 
   const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 
