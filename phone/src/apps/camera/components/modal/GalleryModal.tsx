@@ -31,8 +31,6 @@ export const GalleryModal = () => {
     [query],
   );
 
-  console.log('meta', meta);
-
   const _handleClose = () => {
     history.push(referal);
   };
