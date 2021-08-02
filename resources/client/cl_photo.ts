@@ -76,11 +76,11 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
   await Delay(0);
-  const resp = await takePhoto();
-  await Delay(200);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  const resp = await takePhoto();
+  await Delay(200);
   inCameraMode = false;
   ClearHelp(true);
 
