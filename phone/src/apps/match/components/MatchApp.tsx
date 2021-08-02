@@ -7,6 +7,7 @@ import { useApp } from '../../../os/apps/hooks/useApps';
 import { MatchThemeProvider } from '../providers/MatchThemeProvider';
 import MatchBottomNavigation from '../components/BottomNavigation';
 import MatchContainer from './MatchContainer';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');
@@ -19,7 +20,9 @@ export const MatchApp = () => {
       <AppWrapper id="contact-app">
         <AppTitle app={match} />
         <AppContent>
-          <MatchContainer />
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <MatchContainer />
+          </React.Suspense>
         </AppContent>
         <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
       </AppWrapper>
