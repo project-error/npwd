@@ -1,9 +1,12 @@
 # No IDE Folders
 .idea
 
+npwd_temp
+
 resources/html
 
 phone/.eslintcache
+phone/.env
 
 # Node Modules and Built Folders
 node_modules
@@ -23,3 +26,4 @@ sv_npwd.log
 
 # FXServer Yarn
 .yarn.installed
+phone/.env

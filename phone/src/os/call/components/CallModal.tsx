@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components/AppWrapper';
+import { AppWrapper } from '../../../ui/components';
 import { AppContent } from '../../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
@@ -10,6 +10,7 @@ import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import RingingText from './RingingText';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 const useStyles = makeStyles({
   root: {
@@ -21,11 +22,13 @@ const useStyles = makeStyles({
   },
 });
 
-export const CallModal = () => {
+export const CallModal: React.FC = () => {
   const [settings] = useSettings();
   const { call } = useCall();
 
   const classes = useStyles();
+
+  if (!call) return null;
 
   return (
     <AppWrapper>
@@ -34,13 +37,15 @@ export const CallModal = () => {
           backgroundImage: `url(${getBackgroundPath(settings.wallpaper.value)})`,
         }}
       >
-        <Box className={classes.root} padding={5}>
-          <Box>
-            <CallContactContainer />
-            {call.accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <Box className={classes.root} padding={5}>
+            <Box>
+              <CallContactContainer />
+              {call.is_accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+            </Box>
+            <CallControls />
           </Box>
-          <CallControls />
-        </Box>
+        </React.Suspense>
       </AppContent>
     </AppWrapper>
   );

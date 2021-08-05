@@ -14,7 +14,7 @@ export const MarketplaceApp = () => {
 
   return (
     <MarketplaceThemeProvider>
-      <AppWrapper id="sellout-app">
+      <AppWrapper id="marketplace-app">
         <AppTitle app={marketplaceApp} />
         <AppContent>
           <Switch>

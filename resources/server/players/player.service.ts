@@ -170,7 +170,7 @@ class _PlayerService {
    *
    */
   async handleNewPlayerEvent({ source: src, identifier, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier });
+    const player = await this.createNewPlayer({ src, identifier: identifier.toString() });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);

@@ -5,7 +5,6 @@ import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { MatchApp } from '../../../apps/match/components/MatchApp';
 import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
@@ -22,8 +21,8 @@ import {
   CONTACTS_APP_TEXT_COLOR,
 } from '../../../apps/contacts/contacts.theme';
 import {
-  SELLOUT_APP_PRIMARY_COLOR,
-  SELLOUT_APP_ICON_COLOR,
+  MARKETPLACE_APP_PRIMARY_COLOR,
+  MARKETPLACE_APP_ICON_COLOR,
 } from '../../../apps/marketplace/marketplace.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
@@ -34,6 +33,8 @@ import {
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 import { SvgIconProps } from '@material-ui/core';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
+import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
+import { MatchApp } from '../../../apps/match/components/MatchApp';
 
 export interface IAppConfig {
   id: string;
@@ -60,6 +61,16 @@ export const APPS: IAppConfig[] = [
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
+  },
+  {
+    id: 'BROWSER',
+    nameLocale: 'BROWSER.NAME',
+    backgroundColor: blue['300'],
+    path: '/browser',
+    color: common.white,
+    Route: () => (
+      <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
+    ),
   },
   {
     id: 'MESSAGES',
@@ -129,8 +140,8 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
-    backgroundColor: SELLOUT_APP_PRIMARY_COLOR,
-    color: SELLOUT_APP_ICON_COLOR,
+    backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
+    color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
     Route: () => (
       <AppRoute

@@ -1,5 +1,9 @@
 local disableKeys
 
+local DisableControlAction = DisableControlAction
+local Wait = Wait
+local CreateThread = CreateThread
+
 CreateThread(function()
     while true do
         if disableKeys then

@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { FormattedProfile, FormattedMatch } from '../../../../../../typings/match';
 
 const useStyles = makeStyles({
-  root: {},
   tags: {
     position: 'absolute',
     bottom: '40%',

@@ -1,0 +1,70 @@
+name: Tagged Release Publisher
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+ create-tagged-release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      VERSION_TAG: ${{ steps.get_vars.outputs.VERSION_TAG }}
+    steps:
+      - name: Install archive tools
+        run: sudo apt-get install zip gzip tar
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+      - name: Get variables
+        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
+        id: get_vars
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run build
+        run: npm run build
+      - name: Create Sentry Release
+        uses: tclindner/sentry-releases-action@v1.2.0
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_URL: https://sentry.projecterror.dev/
+        with:
+          environment: production
+          tagName: ${{ steps.get_vars.outputs.VERSION_TAG }}
+          sourceMapOptions: './resources/html/static/js'
+      - name: Bundle built files
+        run: |
+          mkdir npwd_temp
+          mkdir npwd_temp/resources
+          cp -t npwd_temp/resources -r resources/dist resources/html
+          cp -t npwd_temp fxmanifest.lua config.json LICENSE README.md
+          zip -r npwd-${{ steps.get_vars.outputs.VERSION_TAG }} npwd_temp
+          rm -rf npwd_temp
+          echo "Cleaned up"
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            "npwd-${{ steps.get_vars.outputs.VERSION_TAG }}"
+          id: auto_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

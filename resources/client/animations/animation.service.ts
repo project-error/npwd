@@ -9,9 +9,9 @@ export enum AnimationState {
 
 export class AnimationService {
   private animationInterval: NodeJS.Timeout;
-  private onCall: boolean = false;
-  private phoneOpen: boolean = false;
-  private onCamera: boolean = false;
+  private onCall = false;
+  private phoneOpen = false;
+  private onCamera = false;
 
   private createAnimationInterval() {
     this.animationInterval = setInterval(async () => {
@@ -105,6 +105,14 @@ export class AnimationService {
     this.setPhoneState(AnimationState.ON_CALL, false);
   }
 
+  async openCamera() {
+    this.setPhoneState(AnimationState.ON_CAMERA, true);
+  }
+
+  async closeCamera() {
+    this.setPhoneState(AnimationState.ON_CAMERA, false);
+  }
+
   private async loadAnimDict(dict: any) {
     //-- Loads the animation dict. Used in the anim functions.
     RequestAnimDict(dict);
@@ -190,5 +198,5 @@ export class AnimationService {
       await this.loadAnimDict(DICT);
       TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
     }
-  };
+  }
 }

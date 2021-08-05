@@ -1,7 +1,11 @@
-import { GalleryPhoto, PhotoEvents } from '../../typings/photo';
+import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
-import { sendMessage, sendCameraEvent } from '../utils/messages';
+import { sendCameraEvent, sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
+import { ClUtils } from './client';
+import { animationService } from './animations/animation.controller';
+import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
+
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
 const exp = (global as any).exports;
@@ -29,10 +33,8 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
-
-RegisterNuiCallbackType(PhotoEvents.TAKE_PHOTO);
-on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
-  cb();
+RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
+  await animationService.openCamera();
   emit('npwd:disableControlActions', false);
   // Create Phone Prop
   let frontCam = false;
@@ -52,30 +54,43 @@ on(`__cfx_nui:${PhotoEvents.TAKE_PHOTO}`, async (data: any, cb: Function) => {
       frontCam = !frontCam;
       CellFrontCamActivate(frontCam);
     } else if (IsControlJustPressed(1, 176)) {
-      await handleTakePicture();
+      if (SCREENSHOT_BASIC_TOKEN !== 'none') {
+        const resp = await handleTakePicture();
+        cb(resp);
+        break;
+      }
+      console.error(
+        'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
+      );
     } else if (IsControlJustPressed(1, 177)) {
       handleCameraExit();
       break;
-    } 
+    }
     displayHelperText();
   }
   ClearHelp(true);
   emit('npwd:disableControlActions', true);
+  await animationService.closeCamera();
 });
 
 const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
   await Delay(0);
-  takePhoto();
-  await Delay(200);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
-  sendCameraEvent(PhotoEvents.UPLOAD_PHOTO, true);
+  const resp = await takePhoto();
+  await Delay(200);
   inCameraMode = false;
+  ClearHelp(true);
+
+  return resp;
 };
 
-const handleCameraExit = () => {
+const handleCameraExit = async () => {
+  ClearHelp(true);
+  animationService.closeCamera();
+  emit('npwd:disableControlActions', true);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
@@ -83,50 +98,33 @@ const handleCameraExit = () => {
   inCameraMode = false;
 };
 
-onNet(PhotoEvents.SEND_PHOTOS, (photos: string[]) => {
-  sendCameraEvent(PhotoEvents.SEND_PHOTOS, photos);
-});
-
-function takePhoto() {
-  // Return and log error if screenshot basic token not found
-  if (SCREENSHOT_BASIC_TOKEN === 'none') {
-    return console.error('Screenshot basic token not found. Please set in server.cfg');
-  }
-  exp['screenshot-basic'].requestScreenshotUpload(
-    'https://api.imgur.com/3/image',
-    'imgur',
-    {
-      headers: {
-        authorization: `Client-ID ${SCREENSHOT_BASIC_TOKEN}`,
-        'content-type': 'multipart/form-data',
+const takePhoto = () =>
+  new Promise((res, rej) => {
+    // Return and log error if screenshot basic token not found
+    if (SCREENSHOT_BASIC_TOKEN === 'none') {
+      return console.error('Screenshot basic token not found. Please set in server.cfg');
+    }
+    exp['screenshot-basic'].requestScreenshotUpload(
+      'https://api.imgur.com/3/image',
+      'imgur',
+      {
+        headers: {
+          authorization: `Client-ID ${SCREENSHOT_BASIC_TOKEN}`,
+          'content-type': 'multipart/form-data',
+        },
       },
-    },
-    (data: string) => {
-      try {
-        const imageLink = JSON.parse(data).data.link;
-        emitNet(PhotoEvents.UPLOAD_PHOTO, imageLink);
-      } catch (e) {
-        sendCameraEvent(PhotoEvents.TAKE_PHOTO_ERROR, 'APPS_CAMERA_FAILED_TO_TAKE_PHOTO');
-      }
-    },
-  );
-}
+      async (data: any) => {
+        try {
+          const imageLink = JSON.parse(data).data.link;
+          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, imageLink);
+          console.log('export shit', resp);
+          res(resp);
+        } catch (e) {
+          rej(e.message);
+        }
+      },
+    );
+  });
 
-onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (photo: GalleryPhoto) => {
-  if (photo && photo.image) {
-    return sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, photo);
-  }
-  sendCameraEvent(PhotoEvents.TAKE_PHOTO_ERROR, 'APPS_CAMERA_FAILED_TO_TAKE_PHOTO');
-});
-
-// delete photo
-
-RegisterNuiCallbackType(PhotoEvents.DELETE_PHOTO);
-on(`__cfx_nui:${PhotoEvents.DELETE_PHOTO}`, (data: any, cb: Function) => {
-  emitNet(PhotoEvents.DELETE_PHOTO, data);
-  cb();
-});
-
-onNet(PhotoEvents.DELETE_PHOTO_SUCCESS, () => {
-  emitNet(PhotoEvents.FETCH_PHOTOS);
-});
+RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
+RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);

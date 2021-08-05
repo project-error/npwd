@@ -2,12 +2,13 @@ import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
 import { MessageEvents } from '../../typings/messages';
-import { BankEvents } from '../../typings/bank';
-import { PhotoEvents } from '../../typings/photo';
-import { CallEvents } from '../../typings/call';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
+import { RegisterNuiCB } from './cl_utils';
+
 let isPhoneOpen = false;
+
+const exps = global.exports;
 
 /* * * * * * * * * * * * *
  *
@@ -17,7 +18,6 @@ let isPhoneOpen = false;
 function fetchOnInitialize() {
   emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-  sendMessage('PHONE', PhoneEvents.SET_CONFIG, config);
 }
 
 onNet(PhoneEvents.ON_INIT, () => {
@@ -75,7 +75,7 @@ RegisterCommand(
   'phone',
   async () => {
     //-- Toggles Phone
-    await Phone();
+    await togglePhone();
   },
   false,
 );
@@ -96,24 +96,29 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-async function Phone(): Promise<void> {
-  if (config.PhoneAsItem) {
-    // TODO: Do promise callback here
-    // const hasPhoneItem = await emitNetPromise('phone:hasPhoneItem')
-    // if (!hasPhoneItem) return
+const checkExportCanOpen = (): boolean => {
+  const exportResp = exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction]();
+  if (typeof exportResp !== 'number' && typeof exportResp !== 'boolean') {
+    throw new Error('You must return either a boolean or number from your export function');
   }
-  if (isPhoneOpen) {
-    await hidePhone();
-  } else {
-    await showPhone();
+
+  return !!exportResp;
+};
+
+async function togglePhone(): Promise<void> {
+  if (config.PhoneAsItem.enabled) {
+    const canAccess = checkExportCanOpen();
+    if (!canAccess) return;
   }
+  if (isPhoneOpen) return await hidePhone();
+  await showPhone();
 }
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
 });
 
-AddEventHandler('onResourceStop', function (resource: string) {
+on('onResourceStop', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
     SetNuiFocus(false, false);
@@ -131,39 +136,21 @@ AddEventHandler('onResourceStop', function (resource: string) {
  *  NUI Service Callback Registration
  *
  * * * * * * * * * * * * */
-
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_BANK);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_BANK}`, (data: any, cb: Function) => {
-  emitNet(BankEvents.FETCH_TRANSACTIONS);
-  emitNet(BankEvents.GET_CREDENTIALS);
-  cb();
-});
-
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_CAMERA);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_CAMERA}`, (data: any, cb: Function) => {
-  emitNet(PhotoEvents.FETCH_PHOTOS);
-  cb();
-});
-
-RegisterNuiCallbackType(PhoneEvents.OPEN_APP_DAILER);
-on(`__cfx_nui:${PhoneEvents.OPEN_APP_DAILER}`, (data: any, cb: Function) => {
-  emitNet(CallEvents.FETCH_CALLS);
-  cb();
-});
-
-RegisterNuiCallbackType(PhoneEvents.CLOSE_PHONE);
-on(`__cfx_nui:${PhoneEvents.CLOSE_PHONE}`, async (data: any, cb: Function) => {
+RegisterNuiCB<void>(PhoneEvents.CLOSE_PHONE, async (_, cb) => {
   await hidePhone();
   cb();
-}); // Called for when the phone is closed via the UI.
-
-RegisterNuiCallbackType(PhoneEvents.TOGGLE_KEYS);
-on(`__cfx_nui:${PhoneEvents.TOGGLE_KEYS}`, async (data: any, cb: Function) => {
-  if (isPhoneOpen) {
-    SetNuiFocusKeepInput(data.keepGameFocus);
-  }
-  cb();
 });
+
+// NOTE: This probably has an edge case when phone is closed for some reason
+// and we need to toggle keep input off
+RegisterNuiCB<{ keepGameFocus: boolean }>(
+  PhoneEvents.TOGGLE_KEYS,
+  async ({ keepGameFocus }, cb) => {
+    // We will only
+    if (isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+    cb({});
+  },
+);
 
 // setTick(async () => {
 //   while (config.SwimDestroy) {
