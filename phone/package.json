@@ -30,7 +30,7 @@
     "@craco/craco": "^6.1.1",
     "@sentry/integrations": "^6.10.0",
     "@sentry/webpack-plugin": "^1.16.0",
-    "@sentry/react": "^5.29.2",
+    "@sentry/react": "^6.10.0",
     "@sentry/tracing": "^5.29.2",
     "@types/enzyme": "^3.10.7",
     "@types/howler": "^2.2.1",
