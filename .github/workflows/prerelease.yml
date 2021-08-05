@@ -2,7 +2,7 @@ name: Prerelease Publisher
 on:
   push:
     branches:
-      - master
+      - ci-testing
 jobs:
   pre-release-build:
     runs-on: ubuntu-latest
@@ -20,9 +20,9 @@ jobs:
       - name: Get variables
         id: get_vars
         run: |
-          echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
-          echo ::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
-          echo ::set-output name=DATE::$(date +'%D')"
+          echo "::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}"
+          echo "::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
+          echo "::set-output name=DATE::$(date +'%D')"
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -51,9 +51,9 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: "Pre-Release Build | ${{ steps.get_vars.outputs.DATE }}"
+          title: Pre-Release Build (${{ steps.get_vars.outputs.SHORT_SHA }}) | ${{ steps.get_vars.outputs.DATE }}
           prerelease: true
-          automatic_release_tag: "latest"
+          automatic_release_tag: "unstable"
           files: ./temp/npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip
         env:
           CI: false
