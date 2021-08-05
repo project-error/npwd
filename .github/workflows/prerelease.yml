@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  tagged-release:
+  pre-release-build:
     runs-on: ubuntu-latest
 
     outputs:
@@ -18,8 +18,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
       - name: Get variables
-        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
         id: get_vars
+        run: |
+          echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
+          echo ::set-output name=DATE::$(date +'%D')"
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -38,14 +41,19 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run build
         run: npm run build
-      - name: Create Release
+      - name: Bundle and Zip files
+        run: |
+          mkdir -p ./temp/npwd/resources
+          cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
+          cp -r ./resources/{dist,html} ./temp/npwd/resources
+          cd ./temp && zip -r npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip ./npwd
+      - name: Create Release & Changelog
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: "Pre-Release Build | ${{ steps.get_vars.outputs.DATE }}"
           prerelease: true
-          files: |
-
-          id: auto_release
-
+          files: ./temp/npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip
         env:
+          CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

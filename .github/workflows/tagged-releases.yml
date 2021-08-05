@@ -60,11 +60,11 @@ jobs:
           echo "Cleaned up"
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
+        id: auto_release
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
             "npwd-${{ steps.get_vars.outputs.VERSION_TAG }}"
-          id: auto_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
