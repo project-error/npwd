@@ -5,8 +5,8 @@
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "license": "CC-BY-NC-SA-4.0",
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@octokit/core": "^3.4.0",
     "husky": "^5.2.0",
     "lerna": "^3.22.1",
