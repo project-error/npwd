@@ -18,8 +18,9 @@ dayjs.extend(updateLocale);
 // Enable Sentry when config setting is true and when in prod
 if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
   Sentry.init({
-    dsn: 'https://71fff4e8f11543fa8dbe7acd0f94fb5d@o478949.ingest.sentry.io/5581619',
+    dsn: 'https://0c8321c22b794dc7a648a571cc8c3c34@sentry.projecterror.dev/2',
     autoSessionTracking: true,
+    release: process.env.REACT_APP_VERSION,
     integrations: [new Integrations.BrowserTracing()],
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control

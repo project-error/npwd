@@ -4,7 +4,6 @@ import { useNotesValue } from '../hooks/state';
 import { useSetSelectedNote } from '../hooks/state';
 import { NoteItem } from '../../../../../typings/notes';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Notes } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   noNotes: {

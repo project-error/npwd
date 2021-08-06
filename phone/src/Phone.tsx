@@ -9,13 +9,10 @@ import { Navigation } from './os/navigation-bar/components/Navigation';
 import { useSimcardService } from './os/simcard/hooks/useSimcardService';
 import { usePhoneService } from './os/phone/hooks/usePhoneService';
 import { useApps } from './os/apps/hooks/useApps';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
-import { useMatchService } from './apps/match/hooks/useMatchService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
-import { usePhotoService } from './apps/camera/hooks/usePhotoService';
 import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from './os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
@@ -32,6 +29,8 @@ import PhoneWrapper from './PhoneWrapper';
 
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
+import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
+import { useConfig } from './os/phone/hooks/useConfig';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -41,8 +40,6 @@ function Phone() {
   const [settings] = useSettings();
 
   const { addAlert } = useSnackbar();
-
-  const Nui = useNuiRequest();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes
@@ -62,15 +59,16 @@ function Phone() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useConfig();
+
   useKeyboardService();
   usePhoneService();
   useSimcardService();
   useTwitterService();
-  useMatchService();
   useMarketplaceService();
   useBankService();
   useMessagesService();
-  usePhotoService();
+  /*usePhotoService();*/
   useCallService();
   useDialService();
 
@@ -78,22 +76,24 @@ function Phone() {
 
   return (
     <div>
-      <WindowSnackbar />
-      <PhoneWrapper>
-        <NotificationBar />
-        <div className="PhoneAppContainer">
-          <>
-            <Route exact path="/" component={HomeApp} />
-            {callModal && <Route exact path="/call" component={CallModal} />}
-            {apps.map((App) => (
-              <App.Route key={App.id} />
-            ))}
-          </>
-          <NotificationAlert />
-          <PhoneSnackbar />
-        </div>
-        <Navigation />
-      </PhoneWrapper>
+      <TopLevelErrorComponent>
+        <WindowSnackbar />
+        <PhoneWrapper>
+          <NotificationBar />
+          <div className="PhoneAppContainer">
+            <>
+              <Route exact path="/" component={HomeApp} />
+              {callModal && <Route exact path="/call" component={CallModal} />}
+              {apps.map((App) => (
+                <App.Route key={App.id} />
+              ))}
+            </>
+            <NotificationAlert />
+            <PhoneSnackbar />
+          </div>
+          <Navigation />
+        </PhoneWrapper>
+      </TopLevelErrorComponent>
     </div>
   );
 }

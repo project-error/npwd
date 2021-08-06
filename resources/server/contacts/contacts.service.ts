@@ -19,7 +19,6 @@ class _ContactService {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
       await this.contactsDB.updateContact(reqObj.data, identifier);
-
       resp({ status: 'ok' });
     } catch (e) {
       contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);

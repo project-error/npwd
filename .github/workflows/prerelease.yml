@@ -1,0 +1,57 @@
+name: Prerelease Publisher
+on:
+  push:
+    branches:
+      - master
+jobs:
+  pre-release-build:
+    name: 'Build & Create Pre-Release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Setup Node and Yarn Cache
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      # Get zip util
+      - name: Install archive tools
+        run: sudo apt install zip
+
+      - name: Get variables
+        id: get_vars
+        run: |
+          echo "::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
+          echo "::set-output name=DATE::$(date +'%D')"
+
+      - name: Install Deps
+        run: yarn --frozen-lockfile
+
+      - name: Run build
+        run: yarn build
+
+      - name: Bundle and Zip files
+        run: |
+          mkdir -p ./temp/npwd/resources
+          cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
+          cp -r ./resources/{dist,html} ./temp/npwd/resources
+          cd ./temp && zip -r npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip ./npwd
+
+      - name: Create Release & Changelog
+        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: Pre-Release Build (${{ steps.get_vars.outputs.SHORT_SHA }}) | ${{ steps.get_vars.outputs.DATE }}
+          prerelease: true
+          automatic_release_tag: "unstable"
+          files: ./temp/npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip
+
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

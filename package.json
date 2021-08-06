@@ -14,7 +14,7 @@
     "pretty-quick": "^3.1.0"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run test && lerna run build",
     "prepare": "husky install",
     "bootstrap": "lerna bootstrap",
     "format:staged": "pretty-quick --staged",

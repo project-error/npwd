@@ -1,5 +1,10 @@
 {
   "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Fatal Error",
+      "TOP_LEVEL_ERR_ACTION": "Reload",
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+    },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
@@ -7,7 +12,14 @@
         "RINGING": "Ringing",
         "OUTGOING": "Outgoing call",
         "INCOMING": "Incoming call"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "You cannot call your own phone number!",
+        "ERROR": "Error occurred while completing this call"
       }
+    },
+    "BROWSER": {
+      "NAME": "Browser"
     },
     "SETTINGS": {
       "CATEGORY": {
@@ -64,6 +76,7 @@
     "APPS_CAMERA": "Camera",
 
     "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "Photo could not be saved :(",
+    "APPS_CAMERA_FAILED_TO_DELETE_PHOTO": "Photo could not be deleted :(",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",

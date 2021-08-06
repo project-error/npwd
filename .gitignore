@@ -1,6 +1,8 @@
 # No IDE Folders
 .idea
 
+npwd_temp
+
 resources/html
 
 phone/.eslintcache

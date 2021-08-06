@@ -1,108 +1,79 @@
-import { IAlertProps } from "../../../typings/alerts";
-import { CallEvents, CallHistoryItem, CallRejectReasons } from "../../../typings/call";
+import { IAlertProps } from '../../../typings/alerts';
+import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
+import { animationService } from '../animations/animation.controller';
 
 const exp = (global as any).exports;
 
 export class CallService {
-	private currentCall: number = 0;
+  private currentCall: number;
 
+  constructor() {
+    this.currentCall = 0;
+  }
 
-	isInCall() {
-		return this.currentCall !== 0;
-	}
+  static sendCallAction<T>(method: CallEvents, data: T): void {
+    SendNUIMessage({
+      app: 'CALL',
+      method,
+      data,
+    });
+  }
 
-	openCallModal(show: boolean) {
-		SendNUIMessage({
-			app: 'CALL',
-			method: CallEvents.SET_CALL_MODAL,
-			data: show,
-		});
-	}
+  isInCall() {
+    return this.currentCall !== 0;
+  }
 
-	handleRejectCall() {
-		// we don't want to reset our UI if we're in a call already.
-		if (this.isInCall()) return;
-		this.openCallModal(false);
-		SendNUIMessage({
-			app: 'CALL',
-			method: CallEvents.SET_CALLER,
-			data: {
-			  transmitter: null,
-			  receiver: null,
-			  isTransmitter: null,
-			  accepted: false,
-			  active: false,
-			},
-		});
-	}
+  openCallModal(show: boolean) {
+    CallService.sendCallAction<boolean>(CallEvents.SET_CALL_MODAL, show);
+  }
 
-	handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean) {
-		// If we're already in a call we want to automatically reject
-		if (this.isInCall()) return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
-		this.openCallModal(true);
+  handleRejectCall() {
+    // we don't want to reset our UI if we're in a call already.
+    if (this.isInCall()) return;
+    this.openCallModal(false);
+    CallService.sendCallAction(CallEvents.SET_CALLER, null);
+  }
 
-		SendNUIMessage({
-			app: 'CALL',
-			method: CallEvents.SET_CALLER,
-			data: {
-			  active: true,
-			  transmitter: transmitter,
-			  receiver: receiver,
-			  isTransmitter: isTransmitter,
-			  accepted: false,
-			},
-		});
-	}
+  handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean) {
+    // If we're already in a call we want to automatically reject
+    if (this.isInCall())
+      return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
 
-	handleCallAccepted(channelId: number, currentCall: CallHistoryItem, isTransmitter: boolean) {
-		this.currentCall = channelId
-		exp['pma-voice'].setCallChannel(channelId);
-		// phoneCallStartAnim(); // Trigger call animation only if the call was accepted.
-		SendNUIMessage({
-			app: 'CALL',
-			method: CallEvents.SET_CALLER,
-			data: {
-			  active: true,
-			  transmitter: currentCall.transmitter,
-			  receiver: currentCall.receiver,
-			  isTransmitter: isTransmitter,
-			  accepted: true,
-			},
-		});
-	}
+    this.openCallModal(true);
+    animationService.startPhoneCall();
 
-	handleEndCall() {
-		this.currentCall = 0
-		exp['pma-voice'].setCallChannel(0);
-		this.openCallModal(false);
-	  
-		SendNUIMessage({
-			app: 'CALL',
-			method: CallEvents.SET_CALLER,
-			data: {
-			  transmitter: null,
-			  receiver: null,
-			  isTransmitter: null,
-			  accepted: false,
-			  active: false,
-			},
-		})
-	}
+    SendNUIMessage({
+      app: 'CALL',
+      method: CallEvents.SET_CALLER,
+      data: {
+        active: true,
+        transmitter: transmitter,
+        receiver: receiver,
+        isTransmitter: isTransmitter,
+        accepted: false,
+      },
+    });
+  }
 
-	handleSendAlert(alert: IAlertProps) {
-		SendNUIMessage({
-			app: 'DIALER',
-			method: CallEvents.SEND_ALERT,
-			data: alert,
-		});
-	}
+  handleCallAccepted(callData: ActiveCall) {
+    this.currentCall = callData.channelId;
+    exp['pma-voice'].setCallChannel(callData.channelId);
+    CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALLER, callData);
+  }
 
-	handleFetchCalls(calls: CallHistoryItem[]) {
-		SendNUIMessage({
-			  app: 'DIALER',
-			  method: CallEvents.SET_CALL_HISTORY,
-			  data: calls,
-		});
-	}
+  handleEndCall() {
+    this.currentCall = 0;
+    exp['pma-voice'].setCallChannel(0);
+    this.openCallModal(false);
 
+    CallService.sendCallAction<null>(CallEvents.SET_CALLER, null);
+  }
+
+  handleSendAlert(alert: IAlertProps) {
+    SendNUIMessage({
+      app: 'DIALER',
+      method: CallEvents.SEND_ALERT,
+      data: alert,
+    });
+  }
 }

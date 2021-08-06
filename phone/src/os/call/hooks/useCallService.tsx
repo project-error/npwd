@@ -3,7 +3,6 @@ import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
 
 import { CallEvents, ActiveCall } from '../../../../../typings/call';
-// import InjectDebugData from '../../debug/InjectDebugData';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';
@@ -34,9 +33,9 @@ export const useCallService = () => {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const { call, setCall } = useCall();
+  const { setCall } = useCall();
 
-  const { setNotification } = useCallNotifications();
+  const { setNotification, clearNotification } = useCallNotifications();
 
   const setModal = useSetRecoilState(callerState.callModal);
 
@@ -55,10 +54,11 @@ export const useCallService = () => {
     }
   }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
-  const _setCall = (_call: ActiveCall) => {
-    setCall({ ...call, ..._call });
-    setNotification(_call);
-  };
-  useNuiEvent('CALL', CallEvents.SET_CALLER, _setCall);
+  useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALLER, (callData) => {
+    setCall(callData);
+
+    if (!callData) return clearNotification();
+    setNotification(callData);
+  });
   useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, setModal);
 };

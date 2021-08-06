@@ -7,14 +7,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
-import { CallEvents } from '../../../../../../typings/call';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useFilteredContacts } from '../../hooks/state';
+import { useCall } from '../../../../os/call/hooks/useCall';
 
 export const ContactList = () => {
   const filteredContacts = useFilteredContacts();
   const history = useHistory();
-  const Nui = useNuiRequest();
+  const { initializeCall } = useCall();
 
   const openContactInfo = (contactId: number) => {
     history.push(`/contacts/${contactId}`);
@@ -26,9 +25,7 @@ export const ContactList = () => {
       level: 2,
       data: true,
     });
-    Nui.send(CallEvents.INITIALIZE_CALL, {
-      number,
-    });
+    initializeCall(number);
   };
 
   const handleMessage = (phoneNumber: string) => {

@@ -7,6 +7,7 @@ import { useProfiles } from '../../hooks/useProfiles';
 import Loader from '../Loader';
 import PageText from '../PageText';
 import ActiveProfile from '../ActiveProfile';
+import { useMatchActions } from '../../hooks/useMatchActions';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +24,8 @@ const MINIMUM_LOAD_TIME = 1250;
 const MatchPage = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { profiles, error, activeProfile, setViewed } = useProfiles();
+  const { profiles, error, activeProfile } = useProfiles();
+  const { setViewed } = useMatchActions();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

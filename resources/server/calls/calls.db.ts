@@ -17,12 +17,12 @@ export class CallsRepo {
   async fetchCalls(
     phoneNumber: string,
     limit = FetchDefaultLimits.CALLS_FETCH_LIMIT,
-  ): Promise<CallHistoryItem[] | CallHistoryItem> {
+  ): Promise<CallHistoryItem[]> {
     const query =
       'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC LIMIT ?';
     const [result] = await pool.query(query, [phoneNumber, phoneNumber, limit]);
 
-    return <CallHistoryItem[] | CallHistoryItem>result;
+    return <CallHistoryItem[]>result;
   }
 }
 

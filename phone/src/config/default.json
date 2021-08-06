@@ -194,6 +194,9 @@
     "TWITTER_notiSoundVol": 50,
     "TWITTER_notifyNewFeedTweet": true
   },
+  "appSettings": {
+    "browserHomePage": "https://docs.projecterror.dev"
+  },
   "iconSet": [
     {
       "label": "NPWD Icons",

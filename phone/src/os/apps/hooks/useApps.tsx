@@ -4,7 +4,7 @@ import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core';
-import { useSettings, useSettingsValue } from '../../../apps/settings/hooks/useSettings';
+import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 
 export interface IconSetObject {
   custom: boolean;
@@ -18,11 +18,15 @@ export const useApps = () => {
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
-      const SvgIcon = React.lazy<SvgIconComponent>(
-        () => import(`${__dirname}/../icons/${curIconSet.name}/svg/${app.id}`),
+      const SvgIcon = React.lazy<SvgIconComponent>(() =>
+        import(`${__dirname}/../icons/${curIconSet.name}/svg/${app.id}`).catch(
+          () => 'Was not able to find a dynamic import for icon from this icon set',
+        ),
       );
-      const AppIcon = React.lazy<SvgIconComponent>(
-        () => import(`${__dirname}/../icons/${curIconSet.name}/app/${app.id}`),
+      const AppIcon = React.lazy<SvgIconComponent>(() =>
+        import(`${__dirname}/../icons/${curIconSet.name}/app/${app.id}`).catch(
+          () => 'Was not able to find a dynamic import for icon from this icon set',
+        ),
       );
 
       const NotificationIcon = createLazyAppIcon(SvgIcon);

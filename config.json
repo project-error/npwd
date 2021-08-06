@@ -1,15 +1,9 @@
 {
   "Locale": "en",
-  "KeyTogglePhone": 288,
-  "KeyTakeCall": 38,
-  "PhoneAsItem": false,
-  "SwimDestroy": false,
-  "RunRate": 10,
-  "DestroyChance": 100,
-  "DestroyPhoneReCheck": 3,
-  "notificationPosition": {
-    "horizontal": "right",
-    "vertical": "top"
+  "PhoneAsItem": {
+    "enabled": false,
+    "exportResource": "my-core-resource",
+    "exportName": "myCheckerFunction"
   },
   "general": {
     "useDashNumber": true,
@@ -42,6 +36,7 @@
   },
   "debug": {
     "level": "silly",
-    "enabled": true
+    "enabled": true,
+    "sentryEnabled": true
   }
 }

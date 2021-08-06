@@ -34,7 +34,7 @@ const settingOptionIconSet: Schema = {
   type: 'object',
   properties: {
     label: { type: 'string' },
-    val: { $ref: '/IconSetValue' },
+    value: { $ref: '/IconSetValue' },
   },
   required: true,
 };

@@ -20,6 +20,7 @@ interface MatchConfig {
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
+  sentryEnabled: true;
 }
 
 interface General {
@@ -42,13 +43,16 @@ interface DatabaseConfig {
   useIdentifierPrefix: boolean;
 }
 
+interface PhoneAsItemConfig {
+  enabled: boolean;
+  exportResource: string;
+  exportFunction: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
-  KeyTogglePhone: number;
-  KeyTakeCall: number;
-  PhoneAsItem: boolean;
-  SwimDestroy: boolean;
+  PhoneAsItem: PhoneAsItemConfig;
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;
