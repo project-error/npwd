@@ -48,7 +48,7 @@ const showPhone = async (): Promise<void> => {
   isPhoneOpen = true;
   const time = getCurrentGameTime();
   await animationService.openPhone(); // Animation starts before the phone is open
-  emitNet('phone:getCredentials');
+  emitNet(PhoneEvents.FETCH_CREDENTIALS);
   SetCursorLocation(0.9, 0.922); //Experimental
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
   sendMessage('PHONE', PhoneEvents.SET_TIME, time);

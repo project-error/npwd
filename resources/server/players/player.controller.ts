@@ -3,6 +3,15 @@ import PlayerService from './player.service';
 import { config } from '../server';
 import { PlayerAddData } from './player.interfaces';
 import { playerLogger } from './player.utils';
+import { PhoneEvents } from '../../../typings/phone';
+
+onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
+  const src = getSource();
+  const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
+  console.log('the phone number', phoneNumber);
+
+  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber);
+});
 
 /**
  * Essentially this whole file acts as a controller layer

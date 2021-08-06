@@ -9,6 +9,7 @@ export enum PhoneEvents {
   SET_CONFIG = 'npwd:setPhoneConfig',
   SET_TIME = 'npwd:setGameTime',
   SEND_CREDENTIALS = 'npwd:sendCredentials',
+  FETCH_CREDENTIALS = 'npwd:getCredentials',
   ON_INIT = 'npwd:onInit',
   TOGGLE_KEYS = 'npwd:toggleAllControls',
 }
