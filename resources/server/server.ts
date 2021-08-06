@@ -20,7 +20,6 @@ import './twitter/twitter.controller';
 import './match/match.controller';
 import './bank/bank.controller';
 
-import './sv_main';
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
