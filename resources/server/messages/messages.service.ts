@@ -3,10 +3,11 @@ import { MessageEvents } from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
   createMessageGroupsFromPhoneNumbers,
-  getFormattedMessageGroups,
+  getFormattedMessageConversations,
   getIdentifiersFromParticipants,
   messagesLogger,
 } from './messages.utils';
+import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
@@ -16,13 +17,16 @@ class _MessagesService {
     messagesLogger.debug('Messages service started');
   }
 
-  async handleFetchMessageGroups(src: number) {
+  async handleFetchMessageConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      const messageGroups = await getFormattedMessageGroups(identifier);
-      emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, src, messageGroups);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      const messageConversations = await getFormattedMessageConversations(identifier);
+
+      /*emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, src, messageGroups);*/
+      resp({ status: 'ok', data: messageConversations });
     } catch (e) {
-      emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_FAILED, src);
+      /*emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_FAILED, src);*/
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages groups, ${e.message}`);
     }
   }
@@ -77,7 +81,7 @@ class _MessagesService {
             if (!participantPlayer) {
               return;
             }
-            emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
+            emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, participantPlayer.source);
           }
         }
       }
@@ -107,32 +111,23 @@ class _MessagesService {
     }
   }
 
-  async handleSendMessage(src: number, groupId: string, message: string, groupName: string) {
+  async handleSendMessage(src: number, conversationId: number, message: string) {
     try {
       const _identifier = PlayerService.getIdentifier(src);
-      const userParticipants = getIdentifiersFromParticipants(groupId);
+      const participantId = getIdentifiersFromParticipants(conversationId);
 
-      await this.messagesDB.createMessage(_identifier, groupId, message, userParticipants);
+      await this.messagesDB.createMessage(_identifier, conversationId, message);
 
-      emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, src, groupId);
+      emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, src, conversationId);
 
       // gets the identifiers foe the participants for current groupId.
 
-      for (const participantId of userParticipants) {
-        // we don't broadcast to the source of the event.
-        if (participantId !== _identifier) {
-          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
-          if (!participantPlayer) {
-            return;
-          }
-          emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, participantPlayer.source);
-          emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-            groupName,
-            groupId,
-            message,
-          });
-        }
-      }
+      const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
+      emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+        conversationName: participantPlayer.getPhoneNumber(), // We check if we have a contact on the NUI side.
+        conversationId,
+        message,
+      });
     } catch (e) {
       emitNet(MessageEvents.ACTION_RESULT, src, {
         message: 'APPS_MESSAGES_NEW_MESSAGE_FAILED',
@@ -148,7 +143,7 @@ class _MessagesService {
     try {
       const identifier = PlayerService.getIdentifier(src);
       await this.messagesDB.setMessageRead(groupId, identifier);
-      emitNet(MessageEvents.FETCH_MESSAGE_GROUPS, src);
+      emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, src);
     } catch (e) {
       messagesLogger.error(`Failed to set message as read, ${e.message}`, {
         source: src,

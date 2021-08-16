@@ -1,4 +1,5 @@
-import { UnformattedMessageGroup, Message } from '../../../typings/messages';
+import { pool } from '../db';
+import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import { config } from '../server';
 import DbInterface from '../db/db_wrapper';
 
@@ -6,119 +7,87 @@ export class _MessagesDB {
   /**
    * Create a message in the database
    * @param userIdentifier - identifier of the user creating this message
-   * @param groupId - the message group ID to attach this message to
+   * @param conversationId - the message conversation ID to attach this message to
    * @param message - content of the message
-   * @param participants -
    */
   async createMessage(
     userIdentifier: string,
-    groupId: string,
+    conversationId: number,
     message: string,
-    participants: string[],
-  ): Promise<UnformattedMessageGroup[]> {
-    const query = `INSERT INTO npwd_messages (user_identifier, message, group_id) VALUES (?, ?, ?)`;
+  ): Promise<UnformattedMessageConversation[]> {
+    const query = `INSERT INTO npwd_messages (user_identifier, message, conversation_id)
+                   VALUES (?, ?, ?)`;
 
-    const groupQuery = `
-      UPDATE npwd_messages_groups SET unreadCount = unreadCount + 1 WHERE participant_identifier = ? AND group_id = ?
-    `;
-    const [results] = await DbInterface._rawExec(query, [userIdentifier, message, groupId]);
+    const [results] = await pool.query(query, [userIdentifier, message, conversationId]);
 
-    await Promise.all(
-      participants
-        .filter((s) => userIdentifier !== s)
-        .map((s) => DbInterface._rawExec(groupQuery, [s, groupId])),
-    );
+    return <UnformattedMessageConversation[]>results;
+  }
 
-    return <UnformattedMessageGroup[]>results;
+  // Not sure if we're going to query this exactly as its done here.
+  /**
+   * Retrieve all message conversations associated with a user. This will
+   * populate the list of message conversations on the UI
+   * @param identifier - identifier of the user to get message conversations for
+   */
+  async getMessageConversations(identifier: string): Promise<UnformattedMessageConversation[]> {
+    const query = `SELECT npwd_messages_conversations.unread,
+                          npwd_messages_conversations.conversation_id,
+                          users.phone_number,
+                          npwd_phone_contacts.avatar,
+                          npwd_phone_contacts.display
+                   FROM (SELECT conversation_id
+                         FROM npwd_messages_conversations
+                         WHERE npwd_messages_conversations.participant_identifier = ?) AS t
+                            LEFT OUTER JOIN npwd_messages_conversations
+                                            ON npwd_messages_conversations.conversation_id = t.conversation_id
+                            LEFT OUTER JOIN users
+                                            ON users.identifier = npwd_messages_conversations.participant_identifier
+                            LEFT OUTER JOIN npwd_phone_contacts
+                                            ON REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') =
+                                               REGEXP_REPLACE(users.phone_number, '[^0-9]', '')
+                                                AND npwd_phone_contacts.identifier = ?`;
+
+    const [results] = await pool.query(query, [identifier, identifier]);
+    return <UnformattedMessageConversation[]>results;
   }
 
   /**
-   * Retrieve all message groups associated with a user. This will
-   * populate the list of message groups on the UI
-   * @param userIdentifier - identifier of the user to get message groups for
+   * @param identifier user to get messages for
+   * @param conversationId the conversations for get messages from
    */
-  async getMessageGroups(userIdentifier: string): Promise<UnformattedMessageGroup[]> {
+  async getMessages(identifier: string, conversationId: string): Promise<Message[]> {
     const query = `
-    SELECT
-      npwd_messages_groups.unreadCount,
-      npwd_messages_groups.group_id,
-      npwd_messages_groups.participant_identifier,
-      npwd_messages_groups.user_identifier,
-      npwd_messages_groups.label,
-      ${config.database.playerTable}.${config.database.phoneNumberColumn},
-      npwd_phone_contacts.avatar,
-      npwd_phone_contacts.display
-    FROM (
-      SELECT group_id
-      FROM npwd_messages_groups
-      WHERE npwd_messages_groups.participant_identifier = ?
-    ) as t
-    LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
-    LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_groups.participant_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
-    ORDER BY npwd_messages_groups.createdAt DESC
-    `;
+        SELECT npwd_messages.id
+                   AS
+                   message_id,
+               npwd_messages.message,
+               npwd_messages.isRead,
+               npwd_messages.createdAt,
+               npwd_messages.visible,
+               npwd_messages_conversations.id
+                   AS
+                   conversation_id,
+               npwd_messages_conversations.user_identifier
+                   AS
+                   owner,
+               npwd_messages_conversations.unread,
+               npwd_messages_conversations.participant_identifier
+                   AS
+                   participant,
+               npwd_messages.user_identifier
+                   AS
+                   transmitter
+        FROM npwd_messages
+                 INNER JOIN
+             npwd_messages_conversations
+             ON
+                 npwd_messages.conversation_id = npwd_messages_conversations.id
+        WHERE npwd_messages_conversations.user_identifier = ?
+           OR npwd_messages_conversations.participant_identifier = ? AND npwd_messages_conversations.id = ? `;
 
-    const [results] = await DbInterface._rawExec(query, [
-      userIdentifier,
-      userIdentifier,
-      userIdentifier,
-    ]);
-    return <UnformattedMessageGroup[]>results;
-  }
+    const [results] = await pool.query(query, [identifier, identifier, conversationId]);
 
-  /**
-   * Retrieve all messages associated with a group and add a field
-   * "isMine" which determines if the message belongs to the user
-   * making the request
-   * @param userIdentifier - user to get messages for
-   * @param groupId - the group to get messages from
-   */
-  async getMessages(userIdentifier: string, groupId: string): Promise<Message[]> {
-    const query = `
-    SELECT
-      npwd_messages.id,
-      npwd_messages.message,
-      npwd_messages.group_id,
-      npwd_messages.user_identifier,
-      npwd_messages.isRead,
-      npwd_messages.updatedAt,
-      ${config.database.playerTable}.${config.database.phoneNumberColumn},
-      npwd_phone_contacts.display,
-      npwd_phone_contacts.avatar
-    FROM npwd_messages
-    LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages.user_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
-    WHERE npwd_messages.group_id = ?
-    ORDER BY createdAt ASC;
-    `;
-
-    const [results] = await DbInterface._rawExec(query, [userIdentifier, groupId]);
-    const messages = <Message[]>results;
-    return messages.map((message) => ({
-      ...message,
-      isMine: message.user_identifier == userIdentifier,
-      updatedAt: message.updatedAt.toString(),
-    }));
-  }
-
-  /**
-   * Create a message group label
-   * @param userIdentifier - user who is creating the message group
-   * @param groupId - groupId this label is attached to
-   * @param label - the label itself
-   */
-  async setLabel(userIdentifier: string, groupId: string, label: string): Promise<void> {
-    const query = `
-    UPDATE
-      npwd_messages_groups
-    SET
-      label = ?
-    WHERE
-      group_id = ?
-			AND user_identifier = ?
-    `;
-    await DbInterface._rawExec(query, [label, groupId, userIdentifier]);
+    return <Message[]>results;
   }
 
   /**
@@ -134,11 +103,12 @@ export class _MessagesDB {
     participantIdentifier: string,
   ): Promise<void> {
     const query = `
-    INSERT INTO npwd_messages_groups
-    (user_identifier, group_id, participant_identifier)
-    VALUES (?, ?, ?)
-    `;
-    await DbInterface._rawExec(query, [userIdentifier, groupId, participantIdentifier]);
+        INSERT
+        INTO npwd_messages_groups
+            (user_identifier, group_id, participant_identifier)
+        VALUES (?, ?, ?)
+		`;
+    await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
   }
 
   /**
@@ -147,12 +117,12 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-      SELECT ${config.database.identifierColumn}
-      FROM ${config.database.playerTable}
-      WHERE REGEXP_REPLACE(${config.database.phoneNumberColumn}, '[^0-9]', '') = ?
-      LIMIT 1
-    `;
-    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
+        SELECT ${config.database.identifierColumn}
+        FROM ${config.database.playerTable}
+        WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+        LIMIT 1
+		`;
+    const [results] = await pool.query(query, [phoneNumber]);
     const identifiers = <any>results;
     return identifiers[0]['identifier'];
   }
@@ -178,11 +148,14 @@ export class _MessagesDB {
 
   async getMessageCountByGroup(groupId: string): Promise<number> {
     const query = `
-      SELECT COUNT(*) as count
-      FROM npwd_messages
-      WHERE group_id = ?;
-    `;
-    const [results] = await DbInterface._rawExec(query, [groupId]);
+        SELECT COUNT(*
+                   )
+                   as
+                   count
+        FROM npwd_messages
+        WHERE conversation_id = ?;
+		`;
+    const [results] = await pool.query(query, [groupId]);
     const result = <any>results;
     return result[0].count;
   }

@@ -1,16 +1,43 @@
-import { atom } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../../../typings/messages';
+import { atom, selector } from 'recoil';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageConversation,
+  MessageEvents,
+  MessageGroup,
+} from '../../../../../typings/messages';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import LogDebugEvent from '../../../os/debug/LogDebugEvents';
+import { isEnvBrowser } from '../../../utils/misc';
 
 export const messageState = {
-  messageGroups: atom<MessageGroup[]>({
-    key: 'messageGroups',
-    default: [],
+  messageGroups: atom<MessageConversation[]>({
+    key: 'messageConversations',
+    default: selector({
+      key: 'defaultMessageConversation',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<MessageConversation[]>>(
+            MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+          );
+          LogDebugEvent({ action: 'fetchMessageConversation', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return 'somthing';
+          }
+          console.error(e);
+          return [];
+        }
+      },
+    }),
   }),
   messages: atom<Message[]>({
     key: 'messages',
     default: null,
   }),
-  activeMessageGroup: atom<MessageGroup>({
+  activeMessageGroup: atom<MessageConversation>({
     key: 'activeMessageGroup',
     default: null,
   }),

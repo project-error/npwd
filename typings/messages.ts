@@ -23,19 +23,26 @@ export interface MessageGroup {
   participants: string[];
 }
 
+export interface MessageConversation {
+  conversation_id: number;
+  avatar: string;
+  display: string;
+  phone_number: string;
+  latest_message: string;
+}
+
 /**
  * Used for the raw npwd_messages_groups row responses
  */
-export interface UnformattedMessageGroup {
-  group_id: string;
+export interface UnformattedMessageConversation {
+  conversation_id: string;
   user_identifier: string;
   participant_identifier: string;
   phone_number: string;
-  label?: string;
   avatar?: string;
   display?: string;
-  updatedAt: string;
-  unreadCount: number;
+  updatedAt?: string;
+  unread: number;
 }
 
 /**
@@ -77,7 +84,7 @@ export interface SetMessageRead {
 }
 
 export enum MessageEvents {
-  FETCH_MESSAGE_GROUPS = 'npwd:fetchMessageGroups',
+  FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
   FETCH_MESSAGE_GROUPS_FAILED = 'npwd:fetchMessageGroupsFailed',
   CREATE_MESSAGE_GROUP = 'npwd:createMessageGroup',

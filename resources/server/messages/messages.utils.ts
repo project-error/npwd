@@ -1,9 +1,9 @@
 import { withTransaction } from '../db/pool';
 import {
   CreateMessageGroupResult,
+  MessageConversation,
   MessageGroup,
   MessageGroupMapping,
-  UnformattedMessageGroup,
 } from '../../../typings/messages';
 import { mainLogger } from '../sv_logger';
 import MessagesDB from './messages.db';
@@ -12,63 +12,25 @@ export const messagesLogger = mainLogger.child({ module: 'messages' });
 
 // Functions
 
-/**
- * Consolidate raw message groups into a mapping that groups participants
- * by the message group. The goal of this is to reduce the rows of message
- * groups into a single MessageGroup object.
- * @param userIdentifier - the user identifier to get message groups for
- */
-export async function getConsolidatedMessageGroups(
-  userIdentifier: string,
-): Promise<MessageGroupMapping> {
-  const messageGroups = await MessagesDB.getMessageGroups(userIdentifier);
-  return messageGroups.reduce(
-    (mapping: MessageGroupMapping, messageGroup: UnformattedMessageGroup) => {
-      const groupId = messageGroup.group_id;
-      const displayTerm = messageGroup.display || messageGroup.phone_number || '???';
-      const isUser = messageGroup.participant_identifier == userIdentifier;
-      // Is already mapped?
-      if (groupId in mapping) {
-        // Add participant phone number
-        mapping[groupId].phoneNumbers = mapping[groupId].phoneNumbers.concat(
-          messageGroup.phone_number,
-        );
-        if (isUser) {
-          // Add unread count if its user's message group
-          mapping[groupId].unreadCount = messageGroup.unreadCount;
-          return mapping;
-        }
-        // Add participant if its not user's message group
-        mapping[groupId].participants = mapping[groupId].participants.concat(displayTerm);
-        return mapping;
-      }
-      if (isUser) {
-        // Group not mapped and its current user
-        mapping[groupId] = {
-          user_identifier: messageGroup.user_identifier,
-          unreadCount: messageGroup.unreadCount,
-          avatar: null,
-          label: null,
-          participants: [],
-          phoneNumbers: [messageGroup.phone_number],
-          updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
-        };
-        return mapping;
-      }
-      // Group not mapped and its not current user
+export async function getFormattedMessageConversations(
+  identifier: any,
+): Promise<MessageConversation> {
+  const messageConversations = await MessagesDB.getMessageConversations(identifier);
+  return messageConversations.reduce((mapping: any, conversation: any) => {
+    const groupId = conversation.conversation_id;
+    const isUser = conversation.participant_identifier == identifier;
+    const myNumber = '449731';
+
+    if (conversation.participant_identifier != identifier) {
       mapping[groupId] = {
-        user_identifier: messageGroup.user_identifier,
-        unreadCount: 0,
-        avatar: messageGroup.avatar,
-        label: messageGroup.label,
-        participants: [displayTerm],
-        phoneNumbers: [messageGroup.phone_number],
-        updatedAt: messageGroup.updatedAt ? messageGroup.updatedAt.toString() : null,
+        unread: conversation.unread,
+        phoneNumber: conversation.phone_number,
+        display: conversation.display,
       };
-      return mapping;
-    },
-    {},
-  );
+    }
+
+    return mapping;
+  }, {});
 }
 
 export async function getGroupIds(
@@ -90,7 +52,7 @@ export async function getGroupIds(
  * of MessageGroup objects ready for the UI to consume
  * @param userIdentifier - user to generate the MessageGroups for
  */
-export async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
+/*export async function getFormattedMessageGroups(userIdentifier: string): Promise<MessageGroup[]> {
   const groupMapping = await getConsolidatedMessageGroups(userIdentifier);
   const groupIds = await getGroupIds(userIdentifier, groupMapping);
 
@@ -104,7 +66,7 @@ export async function getFormattedMessageGroups(userIdentifier: string): Promise
       isGroupChat: group.participants.length > 1,
     };
   });
-}
+}*/
 
 /**
  * Create the same unique ID from an identifiers array.
@@ -181,11 +143,6 @@ export async function createMessageGroupsFromPhoneNumbers(
     ),
   ];
 
-  // we allow users to attach labels to name their group chats
-  if (groupLabel) {
-    queryPromises.push(MessagesDB.setLabel(userIdentifier, groupId, groupLabel));
-  }
-
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
@@ -196,6 +153,7 @@ export async function createMessageGroupsFromPhoneNumbers(
 
 // getting the participants from groupId.
 // this should return the source or and array of identifiers
-export function getIdentifiersFromParticipants(groupId: string) {
-  return groupId.split('+');
+export function getIdentifiersFromParticipants(groupId: number) {
+  // TODO: I guess we either have to do a db query or just send the participant form the NUI > client > server;
+  return 'some id';
 }
