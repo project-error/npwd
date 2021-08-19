@@ -23,7 +23,11 @@ import { useTranslation } from 'react-i18next';
 import Modal from '../../../../ui/components/Modal';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { Message, MessageEvents } from '../../../../../../typings/messages';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { MockConversationMessages } from '../../utils/constants';
+import { isEnvBrowser } from '../../../../utils/misc';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -55,20 +59,21 @@ export const MessageModal = () => {
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const { groupId } = useParams<{ groupId: string }>();
-  const { messages, setMessages, activeMessageGroup, setActiveMessageGroup } = useMessages();
+  const { messages, setMessages, activeMessageConversation, setActiveMessageConversation } =
+    useMessages();
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
 
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (activeMessageGroup && messages) {
+    if (activeMessageConversation && messages) {
       setTimeout(() => {
         setLoaded(true);
       }, MINIMUM_LOAD_TIME);
       return;
     }
     setLoaded(false);
-  }, [activeMessageGroup, messages]);
+  }, [activeMessageConversation, messages]);
 
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
@@ -79,8 +84,8 @@ export const MessageModal = () => {
 
   useEffect(() => {
     if (!groupId) return;
-    setActiveMessageGroup(groupId);
-  }, [groupId, setActiveMessageGroup]);
+    setActiveMessageConversation(groupId);
+  }, [groupId, setActiveMessageConversation]);
 
   useEffect(() => {
     if (isLoaded && messages) {
@@ -93,17 +98,17 @@ export const MessageModal = () => {
 
   // sends all unread messages
   useEffect(() => {
-    if (activeMessageGroup?.groupId && activeMessageGroup.unreadCount > 0) {
+    if (activeMessageConversation?.conversation_id) {
       Nui.send(MessageEvents.SET_MESSAGE_READ, {
-        groupId: activeMessageGroup.groupId,
+        groupId: activeMessageConversation.conversation_id,
       });
     }
-  }, [activeMessageGroup, Nui]);
+  }, [activeMessageConversation, Nui]);
 
   // don't allow too many characters, it takes too much room
-  let header = activeMessageGroup ? activeMessageGroup.groupDisplay : '';
+  let header = activeMessageConversation.display || activeMessageConversation.phoneNumber;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
-  header = header.length > MAX_HEADER_CHARS ? activeMessageGroup?.label || truncatedHeader : header;
+  header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
   const headerClass =
     header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
@@ -117,33 +122,11 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
-  const phoneNumbers = activeMessageGroup?.phoneNumbers || [];
-
-  const targetNumber = phoneNumbers.find((n) => myNumber !== n);
+  const targetNumber = activeMessageConversation.phoneNumber;
 
   return (
     <div>
-      <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
-        <Typography variant="h6">{t('APPS_MESSAGES_MEMBERS_TITLE')}</Typography>
-        <List>
-          {phoneNumbers.map((number) => {
-            const display = getDisplayByNumber(number);
-            return (
-              <ListItem divider>
-                <ListItemText>{memberDisplay(display, number, myNumber, t)}</ListItemText>
-                {!getContactByNumber(number) && myNumber !== number && (
-                  <ListItemSecondaryAction>
-                    <Button onClick={() => handleAddContact(number)}>
-                      <PersonAddIcon />
-                    </Button>
-                  </ListItemSecondaryAction>
-                )}
-              </ListItem>
-            );
-          })}
-        </List>
-      </Modal>
-      <Slide direction="left" in={!!activeMessageGroup}>
+      <Slide direction="left" in={!!activeMessageConversation}>
         <Paper className={classes.modalRoot}>
           <Paper className={classes.conversationHeader}>
             <Box display="flex" justifyContent="space-between">
@@ -153,24 +136,18 @@ export const MessageModal = () => {
               <Typography variant="h5" className={headerClass}>
                 {header}
               </Typography>
-              {activeMessageGroup?.isGroupChat ? (
-                <Button>
-                  <MoreVertIcon onClick={() => setGroupActionsOpen(true)} fontSize="large" />
-                </Button>
-              ) : null}
-              {!activeMessageGroup?.isGroupChat &&
-              getDisplayByNumber(targetNumber) === targetNumber ? (
+              {getDisplayByNumber(targetNumber) === targetNumber ? (
                 <Button>
                   <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
                 </Button>
               ) : null}
             </Box>
           </Paper>
-          {isLoaded && activeMessageGroup ? (
+          {isLoaded && activeMessageConversation ? (
             <Conversation
               onClickDisplay={handleAddContact}
               messages={messages}
-              activeMessageGroup={activeMessageGroup}
+              activeMessageGroup={activeMessageConversation}
             />
           ) : (
             <MessageSkeletonList />

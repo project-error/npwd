@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
   },
   message: {
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
   },
 }));
 
@@ -48,11 +48,9 @@ const isImage = (url) => {
 
 export const MessageBubble = ({
   message,
-  isGroupChat,
   onClickDisplay,
 }: {
   message: Message;
-  isGroupChat: boolean;
   onClickDisplay(phoneNumber: string): void;
 }) => {
   const classes = useStyles();
@@ -67,15 +65,6 @@ export const MessageBubble = ({
           ) : (
             <div>{message.message}</div>
           )}
-        </Box>
-        <Box>
-          {isGroupChat && !message.isMine ? (
-            <Link onClick={() => onClickDisplay(message.phone_number)}>
-              <Typography variant="subtitle1" color="secondary">
-                {message.display || message.phone_number}
-              </Typography>
-            </Link>
-          ) : null}
         </Box>
       </Paper>
     </div>

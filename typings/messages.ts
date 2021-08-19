@@ -8,7 +8,11 @@ export interface Message {
   avatar?: string;
   isRead: boolean;
   isMine: boolean;
-  updatedAt: string;
+}
+
+export interface PreDBMessage {
+  conversationId: string;
+  message: string;
 }
 
 export interface MessageGroup {
@@ -24,11 +28,11 @@ export interface MessageGroup {
 }
 
 export interface MessageConversation {
-  conversation_id: number;
+  conversation_id: string;
   avatar: string;
   display: string;
-  phone_number: string;
-  latest_message: string;
+  phoneNumber: string;
+  unread: number;
 }
 
 /**
@@ -66,11 +70,9 @@ export interface CreateMessageGroupResult {
   error?: boolean;
   phoneNumber?: string;
   duplicate?: boolean;
-  groupId?: string;
+  conversationId?: string;
   mine?: boolean;
-  identifiers?: string[];
-  allNumbersFailed?: boolean;
-  failedNumbers: string[];
+  identifiers: string[];
 }
 
 export interface CreateMessageBroadcast {
@@ -87,7 +89,7 @@ export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
   FETCH_MESSAGE_GROUPS_FAILED = 'npwd:fetchMessageGroupsFailed',
-  CREATE_MESSAGE_GROUP = 'npwd:createMessageGroup',
+  CREATE_MESSAGE_CONVERSATION = 'npwd:createMessageGroup',
   CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
   CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
   SEND_MESSAGE = 'npwd:sendMessage',

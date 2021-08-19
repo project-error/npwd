@@ -12,7 +12,7 @@ export class _MessagesDB {
    */
   async createMessage(
     userIdentifier: string,
-    conversationId: number,
+    conversationId: string,
     message: string,
   ): Promise<UnformattedMessageConversation[]> {
     const query = `INSERT INTO npwd_messages (user_identifier, message, conversation_id)
@@ -93,22 +93,22 @@ export class _MessagesDB {
   /**
    * Create a message group
    * @param userIdentifier - the user creating the message group
-   * @param groupId - the unique group ID this corresponds to
+   * @param conversationId - the unique group ID this corresponds to
    * @param participantIdentifier - the participant user identifier. This identifier is what attaches
    * other players to the message group
    */
   async createMessageGroup(
     userIdentifier: string,
-    groupId: string,
+    conversationId: string,
     participantIdentifier: string,
   ): Promise<void> {
     const query = `
         INSERT
-        INTO npwd_messages_groups
-            (user_identifier, group_id, participant_identifier)
+        INTO npwd_messages_conversations
+            (user_identifier, conversation_id, participant_identifier)
         VALUES (?, ?, ?)
 		`;
-    await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
+    await pool.query(query, [userIdentifier, conversationId, participantIdentifier]);
   }
 
   /**
@@ -148,13 +148,7 @@ export class _MessagesDB {
 
   async getMessageCountByGroup(groupId: string): Promise<number> {
     const query = `
-        SELECT COUNT(*
-                   )
-                   as
-                   count
-        FROM npwd_messages
-        WHERE conversation_id = ?;
-		`;
+        SELECT COUNT(*) as count FROM npwd_messages WHERE conversation_id = ?`;
     const [results] = await pool.query(query, [groupId]);
     const result = <any>results;
     return result[0].count;

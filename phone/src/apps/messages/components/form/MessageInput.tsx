@@ -10,7 +10,7 @@ import { TextField } from '../../../../ui/components/Input';
 
 interface IProps {
   onAddImageClick(): void;
-  messageGroupId: string | undefined;
+  messageConversationId: string | undefined;
   messageGroupName: string | undefined;
 }
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   root: { width: '100%' },
 });
 
-const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
+const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const Nui = useNuiRequest();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -30,14 +30,14 @@ const MessageInput = ({ messageGroupId, onAddImageClick }: IProps) => {
       // don't allow the user to submit white space
 
       Nui.send(MessageEvents.SEND_MESSAGE, {
-        groupId: messageGroupId,
+        conversationId: messageConversationId,
         message,
       });
       setMessage('');
     }
   };
 
-  if (!messageGroupId) return null;
+  if (!messageConversationId) return null;
 
   return (
     <Paper variant="outlined" className={classes.root}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 
-import { Message, MessageGroup } from '../../../../../../typings/messages';
+import { Message, MessageConversation, MessageGroup } from '../../../../../../typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
@@ -9,7 +9,7 @@ import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
 
 interface IProps {
-  activeMessageGroup: MessageGroup;
+  activeMessageGroup: MessageConversation;
   messages: Message[];
   onClickDisplay(phoneNumber: string): void;
 }
@@ -28,7 +28,7 @@ const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) 
         image={referalImage}
         onClose={() => setImageModalOpen(false)}
         isOpen={imageModalOpen}
-        messageGroupId={activeMessageGroup.groupId}
+        messageGroupId={activeMessageGroup.conversation_id}
       />
       <Box
         id={CONVERSATION_ELEMENT_ID}
@@ -45,19 +45,13 @@ const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) 
           }}
         >
           {messages.map((message) => (
-            <MessageBubble
-              onClickDisplay={onClickDisplay}
-              key={message.id}
-              message={message}
-              isGroupChat={activeMessageGroup?.isGroupChat}
-            />
+            <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
           ))}
         </Box>
       </Box>
       <MessageInput
-        /*  I should do some groupDiplay here */
-        messageGroupName={activeMessageGroup.label || activeMessageGroup.groupDisplay}
-        messageGroupId={activeMessageGroup.groupId}
+        messageGroupName={activeMessageGroup.phoneNumber || activeMessageGroup.display}
+        messageConversationId={activeMessageGroup.conversation_id}
         onAddImageClick={() => setImageModalOpen(true)}
       />
     </div>

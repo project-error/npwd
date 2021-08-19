@@ -1,18 +1,20 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   CreateMessageGroupResult,
   Message,
   MessageConversation,
   MessageEvents,
-  MessageGroup,
 } from '../../../../../typings/messages';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
+import { MockConversationMessages, MockMessageConversations } from '../utils/constants';
+
+const currentGroupId = atom({ key: 'currentGroupId', default: null });
 
 export const messageState = {
-  messageGroups: atom<MessageConversation[]>({
+  messageCoversations: atom<MessageConversation[]>({
     key: 'messageConversations',
     default: selector({
       key: 'defaultMessageConversation',
@@ -25,7 +27,7 @@ export const messageState = {
           return resp.data;
         } catch (e) {
           if (isEnvBrowser()) {
-            return 'somthing';
+            return MockMessageConversations;
           }
           console.error(e);
           return [];
@@ -35,11 +37,28 @@ export const messageState = {
   }),
   messages: atom<Message[]>({
     key: 'messages',
-    default: null,
+    default: selector({
+      key: 'defaultMessages',
+      get: async ({ get }) => {
+        try {
+          const groupId = get(currentGroupId);
+
+          const resp = await fetchNui(MessageEvents.FETCH_MESSAGES, { conversationId: groupId });
+          LogDebugEvent({ action: 'fetchMessages', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockConversationMessages;
+          }
+          console.error(e);
+          return [];
+        }
+      },
+    }),
   }),
-  activeMessageGroup: atom<MessageConversation>({
+  activeMessageConversation: atom<MessageConversation>({
     key: 'activeMessageGroup',
-    default: null,
+    default: MockMessageConversations[0],
   }),
   showNewMessageGroup: atom<boolean>({
     key: 'showNewMessageGroup',
@@ -58,3 +77,9 @@ export const messageState = {
     default: 0,
   }),
 };
+
+export const useMessageConversationValue = () => useRecoilValue(messageState.messageCoversations);
+export const useSetMessageConversation = () => useSetRecoilState(messageState.messageCoversations);
+export const useMessageConversation = () => useRecoilState(messageState.messageCoversations);
+
+export const useSetConversationId = () => useSetRecoilState(currentGroupId);

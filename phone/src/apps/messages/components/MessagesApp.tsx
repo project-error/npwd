@@ -15,13 +15,12 @@ import { MessageEvents } from '../../../../../typings/messages';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const MessagesApp = () => {
-  const Nui = useNuiRequest();
   const messages = useApp('MESSAGES');
   const history = useHistory();
 
-  useEffect(() => {
-    Nui.send(MessageEvents.FETCH_MESSAGE_GROUPS);
-  }, [Nui]);
+  /* useEffect(() => {
+    Nui.send(MessageEvents.FETCH_MESSAGE_CONVERSATIONS);
+  }, [Nui]);*/
 
   return (
     <MessagesThemeProvider>
@@ -54,7 +53,7 @@ export const MessagesApp = () => {
   );
 };
 
-InjectDebugData([
+/* InjectDebugData([
   {
     app: 'MESSAGES',
     method: MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS,
@@ -91,7 +90,7 @@ InjectDebugData([
       },
     ],
   },
-]);
+]); */
 
 InjectDebugData(
   [

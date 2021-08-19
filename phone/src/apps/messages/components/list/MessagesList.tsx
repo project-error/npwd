@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box, List } from '@mui/material';
-import { MessageGroup } from '../../../../../../typings/messages';
+import { Box, List } from '@material-ui/core';
+import { MessageConversation, MessageGroup } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
@@ -14,28 +14,21 @@ const MessagesList = (): any => {
   const { t } = useTranslation();
 
   const {
-    messageGroups,
+    /* messageGroups,
     goToConversation,
     createMessageGroupResult,
     clearMessageGroupResult,
     getMessageGroupById,
-    setActiveMessageGroup,
+    setActiveMessageGroup, */
+    conversations,
+    goToConversation,
   } = useMessages();
 
   const [searchValue, setSearchValue] = useState('');
 
   const formattedSearch = searchValue.toLowerCase().trim();
-  const filteredGroups = formattedSearch
-    ? messageGroups.filter((group) => {
-        const groupDisplay = group.groupDisplay.toLowerCase();
-        const displayIncludes = groupDisplay.includes(formattedSearch);
 
-        const label = group.label?.toLowerCase();
-        return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
-      })
-    : messageGroups;
-
-  useEffect(() => {
+  /* useEffect(() => {
     if (createMessageGroupResult?.groupId) {
       const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
@@ -51,12 +44,12 @@ const MessagesList = (): any => {
     setActiveMessageGroup,
     getMessageGroupById,
     goToConversation,
-  ]);
+  ]); */
 
-  if (!messageGroups) return null;
+  if (!conversations) return null;
 
-  const handleClick = (messageGroup: MessageGroup) => () => {
-    goToConversation(messageGroup);
+  const handleClick = (conversation: MessageConversation) => () => {
+    goToConversation(conversation);
   };
 
   return (
@@ -71,10 +64,10 @@ const MessagesList = (): any => {
       <Box display="flex" flexDirection="column">
         <Box className={classes.root}>
           <List>
-            {filteredGroups.map((messageGroup) => (
+            {conversations.map((conversation) => (
               <MessageGroupItem
-                key={messageGroup.groupId}
-                messageGroup={messageGroup}
+                key={conversation.conversation_id}
+                messageConversation={conversation}
                 handleClick={handleClick}
               />
             ))}

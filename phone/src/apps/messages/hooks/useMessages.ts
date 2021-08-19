@@ -1,77 +1,70 @@
 import { useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  CreateMessageGroupResult,
-  Message,
-  MessageEvents,
-  MessageGroup,
-} from '../../../../../typings/messages';
-import { messageState } from './state';
+import { useRecoilState } from 'recoil';
+import { MessageConversation, MessageEvents, Message } from '../../../../../typings/messages';
+import { messageState, useMessageConversationValue } from './state';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router';
 
 interface IUseMessages {
   messages?: Message[] | null;
   setMessages: (messages: Message[] | null) => void;
-  messageGroups?: MessageGroup[] | null;
-  createMessageGroupResult?: CreateMessageGroupResult | null;
-  clearMessageGroupResult(): void;
-  getMessageGroupById: (id: string) => MessageGroup | null;
-  setActiveMessageGroup: (groupId: string) => MessageGroup | null;
-  activeMessageGroup: MessageGroup | null;
-  goToConversation(g: Pick<MessageGroup, 'groupId'>): void;
+  conversations?: MessageConversation[] | null;
+  /* createMessageGroupResult?: CreateMessageGroupResult | null;
+  clearMessageGroupResult(): void; */
+  getMessageConversationById: (id: string) => MessageConversation | null;
+  setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
+  activeMessageConversation: MessageConversation | null;
+  goToConversation(g: Pick<MessageConversation, 'conversation_id'>): void;
 }
 
 const useMessages = (): IUseMessages => {
   const Nui = useNuiRequest();
   const history = useHistory();
 
+  const conversations = useMessageConversationValue();
+
   const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
-  const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
-  const [activeMessageGroup, _setActiveMessageGroup] = useRecoilState<MessageGroup | null>(
-    messageState.activeMessageGroup,
-  );
+  const [activeMessageConversation, _setActiveMessageConversation] =
+    useRecoilState<MessageConversation | null>(messageState.activeMessageConversation);
 
-  const getMessageGroupById = useCallback(
-    (id: string): MessageGroup | null => {
-      return messageGroups ? messageGroups.find((c) => c.groupId === id) : null;
+  const getMessageConversationById = useCallback(
+    (id: string): MessageConversation | null => {
+      return conversations && conversations.find((c) => c.conversation_id === id);
     },
-    [messageGroups],
+    [conversations],
   );
 
-  const [
+  /* const [
     createMessageGroupResult,
     setCreateMessageGroupResult,
   ] = useRecoilState<CreateMessageGroupResult | null>(messageState.createMessageGroupResult);
 
-  const clearMessageGroupResult = () => setCreateMessageGroupResult(null);
+  const clearMessageGroupResult = () => setCreateMessageGroupResult(null); */
 
-  const setActiveMessageGroup = useCallback(
+  const setActiveMessageConversation = useCallback(
     (groupId: string) => {
-      const group = getMessageGroupById(groupId);
-      _setActiveMessageGroup(group);
+      const group = getMessageConversationById(groupId);
+      _setActiveMessageConversation(group);
       return group;
     },
-    [_setActiveMessageGroup, getMessageGroupById],
+    [_setActiveMessageConversation, getMessageConversationById],
   );
 
   const goToConversation = (messageGroup) => {
-    if (!messageGroup?.groupId || !history) return;
-    history.push(`/messages/conversations/${messageGroup.groupId}`);
-    Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: messageGroup.groupId });
+    if (!messageGroup?.conversation_id || !history) return;
+    history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+    Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: messageGroup.conversation_id });
   };
 
   return {
     messages,
     setMessages,
-    messageGroups,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-    getMessageGroupById,
-    activeMessageGroup,
-    setActiveMessageGroup,
+    activeMessageConversation,
+    setActiveMessageConversation,
+    getMessageConversationById,
     goToConversation,
+    conversations,
   };
-}
+};
 
 export default useMessages;

@@ -1,26 +1,31 @@
 import React from 'react';
 import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar, Badge } from '@mui/material';
 
-import { MessageGroup } from '../../../../../../typings/messages';
+import { MessageConversation, MessageGroup } from '../../../../../../typings/messages';
 interface IProps {
-  messageGroup: MessageGroup;
-  handleClick: (group: MessageGroup) => () => void;
+  messageConversation: MessageConversation;
+  handleClick: (conversations: MessageConversation) => () => void;
 }
 
-const MessageGroupItem = ({ messageGroup, handleClick }: IProps): any => {
+const MessageGroupItem = ({ messageConversation, handleClick }: IProps): any => {
   // get unread messages, check the length. If we have any, get the groupId,
   // and show the badge
 
-  const hasUnread = messageGroup.unreadCount > 0;
+  /* const hasUnread = messageConversation.unreadCount > 0; */
 
   return (
-    <ListItem key={messageGroup.groupId} onClick={handleClick(messageGroup)} divider button>
+    <ListItem
+      key={messageConversation.conversation_id}
+      onClick={handleClick(messageConversation)}
+      divider
+      button
+    >
       <ListItemAvatar>
-        <Badge color="error" variant="dot" invisible={!hasUnread}>
-          <MuiAvatar src={messageGroup.avatar} />
+        <Badge color="error" variant="dot">
+          <MuiAvatar src={messageConversation.avatar} />
         </Badge>
       </ListItemAvatar>
-      <ListItemText>{messageGroup.label || messageGroup.groupDisplay}</ListItemText>
+      <ListItemText>{messageConversation.display || messageConversation.phoneNumber}</ListItemText>
     </ListItem>
   );
 };

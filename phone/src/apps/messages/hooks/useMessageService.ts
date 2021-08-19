@@ -13,9 +13,9 @@ export const useMessagesService = () => {
   const Nui = useNuiRequest();
   const { pathname } = useLocation();
   const [activeMessageGroup, setActiveMessageGroup] = useRecoilState(
-    messageState.activeMessageGroup,
+    messageState.activeMessageConversation,
   );
-  const setMessageGroups = useSetRecoilState(messageState.messageGroups);
+  const setMessageGroups = useSetRecoilState(messageState.activeMessageConversation);
   const setMessages = useSetRecoilState(messageState.messages);
   const setCreateMessageGroupResult = useSetRecoilState(messageState.createMessageGroupResult);
   const { addAlert } = useSnackbar();
@@ -34,8 +34,8 @@ export const useMessagesService = () => {
 
   const handleMessageBroadcast = useCallback(
     ({ groupId, message }) => {
-      if (groupId === activeMessageGroup?.groupId) {
-        Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: activeMessageGroup.groupId });
+      if (groupId === activeMessageGroup?.conversation_id) {
+        Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: activeMessageGroup.conversation_id });
         if (pathname.includes('messages/conversations')) {
           // Dont trigger notification if conversation is open.
           return;
@@ -48,9 +48,9 @@ export const useMessagesService = () => {
 
   const _setMessageGroups = useCallback(
     (groups) => {
-      if (activeMessageGroup && activeMessageGroup.groupId) {
+      if (activeMessageGroup && activeMessageGroup.conversation_id) {
         setActiveMessageGroup(
-          (curr) => groups.find((g) => g.groupId === activeMessageGroup.groupId) || curr,
+          (curr) => groups.find((g) => g.groupId === activeMessageGroup.conversation_id) || curr,
         );
       }
       setMessageGroups(groups);

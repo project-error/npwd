@@ -9,7 +9,7 @@ client_scripts {
 }
 
 server_script {
-    'resources/dist/server/*.server.js'
+    'resources/dist/server/server.js'
 }
 
 ui_page 'resources/html/index.html'

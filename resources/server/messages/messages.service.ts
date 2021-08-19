@@ -1,8 +1,8 @@
 import PlayerService from '../players/player.service';
-import { MessageEvents } from '../../../typings/messages';
+import { Message, MessageEvents, PreDBMessage } from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
-  createMessageGroupsFromPhoneNumbers,
+  createMessageGroupsFromPhoneNumber,
   getFormattedMessageConversations,
   getIdentifiersFromParticipants,
   messagesLogger,
@@ -31,47 +31,22 @@ class _MessagesService {
     }
   }
 
-  async handleCreateMessageGroup(src: number, phoneNumbers: string[], label: string = null) {
+  async handleCreateMessageConversation(
+    reqObj: PromiseRequest<{ targetNumber: string }>,
+    resp: PromiseEventResp<boolean>,
+  ) {
     try {
-      const _identifier = PlayerService.getIdentifier(src);
-      const result = await createMessageGroupsFromPhoneNumbers(_identifier, phoneNumbers, label);
-
-      if (result.error && result.allNumbersFailed) {
-        emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, src, result);
-        return emitNet(MessageEvents.ACTION_RESULT, src, {
-          message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_ALL_NUMBERS_FAILED`,
-          type: 'error',
-        });
-      }
+      const _identifier = PlayerService.getIdentifier(reqObj.source);
+      const result = await createMessageGroupsFromPhoneNumber(
+        _identifier,
+        reqObj.data.targetNumber,
+      );
 
       if (result.error) {
-        emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, src, result);
-        return emitNet(MessageEvents.ACTION_RESULT, src, {
-          message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED`,
-          type: 'error',
-        });
+        return resp({ status: 'error', data: false });
       }
 
-      if (result.failedNumbers.length === 1) {
-        emitNet(MessageEvents.ACTION_RESULT, src, {
-          message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED`,
-          type: 'warning',
-          options: { number: result.failedNumbers[0] },
-        });
-      }
-
-      if (result.failedNumbers.length > 1) {
-        emitNet(MessageEvents.ACTION_RESULT, src, {
-          message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED`,
-          type: 'warning',
-          options: { numbers: result.failedNumbers.join(', ') },
-        });
-      }
-
-      emitNet(MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, src, result);
-      if (result.duplicate) {
-        return;
-      }
+      /* emitNet(MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, reqObj.source, result); */
 
       if (result.identifiers) {
         for (const participantId of result.identifiers) {
@@ -86,55 +61,73 @@ class _MessagesService {
         }
       }
     } catch (e) {
-      emitNet(MessageEvents.CREATE_MESSAGE_GROUP_FAILED, src);
-      emitNet(MessageEvents.ACTION_RESULT, src, {
-        message: `APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED`,
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+
       messagesLogger.error(`Failed to create message group, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
         e,
       });
     }
   }
 
-  async handleFetchMessages(src: number, groupId: string) {
+  async handleFetchMessages(
+    reqObj: PromiseRequest<{ conversationId: string }>,
+    resp: PromiseEventResp<Message[]>,
+  ) {
     try {
-      const _identifier = PlayerService.getIdentifier(src);
-      const messages = await this.messagesDB.getMessages(_identifier, groupId);
-      emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, src, messages);
+      const _identifier = PlayerService.getIdentifier(reqObj.source);
+      const messages = await this.messagesDB.getMessages(_identifier, reqObj.data.conversationId);
+
+      resp({ status: 'ok', data: messages });
+
+      /* emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, reqObj.source, messages); */
     } catch (e) {
-      emitNet(MessageEvents.FETCH_MESSAGES_FAILED, src);
+      /* emitNet(MessageEvents.FETCH_MESSAGES_FAILED, reqObj.source); */
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
     }
   }
 
-  async handleSendMessage(src: number, conversationId: number, message: string) {
+  async handleSendMessage(reqObj: PromiseRequest<PreDBMessage>, resp: PromiseEventResp<void>) {
     try {
-      const _identifier = PlayerService.getIdentifier(src);
-      const participantId = getIdentifiersFromParticipants(conversationId);
+      const _identifier = PlayerService.getIdentifier(reqObj.source);
+      const messageData = reqObj.data;
+      const participants = getIdentifiersFromParticipants(messageData.conversationId);
 
-      await this.messagesDB.createMessage(_identifier, conversationId, message);
+      await this.messagesDB.createMessage(
+        _identifier,
+        messageData.conversationId,
+        messageData.message,
+      );
 
-      emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, src, conversationId);
+      emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData.conversationId);
 
       // gets the identifiers foe the participants for current groupId.
 
-      const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
-      emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-        conversationName: participantPlayer.getPhoneNumber(), // We check if we have a contact on the NUI side.
-        conversationId,
-        message,
-      });
+      for (const participantId of participants) {
+        if (participantId !== _identifier) {
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
+
+          if (!participantPlayer) {
+            return;
+          }
+
+          emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+            conversationName: participantPlayer.getPhoneNumber(), // We check if we have a contact on the NUI side.
+            conversationId: messageData.conversationId,
+            message: messageData.message,
+          });
+        }
+      }
     } catch (e) {
-      emitNet(MessageEvents.ACTION_RESULT, src, {
+      emitNet(MessageEvents.ACTION_RESULT, reqObj.source, {
         message: 'APPS_MESSAGES_NEW_MESSAGE_FAILED',
         type: 'error',
       });
       messagesLogger.error(`Failed to send message, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
     }
   }
