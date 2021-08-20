@@ -9,18 +9,24 @@ import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MessageEvents } from '../../../../../../typings/messages';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   isOpen: boolean;
   messageGroupId: string | undefined;
+
   onClose(): void;
+
   image?: string;
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
-  const Nui = useNuiRequest();
   const history = useHistory();
+  const { t } = useTranslation();
   const { pathname, search } = useLocation();
+  const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
 
   const removeQueryParamImage = useCallback(() => {
@@ -30,13 +36,20 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const sendImageMessage = useCallback(
     (m) => {
-      Nui.send(MessageEvents.SEND_MESSAGE, {
-        groupId: messageGroupId,
-        message: m,
-      });
-      onClose();
+      fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageGroupId, message: m }).then(
+        (resp) => {
+          if (resp !== 'ok') {
+            onClose();
+            return addAlert({
+              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+              type: 'error',
+            });
+          }
+          onClose();
+        },
+      );
     },
-    [messageGroupId, onClose, Nui],
+    [messageGroupId, onClose, addAlert, t],
   );
 
   const sendFromQueryParam = useCallback(

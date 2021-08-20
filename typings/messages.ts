@@ -15,18 +15,6 @@ export interface PreDBMessage {
   message: string;
 }
 
-export interface MessageGroup {
-  groupId: string;
-  groupDisplay: string;
-  isGroupChat: boolean;
-  avatar?: string;
-  label?: string;
-  updatedAt: string;
-  unreadCount: number;
-  phoneNumbers: string[];
-  participants: string[];
-}
-
 export interface MessageConversation {
   conversation_id: string;
   avatar: string;

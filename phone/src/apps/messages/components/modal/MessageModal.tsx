@@ -20,44 +20,19 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Modal from '../../../../ui/components/Modal';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
-import { Message, MessageEvents } from '../../../../../../typings/messages';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { MockConversationMessages } from '../../utils/constants';
-import { isEnvBrowser } from '../../../../utils/misc';
+import { MessageEvents } from '../../../../../../typings/messages';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
-const memberDisplay = (display, number, myNumber, t) => {
-  if (myNumber === number) {
-    return (
-      <span>
-        {t('APPS_MESSAGES_ME')} ({number})
-      </span>
-    );
-  }
-  if (display !== number) {
-    return (
-      <span>
-        {display} ({number})
-      </span>
-    );
-  }
-  return <span>{number}</span>;
-};
-
 export const MessageModal = () => {
   const Nui = useNuiRequest();
   const classes = useStyles();
   const history = useHistory();
-  const myNumber = useMyPhoneNumber();
   const { pathname } = useLocation();
-  const { t } = useTranslation();
   const { groupId } = useParams<{ groupId: string }>();
   const { messages, setMessages, activeMessageConversation, setActiveMessageConversation } =
     useMessages();
@@ -74,8 +49,6 @@ export const MessageModal = () => {
     }
     setLoaded(false);
   }, [activeMessageConversation, messages]);
-
-  const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
   const closeModal = () => {
     history.push('/messages');

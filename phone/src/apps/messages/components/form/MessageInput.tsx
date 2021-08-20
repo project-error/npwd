@@ -7,6 +7,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessageEvents } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 interface IProps {
   onAddImageClick(): void;
@@ -19,21 +21,28 @@ const useStyles = makeStyles({
 });
 
 const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
-  const Nui = useNuiRequest();
   const { t } = useTranslation();
+  const { addAlert } = useSnackbar();
   const classes = useStyles();
   const [message, setMessage] = useState('');
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (message.trim()) {
-      // don't allow the user to submit white space
+      fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageConversationId, message }).then(
+        (resp) => {
+          if (resp !== 'ok') {
+            setMessage('');
 
-      Nui.send(MessageEvents.SEND_MESSAGE, {
-        conversationId: messageConversationId,
-        message,
-      });
-      setMessage('');
+            return addAlert({
+              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+              type: 'error',
+            });
+          }
+
+          setMessage('');
+        },
+      );
     }
   };
 

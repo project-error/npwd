@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar, Badge } from '@mui/material';
 
-import { MessageConversation, MessageGroup } from '../../../../../../typings/messages';
+import { MessageConversation } from '../../../../../../typings/messages';
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;

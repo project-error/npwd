@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, List } from '@material-ui/core';
-import { MessageConversation, MessageGroup } from '../../../../../../typings/messages';
+import { MessageConversation } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
@@ -20,6 +20,8 @@ const MessagesList = (): any => {
     clearMessageGroupResult,
     getMessageGroupById,
     setActiveMessageGroup, */
+    setActiveMessageConversation,
+    getMessageConversationById,
     conversations,
     goToConversation,
   } = useMessages();
@@ -28,7 +30,9 @@ const MessagesList = (): any => {
 
   const formattedSearch = searchValue.toLowerCase().trim();
 
-  /* useEffect(() => {
+  // TODO: Fix this I guess
+
+  /*useEffect(() => {
     if (createMessageGroupResult?.groupId) {
       const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
       clearMessageGroupResult();
