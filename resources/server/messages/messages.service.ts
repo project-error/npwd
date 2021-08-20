@@ -102,7 +102,7 @@ class _MessagesService {
         messageData.message,
       );
 
-      emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData.conversationId);
+      resp({ status: 'ok' });
 
       // gets the identifiers foe the participants for current groupId.
 

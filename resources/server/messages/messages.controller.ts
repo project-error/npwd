@@ -1,17 +1,25 @@
 import { getSource } from '../utils/miscUtils';
-import { Message, MessageEvents, PreDBMessage } from '../../../typings/messages';
+import {
+  Message,
+  MessageConversation,
+  MessageEvents,
+  PreDBMessage,
+} from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNetPromise<void, any>(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, async (reqObj, resp) => {
-  MessagesService.handleFetchMessageConversations(reqObj, resp).catch((e) => {
-    messagesLogger.error(
-      `Error occurred in fetch messsage converations (${reqObj.source}), Error: ${e.message}`,
-    );
-    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-  });
-});
+onNetPromise<void, MessageConversation[]>(
+  MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+  async (reqObj, resp) => {
+    MessagesService.handleFetchMessageConversations(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred in fetch messsage converations (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
 
 onNetPromise<{ targetNumber: string }, boolean>(
   MessageEvents.CREATE_MESSAGE_CONVERSATION,

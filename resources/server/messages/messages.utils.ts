@@ -95,8 +95,8 @@ export async function createMessageGroupsFromPhoneNumber(
     };
   }
 
-  MessagesDB.createMessageGroup(userIdentifier, conversationId, userIdentifier);
-  MessagesDB.createMessageGroup(userIdentifier, conversationId, identifier);
+  await MessagesDB.createMessageGroup(userIdentifier, conversationId, userIdentifier);
+  await MessagesDB.createMessageGroup(userIdentifier, conversationId, identifier);
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
@@ -107,6 +107,5 @@ export async function createMessageGroupsFromPhoneNumber(
 // getting the participants from groupId.
 // this should return the source or and array of identifiers
 export function getIdentifiersFromParticipants(conversationId: string) {
-  // TODO: I guess we either have to do a db query or just send the participant form the NUI > client > server;
   return conversationId.split('+');
 }
