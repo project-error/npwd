@@ -89,4 +89,5 @@ export enum MessageEvents {
   ACTION_RESULT = 'npwd:setMessagesAlert',
   CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
+  DELETE_CONVERSATION = 'nwpd:deleteConversation',
 }

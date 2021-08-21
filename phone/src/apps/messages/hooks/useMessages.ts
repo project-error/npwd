@@ -8,9 +8,7 @@ import { useHistory } from 'react-router';
 interface IUseMessages {
   messages?: Message[] | null;
   setMessages: (messages: Message[] | null) => void;
-  conversations?: MessageConversation[] | null;
-  /* createMessageGroupResult?: CreateMessageGroupResult | null;
-  clearMessageGroupResult(): void; */
+  conversations?: MessageConversation[];
   getMessageConversationById: (id: string) => MessageConversation | null;
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
@@ -23,7 +21,7 @@ const useMessages = (): IUseMessages => {
 
   const conversations = useMessageConversationValue();
 
-  const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
+  const [messages, setMessages] = useRecoilState<Message[]>(messageState.messages);
   const [activeMessageConversation, _setActiveMessageConversation] =
     useRecoilState<MessageConversation | null>(messageState.activeMessageConversation);
 
@@ -33,13 +31,6 @@ const useMessages = (): IUseMessages => {
     },
     [conversations],
   );
-
-  /* const [
-    createMessageGroupResult,
-    setCreateMessageGroupResult,
-  ] = useRecoilState<CreateMessageGroupResult | null>(messageState.createMessageGroupResult);
-
-  const clearMessageGroupResult = () => setCreateMessageGroupResult(null); */
 
   const setActiveMessageConversation = useCallback(
     (groupId: string) => {

@@ -163,6 +163,11 @@ export class _MessagesDB {
     const query = `UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?`;
     await DbInterface._rawExec(query, [groupId, identifier]);
   }
+
+  async deleteConversation(conversationId: string) {
+    const query = `DELETE FROM npwd_messages_conversations WHERE conversation_id = ?`;
+    await pool.query(query, [conversationId]);
+  }
 }
 
 const MessagesDB = new _MessagesDB();

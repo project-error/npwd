@@ -143,6 +143,21 @@ class _MessagesService {
       });
     }
   }
+
+  async handleDeleteConversation(
+    reqObj: PromiseRequest<{ conversationId: string }>,
+    resp: PromiseEventResp<void>,
+  ) {
+    try {
+      await this.messagesDB.deleteConversation(reqObj.data.conversationId);
+      resp({ status: 'ok' });
+    } catch (e) {
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      messagesLogger.error(`Failed to delete conversation, ${e.message}`, {
+        source: reqObj.source,
+      });
+    }
+  }
 }
 
 const MessagesService = new _MessagesService();

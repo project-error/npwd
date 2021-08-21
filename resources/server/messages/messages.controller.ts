@@ -48,11 +48,23 @@ onNetPromise<{ conversationId: string }, Message[]>(
 onNetPromise<PreDBMessage, void>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
   MessagesService.handleSendMessage(reqObj, resp).catch((e) => {
     messagesLogger.error(
-      `Error occurred while sending messsage (${reqObj.source}), Error: ${e.message}`,
+      `Error occurred while sending message (${reqObj.source}), Error: ${e.message}`,
     );
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });
+
+onNetPromise<{ conversationId: string }, void>(
+  MessageEvents.DELETE_CONVERSATION,
+  async (reqObj, resp) => {
+    MessagesService.handleDeleteConversation(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred while deleting conversation (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
 
 onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
   const src = getSource();

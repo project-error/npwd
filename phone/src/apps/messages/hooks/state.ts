@@ -35,6 +35,24 @@ export const messageState = {
       },
     }),
   }),
+  filterValue: atom<string>({
+    key: 'defaultFilterValue',
+    default: '',
+  }),
+  filteredMessageConversations: selector<MessageConversation[]>({
+    key: 'defaultFilteredMessageConversations',
+    get: ({ get }) => {
+      const searchValue: string = get(messageState.filterValue);
+      const messageConversations: MessageConversation[] = get(messageState.messageCoversations);
+
+      const regExp = new RegExp(searchValue, 'gi');
+
+      return messageConversations.filter(
+        (conversation) =>
+          conversation.display.match(regExp) || conversation.phoneNumber.match(regExp),
+      );
+    },
+  }),
   messages: atom<Message[]>({
     key: 'messages',
     default: selector({
@@ -82,4 +100,13 @@ export const useMessageConversationValue = () => useRecoilValue(messageState.mes
 export const useSetMessageConversation = () => useSetRecoilState(messageState.messageCoversations);
 export const useMessageConversation = () => useRecoilState(messageState.messageCoversations);
 
+export const useActiveMessageConversation = () =>
+  useRecoilValue(messageState.activeMessageConversation);
+
 export const useSetConversationId = () => useSetRecoilState(currentGroupId);
+
+export const useFilterValueState = () => useRecoilState(messageState.filterValue);
+export const useSetFilterValue = () => useSetRecoilState(messageState.filterValue);
+
+export const useFilteredConversationsValue = () =>
+  useRecoilValue(messageState.filteredMessageConversations);

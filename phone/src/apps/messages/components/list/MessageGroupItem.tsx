@@ -21,7 +21,7 @@ const MessageGroupItem = ({ messageConversation, handleClick }: IProps): any => 
       button
     >
       <ListItemAvatar>
-        <Badge color="error" variant="dot">
+        <Badge color="error" variant="dot" invisible={messageConversation.unread > 0}>
           <MuiAvatar src={messageConversation.avatar} />
         </Badge>
       </ListItemAvatar>
