@@ -3,6 +3,7 @@ import React from 'react';
 import { Message } from '../../../../../../typings/messages';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { PictureReveal } from '../../../../ui/components/PictureReveal';
+import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,9 +54,14 @@ export const MessageBubble = ({
   onClickDisplay(phoneNumber: string): void;
 }) => {
   const classes = useStyles();
+  const myNumber = useMyPhoneNumber();
+
   return (
     <div className={classes.root}>
-      <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
+      <Paper
+        className={message.author === myNumber ? classes.mySms : classes.sms}
+        variant="outlined"
+      >
         <Box className={classes.message}>
           {isImage(message.message) ? (
             <PictureReveal>

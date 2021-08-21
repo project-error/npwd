@@ -6,7 +6,7 @@ RegisterNuiProxy(MessageEvents.FETCH_MESSAGE_CONVERSATIONS);
 RegisterNuiProxy(MessageEvents.FETCH_MESSAGES);
 RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
-RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);
+/*RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);*/
 
 onNet(MessageEvents.CREATE_MESSAGE_BROADCAST, (result: CreateMessageBroadcast) => {
   sendMessageEvent(MessageEvents.CREATE_MESSAGE_BROADCAST, result);

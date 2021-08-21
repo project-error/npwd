@@ -9,7 +9,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { MessageModal } from './modal/MessageModal';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { MessageEvents } from '../../../../../typings/messages';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
@@ -17,10 +16,6 @@ import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
   const history = useHistory();
-
-  /* useEffect(() => {
-    Nui.send(MessageEvents.FETCH_MESSAGE_CONVERSATIONS);
-  }, [Nui]);*/
 
   return (
     <MessagesThemeProvider>

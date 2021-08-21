@@ -48,7 +48,7 @@ class _MessagesService {
 
       /* emitNet(MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, reqObj.source, result); */
 
-      if (result.identifiers) {
+      /* if (result.identifiers) {
         for (const participantId of result.identifiers) {
           // we don't broadcast to the source of the event.
           if (participantId !== _identifier) {
@@ -59,7 +59,7 @@ class _MessagesService {
             emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, participantPlayer.source);
           }
         }
-      }
+      }*/
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
 
@@ -75,8 +75,7 @@ class _MessagesService {
     resp: PromiseEventResp<Message[]>,
   ) {
     try {
-      const _identifier = PlayerService.getIdentifier(reqObj.source);
-      const messages = await this.messagesDB.getMessages(_identifier, reqObj.data.conversationId);
+      const messages = await this.messagesDB.getMessages(reqObj.data.conversationId);
 
       resp({ status: 'ok', data: messages });
 
@@ -92,12 +91,13 @@ class _MessagesService {
 
   async handleSendMessage(reqObj: PromiseRequest<PreDBMessage>, resp: PromiseEventResp<void>) {
     try {
-      const _identifier = PlayerService.getIdentifier(reqObj.source);
+      const player = PlayerService.getPlayer(reqObj.source);
+      const authorPhoneNumber = player.getPhoneNumber();
       const messageData = reqObj.data;
       const participants = getIdentifiersFromParticipants(messageData.conversationId);
 
       await this.messagesDB.createMessage(
-        _identifier,
+        authorPhoneNumber,
         messageData.conversationId,
         messageData.message,
       );
@@ -106,8 +106,9 @@ class _MessagesService {
 
       // gets the identifiers foe the participants for current groupId.
 
+      // FIXME: This still causes an error when sending to an offline player it seems.
       for (const participantId of participants) {
-        if (participantId !== _identifier) {
+        if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
           if (!participantPlayer) {

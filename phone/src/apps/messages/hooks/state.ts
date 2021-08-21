@@ -62,9 +62,8 @@ export const messageState = {
       get: async ({ get }) => {
         try {
           const groupId = get(currentGroupId);
-
           const resp = await fetchNui(MessageEvents.FETCH_MESSAGES, { conversationId: groupId });
-          LogDebugEvent({ action: 'fetchMessages', data: resp.data });
+          LogDebugEvent({ action: 'fetchMessages', data: resp.data[0], level: 5 });
           return resp.data;
         } catch (e) {
           if (isEnvBrowser()) {
@@ -101,6 +100,9 @@ export const messageState = {
 export const useMessageConversationValue = () => useRecoilValue(messageState.messageCoversations);
 export const useSetMessageConversation = () => useSetRecoilState(messageState.messageCoversations);
 export const useMessageConversation = () => useRecoilState(messageState.messageCoversations);
+
+export const useMessagesState = () => useRecoilState(messageState.messages);
+export const useMessagesValue = () => useRecoilValue(messageState.messages);
 
 export const useActiveMessageConversation = () =>
   useRecoilValue(messageState.activeMessageConversation);

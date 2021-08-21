@@ -6,19 +6,19 @@ import DbInterface from '../db/db_wrapper';
 export class _MessagesDB {
   /**
    * Create a message in the database
-   * @param userIdentifier - identifier of the user creating this message
+   * @param author - the phoneNumber to the player who sent the message
    * @param conversationId - the message conversation ID to attach this message to
    * @param message - content of the message
    */
   async createMessage(
-    userIdentifier: string,
+    author: string,
     conversationId: string,
     message: string,
   ): Promise<UnformattedMessageConversation[]> {
-    const query = `INSERT INTO npwd_messages (user_identifier, message, conversation_id)
+    const query = `INSERT INTO npwd_messages (author, message, conversation_id)
                    VALUES (?, ?, ?)`;
 
-    const [results] = await pool.query(query, [userIdentifier, message, conversationId]);
+    const [results] = await pool.query(query, [author, message, conversationId]);
 
     return <UnformattedMessageConversation[]>results;
   }
@@ -54,40 +54,17 @@ export class _MessagesDB {
   }
 
   /**
-   * @param identifier user to get messages for
    * @param conversationId the conversations for get messages from
    */
-  async getMessages(identifier: string, conversationId: string): Promise<Message[]> {
-    const query = `
-        SELECT npwd_messages.id
-                   AS
-                   message_id,
-               npwd_messages.message,
-               npwd_messages.isRead,
-               npwd_messages.createdAt,
-               npwd_messages.visible,
-               npwd_messages_conversations.id
-                   AS
-                   conversation_id,
-               npwd_messages_conversations.user_identifier
-                   AS
-                   owner,
-               npwd_messages_conversations.unread,
-               npwd_messages_conversations.participant_identifier
-                   AS
-                   participant,
-               npwd_messages.user_identifier
-                   AS
-                   transmitter
-        FROM npwd_messages
-                 INNER JOIN
-             npwd_messages_conversations
-             ON
-                 npwd_messages.conversation_id = npwd_messages_conversations.id
-        WHERE npwd_messages_conversations.user_identifier = ?
-           OR npwd_messages_conversations.participant_identifier = ? AND npwd_messages_conversations.id = ? `;
+  async getMessages(conversationId: string): Promise<Message[]> {
+    const query = `SELECT npwd_messages.id,
+                          npwd_messages.conversation_id,
+                          npwd_messages.message,
+                          npwd_messages.author
+                   FROM npwd_messages
+                   WHERE npwd_messages.conversation_id = ?`;
 
-    const [results] = await pool.query(query, [identifier, identifier, conversationId]);
+    const [results] = await pool.query(query, [conversationId]);
 
     return <Message[]>results;
   }
@@ -119,14 +96,14 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-        SELECT ${config.database.identifierColumn}
-        FROM ${config.database.playerTable}
-        WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+        SELECT identifier
+        FROM users
+        WHERE phone_number = ?
         LIMIT 1
 		`;
     const [results] = await pool.query(query, [phoneNumber]);
-    const identifiers = <any>results;
-    return identifiers[0]['identifier'];
+    const result = <any>results;
+    return result[0].identifier;
   }
 
   /**

@@ -17,7 +17,6 @@ import useStyles from './modal.styles';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
@@ -28,30 +27,29 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessagesValue } from '../../hooks/state';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
 export const MessageModal = () => {
-  const Nui = useNuiRequest();
   const { t } = useTranslation();
   const classes = useStyles();
   const { addAlert } = useSnackbar();
   const history = useHistory();
   const { pathname } = useLocation();
   const { groupId } = useParams<{ groupId: string }>();
-  const { messages, setMessages, activeMessageConversation, setActiveMessageConversation } =
-    useMessages();
+  const { activeMessageConversation, setActiveMessageConversation } = useMessages();
+
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
+  const messages = useMessagesValue();
   const { removeConversation } = useMessageActions();
 
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
   useEffect(() => {
-    console.log('active', activeMessageConversation);
-    console.log('messages', messages);
     if (activeMessageConversation && messages) {
       setTimeout(() => {
         setLoaded(true);
@@ -63,8 +61,6 @@ export const MessageModal = () => {
 
   const closeModal = () => {
     history.push('/messages');
-    // TODO: Test in-game. Might only be a browser issue because of mock data?
-    setMessages(null);
   };
 
   useEffect(() => {
@@ -82,13 +78,14 @@ export const MessageModal = () => {
   }, [isLoaded, messages]);
 
   // sends all unread messages
-  useEffect(() => {
+  // FIXME: Just make sure this is done properly
+  /*useEffect(() => {
     if (activeMessageConversation?.conversation_id) {
       Nui.send(MessageEvents.SET_MESSAGE_READ, {
         groupId: activeMessageConversation.conversation_id,
       });
     }
-  }, [activeMessageConversation, Nui]);
+  }, [activeMessageConversation, Nui]);*/
 
   // don't allow too many characters, it takes too much room
   let header = activeMessageConversation.display || activeMessageConversation.phoneNumber;

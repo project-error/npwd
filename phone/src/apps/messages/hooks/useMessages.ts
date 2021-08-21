@@ -1,13 +1,20 @@
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { MessageConversation, MessageEvents, Message } from '../../../../../typings/messages';
-import { messageState, useMessageConversationValue } from './state';
+import {
+  messageState,
+  useMessageConversationValue,
+  useMessagesState,
+  useSetConversationId,
+} from './state';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
 
 interface IUseMessages {
-  messages?: Message[] | null;
-  setMessages: (messages: Message[] | null) => void;
+  /*messages?: Message[] | null;
+  setMessages: (messages: Message[] | null) => void;*/
   conversations?: MessageConversation[];
   getMessageConversationById: (id: string) => MessageConversation | null;
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
@@ -21,7 +28,7 @@ const useMessages = (): IUseMessages => {
 
   const conversations = useMessageConversationValue();
 
-  const [messages, setMessages] = useRecoilState<Message[]>(messageState.messages);
+  const setCurrentConversationId = useSetConversationId();
   const [activeMessageConversation, _setActiveMessageConversation] =
     useRecoilState<MessageConversation | null>(messageState.activeMessageConversation);
 
@@ -43,13 +50,14 @@ const useMessages = (): IUseMessages => {
 
   const goToConversation = (messageGroup) => {
     if (!messageGroup?.conversation_id || !history) return;
+    setCurrentConversationId(messageGroup.conversation_id);
+
     history.push(`/messages/conversations/${messageGroup.conversation_id}`);
-    Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: messageGroup.conversation_id });
   };
 
   return {
-    messages,
-    setMessages,
+    /*messages,
+    setMessages,*/
     activeMessageConversation,
     setActiveMessageConversation,
     getMessageConversationById,

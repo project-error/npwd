@@ -86,7 +86,7 @@ export function createGroupHashID(participants: string[]) {
  * one fails resulting in a partial group which would be very confusing
  * to the player.
  * @param userIdentifier - user who is creating the group
- * @param phoneNumbers - list of phone numbers to add to the grup
+ * @param phoneNumber - list of phone numbers to add to the grup
  * @param groupLabel - optional group label to give the group
  */
 export async function createMessageGroupsFromPhoneNumber(
@@ -98,14 +98,14 @@ export async function createMessageGroupsFromPhoneNumber(
   const identifier = await MessagesDB.getIdentifierFromPhoneNumber(phoneNumber);
 
   const conversationId = createGroupHashID([userIdentifier, identifier]);
-  if (await MessagesDB.checkIfMessageGroupExists(conversationId)) {
+  /*if (await MessagesDB.checkIfMessageGroupExists(conversationId)) {
     return {
       error: false,
       duplicate: true,
       conversationId,
       identifiers: [userIdentifier, identifier],
     };
-  }
+  }*/
 
   await MessagesDB.createMessageGroup(userIdentifier, conversationId, userIdentifier);
   await MessagesDB.createMessageGroup(userIdentifier, conversationId, identifier);

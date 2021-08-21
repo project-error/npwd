@@ -1,13 +1,8 @@
 export interface Message {
   id: number;
   message: string;
-  user_identifier: string;
-  phone_number: string;
-  groupId?: string;
-  display?: string;
-  avatar?: string;
-  isRead: boolean;
-  isMine: boolean;
+  conversation_id?: string;
+  author: string;
 }
 
 export interface PreDBMessage {
