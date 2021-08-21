@@ -10,9 +10,7 @@ export const messagesLogger = mainLogger.child({ module: 'messages' });
 
 // Functions
 
-export async function getFormattedMessageConversations(
-  identifier: any,
-): Promise<MessageConversation> {
+export async function getConsolidatedMessageGroups(identifier: any): Promise<any> {
   const messageConversations = await MessagesDB.getMessageConversations(identifier);
   return messageConversations.reduce((mapping: any, conversation: any) => {
     const groupId = conversation.conversation_id;
@@ -22,6 +20,8 @@ export async function getFormattedMessageConversations(
         unread: conversation.unread,
         phoneNumber: conversation.phone_number,
         display: conversation.display,
+        conversation_id: conversation.conversation_id,
+        user_identifier: identifier,
       };
     }
 
@@ -29,14 +29,26 @@ export async function getFormattedMessageConversations(
   }, {});
 }
 
-export async function getGroupIds(
-  userIdentifier: string,
-  groupMapping: MessageGroupMapping,
-): Promise<string[]> {
+export async function getFormattedMessageConversations(
+  identifier: string,
+): Promise<MessageConversation[]> {
+  const conversationMapping = await getConsolidatedMessageGroups(identifier);
+  const conversationIds = await getGroupIds(identifier, conversationMapping);
+
+  return conversationIds.map((conversationId) => {
+    const conversation = conversationMapping[conversationId];
+
+    return {
+      ...conversation,
+    };
+  });
+}
+
+export async function getGroupIds(userIdentifier: string, groupMapping: any): Promise<string[]> {
   const groupIds: string[] = [];
   for (const groupId of Object.keys(groupMapping)) {
-    const isMine = groupMapping[groupId].user_identifier == userIdentifier;
-    if (isMine || (await MessagesDB.getMessageCountByGroup(groupId)) > 0) {
+    const isMine = (groupMapping[groupId].user_identifier = userIdentifier);
+    if (isMine) {
       groupIds.push(groupId);
     }
   }

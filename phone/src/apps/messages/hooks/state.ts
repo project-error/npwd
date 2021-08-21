@@ -45,6 +45,8 @@ export const messageState = {
       const searchValue: string = get(messageState.filterValue);
       const messageConversations: MessageConversation[] = get(messageState.messageCoversations);
 
+      if (!searchValue) return messageConversations; // added this
+
       const regExp = new RegExp(searchValue, 'gi');
 
       return messageConversations.filter(

@@ -18,7 +18,6 @@ const exps = global.exports;
  *
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
-  emitNet(MessageEvents.FETCH_MESSAGE_GROUPS);
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 }
 

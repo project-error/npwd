@@ -6,7 +6,11 @@ import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { SearchField } from '../../../../ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
-import { useFilteredConversationsValue, useFilterValueState } from '../../hooks/state';
+import {
+  useFilteredConversationsValue,
+  useFilterValueState,
+  useMessageConversationValue,
+} from '../../hooks/state';
 
 const MessagesList = (): any => {
   const classes = useStyles();
@@ -17,7 +21,7 @@ const MessagesList = (): any => {
   const filteredConversations = useFilteredConversationsValue();
   const [searchValue, setSearchValue] = useFilterValueState();
 
-  if (!conversations) return null;
+  if (!conversations) return <p>No messages</p>;
 
   const handleClick = (conversation: MessageConversation) => () => {
     goToConversation(conversation);

@@ -14,7 +14,7 @@ onNetPromise<void, MessageConversation[]>(
   async (reqObj, resp) => {
     MessagesService.handleFetchMessageConversations(reqObj, resp).catch((e) => {
       messagesLogger.error(
-        `Error occurred in fetch messsage converations (${reqObj.source}), Error: ${e.message}`,
+        `Error occurred in fetch message conversations (${reqObj.source}), Error: ${e.message}`,
       );
       resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });

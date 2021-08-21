@@ -32,6 +32,8 @@ export class _MessagesDB {
   async getMessageConversations(identifier: string): Promise<UnformattedMessageConversation[]> {
     const query = `SELECT npwd_messages_conversations.unread,
                           npwd_messages_conversations.conversation_id,
+                          npwd_messages_conversations.user_identifier,
+                          npwd_messages_conversations.participant_identifier,
                           users.phone_number,
                           npwd_phone_contacts.avatar,
                           npwd_phone_contacts.display
@@ -148,7 +150,9 @@ export class _MessagesDB {
 
   async getMessageCountByGroup(groupId: string): Promise<number> {
     const query = `
-        SELECT COUNT(*) as count FROM npwd_messages WHERE conversation_id = ?`;
+        SELECT COUNT(*) as count
+        FROM npwd_messages
+        WHERE conversation_id = ?`;
     const [results] = await pool.query(query, [groupId]);
     const result = <any>results;
     return result[0].count;
@@ -165,7 +169,9 @@ export class _MessagesDB {
   }
 
   async deleteConversation(conversationId: string) {
-    const query = `DELETE FROM npwd_messages_conversations WHERE conversation_id = ?`;
+    const query = `DELETE
+                   FROM npwd_messages_conversations
+                   WHERE conversation_id = ?`;
     await pool.query(query, [conversationId]);
   }
 }
