@@ -96,8 +96,8 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-        SELECT identifier
-        FROM users
+        SELECT ${config.database.identifierColumn}
+        FROM ${config.database.playerTable}
         WHERE phone_number = ?
         LIMIT 1
 		`;
