@@ -1,4 +1,4 @@
-import { withTransaction } from '../db';
+import { withTransaction } from '../db/pool';
 import {
   CreateMessageGroupResult,
   MessageGroup,

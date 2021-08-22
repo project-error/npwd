@@ -41,6 +41,7 @@ interface DatabaseConfig {
   playerTable: string;
   identifierColumn: string;
   useIdentifierPrefix: boolean;
+  profileQueries: boolean;
 }
 
 interface PhoneAsItemConfig {

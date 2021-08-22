@@ -12,7 +12,8 @@
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
-    "identifierColumn": "identifier"
+    "identifierColumn": "identifier",
+    "profileQueries": true
   },
   "twitter": {
     "showNotifications": true,

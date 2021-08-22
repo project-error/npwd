@@ -8,7 +8,7 @@ import {
   getUserId,
   getPassword,
 } from './db_utils';
-import { mainLogger } from './sv_logger';
+import { mainLogger } from '../sv_logger';
 
 // we require set mysql_connection_string  to be set in the config
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');

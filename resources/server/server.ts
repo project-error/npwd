@@ -8,7 +8,7 @@ export const config: ResourceConfig = JSON.parse(
 );
 
 // Setup controllers
-import './db';
+import './db/pool';
 import './players/player.controller';
 import './calls/calls.controller';
 import './notes/notes.controller';
@@ -22,7 +22,6 @@ import './bank/bank.controller';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 
 // Setup sentry tracing
 if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
