@@ -89,7 +89,10 @@ class _MessagesService {
     }
   }
 
-  async handleSendMessage(reqObj: PromiseRequest<PreDBMessage>, resp: PromiseEventResp<void>) {
+  async handleSendMessage(
+    reqObj: PromiseRequest<PreDBMessage>,
+    resp: PromiseEventResp<PreDBMessage>,
+  ) {
     try {
       const player = PlayerService.getPlayer(reqObj.source);
       const authorPhoneNumber = player.getPhoneNumber();
@@ -102,12 +105,11 @@ class _MessagesService {
         messageData.message,
       );
 
-      resp({ status: 'ok' });
-
-      // gets the identifiers foe the participants for current groupId.
+      resp({ status: 'ok', data: messageData });
 
       // FIXME: This still causes an error when sending to an offline player it seems.
       for (const participantId of participants) {
+        console.log('id', participantId);
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 

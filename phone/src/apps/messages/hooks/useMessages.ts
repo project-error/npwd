@@ -1,20 +1,10 @@
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
-import { MessageConversation, MessageEvents, Message } from '../../../../../typings/messages';
-import {
-  messageState,
-  useMessageConversationValue,
-  useMessagesState,
-  useSetConversationId,
-} from './state';
-import { useNuiRequest } from 'fivem-nui-react-lib';
+import { MessageConversation } from '../../../../../typings/messages';
+import { messageState, useMessageConversationValue, useSetConversationId } from './state';
 import { useHistory } from 'react-router';
-import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
 
 interface IUseMessages {
-  /*messages?: Message[] | null;
-  setMessages: (messages: Message[] | null) => void;*/
   conversations?: MessageConversation[];
   getMessageConversationById: (id: string) => MessageConversation | null;
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
@@ -23,7 +13,6 @@ interface IUseMessages {
 }
 
 const useMessages = (): IUseMessages => {
-  const Nui = useNuiRequest();
   const history = useHistory();
 
   const conversations = useMessageConversationValue();
@@ -56,8 +45,6 @@ const useMessages = (): IUseMessages => {
   };
 
   return {
-    /*messages,
-    setMessages,*/
     activeMessageConversation,
     setActiveMessageConversation,
     getMessageConversationById,

@@ -103,6 +103,7 @@ export const useMessageConversation = () => useRecoilState(messageState.messageC
 
 export const useMessagesState = () => useRecoilState(messageState.messages);
 export const useMessagesValue = () => useRecoilValue(messageState.messages);
+export const useSetMessages = () => useSetRecoilState(messageState.messages);
 
 export const useActiveMessageConversation = () =>
   useRecoilValue(messageState.activeMessageConversation);
