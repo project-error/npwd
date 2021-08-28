@@ -5,6 +5,14 @@
       "TOP_LEVEL_ERR_ACTION": "Reload",
       "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
     },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "No unread notifications"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "You have no notes"
+      }
+    },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
