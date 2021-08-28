@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppWrapper } from '../../ui/components';
 import { AppContent } from '../../ui/components/AppContent';
 import { AppTitle } from '../../ui/components/AppTitle';
@@ -12,6 +12,8 @@ import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route } from 'react-router-dom';
 import { useSetSelectedNote } from './hooks/state';
 import { LoadingSpinner } from '../../ui/components/LoadingSpinner';
+import { useQueryParams } from '../../common/hooks/useQueryParams';
+import { AddNoteExportData } from '../../../../typings/notes';
 
 export const NotesApp = () => {
   const classes = useStyles();
@@ -21,6 +23,13 @@ export const NotesApp = () => {
   const onClickCreate = () => {
     setSelectedNote({ title: '', content: '' });
   };
+
+  const { title, content } = useQueryParams<AddNoteExportData>({ title: '', content: '' });
+
+  useEffect(() => {
+    // Only on mount
+    if (title || content) setSelectedNote({ title, content });
+  }, [title, content, setSelectedNote]);
 
   return (
     <NotesThemeProvider>

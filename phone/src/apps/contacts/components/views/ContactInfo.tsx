@@ -12,6 +12,7 @@ import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useContactsAPI } from '../../hooks/useContactsAPI';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -21,6 +22,8 @@ interface ContactInfoRouteParams {
 interface ContactInfoRouteQuery {
   addNumber?: string;
   referal?: string;
+  name?: string;
+  avatar?: string;
 }
 
 const useStyles = makeStyles({
@@ -53,22 +56,26 @@ const useStyles = makeStyles({
 const ContactsInfoPage = () => {
   const classes = useStyles();
   const history = useHistory();
-
-  const { getContact, addContact, updateContact, deleteContact } = useContactActions();
-
-  const { addAlert } = useSnackbar();
-
   const { id } = useParams<ContactInfoRouteParams>();
-  const { addNumber, referal } = useQueryParams<ContactInfoRouteQuery>({
+  const {
+    addNumber,
+    // Because this is mispelled absolutely everywhere
+    referal: referral,
+    avatar: avatarParam,
+    name: nameParam,
+  } = useQueryParams<ContactInfoRouteQuery>({
     referal: '/contacts',
   });
 
+  const { getContact } = useContactActions();
+  const { updateContact, addNewContact, deleteContact } = useContactsAPI();
+
   const contact = getContact(parseInt(id));
 
+  const [name, setName] = useState(() => contact?.display || '');
+  const [number, setNumber] = useState(() => contact?.number || '');
+  const [avatar, setAvatar] = useState(() => contact?.avatar || '');
   // Set state after checking if null
-  const [name, setName] = useState(contact ? contact.display : '');
-  const [number, setNumber] = useState(contact ? contact.number : '');
-  const [avatar, setAvatar] = useState(contact ? contact.avatar : '');
 
   const { t } = useTranslation();
 
@@ -90,97 +97,23 @@ const ContactsInfoPage = () => {
     setAvatar(e.target.value);
   };
 
-  useEffect(() => {
-    if (addNumber) {
-      setNumber(addNumber);
-    }
-  }, [addNumber]);
-
   const handleContactAdd = () => {
-    LogDebugEvent({
-      action: 'Handling Contact Add',
-      data: contact,
-      level: 2,
-    });
-    fetchNui<ServerPromiseResp<Contact>>(ContactEvents.ADD_CONTACT, {
-      display: name,
-      number,
-      avatar,
-    }).then((serverResp) => {
-      if (serverResp.status !== 'ok') {
-        return addAlert({
-          message: t('APPS_CONTACT_ADD_FAILED'),
-          type: 'error',
-        });
-      }
-
-      // Sanity checks maybe?
-
-      addContact(serverResp.data);
-      addAlert({
-        message: t('APPS_CONTACT_ADD_SUCCESS'),
-        type: 'success',
-      });
-      history.replace(referal);
-    });
-  };
-
-  const handleContactSave = () => {
-    LogDebugEvent({
-      action: 'Handling Contact Update',
-      data: contact,
-      level: 2,
-    });
-    fetchNui<ServerPromiseResp>(ContactEvents.UPDATE_CONTACT, {
-      id: contact.id,
-      display: name,
-      number,
-      avatar,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('APPS_CONTACT_UPDATE_FAILED'),
-          type: 'error',
-        });
-      }
-
-      updateContact({
-        id: contact.id,
-        display: name,
-        number,
-        avatar,
-      });
-
-      addAlert({
-        message: t('APPS_CONTACT_UPDATE_SUCCESS'),
-        type: 'success',
-      });
-
-      history.goBack();
-    });
+    addNewContact({ display: name, number, avatar }, referral);
   };
 
   const handleContactDelete = () => {
-    LogDebugEvent({
-      action: 'Handling Contact Delete',
-      data: contact,
-      level: 2,
-    });
-    fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id: contact.id }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('APPS_CONTACT_DELETE_FAILED'),
-          type: 'error',
-        });
-      }
-      history.goBack();
-      deleteContact(contact.id);
-      addAlert({
-        message: t('APPS_CONTACT_DELETE_SUCCESS'),
-        type: 'error',
-      });
-    });
+    deleteContact({ id: contact.id });
   };
+
+  const handleContactUpdate = () => {
+    updateContact({ id: contact.id, number, avatar, display: name });
+  };
+
+  useEffect(() => {
+    if (addNumber) setNumber(addNumber);
+    if (avatarParam) setAvatar(avatarParam);
+    if (nameParam) setName(nameParam);
+  }, [addNumber, avatar, avatarParam, nameParam]);
 
   return (
     <Paper className={classes.root} square>
@@ -227,7 +160,7 @@ const ContactsInfoPage = () => {
         {contact && (
           <>
             <Box py={1} display="block">
-              <Button color="primary" variant="contained" onClick={handleContactSave}>
+              <Button color="primary" variant="contained" onClick={handleContactUpdate}>
                 {t('GENERIC_UPDATE')}
               </Button>
             </Box>

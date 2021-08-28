@@ -33,12 +33,10 @@ export enum NotesEvents {
   FETCH_ALL_NOTES = 'npwd:fetchAllNotes',
   DELETE_NOTE = 'npwd:deleteNote',
   UPDATE_NOTE = 'npwd:updateNote',
+  ADD_NOTE_EXPORT = 'npwd:addNoteExport',
 }
 
-export interface NoteServerResponse<T = unknown> {
-  alert?: IAlertProps;
-  action: 'SEND' | 'UPDATE' | 'DELETE' | 'ADD';
-  suceeded: boolean;
-  refetch?: boolean;
-  data?: T;
+export interface AddNoteExportData {
+  title?: string;
+  content?: string;
 }

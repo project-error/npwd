@@ -31,6 +31,8 @@ import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
 import { useConfig } from './os/phone/hooks/useConfig';
+import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
+import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -68,6 +70,8 @@ function Phone() {
   useMarketplaceService();
   useBankService();
   useMessagesService();
+  useContactsListener();
+  useNoteListener();
   /*usePhotoService();*/
   useCallService();
   useDialService();

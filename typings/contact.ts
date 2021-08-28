@@ -31,4 +31,12 @@ export enum ContactEvents {
   ADD_CONTACT = 'npwd:addContacts',
   UPDATE_CONTACT = 'npwd:updateContact',
   DELETE_CONTACT = 'npwd:deleteContact',
+  // Used to fill in information through an export event
+  ADD_CONTACT_EXPORT = 'npwd:addContactExport',
+}
+
+export interface AddContactExportData {
+  name?: string;
+  number: string;
+  avatar?: string;
 }
