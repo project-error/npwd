@@ -29,7 +29,7 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
     (listing: MarketplaceListing) => {
       // Make sure our atom is actually loaded before we attempt a dispatch
       if (valueLoading !== 'hasValue') return;
-      setListings((curListings) => [...curListings, listing]);
+      setListings((curListings) => [listing, ...curListings]);
     },
     [setListings, valueLoading],
   );
