@@ -98,6 +98,11 @@ export const BrowserApp: React.FC = () => {
             src={browserUrl}
             // @ts-ignore
             className={classes.iframe}
+            style={{
+              height: '100%',
+              width: '100%',
+              border: 'none',
+            }}
             title="npwd-browser"
             ref={iframeRef}
           />
