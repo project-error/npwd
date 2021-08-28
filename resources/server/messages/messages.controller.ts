@@ -45,7 +45,7 @@ onNetPromise<{ conversationId: string }, Message[]>(
   },
 );
 
-onNetPromise<PreDBMessage, PreDBMessage>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
+onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
   MessagesService.handleSendMessage(reqObj, resp).catch((e) => {
     messagesLogger.error(
       `Error occurred while sending message (${reqObj.source}), Error: ${e.message}`,

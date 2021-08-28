@@ -8,6 +8,7 @@ import {
   messagesLogger,
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { useSetConversationId } from '../../../phone/src/apps/messages/hooks/state';
 
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
@@ -69,10 +70,7 @@ class _MessagesService {
     }
   }
 
-  async handleSendMessage(
-    reqObj: PromiseRequest<PreDBMessage>,
-    resp: PromiseEventResp<PreDBMessage>,
-  ) {
+  async handleSendMessage(reqObj: PromiseRequest<PreDBMessage>, resp: PromiseEventResp<Message>) {
     try {
       const player = PlayerService.getPlayer(reqObj.source);
       const authorPhoneNumber = player.getPhoneNumber();
@@ -85,7 +83,22 @@ class _MessagesService {
         messageData.message,
       );
 
-      resp({ status: 'ok', data: messageData });
+      resp({
+        status: 'ok',
+        data: {
+          ...messageData,
+          conversation_id: messageData.conversationId,
+          author: authorPhoneNumber,
+          id: 1,
+        },
+      });
+
+      console.log({
+        ...messageData,
+        conversation_id: messageData.conversationId,
+        author: authorPhoneNumber,
+        id: 1,
+      });
 
       // FIXME: This still causes an error when sending to an offline player it seems.
       for (const participantId of participants) {

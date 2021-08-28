@@ -1,19 +1,19 @@
 import {
   messageState,
   useActiveMessageConversation,
-  useSetMessageConversation,
+  useSetMessageConversations,
   useSetMessages,
 } from './state';
 import { useCallback } from 'react';
 import { useLocation } from 'react-router';
 import { useMessageNotifications } from './useMessageNotifications';
-import { PreDBMessage } from '../../../../../typings/messages';
-import { useRecoilValueLoadable } from 'recoil';
+import { Message, PreDBMessage } from '../../../../../typings/messages';
+import { useRecoilValue, useRecoilValueLoadable, waitForAll } from 'recoil';
 
 interface MessageActionProps {
   removeConversation: (conversationId: string) => void;
   handleBroadcast: ({ conversationName, conversationId, message }) => void;
-  updateMessages: (messageDto: PreDBMessage) => void;
+  updateMessages: (messageDto: Message) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -22,9 +22,7 @@ export const useMessageActions = (): MessageActionProps => {
     messageState.messageCoversations,
   );
 
-  console.dir(contents);
-
-  const setMessageConversation = useSetMessageConversation();
+  const setMessageConversation = useSetMessageConversations();
   const activeMessageGroup = useActiveMessageConversation();
   const { pathname } = useLocation();
   const { setNotification } = useMessageNotifications();
@@ -45,7 +43,7 @@ export const useMessageActions = (): MessageActionProps => {
 
   const handleBroadcast = useCallback(
     ({ conversationName, conversationId, message }) => {
-      if (conversationId === activeMessageGroup?.conversation_id) {
+      if (conversationId === activeMessageGroup.conversation_id) {
         if (pathname.includes('messages/conversations')) {
           return;
         }
@@ -57,15 +55,15 @@ export const useMessageActions = (): MessageActionProps => {
   );
 
   const updateMessages = useCallback(
-    (messageDto: PreDBMessage) => {
+    (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
 
       setMessages((currVal) => [
         ...currVal,
         {
           message: messageDto.message,
-          conversation_id: messageDto.conversationId,
-          author: 'chip', // Obviously mock
+          conversation_id: messageDto.conversation_id,
+          author: messageDto.author,
           id: 1, // Obviously mock
         },
       ]);

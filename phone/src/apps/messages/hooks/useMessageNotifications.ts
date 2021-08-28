@@ -3,6 +3,8 @@ import { matchPath, useHistory } from 'react-router-dom';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
 import useMessages from './useMessages';
+import { useRecoilValue, waitForAll } from 'recoil';
+import { messageState } from './state';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -11,7 +13,8 @@ export const useMessageNotifications = () => {
   const history = useHistory();
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
-  const { getMessageConversationById, activeMessageConversation, goToConversation } = useMessages();
+  const { getMessageConversationById, goToConversation } = useMessages();
+  const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
   // Remove notifications from groups when opening them
   history.listen((location) => {

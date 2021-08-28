@@ -65,6 +65,7 @@ export const messageState = {
           const resp = await fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
             conversationId: groupId,
           });
+          console.log('fetched messsages for group id', groupId);
           LogDebugEvent({ action: 'fetchMessages', data: resp.data[0], level: 5 });
           return resp.data;
         } catch (e) {
@@ -77,7 +78,7 @@ export const messageState = {
       },
     }),
   }),
-  activeMessageConversation: atom<MessageConversation>({
+  activeMessageConversation: atom<MessageConversation | null>({
     key: 'activeMessageGroup',
     default: null,
   }),
@@ -99,9 +100,9 @@ export const messageState = {
   }),
 };
 
-export const useMessageConversationValue = () => useRecoilValue(messageState.messageCoversations);
-export const useSetMessageConversation = () => useSetRecoilState(messageState.messageCoversations);
-export const useMessageConversation = () => useRecoilState(messageState.messageCoversations);
+export const useMessageConversationsValue = () => useRecoilValue(messageState.messageCoversations);
+export const useSetMessageConversations = () => useSetRecoilState(messageState.messageCoversations);
+export const useMessageConversations = () => useRecoilState(messageState.messageCoversations);
 
 export const useMessagesState = () => useRecoilState(messageState.messages);
 export const useMessagesValue = () => useRecoilValue(messageState.messages);

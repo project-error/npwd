@@ -6,11 +6,7 @@ import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
 import { SearchField } from '../../../../ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
-import {
-  useFilteredConversationsValue,
-  useFilterValueState,
-  useMessageConversationValue,
-} from '../../hooks/state';
+import { useFilteredConversationsValue, useFilterValueState } from '../../hooks/state';
 
 const MessagesList = (): any => {
   const classes = useStyles();

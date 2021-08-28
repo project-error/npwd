@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, waitForAll } from 'recoil';
 import { MessageConversation } from '../../../../../typings/messages';
-import { messageState, useMessageConversationValue, useSetConversationId } from './state';
+import { messageState, useSetConversationId } from './state';
 import { useHistory } from 'react-router';
 
 interface IUseMessages {
@@ -9,13 +9,14 @@ interface IUseMessages {
   getMessageConversationById: (id: string) => MessageConversation | null;
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
+
   goToConversation(g: Pick<MessageConversation, 'conversation_id'>): void;
 }
 
 const useMessages = (): IUseMessages => {
   const history = useHistory();
 
-  const conversations = useMessageConversationValue();
+  const [conversations] = useRecoilValue(waitForAll([messageState.messageCoversations]));
 
   const setCurrentConversationId = useSetConversationId();
   const [activeMessageConversation, _setActiveMessageConversation] =
@@ -40,6 +41,9 @@ const useMessages = (): IUseMessages => {
   const goToConversation = (messageGroup) => {
     if (!messageGroup?.conversation_id || !history) return;
     setCurrentConversationId(messageGroup.conversation_id);
+
+    console.log('Hello I am going to the conversation');
+    console.log(messageGroup.conversation_id);
 
     history.push(`/messages/conversations/${messageGroup.conversation_id}`);
   };

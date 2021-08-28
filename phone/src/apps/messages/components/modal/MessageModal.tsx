@@ -87,6 +87,14 @@ export const MessageModal = () => {
     }
   }, [activeMessageConversation, Nui]);*/
 
+  // We need to wait for the active conversation to be set.
+  if (!activeMessageConversation)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+
   // don't allow too many characters, it takes too much room
   let header = activeMessageConversation.display || activeMessageConversation.phoneNumber;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;

@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import SendIcon from '@mui/icons-material/Send';
 import ImageIcon from '@mui/icons-material/Image';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { MessageEvents, PreDBMessage } from '../../../../../../typings/messages';
+import { Message, MessageEvents, PreDBMessage } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
@@ -32,7 +32,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (message.trim()) {
-      fetchNui<ServerPromiseResp<PreDBMessage>>(MessageEvents.SEND_MESSAGE, {
+      fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId: messageConversationId,
         message,
       }).then((resp) => {
