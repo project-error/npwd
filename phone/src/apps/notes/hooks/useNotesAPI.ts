@@ -64,7 +64,11 @@ export const useNotesAPI = (): NotesAPIValue => {
 
   const updateNote = useCallback(
     async ({ id, content, title }: NoteItem) => {
-      const resp = await fetchNui<ServerPromiseResp>(NotesEvents.ADD_NOTE, { id, content, title });
+      const resp = await fetchNui<ServerPromiseResp>(NotesEvents.UPDATE_NOTE, {
+        id,
+        content,
+        title,
+      });
       if (resp.status !== 'ok') {
         return addAlert({
           message: t('APPS_NOTES_UPDATE_FAILED'),
