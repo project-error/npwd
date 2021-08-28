@@ -67,13 +67,8 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
   const classes = useStyles();
 
-  const {
-    icons,
-    notifications,
-    removeNotification,
-    barUncollapsed,
-    setBarUncollapsed,
-  } = useNotifications();
+  const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } =
+    useNotifications();
 
   const time = usePhoneTime();
 
@@ -88,7 +83,7 @@ export const NotificationBar = () => {
       <Grid
         className={classes.root}
         container
-        justify="space-between"
+        justifyContent="space-between"
         wrap="nowrap"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
@@ -108,7 +103,7 @@ export const NotificationBar = () => {
             </Typography>
           </Grid>
         )}
-        <Grid container item wrap="nowrap" justify="flex-end" alignItems="center">
+        <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
           <Grid item>
             <SignalIcon fontSize="small" />
           </Grid>

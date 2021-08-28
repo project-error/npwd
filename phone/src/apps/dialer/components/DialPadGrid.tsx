@@ -31,7 +31,7 @@ export const DialGrid = () => {
 
   return (
     <Box height="100%">
-      <Grid container justify="space-around">
+      <Grid container justifyContent="space-around">
         <ButtonItem label={1} onClick={() => add(1)} />
         <ButtonItem label={2} onClick={() => add(2)} />
         <ButtonItem label={3} onClick={() => add(3)} />

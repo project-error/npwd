@@ -60,8 +60,8 @@ export const DialerInput = () => {
       >
         <PhoneIcon fontSize="large" />
       </IconButton>
-      <IconButton className={classes.iconBtn}>
-        <PersonAddIcon fontSize="large" onClick={() => handleNewContact(inputVal)} />
+      <IconButton className={classes.iconBtn} onClick={() => handleNewContact(inputVal)}>
+        <PersonAddIcon fontSize="large" />
       </IconButton>
     </Box>
   );

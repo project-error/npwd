@@ -83,7 +83,7 @@ export const Calculator = ({ ...props }) => {
         {resultStr}
       </Box>
       <Box>
-        <Grid container justify="space-around">
+        <Grid container justifyContent="space-around">
           <CalcButton button={clear} className={classes.button} />
           <CalcButton button={clearAll} className={classes.button} />
           <CalcButton button={divider} className={classes.button} />
