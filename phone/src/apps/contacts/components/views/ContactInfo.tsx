@@ -5,13 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { Contact, ContactEvents, ContactsDatabaseLimits } from '../../../../../../typings/contact';
+import { ContactsDatabaseLimits } from '../../../../../../typings/contact';
 import { TextField } from '../../../../ui/components/Input';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
 interface ContactInfoRouteParams {
