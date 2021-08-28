@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import useStyles from './notes.styles';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route } from 'react-router-dom';
-import { useSetSelectedNote } from './hooks/state';
+import { useSetModalVisible, useSetSelectedNote } from './hooks/state';
 import { LoadingSpinner } from '../../ui/components/LoadingSpinner';
 import { useQueryParams } from '../../common/hooks/useQueryParams';
 import { AddNoteExportData } from '../../../../typings/notes';
@@ -19,9 +19,11 @@ export const NotesApp = () => {
   const classes = useStyles();
   const notesApp = useApp('NOTES');
   const setSelectedNote = useSetSelectedNote();
+  const setModalVisible = useSetModalVisible();
 
   const onClickCreate = () => {
     setSelectedNote({ title: '', content: '' });
+    setModalVisible(true);
   };
 
   const { title, content } = useQueryParams<AddNoteExportData>({ title: '', content: '' });
