@@ -30,11 +30,18 @@ export const noteStates = {
     key: 'selectedNote',
     default: null,
   }),
+  modalVisibile: atom({
+    key: 'noteModalVisible',
+    default: false,
+  }),
 };
 
 export const useSetSelectedNote = () => useSetRecoilState(noteStates.selectedNote);
 export const useSelectedNoteValue = () => useRecoilValue(noteStates.selectedNote);
 export const useSelectedNote = () => useRecoilState(noteStates.selectedNote);
+
+export const useSetModalVisible = () => useSetRecoilState(noteStates.modalVisibile);
+export const useModalVisible = () => useRecoilState(noteStates.modalVisibile);
 
 export const useNotesValue = () => useRecoilValue(noteStates.noteItems);
 export const useSetNotes = () => useSetRecoilState(noteStates.noteItems);

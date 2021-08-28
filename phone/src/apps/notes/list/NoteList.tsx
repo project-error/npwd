@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { useNotesValue } from '../hooks/state';
+import { useNotesValue, useSetModalVisible } from '../hooks/state';
 import { useSetSelectedNote } from '../hooks/state';
 import { NoteItem } from '../../../../../typings/notes';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -16,9 +16,11 @@ const NoteList = () => {
   const classes = useStyles();
   const notes = useNotesValue();
   const setNote = useSetSelectedNote();
+  const setModalVisible = useSetModalVisible();
 
   const handleNoteModal = (note: NoteItem) => {
     setNote(note);
+    setModalVisible(true);
   };
 
   if (notes && notes.length)
