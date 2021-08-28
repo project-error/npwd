@@ -9,13 +9,7 @@ import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
 import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
-import { Box, CircularProgress } from '@material-ui/core';
-
-const LoadingSpinner: React.FC = () => (
-  <Box>
-    <CircularProgress />
-  </Box>
-);
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 export const DialerApp = () => {
   const dialer = useApp('DIALER');
