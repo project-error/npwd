@@ -9,7 +9,7 @@ import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Fab from '@material-ui/core/Fab';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
@@ -25,6 +25,9 @@ export const ContactsApp = () => {
   const contacts = useApp('CONTACTS');
   const history = useHistory();
   const classes = useStyles();
+  const { pathname } = useLocation();
+
+  const pathTemplate = /contacts\/-?\d/;
 
   return (
     <ContactsThemeProvider>
@@ -36,13 +39,15 @@ export const ContactsApp = () => {
             <Route path="/contacts/:id" exact component={ContactsInfoPage} />
           </React.Suspense>
         </AppContent>
-        <Fab
-          color="primary"
-          onClick={() => history.push('/contacts/-1')}
-          className={classes.absolute}
-        >
-          <PersonAddIcon />
-        </Fab>
+        {!pathname.match(pathTemplate) && (
+          <Fab
+            color="primary"
+            onClick={() => history.push('/contacts/-1')}
+            className={classes.absolute}
+          >
+            <PersonAddIcon />
+          </Fab>
+        )}
       </AppWrapper>
     </ContactsThemeProvider>
   );
