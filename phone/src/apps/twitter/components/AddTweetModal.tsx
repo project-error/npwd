@@ -94,6 +94,7 @@ export const AddTweetModal = () => {
 
     const data: NewTweet = {
       message,
+      retweet: null,
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
     };
