@@ -22,10 +22,8 @@ class _MessagesService {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const messageConversations = await getFormattedMessageConversations(identifier);
 
-      /*emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, src, messageGroups);*/
       resp({ status: 'ok', data: messageConversations });
     } catch (e) {
-      /*emitNet(MessageEvents.FETCH_MESSAGE_GROUPS_FAILED, src);*/
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages groups, ${e.message}`);
     }
@@ -45,21 +43,6 @@ class _MessagesService {
       if (result.error) {
         return resp({ status: 'error', data: false });
       }
-
-      /* emitNet(MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, reqObj.source, result); */
-
-      /* if (result.identifiers) {
-        for (const participantId of result.identifiers) {
-          // we don't broadcast to the source of the event.
-          if (participantId !== _identifier) {
-            const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
-            if (!participantPlayer) {
-              return;
-            }
-            emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, participantPlayer.source);
-          }
-        }
-      }*/
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
 
@@ -78,10 +61,7 @@ class _MessagesService {
       const messages = await this.messagesDB.getMessages(reqObj.data.conversationId);
 
       resp({ status: 'ok', data: messages });
-
-      /* emitNet(MessageEvents.FETCH_MESSAGES_SUCCESS, reqObj.source, messages); */
     } catch (e) {
-      /* emitNet(MessageEvents.FETCH_MESSAGES_FAILED, reqObj.source); */
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
         source: reqObj.source,
@@ -113,12 +93,17 @@ class _MessagesService {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
+          console.log('part id', participantPlayer);
+          console.log('part source', participantPlayer.source);
+
           if (!participantPlayer) {
             return;
           }
 
+          emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
+
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-            conversationName: participantPlayer.getPhoneNumber(), // We check if we have a contact on the NUI side.
+            conversationName: participantPlayer.getPhoneNumber(),
             conversationId: messageData.conversationId,
             message: messageData.message,
           });

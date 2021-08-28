@@ -26,11 +26,11 @@ export const useMessageNotifications = () => {
     }
   });
 
-  const setNotification = ({ groupId, message }) => {
-    const group = getMessageConversationById(groupId);
+  const setNotification = ({ conversationId, message }) => {
+    const group = getMessageConversationById(conversationId);
     if (!group) return;
 
-    const id = `${NOTIFICATION_ID}:${groupId}`;
+    const id = `${NOTIFICATION_ID}:${conversationId}`;
 
     const notification = {
       app: 'MESSAGES',

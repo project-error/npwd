@@ -98,14 +98,6 @@ export async function createMessageGroupsFromPhoneNumber(
   const identifier = await MessagesDB.getIdentifierFromPhoneNumber(phoneNumber);
 
   const conversationId = createGroupHashID([userIdentifier, identifier]);
-  /*if (await MessagesDB.checkIfMessageGroupExists(conversationId)) {
-    return {
-      error: false,
-      duplicate: true,
-      conversationId,
-      identifiers: [userIdentifier, identifier],
-    };
-  }*/
 
   await MessagesDB.createMessageGroup(userIdentifier, conversationId, userIdentifier);
   await MessagesDB.createMessageGroup(userIdentifier, conversationId, identifier);

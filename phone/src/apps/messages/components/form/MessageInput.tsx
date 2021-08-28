@@ -5,10 +5,12 @@ import makeStyles from '@mui/styles/makeStyles';
 import SendIcon from '@mui/icons-material/Send';
 import ImageIcon from '@mui/icons-material/Image';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { MessageEvents, PreDBMessage } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 interface IProps {
   onAddImageClick(): void;
@@ -25,24 +27,27 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const { addAlert } = useSnackbar();
   const classes = useStyles();
   const [message, setMessage] = useState('');
+  const { updateMessages } = useMessageActions();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (message.trim()) {
-      fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageConversationId, message }).then(
-        (resp) => {
-          if (resp !== 'ok') {
-            setMessage('');
-
-            return addAlert({
-              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
-              type: 'error',
-            });
-          }
-
+      fetchNui<ServerPromiseResp<PreDBMessage>>(MessageEvents.SEND_MESSAGE, {
+        conversationId: messageConversationId,
+        message,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
           setMessage('');
-        },
-      );
+
+          return addAlert({
+            message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        updateMessages(resp.data);
+        setMessage('');
+      });
     }
   };
 

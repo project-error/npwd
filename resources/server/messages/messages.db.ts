@@ -20,6 +20,8 @@ export class _MessagesDB {
 
     const [results] = await pool.query(query, [author, message, conversationId]);
 
+    console.log('messsage result', results);
+
     return <UnformattedMessageConversation[]>results;
   }
 
@@ -96,8 +98,8 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-        SELECT ${config.database.identifierColumn}
-        FROM ${config.database.playerTable}
+        SELECT identifier
+        FROM users
         WHERE phone_number = ?
         LIMIT 1
 		`;

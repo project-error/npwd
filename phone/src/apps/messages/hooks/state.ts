@@ -62,7 +62,9 @@ export const messageState = {
       get: async ({ get }) => {
         try {
           const groupId = get(currentGroupId);
-          const resp = await fetchNui(MessageEvents.FETCH_MESSAGES, { conversationId: groupId });
+          const resp = await fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+            conversationId: groupId,
+          });
           LogDebugEvent({ action: 'fetchMessages', data: resp.data[0], level: 5 });
           return resp.data;
         } catch (e) {
@@ -77,7 +79,7 @@ export const messageState = {
   }),
   activeMessageConversation: atom<MessageConversation>({
     key: 'activeMessageGroup',
-    default: MockMessageConversations[0],
+    default: null,
   }),
   showNewMessageGroup: atom<boolean>({
     key: 'showNewMessageGroup',
