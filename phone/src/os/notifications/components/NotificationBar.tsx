@@ -17,6 +17,7 @@ import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
+import { NoNotificationText } from './NoNotificationText';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,7 +120,7 @@ export const NotificationBar = () => {
       </Grid>
       <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
-          <Box py={2}>
+          <Box py={1}>
             <List>
               <Divider />
               {notifications.map((notification, idx) => (
@@ -141,7 +142,8 @@ export const NotificationBar = () => {
               ))}
             </List>
           </Box>
-          <Box display="flex">
+          <Box display="flex" flexDirection="column">
+            <NoNotificationText />
             <IconButton
               className={classes.collapseBtn}
               size="small"
