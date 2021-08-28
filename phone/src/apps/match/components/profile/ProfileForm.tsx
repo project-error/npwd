@@ -81,7 +81,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
+          message: t('APPS_MATCH_UPDATE_PROFILE_FAILED'),
           type: 'error',
         });
       }
@@ -89,7 +89,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       setMyProfile(resp.data);
 
       addAlert({
-        message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
+        message: t('APPS_MATCH_UPDATE_PROFILE_SUCCEEDED'),
         type: 'success',
       });
     });
