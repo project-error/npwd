@@ -250,6 +250,7 @@
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
+    "GENERIC_EDIT": "Edit",
     "GENERIC_UPDATE": "Update",
     "GENERIC_REQUIRED": "Required",
     "GENERIC_DELETE": "Delete",
