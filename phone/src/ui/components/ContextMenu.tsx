@@ -24,13 +24,13 @@ export interface IContextMenuOption {
   key?: string;
 }
 
-interface IContextMenuProps {
+interface ContextMenuProps {
   open: boolean;
-  onClose(): void;
+  onClose: () => void;
   options: Array<IContextMenuOption>;
 }
 
-export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 

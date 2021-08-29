@@ -10,7 +10,7 @@ import { useHistory, useLocation } from 'react-router';
 import { useApps } from '../../../os/apps/hooks/useApps';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
-export const NoteModal = () => {
+export const NoteModal: React.FC = () => {
   const classes = useStyles();
   const { addNewNote, deleteNote, updateNote } = useNotesAPI();
   const [modalVisible, setModalVisible] = useModalVisible();

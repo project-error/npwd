@@ -10,7 +10,7 @@ import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
 import { useCall } from '../../../../os/call/hooks/useCall';
 
-export const ContactList = () => {
+export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
   const history = useHistory();
   const { initializeCall } = useCall();

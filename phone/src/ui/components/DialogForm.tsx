@@ -35,14 +35,14 @@ interface DialogFormProps {
   content: string;
 }
 
-export default function DialogForm({
+const DialogForm: React.FC<DialogFormProps> = ({
   children,
   open,
   handleClose,
   onSubmit,
   title,
   content,
-}: DialogFormProps) {
+}) => {
   const classes = useStyles();
 
   const showHideClassName = open ? classes.displayBlock : classes.displayNone;
@@ -66,4 +66,6 @@ export default function DialogForm({
       </Paper>
     </div>
   );
-}
+};
+
+export default DialogForm;

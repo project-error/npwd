@@ -4,13 +4,13 @@ import { PictureThumbnail } from './PictureThumbnail';
 import { PictureResponsive } from './PictureResponsive';
 import Modal from './Modal';
 
-interface IProps {
+interface PictureProps {
   src: string;
   alt: string;
   size?: string;
 }
 
-export const Picture = ({ src, alt, size }: IProps) => {
+export const Picture: React.FC<PictureProps> = ({ src, alt, size }) => {
   const [visible, setVisible] = useState<boolean>(false);
   return (
     <>

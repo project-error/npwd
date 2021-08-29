@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 
-export const CalculatorIcon = ({ ...props }: SvgIconProps) => {
+export const CalculatorIcon: React.FC<SvgIconProps> = ({ ...props }) => {
   return (
     <SvgIcon {...props}>
       <svg

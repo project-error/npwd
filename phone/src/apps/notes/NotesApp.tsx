@@ -15,7 +15,7 @@ import { LoadingSpinner } from '../../ui/components/LoadingSpinner';
 import { useQueryParams } from '../../common/hooks/useQueryParams';
 import { AddNoteExportData } from '../../../../typings/notes';
 
-export const NotesApp = () => {
+export const NotesApp: React.FC = () => {
   const classes = useStyles();
   const notesApp = useApp('NOTES');
   const setSelectedNote = useSetSelectedNote();

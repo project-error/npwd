@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Calculator = ({ ...props }) => {
+export const Calculator: React.FC = () => {
   const {
     result,
     equals,

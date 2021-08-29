@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const ContactsApp = () => {
+export const ContactsApp: React.FC = () => {
   const contacts = useApp('CONTACTS');
   const history = useHistory();
   const classes = useStyles();

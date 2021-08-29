@@ -3,10 +3,6 @@ import { Box, makeStyles, Theme } from '@material-ui/core';
 import { useSettings } from '../../apps/settings/hooks/useSettings';
 import { useTranslation } from 'react-i18next';
 
-interface IProps {
-  children: JSX.Element;
-}
-
 const useStyles = makeStyles<Theme, { covered: boolean }>((theme) => ({
   cover: {
     cursor: 'pointer',
@@ -16,7 +12,7 @@ const useStyles = makeStyles<Theme, { covered: boolean }>((theme) => ({
   },
 }));
 
-export const PictureReveal = ({ children }: IProps) => {
+export const PictureReveal: React.FC = ({ children }) => {
   const [settings] = useSettings();
   const [covered, setCovered] = useState<boolean>(false);
   const [ready, setReady] = useState<boolean>(false);

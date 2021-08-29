@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface IBtnItem {
-  onClick?: (...args: any) => void;
+interface ButtonItemProps {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   label: string | number;
 }
 
-const ButtonItem = ({ label, onClick }: IBtnItem) => {
+const ButtonItem: React.FC<ButtonItemProps> = ({ label, onClick }) => {
   const classes = useStyles();
   return (
     <Grid key={label} item xs={4}>

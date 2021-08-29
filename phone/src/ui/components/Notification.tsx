@@ -19,7 +19,12 @@ const useStyles = makeStyles({
   },
 });
 
-function Notification({ children, handleClose, open }) {
+interface NotificationProps {
+  open: boolean;
+  handleClose: () => void;
+}
+
+export const Notification: React.FC<NotificationProps> = ({ children, handleClose, open }) => {
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
 
@@ -49,6 +54,6 @@ function Notification({ children, handleClose, open }) {
       </Snackbar>
     </ThemeProvider>
   );
-}
+};
 
 export default Notification;

@@ -1,9 +1,16 @@
 import React from 'react';
 import { AppIcon } from './AppIcon';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, GridSize } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { IApp } from '../../os/apps/config/apps';
 
-export const GridMenu = ({ items, Component = AppIcon, xs = undefined }) => {
+interface GridMenuProps {
+  items: IApp[];
+  Component?: React.ElementType;
+  xs?: GridSize;
+}
+
+export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, xs }) => {
   return (
     <Grid container alignItems="center" direction="row">
       {items &&

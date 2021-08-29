@@ -20,13 +20,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const AppContent = ({
+export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
   children,
   paperStyle,
   backdrop,
   onClickBackdrop,
   ...props
-}: AppContentTypes & BoxProps) => {
+}) => {
   const classes = useStyles();
 
   return (

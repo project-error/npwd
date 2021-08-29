@@ -33,7 +33,12 @@ const useStyles = makeStyles({
   },
 });
 
-export const Modal = ({ children, visible, handleClose }) => {
+interface ModalProps {
+  visible?: boolean;
+  handleClose?: () => void;
+}
+
+export const Modal: React.FC<ModalProps> = ({ children, visible, handleClose }) => {
   const classes = useStyles();
 
   const showHideClassName = visible ? classes.displayBlock : classes.displayNone;

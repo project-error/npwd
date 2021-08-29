@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const DialerNavBar = () => {
+const DialerNavBar: React.FC = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [page, setPage] = useState(pathname);

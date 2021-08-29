@@ -11,7 +11,7 @@ import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
-export const DialerApp = () => {
+export const DialerApp: React.FC = () => {
   const dialer = useApp('DIALER');
   return (
     <DialerThemeProvider>

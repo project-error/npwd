@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavigationBar = () => {
+export const NavigationBar: React.FC = () => {
   const classes = useStyles();
   const [activePage, setActivePage] = useState(0);
   return (

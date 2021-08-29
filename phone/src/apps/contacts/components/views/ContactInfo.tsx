@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ContactsInfoPage = () => {
+const ContactsInfoPage: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams<ContactInfoRouteParams>();

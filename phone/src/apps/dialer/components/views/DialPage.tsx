@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const DialPage = () => {
+const DialPage: React.FC = () => {
   const classes = useStyles();
   const query = useQueryParams();
   const queryNumber = query.number;

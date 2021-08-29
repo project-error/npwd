@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const DialerInput = () => {
+export const DialerInput: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();

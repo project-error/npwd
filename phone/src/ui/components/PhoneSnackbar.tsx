@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const PhoneSnackbar = () => {
+export const PhoneSnackbar: React.FC = () => {
   const classes = useStyles();
   const { alert, isOpen, handleClose } = useSnackbar();
 
