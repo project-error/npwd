@@ -143,7 +143,7 @@ export const NotificationBar = () => {
             </List>
           </Box>
           <Box display="flex" flexDirection="column">
-            <NoNotificationText />
+            {!notifications.length && <NoNotificationText />}
             <IconButton
               className={classes.collapseBtn}
               size="small"
