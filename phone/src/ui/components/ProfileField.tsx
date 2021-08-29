@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from './Input';
 
@@ -12,41 +12,43 @@ const useStyles = makeStyles({
   },
 });
 
-const ProfileField = ({
-  label,
-  value,
-  handleChange,
-  allowChange,
-  multiline,
-  inputRef,
-  maxLength,
-}) => {
-  const classes = useStyles();
-  const _handleChange = (e) => handleChange(e.target.value);
+interface ProfileFieldProps {
+  label: string;
+  value: string;
+  handleChange?: (val: string) => void;
+  allowChange?: boolean;
+  multiline?: boolean;
+  maxLength?: number;
+}
 
-  return (
-    <div className={classes.formContainer}>
-      <TextField
-        className={classes.textField}
-        label={label}
-        value={value}
-        onChange={_handleChange}
-        disabled={!allowChange}
-        inputProps={{
-          maxLength: maxLength,
-        }}
-        multiline={multiline}
-        inputRef={inputRef}
-      />
-    </div>
-  );
-};
+const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
+  ({ label, value, handleChange, allowChange, multiline, maxLength }, ref) => {
+    const classes = useStyles();
+    const _handleChange = (e) => handleChange(e.target.value);
+
+    return (
+      <div className={classes.formContainer}>
+        <TextField
+          className={classes.textField}
+          label={label}
+          value={value}
+          onChange={_handleChange}
+          disabled={!allowChange}
+          inputProps={{
+            maxLength: maxLength,
+          }}
+          multiline={multiline}
+          inputRef={ref}
+        />
+      </div>
+    );
+  },
+);
 
 ProfileField.defaultProps = {
   allowChange: true,
   maxLength: 200,
   multiline: false,
-  inputRef: null,
 };
 
 export default ProfileField;
