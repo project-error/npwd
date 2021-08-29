@@ -44,7 +44,7 @@ export const useMatchActions = () => {
         }
       });
     },
-    [setProfiles, addAlert, setMatches],
+    [setProfiles, addAlert, t, setMatches],
   );
 
   return {
