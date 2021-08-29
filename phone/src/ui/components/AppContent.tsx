@@ -9,7 +9,6 @@ const useStyles = makeStyles(() => ({
   box: {
     width: '100%',
     height: '100%', // allow application to fill entireity of space
-    position: 'relative',
   },
   backdrop: {
     position: 'absolute',

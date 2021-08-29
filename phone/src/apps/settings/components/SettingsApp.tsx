@@ -62,7 +62,7 @@ export const SettingsApp = () => {
   const myNumber = useMyPhoneNumber();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
-  const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
+  const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
 
   const { addAlert } = useSnackbar();
 
@@ -136,7 +136,7 @@ export const SettingsApp = () => {
 
   const customWallpaper: IContextMenuOption = {
     selected: false,
-    onClick: () => setCustomWallpaperModal(true),
+    onClick: () => setCustomWallpaperState(true),
     key: 'CUSTOM_WALLPAPER',
     label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
   };
@@ -156,9 +156,27 @@ export const SettingsApp = () => {
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
+      {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
-      <div className={customWallpaperModal ? classes.backgroundModal : undefined} />
-      <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
+      <div className={customWallpaperState && classes.backgroundModal} />
+      {/*
+        Sometimes depending on the height of the app, we sometimes want it to fill its parent
+        and other times we want it to grow with the content. AppContent implementation currently
+        has a style of height: 100%, attached to its main class. We overwrite this here by
+        passing a style prop of height: 'auto'. This isn't ideal but it works without breaking
+        any of the other apps.
+
+        This also fixes Material UI v5's background color properly
+      */}
+      <AppContent
+        backdrop={isMenuOpen}
+        onClickBackdrop={closeMenu}
+        display="flex"
+        id="test"
+        style={{
+          height: 'auto',
+        }}
+      >
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
