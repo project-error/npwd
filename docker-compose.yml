@@ -22,3 +22,10 @@ services:
       MYSQL_PASSWORD: 'devlocal'
       MYSQL_DATABASE: 'npwd_test'
       MYSQL_USER: 'dev'
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+    ports:
+      - 9090:8080
