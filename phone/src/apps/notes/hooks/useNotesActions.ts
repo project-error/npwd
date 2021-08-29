@@ -20,7 +20,7 @@ export const useNotesActions = (): UseNotesActionsValue => {
 
   const addLocalNote = useCallback(
     (note: NoteItem) => {
-      setNotes((curNotes) => [...curNotes, note]);
+      setNotes((curNotes) => [note, ...curNotes]);
     },
     [setNotes],
   );
