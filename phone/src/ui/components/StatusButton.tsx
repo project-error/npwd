@@ -34,12 +34,9 @@ const useStyles = makeStyles(
   { name: 'MuiButton' },
 );
 
-export const StatusButton = ({
-  color = 'info',
-  variant,
-  className,
-  ...props
-}: Omit<ButtonProps, 'color'> & { color: StatusButtonStyleColor }) => {
+export const StatusButton: React.FC<
+  Omit<ButtonProps, 'color'> & { color: StatusButtonStyleColor }
+> = ({ color = 'info', variant, className, ...props }) => {
   const classes = useStyles({ color });
   return (
     <Button

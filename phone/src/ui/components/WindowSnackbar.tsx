@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 // NOTE: Will make this more generic at some point for error handling as well
-const WindowSnackbar = () => {
+const WindowSnackbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [severity, setSeverity] = useState<'info' | 'error' | 'success'>('info');

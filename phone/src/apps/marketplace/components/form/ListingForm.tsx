@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ListingForm = () => {
+export const ListingForm: React.FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();

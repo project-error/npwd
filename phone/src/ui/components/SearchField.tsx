@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IProps {
+interface SearchFieldProps {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   value: string;
   placeholder?: string;
@@ -62,7 +62,11 @@ const DEFAULT_PROPS = {
   placeholder: 'Search...',
 };
 
-export const SearchField = ({ value, onChange, placeholder }: IProps = DEFAULT_PROPS) => {
+export const SearchField: React.FC<SearchFieldProps> = ({
+  value,
+  onChange,
+  placeholder,
+} = DEFAULT_PROPS) => {
   const classes = useStyles();
   return (
     <Paper elevation={24} variant="outlined" className={classes.bg}>

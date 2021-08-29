@@ -13,12 +13,15 @@ const useStyles = makeStyles({
 
 const MINIMUM_LOAD_TIME = 750;
 
-interface IProps {
+interface ProfileUpdateButtonProps {
   handleClick: () => void;
   loading: boolean;
 }
 
-export function ProfileUpdateButton({ handleClick, loading }: IProps) {
+export const ProfileUpdateButton: React.FC<ProfileUpdateButtonProps> = ({
+  handleClick,
+  loading,
+}) => {
   const classes = useStyles();
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(true);
 
@@ -39,6 +42,6 @@ export function ProfileUpdateButton({ handleClick, loading }: IProps) {
       </Fab>
     </div>
   );
-}
+};
 
 export default ProfileUpdateButton;
