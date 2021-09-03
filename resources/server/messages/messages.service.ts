@@ -8,7 +8,6 @@ import {
   messagesLogger,
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
-import { useSetConversationId } from '../../../phone/src/apps/messages/hooks/state';
 
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;

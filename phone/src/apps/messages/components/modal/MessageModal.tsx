@@ -27,7 +27,7 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
-import { useMessagesValue } from '../../hooks/state';
+import { useMessagesState } from '../../hooks/state';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -43,7 +43,8 @@ export const MessageModal = () => {
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
-  const messages = useMessagesValue();
+  const [messages, setMessages] = useMessagesState();
+
   const { removeConversation } = useMessageActions();
 
   const [isLoaded, setLoaded] = useState(false);
@@ -61,6 +62,7 @@ export const MessageModal = () => {
 
   const closeModal = () => {
     history.push('/messages');
+    setMessages(null);
   };
 
   useEffect(() => {

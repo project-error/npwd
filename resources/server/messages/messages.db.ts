@@ -20,8 +20,6 @@ export class _MessagesDB {
 
     const [results] = await pool.query(query, [author, message, conversationId]);
 
-    console.log('messsage result', results);
-
     return <UnformattedMessageConversation[]>results;
   }
 

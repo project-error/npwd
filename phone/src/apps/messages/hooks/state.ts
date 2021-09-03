@@ -65,8 +65,7 @@ export const messageState = {
           const resp = await fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
             conversationId: groupId,
           });
-          console.log('fetched messsages for group id', groupId);
-          LogDebugEvent({ action: 'fetchMessages', data: resp.data[0], level: 5 });
+          LogDebugEvent({ action: 'fetchMessages', data: resp.data, level: 5 });
           return resp.data;
         } catch (e) {
           if (isEnvBrowser()) {
