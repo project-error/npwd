@@ -5,6 +5,7 @@ import { PhoneEvents } from '../../typings/phone';
 import { ClUtils } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
+import { AnimationService } from './animations/animation.service';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
@@ -63,7 +64,7 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
         'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
       );
     } else if (IsControlJustPressed(1, 177)) {
-      handleCameraExit();
+      await handleCameraExit();
       break;
     }
     displayHelperText();
@@ -84,6 +85,7 @@ const handleTakePicture = async () => {
   inCameraMode = false;
   ClearHelp(true);
 
+  animationService.openPhone();
   return resp;
 };
 
@@ -96,6 +98,8 @@ const handleCameraExit = async () => {
   openPhoneTemp();
   sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, false);
   inCameraMode = false;
+
+  await animationService.openCamera();
 };
 
 const takePhoto = () =>
