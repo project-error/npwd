@@ -5,7 +5,6 @@ import { PhoneEvents } from '../../typings/phone';
 import { ClUtils } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
-import { AnimationService } from './animations/animation.service';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 
