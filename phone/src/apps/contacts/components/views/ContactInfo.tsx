@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar as MuiAvatar, Box, Button, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar as MuiAvatar, Box, Button, Paper } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ContactsDatabaseLimits } from '../../../../../../typings/contact';
 import { TextField } from '../../../../ui/components/Input';

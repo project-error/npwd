@@ -1,6 +1,7 @@
 import React, { FocusEventHandler, useRef, useState } from 'react';
-import { makeStyles, Theme, Box, IconButton } from '@material-ui/core';
-import { Cached, KeyboardArrowLeft } from '@material-ui/icons';
+import { Theme, Box, IconButton } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Cached, KeyboardArrowLeft } from '@mui/icons-material';
 import { InputBase } from '../../../ui/components/Input';
 
 const useStyles = makeStyles((theme: Theme) => ({

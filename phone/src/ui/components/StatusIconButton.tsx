@@ -1,4 +1,5 @@
-import { fade, IconButton, IconButtonProps, makeStyles } from '@material-ui/core';
+import { alpha, IconButton, IconButtonProps } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 type StatusButtonStyleColor = 'success' | 'error' | 'warning' | 'info';
@@ -18,7 +19,7 @@ const useStyles = makeStyles(
     },
     outlined: {
       border: ({ color }: IStatusButtonStyleProps) =>
-        `1px solid ${fade(theme.palette[color].main, 0.5)}`,
+        `1px solid ${alpha(theme.palette[color].main, 0.5)}`,
       '&:hover': {
         border: ({ color }: IStatusButtonStyleProps) => `1px solid ${theme.palette[color].main}`,
       },

@@ -1,7 +1,7 @@
 import React from 'react';
-import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Divider from '@mui/material/Divider';
+import makeStyles from '@mui/styles/makeStyles';
+import Skeleton from '@mui/material/Skeleton';
 
 const useStyles = makeStyles({
   root: {
@@ -25,11 +25,11 @@ export default function TweetSkeleton() {
     <>
       <div className={classes.root}>
         <div className={classes.left}>
-          <Skeleton variant="circle" width={60} height={60} />
+          <Skeleton variant="circular" width={60} height={60} />
         </div>
         <div className={classes.right}>
           <Skeleton variant="text" />
-          <Skeleton variant="rect" width={250} height={118} />
+          <Skeleton variant="rectangular" width={250} height={118} />
         </div>
       </div>
 

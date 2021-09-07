@@ -1,5 +1,5 @@
 import React from 'react';
-import { blue, common, grey, purple } from '@material-ui/core/colors';
+import { blue, common, grey, purple } from '@mui/material/colors';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
@@ -31,7 +31,7 @@ import {
   TWITTER_APP_TEXT_COLOR,
 } from '../../../apps/twitter/twitter.theme';
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
-import { SvgIconProps } from '@material-ui/core';
+import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Button, CircularProgress } from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@mui/material';
 import useStyles from './grid.styles';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';

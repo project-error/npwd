@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import {
   Profile as IProfile,
@@ -8,7 +8,7 @@ import {
 } from '../../../../../../typings/match';
 import ProfileField from '../../../../ui/components/ProfileField';
 import UpdateButton from '../../../../ui/components/UpdateButton';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import PageText from '../PageText';

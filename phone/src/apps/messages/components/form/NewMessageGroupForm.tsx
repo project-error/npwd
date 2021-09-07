@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button } from '@mui/material';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
 import { MessageEvents } from '../../../../../../typings/messages';

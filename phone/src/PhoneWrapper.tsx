@@ -2,7 +2,7 @@ import React from 'react';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
-import { Slide } from '@material-ui/core';
+import { Slide } from '@mui/material';
 
 const PhoneWrapper: React.FC = ({ children }) => {
   const [settings] = useSettings();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography } from '@mui/material';
 import useTimer from '../hooks/useTimer';
 
 const formatTime = (time: number) => (time < 10 ? `0${time}` : time);

@@ -1,8 +1,11 @@
 import React, { HTMLAttributes } from 'react';
-import { Typography, Box, makeStyles } from '@material-ui/core';
+import { Typography, Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { Variant } from '@material-ui/core/styles/createTypography';
 import { IApp } from '../../os/apps/config/apps';
+import { OverridableStringUnion } from '@mui/types';
+import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
+import { Variant } from '@mui/material/styles/createTypography';
 
 interface IUseStyle {
   root: any;
@@ -24,7 +27,7 @@ const useStyle = makeStyles(
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
   app: IApp;
-  variant?: Variant;
+  variant?: OverridableStringUnion<Variant | 'inherit', TypographyPropsVariantOverrides>;
 }
 
 // Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint

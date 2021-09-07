@@ -1,4 +1,5 @@
-import { Box, Link, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Box, Link, Paper, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Message } from '../../../../../../typings/messages';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';

@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button } from '@mui/material';
 
 const initialState = {
   value: 0,

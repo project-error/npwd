@@ -9,10 +9,10 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-} from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import useStyles from './modal.styles';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';

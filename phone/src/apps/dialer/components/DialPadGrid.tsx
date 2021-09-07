@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Box, Button, Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Box, Button, Grid } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { DialInputCtx } from '../context/InputContext';
 
 const useStyles = makeStyles((theme: Theme) => ({

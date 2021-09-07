@@ -1,5 +1,5 @@
 import React from 'react';
-import { Contacts } from '@material-ui/icons';
+import { Contacts } from '@mui/icons-material';
 
 const ContactIcon: React.FC = () => <Contacts fontSize="small" />;
 

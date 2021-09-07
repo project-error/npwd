@@ -1,4 +1,4 @@
-import { Language } from '@material-ui/icons';
+import { Language } from '@mui/icons-material';
 
 const BrowserIcon = () => <Language fontSize="small" />;
 

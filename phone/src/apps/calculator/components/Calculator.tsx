@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { useCalculator, CalcButton } from '../hooks/useCalculator';
-import { Grid, makeStyles, Box, Paper, Fab } from '@material-ui/core';
+import { Grid, Box, Paper, Fab } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 

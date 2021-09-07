@@ -1,7 +1,7 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import Paper from '@mui/material/Paper';
+import makeStyles from '@mui/styles/makeStyles';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {

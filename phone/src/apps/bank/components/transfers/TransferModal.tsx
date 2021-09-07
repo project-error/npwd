@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '../../../../ui/components/Modal';
-import { Button, List, ListItem, makeStyles } from '@material-ui/core';
+import { Button, List, ListItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useBankModal } from '../../hooks/useBankModal';
 import { BankEvents } from '../../../../../../typings/bank';
 import { useNuiRequest } from 'fivem-nui-react-lib';

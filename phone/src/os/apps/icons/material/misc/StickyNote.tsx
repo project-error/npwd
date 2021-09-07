@@ -1,6 +1,6 @@
-import { SvgIconProps } from '@material-ui/core/SvgIcon';
+import { SvgIconProps } from '@mui/material/SvgIcon';
 import React from 'react';
-import { SvgIcon } from '@material-ui/core';
+import { SvgIcon } from '@mui/material';
 
 const StickyNote: React.FC<SvgIconProps> = (props) => (
   <SvgIcon {...props}>

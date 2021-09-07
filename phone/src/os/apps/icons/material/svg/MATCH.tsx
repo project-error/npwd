@@ -1,5 +1,5 @@
 import React from 'react';
-import { Favorite } from '@material-ui/icons';
+import { Favorite } from '@mui/icons-material';
 
 const MatchIcon: React.FC = () => <Favorite fontSize="small" />;
 

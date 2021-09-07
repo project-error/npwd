@@ -1,6 +1,6 @@
-import { Button, Slide, Paper, Typography, Container, Box } from '@material-ui/core';
+import { Button, Slide, Paper, Typography, Container, Box } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import { useTranslation } from 'react-i18next';
 import { StatusButton } from '../../../ui/components/StatusButton';
@@ -100,7 +100,7 @@ export const NoteModal: React.FC = () => {
             </Box>
             <TextField
               className={classes.input}
-              rowsMax={1}
+              maxRows={1}
               label={t('GENERIC_TITLE')}
               inputProps={{
                 className: classes.inputPropsTitle,

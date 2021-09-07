@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import SearchIcon from '@material-ui/icons/Search';
-import ProfileIcon from '@material-ui/icons/Person';
+import makeStyles from '@mui/styles/makeStyles';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import SearchIcon from '@mui/icons-material/Search';
+import ProfileIcon from '@mui/icons-material/Person';
 
 const useStyles = makeStyles({
   root: {
