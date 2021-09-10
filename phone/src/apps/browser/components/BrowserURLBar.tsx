@@ -1,11 +1,19 @@
 import React, { FocusEventHandler, useRef, useState } from 'react';
-import { Theme, Box, IconButton } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@material-ui/core/styles';
+import { Box, IconButton } from '@mui/material';
 import { Cached, KeyboardArrowLeft } from '@mui/icons-material';
 import { InputBase } from '../../../ui/components/Input';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  urlInput: {
+const PREFIX = 'BrowserURLBar';
+
+const classes = {
+  urlInput: `${PREFIX}-urlInput`,
+  urlInputFocused: `${PREFIX}-urlInputFocused`,
+  root: `${PREFIX}-root`,
+};
+
+const StyledBox = styled(Box)(() => ({
+  [`& .${classes.urlInput}`]: {
     borderRadius: 18,
     borderWidth: 1,
     borderStyle: 'solid',
@@ -16,10 +24,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: '#909090',
     transition: 'color 0.1s ease',
   },
-  urlInputFocused: {
+
+  [`& .${classes.urlInputFocused}`]: {
     color: '#fff',
   },
-  root: {},
+
+  [`&.${classes.root}`]: {},
 }));
 
 interface BrowserControlsProps {
@@ -37,7 +47,6 @@ export const BrowserURLBar: React.FC<BrowserControlsProps> = ({
   browserUrl,
   setBrowser,
 }) => {
-  const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputState, setInputState] = useState('');
   const [isFocused, setFocus] = useState(false);
@@ -67,7 +76,7 @@ export const BrowserURLBar: React.FC<BrowserControlsProps> = ({
   const transformedUrl = isFocused ? inputState : styledUrl;
 
   return (
-    <Box display="flex" py={1} className={classes.root} px={1}>
+    <StyledBox display="flex" py={1} className={classes.root} px={1}>
       <IconButton size="small" onClick={() => reloadPage()}>
         <Cached />
       </IconButton>
@@ -88,6 +97,6 @@ export const BrowserURLBar: React.FC<BrowserControlsProps> = ({
         spellCheck={false}
         onBlur={handleFocusOut}
       />
-    </Box>
+    </StyledBox>
   );
 };
