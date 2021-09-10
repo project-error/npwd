@@ -153,12 +153,13 @@ export const SettingsApp = () => {
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   const classes = useStyles();
+
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
       {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
-      <div className={customWallpaperState && classes.backgroundModal} />
+      <div className={customWallpaperState ? classes.backgroundModal : undefined} />
       {/*
         Sometimes depending on the height of the app, we sometimes want it to fill its parent
         and other times we want it to grow with the content. AppContent implementation currently
