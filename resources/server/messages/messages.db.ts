@@ -34,7 +34,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
                           npwd_messages_conversations.participant_identifier,
-                          users.phone_number,
+                          ${config.database.playerTable}.phone_number,
                           npwd_phone_contacts.avatar,
                           npwd_phone_contacts.display
                    FROM (SELECT conversation_id
@@ -42,11 +42,11 @@ export class _MessagesDB {
                          WHERE npwd_messages_conversations.participant_identifier = ?) AS t
                             LEFT OUTER JOIN npwd_messages_conversations
                                             ON npwd_messages_conversations.conversation_id = t.conversation_id
-                            LEFT OUTER JOIN users
-                                            ON users.identifier = npwd_messages_conversations.participant_identifier
+                            LEFT OUTER JOIN ${config.database.playerTable}
+                                            ON ${config.database.playerTable}.identifier = npwd_messages_conversations.participant_identifier
                             LEFT OUTER JOIN npwd_phone_contacts
                                             ON REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') =
-                                               REGEXP_REPLACE(users.phone_number, '[^0-9]', '')
+                                               REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '')
                                                 AND npwd_phone_contacts.identifier = ?`;
 
     const [results] = await pool.query(query, [identifier, identifier]);
@@ -97,7 +97,7 @@ export class _MessagesDB {
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
         SELECT identifier
-        FROM users
+        FROM ${config.database.playerTable}
         WHERE phone_number = ?
         LIMIT 1
 		`;

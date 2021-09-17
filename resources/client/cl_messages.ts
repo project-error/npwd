@@ -8,7 +8,6 @@ RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 /*RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);*/
 
-// This is sent to the receiver
 onNet(MessageEvents.SEND_MESSAGE_SUCCESS, (messageDto: PreDBMessage) => {
   sendMessageEvent(MessageEvents.SEND_MESSAGE_SUCCESS, messageDto);
 });
