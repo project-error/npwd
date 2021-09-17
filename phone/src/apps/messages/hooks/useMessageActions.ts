@@ -1,18 +1,10 @@
-import {
-  messageState,
-  useActiveMessageConversation,
-  useSetMessageConversations,
-  useSetMessages,
-} from './state';
+import { messageState, useSetMessageConversations, useSetMessages } from './state';
 import { useCallback } from 'react';
-import { useLocation } from 'react-router';
-import { useMessageNotifications } from './useMessageNotifications';
-import { Message, PreDBMessage } from '../../../../../typings/messages';
-import { useRecoilValue, useRecoilValueLoadable, waitForAll } from 'recoil';
+import { Message } from '../../../../../typings/messages';
+import { useRecoilValueLoadable } from 'recoil';
 
 interface MessageActionProps {
   removeConversation: (conversationId: string) => void;
-  handleBroadcast: ({ conversationName, conversationId, message }) => void;
   updateMessages: (messageDto: Message) => void;
 }
 
@@ -23,9 +15,6 @@ export const useMessageActions = (): MessageActionProps => {
   );
 
   const setMessageConversation = useSetMessageConversations();
-  const activeMessageGroup = useActiveMessageConversation();
-  const { pathname } = useLocation();
-  const { setNotification } = useMessageNotifications();
   const setMessages = useSetMessages();
 
   const removeConversation = useCallback(
@@ -39,19 +28,6 @@ export const useMessageActions = (): MessageActionProps => {
       );
     },
     [setMessageConversation, conversationLoading, contents],
-  );
-
-  const handleBroadcast = useCallback(
-    ({ conversationName, conversationId, message }) => {
-      if (conversationId === activeMessageGroup.conversation_id) {
-        if (pathname.includes('messages/conversations')) {
-          return;
-        }
-      }
-
-      setNotification({ conversationId, message });
-    },
-    [setNotification, activeMessageGroup, pathname],
   );
 
   const updateMessages = useCallback(
@@ -73,7 +49,6 @@ export const useMessageActions = (): MessageActionProps => {
 
   return {
     removeConversation,
-    handleBroadcast,
     updateMessages,
   };
 };

@@ -3,7 +3,7 @@ import { matchPath, useHistory } from 'react-router-dom';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
 import useMessages from './useMessages';
-import { useRecoilValue, waitForAll } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
 
 const NOTIFICATION_ID = 'messages:broadcast';

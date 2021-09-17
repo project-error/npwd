@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useRecoilState, useRecoilValue, waitForAll } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
 import { MessageConversation } from '../../../../../typings/messages';
 import { messageState, useSetConversationId } from './state';
 import { useHistory } from 'react-router';
@@ -16,17 +16,26 @@ interface IUseMessages {
 const useMessages = (): IUseMessages => {
   const history = useHistory();
 
-  const [conversations] = useRecoilValue(waitForAll([messageState.messageCoversations]));
+  //const [conversations] = useRecoilValue(waitForAll([messageState.messageCoversations]));
+  const { state: conversationLoading, contents } = useRecoilValueLoadable(
+    messageState.messageCoversations,
+  );
+  const [activeMessageConversation] = useRecoilValue(
+    waitForAll([messageState.activeMessageConversation]),
+  );
 
   const setCurrentConversationId = useSetConversationId();
-  const [activeMessageConversation, _setActiveMessageConversation] =
-    useRecoilState<MessageConversation | null>(messageState.activeMessageConversation);
+  const _setActiveMessageConversation = useSetRecoilState(messageState.activeMessageConversation);
 
   const getMessageConversationById = useCallback(
     (id: string): MessageConversation | null => {
-      return conversations && conversations.find((c) => c.conversation_id === id);
+      if (conversationLoading !== 'hasValue') return;
+
+      if (!contents.length) return;
+
+      return contents && contents.find((c) => c.conversation_id === id);
     },
-    [conversations],
+    [contents, conversationLoading],
   );
 
   const setActiveMessageConversation = useCallback(
@@ -38,22 +47,25 @@ const useMessages = (): IUseMessages => {
     [_setActiveMessageConversation, getMessageConversationById],
   );
 
-  const goToConversation = (messageGroup) => {
-    if (!messageGroup?.conversation_id || !history) return;
-    setCurrentConversationId(messageGroup.conversation_id);
+  const goToConversation = useCallback(
+    (messageGroup) => {
+      if (!messageGroup?.conversation_id || !history) return;
+      setCurrentConversationId(messageGroup.conversation_id);
 
-    console.log('Hello I am going to the conversation');
-    console.log(messageGroup.conversation_id);
+      console.log('Hello I am going to the conversation');
+      console.log(messageGroup.conversation_id);
 
-    history.push(`/messages/conversations/${messageGroup.conversation_id}`);
-  };
+      history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+    },
+    [setCurrentConversationId, history],
+  );
 
   return {
     activeMessageConversation,
     setActiveMessageConversation,
     getMessageConversationById,
     goToConversation,
-    conversations,
+    conversations: contents,
   };
 };
 
