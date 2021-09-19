@@ -16,7 +16,6 @@ interface IUseMessages {
 const useMessages = (): IUseMessages => {
   const history = useHistory();
 
-  //const [conversations] = useRecoilValue(waitForAll([messageState.messageCoversations]));
   const { state: conversationLoading, contents } = useRecoilValueLoadable(
     messageState.messageCoversations,
   );
@@ -51,9 +50,6 @@ const useMessages = (): IUseMessages => {
     (messageGroup) => {
       if (!messageGroup?.conversation_id || !history) return;
       setCurrentConversationId(messageGroup.conversation_id);
-
-      console.log('Hello I am going to the conversation');
-      console.log(messageGroup.conversation_id);
 
       history.push(`/messages/conversations/${messageGroup.conversation_id}`);
     },

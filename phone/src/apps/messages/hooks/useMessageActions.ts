@@ -10,7 +10,7 @@ interface MessageActionProps {
 
 export const useMessageActions = (): MessageActionProps => {
   const { state: messageLoading } = useRecoilValueLoadable(messageState.messages);
-  const { state: conversationLoading, contents } = useRecoilValueLoadable(
+  const { state: conversationLoading, contents: conversations } = useRecoilValueLoadable(
     messageState.messageCoversations,
   );
 
@@ -21,13 +21,13 @@ export const useMessageActions = (): MessageActionProps => {
     (conversationId: string) => {
       if (conversationLoading !== 'hasValue') return;
 
-      if (!contents.length) return;
+      if (!conversations.length) return;
 
       setMessageConversation((curVal) =>
         [...curVal].filter((conversation) => conversation.conversation_id !== conversationId),
       );
     },
-    [setMessageConversation, conversationLoading, contents],
+    [setMessageConversation, conversationLoading, conversations],
   );
 
   const updateMessages = useCallback(

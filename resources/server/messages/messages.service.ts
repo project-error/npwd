@@ -1,5 +1,11 @@
 import PlayerService from '../players/player.service';
-import { Message, MessageEvents, PreDBMessage } from '../../../typings/messages';
+import {
+  Message,
+  MessageConversation,
+  MessageEvents,
+  PreDBMessage,
+  UnformattedMessageConversation,
+} from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
   createMessageGroupsFromPhoneNumber,
@@ -31,7 +37,7 @@ class _MessagesService {
 
   async handleCreateMessageConversation(
     reqObj: PromiseRequest<{ targetNumber: string }>,
-    resp: PromiseEventResp<boolean>,
+    resp: PromiseEventResp<any>,
   ) {
     try {
       const _identifier = PlayerService.getIdentifier(reqObj.source);
@@ -41,8 +47,13 @@ class _MessagesService {
       );
 
       if (result.error) {
-        return resp({ status: 'error', data: false });
+        return resp({ status: 'error' });
       }
+
+      resp({
+        status: 'ok',
+        data: { conversation_id: result.conversationId, phoneNumber: result.phoneNumber },
+      });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
 
@@ -92,21 +103,10 @@ class _MessagesService {
         },
       });
 
-      console.log({
-        ...messageData,
-        conversation_id: messageData.conversationId,
-        author: authorPhoneNumber,
-        id: 1,
-      });
-
       // FIXME: This still causes an error when sending to an offline player it seems.
       for (const participantId of participants) {
-        console.log('id', participantId);
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
-
-          console.log('part id', participantPlayer);
-          console.log('part source', participantPlayer.source);
 
           if (!participantPlayer) {
             return;

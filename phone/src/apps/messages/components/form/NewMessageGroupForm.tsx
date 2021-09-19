@@ -15,18 +15,17 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
-  const Nui = useNuiRequest();
   const history = useHistory();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
-  const [participant, setParticipant] = useState(null);
+  const [participant, setParticipant] = useState<any>('');
   const { getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
 
   useEffect(() => {
     if (phoneNumber) {
       const find = getContactByNumber(phoneNumber) || { number: phoneNumber };
-      setParticipant((all) => [...all, find]);
+      setParticipant(find);
     }
   }, [phoneNumber, getContactByNumber]);
 
@@ -40,7 +39,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
     if (participant) {
       fetchNui<ServerPromiseResp<boolean>>(MessageEvents.CREATE_MESSAGE_CONVERSATION, {
-        targetNumber: participant.number,
+        targetNumber: participant.number || participant,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
@@ -53,10 +52,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       setParticipant(null);
       history.push('/messages');
     }
-  }, [history, Nui, participant, addAlert, t]);
+  }, [history, participant, addAlert, t]);
 
   const onAutocompleteChange = (_e, value: any) => {
-    if (value) {
+    /*if (value) {
       const isValid = true; // PHONE_NUMBER_REGEX.test(value[lastIdx]);
       if (!isValid) {
         return addAlert({ message: t('APPS_MESSAGES_INVALID_PHONE_NUMBER'), type: 'error' });
@@ -64,7 +63,8 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
       setParticipant(value);
       return;
-    }
+    }*/
+
     setParticipant(value);
   };
 
@@ -73,16 +73,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       {...params}
       fullWidth
       label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
-      inputProps={{
-        ...params.inputProps,
-        onKeyPress: (e) => {
-          if (e.key === 'Enter' && e.currentTarget.value) {
-            e.preventDefault();
-            onAutocompleteChange(e, [...participant, e.currentTarget.value]);
-          }
-        },
-        autoFocus: true,
-      }}
+      onChange={(e) => setParticipant(e.currentTarget.value)}
     />
   );
 
@@ -92,12 +83,11 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     <Box>
       <Box px={2} py={3}>
         <Autocomplete<Contact, boolean, boolean, boolean>
-          value={participant}
           freeSolo
           autoHighlight
-          options={contacts || []}
-          getOptionLabel={(c) => c.display || c.number}
-          onChange={onAutocompleteChange}
+          options={contacts}
+          getOptionLabel={(contact) => contact.display || contact.number}
+          onChange={(e, value: any) => setParticipant(value)}
           renderInput={renderAutocompleteInput}
         />
       </Box>

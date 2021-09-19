@@ -18,6 +18,11 @@ export interface MessageConversation {
   unread: number;
 }
 
+export interface FormattedMessageConversation {
+  conversation_id: string;
+  phoneNumber: string;
+}
+
 /**
  * Used for the raw npwd_messages_groups row responses
  */
