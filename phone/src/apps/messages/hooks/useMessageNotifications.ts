@@ -29,7 +29,7 @@ export const useMessageNotifications = () => {
     }
   });
 
-  const setNotification = ({ conversationId, message }) => {
+  const setNotification = ({ conversationName, conversationId, message }) => {
     const group = getMessageConversationById(conversationId);
     if (!group) return;
 
@@ -39,12 +39,14 @@ export const useMessageNotifications = () => {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: group.phoneNumber || group.display,
+      title: group.display || group.phoneNumber || conversationName,
       onClick: () => goToConversation(group),
       content: message,
       icon,
       notificationIcon,
     };
+
+    console.log('fuck me hard in the ass', notification);
 
     addNotificationAlert(notification, (n) => {
       removeId(id);

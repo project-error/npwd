@@ -93,6 +93,12 @@ class _MessagesService {
         messageData.message,
       );
 
+      console.log({
+        ...messageData,
+        conversation_id: messageData.conversationId,
+        author: authorPhoneNumber,
+      });
+
       resp({
         status: 'ok',
         data: {
@@ -112,10 +118,12 @@ class _MessagesService {
             return;
           }
 
+          console.log('got a player', participantPlayer.getName());
+
           emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
 
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-            conversationName: participantPlayer.getPhoneNumber(),
+            conversationName: player.getPhoneNumber(),
             conversationId: messageData.conversationId,
             message: messageData.message,
           });

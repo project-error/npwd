@@ -12,25 +12,16 @@ export const useMessagesService = () => {
   const activeMessageGroup = useActiveMessageConversation();
   const { pathname } = useLocation();
 
-  /* const handleMessageBroadcast = useCallback(
-    ({ conversationName, conversationId, message }) => {
-      handleBroadcast({ conversationName, conversationId, message });
-    },
-    [handleBroadcast],
-  ); */
+  const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
+    /*if (conversationId === activeMessageGroup.conversation_id) {
+    
+    }*/
+    if (pathname.includes(`/messages/conversations/${conversationId}`)) {
+      return;
+    }
 
-  const handleMessageBroadcast = useCallback(
-    ({ conversationName, conversationId, message }) => {
-      if (conversationId === activeMessageGroup.conversation_id) {
-        if (pathname.includes('messages/conversations')) {
-          return;
-        }
-      }
-
-      setNotification({ conversationId, message });
-    },
-    [setNotification, activeMessageGroup, pathname],
-  );
+    setNotification({ conversationName, conversationId, message });
+  };
 
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
