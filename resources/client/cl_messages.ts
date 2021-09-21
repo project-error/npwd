@@ -13,6 +13,5 @@ onNet(MessageEvents.SEND_MESSAGE_SUCCESS, (messageDto: PreDBMessage) => {
 });
 
 onNet(MessageEvents.CREATE_MESSAGE_BROADCAST, (result: CreateMessageBroadcast) => {
-  console.log('fuck me', result);
   sendMessageEvent(MessageEvents.CREATE_MESSAGE_BROADCAST, result);
 });

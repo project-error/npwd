@@ -13,9 +13,6 @@ export const useMessagesService = () => {
   const { pathname } = useLocation();
 
   const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
-    /*if (conversationId === activeMessageGroup.conversation_id) {
-    
-    }*/
     if (pathname.includes(`/messages/conversations/${conversationId}`)) {
       return;
     }

@@ -109,7 +109,6 @@ class _MessagesService {
         },
       });
 
-      // FIXME: This still causes an error when sending to an offline player it seems.
       for (const participantId of participants) {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
@@ -118,10 +117,7 @@ class _MessagesService {
             return;
           }
 
-          console.log('got a player', participantPlayer.getName());
-
           emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
-
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
             conversationName: player.getPhoneNumber(),
             conversationId: messageData.conversationId,

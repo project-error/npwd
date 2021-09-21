@@ -46,8 +46,6 @@ export const useMessageNotifications = () => {
       notificationIcon,
     };
 
-    console.log('fuck me hard in the ass', notification);
-
     addNotificationAlert(notification, (n) => {
       removeId(id);
       if (group.unread > 1) {
