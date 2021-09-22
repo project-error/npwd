@@ -5,7 +5,7 @@ import PlayerService from '../players/player.service';
 import DbInterface from '../db/db_wrapper';
 
 export async function generatePhoneNumber(identifier: string): Promise<string> {
-  const getQuery = `SELECT phone_number FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ?`;
+  const getQuery = `SELECT ${config.database.phoneNumberColumn} FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ?`;
   const [results] = await DbInterface._rawExec(getQuery, [identifier]);
   const result = <any[]>results;
   const phoneNumber = result[0]?.phone_number;
@@ -28,7 +28,7 @@ export async function generatePhoneNumber(identifier: string): Promise<string> {
       mainLogger.debug(
         `Generated a new number for identifier: ${identifier}, number: ${phoneNumber}`,
       );
-      const query = `UPDATE ${config.database.playerTable} SET phone_number = ? WHERE ${config.database.identifierColumn} = ?`;
+      const query = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
       await DbInterface._rawExec(query, [newNumber, identifier]);
       return newNumber;
     }
