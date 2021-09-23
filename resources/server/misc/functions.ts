@@ -8,7 +8,7 @@ export async function generatePhoneNumber(identifier: string): Promise<string> {
   const getQuery = `SELECT ${config.database.phoneNumberColumn} FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ?`;
   const [results] = await DbInterface._rawExec(getQuery, [identifier]);
   const result = <any[]>results;
-  const phoneNumber = result[0]?.phone_number;
+  const phoneNumber = result[0]?.[config.database.phoneNumberColumn];
 
   // Generate a new phone number if there isn't one present
   if (!phoneNumber)
