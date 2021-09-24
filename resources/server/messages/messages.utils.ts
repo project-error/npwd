@@ -9,7 +9,6 @@ import MessagesDB from './messages.db';
 export const messagesLogger = mainLogger.child({ module: 'messages' });
 
 // Functions
-
 export async function getConsolidatedMessageGroups(identifier: any): Promise<any> {
   const messageConversations = await MessagesDB.getMessageConversations(identifier);
   return messageConversations.reduce((mapping: any, conversation: any) => {

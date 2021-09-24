@@ -40,7 +40,7 @@ export const useMessageActions = (): MessageActionProps => {
           message: messageDto.message,
           conversation_id: messageDto.conversation_id,
           author: messageDto.author,
-          id: 1, // Obviously mock
+          id: messageDto.id,
         },
       ]);
     },

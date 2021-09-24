@@ -1,8 +1,10 @@
 import { pool } from '../db';
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import { config } from '../server';
+import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
+// not sure whats going on here.
 export class _MessagesDB {
   /**
    * Create a message in the database
@@ -10,17 +12,13 @@ export class _MessagesDB {
    * @param conversationId - the message conversation ID to attach this message to
    * @param message - content of the message
    */
-  async createMessage(
-    author: string,
-    conversationId: string,
-    message: string,
-  ): Promise<UnformattedMessageConversation[]> {
+  async createMessage(author: string, conversationId: string, message: string): Promise<number> {
     const query = `INSERT INTO npwd_messages (author, message, conversation_id)
                    VALUES (?, ?, ?)`;
 
     const [results] = await pool.query(query, [author, message, conversationId]);
 
-    return <UnformattedMessageConversation[]>results;
+    return (<ResultSetHeader>results).insertId;
   }
 
   // Not sure if we're going to query this exactly as its done here.
@@ -43,7 +41,7 @@ export class _MessagesDB {
                             LEFT OUTER JOIN npwd_messages_conversations
                                             ON npwd_messages_conversations.conversation_id = t.conversation_id
                             LEFT OUTER JOIN ${config.database.playerTable}
-                                            ON ${config.database.playerTable}.identifier = npwd_messages_conversations.participant_identifier
+                                            ON ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_conversations.participant_identifier
                             LEFT OUTER JOIN npwd_phone_contacts
                                             ON REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') =
                                                REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '')
@@ -62,7 +60,9 @@ export class _MessagesDB {
                           npwd_messages.message,
                           npwd_messages.author
                    FROM npwd_messages
-                   WHERE npwd_messages.conversation_id = ?`;
+                   WHERE npwd_messages.conversation_id = ?
+                   ORDER BY id DESC
+                   LIMIT 20`;
 
     const [results] = await pool.query(query, [conversationId]);
 
@@ -96,7 +96,7 @@ export class _MessagesDB {
    */
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
-        SELECT identifier
+        SELECT ${config.database.identifierColumn}
         FROM ${config.database.playerTable}
         WHERE phone_number = ?
         LIMIT 1

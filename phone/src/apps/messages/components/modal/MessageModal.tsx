@@ -20,7 +20,7 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { Message, MessageEvents } from '../../../../../../typings/messages';
 import Modal from '../../../../ui/components/Modal';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { fetchNui } from '../../../../utils/fetchNui';
@@ -61,8 +61,8 @@ export const MessageModal = () => {
   }, [activeMessageConversation, messages]);
 
   const closeModal = () => {
-    history.push('/messages');
     setMessages(null);
+    history.push('/messages');
   };
 
   useEffect(() => {
@@ -78,6 +78,18 @@ export const MessageModal = () => {
       }
     }
   }, [isLoaded, messages]);
+
+  // we just fetch the first 20 messages, and then uhhh...pagination does some magic
+  useEffect(() => {
+    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+      conversationId: groupId,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+      }
+
+      setMessages(resp.data);
+    });
+  }, [groupId, setMessages]);
 
   // sends all unread messages
   // FIXME: Just make sure this is done properly

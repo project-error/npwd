@@ -14,7 +14,7 @@ import { MockConversationMessages, MockMessageConversations } from '../utils/con
 const currentGroupId = atom({ key: 'currentGroupId', default: null });
 
 export const messageState = {
-  messageCoversations: atom<MessageConversation[] | null>({
+  messageCoversations: atom<MessageConversation[]>({
     key: 'messageConversations',
     default: selector({
       key: 'defaultMessageConversation',
@@ -30,7 +30,7 @@ export const messageState = {
             return MockMessageConversations;
           }
           console.error(e);
-          return null;
+          return [];
         }
       },
     }),
@@ -55,7 +55,7 @@ export const messageState = {
       );
     },
   }),
-  messages: atom<Message[]>({
+  messages: atom<Message[] | null>({
     key: 'messages',
     default: selector({
       key: 'defaultMessages',

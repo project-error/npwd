@@ -1,11 +1,5 @@
 import PlayerService from '../players/player.service';
-import {
-  Message,
-  MessageConversation,
-  MessageEvents,
-  PreDBMessage,
-  UnformattedMessageConversation,
-} from '../../../typings/messages';
+import { Message, MessageEvents, PreDBMessage } from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
   createMessageGroupsFromPhoneNumber,
@@ -15,6 +9,7 @@ import {
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
+// felt good to just remove group chats.
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
 
@@ -87,17 +82,13 @@ class _MessagesService {
       const messageData = reqObj.data;
       const participants = getIdentifiersFromParticipants(messageData.conversationId);
 
-      await this.messagesDB.createMessage(
+      const messageId = await this.messagesDB.createMessage(
         authorPhoneNumber,
         messageData.conversationId,
         messageData.message,
       );
 
-      console.log({
-        ...messageData,
-        conversation_id: messageData.conversationId,
-        author: authorPhoneNumber,
-      });
+      console.log('message id', messageId);
 
       resp({
         status: 'ok',
@@ -105,7 +96,7 @@ class _MessagesService {
           ...messageData,
           conversation_id: messageData.conversationId,
           author: authorPhoneNumber,
-          id: 1,
+          id: messageId,
         },
       });
 

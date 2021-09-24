@@ -3,17 +3,17 @@ import { Message, MessageEvents } from '../../../../../typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
-import { useActiveMessageConversation } from './state';
 import { useLocation } from 'react-router';
+import { usePhoneVisibility } from '../../../os/phone/hooks/usePhoneVisibility';
 
 export const useMessagesService = () => {
   const { updateMessages } = useMessageActions();
   const { setNotification } = useMessageNotifications();
-  const activeMessageGroup = useActiveMessageConversation();
   const { pathname } = useLocation();
+  const { visibility } = usePhoneVisibility();
 
   const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
-    if (pathname.includes(`/messages/conversations/${conversationId}`)) {
+    if (visibility && pathname.includes('/messages/conversations')) {
       return;
     }
 
