@@ -8,8 +8,7 @@ import { PhoneEvents } from '../../../typings/phone';
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
   const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
-  console.log('the phone number', phoneNumber);
-
+  playerLogger.info(`Player ID:^5 (${src})^2 Phone Number: ^5(${phoneNumber})^7`);
   emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber);
 });
 
