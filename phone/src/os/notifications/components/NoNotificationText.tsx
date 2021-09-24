@@ -6,7 +6,7 @@ export const NoNotificationText: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Box width="100%" id="test" py={1} textAlign="center">
+    <Box width="100%" py={1} textAlign="center">
       <Typography variant="body2" color="textSecondary">
         🎉 {t('NOTIFICATIONS.NO_UNREAD')} 🎉
       </Typography>

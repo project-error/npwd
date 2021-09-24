@@ -1,5 +1,5 @@
 import { AppWrapper } from '../../../ui/components';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import React, { Reducer, useReducer, useRef } from 'react';
 import { AppContent } from '../../../ui/components/AppContent';
 import { Box } from '@mui/material';

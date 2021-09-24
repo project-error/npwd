@@ -2,16 +2,11 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
 import Fade from '@mui/material/Fade';
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { usePhone } from '../../os/phone/hooks/usePhone';
 
 import { usePhoneTheme } from '../../os/phone/hooks/usePhoneTheme';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 const useStyles = makeStyles({
   paper: {
