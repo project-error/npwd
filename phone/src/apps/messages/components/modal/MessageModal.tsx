@@ -33,6 +33,7 @@ const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
+// abandon all hope ye who enter here
 export const MessageModal = () => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -44,11 +45,28 @@ export const MessageModal = () => {
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
-
   const { removeConversation } = useMessageActions();
 
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
+
+  // we just fetch the first 20 messages, and then uhhh...pagination does some magic
+  useEffect(() => {
+    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_INITIAL_MESSAGES, {
+      conversationId: groupId,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        addAlert({
+          message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+          type: 'error',
+        });
+
+        return history.push('/messages');
+      }
+
+      setMessages(resp.data);
+    });
+  }, [groupId, setMessages, history, addAlert, t]);
 
   useEffect(() => {
     if (activeMessageConversation && messages) {
@@ -78,18 +96,6 @@ export const MessageModal = () => {
       }
     }
   }, [isLoaded, messages]);
-
-  // we just fetch the first 20 messages, and then uhhh...pagination does some magic
-  useEffect(() => {
-    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
-      conversationId: groupId,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-      }
-
-      setMessages(resp.data);
-    });
-  }, [groupId, setMessages]);
 
   // sends all unread messages
   // FIXME: Just make sure this is done properly

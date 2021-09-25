@@ -57,7 +57,8 @@ export const messageState = {
   }),
   messages: atom<Message[] | null>({
     key: 'messages',
-    default: selector({
+    default: null,
+    /*default: selector({
       key: 'defaultMessages',
       get: async ({ get }) => {
         try {
@@ -75,7 +76,7 @@ export const messageState = {
           return [];
         }
       },
-    }),
+    }),*/
   }),
   activeMessageConversation: atom<MessageConversation | null>({
     key: 'activeMessageGroup',
@@ -111,6 +112,7 @@ export const useActiveMessageConversation = () =>
   useRecoilValue(messageState.activeMessageConversation);
 
 export const useSetConversationId = () => useSetRecoilState(currentGroupId);
+export const useConversationId = () => useRecoilValue(currentGroupId);
 
 export const useFilterValueState = () => useRecoilState(messageState.filterValue);
 export const useSetFilterValue = () => useSetRecoilState(messageState.filterValue);

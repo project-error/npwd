@@ -231,6 +231,7 @@
     "APPS_MESSAGES_DELETE_CONVERSATION": "Delete conversation",
     "APPS_MESSAGES_DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
     "APPS_MESSAGES_ME": "Me",
+    "APPS_MESSAGES_FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
 
     "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
     "APPS_NOTES_ADD_FAILED": "Failed to save note.",

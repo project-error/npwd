@@ -59,12 +59,39 @@ class _MessagesService {
     }
   }
 
-  async handleFetchMessages(
+  async handleFetchInitialMessages(
     reqObj: PromiseRequest<{ conversationId: string }>,
     resp: PromiseEventResp<Message[]>,
   ) {
     try {
-      const messages = await this.messagesDB.getMessages(reqObj.data.conversationId);
+      const messages = await this.messagesDB.getInitialMessages(reqObj.data.conversationId);
+
+      console.log('initial messages', messages);
+
+      messages.sort((a, b) => a.id - b.id);
+
+      resp({ status: 'ok', data: messages });
+    } catch (e) {
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
+        source: reqObj.source,
+      });
+    }
+  }
+
+  async handleFetchMessages(
+    reqObj: PromiseRequest<{ conversationId: string; page: number }>,
+    resp: PromiseEventResp<Message[]>,
+  ) {
+    try {
+      const messages = await this.messagesDB.getMessages(
+        reqObj.data.conversationId,
+        reqObj.data.page,
+      );
+      console.log('messages', messages);
+      if (messages.length === 0) return;
+
+      messages.sort((a, b) => (a.id = b.id));
 
       resp({ status: 'ok', data: messages });
     } catch (e) {

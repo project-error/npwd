@@ -52,9 +52,11 @@ export class _MessagesDB {
   }
 
   /**
+   * Might seem very redundant to do this, but hey, we have to release this phone
+   * at some point
    * @param conversationId the conversations for get messages from
    */
-  async getMessages(conversationId: string): Promise<Message[]> {
+  async getInitialMessages(conversationId: string): Promise<Message[]> {
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,
                           npwd_messages.message,
@@ -65,6 +67,22 @@ export class _MessagesDB {
                    LIMIT 20`;
 
     const [results] = await pool.query(query, [conversationId]);
+
+    return <Message[]>results;
+  }
+
+  async getMessages(conversationId: string, page: number): Promise<Message[]> {
+    const query = `SELECT npwd_messages.id,
+                          npwd_messages.conversation_id,
+                          npwd_messages.message,
+                          npwd_messages.author
+                   FROM npwd_messages
+                   WHERE npwd_messages.conversation_id = ?
+                     AND id > ?
+                   ORDER BY id DESC
+                   LIMIT 20`;
+
+    const [results] = await pool.query(query, [conversationId, page]);
 
     return <Message[]>results;
   }

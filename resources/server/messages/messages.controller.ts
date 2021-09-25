@@ -33,7 +33,20 @@ onNetPromise<{ targetNumber: string }, boolean>(
   },
 );
 
+// I know, redundant...
 onNetPromise<{ conversationId: string }, Message[]>(
+  MessageEvents.FETCH_INITIAL_MESSAGES,
+  async (reqObj, resp) => {
+    MessagesService.handleFetchInitialMessages(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred in fetch messages (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
+
+onNetPromise<{ conversationId: string; page: number }, Message[]>(
   MessageEvents.FETCH_MESSAGES,
   async (reqObj, resp) => {
     MessagesService.handleFetchMessages(reqObj, resp).catch((e) => {

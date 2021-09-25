@@ -86,6 +86,7 @@ export enum MessageEvents {
   FETCH_MESSAGES = 'npwd:fetchMessages',
   FETCH_MESSAGES_SUCCESS = 'npwd:fetchMessagesSuccess',
   FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',
+  FETCH_INITIAL_MESSAGES = 'npwd:fetchInitialMessages',
   ACTION_RESULT = 'npwd:setMessagesAlert',
   CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
