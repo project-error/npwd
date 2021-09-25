@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Box, IconButton, Paper } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import PhoneIcon from '@material-ui/icons/Phone';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { Box, IconButton, Paper } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -57,10 +58,15 @@ export const DialerInput: React.FC = () => {
         className={classes.iconBtn}
         disabled={inputVal <= ''}
         onClick={() => handleCall(inputVal)}
+        size="large"
       >
         <PhoneIcon fontSize="large" />
       </IconButton>
-      <IconButton className={classes.iconBtn} onClick={() => handleNewContact(inputVal)}>
+      <IconButton
+        className={classes.iconBtn}
+        onClick={() => handleNewContact(inputVal)}
+        size="large"
+      >
         <PersonAddIcon fontSize="large" />
       </IconButton>
     </Box>

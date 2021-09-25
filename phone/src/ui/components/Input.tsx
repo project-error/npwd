@@ -1,8 +1,7 @@
 import React from 'react';
-import MUITextField from '@material-ui/core/TextField';
-import MUIInputBase, { InputBaseProps } from '@material-ui/core/InputBase';
+import MUITextField, { TextFieldProps } from '@mui/material/TextField';
+import MUIInputBase, { InputBaseProps } from '@mui/material/InputBase';
 import { PhoneEvents } from '../../../../typings/phone';
-import { TextFieldProps } from '@material-ui/core/TextField/TextField';
 import { fetchNui } from '../../utils/fetchNui';
 import { isEnvBrowser } from '../../utils/misc';
 import { noop } from '../../../../resources/utils/misc';
@@ -16,6 +15,7 @@ export const TextField: React.FC<TextFieldProps> = (props) => {
   return (
     <MUITextField
       {...props}
+      variant={props.variant ?? 'standard'}
       onFocus={(e) => {
         toggleKeys(false);
         if (props.onFocus) {

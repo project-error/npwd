@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Picker } from 'emoji-mart';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 
 export const EmojiSelect = ({ visible, onEmojiClick }) => {
   const theme = useTheme();
@@ -8,7 +8,7 @@ export const EmojiSelect = ({ visible, onEmojiClick }) => {
   if (!visible) return null;
 
   return (
-    <Picker onClick={onEmojiClick} set="google" theme={theme.palette.type} showPreview={false} />
+    <Picker onClick={onEmojiClick} set="google" theme={theme.palette.mode} showPreview={false} />
   );
 };
 

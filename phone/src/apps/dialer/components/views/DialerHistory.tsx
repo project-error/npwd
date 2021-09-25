@@ -1,16 +1,17 @@
 import React from 'react';
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
-import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
-import PhoneIcon from '@material-ui/icons/Phone';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
+import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { List } from '../../../../ui/components/List';
 import { ListItem } from '../../../../ui/components/ListItem';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { CallHistoryItem } from '../../../../../../typings/call';
 import { useTranslation } from 'react-i18next';
-import { Box, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Box, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import dayjs from 'dayjs';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { useDialHistory } from '../../hooks/useDialHistory';
@@ -67,13 +68,16 @@ export const DialerHistory: React.FC = () => {
                 dayjs().to(dayjs.unix(parseInt(call.start)))
               }
             />
-            <IconButton onClick={() => handleCall(call.receiver)}>{<PhoneIcon />}</IconButton>
+            <IconButton onClick={() => handleCall(call.receiver)} size="large">
+              {<PhoneIcon />}
+            </IconButton>
 
             {getDisplayByNumber(call.receiver) === call.receiver && (
               <IconButton
                 onClick={() =>
                   history.push(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)
                 }
+                size="large"
               >
                 <PersonAddIcon />
               </IconButton>
@@ -92,7 +96,7 @@ export const DialerHistory: React.FC = () => {
                 dayjs().to(dayjs.unix(parseInt(call.start)))
               }
             />
-            <IconButton onClick={() => handleCall(call.transmitter)}>
+            <IconButton onClick={() => handleCall(call.transmitter)} size="large">
               <PhoneIcon />
             </IconButton>
 
@@ -101,6 +105,7 @@ export const DialerHistory: React.FC = () => {
                 onClick={() =>
                   history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
                 }
+                size="large"
               >
                 <PersonAddIcon />
               </IconButton>

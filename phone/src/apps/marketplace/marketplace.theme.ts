@@ -1,4 +1,4 @@
-import { common, red } from '@material-ui/core/colors';
+import { common, red } from '@mui/material/colors';
 
 export const MARKETPLACE_APP_PRIMARY_COLOR = red[500];
 export const MARKETPLACE_APP_ICON_COLOR = common.white;

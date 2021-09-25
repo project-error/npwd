@@ -5,9 +5,9 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { ExampleThemeProvider } from '../providers/ExampleThemeProvider';
 import { AppTitle } from '../../../ui/components/AppTitle';
-import PlayIcon from '@material-ui/icons/PlayArrow';
-import StopIcon from '@material-ui/icons/Stop';
-import { Button, IconButton } from '@material-ui/core';
+import PlayIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
+import { Button, IconButton } from '@mui/material';
 import useSound from '../../../os/sound/hooks/useSound';
 import { useExampleStringValue } from '../hooks/state';
 
@@ -35,7 +35,7 @@ export const ExampleApp = () => {
           <Button color="primary">{example.id}</Button>
           {/* Here we are using the value in a h3 tag */}
           <h3>{exampleString}</h3>
-          <IconButton onClick={() => (playing ? stop() : play())}>
+          <IconButton onClick={() => (playing ? stop() : play())} size="large">
             {playing ? <StopIcon /> : <PlayIcon />}
           </IconButton>
           <Button onClick={toggleSound}>Change sound on the fly</Button>

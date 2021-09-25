@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, makeStyles, Backdrop, Paper, BoxProps } from '@material-ui/core';
+import { Box, Backdrop, Paper, BoxProps } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { AppContentTypes } from '../interface/InterfaceUI';
 
 const useStyles = makeStyles(() => ({

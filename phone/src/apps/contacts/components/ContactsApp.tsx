@@ -7,10 +7,11 @@ import { Route } from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Fab from '@material-ui/core/Fab';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Fab from '@mui/material/Fab';
 import { useHistory, useLocation } from 'react-router';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useNotesValue, useSetModalVisible } from '../hooks/state';
 import { useSetSelectedNote } from '../hooks/state';
 import { NoteItem } from '../../../../../typings/notes';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme: Theme) => ({

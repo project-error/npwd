@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { Button } from '../../../../ui/components/Button';
 import { useTranslation } from 'react-i18next';
 

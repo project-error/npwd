@@ -14,7 +14,7 @@ import {
   SettingSwitch,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   FilterList,
   Brush,
@@ -28,9 +28,9 @@ import {
   Book,
   DeleteForever,
   Apps,
-} from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
-import { ListSubheader } from '@material-ui/core';
+} from '@mui/icons-material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ListSubheader } from '@mui/material';
 import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
@@ -153,12 +153,13 @@ export const SettingsApp = () => {
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   const classes = useStyles();
+
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
       {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
-      <div className={customWallpaperState && classes.backgroundModal} />
+      <div className={customWallpaperState ? classes.backgroundModal : undefined} />
       {/*
         Sometimes depending on the height of the app, we sometimes want it to fill its parent
         and other times we want it to grow with the content. AppContent implementation currently

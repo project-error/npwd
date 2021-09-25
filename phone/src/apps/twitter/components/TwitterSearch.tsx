@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import TweetList from './tweet/TweetList';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import SearchButton from './buttons/SearchButton';

@@ -1,13 +1,14 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import makeStyles from '@mui/styles/makeStyles';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
+import { SelectChangeEvent } from '@mui/material';
 
-interface IProps {
+interface DefaultProfilePromptProps {
   handleUpdate: () => void;
   profileName: string;
   setProfileName: (name: string) => void;
@@ -26,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function DefaultProfilePrompt({
+export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   profileName,
   setProfileName,
   handleUpdate,
   defaultProfileNames,
-}: IProps): JSX.Element {
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleChange = (event: React.ChangeEvent<any>): void => {
+  const handleChange = (event: SelectChangeEvent<string>): void => {
     event.preventDefault();
     setProfileName(event.target.value);
   };
@@ -65,6 +66,6 @@ export function DefaultProfilePrompt({
       <ProfileUpdateButton handleClick={handleUpdate} />
     </div>
   );
-}
+};
 
 export default DefaultProfilePrompt;

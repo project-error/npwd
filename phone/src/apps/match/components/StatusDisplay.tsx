@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 function StatusDisplay({ className, visible, text }) {
   const style = { opacity: visible ? '0.65' : '0.0' };

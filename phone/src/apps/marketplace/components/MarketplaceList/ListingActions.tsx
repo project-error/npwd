@@ -1,11 +1,12 @@
-import { Box, Tooltip, Button } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Box, Tooltip, Button } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-import ChatIcon from '@material-ui/icons/Chat';
-import PhoneIcon from '@material-ui/icons/Phone';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReportIcon from '@mui/icons-material/Report';
+import ChatIcon from '@mui/icons-material/Chat';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchNui } from '../../../../utils/fetchNui';

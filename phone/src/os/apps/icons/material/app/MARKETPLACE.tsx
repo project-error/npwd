@@ -1,5 +1,5 @@
 import React from 'react';
-import { MonetizationOn } from '@material-ui/icons';
+import { MonetizationOn } from '@mui/icons-material';
 
 const MarketplaceIcon: React.FC = () => <MonetizationOn fontSize="large" />;
 

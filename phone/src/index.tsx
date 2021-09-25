@@ -11,6 +11,7 @@ import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import { Theme as MaterialUITheme } from '@mui/material';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -26,6 +27,11 @@ if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
     // for finer control
     tracesSampleRate: 1.0,
   });
+}
+
+declare module '@emotion/react' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface Theme extends MaterialUITheme {}
 }
 
 // window.mockNuiEvent is restricted to development env only

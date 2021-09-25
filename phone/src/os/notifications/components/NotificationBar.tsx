@@ -1,18 +1,9 @@
 import React, { useEffect } from 'react';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  IconButton,
-  Slide,
-  Paper,
-  Box,
-  List,
-  Divider,
-} from '@material-ui/core';
-import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
-import Battery90Icon from '@material-ui/icons/Battery90';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
+import Battery90Icon from '@mui/icons-material/Battery90';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';

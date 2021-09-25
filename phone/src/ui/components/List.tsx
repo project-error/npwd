@@ -1,5 +1,5 @@
 import React from 'react';
-import MaterialList, { ListProps } from '@material-ui/core/List';
+import MaterialList, { ListProps } from '@mui/material/List';
 
 export const List: React.FC<ListProps> = ({ ...props }) => (
   <MaterialList aria-label="list" {...props}>

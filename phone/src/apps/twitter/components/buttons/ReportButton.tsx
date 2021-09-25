@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, CircularProgress, MenuItem } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
+import { Button, CircularProgress, MenuItem } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 

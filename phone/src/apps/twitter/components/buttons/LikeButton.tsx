@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress } from '@material-ui/core';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Button, CircularProgress } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 

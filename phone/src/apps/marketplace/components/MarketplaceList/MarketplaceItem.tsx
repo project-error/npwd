@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Paper } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
+import { Typography, Paper } from '@mui/material';
 import { ListItem } from '../../../../ui/components/ListItem';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MarketplaceListing } from '../../../../../../typings/marketplace';

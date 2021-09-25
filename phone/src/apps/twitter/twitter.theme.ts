@@ -1,4 +1,4 @@
-import { common } from '@material-ui/core/colors';
+import { common } from '@mui/material/colors';
 
 export const TWITTER_APP_PRIMARY_COLOR = '#00acee';
 export const TWITTER_APP_TEXT_COLOR = common.white;

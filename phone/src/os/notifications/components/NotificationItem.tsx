@@ -1,13 +1,7 @@
 import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import {
-  IconButton,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton, ListItem, ListItemAvatar, ListItemText, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { INotification } from '../providers/NotificationsProvider';
 
 const useStyles = makeStyles<Theme, { cantClose: boolean }>((theme) => ({

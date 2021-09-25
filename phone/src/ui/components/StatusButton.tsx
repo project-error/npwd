@@ -1,4 +1,5 @@
-import { Button, ButtonProps, alpha, makeStyles } from '@material-ui/core';
+import { Button, ButtonProps, alpha } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 type StatusButtonStyleColor = 'success' | 'error' | 'warning' | 'info';

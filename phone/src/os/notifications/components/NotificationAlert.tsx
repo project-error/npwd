@@ -1,8 +1,9 @@
 import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { Box, IconButton, makeStyles, Slide } from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, IconButton, Slide } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useNotifications } from '../hooks/useNotifications';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   snackbar: {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { darken, makeStyles, Theme } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import { Avatar, Badge, Button, Tooltip, Zoom } from '@material-ui/core';
+import { darken, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { green } from '@mui/material/colors';
+import { Avatar, Badge, Button, Tooltip, Zoom } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '../../os/notifications/providers/NotificationsProvider';
 

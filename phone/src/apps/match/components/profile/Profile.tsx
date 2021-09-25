@@ -1,6 +1,6 @@
 import React from 'react';
-import { CardContent, CardMedia, Chip, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { CardContent, CardMedia, Chip, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
 import { FormattedProfile, FormattedMatch } from '../../../../../../typings/match';

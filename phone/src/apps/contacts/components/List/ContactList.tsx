@@ -1,9 +1,9 @@
 import React from 'react';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Button, ListItemAvatar, Avatar as MuiAvatar, List, ListItem } from '@material-ui/core';
-import PhoneIcon from '@material-ui/icons/Phone';
-import ChatIcon from '@material-ui/icons/Chat';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ListItemText from '@mui/material/ListItemText';
+import { Button, ListItemAvatar, Avatar as MuiAvatar, List, ListItem } from '@mui/material';
+import PhoneIcon from '@mui/icons-material/Phone';
+import ChatIcon from '@mui/icons-material/Chat';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';

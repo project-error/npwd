@@ -1,4 +1,4 @@
-import { common, green } from '@material-ui/core/colors';
+import { common, green } from '@mui/material/colors';
 
 export const DIALER_APP_PRIMARY_COLOR = green[600];
 export const DIALER_APP_TEXT_COLOR = common.white;

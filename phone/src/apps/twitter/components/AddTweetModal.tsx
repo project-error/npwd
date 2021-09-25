@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { v4 as uuidv4 } from 'uuid';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../ui/components/Modal';

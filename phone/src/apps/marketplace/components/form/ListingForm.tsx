@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { makeStyles, Button, Box } from '@material-ui/core';
+import { Button, Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import ImageIcon from '@material-ui/icons/Image';
+import ImageIcon from '@mui/icons-material/Image';
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';

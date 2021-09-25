@@ -1,5 +1,6 @@
 import React from 'react';
-import { ListItemIcon, ListItemText, Slide, makeStyles, Paper } from '@material-ui/core';
+import { ListItemIcon, ListItemText, Slide, Paper } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { List } from './List';
 import { ListItem } from './ListItem';
 import { useTranslation } from 'react-i18next';

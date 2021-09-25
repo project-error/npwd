@@ -1,5 +1,5 @@
 import React from 'react';
-import { Twitter } from '@material-ui/icons';
+import { Twitter } from '@mui/icons-material';
 
 const TwitterIcon: React.FC = () => <Twitter fontSize="small" />;
 

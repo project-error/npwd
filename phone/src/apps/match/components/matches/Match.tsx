@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Box, Button, ListItem, makeStyles } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
-import ChatIcon from '@material-ui/icons/Chat';
+import ListItemText from '@mui/material/ListItemText';
+import { Box, Button, ListItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import PersonIcon from '@mui/icons-material/Person';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import { FormattedMatch } from '../../../../../../typings/match';
 import Profile from '../profile/Profile';

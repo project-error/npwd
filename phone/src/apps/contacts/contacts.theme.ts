@@ -1,4 +1,4 @@
-import { blue, common } from '@material-ui/core/colors';
+import { blue, common } from '@mui/material/colors';
 
 export const CONTACTS_APP_PRIMARY_COLOR = blue[500];
 export const CONTACTS_APP_TEXT_COLOR = common.white;
