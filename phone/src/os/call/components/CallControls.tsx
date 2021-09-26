@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
-    color: theme.palette.secondary.contrastText,
+    color: 'white',
     boxShadow: '0 .5rem 3rem -.25em rgba(0,0,0,.3)',
   },
   iconWrapper: {
