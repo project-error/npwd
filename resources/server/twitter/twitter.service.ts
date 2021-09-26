@@ -3,6 +3,7 @@ import TwitterDB, { _TwitterDB } from './twitter.db';
 import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
+import { PromiseEventResp } from '../utils/PromiseNetEvents/promise.types';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -78,7 +79,7 @@ class _TwitterService {
     }
   }
 
-  async handleFetchTweets(src: number) {
+  async handleFetchTweets(src: number, pageIdx: number, resp: PromiseEventResp<Tweet[]>) {
     try {
       const identifier = PlayerService.getIdentifier(src);
       const profile = await this.twitterDB.getProfile(identifier);
@@ -88,13 +89,15 @@ class _TwitterService {
           `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
         );
 
-      const tweets = await this.twitterDB.fetchAllTweets(profile.id);
-      emitNet(TwitterEvents.FETCH_TWEETS_SUCCESS, src, tweets);
+      const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
+      //emitNet(TwitterEvents.FETCH_TWEETS_SUCCESS, src, tweets);
+      resp({ data: tweets, status: 'ok' });
     } catch (e) {
       twitterLogger.error(`Fetching tweets failed, ${e.message}`, {
         source: src,
       });
-      emitNet(TwitterEvents.FETCH_TWEETS_FAILURE, src);
+      resp({ status: 'error', errorMsg: e.message });
+      //emitNet(TwitterEvents.FETCH_TWEETS_FAILURE, src);
     }
   }
 

@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { FormattedTweet, Tweet as ITweet } from '../../../../../typings/twitter';
 
 export const twitterState = {
   profile: atom({
@@ -43,6 +44,10 @@ export const twitterState = {
   }),
   unreadTweetsCount: atom({
     key: 'unreadTweetsCount',
+    default: 0,
+  }),
+  tweetPageId: atom({
+    key: 'tweetPageId',
     default: 0,
   }),
 };

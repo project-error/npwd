@@ -3,10 +3,11 @@ import React, { useEffect, useState, memo } from 'react';
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
 import TweetSkeletonList from './TweetSkeletonList';
+import { Tweet as ITweet } from '../../../../../../typings/twitter';
 
 const MINIMUM_LOAD_TIME = 700;
 
-export function TweetList({ tweets }) {
+export function TweetList({ tweets }: { tweets: ITweet[] }) {
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
 
   useEffect(() => {

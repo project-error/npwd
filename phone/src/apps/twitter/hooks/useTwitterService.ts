@@ -9,6 +9,9 @@ import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
 import { Tweet, FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
+import { useCurrentTwitterPage } from './useCurrentTwitterPage';
+import { useEffect } from 'react';
+import { fetchNui } from '../../../utils/fetchNui';
 
 /**
  * Perform all necessary processing/transforms from the raw database
@@ -55,18 +58,21 @@ export const useTwitterService = () => {
 
   const [profile, setProfile] = useRecoilState<Profile>(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
-
+  const { pageId } = useCurrentTwitterPage();
   const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
   const setDefaultProfileNames = useSetRecoilState(twitterState.defaultProfileNames);
 
-  const _setTweets = (tweets) => {
-    setTweets(tweets.map(processTweet));
-  };
   const _setFilteredTweets = (tweets) => {
     setFilteredTweets(tweets.map(processTweet));
   };
+
+  useEffect(() => {
+    fetchNui<Tweet[], { pageId: number }>(TwitterEvents.FETCH_TWEETS, { pageId }).then((resp) => {
+      setTweets(resp.map(processTweet));
+    });
+  }, [pageId, setTweets]); //needs to be tied to the inf scroll component that updates the pageId state using the wrapped hook
 
   // these tweets are coming directly from other player clients
   const handleTweetBroadcast = (tweet: Tweet) => {
@@ -88,7 +94,7 @@ export const useTwitterService = () => {
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_PROFILE_RESULT, handleAddAlert);
   useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_LOADING, setUpdateProfileLoading);
   useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_RESULT, handleAddAlert);
-  useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS, _setTweets);
+  // useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS, _setTweets);
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_LOADING, setCreateLoading);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_RESULT, handleAddAlert);

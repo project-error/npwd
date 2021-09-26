@@ -7,7 +7,7 @@
  */
 import LogDebugEvent from '../os/debug/LogDebugEvents';
 
-export async function fetchNui<T = any>(eventName: string, data?: any): Promise<T> {
+export async function fetchNui<T = any, B = any>(eventName: string, data?: B): Promise<T> {
   const options = {
     method: 'post',
     headers: {

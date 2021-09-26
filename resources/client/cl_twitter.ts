@@ -1,6 +1,7 @@
 import { TwitterEvents } from '../../typings/twitter';
 import { sendTwitterMessage } from '../utils/messages';
 import { IAlertProps } from '../../typings/alerts';
+import { RegisterNuiProxy } from './cl_utils';
 
 /**
  * Twitter get or create profile
@@ -55,11 +56,9 @@ onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
 /**
  * Twitter fetch tweets
  */
-RegisterNuiCallbackType(TwitterEvents.FETCH_TWEETS);
-on(`__cfx_nui:${TwitterEvents.FETCH_TWEETS}`, () => {
-  emitNet(TwitterEvents.FETCH_TWEETS);
-});
+RegisterNuiProxy(TwitterEvents.FETCH_TWEETS);
 
+/*
 onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
   sendTwitterMessage(TwitterEvents.FETCH_TWEETS, tweets);
 });
@@ -67,6 +66,9 @@ onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
 onNet(TwitterEvents.FETCH_TWEETS_FAILURE, () => {
   sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FAILURE);
 });
+*/
+
+//kept for now, will need to remove later  ^^
 
 /**
  * Twitter fetch filtered tweets

@@ -27,6 +27,8 @@ const SELECT_FIELDS = `
   TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
 `;
 
+const TWEETS_PER_PAGE = 25;
+
 const formatTweets =
   (profileId: number) =>
   (tweet: Tweet): Tweet => ({
@@ -40,11 +42,14 @@ export class _TwitterDB {
    * Retrieve the latest 50 tweets
    * @param profileId - twitter profile id of the player
    */
-  async fetchAllTweets(profileId: number): Promise<Tweet[]> {
+  async fetchAllTweets(profileId: number, currPage: number): Promise<Tweet[]> {
+    currPage = typeof currPage === 'number' ? currPage : 1; // avoid sql injection without prepared query
     const query = `
         SELECT ${SELECT_FIELDS}
         FROM (
-          SELECT * FROM npwd_twitter_tweets ORDER BY id DESC LIMIT 50
+          SELECT * FROM npwd_twitter_tweets ORDER BY id DESC LIMIT ${TWEETS_PER_PAGE} OFFSET ${
+      TWEETS_PER_PAGE * currPage
+    }
         ) npwd_twitter_tweets
                  LEFT OUTER JOIN npwd_twitter_profiles
                                  ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier

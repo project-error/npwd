@@ -3,6 +3,7 @@ import { twitterLogger } from './twitter.utils';
 import { Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
+import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
@@ -26,13 +27,14 @@ onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
     twitterLogger.error(`Error occurred in updateProfile event (${_source}), Error: ${e.message}`),
   );
 });
-
-onNet(TwitterEvents.FETCH_TWEETS, async () => {
+/*
+onNet(TwitterEvents.FETCH_TWEETS, async (pageI: number) => {
   const _source = getSource();
-  TwitterService.handleFetchTweets(_source).catch((e) =>
+  TwitterService.handleFetchTweets(_source, pageI).catch((e) =>
     twitterLogger.error(`Error occurred in fetchTweets event (${_source}), Error: ${e.message}`),
   );
 });
+ */
 
 onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
   const _source = getSource();
@@ -75,6 +77,12 @@ onNet(TwitterEvents.REPORT, async (tweetId: number) => {
   const _source = getSource();
   TwitterService.handleReport(_source, tweetId).catch((e) =>
     twitterLogger.error(`Error occurred in report event (${_source}), Error: ${e.message}`),
+  );
+});
+
+onNetPromise<{ pageId: number }, Tweet[]>(TwitterEvents.FETCH_TWEETS, (req, res) => {
+  TwitterService.handleFetchTweets(req.source, req.data.pageId, res).catch((e) =>
+    twitterLogger.error(`Error occurred in fetchTweets event (${req.source}), Error: ${e.message}`),
   );
 });
 
