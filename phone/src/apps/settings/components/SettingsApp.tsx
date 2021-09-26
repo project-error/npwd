@@ -144,7 +144,7 @@ export const SettingsApp = () => {
   const handleCopyPhoneNumber = () => {
     setClipboard(myNumber);
     addAlert({
-      message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+      message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
         content: 'number',
       }),
       type: 'success',
@@ -182,7 +182,7 @@ export const SettingsApp = () => {
           <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
             labelSecondary={myNumber}
-            actionLabel={t('GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP', {
+            actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
               content: 'number',
             })}
             icon={<Phone />}

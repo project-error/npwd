@@ -78,12 +78,12 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
       <div style={{ float: 'left' }}>
         {listing.number !== myNumber && (
           <>
-            <Tooltip title={t('GENERIC_MESSAGE')}>
+            <Tooltip title={t('GENERIC.MESSAGE')}>
               <Button onClick={handleMessage}>
                 <ChatIcon className={classes.icon} />
               </Button>
             </Tooltip>
-            <Tooltip title={`${t('GENERIC_CALL')}: ${listing.number}`}>
+            <Tooltip title={`${t('GENERIC.CALL')}: ${listing.number}`}>
               <Button onClick={handleCall}>
                 <PhoneIcon className={classes.icon} />
               </Button>
@@ -94,13 +94,13 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
 
       <div style={{ float: 'right' }}>
         {listing.number === myNumber ? (
-          <Tooltip title={t('GENERIC_DELETE')}>
+          <Tooltip title={t('GENERIC.DELETE')}>
             <Button onClick={handleDeleteListing}>
               <DeleteIcon />
             </Button>
           </Tooltip>
         ) : (
-          <Tooltip title={t('GENERIC_REPORT')}>
+          <Tooltip title={t('GENERIC.REPORT')}>
             <Button onClick={handleReportListing}>
               <ReportIcon />
             </Button>

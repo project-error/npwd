@@ -67,6 +67,24 @@
       "y": "a year",
       "yy": "%d years"
     },
+    "GENERIC": {
+      "LOADING": "Loading...",
+      "WAIT": "Please wait...",
+      "SAVE": "Save",
+      "EDIT": "Edit",
+      "UPDATE": "Update",
+      "REQUIRED": "Required",
+      "DELETE": "Delete",
+      "REPORT": "Report",
+      "CALL": "Call",
+      "MESSAGE": "Message",
+      "CLOSE": "Close",
+      "CANCEL": "Cancel",
+      "TITLE": "Title",
+      "CONTENT": "Content",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    },
 
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",

@@ -63,7 +63,7 @@ export const Calculator: React.FC = () => {
   const handleCopyClipboard = () => {
     setClipboard(resultStr);
     addAlert({
-      message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+      message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
         content: 'number',
       }),
       type: 'success',

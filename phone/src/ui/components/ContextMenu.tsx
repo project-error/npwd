@@ -39,7 +39,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
     ? [
         ...options,
         {
-          label: t('GENERIC_CLOSE'),
+          label: t('GENERIC.CLOSE'),
           onClick: onClose,
         } as IContextMenuOption,
       ]

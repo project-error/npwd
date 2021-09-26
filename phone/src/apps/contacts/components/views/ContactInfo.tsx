@@ -157,12 +157,12 @@ const ContactsInfoPage: React.FC = () => {
           <>
             <Box py={1} display="block">
               <Button color="primary" variant="contained" onClick={handleContactUpdate}>
-                {t('GENERIC_UPDATE')}
+                {t('GENERIC.UPDATE')}
               </Button>
             </Box>
             <Box py={1} display="block">
               <Button variant="contained" color="secondary" onClick={handleContactDelete}>
-                {t('GENERIC_DELETE')}
+                {t('GENERIC.DELETE')}
               </Button>
             </Box>
           </>

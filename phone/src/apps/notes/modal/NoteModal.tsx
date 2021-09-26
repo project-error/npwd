@@ -101,7 +101,7 @@ export const NoteModal: React.FC = () => {
             <TextField
               className={classes.input}
               maxRows={1}
-              label={t('GENERIC_TITLE')}
+              label={t('GENERIC.TITLE')}
               inputProps={{
                 className: classes.inputPropsTitle,
                 maxLength: 25,
@@ -116,7 +116,7 @@ export const NoteModal: React.FC = () => {
                 className: classes.inputPropsContent,
                 maxLength: 250,
               }}
-              label={t('GENERIC_CONTENT')}
+              label={t('GENERIC.CONTENT')}
               multiline
               fullWidth
               rows={16}
@@ -134,12 +134,12 @@ export const NoteModal: React.FC = () => {
                     disabled={noteTitle.length <= 0}
                     onClick={handleNewNote}
                   >
-                    {t('GENERIC_SAVE')}
+                    {t('GENERIC.SAVE')}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={_handleClose}>
-                    {t('GENERIC_CANCEL')}
+                    {t('GENERIC.CANCEL')}
                   </StatusButton>
                 </Box>
               </>
@@ -152,12 +152,12 @@ export const NoteModal: React.FC = () => {
                     onClick={handleUpdateNote}
                     disabled={noteTitle.length <= 0}
                   >
-                    {t('GENERIC_UPDATE')}
+                    {t('GENERIC.UPDATE')}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
-                    {t('GENERIC_DELETE')}
+                    {t('GENERIC.DELETE')}
                   </StatusButton>
                 </Box>
               </>
