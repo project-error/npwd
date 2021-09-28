@@ -18,78 +18,77 @@ import { useTranslation } from 'react-i18next';
 interface IProps {
   activeMessageGroup: MessageConversation;
   messages: Message[];
+
   onClickDisplay(phoneNumber: string): void;
 }
 
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
-const Conversation = React.forwardRef<HTMLDivElement, IProps>(
-  ({ activeMessageGroup, messages, onClickDisplay }, ref) => {
-    const classes = useStyles();
-    const [imageModalOpen, setImageModalOpen] = useState(false);
-    const query = useQueryParams();
-    const referalImage = query?.image || null;
-    const conversationId = useConversationId();
-    const { addAlert } = useSnackbar();
-    const history = useHistory();
-    const setMessages = useSetMessages();
-    const { t } = useTranslation();
+const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickDisplay }) => {
+  const classes = useStyles();
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const query = useQueryParams();
+  const referalImage = query?.image || null;
+  const conversationId = useConversationId();
+  const { addAlert } = useSnackbar();
+  const history = useHistory();
+  const setMessages = useSetMessages();
+  const { t } = useTranslation();
 
-    const handleNextPage = (page: number) => {
-      fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
-        conversationId: conversationId,
-        page,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          addAlert({
-            message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
-            type: 'error',
-          });
+  const handleNextPage = (page: number) => {
+    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+      conversationId: conversationId,
+      page,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        addAlert({
+          message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+          type: 'error',
+        });
 
-          return history.push('/messages');
-        }
+        return history.push('/messages');
+      }
 
-        setMessages((currVal) => [...resp.data, ...currVal]);
-      });
-    };
+      setMessages((currVal) => [...resp.data, ...currVal]);
+    });
+  };
 
-    return (
-      <div className={classes.conversationContainer}>
-        <MessageImageModal
-          image={referalImage}
-          onClose={() => setImageModalOpen(false)}
-          isOpen={imageModalOpen}
-          messageGroupId={activeMessageGroup.conversation_id}
-        />
+  return (
+    <div className={classes.conversationContainer}>
+      <MessageImageModal
+        image={referalImage}
+        onClose={() => setImageModalOpen(false)}
+        isOpen={imageModalOpen}
+        messageGroupId={activeMessageGroup.conversation_id}
+      />
+      <Box
+        id={CONVERSATION_ELEMENT_ID}
+        height="85%"
+        pt={6}
+        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
+      >
         <Box
-          id={CONVERSATION_ELEMENT_ID}
-          height="85%"
-          pt={6}
-          style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 'min-content',
+            width: '100%',
+          }}
         >
-          <Box
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 'min-content',
-              width: '100%',
-            }}
-          >
-            <InfiniteScroll nextPage={handleNextPage} inverse={true} nextPageNumber={20}>
-              {messages.map((message) => (
-                <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
-              ))}
-            </InfiniteScroll>
-          </Box>
+          <InfiniteScroll nextPage={handleNextPage} inverse={true} nextPageNumber={20}>
+            {messages.map((message) => (
+              <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
+            ))}
+          </InfiniteScroll>
         </Box>
-        <MessageInput
-          messageGroupName={activeMessageGroup.phoneNumber || activeMessageGroup.display}
-          messageConversationId={activeMessageGroup.conversation_id}
-          onAddImageClick={() => setImageModalOpen(true)}
-        />
-      </div>
-    );
-  },
-);
+      </Box>
+      <MessageInput
+        messageGroupName={activeMessageGroup.phoneNumber || activeMessageGroup.display}
+        messageConversationId={activeMessageGroup.conversation_id}
+        onAddImageClick={() => setImageModalOpen(true)}
+      />
+    </div>
+  );
+};
 
 export default Conversation;

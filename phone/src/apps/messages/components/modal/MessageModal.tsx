@@ -49,35 +49,7 @@ export const MessageModal = () => {
 
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
-
-  const [page, setPage] = useState(0);
-  const loader = useRef(null);
-
-  const handleObserver = (entities) => {
-    const target = entities[0];
-
-    if (target.isIntersecting) {
-      if (messages.length >= 20) {
-        console.log('FETCHING NEW MESSAGES')
-        setPage((prev) => prev + 20);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const options: any = {
-      root: null,
-      rootMargin: '20px',
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver(handleObserver, options);
-
-    if (loader.current) {
-      observer.observe(loader.current);
-    }
-  }, [messages]);
-
+  
   // we just fetch the first 20 messages, and then uhhh...pagination does some magic
   useEffect(() => {
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
@@ -95,7 +67,7 @@ export const MessageModal = () => {
       
       setMessages((currVal) => [...resp.data, ...currVal]);
     });
-  }, [groupId, setMessages, history, page, addAlert, t]);
+  }, [groupId, setMessages, history, addAlert, t]);
 
   useEffect(() => {
     if (activeMessageConversation && messages) {
@@ -217,7 +189,6 @@ export const MessageModal = () => {
           </Paper>
           {isLoaded && activeMessageConversation ? (
             <Conversation
-              ref={loader}
               onClickDisplay={handleAddContact}
               messages={messages}
               activeMessageGroup={activeMessageConversation}
