@@ -45,7 +45,7 @@ export class _MessagesDB {
       npwd_messages_groups.participant_identifier,
       npwd_messages_groups.user_identifier,
       npwd_messages_groups.label,
-      ${config.database.playerTable}.phone_number,
+      ${config.database.playerTable}.${config.database.phoneNumberColumn},
       npwd_phone_contacts.avatar,
       npwd_phone_contacts.display
     FROM (
@@ -83,7 +83,7 @@ export class _MessagesDB {
       npwd_messages.user_identifier,
       npwd_messages.isRead,
       npwd_messages.updatedAt,
-      ${config.database.playerTable}.phone_number,
+      ${config.database.playerTable}.${config.database.phoneNumberColumn},
       npwd_phone_contacts.display,
       npwd_phone_contacts.avatar
     FROM npwd_messages

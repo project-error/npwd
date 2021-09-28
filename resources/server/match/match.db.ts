@@ -87,7 +87,7 @@ export class _MatchDB {
         SELECT targetProfile.*,
                UNIX_TIMESTAMP(targetProfile.updatedAt)                                     AS lastActive,
                UNIX_TIMESTAMP(GREATEST(npwd_match_views.createdAt, targetViews.createdAt)) AS matchedAt,
-               targetUser.phone_number                                                     AS phoneNumber
+               targetUser.${config.database.phoneNumberColumn}                                                     AS phoneNumber
         FROM npwd_match_views
                  LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.profile = targetProfile.id
                  LEFT OUTER JOIN npwd_match_profiles AS myProfile ON npwd_match_views.identifier = myProfile.identifier
