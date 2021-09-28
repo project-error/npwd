@@ -42,6 +42,7 @@ interface DatabaseConfig {
   identifierColumn: string;
   useIdentifierPrefix: boolean;
   profileQueries: boolean;
+  phoneNumberColumn: string;
 }
 
 interface PhoneAsItemConfig {

@@ -55,7 +55,7 @@ export class _MessagesDB {
     ) as t
     LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
     LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_groups.participant_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     ORDER BY npwd_messages_groups.createdAt DESC
     `;
 
@@ -88,7 +88,7 @@ export class _MessagesDB {
       npwd_phone_contacts.avatar
     FROM npwd_messages
     LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages.user_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     WHERE npwd_messages.group_id = ?
     ORDER BY createdAt ASC;
     `;
@@ -149,7 +149,7 @@ export class _MessagesDB {
     const query = `
       SELECT ${config.database.identifierColumn}
       FROM ${config.database.playerTable}
-      WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+      WHERE REGEXP_REPLACE(${config.database.phoneNumberColumn}, '[^0-9]', '') = ?
       LIMIT 1
     `;
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);

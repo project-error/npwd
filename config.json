@@ -13,7 +13,8 @@
     "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",
-    "profileQueries": true
+    "profileQueries": true,
+    "phoneNumberColumn": "phone_number"
   },
   "twitter": {
     "showNotifications": true,

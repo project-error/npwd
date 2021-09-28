@@ -1,4 +1,4 @@
-import { generatePhoneNumber } from '../misc/functions';
+import { findOrGeneratePhoneNumber } from '../misc/functions';
 import { PhoneEvents } from '../../../typings/phone';
 import { Player } from './player.class';
 import { PlayerAddData } from './player.interfaces';
@@ -111,12 +111,7 @@ class _PlayerService {
     playerLogger.info(`Started loading for ${username} (${pSource})`);
     // Ensure phone number exists or generate
 
-    let phone_number: string;
-    try {
-      phone_number = await generatePhoneNumber(playerIdentifier);
-    } catch (e) {
-      return;
-    }
+    const phone_number = await findOrGeneratePhoneNumber(playerIdentifier);
 
     const newPlayer = new Player({
       identifier: playerIdentifier,
@@ -148,10 +143,7 @@ class _PlayerService {
   }): Promise<Player | null> {
     const username = GetPlayerName(src.toString());
 
-    const phoneNumber = await generatePhoneNumber(identifier).catch((e) => {
-      playerLogger.error(`Failed to generate phone number for source: ${src}. Error: ${e.message}`);
-      return null;
-    });
+    const phoneNumber = await findOrGeneratePhoneNumber(identifier);
 
     if (!phoneNumber) return null;
 

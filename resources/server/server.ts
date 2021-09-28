@@ -1,7 +1,6 @@
 import { Server } from 'esx.js';
 import { ResourceConfig } from '../../typings/config';
 import { RewriteFrames } from '@sentry/integrations';
-
 // Setup and export config loaded at runtime
 export const config: ResourceConfig = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'config.json'),
@@ -19,6 +18,9 @@ import './marketplace/marketplace.controller';
 import './twitter/twitter.controller';
 import './match/match.controller';
 import './bank/bank.controller';
+
+// setup exports
+import './bridge/sv_exports';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
