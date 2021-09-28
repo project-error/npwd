@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 
-import { Message, MessageConversation } from '../../../../../../typings/messages';
+import { Message, MessageConversation, MessageEvents } from '../../../../../../typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
-import useFetchMessages from '../../hooks/useFetchMessages';
+import { InfiniteScroll } from '../../../../ui/components/InfinteScroll';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useConversationId, useSetMessages } from '../../hooks/state';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
@@ -17,76 +23,73 @@ interface IProps {
 
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
-const Conversation = ({ activeMessageGroup, messages, onClickDisplay }: IProps) => {
-  const classes = useStyles();
-  const [imageModalOpen, setImageModalOpen] = useState(false);
-  const query = useQueryParams();
-  const referalImage = query?.image || null;
+const Conversation = React.forwardRef<HTMLDivElement, IProps>(
+  ({ activeMessageGroup, messages, onClickDisplay }, ref) => {
+    const classes = useStyles();
+    const [imageModalOpen, setImageModalOpen] = useState(false);
+    const query = useQueryParams();
+    const referalImage = query?.image || null;
+    const conversationId = useConversationId();
+    const { addAlert } = useSnackbar();
+    const history = useHistory();
+    const setMessages = useSetMessages();
+    const { t } = useTranslation();
 
-  const [page, setPage] = useState<number>(0);
-  const { loading } = useFetchMessages(page);
-  const loader = useRef(null);
+    const handleNextPage = (page: number) => {
+      fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+        conversationId: conversationId,
+        page,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          addAlert({
+            message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+            type: 'error',
+          });
 
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 20);
-    }
-  }, []);
+          return history.push('/messages');
+        }
 
-  useEffect(() => {
-    if (messages.length >= 20) {
-      const option = {
-        root: null,
-        rootMargin: '25px',
-        threshold: 0,
-      };
+        setMessages((currVal) => [...resp.data, ...currVal]);
+      });
+    };
 
-      const observer = new IntersectionObserver(handleObserver, option);
-      if (loader.current) observer.observe(loader.current);
-    }
-  }, [handleObserver, messages]);
-
-  return (
-    <div className={classes.conversationContainer}>
-      <MessageImageModal
-        image={referalImage}
-        onClose={() => setImageModalOpen(false)}
-        isOpen={imageModalOpen}
-        messageGroupId={activeMessageGroup.conversation_id}
-      />
-      <Box
-        id={CONVERSATION_ELEMENT_ID}
-        height="85%"
-        pt={6}
-        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
-      >
+    return (
+      <div className={classes.conversationContainer}>
+        <MessageImageModal
+          image={referalImage}
+          onClose={() => setImageModalOpen(false)}
+          isOpen={imageModalOpen}
+          messageGroupId={activeMessageGroup.conversation_id}
+        />
         <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: 'min-content',
-            width: '100%',
-          }}
+          id={CONVERSATION_ELEMENT_ID}
+          height="85%"
+          pt={6}
+          style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
         >
-          <div ref={loader} />
-          {loading && (
-            <Box mt={2} display="flex" justifyContent="center">
-              <CircularProgress />
-            </Box>
-          )}
-          {messages.map((message) => (
-            <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
-          ))}
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 'min-content',
+              width: '100%',
+            }}
+          >
+            <InfiniteScroll nextPage={handleNextPage} inverse={true} nextPageNumber={20}>
+              {messages.map((message) => (
+                <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
+              ))}
+            </InfiniteScroll>
+          </Box>
         </Box>
-      </Box>
-      <MessageInput
-        messageGroupName={activeMessageGroup.phoneNumber || activeMessageGroup.display}
-        messageConversationId={activeMessageGroup.conversation_id}
-        onAddImageClick={() => setImageModalOpen(true)}
-      />
-    </div>
-  );
-};
+        <MessageInput
+          messageGroupName={activeMessageGroup.phoneNumber || activeMessageGroup.display}
+          messageConversationId={activeMessageGroup.conversation_id}
+          onAddImageClick={() => setImageModalOpen(true)}
+        />
+      </div>
+    );
+  },
+);
 
 export default Conversation;

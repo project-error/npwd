@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Slide,
   Paper,
@@ -50,10 +50,39 @@ export const MessageModal = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
+  const [page, setPage] = useState(0);
+  const loader = useRef(null);
+
+  const handleObserver = (entities) => {
+    const target = entities[0];
+
+    if (target.isIntersecting) {
+      if (messages.length >= 20) {
+        console.log('FETCHING NEW MESSAGES')
+        setPage((prev) => prev + 20);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const options: any = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver(handleObserver, options);
+
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+  }, [messages]);
+
   // we just fetch the first 20 messages, and then uhhh...pagination does some magic
   useEffect(() => {
-    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_INITIAL_MESSAGES, {
+    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
+      page: 0
     }).then((resp) => {
       if (resp.status !== 'ok') {
         addAlert({
@@ -63,10 +92,10 @@ export const MessageModal = () => {
 
         return history.push('/messages');
       }
-
-      setMessages(resp.data);
+      
+      setMessages((currVal) => [...resp.data, ...currVal]);
     });
-  }, [groupId, setMessages, history, addAlert, t]);
+  }, [groupId, setMessages, history, page, addAlert, t]);
 
   useEffect(() => {
     if (activeMessageConversation && messages) {
@@ -100,12 +129,12 @@ export const MessageModal = () => {
   // sends all unread messages
   // FIXME: Just make sure this is done properly
   /*useEffect(() => {
-    if (activeMessageConversation?.conversation_id) {
-      Nui.send(MessageEvents.SET_MESSAGE_READ, {
-        groupId: activeMessageConversation.conversation_id,
-      });
-    }
-  }, [activeMessageConversation, Nui]);*/
+		if (activeMessageConversation?.conversation_id) {
+			Nui.send(MessageEvents.SET_MESSAGE_READ, {
+				groupId: activeMessageConversation.conversation_id,
+			});
+		}
+	}, [activeMessageConversation, Nui]);*/
 
   // We need to wait for the active conversation to be set.
   if (!activeMessageConversation)
@@ -188,6 +217,7 @@ export const MessageModal = () => {
           </Paper>
           {isLoaded && activeMessageConversation ? (
             <Conversation
+              ref={loader}
               onClickDisplay={handleAddContact}
               messages={messages}
               activeMessageGroup={activeMessageConversation}

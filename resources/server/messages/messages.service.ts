@@ -65,9 +65,7 @@ class _MessagesService {
   ) {
     try {
       const messages = await this.messagesDB.getInitialMessages(reqObj.data.conversationId);
-
-      console.log('initial messages', messages);
-
+      
       messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });
@@ -88,10 +86,10 @@ class _MessagesService {
         reqObj.data.conversationId,
         reqObj.data.page,
       );
-      console.log('messages', messages);
+      
       if (messages.length === 0) return;
-
-      messages.sort((a, b) => (a.id = b.id));
+      
+      messages.sort((a, b) => (a.id - b.id));
 
       resp({ status: 'ok', data: messages });
     } catch (e) {

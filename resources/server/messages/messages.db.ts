@@ -4,6 +4,8 @@ import { config } from '../server';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
+const MESSAGES_PER_PAGE = 20
+
 // not sure whats going on here.
 export class _MessagesDB {
   /**
@@ -56,6 +58,8 @@ export class _MessagesDB {
    * at some point
    * @param conversationId the conversations for get messages from
    */
+  
+  // TODO: Get rid of this
   async getInitialMessages(conversationId: string): Promise<Message[]> {
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,
@@ -64,7 +68,7 @@ export class _MessagesDB {
                    FROM npwd_messages
                    WHERE npwd_messages.conversation_id = ?
                    ORDER BY id DESC
-                   LIMIT 20`;
+                   LIMIT ${MESSAGES_PER_PAGE} OFFSET 0`;
 
     const [results] = await pool.query(query, [conversationId]);
 
@@ -72,15 +76,14 @@ export class _MessagesDB {
   }
 
   async getMessages(conversationId: string, page: number): Promise<Message[]> {
-    const query = `SELECT npwd_messages.id,
-                          npwd_messages.conversation_id,
-                          npwd_messages.message,
-                          npwd_messages.author
+    const query = `SELECT
+                     npwd_messages.id,
+                     npwd_messages.conversation_id,
+                     npwd_messages.message,
+                     npwd_messages.author
                    FROM npwd_messages
                    WHERE npwd_messages.conversation_id = ?
-                     AND id > ?
-                   ORDER BY id DESC
-                   LIMIT 20`;
+                   ORDER BY id DESC LIMIT ${MESSAGES_PER_PAGE} OFFSET ?`;
 
     const [results] = await pool.query(query, [conversationId, page]);
 

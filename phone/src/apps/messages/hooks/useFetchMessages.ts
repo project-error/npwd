@@ -10,6 +10,7 @@ function useFetchMessages(page) {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(null);
   const conversationId = useConversationId();
+  
 
   const getMessages = useCallback(async () => {
     try {
@@ -32,8 +33,10 @@ function useFetchMessages(page) {
   }, [page, conversationId]);
 
   useEffect(() => {
-    getMessages();
-  }, [getMessages, page, currentPage]);
+    if (page > 20) {
+      getMessages();
+    }
+  }, [getMessages, page]);
 
   return { loading, error, list, currentPage, setCurrentPage };
 }
