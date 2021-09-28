@@ -15,7 +15,7 @@ class _DbInterface {
       if (config.database.profileQueries) return await withProfile(pool.execute, query, values);
 
       ScheduleResourceTick(RESOURCE_NAME);
-      return await pool.execute(query, values);
+      return await pool.query(query, values);
     } catch (e) {
       this.logger.error(`Error executing ${query} with error message ${e.message}`);
     }
@@ -29,7 +29,7 @@ class _DbInterface {
    */
   public _rawExec(query: string, values?: unknown) {
     ScheduleResourceTick(RESOURCE_NAME);
-    return pool.execute(query, values);
+    return pool.query(query, values);
   }
 
   /**
