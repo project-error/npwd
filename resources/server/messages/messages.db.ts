@@ -76,6 +76,8 @@ export class _MessagesDB {
   }
 
   async getMessages(conversationId: string, page: number): Promise<Message[]> {
+    const offset = page * MESSAGES_PER_PAGE
+    
     const query = `SELECT
                      npwd_messages.id,
                      npwd_messages.conversation_id,
@@ -83,9 +85,9 @@ export class _MessagesDB {
                      npwd_messages.author
                    FROM npwd_messages
                    WHERE npwd_messages.conversation_id = ?
-                   ORDER BY id DESC LIMIT ${MESSAGES_PER_PAGE} OFFSET ?`;
+                   ORDER BY id DESC LIMIT ? OFFSET ?`;
 
-    const [results] = await pool.query(query, [conversationId, page]);
+    const [results] = await pool.query(query, [conversationId, MESSAGES_PER_PAGE, offset]);
 
     return <Message[]>results;
   }

@@ -14,6 +14,7 @@ import { useConversationId, useSetMessages } from '../../hooks/state';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useCall } from '../../../../os/call/hooks/useCall';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
@@ -36,21 +37,23 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   const { t } = useTranslation();
 
   const handleNextPage = (page: number) => {
-    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
-      conversationId: conversationId,
-      page,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        addAlert({
-          message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
-          type: 'error',
-        });
+    if (messages.length >= 20) {
+      fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+        conversationId: conversationId,
+        page,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          addAlert({
+            message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+            type: 'error',
+          });
 
-        return history.push('/messages');
-      }
+          return history.push('/messages');
+        }
 
-      setMessages((currVal) => [...resp.data, ...currVal]);
-    });
+        setMessages((currVal) => [...resp.data, ...currVal]);
+      });
+    }
   };
 
   return (
@@ -75,7 +78,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
             width: '100%',
           }}
         >
-          <InfiniteScroll nextPage={handleNextPage} inverse={true} nextPageNumber={20}>
+          <InfiniteScroll nextPage={handleNextPage} inverse={true}>
             {messages.map((message) => (
               <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
             ))}

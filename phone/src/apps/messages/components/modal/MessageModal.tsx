@@ -64,8 +64,9 @@ export const MessageModal = () => {
 
         return history.push('/messages');
       }
-      
-      setMessages((currVal) => [...resp.data, ...currVal]);
+  
+      console.log(resp.data);
+      setMessages(resp.data);
     });
   }, [groupId, setMessages, history, addAlert, t]);
 
@@ -90,13 +91,13 @@ export const MessageModal = () => {
   }, [groupId, setActiveMessageConversation]);
 
   useEffect(() => {
-    if (isLoaded && messages) {
+    if (isLoaded) {
       const element = document.getElementById(CONVERSATION_ELEMENT_ID);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }
     }
-  }, [isLoaded, messages]);
+  }, [isLoaded]);
 
   // sends all unread messages
   // FIXME: Just make sure this is done properly

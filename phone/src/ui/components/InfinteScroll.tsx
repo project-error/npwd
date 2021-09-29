@@ -2,20 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface InfiniteScrollProps {
 	nextPage: (page: number) => void;
-  nextPageNumber: number;
 	inverse: boolean;
 }
 
-export const InfiniteScroll: React.FC<InfiniteScrollProps> = (children, { nextPage, inverse = false, nextPageNumber  }) => {
+export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ children,  nextPage, inverse = false }) => {
   const loader = useRef(null);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   
-  const handleObserver = (entites) => {
-    const target = entites[0];
+  const handleObserver = (entities: IntersectionObserverEntry[]) => {
+    const target = entities[0];
 
     if (target.isIntersecting) {
       // update page
-      setPage((prev) => page + nextPageNumber);
+      console.log('hit target');
+      if (children) {
+        setPage((prev) => page + 1);
+      }
     }
   };
   
@@ -24,7 +26,7 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = (children, { nextPa
   }, [page])
 
   useEffect(() => {
-    const options: any = {
+    const options: IntersectionObserverInit = {
       root: null,
       rootMargin: '25px',
       threshold: 1.0,
@@ -39,9 +41,8 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = (children, { nextPa
 
   return (
     <div>
-      {inverse && <div ref={loader} />}
+      <div ref={loader} />
       {children}
-      {!inverse && <div ref={loader} />}
     </div>
   )
 };
