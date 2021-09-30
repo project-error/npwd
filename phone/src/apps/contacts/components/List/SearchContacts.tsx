@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ import { SearchField } from '../../../../ui/components/SearchField';
 import { useDebounce } from '../../../../os/phone/hooks/useDebounce';
 import { useSetContactFilterInput } from '../../hooks/state';
 
-export const SearchContacts = () => {
+export const SearchContacts: React.FC = () => {
   const { t } = useTranslation();
   const setFilterVal = useSetContactFilterInput();
   const [inputVal, setInputVal] = useState('');

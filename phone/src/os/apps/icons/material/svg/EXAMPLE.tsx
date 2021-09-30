@@ -1,5 +1,5 @@
 import React from 'react';
-import { Help } from '@material-ui/icons';
+import { Help } from '@mui/icons-material';
 
 const ExampleIcon: React.FC = () => <Help fontSize="small" />;
 

@@ -1,6 +1,7 @@
 export const PHONE_NUMBER_REGEX = /^([0-9]{3}-[0-9]{4})|([0-9]{7})$/;
 
 export enum PhoneEvents {
+  OPEN_APP = 'npwd:openApp',
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',
   SET_VISIBILITY = 'npwd:setVisibility',
@@ -9,6 +10,7 @@ export enum PhoneEvents {
   SET_CONFIG = 'npwd:setPhoneConfig',
   SET_TIME = 'npwd:setGameTime',
   SEND_CREDENTIALS = 'npwd:sendCredentials',
+  FETCH_CREDENTIALS = 'npwd:getCredentials',
   ON_INIT = 'npwd:onInit',
   TOGGLE_KEYS = 'npwd:toggleAllControls',
 }

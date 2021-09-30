@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import PhoneIcon from '@material-ui/icons/Phone';
-import PersonIcon from '@material-ui/icons/Person';
-import HistoryIcon from '@material-ui/icons/History';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonIcon from '@mui/icons-material/Person';
+import HistoryIcon from '@mui/icons-material/History';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const DialerNavBar = () => {
+const DialerNavBar: React.FC = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [page, setPage] = useState(pathname);

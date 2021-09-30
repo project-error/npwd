@@ -1,6 +1,8 @@
 # No IDE Folders
 .idea
 
+.docker
+
 npwd_temp
 
 resources/html

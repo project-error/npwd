@@ -1,10 +1,9 @@
 import React from 'react';
-import MaterialButton from '@material-ui/core/Button';
+import MaterialButton from '@mui/material/Button';
+import { ButtonProps } from '@mui/material';
 
-export const Button = ({ ...props }) => {
-  return (
-    <MaterialButton aria-label="button" {...props}>
-      {props.children}
-    </MaterialButton>
-  );
-};
+export const Button: React.FC<ButtonProps> = ({ ...props }) => (
+  <MaterialButton aria-label="button" {...props}>
+    {props.children}
+  </MaterialButton>
+);

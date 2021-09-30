@@ -1,11 +1,12 @@
-import { Box, Tooltip, Button } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Box, Tooltip, Button } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-import ChatIcon from '@material-ui/icons/Chat';
-import PhoneIcon from '@material-ui/icons/Phone';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReportIcon from '@mui/icons-material/Report';
+import ChatIcon from '@mui/icons-material/Chat';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchNui } from '../../../../utils/fetchNui';
@@ -77,12 +78,12 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
       <div style={{ float: 'left' }}>
         {listing.number !== myNumber && (
           <>
-            <Tooltip title={t('GENERIC_MESSAGE')}>
+            <Tooltip title={t('GENERIC.MESSAGE')}>
               <Button onClick={handleMessage}>
                 <ChatIcon className={classes.icon} />
               </Button>
             </Tooltip>
-            <Tooltip title={`${t('GENERIC_CALL')}: ${listing.number}`}>
+            <Tooltip title={`${t('GENERIC.CALL')}: ${listing.number}`}>
               <Button onClick={handleCall}>
                 <PhoneIcon className={classes.icon} />
               </Button>
@@ -93,13 +94,13 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
 
       <div style={{ float: 'right' }}>
         {listing.number === myNumber ? (
-          <Tooltip title={t('GENERIC_DELETE')}>
+          <Tooltip title={t('GENERIC.DELETE')}>
             <Button onClick={handleDeleteListing}>
               <DeleteIcon />
             </Button>
           </Tooltip>
         ) : (
-          <Tooltip title={t('GENERIC_REPORT')}>
+          <Tooltip title={t('GENERIC.REPORT')}>
             <Button onClick={handleReportListing}>
               <ReportIcon />
             </Button>

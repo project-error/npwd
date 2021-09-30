@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 
-interface IProps {
+interface PictureResponsiveProps {
   src: string;
   alt: string;
 }
@@ -13,6 +13,6 @@ const useStyles = makeStyles({
   },
 });
 
-export const PictureResponsive = ({ src, alt }: IProps) => {
-  return <img className={useStyles().root} src={src} alt={alt} />;
-};
+export const PictureResponsive: React.FC<PictureResponsiveProps> = ({ src, alt }) => (
+  <img className={useStyles().root} src={src} alt={alt} />
+);

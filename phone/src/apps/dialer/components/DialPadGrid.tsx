@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Box, Button, Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Box, Button, Grid } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { DialInputCtx } from '../context/InputContext';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -10,12 +11,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface IBtnItem {
-  onClick?: (...args: any) => void;
+interface ButtonItemProps {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   label: string | number;
 }
 
-const ButtonItem = ({ label, onClick }: IBtnItem) => {
+const ButtonItem: React.FC<ButtonItemProps> = ({ label, onClick }) => {
   const classes = useStyles();
   return (
     <Grid key={label} item xs={4}>
@@ -31,7 +32,7 @@ export const DialGrid = () => {
 
   return (
     <Box height="100%">
-      <Grid container justify="space-around">
+      <Grid container justifyContent="space-around">
         <ButtonItem label={1} onClick={() => add(1)} />
         <ButtonItem label={2} onClick={() => add(2)} />
         <ButtonItem label={3} onClick={() => add(3)} />

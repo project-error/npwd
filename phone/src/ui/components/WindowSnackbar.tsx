@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Snackbar, Typography } from '@material-ui/core';
+import { Snackbar, Typography } from '@mui/material';
 import { Alert } from './Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 
 const useStyles = makeStyles({
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 // NOTE: Will make this more generic at some point for error handling as well
-const WindowSnackbar = () => {
+const WindowSnackbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [severity, setSeverity] = useState<'info' | 'error' | 'success'>('info');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 import { Message, MessageGroup } from '../../../../../../typings/messages';
 import MessageInput from '../form/MessageInput';

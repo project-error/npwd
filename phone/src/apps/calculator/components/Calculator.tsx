@@ -1,31 +1,32 @@
 import React, { useMemo } from 'react';
-import { useCalculator, CalcButton } from '../hooks/useCalculator';
-import { Grid, makeStyles, Box, Paper, Fab } from '@material-ui/core';
+import { useCalculator } from '../hooks/useCalculator';
+import { Grid, Box, Paper, Fab, styled } from '@mui/material';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { CalculatorButton } from './CalculatorButton';
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    fontSize: theme.typography.h5.fontSize,
-    padding: theme.spacing(2),
-  },
-  result: {
-    fontSize: theme.typography.h2.fontSize,
-    textAlign: 'right',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    position: 'relative',
-  },
-  copyFab: {
-    position: 'absolute',
-    top: '16px',
-    left: '16px',
-  },
+const StyledFab = styled(Fab)({
+  position: 'absolute',
+  top: '16px',
+  left: '16px',
+});
+
+const StyledResultWrapper = styled(Box)(({ theme }) => ({
+  fontSize: theme.typography.h2.fontSize,
+  textAlign: 'right',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  position: 'relative',
 }));
 
-export const Calculator = ({ ...props }) => {
+const StyledCalcBtn = styled(CalculatorButton)(({ theme }) => ({
+  fontSize: theme.typography.h5.fontSize,
+  padding: theme.spacing(2),
+}));
+
+export const Calculator: React.FC = () => {
   const {
     result,
     equals,
@@ -50,7 +51,6 @@ export const Calculator = ({ ...props }) => {
 
   const { addAlert } = useSnackbar();
 
-  const classes = useStyles();
   const resultStr = useMemo(
     () =>
       result().toLocaleString(undefined, {
@@ -60,48 +60,46 @@ export const Calculator = ({ ...props }) => {
     [result],
   );
 
+  const handleCopyClipboard = () => {
+    setClipboard(resultStr);
+    addAlert({
+      message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
+        content: 'number',
+      }),
+      type: 'success',
+    });
+  };
+
   const { t } = useTranslation();
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box flexGrow={1} component={Paper} p={4} className={classes.result}>
-        <Fab
-          size="small"
-          onClick={() => {
-            setClipboard(resultStr);
-            addAlert({
-              message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
-                content: 'number',
-              }),
-              type: 'success',
-            });
-          }}
-          className={classes.copyFab}
-        >
+      <StyledResultWrapper flexGrow={1} component={Paper} p={2}>
+        <StyledFab size="small" onClick={handleCopyClipboard}>
           <FileCopyIcon />
-        </Fab>
+        </StyledFab>
         {resultStr}
-      </Box>
+      </StyledResultWrapper>
       <Box>
-        <Grid container justify="space-around">
-          <CalcButton button={clear} className={classes.button} />
-          <CalcButton button={clearAll} className={classes.button} />
-          <CalcButton button={divider} className={classes.button} />
-          <CalcButton button={multiplier} className={classes.button} />
-          <CalcButton button={seven} className={classes.button} />
-          <CalcButton button={eight} className={classes.button} />
-          <CalcButton button={nine} className={classes.button} />
-          <CalcButton button={substractor} className={classes.button} />
-          <CalcButton button={four} className={classes.button} />
-          <CalcButton button={five} className={classes.button} />
-          <CalcButton button={six} className={classes.button} />
-          <CalcButton button={adder} className={classes.button} />
-          <CalcButton button={one} className={classes.button} />
-          <CalcButton button={two} className={classes.button} />
-          <CalcButton button={three} className={classes.button} />
-          <CalcButton button={equals} className={classes.button} />
-          <CalcButton button={dot} className={classes.button} />
-          <CalcButton button={zero} className={classes.button} xs={9} />
+        <Grid container justifyContent="space-around">
+          <StyledCalcBtn buttonOpts={clear} />
+          <StyledCalcBtn buttonOpts={clearAll} />
+          <StyledCalcBtn buttonOpts={divider} />
+          <StyledCalcBtn buttonOpts={multiplier} />
+          <StyledCalcBtn buttonOpts={seven} />
+          <StyledCalcBtn buttonOpts={eight} />
+          <StyledCalcBtn buttonOpts={nine} />
+          <StyledCalcBtn buttonOpts={substractor} />
+          <StyledCalcBtn buttonOpts={four} />
+          <StyledCalcBtn buttonOpts={five} />
+          <StyledCalcBtn buttonOpts={six} />
+          <StyledCalcBtn buttonOpts={adder} />
+          <StyledCalcBtn buttonOpts={one} />
+          <StyledCalcBtn buttonOpts={two} />
+          <StyledCalcBtn buttonOpts={three} />
+          <StyledCalcBtn buttonOpts={equals} />
+          <StyledCalcBtn buttonOpts={dot} />
+          <StyledCalcBtn buttonOpts={zero} GridProps={{ xs: 9 }} />
         </Grid>
       </Box>
     </Box>

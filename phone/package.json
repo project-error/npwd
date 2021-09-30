@@ -6,9 +6,12 @@
   "license": "CC-BY-NC-SA-4.0",
   "homepage": "/resources/html",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/lab": "^5.0.0-alpha.45",
+    "@mui/material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
     "dayjs": "^1.10.4",
     "dompurify": "^2.2.6",
     "emoji-mart": "^3.0.1",
@@ -29,9 +32,9 @@
   "devDependencies": {
     "@craco/craco": "^6.1.1",
     "@sentry/integrations": "^6.10.0",
-    "@sentry/webpack-plugin": "^1.16.0",
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
+    "@sentry/webpack-plugin": "^1.16.0",
     "@types/enzyme": "^3.10.7",
     "@types/howler": "^2.2.1",
     "@types/node": "^14.11.5",
@@ -49,7 +52,7 @@
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "start": "cross-env PUBLIC_URL=/ craco start",
-    "watch": "cross-env REACT_APP_IN_GAME=1 craco start",
+    "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
     "build:release": "cross-env SENTRY_RELEASE=true craco build",
     "build": "craco build",
     "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"

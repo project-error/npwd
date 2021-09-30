@@ -1,15 +1,15 @@
 import { ESX } from '../server';
-import { pool } from '../db';
 import { Transfer, IBankCredentials, BankEvents } from '../../../typings/bank';
 import { mainLogger } from '../sv_logger';
 import { getSource } from '../utils/miscUtils';
 import PlayerService from '../players/player.service';
+import DbInterface from '../db/db_wrapper';
 
 const bankLogger = mainLogger.child({ module: 'bank' });
 
 async function fetchAllTransactions(identifier: string): Promise<Transfer[]> {
   const query = 'SELECT * FROM npwd_bank_transfers WHERE identifier = ? ORDER BY id DESC';
-  const [results] = await pool.query(query, [identifier]);
+  const [results] = await DbInterface._rawExec(query, [identifier]);
   const transactions = <Transfer[]>results;
 
   bankLogger.verbose(`Fetched all transactions (${identifier}) - ${JSON.stringify(transactions)}`);
@@ -49,7 +49,7 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
     const query =
       'INSERT INTO npwd_bank_transfers (identifier, target, amount, message, type, source) VALUES (?, ?, ?, ?, ?, ?)';
 
-    const [results] = await pool.query(query, [
+    const [results] = await DbInterface._rawExec(query, [
       identifier,
       transfer.targetID,
       transfer.transferAmount,
@@ -68,7 +68,7 @@ async function addTransfer(identifier: string, transfer: Transfer): Promise<any>
  */
 async function getTransfer(transferId: number): Promise<Transfer> {
   const query = 'SELECT * FROM npwd_bank_transfers WHERE id = ?';
-  const [results] = await pool.query(query, [transferId]);
+  const [results] = await DbInterface._rawExec(query, [transferId]);
   const transfers = <Transfer[]>results;
   const transfer = transfers[0];
   return { ...transfer };

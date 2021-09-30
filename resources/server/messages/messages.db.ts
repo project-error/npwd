@@ -1,6 +1,6 @@
-import { pool } from '../db';
 import { UnformattedMessageGroup, Message } from '../../../typings/messages';
 import { config } from '../server';
+import DbInterface from '../db/db_wrapper';
 
 export class _MessagesDB {
   /**
@@ -21,12 +21,12 @@ export class _MessagesDB {
     const groupQuery = `
       UPDATE npwd_messages_groups SET unreadCount = unreadCount + 1 WHERE participant_identifier = ? AND group_id = ?
     `;
-    const [results] = await pool.query(query, [userIdentifier, message, groupId]);
+    const [results] = await DbInterface._rawExec(query, [userIdentifier, message, groupId]);
 
     await Promise.all(
       participants
         .filter((s) => userIdentifier !== s)
-        .map((s) => pool.query(groupQuery, [s, groupId])),
+        .map((s) => DbInterface._rawExec(groupQuery, [s, groupId])),
     );
 
     return <UnformattedMessageGroup[]>results;
@@ -45,7 +45,7 @@ export class _MessagesDB {
       npwd_messages_groups.participant_identifier,
       npwd_messages_groups.user_identifier,
       npwd_messages_groups.label,
-      ${config.database.playerTable}.phone_number,
+      ${config.database.playerTable}.${config.database.phoneNumberColumn},
       npwd_phone_contacts.avatar,
       npwd_phone_contacts.display
     FROM (
@@ -55,11 +55,15 @@ export class _MessagesDB {
     ) as t
     LEFT OUTER JOIN npwd_messages_groups on npwd_messages_groups.group_id = t.group_id
     LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_groups.participant_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     ORDER BY npwd_messages_groups.createdAt DESC
     `;
 
-    const [results] = await pool.query(query, [userIdentifier, userIdentifier, userIdentifier]);
+    const [results] = await DbInterface._rawExec(query, [
+      userIdentifier,
+      userIdentifier,
+      userIdentifier,
+    ]);
     return <UnformattedMessageGroup[]>results;
   }
 
@@ -79,17 +83,17 @@ export class _MessagesDB {
       npwd_messages.user_identifier,
       npwd_messages.isRead,
       npwd_messages.updatedAt,
-      ${config.database.playerTable}.phone_number,
+      ${config.database.playerTable}.${config.database.phoneNumberColumn},
       npwd_phone_contacts.display,
       npwd_phone_contacts.avatar
     FROM npwd_messages
     LEFT OUTER JOIN ${config.database.playerTable} on ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages.user_identifier
-    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
+    LEFT OUTER JOIN npwd_phone_contacts on REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') = REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '') AND npwd_phone_contacts.identifier = ?
     WHERE npwd_messages.group_id = ?
     ORDER BY createdAt ASC;
     `;
 
-    const [results] = await pool.query(query, [userIdentifier, groupId]);
+    const [results] = await DbInterface._rawExec(query, [userIdentifier, groupId]);
     const messages = <Message[]>results;
     return messages.map((message) => ({
       ...message,
@@ -114,7 +118,7 @@ export class _MessagesDB {
       group_id = ?
 			AND user_identifier = ?
     `;
-    await pool.query(query, [label, groupId, userIdentifier]);
+    await DbInterface._rawExec(query, [label, groupId, userIdentifier]);
   }
 
   /**
@@ -134,7 +138,7 @@ export class _MessagesDB {
     (user_identifier, group_id, participant_identifier)
     VALUES (?, ?, ?)
     `;
-    await pool.query(query, [userIdentifier, groupId, participantIdentifier]);
+    await DbInterface._rawExec(query, [userIdentifier, groupId, participantIdentifier]);
   }
 
   /**
@@ -145,10 +149,10 @@ export class _MessagesDB {
     const query = `
       SELECT ${config.database.identifierColumn}
       FROM ${config.database.playerTable}
-      WHERE REGEXP_REPLACE(phone_number, '[^0-9]', '') = ?
+      WHERE REGEXP_REPLACE(${config.database.phoneNumberColumn}, '[^0-9]', '') = ?
       LIMIT 1
     `;
-    const [results] = await pool.query(query, [phoneNumber]);
+    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
     const identifiers = <any>results;
     return identifiers[0]['identifier'];
   }
@@ -166,7 +170,7 @@ export class _MessagesDB {
       FROM npwd_messages_groups
       WHERE group_id = ?;
     `;
-    const [results] = await pool.query(query, [groupId]);
+    const [results] = await DbInterface._rawExec(query, [groupId]);
     const result = <any>results;
     const count = result[0].count;
     return count > 0;
@@ -178,7 +182,7 @@ export class _MessagesDB {
       FROM npwd_messages
       WHERE group_id = ?;
     `;
-    const [results] = await pool.query(query, [groupId]);
+    const [results] = await DbInterface._rawExec(query, [groupId]);
     const result = <any>results;
     return result[0].count;
   }
@@ -190,7 +194,7 @@ export class _MessagesDB {
    */
   async setMessageRead(groupId: string, identifier: string) {
     const query = `UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?`;
-    await pool.query(query, [groupId, identifier]);
+    await DbInterface._rawExec(query, [groupId, identifier]);
   }
 }
 

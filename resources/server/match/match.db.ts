@@ -1,9 +1,10 @@
 import { Like, Match, NewProfile, Profile } from '../../../typings/match';
-import { pool } from '../db';
+import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '../server';
 import { generateProfileName } from '../utils/generateProfileName';
 import { matchLogger } from './match.utils';
+import DbInterface from '../db/db_wrapper';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
 
@@ -33,7 +34,7 @@ export class _MatchDB {
         ORDER BY npwd_match_profiles.updatedAt DESC
         LIMIT 25
 		`;
-    const [results] = await pool.query(query, [identifier, identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
     return <Profile[]>results;
   }
 
@@ -48,7 +49,7 @@ export class _MatchDB {
                    VALUES ?`;
     const formattedLikes = likes.map((like) => [identifier, like.id, like.liked]);
 
-    const results = await pool.query(query, [formattedLikes]);
+    const results = await DbInterface._rawExec(query, [formattedLikes]);
     return <ResultSetHeader[]>results;
   }
 
@@ -71,7 +72,7 @@ export class _MatchDB {
           AND targetProfile.id = ?
           AND Liked = 1
 		`;
-    const [results] = await pool.query(query, [identifier, id]);
+    const [results] = await DbInterface._rawExec(query, [identifier, id]);
     return <Profile[]>results;
   }
 
@@ -86,7 +87,7 @@ export class _MatchDB {
         SELECT targetProfile.*,
                UNIX_TIMESTAMP(targetProfile.updatedAt)                                     AS lastActive,
                UNIX_TIMESTAMP(GREATEST(npwd_match_views.createdAt, targetViews.createdAt)) AS matchedAt,
-               targetUser.phone_number                                                     AS phoneNumber
+               targetUser.${config.database.phoneNumberColumn}                                                     AS phoneNumber
         FROM npwd_match_views
                  LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.profile = targetProfile.id
                  LEFT OUTER JOIN npwd_match_profiles AS myProfile ON npwd_match_views.identifier = myProfile.identifier
@@ -99,7 +100,7 @@ export class _MatchDB {
           AND targetViews.liked = 1
         ORDER BY matchedAt DESC
 		`;
-    const [results] = await pool.query(query, [identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier]);
     return <Match[]>results;
   }
 
@@ -116,7 +117,7 @@ export class _MatchDB {
         WHERE identifier = ?
         LIMIT 1
 		`;
-    const [results] = await pool.query(query, [identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier]);
     const profiles = <Profile[]>results;
     return profiles[0];
   }

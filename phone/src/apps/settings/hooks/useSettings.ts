@@ -103,32 +103,34 @@ export interface IPhoneSettings {
   TWITTER_notifyNewFeedTweet: boolean;
 }
 
-const localStorageEffect = (key) => ({ setSelf, onSet }) => {
-  const savedVal = localStorage.getItem(key);
-  if (savedVal) {
-    try {
-      const validString = isSchemaValid(savedVal);
-      if (validString) {
-        setSelf(JSON.parse(savedVal));
-      } else {
-        console.error('Settings Schema was invalid, applying default settings');
+const localStorageEffect =
+  (key) =>
+  ({ setSelf, onSet }) => {
+    const savedVal = localStorage.getItem(key);
+    if (savedVal) {
+      try {
+        const validString = isSchemaValid(savedVal);
+        if (validString) {
+          setSelf(JSON.parse(savedVal));
+        } else {
+          console.error('Settings Schema was invalid, applying default settings');
+          setSelf(config.defaultSettings);
+        }
+      } catch (e) {
+        // If we are unable to parse the json string, we set default settings
+        console.error('Unable to parse JSON');
         setSelf(config.defaultSettings);
       }
-    } catch (e) {
-      // If we are unable to parse the json string, we set default settings
-      console.error('Unable to parse JSON');
-      setSelf(config.defaultSettings);
     }
-  }
 
-  onSet((newValue) => {
-    if (newValue instanceof DefaultValue) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, JSON.stringify(newValue));
-    }
-  });
-};
+    onSet((newValue) => {
+      if (newValue instanceof DefaultValue) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, JSON.stringify(newValue));
+      }
+    });
+  };
 
 export const settingsState = atom<IPhoneSettings>({
   key: 'settings',
@@ -146,7 +148,4 @@ export const useSettingsValue = () => useRecoilValue(settingsState);
 
 export const useResetSettings = () => useResetRecoilState(settingsState);
 
-export const useCustomWallpaperModal = () => {
-  const [customWallpaperModal, setCustomWallpaperModal] = useRecoilState(customWallpaperState);
-  return { customWallpaperModal, setCustomWallpaperModal };
-};
+export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState);

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar as MuiAvatar,
-  Badge,
-} from '@material-ui/core';
+import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar, Badge } from '@mui/material';
 
 import { MessageGroup } from '../../../../../../typings/messages';
 interface IProps {

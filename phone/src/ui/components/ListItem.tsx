@@ -1,10 +1,8 @@
 import React from 'react';
-import MaterialListItem from '@material-ui/core/ListItem';
+import MaterialListItem from '@mui/material/ListItem';
 
-export const ListItem = ({ ...props }) => {
-  return (
-    <MaterialListItem aria-label="list item" {...props}>
-      {props.children}
-    </MaterialListItem>
-  );
-};
+export const ListItem = ({ ...props }) => (
+  <MaterialListItem aria-label="list item" {...props}>
+    {props.children}
+  </MaterialListItem>
+);

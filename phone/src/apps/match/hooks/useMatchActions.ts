@@ -4,11 +4,13 @@ import { ServerPromiseResp } from '../../../../../typings/common';
 import { useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const useMatchActions = () => {
   const setProfiles = useSetFormattedProfiles();
   const setMatches = useSetMatches();
   const { addAlert } = useSnackbar();
+  const { t } = useTranslation();
 
   const setViewed = useCallback(
     (id: number, liked: boolean) => {
@@ -22,7 +24,7 @@ export const useMatchActions = () => {
       fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, [{ id, liked }]).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: 'APPS_MATCH_SAVE_LIKES_FAILED',
+            message: t('APPS_MATCH_SAVE_LIKES_FAILED'),
             type: 'error',
           });
         }
@@ -33,7 +35,7 @@ export const useMatchActions = () => {
 
         if (resp.data) {
           addAlert({
-            message: 'APPS_MATCH_NEW_LIKE_FOUND',
+            message: t('APPS_MATCH_NEW_LIKE_FOUND'),
             type: 'info',
           });
           fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
@@ -42,7 +44,7 @@ export const useMatchActions = () => {
         }
       });
     },
-    [setProfiles, addAlert, setMatches],
+    [setProfiles, addAlert, t, setMatches],
   );
 
   return {

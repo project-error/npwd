@@ -9,7 +9,6 @@ export interface AppContentTypes {
 
 export interface AppWrapperTypes {
   id?: string;
-  children?: JSX.Element | JSX.Element[];
   style?: CSSProperties;
   handleClickAway?: (...args: any[]) => void;
 }

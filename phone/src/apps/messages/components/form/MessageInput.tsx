@@ -1,8 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, Box, makeStyles, Button } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
-import ImageIcon from '@material-ui/icons/Image';
+import { Paper, Box, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import SendIcon from '@mui/icons-material/Send';
+import ImageIcon from '@mui/icons-material/Image';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { MessageEvents } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';

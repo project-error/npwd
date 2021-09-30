@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import {
   Profile as IProfile,
@@ -8,7 +8,7 @@ import {
 } from '../../../../../../typings/match';
 import ProfileField from '../../../../ui/components/ProfileField';
 import UpdateButton from '../../../../ui/components/UpdateButton';
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import PageText from '../PageText';
@@ -81,7 +81,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: 'APPS_MATCH_UPDATE_PROFILE_FAILED',
+          message: t('APPS_MATCH_UPDATE_PROFILE_FAILED'),
           type: 'error',
         });
       }
@@ -89,7 +89,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       setMyProfile(resp.data);
 
       addAlert({
-        message: 'APPS_MATCH_UPDATE_PROFILE_SUCCEEDED',
+        message: t('APPS_MATCH_UPDATE_PROFILE_SUCCEEDED'),
         type: 'success',
       });
     });

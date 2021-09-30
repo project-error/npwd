@@ -9,7 +9,7 @@ import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider'
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { useApp } from '../../../os/apps/hooks/useApps';
 
-export const MarketplaceApp = () => {
+export const MarketplaceApp: React.FC = () => {
   const marketplaceApp = useApp('MARKETPLACE');
 
   return (

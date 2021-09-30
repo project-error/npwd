@@ -1,4 +1,4 @@
-import { red, common } from '@material-ui/core/colors';
+import { red, common } from '@mui/material/colors';
 
 export const MATCH_APP_PRIMARY_COLOR = '#FE3B73';
 export const MATCH_APP_TEXT_COLOR = common.white;

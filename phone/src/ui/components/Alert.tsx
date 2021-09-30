@@ -1,6 +1,8 @@
-import React from 'react';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles, Typography } from '@material-ui/core';
+import React, { forwardRef } from 'react';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { Typography } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   root: {
@@ -13,13 +15,13 @@ const useStyles = makeStyles({
   },
 });
 
-export function Alert({ children, ...props }) {
+export const Alert: React.FC<AlertProps> = forwardRef((props, ref) => {
   const classes = useStyles();
   return (
-    <MuiAlert className={classes.root} elevation={4} variant="filled" {...props}>
-      <Typography className={classes.msg}>{children}</Typography>
+    <MuiAlert className={classes.root} elevation={4} variant="filled" {...props} ref={ref}>
+      <Typography className={classes.msg}>{props.children}</Typography>
     </MuiAlert>
   );
-}
+});
 
 export default Alert;

@@ -1,9 +1,10 @@
 import { NewTweet, Profile, Tweet } from '../../../typings/twitter';
-import { pool } from '../db';
+import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '../server';
 import { generateProfileName } from '../utils/generateProfileName';
 import { twitterLogger } from './twitter.utils';
+import DbInterface from '../db/db_wrapper';
 
 const SELECT_FIELDS = `
   npwd_twitter_tweets.id,
@@ -26,11 +27,13 @@ const SELECT_FIELDS = `
   TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
 `;
 
-const formatTweets = (profileId: number) => (tweet: Tweet): Tweet => ({
-  ...tweet,
-  isMine: tweet.profile_id === profileId,
-  isRetweet: tweet.isRetweet === 1,
-});
+const formatTweets =
+  (profileId: number) =>
+  (tweet: Tweet): Tweet => ({
+    ...tweet,
+    isMine: tweet.profile_id === profileId,
+    isRetweet: tweet.isRetweet === 1,
+  });
 
 export class _TwitterDB {
   /**
@@ -54,7 +57,7 @@ export class _TwitterDB {
                                  ON retweets.identifier = retweets_profiles.identifier
         WHERE npwd_twitter_tweets.visible = 1
 		`;
-    const [results] = await pool.query(query, [profileId, profileId]);
+    const [results] = await DbInterface._rawExec(query, [profileId, profileId]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId));
   }
@@ -83,7 +86,7 @@ export class _TwitterDB {
           AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
         ORDER BY npwd_twitter_tweets.id DESC LIMIT 100
 		`;
-    const [results] = await pool.query(query, [
+    const [results] = await DbInterface._rawExec(query, [
       profileId,
       profileId,
       parameterizedSearchValue,
@@ -113,7 +116,7 @@ export class _TwitterDB {
                                  ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
         WHERE npwd_twitter_tweets.id = ?
 		`;
-    const [results] = await pool.query(query, [profileId, profileId, tweetId]);
+    const [results] = await DbInterface._rawExec(query, [profileId, profileId, tweetId]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId))[0];
   }
@@ -129,7 +132,7 @@ export class _TwitterDB {
         INSERT INTO npwd_twitter_tweets (identifier, message, images, retweet)
         VALUES (?, ?, ?, ?)
 		`;
-    const [results] = await pool.query(query, [
+    const [results] = await DbInterface._rawExec(query, [
       identifier,
       tweet.message,
       tweet.images,
@@ -161,7 +164,7 @@ export class _TwitterDB {
         FROM npwd_twitter_profiles
         WHERE identifier = ? LIMIT 1
 		`;
-    const [results] = await pool.query(query, [identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier]);
     const profiles = <Profile[]>results;
     return profiles.length > 0 ? profiles[0] : null;
   }
@@ -281,7 +284,7 @@ export class _TwitterDB {
         WHERE profile_id = ?
           AND tweet_id = ? LIMIT 1
 		`;
-    const [results] = await pool.query(query, [profileId, tweetId]);
+    const [results] = await DbInterface._rawExec(query, [profileId, tweetId]);
     const likes = <any[]>results;
     return likes.length > 0;
   }
@@ -298,7 +301,7 @@ export class _TwitterDB {
         WHERE tweet_id = ?
           AND profile_id = ? LIMIT 1
 		`;
-    const [results] = await pool.query(query, [tweetId, profileId]);
+    const [results] = await DbInterface._rawExec(query, [tweetId, profileId]);
     const reports = <any[]>results;
     return reports.length > 0;
   }
@@ -315,7 +318,7 @@ export class _TwitterDB {
         FROM npwd_twitter_tweets
         WHERE (id = ? OR retweet = ?) AND identifier = ?
 		`;
-    const [results] = await pool.query(query, [tweetId, tweetId, identifier]);
+    const [results] = await DbInterface._rawExec(query, [tweetId, tweetId, identifier]);
     const counts = <any[]>results;
     return counts[0].count > 0;
   }

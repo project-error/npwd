@@ -5,8 +5,8 @@ import DialogForm from '../../../ui/components/DialogForm';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { TextField } from '../../../ui/components/Input';
 
-export default function WallpaperModal() {
-  const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
+const WallpaperModal: React.FC = () => {
+  const [customWallpaperModal, setCustomWallpaperModal] = useCustomWallpaperModal();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
   const [value, setValue] = useState(settings.wallpaper.value ? settings.wallpaper.value : '');
@@ -49,4 +49,6 @@ export default function WallpaperModal() {
       />
     </DialogForm>
   );
-}
+};
+
+export default WallpaperModal;

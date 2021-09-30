@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { CircularProgress, makeStyles, Button } from '@material-ui/core';
+import { CircularProgress, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { Repeat } from '@material-ui/icons';
+import { Repeat } from '@mui/icons-material';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 
 interface IProps {

@@ -12,7 +12,9 @@
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
-    "identifierColumn": "identifier"
+    "identifierColumn": "identifier",
+    "profileQueries": true,
+    "phoneNumberColumn": "phone_number"
   },
   "twitter": {
     "showNotifications": true,

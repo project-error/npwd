@@ -1,73 +1,88 @@
-import { useContacts } from './state';
+import { contactsState } from './state';
 
 import { Contact } from '../../../../../typings/contact';
 import { useCallback } from 'react';
+import { useRecoilStateLoadable } from 'recoil';
 
 interface UseContactsValue {
   getDisplayByNumber: (number: string) => string;
   getContactByNumber: (number: string) => Contact | null;
   getContact: (id: number) => Contact | null;
   getPictureByNumber: (number: string) => string | null;
-  deleteContact: (id: number) => void;
-  addContact: (contact: Contact) => void;
-  updateContact: (contact: Contact) => void;
+  deleteLocalContact: (id: number) => void;
+  addLocalContact: (contact: Contact) => void;
+  updateLocalContact: (contact: Contact) => void;
 }
 
 export const useContactActions = (): UseContactsValue => {
-  const [contacts, setContacts] = useContacts();
+  const [{ state, contents }, setContacts] = useRecoilStateLoadable(contactsState.contacts);
 
   const getDisplayByNumber = useCallback(
     (number: string) => {
-      const found = contacts.find((contact) => contact.number === number);
+      if (state !== 'hasValue') return null;
+
+      const found = contents.find((contact) => contact.number === number);
       return found ? found.display : number;
     },
-    [contacts],
+    [contents, state],
   );
 
   const getPictureByNumber = useCallback(
     (number: string) => {
-      const found = contacts.find((contact) => contact.number === number);
+      if (state !== 'hasValue') return null;
+
+      const found = contents.find((contact) => contact.number === number);
       return found ? found.avatar : null;
     },
-    [contacts],
+    [contents, state],
   );
 
   const getContactByNumber = useCallback(
     (number: string): Contact | null => {
-      for (const contact of contacts) {
+      if (state !== 'hasValue') return null;
+
+      for (const contact of contents) {
         if (contact.number === number) return contact;
       }
       return null;
     },
-    [contacts],
+    [contents, state],
   );
 
   const getContact = useCallback(
     (id: number): Contact | null => {
-      for (const contact of contacts) {
+      if (state !== 'hasValue') return null;
+
+      for (const contact of contents) {
         if (contact.id === id) return contact;
       }
       return null;
     },
-    [contacts],
+    [contents, state],
   );
 
-  const deleteContact = useCallback(
+  const deleteLocalContact = useCallback(
     (id: number): void => {
+      if (state !== 'hasValue') return null;
+
       setContacts((curContacts) => [...curContacts].filter((contact) => contact.id !== id));
     },
-    [setContacts],
+    [setContacts, state],
   );
 
-  const addContact = useCallback(
+  const addLocalContact = useCallback(
     (contact: Contact) => {
+      if (state !== 'hasValue') return null;
+
       setContacts((curContacts) => [...curContacts, contact]);
     },
-    [setContacts],
+    [setContacts, state],
   );
 
-  const updateContact = useCallback(
+  const updateLocalContact = useCallback(
     (updatedContact: Contact) => {
+      if (state !== 'hasValue') return null;
+
       setContacts((curContacts) => {
         const targetContactIndex = curContacts.findIndex(
           (contact) => contact.id === updatedContact.id,
@@ -77,7 +92,7 @@ export const useContactActions = (): UseContactsValue => {
         return newContactsArray;
       });
     },
-    [setContacts],
+    [setContacts, state],
   );
 
   return {
@@ -85,8 +100,8 @@ export const useContactActions = (): UseContactsValue => {
     getContact,
     getContactByNumber,
     getPictureByNumber,
-    deleteContact,
-    updateContact,
-    addContact,
+    deleteLocalContact,
+    updateLocalContact,
+    addLocalContact,
   };
 };

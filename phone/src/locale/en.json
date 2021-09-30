@@ -5,6 +5,14 @@
       "TOP_LEVEL_ERR_ACTION": "Reload",
       "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
     },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "No unread notifications"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "You have no notes"
+      }
+    },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
@@ -58,6 +66,24 @@
       "MM": "%d months",
       "y": "a year",
       "yy": "%d years"
+    },
+    "GENERIC": {
+      "LOADING": "Loading...",
+      "WAIT": "Please wait...",
+      "SAVE": "Save",
+      "EDIT": "Edit",
+      "UPDATE": "Update",
+      "REQUIRED": "Required",
+      "DELETE": "Delete",
+      "REPORT": "Report",
+      "CALL": "Call",
+      "MESSAGE": "Message",
+      "CLOSE": "Close",
+      "CANCEL": "Cancel",
+      "TITLE": "Title",
+      "CONTENT": "Content",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
     },
 
     "COMING_SOON": "Coming soon...",
@@ -242,6 +268,7 @@
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
+    "GENERIC_EDIT": "Edit",
     "GENERIC_UPDATE": "Update",
     "GENERIC_REQUIRED": "Required",
     "GENERIC_DELETE": "Delete",

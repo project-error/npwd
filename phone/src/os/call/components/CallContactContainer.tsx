@@ -1,6 +1,6 @@
 import React from 'react';
-import { Avatar, Box, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Box, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
 import { useCall } from '../hooks/useCall';
 import { useTranslation } from 'react-i18next';

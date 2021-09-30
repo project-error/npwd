@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { AddCircle, Home } from '@material-ui/icons/';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { AddCircle, Home } from '@mui/icons-material/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavigationBar = () => {
+export const NavigationBar: React.FC = () => {
   const classes = useStyles();
   const [activePage, setActivePage] = useState(0);
   return (
