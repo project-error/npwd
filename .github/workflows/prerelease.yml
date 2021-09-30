@@ -42,6 +42,7 @@ jobs:
           cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
           cp -r ./resources/{dist,html} ./temp/npwd/resources
           # Make sure we copy our one lua boy
+          mkdir ./temp/npwd/resources/client
           cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
           cd ./temp && zip -r npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip ./npwd
 
