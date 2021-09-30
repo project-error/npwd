@@ -4,6 +4,7 @@ import { verifyExportArgType } from './cl_utils';
 import { initializeCallHandler } from './calls/cl_calls.controller';
 import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { AddNoteExportData, NotesEvents } from '../../typings/notes';
+import { hidePhone, showPhone } from './cl_main';
 
 const exps = global.exports;
 
@@ -15,12 +16,31 @@ exps('openApp', (app: string) => {
 });
 
 // Will set the phone to open or closed based on based value
-exps('setPhoneVisible', (bool: boolean | number) => {
+exps('setPhoneVisible', async (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
 
+  const isPhoneDisabled = (global as any).isPhoneDisabled;
+  const isPhoneOpen = (global as any).isPhoneOpen;
+  // We need to make sure that the phone isn't disabled before we use the setter
+  if (isPhoneDisabled && !bool && isPhoneOpen) return;
+
   const coercedType = !!bool;
-  sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, coercedType);
+
+  if (coercedType) await showPhone();
+  else await hidePhone();
 });
+
+// Getter equivalent of above
+exps('isPhoneVisible', () => (global as any).isPhoneOpen);
+
+// Will prevent the phone from being opened
+exps('setPhoneDisabled', (bool: boolean | number) => {
+  verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
+  const coercedType = !!bool;
+  (global as any).isPhoneDisabled = coercedType;
+});
+
+exps('isPhoneDisabled', () => (global as any).isPhoneDisabled);
 
 // Takes in a number to start the call with
 exps('startPhoneCall', (number: string) => {

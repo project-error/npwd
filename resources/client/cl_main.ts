@@ -6,7 +6,9 @@ import { config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 
-let isPhoneOpen = false;
+// All main globals that are set and used across files
+(global as any).isPhoneOpen = false;
+(global as any).isPhoneDisabled = false;
 
 const exps = global.exports;
 
@@ -44,8 +46,8 @@ const getCurrentGameTime = () => {
  *
  * * * * * * * * * * * * */
 
-const showPhone = async (): Promise<void> => {
-  isPhoneOpen = true;
+export const showPhone = async (): Promise<void> => {
+  (global as any).isPhoneOpen = true;
   const time = getCurrentGameTime();
   await animationService.openPhone(); // Animation starts before the phone is open
   emitNet(PhoneEvents.FETCH_CREDENTIALS);
@@ -57,8 +59,8 @@ const showPhone = async (): Promise<void> => {
   emit('npwd:disableControlActions', true);
 };
 
-const hidePhone = async (): Promise<void> => {
-  isPhoneOpen = false;
+export const hidePhone = async (): Promise<void> => {
+  (global as any).isPhoneOpen = false;
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await animationService.closePhone();
   SetNuiFocus(false, false);
@@ -75,7 +77,8 @@ RegisterCommand(
   'phone',
   async () => {
     //-- Toggles Phone
-    await togglePhone();
+    // Check to see if the phone is marked as disabled
+    if (!(global as any).isPhoneDisabled) await togglePhone();
   },
   false,
 );
@@ -110,7 +113,7 @@ async function togglePhone(): Promise<void> {
     const canAccess = checkExportCanOpen();
     if (!canAccess) return;
   }
-  if (isPhoneOpen) return await hidePhone();
+  if ((global as any).isPhoneOpen) return await hidePhone();
   await showPhone();
 }
 
@@ -147,7 +150,7 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   PhoneEvents.TOGGLE_KEYS,
   async ({ keepGameFocus }, cb) => {
     // We will only
-    if (isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+    if ((global as any).isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
     cb({});
   },
 );
