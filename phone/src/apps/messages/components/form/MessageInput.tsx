@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, KeyboardEventHandler, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -29,8 +29,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const [message, setMessage] = useState('');
   const { updateMessages } = useMessageActions();
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (message.trim()) {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId: messageConversationId,
@@ -51,17 +50,25 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit()
+    }
+  };
+
   if (!messageConversationId) return null;
 
   return (
     <Paper variant="outlined" className={classes.root}>
-      <form onSubmit={handleSubmit}>
+      {/*<form onSubmit={handleSubmit}>*/}
         <Box display="flex">
           <Box pl={1} flexGrow={1}>
             <TextField
               multiline
               aria-multiline="true"
               fullWidth
+              onKeyPress={handleKeyPress}
               inputProps={{ style: { fontSize: '1.3em' } }}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -72,12 +79,12 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
             <Button onClick={onAddImageClick}>
               <ImageIcon />
             </Button>
-            <Button type="submit">
+            <Button onClick={handleSubmit}>
               <SendIcon />
             </Button>
           </Box>
         </Box>
-      </form>
+      {/*</form>*/}
     </Paper>
   );
 };

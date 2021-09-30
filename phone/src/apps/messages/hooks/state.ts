@@ -55,9 +55,9 @@ export const messageState = {
       );
     },
   }),
-  messages: atom<Message[] | null>({
+  messages: atom<Message[]>({
     key: 'messages',
-    default: null,
+    default: [],
     /*default: selector({
       key: 'defaultMessages',
       get: async ({ get }) => {

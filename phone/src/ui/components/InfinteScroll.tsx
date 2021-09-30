@@ -15,9 +15,7 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ children,  nextP
     if (target.isIntersecting) {
       // update page
       console.log('hit target');
-      if (children) {
-        setPage((prev) => page + 1);
-      }
+      setPage((prev) => page + 1);
     }
   };
   

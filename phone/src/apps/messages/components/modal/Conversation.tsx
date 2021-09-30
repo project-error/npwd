@@ -14,7 +14,6 @@ import { useConversationId, useSetMessages } from '../../hooks/state';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCall } from '../../../../os/call/hooks/useCall';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
