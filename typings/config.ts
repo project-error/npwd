@@ -40,6 +40,7 @@ interface BankConfig {
 interface DatabaseConfig {
   playerTable: string;
   identifierColumn: string;
+  identifierType: string;
   useIdentifierPrefix: boolean;
   profileQueries: boolean;
   phoneNumberColumn: string;
