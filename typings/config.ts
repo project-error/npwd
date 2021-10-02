@@ -46,6 +46,18 @@ interface DatabaseConfig {
   phoneNumberColumn: string;
 }
 
+interface ImageConfig {
+  url: string;
+  type: string;
+  imageEncoding: 'png' | 'jpg' | 'webp';
+  contentType: string;
+  authorizationPrefix: string;
+  useAuthorization: boolean;
+  returnedUrlObjectName: string;
+  returnedUrlFieldName: string;
+  returnedUrlInArray: boolean;
+}
+
 interface PhoneAsItemConfig {
   enabled: boolean;
   exportResource: string;
@@ -63,4 +75,5 @@ export interface ResourceConfig {
   notificationPosition: NotificationConfig;
   general: General;
   debug: Debug;
+  images: ImageConfig;
 }
