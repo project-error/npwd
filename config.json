@@ -13,6 +13,7 @@
     "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",
+    "identifierType": "license",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
