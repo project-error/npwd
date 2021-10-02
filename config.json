@@ -17,6 +17,18 @@
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
+  "images": {
+    "url": "https://api.imgur.com/3/image",
+    "type": "imgur",
+    "imageEncoding": "jpg",
+    "contentType": "multipart/form-data",
+    "authorizationPrefix": "Client-ID",
+    "useAuthorization": true,
+    "returnedDataIndexes": [
+      "data",
+      "link"
+    ]
+  },
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,
