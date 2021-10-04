@@ -17,15 +17,13 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     const target = entities[0];
 
     if (target.isIntersecting) {
-      // update page
-      console.log('hit target');
       setPage((prev) => page + 1);
     }
   };
 
   useEffect(() => {
     nextPage(page);
-  }, [page]);
+  }, [nextPage, page]);
 
   useEffect(() => {
     const options: IntersectionObserverInit = {
@@ -43,8 +41,9 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
 
   return (
     <div>
-      <div ref={loader} />
+      {inverse && <div ref={loader} />}
       {children}
+      {!inverse && <div ref={loader} />}
     </div>
   );
 };

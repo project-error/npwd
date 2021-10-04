@@ -21,7 +21,6 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose
   const selectedMessage = useSelectedMessageValue();
 
   const handleDeleteMessage = useCallback(() => {
-    console.log('fuck face');
     fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_MESSAGE, selectedMessage).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { Message, MessageConversation, MessageEvents } from '../../../../../../typings/messages';
@@ -35,8 +35,8 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   const setMessages = useSetMessages();
   const { t } = useTranslation();
 
-  const handleNextPage = (page: number) => {
-    if (messages.length >= 20) {
+  const handleNextPage = useCallback(
+    (page: number) => {
       fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
         conversationId: conversationId,
         page,
@@ -52,8 +52,9 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
 
         setMessages((currVal) => [...resp.data, ...currVal]);
       });
-    }
-  };
+    },
+    [addAlert, conversationId, setMessages, history, t],
+  );
 
   return (
     <div className={classes.conversationContainer}>
