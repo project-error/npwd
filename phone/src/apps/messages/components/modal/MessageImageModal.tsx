@@ -67,7 +67,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const menuOptions = useMemo(
     () => [
       {
-        label: 'Camera / Gallery',
+        label: t('APPS_MESSAGE_MEDIA_OPTION'),
         icon: <PhotoLibraryIcon />,
         onClick: () =>
           history.push(
@@ -77,7 +77,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           ),
       },
     ],
-    [history, pathname, search],
+    [history, pathname, search, t],
   );
 
   return (

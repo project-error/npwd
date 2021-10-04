@@ -217,6 +217,7 @@
     "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
+    "APPS_MESSAGE_MEDIA_OPTION": "Camera / Gallery",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Send",
     "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number",
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
