@@ -98,6 +98,10 @@ export const messageState = {
     key: 'unreadMessagesCount',
     default: 0,
   }),
+  selectedMessage: atom<Message>({
+    key: 'selectedMessage',
+    default: null,
+  }),
 };
 
 export const useMessageConversationsValue = () => useRecoilValue(messageState.messageCoversations);
@@ -119,3 +123,6 @@ export const useSetFilterValue = () => useSetRecoilState(messageState.filterValu
 
 export const useFilteredConversationsValue = () =>
   useRecoilValue(messageState.filteredMessageConversations);
+
+export const useSetSelectedMessage = () => useSetRecoilState(messageState.selectedMessage);
+export const useSelectedMessageValue = () => useRecoilValue(messageState.selectedMessage);

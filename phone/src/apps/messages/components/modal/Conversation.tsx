@@ -65,9 +65,14 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
       />
       <Box
         id={CONVERSATION_ELEMENT_ID}
-        height="85%"
-        pt={6}
-        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
+        component="div"
+        sx={{
+          height: '100%',
+          paddingTop: 3,
+          flex: 1,
+          display: 'flex',
+          overflowY: 'auto',
+        }}
       >
         <Box
           style={{

@@ -6,6 +6,7 @@ import { useRecoilValueLoadable } from 'recoil';
 interface MessageActionProps {
   removeConversation: (conversationId: string) => void;
   updateMessages: (messageDto: Message) => void;
+  deleteMessage: (messageId: number) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -47,8 +48,16 @@ export const useMessageActions = (): MessageActionProps => {
     [messageLoading, setMessages],
   );
 
+  const deleteMessage = useCallback(
+    (messageId: number) => {
+      setMessages((currVal) => [...currVal].filter((msg) => msg.id !== messageId));
+    },
+    [setMessages],
+  );
+
   return {
     removeConversation,
     updateMessages,
+    deleteMessage,
   };
 };

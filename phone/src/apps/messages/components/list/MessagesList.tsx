@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, List } from '@material-ui/core';
+import React from 'react';
+import { Box, List } from '@mui/material';
 import { MessageConversation } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';

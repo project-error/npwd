@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Slide,
   Paper,
   Typography,
   Button,
   Box,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
+  CircularProgress,
+  Tooltip,
+  IconButton,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -22,7 +21,6 @@ import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Message, MessageEvents } from '../../../../../../typings/messages';
 import Modal from '../../../../ui/components/Modal';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
@@ -49,12 +47,12 @@ export const MessageModal = () => {
 
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
-  
+
   // we just fetch the first 20 messages, and then uhhh...pagination does some magic
   useEffect(() => {
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
-      page: 0
+      page: 0,
     }).then((resp) => {
       if (resp.status !== 'ok') {
         addAlert({
@@ -64,7 +62,7 @@ export const MessageModal = () => {
 
         return history.push('/messages');
       }
-  
+
       console.log(resp.data);
       setMessages(resp.data);
     });

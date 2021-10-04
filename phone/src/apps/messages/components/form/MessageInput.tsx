@@ -1,11 +1,10 @@
-import React, { FormEvent, KeyboardEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import SendIcon from '@mui/icons-material/Send';
 import ImageIcon from '@mui/icons-material/Image';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { Message, MessageEvents, PreDBMessage } from '../../../../../../typings/messages';
+import { Message, MessageEvents } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
@@ -53,7 +52,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      handleSubmit()
+      handleSubmit();
     }
   };
 
@@ -62,28 +61,28 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   return (
     <Paper variant="outlined" className={classes.root}>
       {/*<form onSubmit={handleSubmit}>*/}
-        <Box display="flex">
-          <Box pl={1} flexGrow={1}>
-            <TextField
-              multiline
-              aria-multiline="true"
-              fullWidth
-              onKeyPress={handleKeyPress}
-              inputProps={{ style: { fontSize: '1.3em' } }}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
-            />
-          </Box>
-          <Box>
-            <Button onClick={onAddImageClick}>
-              <ImageIcon />
-            </Button>
-            <Button onClick={handleSubmit}>
-              <SendIcon />
-            </Button>
-          </Box>
+      <Box display="flex">
+        <Box pl={1} flexGrow={1}>
+          <TextField
+            multiline
+            aria-multiline="true"
+            fullWidth
+            onKeyPress={handleKeyPress}
+            inputProps={{ style: { fontSize: '1.3em' } }}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
+          />
         </Box>
+        <Box>
+          <Button onClick={onAddImageClick}>
+            <ImageIcon />
+          </Button>
+          <Button onClick={handleSubmit}>
+            <SendIcon />
+          </Button>
+        </Box>
+      </Box>
       {/*</form>*/}
     </Paper>
   );

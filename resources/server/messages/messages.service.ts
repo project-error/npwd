@@ -65,7 +65,7 @@ class _MessagesService {
   ) {
     try {
       const messages = await this.messagesDB.getInitialMessages(reqObj.data.conversationId);
-      
+
       messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });
@@ -86,10 +86,10 @@ class _MessagesService {
         reqObj.data.conversationId,
         reqObj.data.page,
       );
-      
+
       if (messages.length === 0) return;
-      
-      messages.sort((a, b) => (a.id - b.id));
+
+      messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });
     } catch (e) {
@@ -174,6 +174,18 @@ class _MessagesService {
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
       messagesLogger.error(`Failed to delete conversation, ${e.message}`, {
+        source: reqObj.source,
+      });
+    }
+  }
+
+  async handleDeleteMessage(reqObj: PromiseRequest<Message>, resp: PromiseEventResp<void>) {
+    try {
+      await this.messagesDB.deleteMessage(reqObj.data);
+      resp({ status: 'ok' });
+    } catch (e) {
+      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      messagesLogger.error(`Failed to delete message, ${e.message}`, {
         source: reqObj.source,
       });
     }

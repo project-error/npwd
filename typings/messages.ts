@@ -83,6 +83,7 @@ export enum MessageEvents {
   SEND_MESSAGE = 'npwd:sendMessage',
   SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
   SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
+  DELETE_MESSAGE = 'npwd:deleteMessage',
   FETCH_MESSAGES = 'npwd:fetchMessages',
   FETCH_MESSAGES_SUCCESS = 'npwd:fetchMessagesSuccess',
   FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',

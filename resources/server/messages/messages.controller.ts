@@ -33,19 +33,6 @@ onNetPromise<{ targetNumber: string }, boolean>(
   },
 );
 
-// I know, redundant...
-onNetPromise<{ conversationId: string }, Message[]>(
-  MessageEvents.FETCH_INITIAL_MESSAGES,
-  async (reqObj, resp) => {
-    MessagesService.handleFetchInitialMessages(reqObj, resp).catch((e) => {
-      messagesLogger.error(
-        `Error occurred in fetch messages (${reqObj.source}), Error: ${e.message}`,
-      );
-      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-    });
-  },
-);
-
 onNetPromise<{ conversationId: string; page: number }, Message[]>(
   MessageEvents.FETCH_MESSAGES,
   async (reqObj, resp) => {
@@ -78,6 +65,15 @@ onNetPromise<{ conversationId: string }, void>(
     });
   },
 );
+
+onNetPromise<Message, void>(MessageEvents.DELETE_MESSAGE, async (reqObj, resp) => {
+  MessagesService.handleDeleteMessage(reqObj, resp).catch((e) => {
+    messagesLogger.error(
+      `Error occurred while deleting message (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
 
 onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
   const src = getSource();

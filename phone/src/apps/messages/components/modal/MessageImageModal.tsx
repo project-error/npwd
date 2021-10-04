@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { Box, Typography, Button } from '@mui/material';

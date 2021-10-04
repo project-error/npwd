@@ -1,10 +1,9 @@
-import { pool } from '../db';
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import { config } from '../server';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
-const MESSAGES_PER_PAGE = 20
+const MESSAGES_PER_PAGE = 20;
 
 // not sure whats going on here.
 export class _MessagesDB {
@@ -18,7 +17,7 @@ export class _MessagesDB {
     const query = `INSERT INTO npwd_messages (author, message, conversation_id)
                    VALUES (?, ?, ?)`;
 
-    const [results] = await pool.query(query, [author, message, conversationId]);
+    const [results] = await DbInterface._rawExec(query, [author, message, conversationId]);
 
     return (<ResultSetHeader>results).insertId;
   }
@@ -49,7 +48,7 @@ export class _MessagesDB {
                                                REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '')
                                                 AND npwd_phone_contacts.identifier = ?`;
 
-    const [results] = await pool.query(query, [identifier, identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
     return <UnformattedMessageConversation[]>results;
   }
 
@@ -58,7 +57,7 @@ export class _MessagesDB {
    * at some point
    * @param conversationId the conversations for get messages from
    */
-  
+
   // TODO: Get rid of this
   async getInitialMessages(conversationId: string): Promise<Message[]> {
     const query = `SELECT npwd_messages.id,
@@ -70,14 +69,14 @@ export class _MessagesDB {
                    ORDER BY id DESC
                    LIMIT ${MESSAGES_PER_PAGE} OFFSET 0`;
 
-    const [results] = await pool.query(query, [conversationId]);
+    const [results] = await DbInterface._rawExec(query, [conversationId]);
 
     return <Message[]>results;
   }
 
   async getMessages(conversationId: string, page: number): Promise<Message[]> {
-    const offset = page * MESSAGES_PER_PAGE
-    
+    const offset = page * MESSAGES_PER_PAGE;
+
     const query = `SELECT
                      npwd_messages.id,
                      npwd_messages.conversation_id,
@@ -87,7 +86,11 @@ export class _MessagesDB {
                    WHERE npwd_messages.conversation_id = ?
                    ORDER BY id DESC LIMIT ? OFFSET ?`;
 
-    const [results] = await pool.query(query, [conversationId, MESSAGES_PER_PAGE, offset]);
+    const [results] = await DbInterface._rawExec(query, [
+      conversationId,
+      MESSAGES_PER_PAGE,
+      offset,
+    ]);
 
     return <Message[]>results;
   }
@@ -110,7 +113,7 @@ export class _MessagesDB {
             (user_identifier, conversation_id, participant_identifier)
         VALUES (?, ?, ?)
 		`;
-    await pool.query(query, [userIdentifier, conversationId, participantIdentifier]);
+    await DbInterface._rawExec(query, [userIdentifier, conversationId, participantIdentifier]);
   }
 
   /**
@@ -124,7 +127,7 @@ export class _MessagesDB {
         WHERE phone_number = ?
         LIMIT 1
 		`;
-    const [results] = await pool.query(query, [phoneNumber]);
+    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
     const result = <any>results;
     return result[0].identifier;
   }
@@ -153,7 +156,7 @@ export class _MessagesDB {
         SELECT COUNT(*) as count
         FROM npwd_messages
         WHERE conversation_id = ?`;
-    const [results] = await pool.query(query, [groupId]);
+    const [results] = await DbInterface._rawExec(query, [groupId]);
     const result = <any>results;
     return result[0].count;
   }
@@ -172,7 +175,13 @@ export class _MessagesDB {
     const query = `DELETE
                    FROM npwd_messages_conversations
                    WHERE conversation_id = ?`;
-    await pool.query(query, [conversationId]);
+    await DbInterface._rawExec(query, [conversationId]);
+  }
+
+  async deleteMessage(message: Message) {
+    const query = `DELETE FROM npwd_messages WHERE id = ? AND conversation_id = ?`;
+
+    await DbInterface._rawExec(query, [message.id, message.conversation_id]);
   }
 }
 
