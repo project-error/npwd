@@ -26,6 +26,8 @@ import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessagesState } from '../../hooks/state';
+import { isEnvBrowser } from '../../../../utils/misc';
+import { MockConversationMessages } from '../../utils/constants';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -50,6 +52,10 @@ export const MessageModal = () => {
 
   // we just fetch the first 20 messages, and then uhhh...pagination does some magic
   useEffect(() => {
+    if (isEnvBrowser()) {
+      return setMessages(MockConversationMessages);
+    }
+
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
       page: 0,

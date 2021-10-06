@@ -57,7 +57,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   );
 
   return (
-    <div className={classes.conversationContainer}>
+    <Box className={classes.conversationContainer}>
       <MessageImageModal
         image={referalImage}
         onClose={() => setImageModalOpen(false)}
@@ -66,14 +66,9 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
       />
       <Box
         id={CONVERSATION_ELEMENT_ID}
-        component="div"
-        sx={{
-          height: '100%',
-          paddingTop: 3,
-          flex: 1,
-          display: 'flex',
-          overflowY: 'auto',
-        }}
+        height="85%"
+        pt={6}
+        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
       >
         <Box
           style={{
@@ -95,7 +90,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
         messageConversationId={activeMessageGroup.conversation_id}
         onAddImageClick={() => setImageModalOpen(true)}
       />
-    </div>
+    </Box>
   );
 };
 

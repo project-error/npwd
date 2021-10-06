@@ -40,10 +40,10 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   }, []);
 
   return (
-    <div>
+    <>
       {inverse && <div ref={loader} />}
       {children}
       {!inverse && <div ref={loader} />}
-    </div>
+    </>
   );
 };

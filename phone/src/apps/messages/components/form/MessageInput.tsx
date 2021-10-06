@@ -18,7 +18,9 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  root: { width: '100%' },
+  root: {
+    width: '100%',
+  },
 });
 
 const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
@@ -60,30 +62,29 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
 
   return (
     <Paper variant="outlined" className={classes.root}>
-      {/*<form onSubmit={handleSubmit}>*/}
-      <Box display="flex">
-        <Box pl={1} flexGrow={1}>
-          <TextField
-            multiline
-            aria-multiline="true"
-            fullWidth
-            onKeyPress={handleKeyPress}
-            inputProps={{ style: { fontSize: '1.3em' } }}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
-          />
+      <form onSubmit={handleSubmit}>
+        <Box display="flex">
+          <Box pl={1} flexGrow={1}>
+            <TextField
+              multiline
+              aria-multiline="true"
+              fullWidth
+              inputProps={{ style: { fontSize: '1.3em' } }}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
+            />
+          </Box>
+          <Box>
+            <Button onClick={onAddImageClick}>
+              <ImageIcon />
+            </Button>
+            <Button type="submit">
+              <SendIcon />
+            </Button>
+          </Box>
         </Box>
-        <Box>
-          <Button onClick={onAddImageClick}>
-            <ImageIcon />
-          </Button>
-          <Button onClick={handleSubmit}>
-            <SendIcon />
-          </Button>
-        </Box>
-      </Box>
-      {/*</form>*/}
+      </form>
     </Paper>
   );
 };
