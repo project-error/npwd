@@ -20,6 +20,7 @@ interface IProps {
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    minHeight: '80px',
   },
 });
 
@@ -64,7 +65,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     <Paper variant="outlined" className={classes.root}>
       <form onSubmit={handleSubmit}>
         <Box display="flex">
-          <Box pl={1} flexGrow={1}>
+          <Box pl={3} pt={1} pb={1} flexGrow={1}>
             <TextField
               multiline
               aria-multiline="true"

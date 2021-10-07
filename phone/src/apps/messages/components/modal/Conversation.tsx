@@ -37,7 +37,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
 
   const handleNextPage = useCallback(
     (page: number) => {
-      fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+      /*fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
         conversationId: conversationId,
         page,
       }).then((resp) => {
@@ -51,7 +51,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
         }
 
         setMessages((currVal) => [...resp.data, ...currVal]);
-      });
+      });*/
     },
     [addAlert, conversationId, setMessages, history, t],
   );

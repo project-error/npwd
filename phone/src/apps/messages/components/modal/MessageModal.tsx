@@ -56,7 +56,7 @@ export const MessageModal = () => {
       return setMessages(MockConversationMessages);
     }
 
-    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+    /*fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
       page: 0,
     }).then((resp) => {
@@ -71,7 +71,7 @@ export const MessageModal = () => {
 
       console.log(resp.data);
       setMessages(resp.data);
-    });
+    });*/
   }, [groupId, setMessages, history, addAlert, t]);
 
   useEffect(() => {
