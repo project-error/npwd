@@ -119,7 +119,7 @@ const takePhoto = () =>
       },
       async (data: any) => {
         try {
-          var parsedData = JSON.parse(data);
+          let parsedData = JSON.parse(data);
           for (let index of config.images.returnedDataIndexes)
             parsedData = parsedData[index];
           const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
