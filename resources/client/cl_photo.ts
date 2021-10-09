@@ -2,7 +2,7 @@ import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendCameraEvent, sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { ClUtils } from './client';
+import { ClUtils, config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
@@ -104,22 +104,25 @@ const handleCameraExit = async () => {
 const takePhoto = () =>
   new Promise((res, rej) => {
     // Return and log error if screenshot basic token not found
-    if (SCREENSHOT_BASIC_TOKEN === 'none') {
+    if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.useAuthorization) {
       return console.error('Screenshot basic token not found. Please set in server.cfg');
     }
     exp['screenshot-basic'].requestScreenshotUpload(
-      'https://api.imgur.com/3/image',
-      'imgur',
+      config.images.url,
+      config.images.type,
       {
+        encoding: config.images.imageEncoding,
         headers: {
-          authorization: `Client-ID ${SCREENSHOT_BASIC_TOKEN}`,
-          'content-type': 'multipart/form-data',
+          authorization: config.images.useAuthorization ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}` : undefined,
+          'content-type': config.images.contentType,
         },
       },
       async (data: any) => {
         try {
-          const imageLink = JSON.parse(data).data.link;
-          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, imageLink);
+          let parsedData = JSON.parse(data);
+          for (let index of config.images.returnedDataIndexes)
+            parsedData = parsedData[index];
+          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
           console.log('export shit', resp);
           res(resp);
         } catch (e) {
