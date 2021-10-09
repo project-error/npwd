@@ -52,12 +52,12 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  /*const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       handleSubmit();
     }
-  };
+  };*/
 
   if (!messageConversationId) return null;
 

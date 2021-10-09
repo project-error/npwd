@@ -50,13 +50,12 @@ export const MessageModal = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
-  // we just fetch the first 20 messages, and then uhhh...pagination does some magic
   useEffect(() => {
     if (isEnvBrowser()) {
       return setMessages(MockConversationMessages);
     }
 
-    /*fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
       page: 0,
     }).then((resp) => {
@@ -71,7 +70,7 @@ export const MessageModal = () => {
 
       console.log(resp.data);
       setMessages(resp.data);
-    });*/
+    });
   }, [groupId, setMessages, history, addAlert, t]);
 
   useEffect(() => {
