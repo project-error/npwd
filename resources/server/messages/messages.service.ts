@@ -65,7 +65,6 @@ class _MessagesService {
   ) {
     try {
       const messages = await this.messagesDB.getInitialMessages(reqObj.data.conversationId);
-
       messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });
@@ -129,9 +128,7 @@ class _MessagesService {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
-          if (!participantPlayer) {
-            return;
-          }
+          if (!participantPlayer) return;
 
           emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
