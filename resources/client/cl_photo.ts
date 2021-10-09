@@ -119,9 +119,10 @@ const takePhoto = () =>
       },
       async (data: any) => {
         try {
-          const parsedData = JSON.parse(data);
-          const imageLink = config.images.returnedUrlInArray ? parsedData[config.images.returnedUrlObjectName][0][config.images.returnedUrlFieldName] : parsedData[config.images.returnedUrlObjectName][config.images.returnedUrlFieldName];
-          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, imageLink);
+          var parsedData = JSON.parse(data);
+          for (let index of config.images.returnedDataIndexes)
+            parsedData = parsedData[index];
+          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
           console.log('export shit', resp);
           res(resp);
         } catch (e) {

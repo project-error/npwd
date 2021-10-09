@@ -24,9 +24,10 @@
     "contentType": "multipart/form-data",
     "authorizationPrefix": "Client-ID",
     "useAuthorization": true,
-    "returnedUrlObjectName": "data",
-    "returnedUrlFieldName": "link",
-    "returnedUrlInArray": false
+    "returnedDataIndexes": [
+      "data",
+      "link"
+    ]
   },
   "twitter": {
     "showNotifications": true,

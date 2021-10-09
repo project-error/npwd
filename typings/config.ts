@@ -53,9 +53,7 @@ interface ImageConfig {
   contentType: string;
   authorizationPrefix: string;
   useAuthorization: boolean;
-  returnedUrlObjectName: string;
-  returnedUrlFieldName: string;
-  returnedUrlInArray: boolean;
+  returnedDataIndexes: Array<any>;
 }
 
 interface PhoneAsItemConfig {
