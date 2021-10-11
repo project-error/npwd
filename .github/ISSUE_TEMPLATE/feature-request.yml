@@ -15,7 +15,7 @@ body:
   attributes:
     label: Application
     description: If this feature request is for an app, please specify. Otherwise, use "Other". 
-    options:""
+    options:
       - Other
       - Browser
       - Calculator
@@ -35,7 +35,7 @@ body:
   attributes:
     label: Dependency
     description: Does your suggestion require any dependencies? Jobs and Money are framework dependencies. 
-    options:""
+    options:
       - Yes 
       - No
   validations:
