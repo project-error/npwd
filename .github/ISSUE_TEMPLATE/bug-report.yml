@@ -31,6 +31,16 @@ body:
   id: issue-reproduction
   attributes:
     label: Issue Reproduction
-    description: Steps to reproduce the issue. Please use numerical formatting when giving reproduction steps.
+    description: Steps to reproduce the issue. Please use numerical formatting when giving reproduction steps. See below for example.
   validations:
     required: true
+- type: markdown
+  attributes:
+    value: |
+      ## Reproduction Example
+      ```
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      ```
