@@ -2,7 +2,6 @@ name: Feature Request
 description: Suggest a feature that you would like added/improved upon.
 title: "Enhancement: <short description>"
 labels: Enhancement
-assignees: ''
 
 body:
 - type: markdown
