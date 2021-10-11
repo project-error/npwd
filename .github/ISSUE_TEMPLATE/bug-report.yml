@@ -1,4 +1,4 @@
-name: Bug Report
+name: #Bug Report
 description: Create a report to help us improve our resource.
 title: "Bug: <short description>"
 labels: New Issue
@@ -7,7 +7,6 @@ body:
 - type: markdown
   attributes:
     value: |
-      ## Thank you for filling out this bug report
       Please fill out this short template to the best of your ability.
 - type: dropdown
   id: developement-issue
