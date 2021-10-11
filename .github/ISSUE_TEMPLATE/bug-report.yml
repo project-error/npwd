@@ -44,3 +44,10 @@ body:
         3. Scroll down to '....'
         4. See error
       ```
+- type: textarea
+  id: evidence
+  attributes:
+    label: Evidence
+    description: If applicable, add a screenshot or a video to help explain your problem. Use [streamable]<https://streamable.com/> when uploading a video.
+  validations:
+    required: false
