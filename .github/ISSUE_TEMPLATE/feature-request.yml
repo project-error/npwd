@@ -50,6 +50,6 @@ body:
   id: references
   attributes:
     label: References
-    description: Do you have any references to help us visualize your suggestion?
+    description: Do you have any references to help us visualize your suggestion? Example":" <https://www.youtube.com/watch?v=j5a0jTc9S10>
   validations:
     required: false
