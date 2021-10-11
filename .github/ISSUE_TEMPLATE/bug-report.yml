@@ -1,0 +1,52 @@
+name: Bug Report
+description: Create a report to help us improve our resource.
+title: "Bug: <short description>"
+labels: New Issue
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Please fill out this short template to the best of your ability.
+- type: dropdown
+  id: developement-issue
+  attributes:
+    label: Developement Issue
+    description: Is this issue related to the phone still being in development?
+    options:
+      - "Yes"
+      - "No"
+      - Unsure
+  validations:
+      required: true
+- type: textarea
+  id: issue-description
+  attributes:
+    label: Issue Description
+    description: A clear and concise description of what the issue is. Ommit reproduction steps.
+  validations:
+    required: true
+- type: textarea
+  id: issue-reproduction
+  attributes:
+    label: Issue Reproduction
+    description: Steps to reproduce the issue. Please use numerical formatting when giving reproduction steps. See below for example.
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: |
+      ## Reproduction Example
+      ```
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      ```
+- type: textarea
+  id: evidence
+  attributes:
+    label: Evidence
+    description: If applicable, add a screenshot or a video to help explain your problem. Use [streamable](https://streamable.com/) when uploading a video.
+  validations:
+    required: false
