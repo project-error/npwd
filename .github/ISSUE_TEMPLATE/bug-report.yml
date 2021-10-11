@@ -27,19 +27,17 @@ body:
     description: A clear and concise description of what the issue is. Ommit reproduction steps.
   validations:
     required: true
-- type: textarea
-  id: issue-reproduction
-  attributes:
-    label: Issue Reproduction
-    description: Steps to reproduce the behavior. See below
  - type: markdown
   attributes:
     value: |
+    Brr?
     ```
      1. Go to '...'
      2. Click on '....'
      3. Scroll down to '....'
      4. See error
     ```
+- type: textarea
+  id: issue-reproduction
   validations:
     required: false
