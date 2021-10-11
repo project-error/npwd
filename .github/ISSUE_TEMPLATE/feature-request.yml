@@ -36,8 +36,8 @@ body:
     label: Dependency
     description: Does your suggestion require any dependencies? Jobs and Money are framework dependencies. 
     options:
-      - Yes 
-      - No
+      - "Yes" 
+      - "No"
   validations:
     required: true
 - type: textarea
