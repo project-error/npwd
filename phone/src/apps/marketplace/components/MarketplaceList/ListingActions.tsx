@@ -1,4 +1,4 @@
-import { Box, Tooltip, Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
@@ -14,6 +14,7 @@ import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { useCall } from '../../../../os/call/hooks/useCall';
+import { Tooltip } from '../../../../ui/components/Tooltip';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
