@@ -3,7 +3,7 @@
   "PhoneAsItem": {
     "enabled": false,
     "exportResource": "my-core-resource",
-    "exportName": "myCheckerFunction"
+    "exportFunction": "myCheckerFunction"
   },
   "general": {
     "useDashNumber": true,
