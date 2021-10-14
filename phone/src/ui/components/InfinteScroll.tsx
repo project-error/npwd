@@ -13,13 +13,16 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   const loader = useRef(null);
   const [page, setPage] = useState(1);
 
-  const handleObserver = (entities: IntersectionObserverEntry[]) => {
-    const target = entities[0];
+  const handleObserver = useCallback(
+    (entities: IntersectionObserverEntry[]) => {
+      const target = entities[0];
 
-    if (target.isIntersecting) {
-      setPage((prev) => page + 1);
-    }
-  };
+      if (target.isIntersecting) {
+        setPage(page + 1);
+      }
+    },
+    [page],
+  );
 
   useEffect(() => {
     nextPage(page);
@@ -37,7 +40,7 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     if (loader.current) {
       observer.observe(loader.current);
     }
-  }, []);
+  }, [handleObserver]);
 
   return (
     <>

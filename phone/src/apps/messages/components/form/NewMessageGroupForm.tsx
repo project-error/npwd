@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button } from '@mui/material';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
 import { MessageEvents } from '../../../../../../typings/messages';
-// import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { TextField } from '../../../../ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
@@ -53,20 +51,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       history.push('/messages');
     }
   }, [history, participant, addAlert, t]);
-
-  const onAutocompleteChange = (_e, value: any) => {
-    /*if (value) {
-      const isValid = true; // PHONE_NUMBER_REGEX.test(value[lastIdx]);
-      if (!isValid) {
-        return addAlert({ message: t('APPS_MESSAGES_INVALID_PHONE_NUMBER'), type: 'error' });
-      }
-
-      setParticipant(value);
-      return;
-    }*/
-
-    setParticipant(value);
-  };
 
   const renderAutocompleteInput = (params) => (
     <TextField

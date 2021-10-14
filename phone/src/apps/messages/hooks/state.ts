@@ -9,7 +9,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
-import { MockConversationMessages, MockMessageConversations } from '../utils/constants';
+import { MockMessageConversations } from '../utils/constants';
 
 const currentGroupId = atom({ key: 'currentGroupId', default: null });
 
