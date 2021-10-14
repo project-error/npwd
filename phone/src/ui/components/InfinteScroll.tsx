@@ -13,16 +13,13 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   const loader = useRef(null);
   const [page, setPage] = useState(1);
 
-  const handleObserver = useCallback(
-    (entities: IntersectionObserverEntry[]) => {
-      const target = entities[0];
+  const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
+    const target = entities[0];
 
-      if (target.isIntersecting) {
-        setPage(page + 1);
-      }
-    },
-    [page],
-  );
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
+    }
+  }, []);
 
   useEffect(() => {
     nextPage(page);
