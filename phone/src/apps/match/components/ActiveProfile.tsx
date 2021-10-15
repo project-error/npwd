@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Card, Fab, Box, Tooltip } from '@mui/material';
+import { Card, Fab, Box } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Clear';
 import FireIcon from '@mui/icons-material/Whatshot';
 import makeStyles from '@mui/styles/makeStyles';
@@ -9,6 +9,7 @@ import { FormattedProfile } from '../../../../../typings/match';
 import Draggable from './Draggable';
 import StatusDisplay from './StatusDisplay';
 import Profile from './profile/Profile';
+import { Tooltip } from '../../../ui/components/Tooltip';
 
 const useStyles = makeStyles({
   root: {
