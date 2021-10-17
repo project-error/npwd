@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     cursor: 'pointer',
     width: '370px',
-    height: '120px',
+    height: '80px',
     zIndex: 50,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: 'break-all',
     display: '-webkit-box',
     maxWidth: '360px',
-    height: '60px',
+    height: '20px',
     margin: '0 auto',
     '-webkit-line-clamp': 3,
     '-webkit-box-orient': 'vertical',
@@ -74,7 +74,7 @@ export const NotificationAlert = () => {
               </Box>
             </Box>
           </AlertTitle>
-          <Box component="div" className={classes.alertContent}>
+          <Box component="div" className={classes.alertContent} textOverflow="ellipsis">
             {currentAlert?.content}
           </Box>
         </Alert>
