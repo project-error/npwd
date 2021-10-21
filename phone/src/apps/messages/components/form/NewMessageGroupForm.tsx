@@ -70,7 +70,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           freeSolo
           autoHighlight
           options={contacts}
-          getOptionLabel={(contact) => contact.display || contact.number}
+          getOptionLabel={(contact) => contact.display || contact.number || participant}
           onChange={(e, value: any) => setParticipant(value)}
           renderInput={renderAutocompleteInput}
         />
