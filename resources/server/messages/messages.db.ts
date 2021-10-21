@@ -33,7 +33,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
                           npwd_messages_conversations.participant_identifier,
-                          ${config.database.playerTable}.phone_number,
+                          ${config.database.playerTable}.${config.database.phoneNumberColumn},
                           npwd_phone_contacts.avatar,
                           npwd_phone_contacts.display
                    FROM (SELECT conversation_id
@@ -45,7 +45,7 @@ export class _MessagesDB {
                                             ON ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_conversations.participant_identifier
                             LEFT OUTER JOIN npwd_phone_contacts
                                             ON REGEXP_REPLACE(npwd_phone_contacts.number, '[^0-9]', '') =
-                                               REGEXP_REPLACE(${config.database.playerTable}.phone_number, '[^0-9]', '')
+                                               REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '')
                                                 AND npwd_phone_contacts.identifier = ?`;
 
     const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
@@ -124,7 +124,7 @@ export class _MessagesDB {
     const query = `
         SELECT ${config.database.identifierColumn}
         FROM ${config.database.playerTable}
-        WHERE phone_number = ?
+        WHERE ${config.database.phoneNumberColumn} = ?
         LIMIT 1
 		`;
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
