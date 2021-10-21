@@ -26,8 +26,6 @@ import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessagesState } from '../../hooks/state';
-import { isEnvBrowser } from '../../../../utils/misc';
-import { MockConversationMessages } from '../../utils/constants';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -51,10 +49,6 @@ export const MessageModal = () => {
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
   useEffect(() => {
-    if (isEnvBrowser()) {
-      return setMessages(MockConversationMessages);
-    }
-
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
       conversationId: groupId,
       page: 0,
@@ -68,10 +62,9 @@ export const MessageModal = () => {
         return history.push('/messages');
       }
 
-      console.log(resp.data);
       setMessages(resp.data);
     });
-  }, [groupId, setMessages, history, addAlert, t]);
+  }, [groupId, history, addAlert, t, setMessages]);
 
   useEffect(() => {
     if (activeMessageConversation && messages) {
@@ -138,7 +131,7 @@ export const MessageModal = () => {
   };
 
   const handleDeleteConversation = () => {
-    fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
+    fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_CONVERSATION, {
       conversationId: groupId,
     }).then((resp) => {
       if (resp.status !== 'ok') {

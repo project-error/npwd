@@ -1,9 +1,10 @@
 import { messageState, useSetMessageConversations, useSetMessages } from './state';
 import { useCallback } from 'react';
-import { Message } from '../../../../../typings/messages';
+import { Message, MessageConversation } from '../../../../../typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
 
 interface MessageActionProps {
+  updateConversations: (conversation: MessageConversation) => void;
   removeConversation: (conversationId: string) => void;
   updateMessages: (messageDto: Message) => void;
   deleteMessage: (messageId: number) => void;
@@ -17,6 +18,13 @@ export const useMessageActions = (): MessageActionProps => {
 
   const setMessageConversation = useSetMessageConversations();
   const setMessages = useSetMessages();
+
+  const updateConversations = useCallback(
+    (conversation: MessageConversation) => {
+      setMessageConversation((curVal) => [conversation, ...curVal]);
+    },
+    [setMessageConversation],
+  );
 
   const removeConversation = useCallback(
     (conversationId: string) => {
@@ -56,6 +64,7 @@ export const useMessageActions = (): MessageActionProps => {
   );
 
   return {
+    updateConversations,
     removeConversation,
     updateMessages,
     deleteMessage,

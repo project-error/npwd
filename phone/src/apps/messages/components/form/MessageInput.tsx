@@ -31,7 +31,8 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const [message, setMessage] = useState('');
   const { updateMessages } = useMessageActions();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (message.trim()) {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId: messageConversationId,

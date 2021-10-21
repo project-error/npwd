@@ -73,11 +73,17 @@ export interface SetMessageRead {
   groupId: string;
 }
 
+export interface MessageConversationResponse {
+  conversation_id: string;
+  phoneNumber: string;
+}
+
 export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
   FETCH_MESSAGE_GROUPS_FAILED = 'npwd:fetchMessageGroupsFailed',
   CREATE_MESSAGE_CONVERSATION = 'npwd:createMessageGroup',
+  CREATE_MESSAGE_CONVERSATION_SUCCESS = 'npwd:createMessageConversationSuccess',
   CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
   CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
   SEND_MESSAGE = 'npwd:sendMessage',

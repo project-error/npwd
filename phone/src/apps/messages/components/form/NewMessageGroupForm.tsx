@@ -5,12 +5,13 @@ import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { MessageConversationResponse, MessageEvents } from '../../../../../../typings/messages';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { TextField } from '../../../../ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
@@ -19,6 +20,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const [participant, setParticipant] = useState<any>('');
   const { getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
+  const { updateConversations } = useMessageActions();
 
   useEffect(() => {
     if (phoneNumber) {
@@ -36,21 +38,34 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     /* participant.map(({ number }) => number.replace(/[^0-9]/g, '')); */
 
     if (participant) {
-      fetchNui<ServerPromiseResp<boolean>>(MessageEvents.CREATE_MESSAGE_CONVERSATION, {
-        targetNumber: participant.number || participant,
-      }).then((resp) => {
+      fetchNui<ServerPromiseResp<MessageConversationResponse>>(
+        MessageEvents.CREATE_MESSAGE_CONVERSATION,
+        {
+          targetNumber: participant.number || participant,
+        },
+      ).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
             message: t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED'),
             type: 'error',
           });
         }
-      });
 
-      setParticipant(null);
-      history.push('/messages');
+        const contact = getContactByNumber(resp.data.phoneNumber);
+
+        updateConversations({
+          phoneNumber: resp.data.phoneNumber,
+          conversation_id: resp.data.conversation_id,
+          display: contact.display || null,
+          unread: 0,
+          avatar: contact.avatar || null,
+        });
+
+        setParticipant(null);
+        history.push('/messages');
+      });
     }
-  }, [history, participant, addAlert, t]);
+  }, [history, participant, addAlert, t, getContactByNumber, updateConversations]);
 
   const renderAutocompleteInput = (params) => (
     <TextField

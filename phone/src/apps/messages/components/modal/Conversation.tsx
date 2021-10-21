@@ -78,7 +78,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
             width: '100%',
           }}
         >
-          <InfiniteScroll nextPage={handleNextPage} inverse={true}>
+          <InfiniteScroll nextPage={handleNextPage} inverse>
             {messages.map((message) => (
               <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
             ))}

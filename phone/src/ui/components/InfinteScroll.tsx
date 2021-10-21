@@ -5,11 +5,7 @@ interface InfiniteScrollProps {
   inverse: boolean;
 }
 
-export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
-  children,
-  nextPage,
-  inverse = false,
-}) => {
+export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ children, nextPage, inverse }) => {
   const loader = useRef(null);
   const [page, setPage] = useState(1);
 

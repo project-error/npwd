@@ -21,7 +21,7 @@ onNetPromise<void, MessageConversation[]>(
   },
 );
 
-onNetPromise<{ targetNumber: string }, boolean>(
+onNetPromise<{ targetNumber: string }, MessageConversation>(
   MessageEvents.CREATE_MESSAGE_CONVERSATION,
   async (reqObj, resp) => {
     MessagesService.handleCreateMessageConversation(reqObj, resp).catch((e) => {

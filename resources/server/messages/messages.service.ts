@@ -1,5 +1,10 @@
 import PlayerService from '../players/player.service';
-import { Message, MessageEvents, PreDBMessage } from '../../../typings/messages';
+import {
+  Message,
+  MessageConversationResponse,
+  MessageEvents,
+  PreDBMessage,
+} from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
   createMessageGroupsFromPhoneNumber,
@@ -32,7 +37,7 @@ class _MessagesService {
 
   async handleCreateMessageConversation(
     reqObj: PromiseRequest<{ targetNumber: string }>,
-    resp: PromiseEventResp<any>,
+    resp: PromiseEventResp<MessageConversationResponse>,
   ) {
     try {
       const _identifier = PlayerService.getIdentifier(reqObj.source);
@@ -112,8 +117,6 @@ class _MessagesService {
         messageData.message,
       );
 
-      console.log('message id', messageId);
-
       resp({
         status: 'ok',
         data: {
@@ -128,7 +131,7 @@ class _MessagesService {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
-          if (!participantPlayer) return;
+          if (!participantPlayer) return console.log('participant not found u wot');
 
           emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
