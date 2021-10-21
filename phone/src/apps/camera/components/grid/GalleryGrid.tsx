@@ -35,7 +35,7 @@ export const GalleryGrid = () => {
     fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then((serverResp) => {
       if (serverResp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_CAMERA_FAILED_TO_TAKE_PHOTO'),
+          message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
           type: 'error',
         });
       }

@@ -52,6 +52,12 @@
         "SETTINGS_RESET": "Settings have been reset!"
       }
     },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Where do you want to share the image",
+      "COPY_IMAGE": "Or just copy the image here",
+      "FAILED_TO_DELETE": "Photo could not be deleted :(",
+      "FAILED_TO_TAKE_PHOTO": "Photo could not be saved :("
+    },
     "RELATIVE_TIME": {
       "future": "in %s",
       "past": "%s ago",
@@ -100,9 +106,6 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Camera",
-
-    "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "Photo could not be saved :(",
-    "APPS_CAMERA_FAILED_TO_DELETE_PHOTO": "Photo could not be deleted :(",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",

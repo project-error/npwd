@@ -40,7 +40,7 @@ export const GalleryModal = () => {
       image: meta.image,
     }).then((serverResp) => {
       if (serverResp.status !== 'ok') {
-        return addAlert({ message: t('APPS_CAMERA_FAILED_TO_DELETE_PHOTO'), type: 'error' });
+        return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
       }
 
       deletePhoto(meta.image);
