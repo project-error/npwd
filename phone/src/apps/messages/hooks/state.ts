@@ -58,25 +58,6 @@ export const messageState = {
   messages: atom<Message[]>({
     key: 'messages',
     default: [],
-    /*default: selector({
-      key: 'defaultMessages',
-      get: async ({ get }) => {
-        try {
-          const groupId = get(currentGroupId);
-          const resp = await fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
-            conversationId: groupId,
-          });
-          LogDebugEvent({ action: 'fetchMessages', data: resp.data, level: 5 });
-          return resp.data;
-        } catch (e) {
-          if (isEnvBrowser()) {
-            return MockConversationMessages;
-          }
-          console.error(e);
-          return [];
-        }
-      },
-    }),*/
   }),
   activeMessageConversation: atom<MessageConversation | null>({
     key: 'activeMessageGroup',

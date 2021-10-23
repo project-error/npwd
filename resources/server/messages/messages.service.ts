@@ -91,8 +91,6 @@ class _MessagesService {
         reqObj.data.page,
       );
 
-      if (messages.length === 0) return;
-
       messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });

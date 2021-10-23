@@ -31,8 +31,8 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const [message, setMessage] = useState('');
   const { updateMessages } = useMessageActions();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    /*e.preventDefault();*/
     if (message.trim()) {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId: messageConversationId,
@@ -53,40 +53,40 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     }
   };
 
-  /*const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = async (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      handleSubmit();
+      await handleSubmit();
     }
-  };*/
+  };
 
   if (!messageConversationId) return null;
 
   return (
     <Paper variant="outlined" className={classes.root}>
-      <form onSubmit={handleSubmit}>
-        <Box display="flex">
-          <Box pl={3} pt={1} pb={1} flexGrow={1}>
-            <TextField
-              multiline
-              aria-multiline="true"
-              fullWidth
-              inputProps={{ style: { fontSize: '1.3em' } }}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
-            />
-          </Box>
-          <Box>
-            <Button onClick={onAddImageClick}>
-              <ImageIcon />
-            </Button>
-            <Button type="submit">
-              <SendIcon />
-            </Button>
-          </Box>
+      {/*<form onSubmit={handleSubmit}>*/}
+      <Box display="flex">
+        <Box pl={3} pt={1} pb={1} flexGrow={1}>
+          <TextField
+            onKeyPress={handleKeyPress}
+            multiline
+            aria-multiline="true"
+            fullWidth
+            inputProps={{ style: { fontSize: '1.3em' } }}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
+          />
         </Box>
-      </form>
+        <Box>
+          <Button onClick={onAddImageClick}>
+            <ImageIcon />
+          </Button>
+          <Button onClick={handleSubmit}>
+            <SendIcon />
+          </Button>
+        </Box>
+      </Box>
+      {/*</form>*/}
     </Paper>
   );
 };

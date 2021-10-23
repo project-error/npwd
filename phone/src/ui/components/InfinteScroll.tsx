@@ -3,9 +3,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 interface InfiniteScrollProps {
   nextPage: (page: number) => void;
   inverse: boolean;
+  dataLength: number;
 }
 
-export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ children, nextPage, inverse }) => {
+export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
+  children,
+  nextPage,
+  inverse,
+  dataLength,
+}) => {
   const loader = useRef(null);
   const [page, setPage] = useState(1);
 
