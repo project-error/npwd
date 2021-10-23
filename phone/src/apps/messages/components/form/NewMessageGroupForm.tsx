@@ -30,8 +30,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   }, [phoneNumber, getContactByNumber]);
 
   const handleSubmit = useCallback(() => {
-    console.log('part', participant);
-
     // handles phone numbers in a csv format and strips all spaces and
     // external characters out of them:
     // 123-4567, 987-6543, 333-4444

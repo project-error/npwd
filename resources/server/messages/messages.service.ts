@@ -112,7 +112,7 @@ class _MessagesService {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
-          if (!participantPlayer) return console.log('participant not found u wot');
+          if (!participantPlayer) return;
 
           emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
           emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
