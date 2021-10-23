@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from '../../../../ui/components/Modal';
 import { Button } from '@mui/material';
-import MessageIcon from '@mui/icons-material/Message';
 import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 
 import useStyles from './modal.styles';
