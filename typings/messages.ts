@@ -60,6 +60,7 @@ export interface CreateMessageGroupResult {
   duplicate?: boolean;
   conversationId?: string;
   mine?: boolean;
+  participant: string;
   identifiers: string[];
 }
 

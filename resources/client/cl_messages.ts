@@ -1,4 +1,9 @@
-import { CreateMessageBroadcast, MessageEvents, PreDBMessage } from '../../typings/messages';
+import {
+  CreateMessageBroadcast,
+  MessageConversationResponse,
+  MessageEvents,
+  PreDBMessage,
+} from '../../typings/messages';
 import { sendMessageEvent } from '../utils/messages';
 import { RegisterNuiProxy } from './cl_utils';
 
@@ -15,4 +20,9 @@ onNet(MessageEvents.SEND_MESSAGE_SUCCESS, (messageDto: PreDBMessage) => {
 
 onNet(MessageEvents.CREATE_MESSAGE_BROADCAST, (result: CreateMessageBroadcast) => {
   sendMessageEvent(MessageEvents.CREATE_MESSAGE_BROADCAST, result);
+});
+
+onNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, (result: MessageConversationResponse) => {
+  console.log('hello on client side', result);
+  sendMessageEvent(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, result);
 });

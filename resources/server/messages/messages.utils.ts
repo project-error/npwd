@@ -98,7 +98,13 @@ export async function createMessageGroupsFromPhoneNumber(
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
 
-  return { error: false, conversationId, identifiers: [userIdentifier, identifier], phoneNumber };
+  return {
+    error: false,
+    conversationId,
+    identifiers: [userIdentifier, identifier],
+    phoneNumber,
+    participant: identifier,
+  };
 }
 
 // getting the participants from groupId.
