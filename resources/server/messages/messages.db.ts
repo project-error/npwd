@@ -52,28 +52,6 @@ export class _MessagesDB {
     return <UnformattedMessageConversation[]>results;
   }
 
-  /**
-   * Might seem very redundant to do this, but hey, we have to release this phone
-   * at some point
-   * @param conversationId the conversations for get messages from
-   */
-
-  // TODO: Get rid of this
-  async getInitialMessages(conversationId: string): Promise<Message[]> {
-    const query = `SELECT npwd_messages.id,
-                          npwd_messages.conversation_id,
-                          npwd_messages.message,
-                          npwd_messages.author
-                   FROM npwd_messages
-                   WHERE npwd_messages.conversation_id = ?
-                   ORDER BY id DESC
-                   LIMIT ${MESSAGES_PER_PAGE} OFFSET 0`;
-
-    const [results] = await DbInterface._rawExec(query, [conversationId]);
-
-    return <Message[]>results;
-  }
-
   async getMessages(conversationId: string, page: number): Promise<Message[]> {
     const offset = page * MESSAGES_PER_PAGE;
 

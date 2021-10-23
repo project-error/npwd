@@ -64,23 +64,6 @@ class _MessagesService {
     }
   }
 
-  async handleFetchInitialMessages(
-    reqObj: PromiseRequest<{ conversationId: string }>,
-    resp: PromiseEventResp<Message[]>,
-  ) {
-    try {
-      const messages = await this.messagesDB.getInitialMessages(reqObj.data.conversationId);
-      messages.sort((a, b) => a.id - b.id);
-
-      resp({ status: 'ok', data: messages });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
-      messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
-        source: reqObj.source,
-      });
-    }
-  }
-
   async handleFetchMessages(
     reqObj: PromiseRequest<{ conversationId: string; page: number }>,
     resp: PromiseEventResp<Message[]>,
