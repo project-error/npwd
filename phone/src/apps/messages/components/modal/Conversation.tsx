@@ -35,7 +35,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   const setMessages = useSetMessages();
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
 
   const handleNextPage = useCallback(() => {
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
@@ -55,6 +55,8 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
         setHasMore(false);
         return;
       }
+
+      setHasMore(true);
 
       setPage((curVal) => curVal + 1);
 
