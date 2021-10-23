@@ -48,16 +48,11 @@ class _MessagesService {
 
       const participant = PlayerService.getPlayerFromIdentifier(result.participant);
 
-      console.log('PARTICIPANT', participant);
-
       if (result.error) {
         return resp({ status: 'error' });
       }
 
       if (participant) {
-        console.log('getting that sheeeit');
-        console.log(participant.source);
-        console.log(result.conversationId, sourcePlayer.getPhoneNumber());
         emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
           conversation_id: result.conversationId,
           phoneNumber: sourcePlayer.getPhoneNumber(),

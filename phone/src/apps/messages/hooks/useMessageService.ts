@@ -1,7 +1,6 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import {
   Message,
-  MessageConversation,
   MessageConversationResponse,
   MessageEvents,
 } from '../../../../../typings/messages';
@@ -38,8 +37,6 @@ export const useMessagesService = () => {
   const handleAddConversation = useCallback(
     (conversation: MessageConversationResponse) => {
       const contact = getContactByNumber(conversation.phoneNumber);
-
-      console.log('updating conversation for you');
 
       updateConversations({
         phoneNumber: conversation.phoneNumber,
