@@ -3,7 +3,8 @@ import TwitterDB, { _TwitterDB } from './twitter.db';
 import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
-import { PromiseEventResp } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { ServerPromiseResp } from '../../../typings/common';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -26,12 +27,11 @@ class _TwitterService {
       // We should be able to comment this out as profile **should** be guranteed,
       // as we create a default profile in that process.
 
-      // if (!profile) {
-      //   const defaultProfileNames = await getDefaultProfileNames(identifier);
-      //   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, _source, defaultProfileNames);
-      // } else {
-      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, src, profile);
-      // }
+      if (!profile) {
+        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, src, ['chip', 'taso']);
+      } else {
+        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, src, profile);
+      }
     } catch (e) {
       emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, src);
       twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
@@ -84,12 +84,17 @@ class _TwitterService {
       const identifier = PlayerService.getIdentifier(src);
       const profile = await this.twitterDB.getProfile(identifier);
 
+      console.log('paage number', pageIdx);
+
       if (!profile)
         return twitterLogger.warn(
           `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
         );
 
       const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
+
+      console.log('tweeeeets', tweets.length);
+
       //emitNet(TwitterEvents.FETCH_TWEETS_SUCCESS, src, tweets);
       resp({ data: tweets, status: 'ok' });
     } catch (e) {
@@ -115,16 +120,24 @@ class _TwitterService {
     }
   }
 
-  async handleCreateTweet(src: number, tweet: Tweet) {
+  async handleCreateTweet(
+    reqObj: PromiseRequest<Tweet>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      const createdTweet = await this.twitterDB.createTweet(identifier, tweet);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+
+      console.log('tweet', reqObj.data);
+
+      const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
+
+      resp({ status: 'ok' });
       emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
     } catch (e) {
       twitterLogger.error(`Create tweet failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.CREATE_TWEET_RESULT, src, {
+      emitNet(TwitterEvents.CREATE_TWEET_RESULT, reqObj.source, {
         message: 'TWITTER_CREATE_FAILED',
         type: 'error',
       });

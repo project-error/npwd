@@ -20,6 +20,7 @@ import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
 import { TwitterEvents } from '../../../../../typings/twitter';
+import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {
@@ -58,11 +59,13 @@ export const TwitterApp = () => {
           {promptProfileName ? (
             <ProfilePrompt />
           ) : (
-            <Switch>
-              <Route path="/twitter" exact component={TweetListContainer} />
-              <Route path="/twitter/search" component={TwitterSearch} />
-              <Route path="/twitter/profile" component={TwitterProfile} />
-            </Switch>
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <Switch>
+                <Route path="/twitter" exact component={TweetListContainer} />
+                <Route path="/twitter/search" component={TwitterSearch} />
+                <Route path="/twitter/profile" component={TwitterProfile} />
+              </Switch>
+            </React.Suspense>
           )}
         </AppContent>
         {showTweetButton && <TweetButton openModal={openModal} />}

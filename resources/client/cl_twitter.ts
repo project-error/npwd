@@ -20,6 +20,7 @@ onNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, () => {
 });
 
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, (defaultProfileNames: string[]): void => {
+  console.log('names', defaultProfileNames);
   sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, defaultProfileNames);
 });
 
@@ -57,6 +58,7 @@ onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
  * Twitter fetch tweets
  */
 RegisterNuiProxy(TwitterEvents.FETCH_TWEETS);
+RegisterNuiProxy(TwitterEvents.CREATE_TWEET);
 
 /*
 onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
@@ -89,11 +91,11 @@ onNet(TwitterEvents.FETCH_TWEETS_FILTERED_FAILURE, () => {
 /**
  * Twitter create tweet
  */
-RegisterNuiCallbackType(TwitterEvents.CREATE_TWEET);
+/*RegisterNuiCallbackType(TwitterEvents.CREATE_TWEET);
 on(`__cfx_nui:${TwitterEvents.CREATE_TWEET}`, (data: string) => {
   sendTwitterMessage(TwitterEvents.CREATE_TWEET_LOADING, true);
   emitNet(TwitterEvents.CREATE_TWEET, data);
-});
+});*/
 
 onNet(TwitterEvents.CREATE_TWEET_RESULT, (alert: IAlertProps) => {
   sendTwitterMessage(TwitterEvents.CREATE_TWEET_RESULT, alert);

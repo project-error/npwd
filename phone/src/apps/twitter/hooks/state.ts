@@ -1,5 +1,14 @@
-import { atom } from 'recoil';
-import { FormattedTweet, Tweet as ITweet } from '../../../../../typings/twitter';
+import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
+import {
+  FormattedTweet,
+  Tweet,
+  Tweet as ITweet,
+  TwitterEvents,
+} from '../../../../../typings/twitter';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import { processTweet } from '../utils/tweets';
+import { isEnvBrowser } from '../../../utils/misc';
 
 export const twitterState = {
   profile: atom({
@@ -10,9 +19,24 @@ export const twitterState = {
     key: 'defaultProfileNames',
     default: null,
   }),
-  tweets: atom({
+  // TODO: Fix this any type
+  tweets: atom<any[]>({
     key: 'tweets',
-    default: [],
+    default: [] /*selector({
+      key: 'defaultTweetsValue',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS, { pageId: 0 });
+          return resp.data.map(processTweet);
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return []
+          }
+          console.log(e);
+          return [];
+        }
+      }
+    })*/,
   }),
   filteredTweets: atom({
     key: 'filteredTweets',
@@ -51,3 +75,7 @@ export const twitterState = {
     default: 0,
   }),
 };
+
+export const useTweetsState = () => useRecoilState(twitterState.tweets);
+export const useTweetsValue = () => useRecoilValue(twitterState.tweets);
+export const useSetTweets = () => useSetRecoilState(twitterState.tweets);

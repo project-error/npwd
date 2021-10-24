@@ -45,11 +45,19 @@ onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
   );
 });
 
-onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
+/*onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
   const _source = getSource();
   TwitterService.handleCreateTweet(_source, tweet).catch((e) =>
     twitterLogger.error(`Error occurred in createTweet event (${_source}), Error: ${e.message}`),
   );
+});*/
+
+onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {
+  TwitterService.handleCreateTweet(reqObj, resp).catch((e) => {
+    twitterLogger.error(
+      `Error occurred in createTweet event (${reqObj.source}), Error: ${e.message}`,
+    );
+  });
 });
 
 onNet(TwitterEvents.DELETE_TWEET, async (tweetId: number) => {

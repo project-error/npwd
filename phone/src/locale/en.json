@@ -163,6 +163,7 @@
     "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
     "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Failed to update your profile",
     "APPS_TWITTER_RETWEET_EXISTS": "You have already retweeted this tweet!",
+    "APPS_TWITTER_FETCH_TWEETS_FAILED": "Failed to retrieve tweets",
     "APPS_TWITTER_TIME_JUST_NOW": "Just now",
     "APPS_TWITTER_TIME_MINUTES": "m",
     "APPS_TWITTER_TIME_HOURS": "h",

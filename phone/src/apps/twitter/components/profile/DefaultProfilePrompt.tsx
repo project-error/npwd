@@ -56,11 +56,11 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
           }}
         >
           <option value="" />
-          {defaultProfileNames.map((name) => (
+          {/*{defaultProfileNames.map((name) => (
             <option key={name} value={name}>
               {name}
             </option>
-          ))}
+          ))}*/}
         </Select>
       </FormControl>
       <ProfileUpdateButton handleClick={handleUpdate} />

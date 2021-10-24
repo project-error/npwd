@@ -10,39 +10,10 @@ import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
 import { Tweet, FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
 import { useCurrentTwitterPage } from './useCurrentTwitterPage';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { fetchNui } from '../../../utils/fetchNui';
-
-/**
- * Perform all necessary processing/transforms from the raw database
- * data to what the frontend expects
- * @param {object} tweet - full JSON returned from the server/database
- */
-function processTweet(tweet: Tweet): FormattedTweet {
-  // we store images in the database as a varchar field with
-  // comma separated links to images, so here we split them
-  // back into their distinct members
-  const imageLinks = tweet.images ? tweet.images.split(IMAGE_DELIMITER) : [];
-  const images = imageLinks.map((link) => ({ id: uuidv4(), link }));
-  return { ...tweet, images };
-}
-
-/**
- * in the case a tweet is broadcasted we can make some assumptions
- * that it is brand new and hasn't been liked. We should also need
- * to overwrite isMine since that will be true (sourced from another
- * player's tweet)
-}
- * @param tweet - tweet to process
- * @param playerIdentifier - the current player's identifier
- * @returns Formatted Tweet
- */
-function processBroadcastedTweet(tweet: Tweet, profile: Profile): FormattedTweet {
-  const processedTweet = processTweet(tweet);
-  const isLiked = false;
-  const isMine = profile?.identifier === tweet.identifier;
-  return { ...processedTweet, isMine, isLiked };
-}
+import { useTwitterActions } from './useTwitterActions';
+import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -54,7 +25,8 @@ function processBroadcastedTweet(tweet: Tweet, profile: Profile): FormattedTweet
 export const useTwitterService = () => {
   const { addAlert } = useSnackbar();
   const { setNotification } = useTwitterNotifications();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
+  const { addTweet } = useTwitterActions();
 
   const [profile, setProfile] = useRecoilState<Profile>(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
@@ -68,19 +40,24 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetchNui<Tweet[], { pageId: number }>(TwitterEvents.FETCH_TWEETS, { pageId }).then((resp) => {
       setTweets(resp.map(processTweet));
     });
-  }, [pageId, setTweets]); //needs to be tied to the inf scroll component that updates the pageId state using the wrapped hook
+  }, [pageId, setTweets]);*/
+  //needs to be tied to the inf scroll component that updates the pageId state using the wrapped hook
 
   // these tweets are coming directly from other player clients
-  const handleTweetBroadcast = (tweet: Tweet) => {
-    setNotification(tweet);
-    const processedTweet = processBroadcastedTweet(tweet, profile);
-    const updatedTweets = [processedTweet].concat(currentTweets);
-    setTweets(updatedTweets);
-  };
+  const handleTweetBroadcast = useCallback(
+    (tweet: Tweet) => {
+      setNotification(tweet);
+      const processedTweet = processBroadcastedTweet(tweet, profile);
+      const tweets = [processedTweet].concat(currentTweets);
+
+      addTweet(processedTweet);
+    },
+    [addTweet, setNotification, currentTweets, profile],
+  );
 
   const handleAddAlert = ({ message, type }: IAlert) => {
     addAlert({
