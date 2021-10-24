@@ -31,14 +31,14 @@ const DialerNavBar: React.FC = () => {
   return (
     <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
       <BottomNavigationAction
-        label={t('APPS_DIALER_NAVBAR_HISTORY')}
+        label={t('DIALER.NAVBAR_HISTORY')}
         value="/phone"
         component={NavLink}
         icon={<HistoryIcon />}
         to="/phone"
       />
       <BottomNavigationAction
-        label={t('APPS_DIALER_NAVBAR_DIAL')}
+        label={t('DIALER.NAVBAR_DIAL')}
         value="/phone/dial"
         color="secondary"
         component={NavLink}
@@ -46,7 +46,7 @@ const DialerNavBar: React.FC = () => {
         to="/phone/dial"
       />
       <BottomNavigationAction
-        label={t('APPS_DIALER_NAVBAR_CONTACTS')}
+        label={t('DIALER.NAVBAR_CONTACTS')}
         value="/phone/contacts"
         color="secondary"
         component={NavLink}

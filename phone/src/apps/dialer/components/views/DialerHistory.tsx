@@ -43,7 +43,7 @@ export const DialerHistory: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
-          {t('APPS_DIALER_NO_HISTORY')}
+          {t('DIALER.NO_HISTORY')}
           <span role="img" aria-label="sad">
             😞
           </span>

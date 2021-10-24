@@ -75,30 +75,30 @@ export function Profile() {
       {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
       <div className={classes.spacer} />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_AVATAR')}
+        label={t('TWITTER.EDIT_PROFILE_AVATAR')}
         value={avatarUrl}
         handleChange={handleAvatarChange}
         allowChange={enableAvatars}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_NAME')}
+        label={t('TWITTER.EDIT_PROFILE_NAME')}
         value={name}
         handleChange={handleNameChange}
         allowChange={allowEditableProfileName}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_BIO')}
+        label={t('TWITTER.EDIT_PROFILE_BIO')}
         value={bio}
         handleChange={handleBioChange}
         multiline
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_LOCATION')}
+        label={t('TWITTER.EDIT_PROFILE_LOCATION')}
         value={location}
         handleChange={handleLocationChange}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_JOB')}
+        label={t('TWITTER.EDIT_PROFILE_JOB')}
         value={job}
         handleChange={handleJobChange}
       />

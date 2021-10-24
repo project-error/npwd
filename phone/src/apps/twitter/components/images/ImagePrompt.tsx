@@ -34,7 +34,7 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       onChange={handleImageChange}
       multiline
       size="small"
-      placeholder={t('APPS_TWITTER_IMAGE_PLACEHOLDER')}
+      placeholder={t('TWITTER.IMAGE_PLACEHOLDER')}
       inputRef={textFieldRef}
     />
   );

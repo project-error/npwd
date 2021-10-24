@@ -60,8 +60,8 @@ function TwitterSearch() {
         <div className={classes.searchContainer}>
           <TextField
             className={classes.search}
-            placeholder={t('APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER')}
-            label={t('APPS_TWITTER_SEARCH_TWEETS')}
+            placeholder={t('TWITTER.SEARCH_TWEETS_PLACEHOLDER')}
+            label={t('TWITTER.SEARCH_TWEETS')}
             value={searchValue}
             onChange={handleChange}
             size="medium"

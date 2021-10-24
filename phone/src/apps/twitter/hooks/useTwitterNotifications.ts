@@ -29,10 +29,7 @@ export const useTwitterNotifications = () => {
 
   const setNotification = ({ profile_name, message, isRetweet }: Tweet) => {
     if (profileLoading !== 'hasValue') return;
-
-    const titleStr = isRetweet
-      ? 'APPS_TWITTER_NEW_RETWEET_BROADCAST'
-      : 'APPS_TWITTER_NEW_BROADCAST';
+    const titleStr = isRetweet ? 'TWITTER.NEW_RETWEET_BROADCAST' : 'TWITTER.NEW_BROADCAST';
 
     // profile defaults to null, if for some reason it is not initialized
     // defend against this case
@@ -70,7 +67,7 @@ export const useTwitterNotifications = () => {
       removeId(NOTIFICATION_ID);
       addNotification({
         ...notification,
-        title: t('APPS_TWITTER_UNREAD_MESSAGES', {
+        title: t('TWITTER.UNREAD_MESSAGES', {
           count: newCount,
         }),
         content: null,
