@@ -24,7 +24,7 @@ export const useMatchActions = () => {
       fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, [{ id, liked }]).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('APPS_MATCH_SAVE_LIKES_FAILED'),
+            message: t('MATCH.FEEDBACK.SAVE_LIKES_FAILED'),
             type: 'error',
           });
         }
@@ -35,7 +35,7 @@ export const useMatchActions = () => {
 
         if (resp.data) {
           addAlert({
-            message: t('APPS_MATCH_NEW_LIKE_FOUND'),
+            message: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
             type: 'info',
           });
           fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {

@@ -20,9 +20,9 @@ function MatchList() {
   const [t] = useTranslation();
   const { matches, error } = useMatches();
 
-  if (error) return <PageText text={t('APPS_MATCH_MATCHES_ERROR')} />;
+  if (error) return <PageText text={t('MATCH.FEEDBACK.MATCHES_ERROR')} />;
   if (!matches) return <Loader />;
-  if (matches.length === 0) return <PageText text={t('APPS_MATCH_NO_MATCHES')} />;
+  if (matches.length === 0) return <PageText text={t('MATCH.FEEDBACK.NO_MATCHES')} />;
 
   return (
     <Box className={classes.root}>

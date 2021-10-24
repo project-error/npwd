@@ -33,7 +33,7 @@ function ProfileEditor() {
       <Box className={classes.switch}>
         <FormControlLabel
           control={<Switch checked={showPreview} onChange={toggleSwitch} />}
-          label={t<string>('APPS_MATCH_EDIT_PROFILE_PREVIEW')}
+          label={t<string>('MATCH.EDIT_PROFILE_PREVIEW')}
         />
       </Box>
       <ProfileForm showPreview={showPreview} profile={profile} />

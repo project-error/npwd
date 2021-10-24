@@ -184,7 +184,7 @@ class _TwitterService {
       if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
         resp({
           status: 'error',
-          errorMsg: 'RETWEET_EXISTS',
+          errorMsg: 'FEEDBACK.RETWEET_EXISTS',
         });
       }
 

@@ -22,7 +22,7 @@ function NoProfiles() {
   const [t] = useTranslation();
   return (
     <Box className={classes.root}>
-      <Typography variant="h5">{t('APPS_MATCH_NO_PROFILES')}</Typography>
+      <Typography variant="h5">{t('MATCH.FEEDBACK.NO_PROFILES')}</Typography>
     </Box>
   );
 }

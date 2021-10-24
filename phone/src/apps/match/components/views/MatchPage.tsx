@@ -41,9 +41,9 @@ const MatchPage = () => {
     setViewed(id, liked);
   };
 
-  if (error) return <PageText text={t('APPS_MATCH_PROFILES_ERROR')} />;
+  if (error) return <PageText text={t('MATCH.FEEDBACK.PROFILES_ERROR')} />;
   if (!loaded || !profiles) return <Loader />;
-  if (!activeProfile) return <PageText text={t('APPS_MATCH_NO_PROFILES')} />;
+  if (!activeProfile) return <PageText text={t('MATCH.FEEDBACK.NO_PROFILES')} />;
 
   return (
     <Paper className={classes.root} square>

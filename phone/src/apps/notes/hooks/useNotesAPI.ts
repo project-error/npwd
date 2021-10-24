@@ -26,7 +26,7 @@ export const useNotesAPI = (): NotesAPIValue => {
 
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_NOTES_ADD_FAILED'),
+          message: t('NOTES.FEEDBACK.ADD_FAILED'),
           type: 'error',
         });
       }
@@ -34,7 +34,7 @@ export const useNotesAPI = (): NotesAPIValue => {
       addLocalNote(resp.data);
 
       addAlert({
-        message: t('APPS_NOTES_ADD_SUCCESS'),
+        message: t('NOTES.FEEDBACK.ADD_SUCCESS'),
         type: 'success',
       });
     },
@@ -47,7 +47,7 @@ export const useNotesAPI = (): NotesAPIValue => {
 
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_NOTES_DELETE_FAILED'),
+          message: t('NOTES.FEEDBACK.DELETE_FAILED'),
           type: 'error',
         });
       }
@@ -55,7 +55,7 @@ export const useNotesAPI = (): NotesAPIValue => {
       deleteLocalNote(resp.data.id);
 
       addAlert({
-        message: t('APPS_NOTES_DELETE_SUCCESS'),
+        message: t('NOTES.FEEDBACK.DELETE_SUCCESS'),
         type: 'success',
       });
     },
@@ -71,7 +71,7 @@ export const useNotesAPI = (): NotesAPIValue => {
       });
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_NOTES_UPDATE_FAILED'),
+          message: t('NOTES.FEEDBACK.UPDATE_FAILED'),
           type: 'error',
         });
       }
@@ -79,7 +79,7 @@ export const useNotesAPI = (): NotesAPIValue => {
       updateLocalNote({ id, title, content });
 
       addAlert({
-        message: t('APPS_NOTES_UPDATE_SUCCESS'),
+        message: t('NOTES.FEEDBACK.UPDATE_SUCCESS'),
         type: 'success',
       });
     },
