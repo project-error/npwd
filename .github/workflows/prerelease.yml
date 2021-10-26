@@ -52,7 +52,7 @@ jobs:
         with:
           environment: production
           tagName: "unstable"
-          sourceMapOptions: '{"include": ["resources/html/static/js"], "urlPrefix": "~/static/js"}'
+          sourceMapOptions: '{"include": ["resources/html/static/js"], "urlPrefix": "~/resources/html/static/js"}'
       - name: Create Release & Changelog
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:

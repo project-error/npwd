@@ -38,7 +38,7 @@ jobs:
         with:
           environment: production
           tagName: ${{ steps.get_tag.outputs.VERSION_TAG }}
-          sourceMapOptions: '{"include": ["resources/html/static/js"], "urlPrefix": "~/static/js"}'
+          sourceMapOptions: '{"include": ["resources/html/static/js"], "urlPrefix": "~/resources/html/static/js"}'
 
       - name: Bundle built files
         run: |
