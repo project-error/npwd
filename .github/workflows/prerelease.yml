@@ -34,7 +34,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Run build
-        run: yarn build
+        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 
       - name: Bundle and Zip files
         run: |
@@ -45,7 +45,17 @@ jobs:
           mkdir ./temp/npwd/resources/client
           cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
           cd ./temp && zip -r npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip ./npwd
-
+      - name: Create Sentry Release (NPWD)
+        uses: tclindner/sentry-releases-action@v1.2.0
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: 'project-error'
+          SENTRY_PROJECT: 'npwd'
+          SENTRY_URL: https://sentry.projecterror.dev/
+        with:
+          environment: production
+          tagName: "unstable"
+          sourceMapOptions: '{"include": ["resources/html"]}'
       - name: Create Release & Changelog
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:

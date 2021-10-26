@@ -21,7 +21,7 @@ if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: 'https://0c8321c22b794dc7a648a571cc8c3c34@sentry.projecterror.dev/2',
     autoSessionTracking: true,
-    release: process.env.REACT_APP_VERSION,
+    release: process.env.REACT_APP_VERSION ?? 'unknown',
     integrations: [new Integrations.BrowserTracing()],
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control

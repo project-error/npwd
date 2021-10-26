@@ -4,62 +4,29 @@ on:
     tags:
       - "*"
 jobs:
-  bump-version:
-    name: Bump Version
-    runs-on: ubuntu-latest
-    outputs:
-      VERSION_TAG: ${{ steps.get_version_tag.outputs.VERSION_TAG }}
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Get Version Tag
-        id: get_version_tag
-        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-
-      - name: Bump package shells
-        run: |
-          cd phone && npm version ${{ needs.bump-version.outputs.VERSION_TAG }}
-          cd resources && npm version ${{ needs.bump-version.outputs.VERSION_TAG }}
-          git status
-
-      - name: Commit and push
-        uses: EndBug/add-and-commit@v7.2.1
-        with:
-          message: Bump version to v${{ needs.bump-version.outputs.VERSION_TAG }}
-          default_author: github_actions
-          branch: master
-          add: |
-            phone/package.json
-            resources/package.json
-
   create-tagged-release:
     name: Build and Create Tagged Release
     runs-on: ubuntu-latest
-    needs: bump-version
 
     steps:
-      - name: Install archive tools
-        run: sudo apt install zip
-
+      - name: Get tag
+        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
+        id: get_tag
       - name: Checkout source code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
-
+      - name: Yarn Cache Call
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
 
       - name: Run build
-        run: yarn build
+        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 
       - name: Create Sentry Release (NPWD)
         uses: tclindner/sentry-releases-action@v1.2.0
@@ -68,23 +35,10 @@ jobs:
           SENTRY_ORG: 'project-error'
           SENTRY_PROJECT: 'npwd'
           SENTRY_URL: https://sentry.projecterror.dev/
-          SENTRY_LOG_LEVEL: debug
         with:
           environment: production
-          tagName: ${{ needs.bump-version.outputs.VERSION_TAG }}
-          sourceMapOptions: './resources/html/static/js'
-
-      - name: Create Sentry Release (NodeJS)
-        uses: tclindner/sentry-releases-action@v1.2.0
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: 'project-error'
-          SENTRY_PROJECT: 'npwd-s'
-          SENTRY_URL: https://sentry.projecterror.dev/
-        with:
-          environment: production
-          tagName: ${{ steps.get_vars.outputs.VERSION_TAG }}
-          sourceMapOptions: './resources/html/static/js'
+          tagName: ${{ steps.get_tag.outputs.VERSION_TAG }}
+          sourceMapOptions: '{"include": ["resources/html"]}'
 
       - name: Bundle built files
         run: |
@@ -93,16 +47,16 @@ jobs:
           cp -r ./resources/{dist,html} ./temp/npwd/resources
           # Make sure we copy our one lua boy
           cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
-          cd ./temp && zip -r npwd-${{ needs.bump-version.outputs.VERSION_TAG }}.zip ./npwd
+          cd ./temp && zip -r npwd-${{ steps.get_tag.outputs.VERSION_TAG }}.zip ./npwd
 
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
         id: auto_release
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: NPWD Release | ${{ needs.bump-version.outputs.VERSION_TAG }}
+          title: NPWD Release | ${{ steps.get_tag.outputs.VERSION_TAG }}
           prerelease: false
-          files: npwd-${{ needs.bump-version.outputs.VERSION_TAG }}.zip
+          files: npwd-${{ steps.get_tag.outputs.VERSION_TAG }}.zip
 
         env:
           CI: false
