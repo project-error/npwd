@@ -56,7 +56,9 @@ module.exports = {
 
       paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html');
 
-      if (webpackConfig.mode === 'development') {
+      if (webpackConfig.mode === 'development' && !process.env.REACT_IN_GAME) {
+        webpackConfig.devtool = 'eval';
+      } else if (webpackConfig.mode === 'development') {
         webpackConfig.devtool = 'eval-source-map';
       }
 
