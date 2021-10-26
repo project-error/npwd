@@ -20,9 +20,6 @@ jobs:
         with:
           node-version: '14'
           cache: 'yarn'
-      # Get zip util
-      - name: Install archive tools
-        run: sudo apt install zip
 
       - name: Get variables
         id: get_vars
@@ -55,7 +52,7 @@ jobs:
         with:
           environment: production
           tagName: "unstable"
-          sourceMapOptions: '{"include": ["resources/html"]}'
+          sourceMapOptions: '{"include": ["resources/html/static/js"], "urlPrefix": "~/static/js"}'
       - name: Create Release & Changelog
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
