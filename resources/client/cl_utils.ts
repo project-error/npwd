@@ -1,5 +1,5 @@
 import { uuidv4 } from '../utils/fivem';
-import { ClUtils } from './client';
+import { ClUtils, config } from './client';
 
 interface ISettings {
   promiseTimeout: number;
@@ -65,6 +65,29 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
   on(`__cfx_nui:${event}`, callback);
 };
 
+// Utilise this function alongside NuiProxy to prevent eager mounting (maybe)
+let playerLoaded = false;
+const playerReady = async () => {
+  if (playerLoaded) return true;
+  return new Promise<boolean>((resolve) => {
+    setInterval(() => {
+      if (playerLoaded) resolve(true);
+    }, 50);
+  });
+};
+
+setTimeout(async () => {
+  if (!config.general.enableMultiChar) {
+    on(`playerSpawned`, async () => {
+      playerLoaded = true;
+    });
+  } else {
+    onNet(`npwd:playerLoaded`, async (state: boolean) => {
+      playerLoaded = state;
+    });
+  }
+}, 0);
+
 /**
  *  Will Register an NUI event listener that will immediately
  *  proxy to a server side event of the same name and wait
@@ -74,6 +97,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
+    await playerReady();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
       cb(res);
