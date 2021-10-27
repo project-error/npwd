@@ -5,6 +5,7 @@ import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
+/*
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
   const _source = getSource();
   TwitterService.handleGetOrCreateProfile(_source).catch((e) =>
@@ -12,6 +13,16 @@ onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
       `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
     ),
   );
+});
+*/
+
+onNetPromise(TwitterEvents.GET_OR_CREATE_PROFILE, async (reqObj, resp) => {
+  const _source = getSource();
+  TwitterService.handleGetOrCreateProfile(reqObj, resp).catch((e) => {
+    twitterLogger.error(
+      `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
+    );
+  });
 });
 
 onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
@@ -27,6 +38,7 @@ onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
     twitterLogger.error(`Error occurred in updateProfile event (${_source}), Error: ${e.message}`),
   );
 });
+
 /*
 onNet(TwitterEvents.FETCH_TWEETS, async (pageI: number) => {
   const _source = getSource();

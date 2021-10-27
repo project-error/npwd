@@ -14,8 +14,11 @@ class _TwitterService {
     twitterLogger.debug('Twitter service started');
   }
 
-  async handleGetOrCreateProfile(src: number) {
-    const identifier = PlayerService.getIdentifier(src);
+  async handleGetOrCreateProfile(
+    reqObj: PromiseRequest<void>,
+    resp: PromiseEventResp<Profile | string[]>,
+  ) {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
 
     try {
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
@@ -28,14 +31,15 @@ class _TwitterService {
       // as we create a default profile in that process.
 
       if (!profile) {
-        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, src, ['chip', 'taso']);
+        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, ['chip', 'taso']);
       } else {
-        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, src, profile);
+        resp({ status: 'ok', data: profile });
+        //emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, reqObj.source, profile);
       }
     } catch (e) {
-      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, src);
+      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, reqObj.source);
       twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
     }
   }

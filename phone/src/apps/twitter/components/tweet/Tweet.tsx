@@ -145,4 +145,4 @@ export const Tweet = (tweet: ITweet) => {
   );
 };
 
-export default memo(Tweet);
+export default Tweet;

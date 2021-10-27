@@ -1,17 +1,16 @@
+import { useCallback } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
-import { twitterState } from './state';
+import { twitterState, useTwitterProfileValue } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
 import { Tweet, FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
 import { useCurrentTwitterPage } from './useCurrentTwitterPage';
-import { useCallback, useEffect } from 'react';
-import { fetchNui } from '../../../utils/fetchNui';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 
@@ -28,7 +27,7 @@ export const useTwitterService = () => {
   const { t } = useTranslation();
   const { addTweet } = useTwitterActions();
 
-  const [profile, setProfile] = useRecoilState<Profile>(twitterState.profile);
+  const profile = useTwitterProfileValue();
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
   const { pageId } = useCurrentTwitterPage();
   const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
@@ -52,11 +51,10 @@ export const useTwitterService = () => {
     (tweet: Tweet) => {
       setNotification(tweet);
       const processedTweet = processBroadcastedTweet(tweet, profile);
-      const tweets = [processedTweet].concat(currentTweets);
 
       addTweet(processedTweet);
     },
-    [addTweet, setNotification, currentTweets, profile],
+    [addTweet, setNotification, profile],
   );
 
   const handleAddAlert = ({ message, type }: IAlert) => {
@@ -66,7 +64,8 @@ export const useTwitterService = () => {
     });
   };
 
-  useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE, setProfile);
+  // TODO: Remove TwitterEvents.GET_OR_CREATE_PROFILE listener
+  /*useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE, setProfile);*/
   useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE_NULL, setDefaultProfileNames);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_PROFILE_RESULT, handleAddAlert);
   useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_LOADING, setUpdateProfileLoading);

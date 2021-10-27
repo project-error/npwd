@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
@@ -42,8 +42,6 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
         setHasMore(true);
         setPage((curVal) => curVal + 1);
 
-        console.log('new tewwweeeeeettts', resp.data);
-
         updateTweets(resp.data.map(processTweet));
       },
     );
@@ -78,4 +76,4 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   );
 }
 
-export default memo(TweetList); // only re-render if our tweets change
+export default TweetList; // only re-render if our tweets change
