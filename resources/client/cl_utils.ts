@@ -1,3 +1,4 @@
+import { PhoneEvents } from '../../typings/phone';
 import { uuidv4 } from '../utils/fivem';
 import { ClUtils, config } from './client';
 
@@ -76,13 +77,13 @@ const playerReady = async () => {
   });
 };
 
-setTimeout(async () => {
+setTimeout(() => {
   if (!config.general.enableMultiChar) {
     on(`playerSpawned`, async () => {
       playerLoaded = true;
     });
   } else {
-    onNet(`npwd:playerLoaded`, async (state: boolean) => {
+    onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
       playerLoaded = state;
     });
   }
