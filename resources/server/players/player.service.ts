@@ -161,11 +161,12 @@ class _PlayerService {
    * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
    *
    */
-  async handleNewPlayerEvent({ source: src, identifier, firstname, lastname }: PlayerAddData) {
+  async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
     const player = await this.createNewPlayer({ src, identifier: identifier.toString() });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);
+    if (phoneNumber) player.setPhoneNumber(phoneNumber);
 
     this.addPlayerToMaps(src, player);
 
