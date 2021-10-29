@@ -165,11 +165,10 @@ class _PlayerService {
    *
    */
   async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier: identifier.toString() });
+    const player = await this.createNewPlayer({ src, identifier: identifier.toString(), phoneNumber });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);
-    if (phoneNumber) player.setPhoneNumber(phoneNumber);
 
     this.addPlayerToMaps(src, player);
 
