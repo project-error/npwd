@@ -11,6 +11,7 @@ RegisterNuiProxy(MessageEvents.FETCH_MESSAGE_CONVERSATIONS);
 RegisterNuiProxy(MessageEvents.DELETE_MESSAGE);
 RegisterNuiProxy(MessageEvents.FETCH_MESSAGES);
 RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
+RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 /*RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);*/
 

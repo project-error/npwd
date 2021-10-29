@@ -131,7 +131,8 @@ export const MessageModal = () => {
   };
 
   const handleDeleteConversation = () => {
-    fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_CONVERSATION, {
+    console.log('convo id', groupId);
+    fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
       conversationId: groupId,
     }).then((resp) => {
       if (resp.status !== 'ok') {

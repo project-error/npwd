@@ -18,13 +18,13 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
   const [participant, setParticipant] = useState<any>('');
-  const { getContactByNumber } = useContactActions();
+  const { getDisplayByNumber, getPictureByNumber, getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
   const { updateConversations } = useMessageActions();
 
   useEffect(() => {
     if (phoneNumber) {
-      const find = getContactByNumber(phoneNumber) || { number: phoneNumber };
+      const find = getContactByNumber(phoneNumber) || phoneNumber;
       setParticipant(find);
     }
   }, [phoneNumber, getContactByNumber]);
@@ -49,21 +49,30 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           });
         }
 
-        const contact = getContactByNumber(resp.data.phoneNumber);
+        const display = getDisplayByNumber(resp.data.phoneNumber);
+        const avatar = getPictureByNumber(resp.data.phoneNumber);
 
         updateConversations({
           phoneNumber: resp.data.phoneNumber,
           conversation_id: resp.data.conversation_id,
-          display: contact.display || null,
+          display,
           unread: 0,
-          avatar: contact.avatar || null,
+          avatar,
         });
 
         setParticipant(null);
         history.push('/messages');
       });
     }
-  }, [history, participant, addAlert, t, getContactByNumber, updateConversations]);
+  }, [
+    history,
+    participant,
+    addAlert,
+    t,
+    updateConversations,
+    getDisplayByNumber,
+    getPictureByNumber,
+  ]);
 
   const renderAutocompleteInput = (params) => (
     <TextField

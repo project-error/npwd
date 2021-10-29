@@ -46,17 +46,21 @@ class _MessagesService {
         reqObj.data.targetNumber,
       );
 
-      const participant = PlayerService.getPlayerFromIdentifier(result.participant);
-
       if (result.error) {
         return resp({ status: 'error' });
       }
 
-      if (participant) {
-        emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
-          conversation_id: result.conversationId,
-          phoneNumber: sourcePlayer.getPhoneNumber(),
-        });
+      try {
+        const participant = PlayerService.getPlayerFromIdentifier(result.participant);
+
+        if (participant) {
+          emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
+            conversation_id: result.conversationId,
+            phoneNumber: sourcePlayer.getPhoneNumber(),
+          });
+        }
+      } catch (e) {
+        messagesLogger.error(e.message);
       }
 
       resp({
