@@ -137,15 +137,18 @@ class _PlayerService {
   async createNewPlayer({
     src,
     identifier,
+    phoneNumber
   }: {
     src: number;
     identifier: string;
+    phoneNumber: string;
   }): Promise<Player | null> {
     const username = GetPlayerName(src.toString());
 
-    const phoneNumber = await findOrGeneratePhoneNumber(identifier);
-
-    if (!phoneNumber) return null;
+    if (!phoneNumber) {
+      phoneNumber = await findOrGeneratePhoneNumber(identifier);
+      if (!phoneNumber) return null;
+    }
 
     return new Player({
       source: src,
