@@ -180,3 +180,25 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
 //   const time = getCurrentGameTime()
 //   sendMessage('PHONE', 'setTime', time)
 // }, 2000);
+
+// Set a global function to check if the player is loaded
+let playerLoaded = false;
+(global as any).playerReady = async () => {
+  if (playerLoaded) return true;
+  return new Promise<boolean>((resolve) => {
+    setInterval(() => {
+      if (playerLoaded) resolve(true);
+    }, 50);
+  });
+};
+
+// Register events to set the state of playerLoaded
+if (!config.general.enableMultiChar) {
+  on(`playerSpawned`, async () => {
+    playerLoaded = true;
+  });
+} else {
+  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
+    playerLoaded = state;
+  });
+}
