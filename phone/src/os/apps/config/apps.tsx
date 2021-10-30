@@ -35,6 +35,7 @@ import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
+import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 
 export interface IAppConfig {
   id: string;
@@ -135,7 +136,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} emitOnOpen={true} />,
+    Route: () => (
+      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={true} />
+    ),
   },
   {
     id: 'MARKETPLACE',

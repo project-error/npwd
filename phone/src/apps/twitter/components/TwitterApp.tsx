@@ -49,6 +49,8 @@ export const TwitterApp = () => {
   const handlePageChange = (e, page) => setActivePage(page);
   const showTweetButton = !promptProfileName && activePage === 0;
 
+  console.log('my profile in twitter', profile);
+
   return (
     <TwitterThemeProvider>
       <AppWrapper id="twitter-app">
@@ -60,11 +62,9 @@ export const TwitterApp = () => {
             <ProfilePrompt />
           ) : (
             <React.Suspense fallback={<LoadingSpinner />}>
-              <Switch>
-                <Route path="/twitter" exact component={TweetListContainer} />
-                <Route path="/twitter/search" component={TwitterSearch} />
-                <Route path="/twitter/profile" component={TwitterProfile} />
-              </Switch>
+              <Route path="/twitter" exact component={TweetListContainer} />
+              <Route path="/twitter/search" component={TwitterSearch} />
+              <Route path="/twitter/profile" component={TwitterProfile} />
             </React.Suspense>
           )}
         </AppContent>

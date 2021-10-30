@@ -7,8 +7,6 @@ import {
   TwitterEvents,
 } from '../../../../../typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
-import { processTweet } from '../utils/tweets';
-import { isEnvBrowser } from '../../../utils/misc';
 import { ServerPromiseResp } from '../../../../../typings/common';
 
 export const twitterState = {
@@ -21,6 +19,7 @@ export const twitterState = {
           const resp = await fetchNui<ServerPromiseResp<Profile>>(
             TwitterEvents.GET_OR_CREATE_PROFILE,
           );
+          console.log(resp.data);
           return resp.data;
         } catch (e) {
           console.log(e);

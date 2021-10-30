@@ -3,6 +3,8 @@ import { sendTwitterMessage } from '../utils/messages';
 import { IAlertProps } from '../../typings/alerts';
 import { RegisterNuiProxy } from './cl_utils';
 
+RegisterNuiProxy(TwitterEvents.GET_OR_CREATE_PROFILE);
+
 /**
  * Twitter get or create profile
  */

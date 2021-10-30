@@ -10,6 +10,9 @@ import { twitterState } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,7 @@ export function ProfilePrompt() {
   const defaultProfileNames = useRecoilValue(twitterState.defaultProfileNames);
   const [profileName, setProfileName] = useState(profile?.profile_name || '');
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
 
   const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName && !profile;
   const eventName = showDefaultProfileNames
@@ -42,6 +46,19 @@ export function ProfilePrompt() {
       ...profile,
       profile_name: profileName,
     });
+
+    fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
+      (resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: 'Failed to update profile',
+            type: 'error',
+          });
+        }
+
+        console.log('youre so cool');
+      },
+    );
   };
 
   // case where profile doesn't exist, couldn't be created automatically

@@ -4,7 +4,6 @@ import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitte
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
-import { ServerPromiseResp } from '../../../typings/common';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -23,12 +22,16 @@ class _TwitterService {
     try {
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
 
+      console.log('this source is coool', reqObj.source);
+
       // if we got null from getOrCreateProfile it means it doesn't exist and
       // we failed to create it. In this case we pass the UI some default
       // profile names it can choose from.
 
       // We should be able to comment this out as profile **should** be guranteed,
       // as we create a default profile in that process.
+
+      console.log('our profile', profile);
 
       if (!profile) {
         emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, ['chip', 'taso']);
@@ -45,6 +48,8 @@ class _TwitterService {
   }
 
   async handleCreateProfile(src: number, profile: Profile) {
+    console.log('getting that profile', profile);
+
     try {
       const identifier = PlayerService.getIdentifier(src);
       await this.twitterDB.createProfile(identifier, profile.profile_name);
@@ -87,8 +92,6 @@ class _TwitterService {
     try {
       const identifier = PlayerService.getIdentifier(src);
       const profile = await this.twitterDB.getProfile(identifier);
-
-      console.log('paage number', pageIdx);
 
       if (!profile)
         return twitterLogger.warn(

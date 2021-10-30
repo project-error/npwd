@@ -1,5 +1,11 @@
 import { useCallback } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+  waitForAll,
+} from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useNuiEvent } from 'fivem-nui-react-lib';
@@ -21,13 +27,19 @@ import { processBroadcastedTweet, processTweet } from '../utils/tweets';
  * I have given up on parsing/cleaning database query results there
  * there and have moved that logic here instead.
  */
+
+// TODO: Bring back notifications
+
 export const useTwitterService = () => {
   const { addAlert } = useSnackbar();
   const { setNotification } = useTwitterNotifications();
   const { t } = useTranslation();
   const { addTweet } = useTwitterActions();
 
-  const profile = useTwitterProfileValue();
+  //const [profile] = useRecoilValue(waitForAll([twitterState.profile]))
+  const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
+    twitterState.profile,
+  );
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
   const { pageId } = useCurrentTwitterPage();
   const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
@@ -49,12 +61,16 @@ export const useTwitterService = () => {
   // these tweets are coming directly from other player clients
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
+      if (profileLoading !== 'hasValue') return;
+
+      if (!profileContent) return;
+
       setNotification(tweet);
-      const processedTweet = processBroadcastedTweet(tweet, profile);
+      const processedTweet = processBroadcastedTweet(tweet, profileContent);
 
       addTweet(processedTweet);
     },
-    [addTweet, setNotification, profile],
+    [addTweet, setNotification, profileContent, profileLoading],
   );
 
   const handleAddAlert = ({ message, type }: IAlert) => {

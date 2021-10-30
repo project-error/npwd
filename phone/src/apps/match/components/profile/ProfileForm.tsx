@@ -95,7 +95,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     });
   };
 
-  if (!profile /* && !ResourceConfig.match.allowEditableProfileName*/) {
+  if (!profile && !ResourceConfig.match.allowEditableProfileName) {
     return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
   }
 
