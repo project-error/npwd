@@ -41,11 +41,13 @@ export function ProfilePrompt() {
     ? TwitterEvents.CREATE_PROFILE
     : TwitterEvents.UPDATE_PROFILE;
 
-  const handleUpdate = () => {
-    Nui.send(eventName, {
+  console.log('get me a event', eventName);
+
+  const handleUpdate = async () => {
+    /* Nui.send(eventName, {
       ...profile,
       profile_name: profileName,
-    });
+    });*/
 
     fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {

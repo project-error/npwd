@@ -49,8 +49,6 @@ export const TwitterApp = () => {
   const handlePageChange = (e, page) => setActivePage(page);
   const showTweetButton = !promptProfileName && activePage === 0;
 
-  console.log('my profile in twitter', profile);
-
   return (
     <TwitterThemeProvider>
       <AppWrapper id="twitter-app">

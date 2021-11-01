@@ -70,6 +70,8 @@ class _TwitterService {
   }
 
   async handleUpdateProfile(src: number, profile: Profile) {
+    console.log('getting that updated profile', profile);
+
     try {
       const identifier = PlayerService.getIdentifier(src);
       await this.twitterDB.updateProfile(identifier, profile);

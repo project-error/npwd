@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
@@ -24,7 +24,7 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   const { t } = useTranslation();
   const { updateTweets } = useTwitterActions();
 
-  const handleNextTweets = async () => {
+  const handleNextTweets = useCallback(() => {
     fetchNui<ServerPromiseResp<ITweet[]>>(TwitterEvents.FETCH_TWEETS, { pageId: page }).then(
       (resp) => {
         if (resp.status !== 'ok') {
@@ -33,6 +33,8 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
             message: t('APPS_TWITTER_FETCH_TWEETS_FAILED'),
           });
         }
+
+        console.log('getting that shit broooooooooooooooooo', resp.data.length);
 
         if (resp.data.length === 0) {
           setHasMore(false);
@@ -45,7 +47,7 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
         updateTweets(resp.data.map(processTweet));
       },
     );
-  };
+  }, [page, updateTweets, addAlert, t]);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -62,16 +64,19 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   if (!hasLoaded) return <TweetSkeletonList />;
   return (
     <List>
-      <InfiniteScroll
-        next={handleNextTweets}
-        hasMore={hasMore}
-        loader={<CircularProgress />}
-        dataLength={tweets.length}
-      >
-        {tweets.map((tweet) => (
-          <Tweet key={tweet.id} {...tweet} />
-        ))}
-      </InfiniteScroll>
+      <div id="twitter-scrollable-target" style={{ overflow: 'auto' }}>
+        <InfiniteScroll
+          next={handleNextTweets}
+          hasMore={hasMore}
+          loader={<CircularProgress />}
+          scrollableTarget="twitter-scrollable-target"
+          dataLength={tweets.length}
+        >
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} {...tweet} />
+          ))}
+        </InfiniteScroll>
+      </div>
     </List>
   );
 }

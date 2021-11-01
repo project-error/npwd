@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useTwitterNotifications } from '../../hooks/useTwitterNotifications';
 import TweetList from './TweetList';
 import { Tweet, TwitterEvents } from '../../../../../../typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
