@@ -1,4 +1,4 @@
-import { amber, common } from '@material-ui/core/colors';
+import { amber, common } from '@mui/material/colors';
 
 export const MESSAGES_APP_PRIMARY_COLOR = amber[800];
 export const MESSAGES_APP_TEXT_COLOR = common.white;

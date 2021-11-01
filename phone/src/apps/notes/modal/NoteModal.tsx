@@ -1,25 +1,29 @@
-import { Button, Slide, Paper, Typography, Container, Box } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Button, Slide, Paper, Typography, Container, Box } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import { useTranslation } from 'react-i18next';
 import { StatusButton } from '../../../ui/components/StatusButton';
-import { DeleteNoteDTO, NoteItem, NotesEvents } from '../../../../../typings/notes';
 import { TextField } from '../../../ui/components/Input';
-import { fetchNui } from '../../../utils/fetchNui';
-import { useSelectedNote } from '../hooks/state';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { useNotesActions } from '../hooks/useNotesActions';
+import { useModalVisible, useSelectedNote } from '../hooks/state';
+import { useHistory, useLocation } from 'react-router';
+import { useApps } from '../../../os/apps/hooks/useApps';
+import { useNotesAPI } from '../hooks/useNotesAPI';
 
-export const NoteModal = () => {
+export const NoteModal: React.FC = () => {
   const classes = useStyles();
-  const { addNote, deleteNote, updateNote } = useNotesActions();
+  const { addNewNote, deleteNote, updateNote } = useNotesAPI();
+  const [modalVisible, setModalVisible] = useModalVisible();
   const { t } = useTranslation();
   const [selectedNote, setSelectedNote] = useSelectedNote();
   const [noteTitle, setNoteTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');
-  const { addAlert } = useSnackbar();
+
+  const history = useHistory();
+  const { getApp } = useApps();
+  const location = useLocation();
+
+  const notesApp = useMemo(() => getApp('NOTES'), [getApp]);
 
   const isNewNote = !Boolean(selectedNote?.id);
 
@@ -30,66 +34,28 @@ export const NoteModal = () => {
     }
   }, [selectedNote]);
 
-  const handleNoteSave = () => {
-    fetchNui<ServerPromiseResp<NoteItem>>(NotesEvents.ADD_NOTE, {
-      title: noteTitle,
-      content: noteContent,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('APPS_NOTES_ADD_FAILED'),
-          type: 'error',
-        });
-      }
-
-      addNote(resp.data);
-
-      addAlert({
-        message: t('APPS_NOTES_ADD_SUCCESS'),
-        type: 'success',
-      });
-      setSelectedNote(null);
-    });
-  };
-
   const handleDeleteNote = () => {
-    fetchNui<ServerPromiseResp<DeleteNoteDTO>>(NotesEvents.DELETE_NOTE, selectedNote).then(
-      (resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('APPS_NOTES_DELETE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        deleteNote(resp.data.id);
-
-        addAlert({
-          message: t('APPS_NOTES_DELETE_SUCCESS'),
-          type: 'success',
-        });
-      },
-    );
-    setSelectedNote(null);
+    deleteNote({ id: selectedNote.id })
+      .then(() => {
+        setModalVisible(false);
+      })
+      .catch(console.error);
   };
 
   const handleUpdateNote = () => {
-    fetchNui<ServerPromiseResp>(NotesEvents.ADD_NOTE, selectedNote).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('APPS_NOTES_UPDATE_FAILED'),
-          type: 'error',
-        });
-      }
+    updateNote({ id: selectedNote.id, title: noteTitle, content: noteContent })
+      .then(() => {
+        setModalVisible(false);
+      })
+      .catch(console.error);
+  };
 
-      updateNote({ id: selectedNote.id, title: noteTitle, content: noteContent });
-
-      addAlert({
-        message: t('APPS_NOTES_UPDATE_SUCCESS'),
-        type: 'success',
-      });
-    });
-    setSelectedNote(null);
+  const handleNewNote = () => {
+    addNewNote({ title: noteTitle, content: noteContent })
+      .then(() => {
+        setModalVisible(false);
+      })
+      .catch(console.error);
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,13 +67,24 @@ export const NoteModal = () => {
   };
 
   const _handleClose = () => {
+    setModalVisible(false);
+  };
+
+  const handleClearContent = () => {
     setSelectedNote(null);
+    if (location.search) history.push(notesApp.path);
   };
 
   if (selectedNote === null) return null;
 
   return (
-    <Slide direction="left" in={Boolean(selectedNote)} mountOnEnter unmountOnExit>
+    <Slide
+      direction="left"
+      in={modalVisible}
+      mountOnEnter
+      unmountOnExit
+      onExited={handleClearContent}
+    >
       <Paper className={classes.modalRoot} square>
         <Container>
           <Box>
@@ -123,8 +100,8 @@ export const NoteModal = () => {
             </Box>
             <TextField
               className={classes.input}
-              rowsMax={1}
-              label={t('GENERIC_TITLE')}
+              maxRows={1}
+              label={t('GENERIC.TITLE')}
               inputProps={{
                 className: classes.inputPropsTitle,
                 maxLength: 25,
@@ -139,7 +116,7 @@ export const NoteModal = () => {
                 className: classes.inputPropsContent,
                 maxLength: 250,
               }}
-              label={t('GENERIC_CONTENT')}
+              label={t('GENERIC.CONTENT')}
               multiline
               fullWidth
               rows={16}
@@ -155,14 +132,14 @@ export const NoteModal = () => {
                     color="primary"
                     variant="contained"
                     disabled={noteTitle.length <= 0}
-                    onClick={handleNoteSave}
+                    onClick={handleNewNote}
                   >
-                    {t('GENERIC_SAVE')}
+                    {t('GENERIC.SAVE')}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={_handleClose}>
-                    {t('GENERIC_CANCEL')}
+                    {t('GENERIC.CANCEL')}
                   </StatusButton>
                 </Box>
               </>
@@ -175,12 +152,12 @@ export const NoteModal = () => {
                     onClick={handleUpdateNote}
                     disabled={noteTitle.length <= 0}
                   >
-                    {t('GENERIC_UPDATE')}
+                    {t('GENERIC.UPDATE')}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
-                    {t('GENERIC_DELETE')}
+                    {t('GENERIC.DELETE')}
                   </StatusButton>
                 </Box>
               </>

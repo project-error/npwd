@@ -1,8 +1,13 @@
-import { Box, Link, makeStyles, Paper, Typography } from '@material-ui/core';
-import React from 'react';
+import { Box, IconButton, Paper } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { makeStyles } from '@mui/styles';
+import React, { useState } from 'react';
 import { Message } from '../../../../../../typings/messages';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { PictureReveal } from '../../../../ui/components/PictureReveal';
+import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import MessageBubbleMenu from './MessageBubbleMenu';
+import { useSetSelectedMessage } from '../../hooks/state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
   },
   message: {
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 }));
 
@@ -47,17 +55,27 @@ const isImage = (url) => {
 
 export const MessageBubble = ({
   message,
-  isGroupChat,
   onClickDisplay,
 }: {
   message: Message;
-  isGroupChat: boolean;
   onClickDisplay(phoneNumber: string): void;
 }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const setSelectedMessage = useSetSelectedMessage();
+
+  const openMenu = () => {
+    setMenuOpen(true);
+    setSelectedMessage(message);
+  };
+
   const classes = useStyles();
+  const myNumber = useMyPhoneNumber();
+
+  const isMine = message.author === myNumber;
+
   return (
     <div className={classes.root}>
-      <Paper className={message.isMine ? classes.mySms : classes.sms} variant="outlined">
+      <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box className={classes.message}>
           {isImage(message.message) ? (
             <PictureReveal>
@@ -66,17 +84,14 @@ export const MessageBubble = ({
           ) : (
             <div>{message.message}</div>
           )}
-        </Box>
-        <Box>
-          {isGroupChat && !message.isMine ? (
-            <Link onClick={() => onClickDisplay(message.phone_number)}>
-              <Typography variant="subtitle1" color="secondary">
-                {message.display || message.phone_number}
-              </Typography>
-            </Link>
-          ) : null}
+          {isMine && (
+            <IconButton onClick={openMenu}>
+              <MoreVertIcon />
+            </IconButton>
+          )}
         </Box>
       </Paper>
+      <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
     </div>
   );
 };

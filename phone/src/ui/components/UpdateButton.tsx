@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Fab } from '@material-ui/core';
-import PublishIcon from '@material-ui/icons/Publish';
+import makeStyles from '@mui/styles/makeStyles';
+import { Fab } from '@mui/material';
+import PublishIcon from '@mui/icons-material/Publish';
 
 const useStyles = makeStyles({
   root: {
@@ -13,12 +13,15 @@ const useStyles = makeStyles({
 
 const MINIMUM_LOAD_TIME = 750;
 
-interface IProps {
+interface ProfileUpdateButtonProps {
   handleClick: () => void;
   loading: boolean;
 }
 
-export function ProfileUpdateButton({ handleClick, loading }: IProps) {
+export const ProfileUpdateButton: React.FC<ProfileUpdateButtonProps> = ({
+  handleClick,
+  loading,
+}) => {
   const classes = useStyles();
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(true);
 
@@ -39,6 +42,6 @@ export function ProfileUpdateButton({ handleClick, loading }: IProps) {
       </Fab>
     </div>
   );
-}
+};
 
 export default ProfileUpdateButton;

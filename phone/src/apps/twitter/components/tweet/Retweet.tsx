@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import { Repeat } from '@material-ui/icons';
+import makeStyles from '@mui/styles/makeStyles';
+import { Repeat } from '@mui/icons-material';
 
 interface IProps {
   profileName: string;

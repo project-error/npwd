@@ -1,111 +1,102 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@material-ui/core';
-import { useNuiRequest } from 'fivem-nui-react-lib';
+import { Box, Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
-import { MessageEvents } from '../../../../../../typings/messages';
-import { PHONE_NUMBER_REGEX } from '../../../../../../typings/phone';
+import { MessageConversationResponse, MessageEvents } from '../../../../../../typings/messages';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { TextField } from '../../../../ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
-  const Nui = useNuiRequest();
   const history = useHistory();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
-  const [participants, setParticipants] = useState([]);
-  const [label, setLabel] = useState('');
-  const { getContactByNumber } = useContactActions();
+  const [participant, setParticipant] = useState<any>('');
+  const { getDisplayByNumber, getPictureByNumber, getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
+  const { updateConversations } = useMessageActions();
 
   useEffect(() => {
     if (phoneNumber) {
-      const find = getContactByNumber(phoneNumber) || { number: phoneNumber };
-      setParticipants((all) => [...all, find]);
+      const find = getContactByNumber(phoneNumber) || phoneNumber;
+      setParticipant(find);
     }
   }, [phoneNumber, getContactByNumber]);
-
-  const isGroupChat = participants.length > 1;
 
   const handleSubmit = useCallback(() => {
     // handles phone numbers in a csv format and strips all spaces and
     // external characters out of them:
     // 123-4567, 987-6543, 333-4444
-    const phoneNumbers = participants.map(({ number }) => number.replace(/[^0-9]/g, ''));
-    const labelValue = isGroupChat ? label.trim() : null;
+    /* participant.map(({ number }) => number.replace(/[^0-9]/g, '')); */
 
-    if (phoneNumbers.length) {
-      Nui.send(MessageEvents.CREATE_MESSAGE_GROUP, {
-        phoneNumbers,
-        label: labelValue,
+    if (participant) {
+      fetchNui<ServerPromiseResp<MessageConversationResponse>>(
+        MessageEvents.CREATE_MESSAGE_CONVERSATION,
+        {
+          targetNumber: participant.number || participant,
+        },
+      ).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED'),
+            type: 'error',
+          });
+        }
+
+        const display = getDisplayByNumber(resp.data.phoneNumber);
+        const avatar = getPictureByNumber(resp.data.phoneNumber);
+
+        updateConversations({
+          phoneNumber: resp.data.phoneNumber,
+          conversation_id: resp.data.conversation_id,
+          display,
+          unread: 0,
+          avatar,
+        });
+
+        setParticipant(null);
+        history.push('/messages');
       });
-      setParticipants([]);
-      history.push('/messages');
     }
-  }, [history, label, participants, isGroupChat, Nui]);
-
-  const onAutocompleteChange = (_e, value: any) => {
-    const lastIdx = value.length - 1;
-    if (typeof value[lastIdx] === 'string') {
-      const isValid = PHONE_NUMBER_REGEX.test(value[lastIdx]);
-      if (!isValid) {
-        return addAlert({ message: t('APPS_MESSAGES_INVALID_PHONE_NUMBER'), type: 'error' });
-      }
-      value.splice(lastIdx, 1, { number: value[lastIdx] });
-      setParticipants(value);
-      return;
-    }
-    setParticipants(value as any[]);
-  };
+  }, [
+    history,
+    participant,
+    addAlert,
+    t,
+    updateConversations,
+    getDisplayByNumber,
+    getPictureByNumber,
+  ]);
 
   const renderAutocompleteInput = (params) => (
     <TextField
       {...params}
       fullWidth
       label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
-      inputProps={{
-        ...params.inputProps,
-        onKeyPress: (e) => {
-          if (e.key === 'Enter' && e.currentTarget.value) {
-            e.preventDefault();
-            onAutocompleteChange(e, [...participants, e.currentTarget.value]);
-          }
-        },
-        autoFocus: true,
-      }}
+      onChange={(e) => setParticipant(e.currentTarget.value)}
     />
   );
 
-  const submitDisabled = !participants.length || (isGroupChat && !label);
+  const submitDisabled = !participant;
 
   return (
     <Box>
       <Box px={2} py={3}>
         <Autocomplete<Contact, boolean, boolean, boolean>
-          value={participants}
-          multiple
           freeSolo
           autoHighlight
-          options={contacts || []}
-          getOptionLabel={(c) => c.display || c.number}
-          onChange={onAutocompleteChange}
+          options={contacts}
+          getOptionLabel={(contact) => contact.display || contact.number || participant}
+          onChange={(e, value: any) => setParticipant(value)}
           renderInput={renderAutocompleteInput}
         />
       </Box>
-      {isGroupChat && (
-        <Box px={2} py={3}>
-          <TextField
-            fullWidth
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-            placeholder={t('APPS_MESSAGES_GROUP_CHAT_LABEL')}
-          />
-        </Box>
-      )}
       <Box px={2} py={3}>
         <Button
           onClick={() => handleSubmit()}

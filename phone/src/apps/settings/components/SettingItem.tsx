@@ -7,10 +7,10 @@ import {
   Box,
   Slider,
   IconButton,
-  Tooltip,
   Typography,
   Switch,
-} from '@material-ui/core';
+} from '@mui/material';
+import { Tooltip } from '../../../ui/components/Tooltip';
 
 interface ISettingItem {
   options?: any;
@@ -31,7 +31,7 @@ interface ISettingSlider {
   label: string;
   icon: JSX.Element;
   value: number;
-  onCommit: (event: React.ChangeEvent<{}>, value: number | number[]) => void;
+  onCommit: (event: React.SyntheticEvent | Event, value: number | number[]) => void;
 }
 
 export const SettingItemSlider = ({ icon, label, value, onCommit }: ISettingSlider) => (
@@ -98,7 +98,7 @@ export const SettingItemIconAction = ({
           title={<Typography variant="body2">{actionLabel}</Typography>}
           placement="top-end"
         >
-          <IconButton edge="end" onClick={handleAction}>
+          <IconButton edge="end" onClick={handleAction} size="large">
             {actionIcon}
           </IconButton>
         </Tooltip>

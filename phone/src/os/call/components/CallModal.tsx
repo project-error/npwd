@@ -4,11 +4,11 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
 import { CallControls } from './CallControls';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import RingingText from './RingingText';
 import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
 

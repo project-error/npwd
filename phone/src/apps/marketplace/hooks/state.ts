@@ -35,7 +35,6 @@ export const listingState = atom<MarketplaceListing[]>({
         const resp = await fetchNui<ServerPromiseResp<MarketplaceListing[]>>(
           MarketplaceEvents.FETCH_LISTING,
         );
-
         return resp.data;
       } catch (e) {
         if (isEnvBrowser()) {

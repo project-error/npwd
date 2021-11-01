@@ -1,8 +1,9 @@
 import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { Box, IconButton, makeStyles, Slide } from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, IconButton, Slide } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useNotifications } from '../hooks/useNotifications';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   snackbar: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     cursor: 'pointer',
     width: '370px',
-    height: '120px',
+    height: '80px',
     zIndex: 50,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: 'break-all',
     display: '-webkit-box',
     maxWidth: '360px',
-    height: '60px',
+    height: '20px',
     margin: '0 auto',
     '-webkit-line-clamp': 3,
     '-webkit-box-orient': 'vertical',
@@ -73,7 +74,7 @@ export const NotificationAlert = () => {
               </Box>
             </Box>
           </AlertTitle>
-          <Box component="div" className={classes.alertContent}>
+          <Box component="div" className={classes.alertContent} textOverflow="ellipsis">
             {currentAlert?.content}
           </Box>
         </Alert>

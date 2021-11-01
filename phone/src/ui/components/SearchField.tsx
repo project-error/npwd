@@ -1,6 +1,7 @@
 import React from 'react';
-import { emphasize, makeStyles, Paper } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { emphasize, Paper } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from './Input';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IProps {
+interface SearchFieldProps {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   value: string;
   placeholder?: string;
@@ -62,10 +63,14 @@ const DEFAULT_PROPS = {
   placeholder: 'Search...',
 };
 
-export const SearchField = ({ value, onChange, placeholder }: IProps = DEFAULT_PROPS) => {
+export const SearchField: React.FC<SearchFieldProps> = ({
+  value,
+  onChange,
+  placeholder,
+} = DEFAULT_PROPS) => {
   const classes = useStyles();
   return (
-    <Paper elevation={24} variant="outlined" className={classes.bg}>
+    <Paper variant="outlined" className={classes.bg}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />

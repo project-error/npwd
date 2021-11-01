@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Home, List, Payment } from '@material-ui/icons';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Home, List, Payment } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
   root: {

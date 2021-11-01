@@ -13,12 +13,11 @@ import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '../../../typings/common';
+import { NuiCallbackFunc } from '@project-error/pe-utils';
 
 const callService = new CallService();
 
-// Will trigger whenever somebody initializes a call to any number
-RegisterNuiCB<InitializeCallDTO>(CallEvents.INITIALIZE_CALL, async (data, cb) => {
-  // If they are already in a call return without initializing a new one.
+export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
   if (callService.isInCall()) return;
 
   try {
@@ -41,7 +40,10 @@ RegisterNuiCB<InitializeCallDTO>(CallEvents.INITIALIZE_CALL, async (data, cb) =>
     console.error(e);
     cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
   }
-});
+};
+
+// Will trigger whenever somebody initializes a call to any number
+RegisterNuiCB<InitializeCallDTO>(CallEvents.INITIALIZE_CALL, initializeCallHandler);
 
 onNetTyped<StartCallEventData>(CallEvents.START_CALL, (data) => {
   const { transmitter, isTransmitter, receiver } = data;

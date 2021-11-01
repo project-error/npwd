@@ -1,0 +1,55 @@
+name: Feature Request
+description: Suggest a feature that you would like added/improved upon.
+title: "Enhancement: <short description>"
+labels: Enhancement
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      ## Thank you for filling out this feature/enhancement request
+      Please fill out this short template to the best of your ability.
+- type: dropdown
+  id: application
+  attributes:
+    label: Application
+    description: If this feature request is for an app, please specify. Otherwise, use "Other". 
+    options:
+      - Other
+      - Browser
+      - Calculator
+      - Camera
+      - Contacts
+      - Dialer
+      - Matchmaker
+      - Marketplace
+      - Messages
+      - Notes
+      - Twitter
+      - Settings
+  validations:
+      required: true
+- type: dropdown
+  id: dependency
+  attributes:
+    label: Dependency
+    description: Does your suggestion require any dependencies? Jobs and Money are framework dependencies. 
+    options:
+      - "Yes" 
+      - "No"
+  validations:
+    required: true
+- type: textarea
+  id: feat-description
+  attributes:
+    label: Feature Description
+    description: Please include as much details as possible.
+  validations:
+    required: true
+- type: textarea
+  id: references
+  attributes:
+    label: References
+    description: Do you have any references to help us visualize your suggestion? Example "As seen here <https://www.youtube.com/watch?v=j5a0jTc9S10>"
+  validations:
+    required: false

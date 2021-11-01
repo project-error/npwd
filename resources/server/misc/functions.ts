@@ -1,37 +1,20 @@
-import { pool } from '../db';
 import { config } from '../server';
-import { mainLogger } from '../sv_logger';
-import { getRandomPhoneNumber } from '../utils/getRandomPhoneNumber';
-import PlayerService from '../players/player.service';
+import DbInterface from '../db/db_wrapper';
+import { generateUniquePhoneNumber } from './generateUniquePhoneNumber';
 
-export async function generatePhoneNumber(identifier: string): Promise<string> {
-  const getQuery = `SELECT phone_number FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ?`;
-  const [results] = await pool.query(getQuery, [identifier]);
-  const result = <any[]>results;
-  const phoneNumber = result[0]?.phone_number;
+export async function findOrGeneratePhoneNumber(identifier: string): Promise<string> {
+  const query = `SELECT ${config.database.phoneNumberColumn} FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ? LIMIT 1`;
+  const [res] = await DbInterface._rawExec(query, [identifier]);
 
-  // Generate a new phone number if there isn't one present
-  if (!phoneNumber)
-    if (!phoneNumber) {
-      let existingId;
-      let newNumber;
+  const castRes = res as Record<string, unknown>[];
 
-      do {
-        newNumber = getRandomPhoneNumber();
-        try {
-          existingId = await PlayerService.getIdentifierByPhoneNumber(newNumber);
-        } catch (e) {
-          existingId = false;
-        }
-      } while (existingId);
+  if (castRes && castRes[0][config.database.phoneNumberColumn] !== null) return castRes[0][config.database.phoneNumberColumn] as string;
 
-      mainLogger.debug(
-        `Generated a new number for identifier: ${identifier}, number: ${phoneNumber}`,
-      );
-      const query = `UPDATE ${config.database.playerTable} SET phone_number = ? WHERE ${config.database.identifierColumn} = ?`;
-      await pool.query(query, [newNumber, identifier]);
-      return newNumber;
-    }
+  const gennedNumber = await generateUniquePhoneNumber();
 
-  return phoneNumber;
+  const updateQuery = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
+  // Update profile with new generated number
+  await DbInterface._rawExec(updateQuery, [gennedNumber, identifier]);
+
+  return gennedNumber;
 }

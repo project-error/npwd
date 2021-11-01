@@ -1,0 +1,31 @@
+version: '3.7'
+# This is just here because I am an incredibly lazy person and sometimes
+# do not want to go through the trouble of setting up a local database environment.
+# Do not expect this docker-compose to be the recommended setup. Might include more
+# images in the future, thats why its a compose
+
+# THIS IMAGES SECURITY IS SETUP FOR DEVELOPMENT ONLY. PLEASE DO NOT USE THIS
+# SECURITY CONFIGURATION EVER IN A PRODUCTION ENVIRONMENT
+
+services:
+  mariadb:
+    image: mariadb
+    restart: unless-stopped
+    ports:
+      - 6060:3306
+    volumes:
+      - ./.docker/mysql_data:/var/lib/mysql
+      - ./import.sql:/docker-entrypoint-initdb.d/import.sql
+      - ./misc/docker-init.sql:/docker-entrypoint-initdb.d/docker-init.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_PASSWORD: 'devlocal'
+      MYSQL_DATABASE: 'npwd_test'
+      MYSQL_USER: 'dev'
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+    ports:
+      - 9090:8080

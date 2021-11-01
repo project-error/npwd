@@ -1,62 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Box, List } from '@material-ui/core';
-import { MessageGroup } from '../../../../../../typings/messages';
+import React from 'react';
+import { Box, List } from '@mui/material';
+import { MessageConversation } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
-import { useHistory } from 'react-router-dom';
 import { SearchField } from '../../../../ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
+import { useFilteredConversationsValue, useFilterValueState } from '../../hooks/state';
 
 const MessagesList = (): any => {
   const classes = useStyles();
-  const history = useHistory();
   const { t } = useTranslation();
 
-  const {
-    messageGroups,
-    goToConversation,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-    getMessageGroupById,
-    setActiveMessageGroup,
-  } = useMessages();
+  const { conversations, goToConversation } = useMessages();
 
-  const [searchValue, setSearchValue] = useState('');
+  const filteredConversations = useFilteredConversationsValue();
+  const [searchValue, setSearchValue] = useFilterValueState();
 
-  const formattedSearch = searchValue.toLowerCase().trim();
-  const filteredGroups = formattedSearch
-    ? messageGroups.filter((group) => {
-        const groupDisplay = group.groupDisplay.toLowerCase();
-        const displayIncludes = groupDisplay.includes(formattedSearch);
+  if (!conversations) return <p>No messages</p>;
 
-        const label = group.label?.toLowerCase();
-        return label ? displayIncludes || label.includes(formattedSearch) : displayIncludes;
-      })
-    : messageGroups;
-
-  useEffect(() => {
-    if (createMessageGroupResult?.groupId) {
-      const findGroup = getMessageGroupById(createMessageGroupResult.groupId);
-      clearMessageGroupResult();
-      if (findGroup) {
-        goToConversation(findGroup);
-      }
-    }
-  }, [
-    messageGroups,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-    history,
-    setActiveMessageGroup,
-    getMessageGroupById,
-    goToConversation,
-  ]);
-
-  if (!messageGroups) return null;
-
-  const handleClick = (messageGroup: MessageGroup) => () => {
-    goToConversation(messageGroup);
+  const handleClick = (conversation: MessageConversation) => () => {
+    goToConversation(conversation);
   };
 
   return (
@@ -71,10 +35,10 @@ const MessagesList = (): any => {
       <Box display="flex" flexDirection="column">
         <Box className={classes.root}>
           <List>
-            {filteredGroups.map((messageGroup) => (
+            {filteredConversations.map((conversation) => (
               <MessageGroupItem
-                key={messageGroup.groupId}
-                messageGroup={messageGroup}
+                key={conversation.conversation_id}
+                messageConversation={conversation}
                 handleClick={handleClick}
               />
             ))}

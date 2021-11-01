@@ -1,19 +1,28 @@
 import { AppWrapper } from '../../../ui/components';
+import { styled } from '@mui/material/styles';
 import React, { Reducer, useReducer, useRef } from 'react';
 import { AppContent } from '../../../ui/components/AppContent';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
 import { BrowserURLBar } from './BrowserURLBar';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 
-const useStyles = makeStyles(() => ({
-  iframe: {
+const PREFIX = 'BrowserApp';
+
+const classes = {
+  iframe: `${PREFIX}-iframe`,
+  root: `${PREFIX}-root`,
+};
+
+const StyledAppWrapper = styled(AppWrapper)(() => ({
+  [`& .${classes.iframe}`]: {
     height: '100%',
     width: '100%',
     zoom: 0.5,
     border: 'none',
   },
-  root: {
+
+  [`& .${classes.root}`]: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -49,7 +58,6 @@ const browserReducer: Reducer<BrowserState, ReducerAction> = (state, action) => 
 };
 
 export const BrowserApp: React.FC = () => {
-  const classes = useStyles();
   const [{ appSettings }] = usePhoneConfig();
   const [browserState, dispatch] = useReducer(browserReducer, {
     browserUrl: appSettings.browserHomePage,
@@ -83,7 +91,7 @@ export const BrowserApp: React.FC = () => {
   };
 
   return (
-    <AppWrapper id="browser">
+    <StyledAppWrapper id="browser">
       <AppContent className={classes.root}>
         <BrowserURLBar
           browserUrl={browserUrl}
@@ -98,11 +106,16 @@ export const BrowserApp: React.FC = () => {
             src={browserUrl}
             // @ts-ignore
             className={classes.iframe}
+            style={{
+              height: '100%',
+              width: '100%',
+              border: 'none',
+            }}
             title="npwd-browser"
             ref={iframeRef}
           />
         </Box>
       </AppContent>
-    </AppWrapper>
+    </StyledAppWrapper>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import useStyles from './modal.styles';
-import { Button, Paper } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ShareIcon from '@material-ui/icons/Share';
+import { Button, Paper } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShareIcon from '@mui/icons-material/Share';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
@@ -40,7 +40,7 @@ export const GalleryModal = () => {
       image: meta.image,
     }).then((serverResp) => {
       if (serverResp.status !== 'ok') {
-        return addAlert({ message: t('APPS_CAMERA_FAILED_TO_DELETE_PHOTO'), type: 'error' });
+        return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
       }
 
       deletePhoto(meta.image);

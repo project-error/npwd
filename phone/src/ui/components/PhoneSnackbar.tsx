@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, Snackbar } from '@material-ui/core';
+import { Snackbar } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Alert from './Alert';
 
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const PhoneSnackbar = () => {
+export const PhoneSnackbar: React.FC = () => {
   const classes = useStyles();
   const { alert, isOpen, handleClose } = useSnackbar();
 

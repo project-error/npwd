@@ -1,77 +1,68 @@
 import { useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  CreateMessageGroupResult,
-  Message,
-  MessageEvents,
-  MessageGroup,
-} from '../../../../../typings/messages';
-import { messageState } from './state';
-import { useNuiRequest } from 'fivem-nui-react-lib';
+import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
+import { MessageConversation } from '../../../../../typings/messages';
+import { messageState, useSetConversationId } from './state';
 import { useHistory } from 'react-router';
 
 interface IUseMessages {
-  messages?: Message[] | null;
-  setMessages: (messages: Message[] | null) => void;
-  messageGroups?: MessageGroup[] | null;
-  createMessageGroupResult?: CreateMessageGroupResult | null;
-  clearMessageGroupResult(): void;
-  getMessageGroupById: (id: string) => MessageGroup | null;
-  setActiveMessageGroup: (groupId: string) => MessageGroup | null;
-  activeMessageGroup: MessageGroup | null;
-  goToConversation(g: Pick<MessageGroup, 'groupId'>): void;
+  conversations?: MessageConversation[];
+  getMessageConversationById: (id: string) => MessageConversation | null;
+  setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
+  activeMessageConversation: MessageConversation | null;
+
+  goToConversation(g: Pick<MessageConversation, 'conversation_id'>): void;
 }
 
 const useMessages = (): IUseMessages => {
-  const Nui = useNuiRequest();
   const history = useHistory();
 
-  const [messages, setMessages] = useRecoilState<Message[] | null>(messageState.messages);
-  const messageGroups = useRecoilValue<MessageGroup[] | null>(messageState.messageGroups);
-  const [activeMessageGroup, _setActiveMessageGroup] = useRecoilState<MessageGroup | null>(
-    messageState.activeMessageGroup,
+  const { state: conversationLoading, contents } = useRecoilValueLoadable(
+    messageState.messageCoversations,
+  );
+  const [activeMessageConversation] = useRecoilValue(
+    waitForAll([messageState.activeMessageConversation]),
   );
 
-  const getMessageGroupById = useCallback(
-    (id: string): MessageGroup | null => {
-      return messageGroups ? messageGroups.find((c) => c.groupId === id) : null;
+  const setCurrentConversationId = useSetConversationId();
+  const _setActiveMessageConversation = useSetRecoilState(messageState.activeMessageConversation);
+
+  const getMessageConversationById = useCallback(
+    (id: string): MessageConversation | null => {
+      if (conversationLoading !== 'hasValue') return;
+
+      if (!contents.length) return;
+
+      return contents && contents.find((c) => c.conversation_id === id);
     },
-    [messageGroups],
+    [contents, conversationLoading],
   );
 
-  const [
-    createMessageGroupResult,
-    setCreateMessageGroupResult,
-  ] = useRecoilState<CreateMessageGroupResult | null>(messageState.createMessageGroupResult);
-
-  const clearMessageGroupResult = () => setCreateMessageGroupResult(null);
-
-  const setActiveMessageGroup = useCallback(
+  const setActiveMessageConversation = useCallback(
     (groupId: string) => {
-      const group = getMessageGroupById(groupId);
-      _setActiveMessageGroup(group);
+      const group = getMessageConversationById(groupId);
+      _setActiveMessageConversation(group);
       return group;
     },
-    [_setActiveMessageGroup, getMessageGroupById],
+    [_setActiveMessageConversation, getMessageConversationById],
   );
 
-  const goToConversation = (messageGroup) => {
-    if (!messageGroup?.groupId || !history) return;
-    history.push(`/messages/conversations/${messageGroup.groupId}`);
-    Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: messageGroup.groupId });
-  };
+  const goToConversation = useCallback(
+    (messageGroup) => {
+      if (!messageGroup?.conversation_id || !history) return;
+      setCurrentConversationId(messageGroup.conversation_id);
+
+      history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+    },
+    [setCurrentConversationId, history],
+  );
 
   return {
-    messages,
-    setMessages,
-    messageGroups,
-    createMessageGroupResult,
-    clearMessageGroupResult,
-    getMessageGroupById,
-    activeMessageGroup,
-    setActiveMessageGroup,
+    activeMessageConversation,
+    setActiveMessageConversation,
+    getMessageConversationById,
     goToConversation,
+    conversations: contents,
   };
-}
+};
 
 export default useMessages;

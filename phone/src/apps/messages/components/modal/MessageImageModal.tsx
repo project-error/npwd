@@ -1,26 +1,31 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../../ui/components/Modal';
-import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import { Box, Typography, Button } from '@material-ui/core';
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MessageEvents } from '../../../../../../typings/messages';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   isOpen: boolean;
   messageGroupId: string | undefined;
+
   onClose(): void;
+
   image?: string;
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
-  const Nui = useNuiRequest();
   const history = useHistory();
+  const { t } = useTranslation();
   const { pathname, search } = useLocation();
+  const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
 
   const removeQueryParamImage = useCallback(() => {
@@ -30,13 +35,20 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const sendImageMessage = useCallback(
     (m) => {
-      Nui.send(MessageEvents.SEND_MESSAGE, {
-        groupId: messageGroupId,
-        message: m,
-      });
-      onClose();
+      fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageGroupId, message: m }).then(
+        (resp) => {
+          if (resp !== 'ok') {
+            onClose();
+            return addAlert({
+              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+              type: 'error',
+            });
+          }
+          onClose();
+        },
+      );
     },
-    [messageGroupId, onClose, Nui],
+    [messageGroupId, onClose, addAlert, t],
   );
 
   const sendFromQueryParam = useCallback(
@@ -55,7 +67,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const menuOptions = useMemo(
     () => [
       {
-        label: 'Camera / Gallery',
+        label: t('APPS_MESSAGE_MEDIA_OPTION'),
         icon: <PhotoLibraryIcon />,
         onClick: () =>
           history.push(
@@ -65,7 +77,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           ),
       },
     ],
-    [history, pathname, search],
+    [history, pathname, search, t],
   );
 
   return (

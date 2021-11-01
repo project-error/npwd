@@ -1,22 +1,14 @@
 import React, { useEffect } from 'react';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  IconButton,
-  Slide,
-  Paper,
-  Box,
-  List,
-  Divider,
-} from '@material-ui/core';
-import SignalIcon from '@material-ui/icons/SignalCellular3Bar';
-import Battery90Icon from '@material-ui/icons/Battery90';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
+import Battery90Icon from '@mui/icons-material/Battery90';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
+import { NoNotificationText } from './NoNotificationText';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,13 +59,8 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
   const classes = useStyles();
 
-  const {
-    icons,
-    notifications,
-    removeNotification,
-    barUncollapsed,
-    setBarUncollapsed,
-  } = useNotifications();
+  const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } =
+    useNotifications();
 
   const time = usePhoneTime();
 
@@ -88,7 +75,7 @@ export const NotificationBar = () => {
       <Grid
         className={classes.root}
         container
-        justify="space-between"
+        justifyContent="space-between"
         wrap="nowrap"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
@@ -108,7 +95,7 @@ export const NotificationBar = () => {
             </Typography>
           </Grid>
         )}
-        <Grid container item wrap="nowrap" justify="flex-end" alignItems="center">
+        <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
           <Grid item>
             <SignalIcon fontSize="small" />
           </Grid>
@@ -124,7 +111,7 @@ export const NotificationBar = () => {
       </Grid>
       <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
-          <Box py={2}>
+          <Box py={1}>
             <List>
               <Divider />
               {notifications.map((notification, idx) => (
@@ -146,7 +133,8 @@ export const NotificationBar = () => {
               ))}
             </List>
           </Box>
-          <Box display="flex">
+          <Box display="flex" flexDirection="column">
+            {!notifications.length && <NoNotificationText />}
             <IconButton
               className={classes.collapseBtn}
               size="small"

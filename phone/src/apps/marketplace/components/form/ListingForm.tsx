@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { makeStyles, Button, Box } from '@material-ui/core';
+import { Button, Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import ImageIcon from '@material-ui/icons/Image';
+import ImageIcon from '@mui/icons-material/Image';
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
@@ -30,13 +31,14 @@ const useStyles = makeStyles((theme) => ({
   postButton: {
     display: 'block',
     margin: 'auto',
+    color: 'white',
     background: theme.palette.primary.main,
     width: '80%',
     fontSize: 20,
   },
 }));
 
-export const ListingForm = () => {
+export const ListingForm: React.FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
@@ -48,32 +50,34 @@ export const ListingForm = () => {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
 
-  const addListing = () => {
-    if (title !== '' && description !== '') {
-      fetchNui<ServerPromiseResp<MarketplaceListing[]>>(MarketplaceEvents.ADD_LISTING, {
-        title,
-        description,
-        url,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('APPS_MARKETPLACE_CREATE_LISTING_FAILED'),
-            type: 'error',
-          });
-        }
+  const areFieldsFilled = title.trim() !== '' && description.trim() !== '';
 
-        addAlert({
-          message: t('APPS_MARKETPLACE_CREATE_LISTING_SUCCESS'),
-          type: 'success',
-        });
-        history.push('/marketplace');
-      });
-    } else {
-      addAlert({
+  const addListing = () => {
+    if (!areFieldsFilled) {
+      return addAlert({
         message: t('APPS_MARKETPLACE_REQUIRED_FIELDS'),
         type: 'error',
       });
     }
+
+    fetchNui<ServerPromiseResp<MarketplaceListing[]>>(MarketplaceEvents.ADD_LISTING, {
+      title,
+      description,
+      url,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_MARKETPLACE_CREATE_LISTING_FAILED'),
+          type: 'error',
+        });
+      }
+
+      addAlert({
+        message: t('APPS_MARKETPLACE_CREATE_LISTING_SUCCESS'),
+        type: 'success',
+      });
+      history.push('/marketplace');
+    });
   };
 
   /*const handleChooseImage = () => {
@@ -102,7 +106,7 @@ export const ListingForm = () => {
       <TextField
         className={classes.input}
         onChange={(e) => setTitle(e.target.value)}
-        label={t('GENERIC_REQUIRED')}
+        label={t('GENERIC.REQUIRED')}
         placeholder={t('APPS_MARKETPLACE_FORM_TITLE')}
         inputProps={{
           className: classes.textFieldInput,
@@ -137,7 +141,7 @@ export const ListingForm = () => {
       <TextField
         className={classes.input}
         onChange={(e) => setDescription(e.target.value)}
-        label={t('GENERIC_REQUIRED')}
+        label={t('GENERIC.REQUIRED')}
         placeholder={t('APPS_MARKETPLACE_FORM_DESCRIPTION')}
         inputProps={{
           className: classes.multilineFieldInput,
@@ -152,7 +156,7 @@ export const ListingForm = () => {
         rows={4}
         variant="outlined"
       />
-      <Button onClick={addListing} className={classes.postButton}>
+      <Button onClick={addListing} className={classes.postButton} disabled={!areFieldsFilled}>
         Post
       </Button>
     </div>

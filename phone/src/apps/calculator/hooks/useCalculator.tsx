@@ -1,5 +1,4 @@
-import React, { useReducer } from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { useReducer } from 'react';
 
 const initialState = {
   value: 0,
@@ -83,14 +82,6 @@ const Reducer = (state, action) => {
       return state;
   }
 };
-
-export const CalcButton = ({ button, className, ...props }) => (
-  <Grid key={button.label} item xs={3} {...props}>
-    <Button fullWidth className={className} onClick={button.onClick}>
-      {button.label}
-    </Button>
-  </Grid>
-);
 
 export const useCalculator = () => {
   const [state, dispatch] = useReducer(Reducer, initialState);

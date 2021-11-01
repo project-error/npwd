@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Button, CircularProgress } from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@mui/material';
 import useStyles from './grid.styles';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../common/hooks/useQueryParams';
 import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
@@ -35,7 +35,7 @@ export const GalleryGrid = () => {
     fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then((serverResp) => {
       if (serverResp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_CAMERA_FAILED_TO_TAKE_PHOTO'),
+          message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
           type: 'error',
         });
       }

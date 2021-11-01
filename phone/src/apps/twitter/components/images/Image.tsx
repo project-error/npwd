@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
+import { IconButton } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import CloseIcon from '@mui/icons-material/Close';
 import { PictureReveal } from '../../../../ui/components/PictureReveal';
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 

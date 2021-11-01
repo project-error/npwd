@@ -14,7 +14,7 @@ import {
   SettingSwitch,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   FilterList,
   Brush,
@@ -28,9 +28,9 @@ import {
   Book,
   DeleteForever,
   Apps,
-} from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
-import { ListSubheader } from '@material-ui/core';
+} from '@mui/icons-material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ListSubheader } from '@mui/material';
 import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
@@ -62,7 +62,7 @@ export const SettingsApp = () => {
   const myNumber = useMyPhoneNumber();
   const [settings, setSettings] = useSettings();
   const { t } = useTranslation();
-  const { customWallpaperModal, setCustomWallpaperModal } = useCustomWallpaperModal();
+  const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
 
   const { addAlert } = useSnackbar();
 
@@ -136,7 +136,7 @@ export const SettingsApp = () => {
 
   const customWallpaper: IContextMenuOption = {
     selected: false,
-    onClick: () => setCustomWallpaperModal(true),
+    onClick: () => setCustomWallpaperState(true),
     key: 'CUSTOM_WALLPAPER',
     label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
   };
@@ -144,7 +144,7 @@ export const SettingsApp = () => {
   const handleCopyPhoneNumber = () => {
     setClipboard(myNumber);
     addAlert({
-      message: t('GENERIC_WRITE_TO_CLIPBOARD_MESSAGE', {
+      message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
         content: 'number',
       }),
       type: 'success',
@@ -153,17 +153,36 @@ export const SettingsApp = () => {
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   const classes = useStyles();
+
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
+      {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
-      <div className={customWallpaperModal ? classes.backgroundModal : undefined} />
-      <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
+      <div className={customWallpaperState ? classes.backgroundModal : undefined} />
+      {/*
+        Sometimes depending on the height of the app, we sometimes want it to fill its parent
+        and other times we want it to grow with the content. AppContent implementation currently
+        has a style of height: 100%, attached to its main class. We overwrite this here by
+        passing a style prop of height: 'auto'. This isn't ideal but it works without breaking
+        any of the other apps.
+
+        This also fixes Material UI v5's background color properly
+      */}
+      <AppContent
+        backdrop={isMenuOpen}
+        onClickBackdrop={closeMenu}
+        display="flex"
+        id="test"
+        style={{
+          height: 'auto',
+        }}
+      >
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
             label={t('APPS_SETTINGS_PHONE_NUMBER')}
             labelSecondary={myNumber}
-            actionLabel={t('GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP', {
+            actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
               content: 'number',
             })}
             icon={<Phone />}

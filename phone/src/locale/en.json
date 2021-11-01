@@ -5,6 +5,14 @@
       "TOP_LEVEL_ERR_ACTION": "Reload",
       "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
     },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "No unread notifications"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "You have no notes"
+      }
+    },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
@@ -44,6 +52,25 @@
         "SETTINGS_RESET": "Settings have been reset!"
       }
     },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Where do you want to share the image",
+      "COPY_IMAGE": "Or just copy the image here",
+      "FAILED_TO_DELETE": "Photo could not be deleted :(",
+      "FAILED_TO_TAKE_PHOTO": "Photo could not be saved :("
+    },
+    "CONTACTS": {
+      "PLACEHOLDER_SEARCH_CONTACTS": "Search contacts...",
+      "FORM_NAME": "Name",
+      "FORM_NUMBER": "Number",
+      "FORM_AVATAR": "Avatar URL",
+      "MODAL_BUTTON_ADD": "Add Contact",
+      "ADD_FAILED": "Failed to created contact!",
+      "ADD_SUCCESS": "Successfully created contact!",
+      "UPDATE_FAILED": "Failed to update contact!",
+      "UPDATE_SUCCESS": "Successfully updated contact!",
+      "DELETE_FAILED": "Failed to delete contact!",
+      "DELETE_SUCCESS": "Successfully deleted contact!"
+    },
     "RELATIVE_TIME": {
       "future": "in %s",
       "past": "%s ago",
@@ -58,6 +85,24 @@
       "MM": "%d months",
       "y": "a year",
       "yy": "%d years"
+    },
+    "GENERIC": {
+      "LOADING": "Loading...",
+      "WAIT": "Please wait...",
+      "SAVE": "Save",
+      "EDIT": "Edit",
+      "UPDATE": "Update",
+      "REQUIRED": "Required",
+      "DELETE": "Delete",
+      "REPORT": "Report",
+      "CALL": "Call",
+      "MESSAGE": "Message",
+      "CLOSE": "Close",
+      "CANCEL": "Cancel",
+      "TITLE": "Title",
+      "CONTENT": "Content",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
     },
 
     "COMING_SOON": "Coming soon...",
@@ -74,9 +119,6 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Camera",
-
-    "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "Photo could not be saved :(",
-    "APPS_CAMERA_FAILED_TO_DELETE_PHOTO": "Photo could not be deleted :(",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
     "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
@@ -175,6 +217,7 @@
     "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Phone numbers...",
     "APPS_MESSAGES_GROUP_CHAT_LABEL": "Group chat label...",
+    "APPS_MESSAGE_MEDIA_OPTION": "Camera / Gallery",
     "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Send",
     "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Invalid phone number",
     "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "This message group already exists",
@@ -185,24 +228,13 @@
     "APPS_MESSAGES_MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) are not registered numbers.",
     "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
     "APPS_MESSAGES_UNREAD_MESSAGES": "You have {{ count }} unread messages",
-    "APPS_MESSAGES_MEMBERS_TITLE": "Members",
+    "APPS_MESSAGES_ACTIONS_TITLE": "Actions",
+    "APPS_MESSAGES_DELETE_CONVERSATION": "Delete conversation",
+    "APPS_MESSAGES_DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
     "APPS_MESSAGES_ME": "Me",
-
-    "APPS_CONTACT_FORM_NAME": "Name",
-    "APPS_CONTACT_FORM_NUMBER": "Number",
-    "APPS_CONTACT_FORM_AVATAR": "Avatar URL",
-
-    "APPS_CONTACT_ADD_SUCCESS": "Successfully created contact!",
-    "APPS_CONTACT_ADD_FAILED": "Failed to created contact!",
-    "APPS_CONTACT_UPDATE_SUCCESS": "Successfully updated contact!",
-    "APPS_CONTACT_UPDATE_FAILED": "Failed to update contact!",
-    "APPS_CONTACT_DELETE_SUCCESS": "Successfully deleted contact!",
-    "APPS_CONTACT_DELETE_FAILED": "Failed to delete contact!",
-    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Search contacts...",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_NAME": "Name",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Number",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
-    "APPS_CONTACT_MODAL_BUTTON_ADD": "Add Contact",
+    "APPS_MESSAGES_FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
+    "APPS_MESSAGE_DELETE_MESSAGE": "Delete message",
+    "APPS_MESSAGES_DELETE_MESSAGE_FAILED": "Failed to delete message",
 
     "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
     "APPS_NOTES_ADD_FAILED": "Failed to save note.",
@@ -242,6 +274,7 @@
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
     "GENERIC_SAVE": "Save",
+    "GENERIC_EDIT": "Edit",
     "GENERIC_UPDATE": "Update",
     "GENERIC_REQUIRED": "Required",
     "GENERIC_DELETE": "Delete",

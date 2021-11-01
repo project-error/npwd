@@ -1,11 +1,11 @@
-import { pool } from '../db';
 import { Contact, PreDBContact } from '../../../typings/contact';
 import { ResultSetHeader } from 'mysql2';
+import DbInterface from '../db/db_wrapper';
 
 export class _ContactsDB {
   async fetchAllContacts(identifier: string): Promise<Contact[]> {
     const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
-    const [results] = await pool.query(query, [identifier]);
+    const [results] = await DbInterface._rawExec(query, [identifier]);
     return <Contact[]>results;
   }
 
@@ -16,7 +16,7 @@ export class _ContactsDB {
     const query =
       'INSERT INTO npwd_phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
 
-    const [setResult] = await pool.query(query, [identifier, number, display, avatar]);
+    const [setResult] = await DbInterface._rawExec(query, [identifier, number, display, avatar]);
 
     return {
       id: (<ResultSetHeader>setResult).insertId,
@@ -29,7 +29,7 @@ export class _ContactsDB {
   async updateContact(contact: Contact, identifier: string): Promise<any> {
     const query =
       'UPDATE npwd_phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
-    await pool.query(query, [
+    await DbInterface._rawExec(query, [
       contact.number,
       contact.display,
       contact.avatar,
@@ -40,7 +40,7 @@ export class _ContactsDB {
 
   async deleteContact(contactId: number, identifier: string): Promise<void> {
     const query = 'DELETE FROM npwd_phone_contacts WHERE id = ? AND identifier = ?';
-    await pool.query(query, [contactId, identifier]);
+    await DbInterface._rawExec(query, [contactId, identifier]);
   }
 }
 

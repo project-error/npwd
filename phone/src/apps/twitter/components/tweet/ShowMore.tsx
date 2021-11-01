@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import { Button, Menu, MenuItem } from '@mui/material';
+import MoreIcon from '@mui/icons-material/MoreVert';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import ReportButton from '../buttons/ReportButton';

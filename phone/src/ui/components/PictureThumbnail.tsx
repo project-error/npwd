@@ -1,11 +1,13 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 interface IStyleProps {
   size: string;
 }
 
-interface IProps {
+interface PictureThumbnailProps {
   src: string;
   alt: string;
   size?: string;
@@ -18,6 +20,6 @@ const useStyles = makeStyles<Theme, IStyleProps>({
   }),
 });
 
-export const PictureThumbnail = ({ src, alt, size = '3em' }: IProps) => {
-  return <img className={useStyles({ size }).root} src={src} alt={alt} />;
-};
+export const PictureThumbnail: React.FC<PictureThumbnailProps> = ({ src, alt, size = '3em' }) => (
+  <img className={useStyles({ size }).root} src={src} alt={alt} />
+);

@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, DialogContent, DialogContentText, DialogTitle, Paper } from '@material-ui/core';
-import DialogActions from '@material-ui/core/DialogActions';
+import makeStyles from '@mui/styles/makeStyles';
+import { Button, DialogContent, DialogContentText, DialogTitle, Paper } from '@mui/material';
+import DialogActions from '@mui/material/DialogActions';
 
 const useStyles = makeStyles({
   root: {
@@ -35,14 +35,14 @@ interface DialogFormProps {
   content: string;
 }
 
-export default function DialogForm({
+const DialogForm: React.FC<DialogFormProps> = ({
   children,
   open,
   handleClose,
   onSubmit,
   title,
   content,
-}: DialogFormProps) {
+}) => {
   const classes = useStyles();
 
   const showHideClassName = open ? classes.displayBlock : classes.displayNone;
@@ -66,4 +66,6 @@ export default function DialogForm({
       </Paper>
     </div>
   );
-}
+};
+
+export default DialogForm;

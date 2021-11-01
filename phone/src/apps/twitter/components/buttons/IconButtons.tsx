@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
-import EmojiIcon from '@material-ui/icons/SentimentSatisfied';
+import makeStyles from '@mui/styles/makeStyles';
+import { Button } from '@mui/material';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import EmojiIcon from '@mui/icons-material/SentimentSatisfied';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 
 const useStyles = makeStyles({

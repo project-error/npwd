@@ -1,8 +1,9 @@
 import React from 'react';
-import { makeStyles, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import AppsIcon from '@material-ui/icons/Apps';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import AppsIcon from '@mui/icons-material/Apps';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '../../phone/hooks/usePhone';
 import { useNotifications } from '../../notifications/hooks/useNotifications';

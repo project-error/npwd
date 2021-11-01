@@ -1,5 +1,5 @@
 import React from 'react';
-import { CameraAlt } from '@material-ui/icons';
+import { CameraAlt } from '@mui/icons-material';
 
 const Camera: React.FC = () => <CameraAlt fontSize="large" />;
 

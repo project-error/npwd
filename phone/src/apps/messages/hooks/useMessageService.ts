@@ -1,67 +1,55 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { messageState } from './state';
-import { useNuiEvent, useNuiRequest } from 'fivem-nui-react-lib';
-import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
-import { useMessageNotifications } from './useMessageNotifications';
+import { useNuiEvent } from 'fivem-nui-react-lib';
+import {
+  Message,
+  MessageConversationResponse,
+  MessageEvents,
+} from '../../../../../typings/messages';
+import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
+import { useMessageNotifications } from './useMessageNotifications';
 import { useLocation } from 'react-router';
-import { MessageEvents } from '../../../../../typings/messages';
-import { TOptionsBase } from 'i18next';
+import { usePhoneVisibility } from '../../../os/phone/hooks/usePhoneVisibility';
+import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 export const useMessagesService = () => {
-  const Nui = useNuiRequest();
-  const { pathname } = useLocation();
-  const [activeMessageGroup, setActiveMessageGroup] = useRecoilState(
-    messageState.activeMessageGroup,
-  );
-  const setMessageGroups = useSetRecoilState(messageState.messageGroups);
-  const setMessages = useSetRecoilState(messageState.messages);
-  const setCreateMessageGroupResult = useSetRecoilState(messageState.createMessageGroupResult);
-  const { addAlert } = useSnackbar();
+  const { updateMessages, updateConversations } = useMessageActions();
   const { setNotification } = useMessageNotifications();
-  const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const { visibility } = usePhoneVisibility();
+  const { getContactByNumber } = useContactActions();
 
-  const handleAddAlert = useCallback(
-    ({ message, type, options = {} }: IAlert & { options: TOptionsBase }) => {
-      addAlert({
-        message: t(`${message}`, options),
-        type,
+  const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
+    if (visibility && pathname.includes('/messages/conversations')) {
+      return;
+    }
+
+    setNotification({ conversationName, conversationId, message });
+  };
+
+  // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
+  const handleUpdateMessages = useCallback(
+    (messageDto: Message) => {
+      updateMessages(messageDto);
+    },
+    [updateMessages],
+  );
+
+  const handleAddConversation = useCallback(
+    (conversation: MessageConversationResponse) => {
+      const contact = getContactByNumber(conversation.phoneNumber);
+
+      updateConversations({
+        phoneNumber: conversation.phoneNumber,
+        conversation_id: conversation.conversation_id,
+        avatar: contact.avatar || null,
+        unread: 0,
+        display: contact.display || null,
       });
     },
-    [addAlert, t],
+    [updateConversations, getContactByNumber],
   );
 
-  const handleMessageBroadcast = useCallback(
-    ({ groupId, message }) => {
-      if (groupId === activeMessageGroup?.groupId) {
-        Nui.send(MessageEvents.FETCH_MESSAGES, { groupId: activeMessageGroup.groupId });
-        if (pathname.includes('messages/conversations')) {
-          // Dont trigger notification if conversation is open.
-          return;
-        }
-      }
-      setNotification({ groupId, message });
-    },
-    [activeMessageGroup, pathname, setNotification, Nui],
-  );
-
-  const _setMessageGroups = useCallback(
-    (groups) => {
-      if (activeMessageGroup && activeMessageGroup.groupId) {
-        setActiveMessageGroup(
-          (curr) => groups.find((g) => g.groupId === activeMessageGroup.groupId) || curr,
-        );
-      }
-      setMessageGroups(groups);
-    },
-    [activeMessageGroup, setActiveMessageGroup, setMessageGroups],
-  );
-
-  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGE_GROUPS_SUCCESS, _setMessageGroups);
-  useNuiEvent('MESSAGES', MessageEvents.FETCH_MESSAGES_SUCCESS, setMessages);
-  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_SUCCESS, setCreateMessageGroupResult);
-  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_GROUP_FAILED, setCreateMessageGroupResult);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
-  useNuiEvent('MESSAGES', MessageEvents.ACTION_RESULT, handleAddAlert);
+  useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
+  useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { Button } from '@material-ui/core';
-import ReplyIcon from '@material-ui/icons/Reply';
+import { Button } from '@mui/material';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 import { twitterState } from '../../hooks/state';
 

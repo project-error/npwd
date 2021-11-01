@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import DialGrid from '../DialPadGrid';
 import { DialerInput } from '../DialerInput';
 import { DialInputCtx } from '../../context/InputContext';
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const DialPage = () => {
+const DialPage: React.FC = () => {
   const classes = useStyles();
   const query = useQueryParams();
   const queryNumber = query.number;

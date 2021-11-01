@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone } from '@material-ui/icons';
+import { Phone } from '@mui/icons-material';
 
 const DialerIcon: React.FC = () => <Phone fontSize="large" />;
 

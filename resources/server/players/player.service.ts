@@ -1,4 +1,4 @@
-import { generatePhoneNumber } from '../misc/functions';
+import { findOrGeneratePhoneNumber } from '../misc/functions';
 import { PhoneEvents } from '../../../typings/phone';
 import { Player } from './player.class';
 import { PlayerAddData } from './player.interfaces';
@@ -63,8 +63,9 @@ class _PlayerService {
    */
   getPlayerFromIdentifier(identifier: string): Player | null {
     const player = this.playersByIdentifier.get(identifier);
-    if (!player)
+    if (!player) {
       throw new Error(`Could not find corresponding player for identifier: ${identifier}`);
+    }
     return player;
   }
 
@@ -111,12 +112,7 @@ class _PlayerService {
     playerLogger.info(`Started loading for ${username} (${pSource})`);
     // Ensure phone number exists or generate
 
-    let phone_number: string;
-    try {
-      phone_number = await generatePhoneNumber(playerIdentifier);
-    } catch (e) {
-      return;
-    }
+    const phone_number = await findOrGeneratePhoneNumber(playerIdentifier);
 
     const newPlayer = new Player({
       identifier: playerIdentifier,
@@ -142,18 +138,18 @@ class _PlayerService {
   async createNewPlayer({
     src,
     identifier,
+    phoneNumber
   }: {
     src: number;
     identifier: string;
+    phoneNumber: string;
   }): Promise<Player | null> {
     const username = GetPlayerName(src.toString());
 
-    const phoneNumber = await generatePhoneNumber(identifier).catch((e) => {
-      playerLogger.error(`Failed to generate phone number for source: ${src}. Error: ${e.message}`);
-      return null;
-    });
-
-    if (!phoneNumber) return null;
+    if (!phoneNumber) {
+      phoneNumber = await findOrGeneratePhoneNumber(identifier);
+      if (!phoneNumber) return null;
+    }
 
     return new Player({
       source: src,
@@ -169,8 +165,8 @@ class _PlayerService {
    * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
    *
    */
-  async handleNewPlayerEvent({ source: src, identifier, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier: identifier.toString() });
+  async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
+    const player = await this.createNewPlayer({ src, identifier: identifier.toString(), phoneNumber });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);

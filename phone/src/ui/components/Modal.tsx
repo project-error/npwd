@@ -1,7 +1,7 @@
 import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, Paper } from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import makeStyles from '@mui/styles/makeStyles';
+import { Button, Paper } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {
@@ -33,7 +33,12 @@ const useStyles = makeStyles({
   },
 });
 
-export const Modal = ({ children, visible, handleClose }) => {
+interface ModalProps {
+  visible?: boolean;
+  handleClose?: () => void;
+}
+
+export const Modal: React.FC<ModalProps> = ({ children, visible, handleClose }) => {
   const classes = useStyles();
 
   const showHideClassName = visible ? classes.displayBlock : classes.displayNone;

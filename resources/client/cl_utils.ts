@@ -74,6 +74,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
+    await (global as any).playerReady();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
       cb(res);
@@ -84,6 +85,16 @@ export const RegisterNuiProxy = (event: string) => {
   });
 };
 
+type MsgpackTypes =
+  | 'string'
+  | 'number'
+  | 'bigint'
+  | 'boolean'
+  | 'symbol'
+  | 'undefined'
+  | 'function'
+  | 'object';
+
 type WrapperNetEventCb = <T extends any[]>(...args: T) => void;
 
 /**
@@ -93,4 +104,18 @@ type WrapperNetEventCb = <T extends any[]>(...args: T) => void;
  */
 export const onNpwdEvent = (event: string, cb: WrapperNetEventCb) => {
   onNet(event, cb);
+};
+export const verifyExportArgType = (
+  exportName: string,
+  passedArg: unknown,
+  validTypes: MsgpackTypes[],
+): void => {
+  const passedArgType = typeof passedArg;
+
+  if (!validTypes.includes(passedArgType))
+    throw new Error(
+      `Export ${exportName} was called with incorrect argument type (${validTypes.join(
+        ', ',
+      )}. Passed: ${passedArg}, Type: ${passedArgType})`,
+    );
 };

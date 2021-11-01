@@ -1,5 +1,6 @@
 import React from 'react';
-import { ListItemIcon, ListItemText, Slide, makeStyles, Paper } from '@material-ui/core';
+import { ListItemIcon, ListItemText, Slide, Paper } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { List } from './List';
 import { ListItem } from './ListItem';
 import { useTranslation } from 'react-i18next';
@@ -24,13 +25,13 @@ export interface IContextMenuOption {
   key?: string;
 }
 
-interface IContextMenuProps {
+interface ContextMenuProps {
   open: boolean;
-  onClose(): void;
+  onClose: () => void;
   options: Array<IContextMenuOption>;
 }
 
-export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -38,7 +39,7 @@ export const ContextMenu = ({ open, onClose, options }: IContextMenuProps) => {
     ? [
         ...options,
         {
-          label: t('GENERIC_CLOSE'),
+          label: t('GENERIC.CLOSE'),
           onClick: onClose,
         } as IContextMenuOption,
       ]

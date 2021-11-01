@@ -1,6 +1,7 @@
 export interface PlayerAddData {
   source: number;
   identifier: string;
+  phoneNumber?: string;
   firstname?: string;
   lastname?: string;
 }

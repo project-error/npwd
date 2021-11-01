@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Card, Fab, Box, Tooltip } from '@material-ui/core';
-import CancelIcon from '@material-ui/icons/Clear';
-import FireIcon from '@material-ui/icons/Whatshot';
-import { makeStyles } from '@material-ui/core/styles';
+import { Card, Fab, Box } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Clear';
+import FireIcon from '@mui/icons-material/Whatshot';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
 import { FormattedProfile } from '../../../../../typings/match';
 import Draggable from './Draggable';
 import StatusDisplay from './StatusDisplay';
 import Profile from './profile/Profile';
+import { Tooltip } from '../../../ui/components/Tooltip';
 
 const useStyles = makeStyles({
   root: {

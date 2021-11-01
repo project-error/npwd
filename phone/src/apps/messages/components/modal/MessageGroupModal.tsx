@@ -1,6 +1,6 @@
 import React from 'react';
-import { Slide, Paper, Button } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Slide, Paper, Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import NewMessageGroupForm from '../form/NewMessageGroupForm';
 import { useHistory, useParams } from 'react-router-dom';

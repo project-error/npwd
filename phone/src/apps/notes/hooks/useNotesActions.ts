@@ -3,29 +3,29 @@ import { useCallback } from 'react';
 import { NoteItem } from '../../../../../typings/notes';
 
 interface UseNotesActionsValue {
-  deleteNote: (id: number) => void;
-  addNote: (note: NoteItem) => void;
-  updateNote: (note: NoteItem) => void;
+  deleteLocalNote: (id: number) => void;
+  addLocalNote: (note: NoteItem) => void;
+  updateLocalNote: (note: NoteItem) => void;
 }
 
 export const useNotesActions = (): UseNotesActionsValue => {
   const setNotes = useSetNotes();
 
-  const deleteNote = useCallback(
+  const deleteLocalNote = useCallback(
     (id) => {
       setNotes((curNotes) => [...curNotes].filter((note) => note.id !== id));
     },
     [setNotes],
   );
 
-  const addNote = useCallback(
+  const addLocalNote = useCallback(
     (note: NoteItem) => {
-      setNotes((curNotes) => [...curNotes, note]);
+      setNotes((curNotes) => [note, ...curNotes]);
     },
     [setNotes],
   );
 
-  const updateNote = useCallback(
+  const updateLocalNote = useCallback(
     (note: NoteItem) => {
       setNotes((curNotes) => {
         const targetIndex = curNotes.findIndex((storedNote) => storedNote.id === note.id);
@@ -37,5 +37,5 @@ export const useNotesActions = (): UseNotesActionsValue => {
     [setNotes],
   );
 
-  return { deleteNote, addNote, updateNote };
+  return { deleteLocalNote, addLocalNote, updateLocalNote };
 };
