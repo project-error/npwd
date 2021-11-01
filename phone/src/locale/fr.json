@@ -9,6 +9,49 @@
         "INCOMING": "Appel entrant"
       }
     },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Aucune notifications non lues"
+    },
+    "BROWSER": {
+      "NAME": "Navigateur"
+    },
+    "GENERIC": {
+      "LOADING": "Chargement...",
+      "WAIT": "Patientez...",
+      "SAVE": "Sauvegarder",
+      "EDIT": "Editer",
+      "UPDATE": "Mettre à jour",
+      "REQUIRED": "Requis",
+      "DELETE": "Supprimer",
+      "REPORT": "Report",
+      "CALL": "Appel",
+      "MESSAGE": "Message",
+      "CLOSE": "Fermer",
+      "CANCEL": "Annuler",
+      "TITLE": "Titre",
+      "CONTENT": "Contenu",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copie de {{content}} dans le presse papier !"
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Où voulez-vous partager cette image ?",
+      "COPY_IMAGE": "Ou copier juste un image ici",
+      "FAILED_TO_DELETE": "La photo n'a pas pu être supprimé :(",
+      "FAILED_TO_TAKE_PHOTO": "Impossible de sauvegarder la photo :("
+    },
+    "CONTACTS": {
+      "PLACEHOLDER_SEARCH_CONTACTS": "Recherche de contacts...",
+      "FORM_NAME": "Nom",
+      "FORM_NUMBER": "Numéro",
+      "FORM_AVATAR": "URL de votre Avatar",
+      "MODAL_BUTTON_ADD": "Ajouter un Contact",
+      "ADD_FAILED": "Echec dans la création du contact !",
+      "ADD_SUCCESS": "Contact créé avec succès !",
+      "UPDATE_FAILED": "Echec dans la mise à jour du contact !",
+      "UPDATE_SUCCESS": "Contact mis à jour avec succès !",
+      "DELETE_FAILED": "Echec dans la suppression du contact !",
+      "DELETE_SUCCESS": "Contact supprimé avec succès !"
+    },
     "SETTINGS": {
       "CATEGORY": {
         "APPEARANCE": "Apparence",
@@ -62,7 +105,7 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marché",
     "APPS_CAMERA": "Caméra",
-    
+
     "APPS_CAMERA_FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
 
     "APPS_DIALER_INCOMING_CALL_TITLE": "Appel entrant",
