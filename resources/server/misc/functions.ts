@@ -8,13 +8,13 @@ export async function findOrGeneratePhoneNumber(identifier: string): Promise<str
 
   const castRes = res as Record<string, unknown>[];
 
-  if (res) return castRes[0][config.database.phoneNumberColumn] as string;
+  if (castRes && castRes[0][config.database.phoneNumberColumn] !== null) return castRes[0][config.database.phoneNumberColumn] as string;
 
-  const gennedNumber = generateUniquePhoneNumber();
+  const gennedNumber = await generateUniquePhoneNumber();
 
   const updateQuery = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
   // Update profile with new generated number
-  await DbInterface.exec(updateQuery, [gennedNumber, identifier]);
+  await DbInterface._rawExec(updateQuery, [gennedNumber, identifier]);
 
   return gennedNumber;
 }
