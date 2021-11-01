@@ -34,8 +34,6 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
           });
         }
 
-        console.log('getting that shit broooooooooooooooooo', resp.data.length);
-
         if (resp.data.length === 0) {
           setHasMore(false);
           return;
@@ -64,7 +62,7 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   if (!hasLoaded) return <TweetSkeletonList />;
   return (
     <List>
-      <div id="twitter-scrollable-target" style={{ overflow: 'auto' }}>
+      <div id="twitter-scrollable-target" style={{ overflow: 'auto', height: 500 }}>
         <InfiniteScroll
           next={handleNextTweets}
           hasMore={hasMore}
