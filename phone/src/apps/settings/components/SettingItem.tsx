@@ -7,10 +7,10 @@ import {
   Box,
   Slider,
   IconButton,
-  Tooltip,
   Typography,
   Switch,
 } from '@mui/material';
+import { Tooltip } from '../../../ui/components/Tooltip';
 
 interface ISettingItem {
   options?: any;

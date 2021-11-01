@@ -40,9 +40,20 @@ interface BankConfig {
 interface DatabaseConfig {
   playerTable: string;
   identifierColumn: string;
+  identifierType: string;
   useIdentifierPrefix: boolean;
   profileQueries: boolean;
   phoneNumberColumn: string;
+}
+
+interface ImageConfig {
+  url: string;
+  type: string;
+  imageEncoding: 'png' | 'jpg' | 'webp';
+  contentType: string;
+  authorizationPrefix: string;
+  useAuthorization: boolean;
+  returnedDataIndexes: Array<any>;
 }
 
 interface PhoneAsItemConfig {
@@ -62,4 +73,5 @@ export interface ResourceConfig {
   notificationPosition: NotificationConfig;
   general: General;
   debug: Debug;
+  images: ImageConfig;
 }

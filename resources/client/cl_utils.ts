@@ -74,6 +74,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
+    await (global as any).playerReady();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
       cb(res);

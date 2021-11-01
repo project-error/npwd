@@ -124,7 +124,7 @@ const ContactsInfoPage: React.FC = () => {
           className={classes.input}
           value={name}
           onChange={handleDisplayChange}
-          label={t('APPS_CONTACT_FORM_NAME')}
+          label={t('CONTACTS.FORM_NAME')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -135,7 +135,7 @@ const ContactsInfoPage: React.FC = () => {
           error={number.length === ContactsDatabaseLimits.number}
           value={number}
           onChange={handleNumberChange}
-          label={t('APPS_CONTACT_FORM_NUMBER')}
+          label={t('CONTACTS.FORM_NUMBER')}
           fullWidth
           inputProps={{
             className: classes.inputProps,
@@ -144,7 +144,7 @@ const ContactsInfoPage: React.FC = () => {
         <TextField
           error={avatar.length === ContactsDatabaseLimits.avatar}
           className={classes.input}
-          label={t('APPS_CONTACT_FORM_AVATAR')}
+          label={t('CONTACTS.FORM_AVATAR')}
           fullWidth
           value={avatar}
           onChange={handleAvatarChange}
@@ -171,7 +171,7 @@ const ContactsInfoPage: React.FC = () => {
         {!contact && (
           <Box display="block">
             <Button color="primary" variant="contained" onClick={handleContactAdd}>
-              {t('APPS_CONTACT_MODAL_BUTTON_ADD')}
+              {t('CONTACTS.MODAL_BUTTON_ADD')}
             </Button>
           </Box>
         )}

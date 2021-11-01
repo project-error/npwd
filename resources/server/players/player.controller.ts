@@ -73,6 +73,7 @@ if (config.general.enableMultiChar) {
     playerLogger.debug('Receive newPlayer event, data:');
     playerLogger.debug(playerDTO);
     await PlayerService.handleNewPlayerEvent(playerDTO);
+    emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true)
   });
 
   on('npwd:unloadPlayer', (src: number) => {
@@ -81,5 +82,6 @@ if (config.general.enableMultiChar) {
     }
     playerLogger.debug(`Received unloadPlayer event for ${src}`);
     PlayerService.handleUnloadPlayerEvent(src);
+    emitNet(PhoneEvents.PLAYER_LOADED, src, false)
   });
 }

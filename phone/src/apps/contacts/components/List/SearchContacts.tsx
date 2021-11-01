@@ -22,7 +22,7 @@ export const SearchContacts: React.FC = () => {
     <Box>
       <SearchField
         onChange={(e) => setInputVal(e.target.value)}
-        placeholder={t('APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS')}
+        placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
         value={inputVal}
       />
     </Box>

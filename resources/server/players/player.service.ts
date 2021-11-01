@@ -63,8 +63,9 @@ class _PlayerService {
    */
   getPlayerFromIdentifier(identifier: string): Player | null {
     const player = this.playersByIdentifier.get(identifier);
-    if (!player)
+    if (!player) {
       throw new Error(`Could not find corresponding player for identifier: ${identifier}`);
+    }
     return player;
   }
 
@@ -137,15 +138,18 @@ class _PlayerService {
   async createNewPlayer({
     src,
     identifier,
+    phoneNumber
   }: {
     src: number;
     identifier: string;
+    phoneNumber: string;
   }): Promise<Player | null> {
     const username = GetPlayerName(src.toString());
 
-    const phoneNumber = await findOrGeneratePhoneNumber(identifier);
-
-    if (!phoneNumber) return null;
+    if (!phoneNumber) {
+      phoneNumber = await findOrGeneratePhoneNumber(identifier);
+      if (!phoneNumber) return null;
+    }
 
     return new Player({
       source: src,
@@ -161,8 +165,8 @@ class _PlayerService {
    * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
    *
    */
-  async handleNewPlayerEvent({ source: src, identifier, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier: identifier.toString() });
+  async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
+    const player = await this.createNewPlayer({ src, identifier: identifier.toString(), phoneNumber });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);

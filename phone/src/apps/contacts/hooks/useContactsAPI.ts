@@ -22,7 +22,7 @@ export const useContactsAPI = () => {
       }).then((serverResp) => {
         if (serverResp.status !== 'ok') {
           return addAlert({
-            message: t('APPS_CONTACT_ADD_FAILED'),
+            message: t('CONTACTS.ADD_FAILED'),
             type: 'error',
           });
         }
@@ -30,7 +30,7 @@ export const useContactsAPI = () => {
         // Sanity checks maybe?
         addLocalContact(serverResp.data);
         addAlert({
-          message: t('APPS_CONTACT_ADD_SUCCESS'),
+          message: t('CONTACTS.ADD_SUCCESS'),
           type: 'success',
         });
         history.replace(referral);
@@ -49,7 +49,7 @@ export const useContactsAPI = () => {
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('APPS_CONTACT_UPDATE_FAILED'),
+            message: t('CONTACTS.UPDATE_FAILED'),
             type: 'error',
           });
         }
@@ -62,7 +62,7 @@ export const useContactsAPI = () => {
         });
 
         addAlert({
-          message: t('APPS_CONTACT_UPDATE_SUCCESS'),
+          message: t('CONTACTS.UPDATE_SUCCESS'),
           type: 'success',
         });
 
@@ -77,7 +77,7 @@ export const useContactsAPI = () => {
       fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('APPS_CONTACT_DELETE_FAILED'),
+            message: t('CONTACTS.DELETE_FAILED'),
             type: 'error',
           });
         }
@@ -86,7 +86,7 @@ export const useContactsAPI = () => {
         deleteLocalContact(id);
 
         addAlert({
-          message: t('APPS_CONTACT_DELETE_SUCCESS'),
+          message: t('CONTACTS.DELETE_SUCCESS'),
           type: 'success',
         });
       });

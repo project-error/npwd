@@ -2,9 +2,10 @@ import React from 'react';
 import { darken, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { green } from '@mui/material/colors';
-import { Avatar, Badge, Button, Tooltip, Zoom } from '@mui/material';
+import { Avatar, Badge, Button, Zoom } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '../../os/notifications/providers/NotificationsProvider';
+import { Tooltip } from './Tooltip';
 
 const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
   root: {
