@@ -1,16 +1,65 @@
-import { atom } from 'recoil';
-import { CreateMessageGroupResult, Message, MessageGroup } from '../../../../../typings/messages';
+import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  CreateMessageGroupResult,
+  Message,
+  MessageConversation,
+  MessageEvents,
+} from '../../../../../typings/messages';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import LogDebugEvent from '../../../os/debug/LogDebugEvents';
+import { isEnvBrowser } from '../../../utils/misc';
+import { MockMessageConversations } from '../utils/constants';
+
+const currentGroupId = atom({ key: 'currentGroupId', default: null });
 
 export const messageState = {
-  messageGroups: atom<MessageGroup[]>({
-    key: 'messageGroups',
-    default: [],
+  messageCoversations: atom<MessageConversation[]>({
+    key: 'messageConversations',
+    default: selector({
+      key: 'defaultMessageConversation',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<MessageConversation[]>>(
+            MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+          );
+          LogDebugEvent({ action: 'fetchMessageConversation', data: resp.data });
+          return resp.data;
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockMessageConversations;
+          }
+          console.error(e);
+          return [];
+        }
+      },
+    }),
+  }),
+  filterValue: atom<string>({
+    key: 'defaultFilterValue',
+    default: '',
+  }),
+  filteredMessageConversations: selector<MessageConversation[]>({
+    key: 'defaultFilteredMessageConversations',
+    get: ({ get }) => {
+      const searchValue: string = get(messageState.filterValue);
+      const messageConversations: MessageConversation[] = get(messageState.messageCoversations);
+
+      if (!searchValue) return messageConversations; // added this
+
+      const regExp = new RegExp(searchValue, 'gi');
+
+      return messageConversations.filter(
+        (conversation) =>
+          conversation.display.match(regExp) || conversation.phoneNumber.match(regExp),
+      );
+    },
   }),
   messages: atom<Message[]>({
     key: 'messages',
-    default: null,
+    default: [],
   }),
-  activeMessageGroup: atom<MessageGroup>({
+  activeMessageConversation: atom<MessageConversation | null>({
     key: 'activeMessageGroup',
     default: null,
   }),
@@ -30,4 +79,31 @@ export const messageState = {
     key: 'unreadMessagesCount',
     default: 0,
   }),
+  selectedMessage: atom<Message>({
+    key: 'selectedMessage',
+    default: null,
+  }),
 };
+
+export const useMessageConversationsValue = () => useRecoilValue(messageState.messageCoversations);
+export const useSetMessageConversations = () => useSetRecoilState(messageState.messageCoversations);
+export const useMessageConversations = () => useRecoilState(messageState.messageCoversations);
+
+export const useMessagesState = () => useRecoilState(messageState.messages);
+export const useMessagesValue = () => useRecoilValue(messageState.messages);
+export const useSetMessages = () => useSetRecoilState(messageState.messages);
+
+export const useActiveMessageConversation = () =>
+  useRecoilValue(messageState.activeMessageConversation);
+
+export const useSetConversationId = () => useSetRecoilState(currentGroupId);
+export const useConversationId = () => useRecoilValue(currentGroupId);
+
+export const useFilterValueState = () => useRecoilState(messageState.filterValue);
+export const useSetFilterValue = () => useSetRecoilState(messageState.filterValue);
+
+export const useFilteredConversationsValue = () =>
+  useRecoilValue(messageState.filteredMessageConversations);
+
+export const useSetSelectedMessage = () => useSetRecoilState(messageState.selectedMessage);
+export const useSelectedMessageValue = () => useRecoilValue(messageState.selectedMessage);
