@@ -66,6 +66,17 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 };
 
 /**
+ * Returns a promise that will be resolved once the client has been loaded.
+ */
+export const playerSpawned = () => {
+  return new Promise<boolean>((resolve) => {
+    setInterval(() => {
+      if ((global as any).isPlayerLoaded) resolve(true);
+    }, 50);
+  });
+};
+
+/**
  *  Will Register an NUI event listener that will immediately
  *  proxy to a server side event of the same name and wait
  *  for the response.
@@ -74,7 +85,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
-    await (global as any).playerReady();
+    if (!(global as any).isPlayerLoaded) await playerSpawned();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
       cb(res);

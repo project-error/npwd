@@ -10,6 +10,9 @@ import { RegisterNuiCB } from './cl_utils';
 (global as any).isPhoneOpen = false;
 (global as any).isPhoneDisabled = false;
 
+// Set a global function to check if the player has been loaded
+(global as any).isPlayerLoaded = config.general.enableMultiChar ? false : true;
+
 const exps = global.exports;
 
 /* * * * * * * * * * * * *
@@ -38,6 +41,13 @@ const getCurrentGameTime = () => {
 
   return `${hour}:${minute}`;
 };
+
+// Register an event to update the state of isPlayerLoaded
+if (config.general.enableMultiChar) {
+  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
+    (global as any).isPlayerLoaded = state;
+  });
+}
 
 /* * * * * * * * * * * * *
  *
@@ -179,21 +189,3 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
 //   const time = getCurrentGameTime()
 //   sendMessage('PHONE', 'setTime', time)
 // }, 2000);
-
-// Set a global function to check if the player is loaded
-let playerLoaded = false;
-(global as any).playerReady = async () => {
-  if (playerLoaded) return true;
-  return new Promise<boolean>((resolve) => {
-    setInterval(() => {
-      if (playerLoaded) resolve(true);
-    }, 50);
-  });
-};
-
-// Register events to set the state of playerLoaded
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
-    playerLoaded = state;
-  });
-}
