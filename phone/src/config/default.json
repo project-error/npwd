@@ -149,10 +149,10 @@
       "value": "en"
     },
     "iconSet": {
-      "label": "NPWD Icons",
+      "label": "Material",
       "value": {
-        "custom": true,
-        "name": "npwd_icons"
+        "custom": false,
+        "name": "material"
       }
     },
     "wallpaper": {
