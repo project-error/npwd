@@ -192,11 +192,7 @@ let playerLoaded = false;
 };
 
 // Register events to set the state of playerLoaded
-if (!config.general.enableMultiChar) {
-  on(`playerSpawned`, async () => {
-    playerLoaded = true;
-  });
-} else {
+if (config.general.enableMultiChar) {
   onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
     playerLoaded = state;
   });
