@@ -61,7 +61,6 @@ class _ContactService {
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
-    console.log(srcPlayerNumber);
     try {
       const contacts = await this.contactsDB.fetchAllContacts(identifier, srcPlayerNumber);
       resp({ status: 'ok', data: contacts });
