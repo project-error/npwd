@@ -58,14 +58,6 @@ class _PlayerService {
   }
 
   /**
-   * Returns the player phone number for a given source
-   * Will return null if no player is found online with that source
-   **/
-  getPhoneNumber(source: number): string {
-    return this.getPlayer(source).getPhoneNumber();
-  }
-
-  /**
    * Returns the player phoneNumber for a passed identifier
    * @param identifier The players phone number
    */

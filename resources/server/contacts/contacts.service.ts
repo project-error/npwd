@@ -17,7 +17,8 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
-    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
+    const player = PlayerService.getPlayer(reqObj.source);
+    const srcPlayerNumber = player.getPhoneNumber();
     try {
       await this.contactsDB.updateContact(reqObj.data, identifier, srcPlayerNumber);
       resp({ status: 'ok' });
@@ -31,7 +32,8 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
-    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
+    const player = PlayerService.getPlayer(reqObj.source);
+    const srcPlayerNumber = player.getPhoneNumber();
     try {
       await this.contactsDB.deleteContact(reqObj.data.id, identifier, srcPlayerNumber);
       resp({ status: 'ok' });
@@ -45,7 +47,8 @@ class _ContactService {
     resp: PromiseEventResp<Contact>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
-    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
+    const player = PlayerService.getPlayer(reqObj.source);
+    const srcPlayerNumber = player.getPhoneNumber();
     try {
       const contact = await this.contactsDB.addContact(identifier, srcPlayerNumber, reqObj.data);
 
@@ -60,7 +63,8 @@ class _ContactService {
     resp: PromiseEventResp<Contact[]>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
-    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
+    const player = PlayerService.getPlayer(reqObj.source);
+    const srcPlayerNumber = player.getPhoneNumber();
     try {
       const contacts = await this.contactsDB.fetchAllContacts(identifier, srcPlayerNumber);
       resp({ status: 'ok', data: contacts });
