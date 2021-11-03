@@ -58,6 +58,14 @@ class _PlayerService {
   }
 
   /**
+   * Returns the player phone number for a given source
+   * Will return null if no player is found online with that source
+   **/
+  getPhoneNumber(source: number): string {
+    return this.getPlayer(source).getPhoneNumber();
+  }
+
+  /**
    * Returns the player phoneNumber for a passed identifier
    * @param identifier The players phone number
    */
@@ -138,7 +146,7 @@ class _PlayerService {
   async createNewPlayer({
     src,
     identifier,
-    phoneNumber
+    phoneNumber,
   }: {
     src: number;
     identifier: string;
@@ -165,8 +173,18 @@ class _PlayerService {
    * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
    *
    */
-  async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier: identifier.toString(), phoneNumber });
+  async handleNewPlayerEvent({
+    source: src,
+    identifier,
+    phoneNumber,
+    firstname,
+    lastname,
+  }: PlayerAddData) {
+    const player = await this.createNewPlayer({
+      src,
+      identifier: identifier.toString(),
+      phoneNumber,
+    });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);
