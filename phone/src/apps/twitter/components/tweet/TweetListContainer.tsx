@@ -7,6 +7,7 @@ import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { processTweet } from '../../utils/tweets';
 import { useTweetsState } from '../../hooks/state';
+import { LoadingSpinner } from '../../../../ui/components/LoadingSpinner';
 
 export function TweetListContainer() {
   const { addAlert } = useSnackbar();
@@ -25,6 +26,8 @@ export function TweetListContainer() {
       setTweets(resp.data.map(processTweet));
     });
   }, [addAlert, t, setTweets]);
+
+  if (tweets.length === 0) return <LoadingSpinner />;
 
   return <TweetList tweets={tweets} />;
 }

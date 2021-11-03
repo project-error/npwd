@@ -62,19 +62,17 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   if (!hasLoaded) return <TweetSkeletonList />;
   return (
     <List>
-      <div id="twitter-scrollable-target" style={{ overflow: 'auto', height: 500 }}>
-        <InfiniteScroll
-          next={handleNextTweets}
-          hasMore={hasMore}
-          loader={<CircularProgress />}
-          scrollableTarget="twitter-scrollable-target"
-          dataLength={tweets.length}
-        >
-          {tweets.map((tweet) => (
-            <Tweet key={tweet.id} {...tweet} />
-          ))}
-        </InfiniteScroll>
-      </div>
+      <InfiniteScroll
+        next={handleNextTweets}
+        hasMore={hasMore}
+        height={587}
+        loader={<CircularProgress />}
+        dataLength={tweets.length}
+      >
+        {tweets.map((tweet) => (
+          <Tweet key={tweet.id} {...tweet} />
+        ))}
+      </InfiniteScroll>
     </List>
   );
 }
