@@ -17,8 +17,9 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
     try {
-      await this.contactsDB.updateContact(reqObj.data, identifier);
+      await this.contactsDB.updateContact(reqObj.data, identifier, srcPlayerNumber);
       resp({ status: 'ok' });
     } catch (e) {
       contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);
@@ -30,8 +31,9 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
     try {
-      await this.contactsDB.deleteContact(reqObj.data.id, identifier);
+      await this.contactsDB.deleteContact(reqObj.data.id, identifier, srcPlayerNumber);
       resp({ status: 'ok' });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -43,8 +45,9 @@ class _ContactService {
     resp: PromiseEventResp<Contact>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
     try {
-      const contact = await this.contactsDB.addContact(identifier, reqObj.data);
+      const contact = await this.contactsDB.addContact(identifier, srcPlayerNumber, reqObj.data);
 
       resp({ status: 'ok', data: contact });
     } catch (e) {
@@ -57,8 +60,10 @@ class _ContactService {
     resp: PromiseEventResp<Contact[]>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const srcPlayerNumber = PlayerService.getPhoneNumber(reqObj.source);
+    console.log(srcPlayerNumber);
     try {
-      const contacts = await this.contactsDB.fetchAllContacts(identifier);
+      const contacts = await this.contactsDB.fetchAllContacts(identifier, srcPlayerNumber);
       resp({ status: 'ok', data: contacts });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
