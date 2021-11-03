@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';

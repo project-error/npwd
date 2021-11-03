@@ -1,11 +1,5 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
-import {
-  FormattedTweet,
-  Profile,
-  Tweet,
-  Tweet as ITweet,
-  TwitterEvents,
-} from '../../../../../typings/twitter';
+import { Profile, TwitterEvents } from '../../../../../typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 

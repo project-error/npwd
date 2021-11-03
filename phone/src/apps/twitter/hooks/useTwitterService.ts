@@ -1,22 +1,13 @@
 import { useCallback } from 'react';
-import {
-  useRecoilState,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-  waitForAll,
-} from 'recoil';
-import { v4 as uuidv4 } from 'uuid';
+import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { IMAGE_DELIMITER } from '../utils/images';
 import { APP_TWITTER } from '../utils/constants';
-import { twitterState, useTwitterProfileValue } from './state';
+import { twitterState } from './state';
 import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
-import { Tweet, FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
-import { useCurrentTwitterPage } from './useCurrentTwitterPage';
+import { Tweet, TwitterEvents } from '../../../../../typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 
@@ -41,8 +32,6 @@ export const useTwitterService = () => {
     twitterState.profile,
   );
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);
-  const { pageId } = useCurrentTwitterPage();
-  const [currentTweets, setTweets] = useRecoilState(twitterState.tweets);
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
   const setCreateLoading = useSetRecoilState(twitterState.createTweetLoading);
   const setDefaultProfileNames = useSetRecoilState(twitterState.defaultProfileNames);
@@ -51,11 +40,6 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
-  /*useEffect(() => {
-    fetchNui<Tweet[], { pageId: number }>(TwitterEvents.FETCH_TWEETS, { pageId }).then((resp) => {
-      setTweets(resp.map(processTweet));
-    });
-  }, [pageId, setTweets]);*/
   //needs to be tied to the inf scroll component that updates the pageId state using the wrapped hook
 
   // these tweets are coming directly from other player clients

@@ -1,7 +1,6 @@
-import { FormattedTweet, Tweet } from '../../../../../typings/twitter';
+import { FormattedTweet } from '../../../../../typings/twitter';
 import { useSetTweets } from './state';
 import { useCallback } from 'react';
-import { processTweet } from '../utils/tweets';
 
 interface TwitterActionProps {
   updateTweets: (tweets: FormattedTweet[]) => void;

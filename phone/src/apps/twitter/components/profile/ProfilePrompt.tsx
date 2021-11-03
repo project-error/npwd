@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function ProfilePrompt() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
@@ -57,8 +55,6 @@ export function ProfilePrompt() {
             type: 'error',
           });
         }
-
-        console.log('youre so cool');
       },
     );
   };

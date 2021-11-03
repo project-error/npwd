@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable, waitForAll } from 'recoil';
-import { Tweet, Profile } from '../../../../../typings/twitter';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { Tweet } from '../../../../../typings/twitter';
 
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useNotifications } from '../../../os/notifications/hooks/useNotifications';

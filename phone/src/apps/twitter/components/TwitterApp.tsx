@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { AppWrapper } from '../../../ui/components';
