@@ -27,24 +27,6 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
 
   const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
-  useEffect(() => {
-    textFieldInputRef.current && textFieldInputRef.current.focus();
-    // we pass in modalVisible to this component so that we can
-    // intelligently decide when to focus the input field.
-  }, [modalVisible]);
-
-  const _handleChange = useCallback(
-    (e) => {
-      // when the user types scroll the text field to the bottom
-      // so that we always have the latest line and error message
-      // in view
-      e.preventDefault();
-      textFieldInputRef.current.scrollTop = textFieldInputRef.current.scrollHeight;
-      handleChange(e.target.value);
-    },
-    [handleChange],
-  );
-
   if (!ResourceConfig) return null;
 
   let errorMessage = null;
@@ -70,13 +52,12 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
       value={message}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
-      onChange={_handleChange}
+      onChange={(e) => handleChange(e.currentTarget.value)}
       multiline
       placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-      // ref={textFieldRef}
     />
   );
 };

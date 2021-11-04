@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, memo } from 'react';
 
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
@@ -77,4 +77,4 @@ export function TweetList({ tweets }: { tweets: ITweet[] }) {
   );
 }
 
-export default TweetList; // only re-render if our tweets change
+export default memo(TweetList); // only re-render if our tweets change

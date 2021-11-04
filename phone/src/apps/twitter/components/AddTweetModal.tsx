@@ -165,7 +165,7 @@ export const AddTweetModal = () => {
         handleChange={handleMessageChange}
       />
       <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleimageChange} />
-      <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
+      {/*<EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />*/}
       <ImageDisplay
         visible={!showEmoji && images.length > 0}
         images={images}
