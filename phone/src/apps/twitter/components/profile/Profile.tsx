@@ -8,6 +8,9 @@ import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import ProfileField from '../../../../ui/components/ProfileField';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +30,7 @@ export function Profile() {
   const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -47,7 +51,22 @@ export function Profile() {
       location,
       job,
     };
-    Nui.send(TwitterEvents.UPDATE_PROFILE, data);
+
+    fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t(''),
+          type: 'error',
+        });
+      }
+
+      addAlert({
+        message: t('TWITTER_EDIT_PROFILE_SUCCESS'),
+        type: 'success',
+      });
+    });
+
+    //Nui.send(TwitterEvents.UPDATE_PROFILE, data);
   };
 
   // fetching the config is an asynchronous call so defend against it

@@ -62,22 +62,17 @@ class _TwitterService {
     }
   }
 
-  async handleUpdateProfile(src: number, profile: Profile) {
+  async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<void>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      await this.twitterDB.updateProfile(identifier, profile);
-      emitNet(TwitterEvents.UPDATE_PROFILE_RESULT, src, {
-        message: 'TWITTER_EDIT_PROFILE_SUCCESS',
-        type: 'success',
-      });
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      await this.twitterDB.updateProfile(identifier, reqObj.data);
+
+      resp({ status: 'ok' });
     } catch (e) {
       twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.UPDATE_PROFILE_RESULT, src, {
-        message: 'TWITTER_EDIT_PROFILE_FAILURE',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: e.message });
     }
   }
 

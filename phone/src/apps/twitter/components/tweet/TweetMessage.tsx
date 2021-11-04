@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useCallback, useRef } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
@@ -19,13 +19,23 @@ const useStyles = makeStyles({
   },
 });
 
-export const TweetMessage = ({ modalVisible, message, handleChange }) => {
+export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
   const [t] = useTranslation();
 
   const { characterLimit, newLineLimit } = ResourceConfig.twitter;
+
+  useEffect(() => {
+    textFieldInputRef.current && textFieldInputRef.current.focus();
+  }, [modalVisible]);
+
+  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      onEnter();
+    }
+  };
 
   if (!ResourceConfig) return null;
 
@@ -53,6 +63,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
       onChange={(e) => handleChange(e.currentTarget.value)}
+      onKeyPress={handleOnEnter}
       multiline
       placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
       inputRef={textFieldInputRef}

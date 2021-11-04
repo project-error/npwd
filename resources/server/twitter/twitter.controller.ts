@@ -32,9 +32,9 @@ onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
   );
 });
 
-onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
+onNetPromise<Profile, void>(TwitterEvents.UPDATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleUpdateProfile(_source, profile).catch((e) =>
+  TwitterService.handleUpdateProfile(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in updateProfile event (${_source}), Error: ${e.message}`),
   );
 });

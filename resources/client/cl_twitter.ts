@@ -41,14 +41,7 @@ onNet(TwitterEvents.CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 });
 
-/**
- * Twitter update profile
- */
-RegisterNuiCallbackType(TwitterEvents.UPDATE_PROFILE);
-on(`__cfx_nui:${TwitterEvents.UPDATE_PROFILE}`, (data: string) => {
-  sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, true);
-  emitNet(TwitterEvents.UPDATE_PROFILE, data);
-});
+RegisterNuiProxy(TwitterEvents.UPDATE_PROFILE);
 
 onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
   sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_RESULT, alert);
