@@ -6,15 +6,15 @@ import TwitterService from './twitter.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
 /*
-onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
-  const _source = getSource();
-  TwitterService.handleGetOrCreateProfile(_source).catch((e) =>
-    twitterLogger.error(
-      `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
-    ),
-  );
-});
-*/
+  onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
+    const _source = getSource();
+    TwitterService.handleGetOrCreateProfile(_source).catch((e) =>
+      twitterLogger.error(
+        `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
+      ),
+    );
+  });
+  */
 
 onNetPromise(TwitterEvents.GET_OR_CREATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
@@ -39,30 +39,18 @@ onNet(TwitterEvents.UPDATE_PROFILE, async (profile: Profile) => {
   );
 });
 
-/*
-onNet(TwitterEvents.FETCH_TWEETS, async (pageI: number) => {
-  const _source = getSource();
-  TwitterService.handleFetchTweets(_source, pageI).catch((e) =>
-    twitterLogger.error(`Error occurred in fetchTweets event (${_source}), Error: ${e.message}`),
-  );
-});
- */
-
-onNet(TwitterEvents.FETCH_TWEETS_FILTERED, async (searchValue: string) => {
-  const _source = getSource();
-  TwitterService.handleFetchTweetsFiltered(_source, searchValue).catch((e) =>
-    twitterLogger.error(
-      `Error occurred in fetchTweetsFiltered event (${_source}), Error: ${e.message}`,
-    ),
-  );
-});
-
-/*onNet(TwitterEvents.CREATE_TWEET, async (tweet: Tweet) => {
-  const _source = getSource();
-  TwitterService.handleCreateTweet(_source, tweet).catch((e) =>
-    twitterLogger.error(`Error occurred in createTweet event (${_source}), Error: ${e.message}`),
-  );
-});*/
+onNetPromise<{ searchValue: string }, Tweet[]>(
+  TwitterEvents.FETCH_TWEETS_FILTERED,
+  async (reqObj, resp) => {
+    console.log('getting some filtered tweets');
+    const _source = getSource();
+    TwitterService.handleFetchTweetsFiltered(reqObj, resp).catch((e) =>
+      twitterLogger.error(
+        `Error occurred in fetchTweetsFiltered event (${_source}), Error: ${e.message}`,
+      ),
+    );
+  },
+);
 
 onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {
   TwitterService.handleCreateTweet(reqObj, resp).catch((e) => {

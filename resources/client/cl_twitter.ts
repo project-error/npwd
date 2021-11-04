@@ -77,10 +77,8 @@ onNet(TwitterEvents.FETCH_TWEETS_FAILURE, () => {
 /**
  * Twitter fetch filtered tweets
  */
-RegisterNuiCallbackType(TwitterEvents.FETCH_TWEETS_FILTERED);
-on(`__cfx_nui:${TwitterEvents.FETCH_TWEETS_FILTERED}`, (searchValue: string) => {
-  emitNet(TwitterEvents.FETCH_TWEETS_FILTERED, searchValue);
-});
+
+RegisterNuiProxy(TwitterEvents.FETCH_TWEETS_FILTERED);
 
 onNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, (tweets: any) => {
   sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, tweets);

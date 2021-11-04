@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import TweetList from './tweet/TweetList';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import SearchButton from './buttons/SearchButton';
-import { useFilteredTweets } from '../hooks/useFilteredTweets';
-import { TwitterEvents } from '../../../../../typings/twitter';
 import { TextField } from '../../../ui/components/Input';
+import { fetchNui } from '../../../utils/fetchNui';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { Tweet, TwitterEvents } from '../../../../../typings/twitter';
+import { useFilteredTweets } from '../hooks/state';
+import { processTweet } from '../utils/tweets';
+import { ServerPromiseResp } from '../../../../../typings/common';
 
 const useStyles = makeStyles({
   root: {
@@ -21,11 +24,13 @@ const useStyles = makeStyles({
 });
 
 function TwitterSearch() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const [t] = useTranslation();
   const [searchValue, setSearchValue] = useState('');
-  const { tweets } = useFilteredTweets();
+  const { addAlert } = useSnackbar();
+
+  // a bit weird name convention
+  const [tweets, setFilteredTweets] = useFilteredTweets();
 
   const handleChange = (e) => setSearchValue(e.target.value);
 
@@ -33,7 +38,18 @@ function TwitterSearch() {
     const cleanedSearchValue = searchValue.trim();
     if (!cleanedSearchValue) return;
 
-    Nui.send(TwitterEvents.FETCH_TWEETS_FILTERED, cleanedSearchValue);
+    fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS_FILTERED, {
+      searchValue: cleanedSearchValue,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t(''),
+          type: 'error',
+        });
+      }
+
+      setFilteredTweets(resp.data.map(processTweet));
+    });
   };
 
   const filteredTweets = tweets || [];

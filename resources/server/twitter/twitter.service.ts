@@ -22,8 +22,6 @@ class _TwitterService {
     try {
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
 
-      console.log('this source is coool', reqObj.source);
-
       // if we got null from getOrCreateProfile it means it doesn't exist and
       // we failed to create it. In this case we pass the UI some default
       // profile names it can choose from.
@@ -31,13 +29,10 @@ class _TwitterService {
       // We should be able to comment this out as profile **should** be guranteed,
       // as we create a default profile in that process.
 
-      console.log('our profile', profile);
-
       if (!profile) {
         emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, ['chip', 'taso']);
       } else {
         resp({ status: 'ok', data: profile });
-        //emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_SUCCESS, reqObj.source, profile);
       }
     } catch (e) {
       emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, reqObj.source);
@@ -48,8 +43,6 @@ class _TwitterService {
   }
 
   async handleCreateProfile(src: number, profile: Profile) {
-    console.log('getting that profile', profile);
-
     try {
       const identifier = PlayerService.getIdentifier(src);
       await this.twitterDB.createProfile(identifier, profile.profile_name);
@@ -70,8 +63,6 @@ class _TwitterService {
   }
 
   async handleUpdateProfile(src: number, profile: Profile) {
-    console.log('getting that updated profile', profile);
-
     try {
       const identifier = PlayerService.getIdentifier(src);
       await this.twitterDB.updateProfile(identifier, profile);
@@ -102,30 +93,30 @@ class _TwitterService {
 
       const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
 
-      console.log('tweeeeets', tweets.length);
-
-      //emitNet(TwitterEvents.FETCH_TWEETS_SUCCESS, src, tweets);
       resp({ data: tweets, status: 'ok' });
     } catch (e) {
       twitterLogger.error(`Fetching tweets failed, ${e.message}`, {
         source: src,
       });
       resp({ status: 'error', errorMsg: e.message });
-      //emitNet(TwitterEvents.FETCH_TWEETS_FAILURE, src);
     }
   }
 
-  async handleFetchTweetsFiltered(src: number, searchValue: string) {
+  async handleFetchTweetsFiltered(
+    reqObj: PromiseRequest<{ searchValue: string }>,
+    resp: PromiseEventResp<Tweet[]>,
+  ) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getProfile(identifier);
-      const tweets = await this.twitterDB.fetchTweetsFiltered(profile.id, searchValue);
-      emitNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, src, tweets);
+      const tweets = await this.twitterDB.fetchTweetsFiltered(profile.id, reqObj.data.searchValue);
+
+      resp({ status: 'ok', data: tweets });
     } catch (e) {
       twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.FETCH_TWEETS_FILTERED_FAILURE, src);
+      resp({ status: 'error', errorMsg: e.message });
     }
   }
 
@@ -135,9 +126,6 @@ class _TwitterService {
   ): Promise<void> {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
-
-      console.log('tweet', reqObj.data);
-
       const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
 
       resp({ status: 'ok' });

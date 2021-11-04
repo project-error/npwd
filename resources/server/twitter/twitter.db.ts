@@ -89,7 +89,7 @@ export class _TwitterDB {
                                  ON retweets.identifier = retweets_profiles.identifier
         WHERE npwd_twitter_tweets.visible = 1
           AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
-        ORDER BY npwd_twitter_tweets.id DESC LIMIT 100
+        ORDER BY npwd_twitter_tweets.id DESC LIMIT 50
 		`;
     const [results] = await DbInterface._rawExec(query, [
       profileId,
