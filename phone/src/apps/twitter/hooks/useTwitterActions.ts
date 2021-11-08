@@ -6,6 +6,7 @@ interface TwitterActionProps {
   updateTweets: (tweets: FormattedTweet[]) => void;
   updateFilteredTweets: (tweets: FormattedTweet[]) => void;
   addTweet: (tweet: FormattedTweet) => void;
+  deleteTweet: (tweetId: number) => void;
 }
 
 export const useTwitterActions = (): TwitterActionProps => {
@@ -33,9 +34,17 @@ export const useTwitterActions = (): TwitterActionProps => {
     [setTweets],
   );
 
+  const deleteTweet = useCallback(
+    (tweetId: number) => {
+      setTweets((curVal) => [...curVal].filter((t) => t.id !== tweetId));
+    },
+    [setTweets],
+  );
+
   return {
     updateTweets,
     updateFilteredTweets,
     addTweet,
+    deleteTweet,
   };
 };

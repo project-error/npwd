@@ -4,8 +4,14 @@ import { IAlertProps } from '../../typings/alerts';
 import { RegisterNuiProxy } from './cl_utils';
 
 RegisterNuiProxy(TwitterEvents.GET_OR_CREATE_PROFILE);
-
+RegisterNuiProxy(TwitterEvents.DELETE_TWEET);
+RegisterNuiProxy(TwitterEvents.UPDATE_PROFILE);
+RegisterNuiProxy(TwitterEvents.FETCH_TWEETS);
+RegisterNuiProxy(TwitterEvents.CREATE_TWEET);
+RegisterNuiProxy(TwitterEvents.FETCH_TWEETS_FILTERED);
+RegisterNuiProxy(TwitterEvents.TOGGLE_LIKE);
 /**
+ *
  * Twitter get or create profile
  */
 RegisterNuiCallbackType(TwitterEvents.GET_OR_CREATE_PROFILE);
@@ -41,8 +47,6 @@ onNet(TwitterEvents.CREATE_PROFILE_RESULT, (alert: IAlertProps) => {
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 });
 
-RegisterNuiProxy(TwitterEvents.UPDATE_PROFILE);
-
 onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
   sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_RESULT, alert);
   sendTwitterMessage(TwitterEvents.UPDATE_PROFILE_LOADING, false);
@@ -52,8 +56,6 @@ onNet(TwitterEvents.UPDATE_PROFILE_RESULT, (alert: IAlertProps) => {
 /**
  * Twitter fetch tweets
  */
-RegisterNuiProxy(TwitterEvents.FETCH_TWEETS);
-RegisterNuiProxy(TwitterEvents.CREATE_TWEET);
 
 /*
 onNet(TwitterEvents.FETCH_TWEETS_SUCCESS, (tweets: any) => {
@@ -70,8 +72,6 @@ onNet(TwitterEvents.FETCH_TWEETS_FAILURE, () => {
 /**
  * Twitter fetch filtered tweets
  */
-
-RegisterNuiProxy(TwitterEvents.FETCH_TWEETS_FILTERED);
 
 onNet(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, (tweets: any) => {
   sendTwitterMessage(TwitterEvents.FETCH_TWEETS_FILTERED_SUCCESS, tweets);
@@ -106,27 +106,10 @@ onNet(TwitterEvents.CREATE_TWEET_BROADCAST, (tweet: any) => {
 /**
  * Twitter delete tweet
  */
-RegisterNuiCallbackType(TwitterEvents.DELETE_TWEET);
-on(`__cfx_nui:${TwitterEvents.DELETE_TWEET}`, (tweetId: number) => {
-  emitNet(TwitterEvents.DELETE_TWEET, tweetId);
-});
-
-onNet(TwitterEvents.DELETE_TWEET_SUCCESS, () => {
-  sendTwitterMessage(TwitterEvents.DELETE_TWEET_SUCCESS);
-  emitNet(TwitterEvents.FETCH_TWEETS);
-});
-
-onNet(TwitterEvents.DELETE_TWEET_FAILURE, () => {
-  sendTwitterMessage(TwitterEvents.DELETE_TWEET_FAILURE);
-});
 
 /**
  * Twitter likes
  */
-RegisterNuiCallbackType(TwitterEvents.TOGGLE_LIKE);
-on(`__cfx_nui:${TwitterEvents.TOGGLE_LIKE}`, (tweetId: number) => {
-  emitNet(TwitterEvents.TOGGLE_LIKE, tweetId);
-});
 
 /**
  * Twitter retweets

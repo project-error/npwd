@@ -171,6 +171,8 @@
     "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
     "APPS_TWITTER_NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
     "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
+    "APPS_TWITTER_DELETE_TWEET_FAILED": "Failed to delete tweet",
+    "APPS_TWITTER_LIKE_TWEET_LIKE": "Failed to like tweet",
 
     "APPS_MATCH": "Matchmaker",
     "APPS_MATCH_LIKED": "LIKE",

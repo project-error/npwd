@@ -5,17 +5,6 @@ import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-/*
-  onNet(TwitterEvents.GET_OR_CREATE_PROFILE, async () => {
-    const _source = getSource();
-    TwitterService.handleGetOrCreateProfile(_source).catch((e) =>
-      twitterLogger.error(
-        `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
-      ),
-    );
-  });
-  */
-
 onNetPromise(TwitterEvents.GET_OR_CREATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
   TwitterService.handleGetOrCreateProfile(reqObj, resp).catch((e) => {
@@ -60,18 +49,18 @@ onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {
   });
 });
 
-onNet(TwitterEvents.DELETE_TWEET, async (tweetId: number) => {
+onNetPromise<{ tweetId: number }, void>(TwitterEvents.DELETE_TWEET, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleDeleteTweet(_source, tweetId).catch((e) =>
-    twitterLogger.error(`Error occurred in deleteTweet event (${_source}), Error: ${e.message}`),
-  );
+  TwitterService.handleDeleteTweet(reqObj, resp).catch((e) => {
+    twitterLogger.error(`Error occurred in deleteTweet event (${_source}), Error: ${e.message}`);
+  });
 });
 
-onNet(TwitterEvents.TOGGLE_LIKE, async (tweetId: number) => {
+onNetPromise<{ tweetId: number }, void>(TwitterEvents.TOGGLE_LIKE, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleToggleLike(_source, tweetId).catch((e) =>
-    twitterLogger.error(`Error occurred in toggleEvent event (${_source}), Error: ${e.message}`),
-  );
+  TwitterService.handleToggleLike(reqObj, resp).catch((e) => {
+    twitterLogger.error(`Error occurred in toggleEvent event (${_source}), Error: ${e.message}`);
+  });
 });
 
 onNet(TwitterEvents.RETWEET, async (tweetId: number) => {

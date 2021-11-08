@@ -136,37 +136,51 @@ class _TwitterService {
     }
   }
 
-  async handleDeleteTweet(src: number, tweetId: number) {
+  async handleDeleteTweet(
+    reqObj: PromiseRequest<{ tweetId: number }>,
+    resp: PromiseEventResp<void>,
+  ) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      await this.twitterDB.deleteTweet(identifier, tweetId);
-      emitNet(TwitterEvents.DELETE_TWEET_SUCCESS, src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      await this.twitterDB.deleteTweet(identifier, reqObj.data.tweetId);
+
+      resp({ status: 'ok' });
+      //emitNet(TwitterEvents.DELETE_TWEET_SUCCESS, reqObj.source);
     } catch (e) {
       twitterLogger.error(`Delete tweet failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.DELETE_TWEET_FAILURE, src);
+
+      resp({ status: 'error', errorMsg: e.message });
+      //emitNet(TwitterEvents.DELETE_TWEET_FAILURE, reqObj.source);
     }
   }
 
-  async handleToggleLike(src: number, tweetId: number) {
+  async handleToggleLike(
+    reqObj: PromiseRequest<{ tweetId: number }>,
+    resp: PromiseEventResp<void>,
+  ) {
+    console.log('like id', reqObj.data.tweetId);
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
-      const likeExists = await this.twitterDB.doesLikeExist(profile.id, tweetId);
+      const likeExists = await this.twitterDB.doesLikeExist(profile.id, reqObj.data.tweetId);
 
       if (likeExists) {
-        await this.twitterDB.deleteLike(profile.id, tweetId);
+        await this.twitterDB.deleteLike(profile.id, reqObj.data.tweetId);
       } else {
-        await this.twitterDB.createLike(profile.id, tweetId);
+        await this.twitterDB.createLike(profile.id, reqObj.data.tweetId);
       }
 
-      emitNet(TwitterEvents.TOGGLE_LIKE_SUCCESS, src);
+      resp({ status: 'ok' });
+      //emitNet(TwitterEvents.TOGGLE_LIKE_SUCCESS, reqObj.source);
     } catch (e) {
       twitterLogger.error(`Like failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.TOGGLE_LIKE_FAILURE, src);
+
+      resp({ status: 'error', errorMsg: e.message });
+      //emitNet(TwitterEvents.TOGGLE_LIKE_FAILURE, reqObj.source);
     }
   }
 

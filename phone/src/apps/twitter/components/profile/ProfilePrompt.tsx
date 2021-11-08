@@ -42,11 +42,6 @@ export function ProfilePrompt() {
   console.log('get me a event', eventName);
 
   const handleUpdate = async () => {
-    /* Nui.send(eventName, {
-      ...profile,
-      profile_name: profileName,
-    });*/
-
     fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {
         if (resp.status !== 'ok') {

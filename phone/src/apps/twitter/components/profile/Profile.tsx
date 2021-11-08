@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useProfile } from '../../hooks/useProfile';
 import Avatar from '../Avatar';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
@@ -12,7 +11,7 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: 'relative',
     width: '100%',
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Profile() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
@@ -65,8 +63,6 @@ export function Profile() {
         type: 'success',
       });
     });
-
-    //Nui.send(TwitterEvents.UPDATE_PROFILE, data);
   };
 
   // fetching the config is an asynchronous call so defend against it
