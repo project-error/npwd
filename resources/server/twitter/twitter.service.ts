@@ -184,14 +184,14 @@ class _TwitterService {
     }
   }
 
-  async handleRetweet(src: number, tweetId: number) {
+  async handleRetweet(reqObj: PromiseRequest<{ tweetId: number }>, resp: PromiseEventResp<void>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
 
       // alert the player that they have already retweeted
       // this post (or that they are the original poster)
-      if (await this.twitterDB.doesRetweetExist(tweetId, identifier)) {
-        return emitNet(TwitterEvents.RETWEET_EXISTS, src, {
+      if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
+        return emitNet(TwitterEvents.RETWEET_EXISTS, reqObj.source, {
           message: 'TWITTER_RETWEET_EXISTS',
           type: 'error',
         });
@@ -200,17 +200,21 @@ class _TwitterService {
       // our message for this row is blank because when we
       // query for this tweet it will join off of the retweet
       // column and fetch the message from the related tweet
-      const retweet: NewTweet = { message: '', retweet: tweetId };
+      const retweet: NewTweet = { message: '', retweet: reqObj.data.tweetId };
       const createdTweet = await this.twitterDB.createTweet(identifier, retweet);
 
       const profile = await this.twitterDB.getProfile(identifier);
       const tweet = await this.twitterDB.getTweet(profile.id, createdTweet.id);
+
+      resp({ status: 'ok' });
       emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, tweet);
     } catch (e) {
       twitterLogger.error(`Retweet failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.RETWEET_FAILURE, src);
+
+      resp({ status: 'error', errorMsg: e.message });
+      //emitNet(TwitterEvents.RETWEET_FAILURE, reqObj.source);
     }
   }
 

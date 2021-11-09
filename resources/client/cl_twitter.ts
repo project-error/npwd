@@ -10,6 +10,16 @@ RegisterNuiProxy(TwitterEvents.FETCH_TWEETS);
 RegisterNuiProxy(TwitterEvents.CREATE_TWEET);
 RegisterNuiProxy(TwitterEvents.FETCH_TWEETS_FILTERED);
 RegisterNuiProxy(TwitterEvents.TOGGLE_LIKE);
+RegisterNuiProxy(TwitterEvents.REPORT);
+/**
+ * Twitter retweets
+ */
+RegisterNuiCallbackType(TwitterEvents.RETWEET);
+on(`__cfx_nui:${TwitterEvents.RETWEET}`, (tweetId: number, cb: Function) => {
+  emitNet(TwitterEvents.RETWEET, tweetId);
+  cb();
+});
+RegisterNuiProxy(TwitterEvents.RETWEET);
 /**
  *
  * Twitter get or create profile
@@ -111,25 +121,8 @@ onNet(TwitterEvents.CREATE_TWEET_BROADCAST, (tweet: any) => {
  * Twitter likes
  */
 
-/**
- * Twitter retweets
- */
-RegisterNuiCallbackType(TwitterEvents.RETWEET);
-on(`__cfx_nui:${TwitterEvents.RETWEET}`, (tweetId: number, cb: Function) => {
-  emitNet(TwitterEvents.RETWEET, tweetId);
-  cb();
-});
-
 onNet(TwitterEvents.RETWEET_EXISTS, (alert: IAlertProps) => {
   sendTwitterMessage(TwitterEvents.RETWEET_EXISTS, alert);
-});
-
-/**
- * Twitter reporting tweets
- */
-RegisterNuiCallbackType(TwitterEvents.REPORT);
-on(`__cfx_nui:${TwitterEvents.REPORT}`, (tweetId: number) => {
-  emitNet(TwitterEvents.REPORT, tweetId);
 });
 
 onNet(TwitterEvents.REPORT_SUCCESS, () => {

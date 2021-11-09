@@ -63,9 +63,9 @@ onNetPromise<{ tweetId: number }, void>(TwitterEvents.TOGGLE_LIKE, async (reqObj
   });
 });
 
-onNet(TwitterEvents.RETWEET, async (tweetId: number) => {
+onNetPromise<{ tweetId: number }, void>(TwitterEvents.RETWEET, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleRetweet(_source, tweetId).catch((e) =>
+  TwitterService.handleRetweet(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in retweet event (${_source}), Error: ${e.message}`),
   );
 });
