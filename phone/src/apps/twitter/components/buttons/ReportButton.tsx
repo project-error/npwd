@@ -20,10 +20,15 @@ function ReportButton({ handleClose, tweetId, isReported }) {
     fetchNui<ServerPromiseResp<void>>(TwitterEvents.REPORT, { tweetId }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t(''),
+          message: t('APPS_TWITTER_REPORT_TWEET_FAILED'),
           type: 'error',
         });
       }
+
+      addAlert({
+        message: t('APPS_TWITTER_REPORT_TWEET_SUCCESS'),
+        type: 'success',
+      });
 
       setLoading(true);
       window.setTimeout(() => {

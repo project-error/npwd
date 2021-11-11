@@ -70,9 +70,9 @@ onNetPromise<{ tweetId: number }, void>(TwitterEvents.RETWEET, async (reqObj, re
   );
 });
 
-onNet(TwitterEvents.REPORT, async (tweetId: number) => {
+onNetPromise<{ tweetId: number }, void>(TwitterEvents.REPORT, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleReport(_source, tweetId).catch((e) =>
+  TwitterService.handleReport(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in report event (${_source}), Error: ${e.message}`),
   );
 });

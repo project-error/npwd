@@ -145,14 +145,12 @@ class _TwitterService {
       await this.twitterDB.deleteTweet(identifier, reqObj.data.tweetId);
 
       resp({ status: 'ok' });
-      //emitNet(TwitterEvents.DELETE_TWEET_SUCCESS, reqObj.source);
     } catch (e) {
       twitterLogger.error(`Delete tweet failed, ${e.message}`, {
         source: reqObj.source,
       });
 
       resp({ status: 'error', errorMsg: e.message });
-      //emitNet(TwitterEvents.DELETE_TWEET_FAILURE, reqObj.source);
     }
   }
 
@@ -160,7 +158,6 @@ class _TwitterService {
     reqObj: PromiseRequest<{ tweetId: number }>,
     resp: PromiseEventResp<void>,
   ) {
-    console.log('like id', reqObj.data.tweetId);
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
@@ -173,14 +170,12 @@ class _TwitterService {
       }
 
       resp({ status: 'ok' });
-      //emitNet(TwitterEvents.TOGGLE_LIKE_SUCCESS, reqObj.source);
     } catch (e) {
       twitterLogger.error(`Like failed, ${e.message}`, {
         source: reqObj.source,
       });
 
       resp({ status: 'error', errorMsg: e.message });
-      //emitNet(TwitterEvents.TOGGLE_LIKE_FAILURE, reqObj.source);
     }
   }
 
@@ -214,15 +209,14 @@ class _TwitterService {
       });
 
       resp({ status: 'error', errorMsg: e.message });
-      //emitNet(TwitterEvents.RETWEET_FAILURE, reqObj.source);
     }
   }
 
-  async handleReport(src: number, tweetId: number) {
+  async handleReport(reqObj: PromiseRequest<{ tweetId: number }>, resp: PromiseEventResp<void>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getProfile(identifier);
-      const tweet = await this.twitterDB.getTweet(profile.id, tweetId);
+      const tweet = await this.twitterDB.getTweet(profile.id, reqObj.data.tweetId);
 
       const reportExists = await this.twitterDB.doesReportExist(tweet.id, profile.id);
 
@@ -233,11 +227,11 @@ class _TwitterService {
       await this.twitterDB.createTweetReport(tweet.id, profile.id);
       await reportTweetToDiscord(tweet, profile);
 
-      emitNet(TwitterEvents.REPORT_SUCCESS, src);
+      resp({ status: 'ok' });
     } catch (e) {
-      emitNet(TwitterEvents.REPORT_FAILURE, src);
+      resp({ status: 'error', errorMsg: e.message });
       twitterLogger.error(`Twitter report failed, ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
     }
   }

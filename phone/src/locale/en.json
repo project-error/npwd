@@ -174,6 +174,8 @@
     "APPS_TWITTER_DELETE_TWEET_FAILED": "Failed to delete tweet",
     "APPS_TWITTER_LIKE_TWEET_FAILED": "Failed to like tweet",
     "APPS_TWITTER_RETWEET_FAILED": "Failed to retweet",
+    "APPS_TWITTER_REPORT_TWEET_FAILED": "Failed to report tweet",
+    "APPS_TWITTER_REPORT_TWEET_SUCCESS": "Successfully reported tweet",
 
     "APPS_MATCH": "Matchmaker",
     "APPS_MATCH_LIKED": "LIKE",
