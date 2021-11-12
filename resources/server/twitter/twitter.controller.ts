@@ -14,9 +14,9 @@ onNetPromise(TwitterEvents.GET_OR_CREATE_PROFILE, async (reqObj, resp) => {
   });
 });
 
-onNet(TwitterEvents.CREATE_PROFILE, async (profile: Profile) => {
+onNetPromise<Profile, void>(TwitterEvents.CREATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
-  TwitterService.handleCreateProfile(_source, profile).catch((e) =>
+  TwitterService.handleCreateProfile(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in createProfile event (${_source}), Error: ${e.message}`),
   );
 });

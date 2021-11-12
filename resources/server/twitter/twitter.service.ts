@@ -42,23 +42,19 @@ class _TwitterService {
     }
   }
 
-  async handleCreateProfile(src: number, profile: Profile) {
+  async handleCreateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<void>) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
-      await this.twitterDB.createProfile(identifier, profile.profile_name);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      await this.twitterDB.createProfile(identifier, reqObj.data.profile_name);
 
-      emitNet(TwitterEvents.CREATE_PROFILE_RESULT, src, {
-        message: 'TWITTER_CREATE_PROFILE_SUCCESS',
-        type: 'success',
-      });
+      // should we get the profile here?
+      resp({ status: 'ok' });
     } catch (e) {
       twitterLogger.error(`Failed to create twitter profile: ${e.message}`, {
-        source: src,
+        source: reqObj.source,
       });
-      emitNet(TwitterEvents.CREATE_PROFILE_RESULT, src, {
-        message: 'TWITTER_CREATE_PROFILE_FAILURE',
-        type: 'error',
-      });
+
+      resp({ status: 'error', errorMsg: e.message });
     }
   }
 

@@ -39,8 +39,6 @@ export function ProfilePrompt() {
     ? TwitterEvents.CREATE_PROFILE
     : TwitterEvents.UPDATE_PROFILE;
 
-  console.log('get me a event', eventName);
-
   const handleUpdate = async () => {
     fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {
