@@ -25,7 +25,7 @@ onNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, () => {
 
 // remove and replace with alert
 onNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, (defaultProfileNames: string[]): void => {
-  console.log('names', defaultProfileNames);
+  console.log('default names', defaultProfileNames);
   sendTwitterMessage(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, defaultProfileNames);
 });
 

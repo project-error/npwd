@@ -35,11 +35,13 @@ export function ProfilePrompt() {
   const { addAlert } = useSnackbar();
 
   const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName && !profile;
+  console.log('are we showing default profile names', showDefaultProfileNames);
   const eventName = showDefaultProfileNames
     ? TwitterEvents.CREATE_PROFILE
     : TwitterEvents.UPDATE_PROFILE;
 
   const handleUpdate = async () => {
+    console.log('default profile names', defaultProfileNames);
     fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {
         if (resp.status !== 'ok') {

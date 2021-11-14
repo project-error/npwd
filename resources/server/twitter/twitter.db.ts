@@ -219,6 +219,7 @@ export class _TwitterDB {
   }
 
   async updateProfile(identifier: string, profile: Profile) {
+    console.log(profile);
     const { avatar_url, profile_name, bio, location, job } = profile;
     const query = `
         UPDATE npwd_twitter_profiles

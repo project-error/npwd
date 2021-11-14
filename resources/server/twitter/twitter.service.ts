@@ -4,6 +4,7 @@ import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitte
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { getDefaultProfileNames } from '../players/player.utils';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -30,7 +31,12 @@ class _TwitterService {
       // as we create a default profile in that process.
 
       if (!profile) {
-        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, ['chip', 'taso']);
+        const defaultProfileNames = await getDefaultProfileNames(reqObj.source);
+
+        console.log('We have no profile');
+        console.log(defaultProfileNames);
+
+        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, defaultProfileNames);
       } else {
         resp({ status: 'ok', data: profile });
       }
@@ -58,6 +64,7 @@ class _TwitterService {
     }
   }
 
+  // we get both the profile and a profile name
   async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<void>) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
