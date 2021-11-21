@@ -17,6 +17,7 @@
     "build": "lerna run test && lerna run build",
     "prepare": "husky install",
     "bootstrap": "lerna bootstrap",
+    "format": "pretty-quick",
     "format:staged": "pretty-quick --staged",
     "postinstall": "husky install && yarn bootstrap",
     "test": "lerna run test"
