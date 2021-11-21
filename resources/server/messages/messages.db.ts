@@ -20,7 +20,7 @@ export class _MessagesDB {
     message: string,
   ): Promise<number> {
     const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id)
-                   VALUES (?, ?, ?)`;
+                   VALUES (?, ?, ?, ?)`;
 
     const [results] = await DbInterface._rawExec(query, [
       userIdentifier,
