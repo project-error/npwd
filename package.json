@@ -6,7 +6,7 @@
   "license": "CC-BY-NC-SA-4.0",
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/config-conventional": "^15.0.0",
     "@octokit/core": "^3.5.1",
     "husky": "^5.2.0",
     "lerna": "^4.0.0",
