@@ -22,6 +22,11 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 4. Make sure your code lints.
 5. Issue that pull request!
 
+## Semantic Versioning
+
+NPWD follows semantic versioning. We release patch versions for critical bugfixes, minor versions for
+new features or non-essential changes, and major versions for any breaking changes.
+
 ## Any contributions you make will be under the CC-BY-NC-SA-4.0 License
 
 In short, when you submit code changes, your submissions are understood to be under the same [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
