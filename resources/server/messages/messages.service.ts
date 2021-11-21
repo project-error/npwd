@@ -104,8 +104,10 @@ class _MessagesService {
       const authorPhoneNumber = player.getPhoneNumber();
       const messageData = reqObj.data;
       const participants = getIdentifiersFromParticipants(messageData.conversationId);
+      const userIdentifier = player.getIdentifier();
 
       const messageId = await this.messagesDB.createMessage(
+        userIdentifier,
         authorPhoneNumber,
         messageData.conversationId,
         messageData.message,
