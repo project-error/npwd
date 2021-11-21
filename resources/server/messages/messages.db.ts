@@ -13,11 +13,21 @@ export class _MessagesDB {
    * @param conversationId - the message conversation ID to attach this message to
    * @param message - content of the message
    */
-  async createMessage(author: string, conversationId: string, message: string): Promise<number> {
-    const query = `INSERT INTO npwd_messages (author, message, conversation_id)
-                   VALUES (?, ?, ?)`;
+  async createMessage(
+    userIdentifier: string,
+    author: string,
+    conversationId: string,
+    message: string,
+  ): Promise<number> {
+    const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id)
+                   VALUES (?, ?, ?, ?)`;
 
-    const [results] = await DbInterface._rawExec(query, [author, message, conversationId]);
+    const [results] = await DbInterface._rawExec(query, [
+      userIdentifier,
+      author,
+      message,
+      conversationId,
+    ]);
 
     return (<ResultSetHeader>results).insertId;
   }

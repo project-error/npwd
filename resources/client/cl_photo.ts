@@ -7,7 +7,6 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
-
 const exp = (global as any).exports;
 
 let inCameraMode = false;
@@ -120,10 +119,9 @@ const takePhoto = () =>
       async (data: any) => {
         try {
           let parsedData = JSON.parse(data);
-          for (let index of config.images.returnedDataIndexes)
+          for (const index of config.images.returnedDataIndexes)
             parsedData = parsedData[index];
           const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
-          console.log('export shit', resp);
           res(resp);
         } catch (e) {
           rej(e.message);

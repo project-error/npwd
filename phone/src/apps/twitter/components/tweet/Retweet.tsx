@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     justifyContent: 'flex-start',
     width: '100%',
+    display: 'flex',
+    alignItems: 'flex-start',
     paddingBottom: '8px',
     marginBottom: '6px',
     marginTop: '-6px',
