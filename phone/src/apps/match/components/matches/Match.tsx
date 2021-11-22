@@ -25,7 +25,7 @@ interface IProps {
 export const Match = ({ match }: IProps) => {
   const history = useHistory();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [showProfile, setShowProfile] = useState(false);
 
   const handleMessage = () => {

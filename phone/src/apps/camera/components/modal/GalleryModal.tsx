@@ -22,7 +22,7 @@ export const GalleryModal = () => {
   const query = useQueryParams();
   const { deletePhoto } = usePhotoActions();
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const referal = query.referal || '/camera';
 

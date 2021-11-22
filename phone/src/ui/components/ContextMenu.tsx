@@ -33,7 +33,7 @@ interface ContextMenuProps {
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const _options = onClose
     ? [

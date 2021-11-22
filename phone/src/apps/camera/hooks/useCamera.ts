@@ -14,7 +14,7 @@ interface IUseCamera {
 }
 
 export const useCamera = (): IUseCamera => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
 
   const [photos, setPhotos] = useRecoilState<GalleryPhoto[]>(photoState.photos);

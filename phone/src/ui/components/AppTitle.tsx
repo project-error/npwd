@@ -38,7 +38,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({
   ...props
 }) => {
   const classes = useStyle({ color, backgroundColor });
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   return (
     <Box px={2} pt={2} className={classes.root} {...props}>
       <Typography className={classes.text} paragraph variant={variant}>

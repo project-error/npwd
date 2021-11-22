@@ -10,7 +10,7 @@ import { CallNotification } from '../components/CallNotification';
 const NOTIFICATION_ID = 'call:current';
 
 export const useCallNotifications = () => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const history = useHistory();
   const { addNotificationAlert, removeId, addNotification } = useNotifications();
 

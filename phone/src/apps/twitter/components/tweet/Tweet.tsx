@@ -80,7 +80,7 @@ export const Tweet = (tweet: ITweet) => {
     isRetweet,
   } = tweet;
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
 
   if (!ResourceConfig) return null;

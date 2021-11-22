@@ -14,7 +14,7 @@ interface NotesAPIValue {
 
 export const useNotesAPI = (): NotesAPIValue => {
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addLocalNote, deleteLocalNote, updateLocalNote } = useNotesActions();
 
   const addNewNote = useCallback(

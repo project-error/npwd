@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   const classes = useStyles();
   const [message, setMessage] = useState('');

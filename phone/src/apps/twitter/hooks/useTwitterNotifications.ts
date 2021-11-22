@@ -17,7 +17,7 @@ function isMentioned(profileName: string, message: string) {
 
 export const useTwitterNotifications = () => {
   const [settings] = useSettings();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const history = useHistory();
 
   const { addNotificationAlert, addNotification, hasNotification, removeId } = useNotifications();

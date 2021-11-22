@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const RingingText = () => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [text, setText] = useState<string>(t('CALLS.MESSAGES.RINGING'));
   const [step, setStep] = useState<number>(0);
 

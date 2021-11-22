@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ListingForm: React.FC = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   const history = useHistory();
   const { pathname, search } = useLocation();

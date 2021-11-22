@@ -9,7 +9,7 @@ import { TwitterEvents } from '../../../../../../typings/twitter';
 
 export const ShowMore = ({ id, isReported, isMine }) => {
   const Nui = useNuiRequest();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { ResourceConfig } = usePhone();
 

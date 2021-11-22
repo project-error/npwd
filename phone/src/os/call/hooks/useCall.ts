@@ -23,7 +23,7 @@ export const useCall = (): CallHook => {
   const [call, setCall] = useCurrentCall();
   // const [dialRing, setDialRing] = useState(false);
   const myPhoneNumber = useMyPhoneNumber();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   // const { endDialTone, startDialTone } = useDialingSound();
 

@@ -33,7 +33,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   const { addAlert } = useSnackbar();
   const history = useHistory();
   const setMessages = useSetMessages();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(!!messages.length);
 

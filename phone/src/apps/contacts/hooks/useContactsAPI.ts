@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 
 export const useContactsAPI = () => {
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
   const history = useHistory();
 

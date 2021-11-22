@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
   const classes = useStyles();
   const myNumber = useMyPhoneNumber();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const history = useHistory();
   const { initializeCall } = useCall();
   const { addAlert } = useSnackbar();
