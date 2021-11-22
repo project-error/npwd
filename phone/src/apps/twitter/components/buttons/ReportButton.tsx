@@ -7,8 +7,6 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
-const LOADING_TIME = 1250;
-
 function ReportButton({ handleClose, tweetId, isReported }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);

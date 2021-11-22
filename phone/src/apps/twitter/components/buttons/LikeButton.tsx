@@ -8,8 +8,6 @@ import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
-const LOADING_TIME = 1250;
-
 function LikeButton({ tweetId, isLiked }) {
   const [liked, setLiked] = useState(isLiked);
   const [loading, setLoading] = useState(false);
