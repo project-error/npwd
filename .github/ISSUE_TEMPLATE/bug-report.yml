@@ -20,6 +20,13 @@ body:
   validations:
       required: true
 - type: textarea
+  id: version
+  attributes:
+    label: version
+    description: What branch or release version was this encountered on?
+  validations:
+    required: true
+- type: textarea
   id: issue-description
   attributes:
     label: Issue Description
