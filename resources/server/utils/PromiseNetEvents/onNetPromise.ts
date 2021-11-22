@@ -7,7 +7,7 @@ const netEventLogger = mainLogger.child({ module: 'events' });
 
 export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignature<T, P>): void {
   onNet(eventName, async (respEventName: string, data: T) => {
-    const startTime = performance.now();
+    const startTime = process.hrtime.bigint();
     const src = getSource();
 
     const promiseRequest: PromiseRequest<T> = {
@@ -19,8 +19,8 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
     netEventLogger.silly(promiseRequest);
 
     const promiseResp: PromiseEventResp<P> = (data: ServerPromiseResp<P>) => {
-      const endTime = performance.now();
-      const totalTime = endTime - startTime;
+      const endTime = process.hrtime.bigint();
+      const totalTime = Number(endTime - startTime) / 1e6;
       emitNet(respEventName, src, data);
       netEventLogger.silly(`Response Promise Event ${respEventName} (${totalTime}ms), Data >>`);
       netEventLogger.silly(data);
