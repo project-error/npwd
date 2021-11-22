@@ -15,7 +15,7 @@ import { useMessageActions } from '../../hooks/useMessageActions';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   const [participant, setParticipant] = useState<any>('');
   const { getDisplayByNumber, getPictureByNumber, getContactByNumber } = useContactActions();

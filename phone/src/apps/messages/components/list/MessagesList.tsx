@@ -10,7 +10,7 @@ import { useFilteredConversationsValue, useFilterValueState } from '../../hooks/
 
 const MessagesList = (): any => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const { conversations, goToConversation } = useMessages();
 

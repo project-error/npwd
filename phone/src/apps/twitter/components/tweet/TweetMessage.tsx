@@ -23,7 +23,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 

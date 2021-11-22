@@ -43,7 +43,7 @@ interface IProps {
 
 export function ProfileForm({ profile, showPreview }: IProps) {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const setMyProfile = useSetMyProfile();

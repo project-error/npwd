@@ -9,7 +9,7 @@ const LOADING_TIME = 1250;
 
 function ReportButton({ handleClose, tweetId, isReported }) {
   const Nui = useNuiRequest();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {

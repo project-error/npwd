@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 });
 
 const CallContactContainer = () => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { call } = useCall();
   const classes = useStyles();
 

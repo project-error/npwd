@@ -51,7 +51,7 @@ function processBroadcastedTweet(tweet: Tweet, profile: Profile): FormattedTweet
 export const useTwitterService = () => {
   const { addAlert } = useSnackbar();
   const { setNotification } = useTwitterNotifications();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const [profile, setProfile] = useRecoilState<Profile>(twitterState.profile);
   const setUpdateProfileLoading = useSetRecoilState(twitterState.updateProfileLoading);

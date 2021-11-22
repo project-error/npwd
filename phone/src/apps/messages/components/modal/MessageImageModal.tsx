@@ -23,7 +23,7 @@ interface IProps {
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
   const history = useHistory();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { pathname, search } = useLocation();
   const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);

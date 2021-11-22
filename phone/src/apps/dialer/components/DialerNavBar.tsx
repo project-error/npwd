@@ -22,7 +22,7 @@ const DialerNavBar: React.FC = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [page, setPage] = useState(pathname);
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleChange = (_e, newPage) => {
     setPage(newPage);

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export function Profile() {
   const Nui = useNuiRequest();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
 

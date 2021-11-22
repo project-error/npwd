@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPrimaryClick }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const imagePromptVisible = showImagePrompt && !showEmoji;
   const primaryButtonText = imagePromptVisible

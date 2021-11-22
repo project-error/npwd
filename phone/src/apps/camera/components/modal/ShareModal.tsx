@@ -17,7 +17,7 @@ interface IShareModalProps {
 export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleCopyImage = () => {
     setClipboard(meta.image);

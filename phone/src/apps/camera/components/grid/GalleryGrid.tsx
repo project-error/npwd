@@ -19,7 +19,7 @@ export const GalleryGrid = () => {
   const history = useHistory();
   const query = useQueryParams();
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const photos = usePhotosValue();
   const { takePhoto } = usePhotoActions();
   const [isLoading, setIsLoading] = useState<boolean>(false);

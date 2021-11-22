@@ -6,7 +6,7 @@ import { useTransactions } from '../../hooks/useTransactions';
 
 export const TransactionList = () => {
   const transactionList = useTransactions();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);

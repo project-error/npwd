@@ -73,7 +73,7 @@ const ContactsInfoPage: React.FC = () => {
   const [avatar, setAvatar] = useState(() => contact?.avatar || '');
   // Set state after checking if null
 
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.target.value;

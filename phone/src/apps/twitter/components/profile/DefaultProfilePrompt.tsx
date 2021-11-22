@@ -34,7 +34,7 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   defaultProfileNames,
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleChange = (event: SelectChangeEvent<string>): void => {
     event.preventDefault();

@@ -9,7 +9,7 @@ import { messageState } from './state';
 const NOTIFICATION_ID = 'messages:broadcast';
 
 export const useMessageNotifications = () => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const history = useHistory();
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export function ProfilePrompt() {
   const Nui = useNuiRequest();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { profile } = useProfile();
   const defaultProfileNames = useRecoilValue(twitterState.defaultProfileNames);
   const [profileName, setProfileName] = useState(profile?.profile_name || '');

@@ -78,7 +78,7 @@ const DECISION_THRESHOLD_X_px = 150;
 
 const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   const c = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [status, setStatus] = useState(null);
   const statusRef = useRef(null);
   const idRef = useRef(null);

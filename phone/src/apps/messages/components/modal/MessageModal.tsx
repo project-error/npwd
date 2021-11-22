@@ -33,7 +33,7 @@ const MINIMUM_LOAD_TIME = 600;
 
 // abandon all hope ye who enter here
 export const MessageModal = () => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles();
   const { addAlert } = useSnackbar();
   const history = useHistory();

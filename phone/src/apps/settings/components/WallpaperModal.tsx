@@ -8,7 +8,7 @@ import { TextField } from '../../../ui/components/Input';
 const WallpaperModal: React.FC = () => {
   const [customWallpaperModal, setCustomWallpaperModal] = useCustomWallpaperModal();
   const [settings, setSettings] = useSettings();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [value, setValue] = useState(settings.wallpaper.value ? settings.wallpaper.value : '');
   const { addAlert } = useSnackbar();
 

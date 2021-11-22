@@ -13,7 +13,7 @@ export const BankHome = () => {
   const classes = useStyles();
   const { setShowBankModal } = useBankModal();
   const credentials = useCredentials();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const openTransactionsModal = () => {
     setShowBankModal(true);

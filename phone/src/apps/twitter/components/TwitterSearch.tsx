@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 function TwitterSearch() {
   const Nui = useNuiRequest();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const { tweets } = useFilteredTweets();
 
