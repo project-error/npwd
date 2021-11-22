@@ -18,6 +18,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { promiseTimeout } from '../../../utils/promiseTimeout';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,7 +81,7 @@ export const AddTweetModal = () => {
     setModalVisible(false);
   };
 
-  const handleimageChange = useCallback((link) => setLink(link), []);
+  const handleImageChange = useCallback((link) => setLink(link), []);
 
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
@@ -92,6 +93,7 @@ export const AddTweetModal = () => {
   };
 
   const submitTweet = async () => {
+    await promiseTimeout(200);
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
     if (!isValidMessage(cleanedMessage)) return;
@@ -165,7 +167,7 @@ export const AddTweetModal = () => {
         message={message}
         handleChange={handleMessageChange}
       />
-      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleimageChange} />
+      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleImageChange} />
       <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
       <ImageDisplay
         visible={!showEmoji && images.length > 0}

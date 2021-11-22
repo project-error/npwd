@@ -5,6 +5,7 @@ import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 import { getDefaultProfileNames } from '../players/player.utils';
+import { kMaxLength } from 'buffer';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -21,6 +22,8 @@ class _TwitterService {
     const identifier = PlayerService.getIdentifier(reqObj.source);
 
     try {
+      if (!identifier) return;
+
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
 
       // if we got null from getOrCreateProfile it means it doesn't exist and
@@ -33,6 +36,7 @@ class _TwitterService {
       if (!profile) {
         // TODO: Add sanity check
         const defaultProfileNames = await getDefaultProfileNames(reqObj.source);
+        if (!defaultProfileNames) return;
 
         emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, defaultProfileNames);
       } else {

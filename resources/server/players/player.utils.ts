@@ -8,7 +8,6 @@ export const playerLogger = mainLogger.child({
 const clean = (input: string) => (input ? input.replace(/[^0-9a-z]/gi, '') : input);
 
 export async function getDefaultProfileNames(source: number): Promise<string[]> {
-  //const { firstname, lastname, phone_number } = await getCleanedPlayerInfo(identifier);
   const defaultProfileNames: string[] = [];
   const player = PlayerService.getPlayer(source);
 
