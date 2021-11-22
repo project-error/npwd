@@ -25,8 +25,6 @@ export const useTwitterNotifications = () => {
   const { icon, notificationIcon } = useApp('TWITTER');
 
   const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
-  //const profile: Profile | null = useRecoilValue(twitterState.profile);
-  //const [profile] = useRecoilValue(waitForAll([twitterState.profile]))
   const { state: profileLoading, contents: profile } = useRecoilValueLoadable(twitterState.profile);
 
   const setNotification = ({ profile_name, message, isRetweet }: Tweet) => {

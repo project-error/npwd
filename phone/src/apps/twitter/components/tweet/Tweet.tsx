@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import { ListItemAvatar, Avatar as MuiAvatar, ListItem, Typography } from '@mui/material';
 
-import { Tweet as ITweet } from '../../../../../../typings/twitter';
+import { FormattedTweet, Tweet as ITweet } from '../../../../../../typings/twitter';
 import { secondsToHumanReadable } from '../../utils/time';
 import LikeButton from '../buttons/LikeButton';
 import ReplyButton from '../buttons/ReplyButton';
@@ -63,7 +63,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Tweet = (tweet: ITweet) => {
+export const Tweet = (tweet: FormattedTweet) => {
   const {
     id,
     message,

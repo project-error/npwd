@@ -36,8 +36,6 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   const classes = useStyles();
   const [t] = useTranslation();
 
-  console.log('def names', defaultProfileNames);
-
   const handleChange = (event: SelectChangeEvent<string>): void => {
     event.preventDefault();
     setProfileName(event.target.value);

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState, memo } from 'react';
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
 import TweetSkeletonList from './TweetSkeletonList';
-import { Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
+import { FormattedTweet, Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
@@ -15,7 +15,7 @@ import { CircularProgress } from '@mui/material';
 
 const MINIMUM_LOAD_TIME = 700;
 
-export function TweetList({ tweets }: { tweets: ITweet[] }) {
+export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(!!tweets.length);

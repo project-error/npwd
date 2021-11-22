@@ -17,6 +17,7 @@ function LikeButton({ tweetId, isLiked }) {
   const { addAlert } = useSnackbar();
 
   const handleClick = () => {
+    setLoading(true);
     fetchNui<ServerPromiseResp<void>>(TwitterEvents.TOGGLE_LIKE, { tweetId }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
@@ -25,11 +26,8 @@ function LikeButton({ tweetId, isLiked }) {
         });
       }
 
-      setLoading(true);
-      window.setTimeout(() => {
-        setLiked(!liked);
-        setLoading(false);
-      }, LOADING_TIME);
+      setLoading(false);
+      setLiked(!liked);
     });
   };
 

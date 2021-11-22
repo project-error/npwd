@@ -15,6 +15,8 @@ function ReportButton({ handleClose, tweetId, isReported }) {
   const { addAlert } = useSnackbar();
 
   const handleClick = () => {
+    setLoading(true);
+
     fetchNui<ServerPromiseResp<void>>(TwitterEvents.REPORT, { tweetId }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
@@ -23,16 +25,13 @@ function ReportButton({ handleClose, tweetId, isReported }) {
         });
       }
 
+      setLoading(false);
+      handleClose();
+
       addAlert({
         message: t('APPS_TWITTER_REPORT_TWEET_SUCCESS'),
         type: 'success',
       });
-
-      setLoading(true);
-      window.setTimeout(() => {
-        setLoading(false);
-        handleClose();
-      }, LOADING_TIME);
     });
   };
 

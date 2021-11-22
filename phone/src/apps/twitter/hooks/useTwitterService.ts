@@ -27,7 +27,6 @@ export const useTwitterService = () => {
   const { t } = useTranslation();
   const { addTweet } = useTwitterActions();
 
-  //const [profile] = useRecoilValue(waitForAll([twitterState.profile]))
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     twitterState.profile,
   );
@@ -40,9 +39,6 @@ export const useTwitterService = () => {
     setFilteredTweets(tweets.map(processTweet));
   };
 
-  //needs to be tied to the inf scroll component that updates the pageId state using the wrapped hook
-
-  // these tweets are coming directly from other player clients
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
       if (profileLoading !== 'hasValue') return;
@@ -64,13 +60,10 @@ export const useTwitterService = () => {
     });
   };
 
-  // TODO: Remove TwitterEvents.GET_OR_CREATE_PROFILE listener
-  /*useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE, setProfile);*/
   useNuiEvent(APP_TWITTER, TwitterEvents.GET_OR_CREATE_PROFILE_NULL, setDefaultProfileNames);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_PROFILE_RESULT, handleAddAlert);
   useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_LOADING, setUpdateProfileLoading);
   useNuiEvent(APP_TWITTER, TwitterEvents.UPDATE_PROFILE_RESULT, handleAddAlert);
-  // useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS, _setTweets);
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_LOADING, setCreateLoading);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_RESULT, handleAddAlert);

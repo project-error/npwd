@@ -1,5 +1,5 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
-import { Profile, TwitterEvents } from '../../../../../typings/twitter';
+import { FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 
@@ -13,10 +13,8 @@ export const twitterState = {
           const resp = await fetchNui<ServerPromiseResp<Profile>>(
             TwitterEvents.GET_OR_CREATE_PROFILE,
           );
-          console.log(resp.data);
           return resp.data;
         } catch (e) {
-          console.log(e);
           return null;
         }
       },
@@ -26,8 +24,7 @@ export const twitterState = {
     key: 'defaultProfileNames',
     default: null,
   }),
-  // TODO: Fix this any type
-  tweets: atom<any[]>({
+  tweets: atom<FormattedTweet[]>({
     key: 'tweets',
     default: [],
   }),

@@ -136,7 +136,7 @@ export const APPS: IAppConfig[] = [
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
     Route: () => (
-      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={true} />
+      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
     ),
   },
   {

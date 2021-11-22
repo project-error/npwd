@@ -31,10 +31,8 @@ class _TwitterService {
       // as we create a default profile in that process.
 
       if (!profile) {
+        // TODO: Add sanity check
         const defaultProfileNames = await getDefaultProfileNames(reqObj.source);
-
-        console.log('We have no profile');
-        console.log(defaultProfileNames);
 
         emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, defaultProfileNames);
       } else {

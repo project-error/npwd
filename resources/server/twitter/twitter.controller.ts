@@ -5,14 +5,17 @@ import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 
-onNetPromise(TwitterEvents.GET_OR_CREATE_PROFILE, async (reqObj, resp) => {
-  const _source = getSource();
-  TwitterService.handleGetOrCreateProfile(reqObj, resp).catch((e) => {
-    twitterLogger.error(
-      `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
-    );
-  });
-});
+onNetPromise<void, Profile | string[]>(
+  TwitterEvents.GET_OR_CREATE_PROFILE,
+  async (reqObj, resp) => {
+    const _source = getSource();
+    TwitterService.handleGetOrCreateProfile(reqObj, resp).catch((e) => {
+      twitterLogger.error(
+        `Error occurred in getOrCreateProfile event (${_source}), Error: ${e.message}`,
+      );
+    });
+  },
+);
 
 onNetPromise<Profile, void>(TwitterEvents.CREATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
