@@ -22,8 +22,8 @@ body:
 - type: textarea
   id: version
   attributes:
-    label: version
-    description: What branch or release version was this encountered on?
+    label: Phone Version
+    description: What branch or release version was this issue encountered on?
   validations:
     required: true
 - type: textarea
