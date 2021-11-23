@@ -1,18 +1,16 @@
 {
-  "default-dark": {
-    "palette": {
-      "type": "dark",
-      "primary": {
-        "main": "#a6d4fa"
-      }
-    }
-  },
   "default-light": {
+    "typography": {
+      "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
+    },
     "palette": {
       "type": "light"
     }
   },
   "taso-dark": {
+    "typography": {
+      "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
+    },
     "common": {},
     "palette": {
       "type": "dark",
@@ -27,27 +25,5 @@
       }
     },
     "divider": "rgba(255, 255, 255, 0.12)"
-  },
-  "kiddo-dark": {
-    "palette": {
-      "type": "dark",
-      "primary": {
-        "main": "#EBFEF3"
-      },
-      "secondary": {
-        "main": "#5E0035"
-      },
-      "background": {
-        "default": "#033A18",
-        "paper": "#011308"
-      },
-      "text": {
-        "primary": "#fff",
-        "secondary": "rgba(255, 255, 255, 0.7)",
-        "disabled": "rgba(255, 255, 255, 0.5)",
-        "hint": "rgba(255, 255, 255, 0.5)",
-        "icon": "rgba(255, 255, 255, 0.5)"
-      }
-    }
   }
 }
