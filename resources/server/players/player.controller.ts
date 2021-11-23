@@ -82,6 +82,5 @@ if (config.general.enableMultiChar) {
     }
     playerLogger.debug(`Received unloadPlayer event for ${src}`);
     PlayerService.handleUnloadPlayerEvent(src);
-    emitNet(PhoneEvents.PLAYER_LOADED, src, false)
   });
 }

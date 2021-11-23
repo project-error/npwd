@@ -201,7 +201,7 @@ class _PlayerService {
    **/
   handleUnloadPlayerEvent(src: number) {
     this.deletePlayerFromMaps(src);
-
+    emitNet(PhoneEvents.PLAYER_UNLOADED, src, false);
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
   }
 }

@@ -13,7 +13,7 @@ export enum PhoneEvents {
   FETCH_CREDENTIALS = 'npwd:getCredentials',
   ON_INIT = 'npwd:onInit',
   TOGGLE_KEYS = 'npwd:toggleAllControls',
-  PLAYER_LOADED = 'npwd:playerLoaded',
+  PLAYER_UNLOADED = 'npwd:playerUnloaded',
 }
 
 // Used to standardize the server response
