@@ -1,7 +1,6 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { TwitterEvents } from '../../typings/twitter';
-import { MessageEvents } from '../../typings/messages';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
@@ -9,9 +8,7 @@ import { RegisterNuiCB } from './cl_utils';
 // All main globals that are set and used across files
 (global as any).isPhoneOpen = false;
 (global as any).isPhoneDisabled = false;
-
-// Set a global function to check if the player has been loaded
-(global as any).isPlayerLoaded = config.general.enableMultiChar ? false : true;
+(global as any).isPlayerLoaded = false;
 
 const exps = global.exports;
 
