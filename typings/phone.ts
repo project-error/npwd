@@ -6,6 +6,7 @@ export interface ScriptMessage<T = any> {
 }
 
 export enum PhoneEvents {
+  QUEUE_NOTIFICATION = 'npwd:queueNoti',
   OPEN_APP = 'npwd:openApp',
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',

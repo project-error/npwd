@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
@@ -16,8 +16,8 @@ import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
-import { useCallModal } from '@os/call/hooks/useCallModal';
+import { PhoneSnackbar } from './ui/components/PhoneSnackbar';
+import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
@@ -28,12 +28,17 @@ import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
+import { useNotificationListener } from './os/new-notifications/hooks/useNotificationListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 
-function Phone() {
-  const { i18n } = useTranslation();
+interface PhoneProps {
+  notiRefCB: Dispatch<SetStateAction<HTMLElement>>;
+}
+
+export const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
+  const { t, i18n } = useTranslation();
 
   const { apps } = useApps();
 
@@ -55,6 +60,8 @@ function Phone() {
   useMessagesService();
   useContactsListener();
   useNoteListener();
+  useNotificationListener();
+  /*usePhotoService();*/
   useCallService();
   useDialService();
   useInvalidSettingsHandler();
@@ -67,7 +74,7 @@ function Phone() {
         <WindowSnackbar />
         <PhoneWrapper>
           <NotificationBar />
-          <div className="PhoneAppContainer">
+          <div className="PhoneAppContainer" ref={notiRefCB}>
             <>
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
@@ -75,7 +82,6 @@ function Phone() {
                 <>{!App.isDisabled && <App.Route key={App.id} />}</>
               ))}
             </>
-            <NotificationAlert />
             <PhoneSnackbar />
           </div>
           <Navigation />
@@ -83,7 +89,7 @@ function Phone() {
       </TopLevelErrorComponent>
     </div>
   );
-}
+};
 
 export default Phone;
 

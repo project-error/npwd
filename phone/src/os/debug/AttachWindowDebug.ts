@@ -1,4 +1,5 @@
 import { PhoneEvents } from '@typings/phone';
+import { QueueNotificationOpts } from '../new-notifications/hooks/useNotifications';
 import { IAlert } from '../snackbar/hooks/useSnackbar';
 import { ActiveCall, CallEvents } from '@typings/call';
 
@@ -9,7 +10,7 @@ function dispatchEvent<T = any>({ method, app, data }: { method: string; app: st
         data: {
           app,
           method,
-          data,
+          data: data ?? {},
         },
       }),
     );
@@ -18,7 +19,15 @@ function dispatchEvent<T = any>({ method, app, data }: { method: string; app: st
 
 const debugObj = {
   testNotification: () => {
-    dispatchEvent({ method: 'notiTest', app: 'PHONE', data: {} });
+    dispatchEvent<QueueNotificationOpts>({
+      method: PhoneEvents.QUEUE_NOTIFICATION,
+      app: 'PHONE',
+      data: {
+        appId: 'TWITTER',
+        message: 'Taso just tweeted: You suck bro!',
+        duration: 3000,
+      },
+    });
   },
   testCallOutgoing: () => {
     dispatchEvent({ app: 'CALL', method: CallEvents.SET_CALL_MODAL, data: true });

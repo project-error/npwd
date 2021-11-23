@@ -6,6 +6,7 @@
   "license": "CC-BY-NC-SA-4.0",
   "homepage": "/resources/html",
   "dependencies": {
+    "@emotion/css": "^11.5.0",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.0",
@@ -20,6 +21,8 @@
     "i18next": "^20.6.1",
     "jest": "^27.4.7",
     "jsonschema": "^1.4.0",
+    "lodash": "^4.17.21",
+    "notistack": "^2.0.3",
     "parse-url": "^5.0.7",
     "qs": "^6.9.6",
     "react": "^17.0.2",
