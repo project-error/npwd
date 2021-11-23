@@ -197,6 +197,7 @@ class CallsService {
 
     // player who is calling and recieved the rejection.
     emitNet(CallEvents.WAS_REJECTED, currentCall.transmitterSource);
+    emitNet(CallEvents.WAS_REJECTED, currentCall.receiverSource);
 
     // Update our database
     await this.callsDB.updateCall(currentCall, false, endCallTimeUnix);
@@ -222,6 +223,7 @@ class CallsService {
     // lets protect against that
     if (currentCall?.is_accepted) {
       emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
+      emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
     }
     // player who is calling (transmitter)
     resp({ status: 'ok' });
