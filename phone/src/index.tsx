@@ -7,12 +7,12 @@ import { Integrations } from '@sentry/tracing';
 import './main.css';
 import PhoneConfig from './config/default.json';
 import { PhoneProviders } from './PhoneProviders';
-import attachMockNuiEvent from './os/debug/AttachMockNuiEvent';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
 import { RewriteFrames } from '@sentry/integrations';
+import attachWindowDebug from './os/debug/AttachWindowDebug';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -49,7 +49,9 @@ declare module '@emotion/react' {
 }
 
 // window.mockNuiEvent is restricted to development env only
-if (process.env.NODE_ENV === 'development') attachMockNuiEvent();
+if (process.env.NODE_ENV === 'development') {
+  attachWindowDebug();
+}
 
 ReactDOM.render(
   <HashRouter>
