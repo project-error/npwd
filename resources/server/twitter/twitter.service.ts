@@ -34,7 +34,6 @@ class _TwitterService {
       // as we create a default profile in that process.
 
       if (!profile) {
-        // TODO: Add sanity check
         const defaultProfileNames = await getDefaultProfileNames(reqObj.source);
         if (!defaultProfileNames) return;
 
@@ -50,13 +49,12 @@ class _TwitterService {
     }
   }
 
-  async handleCreateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<void>) {
+  async handleCreateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<Profile>) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
-      await this.twitterDB.createProfile(identifier, reqObj.data.profile_name);
+      const profile = await this.twitterDB.createProfile(identifier, reqObj.data.profile_name);
 
-      // should we get the profile here?
-      resp({ status: 'ok' });
+      resp({ status: 'ok', data: profile });
     } catch (e) {
       twitterLogger.error(`Failed to create twitter profile: ${e.message}`, {
         source: reqObj.source,
@@ -67,12 +65,12 @@ class _TwitterService {
   }
 
   // we get both the profile and a profile name
-  async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<void>) {
+  async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<Profile>) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
-      await this.twitterDB.updateProfile(identifier, reqObj.data);
+      const profile = await this.twitterDB.updateProfile(identifier, reqObj.data);
 
-      resp({ status: 'ok' });
+      resp({ status: 'ok', data: profile });
     } catch (e) {
       twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
         source: reqObj.source,

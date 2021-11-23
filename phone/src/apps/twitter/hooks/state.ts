@@ -72,6 +72,7 @@ export const useSetTweets = () => useSetRecoilState(twitterState.tweets);
 
 export const useTwitterProfile = () => useRecoilState(twitterState.profile);
 export const useTwitterProfileValue = () => useRecoilValue(twitterState.profile);
+export const useSetTwitterProfile = () => useSetRecoilState(twitterState.profile);
 
 export const useFilteredTweets = () => useRecoilState(twitterState.filteredTweets);
 export const useSetFilteredTweets = () => useSetRecoilState(twitterState.filteredTweets);

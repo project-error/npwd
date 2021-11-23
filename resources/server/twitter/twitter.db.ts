@@ -218,7 +218,7 @@ export class _TwitterDB {
     return profile || (await this.createDefaultProfile(identifier));
   }
 
-  async updateProfile(identifier: string, profile: Profile) {
+  async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
     const { avatar_url, profile_name, bio, location, job } = profile;
     const query = `
         UPDATE npwd_twitter_profiles
@@ -230,6 +230,8 @@ export class _TwitterDB {
         WHERE identifier = ?
 		`;
     await pool.execute(query, [avatar_url, profile_name, bio, location, job, identifier]);
+
+    return profile;
   }
 
   /**

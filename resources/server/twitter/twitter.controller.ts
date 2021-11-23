@@ -17,14 +17,14 @@ onNetPromise<void, Profile | string[]>(
   },
 );
 
-onNetPromise<Profile, void>(TwitterEvents.CREATE_PROFILE, async (reqObj, resp) => {
+onNetPromise<Profile, Profile>(TwitterEvents.CREATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
   TwitterService.handleCreateProfile(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in createProfile event (${_source}), Error: ${e.message}`),
   );
 });
 
-onNetPromise<Profile, void>(TwitterEvents.UPDATE_PROFILE, async (reqObj, resp) => {
+onNetPromise<Profile, Profile>(TwitterEvents.UPDATE_PROFILE, async (reqObj, resp) => {
   const _source = getSource();
   TwitterService.handleUpdateProfile(reqObj, resp).catch((e) =>
     twitterLogger.error(`Error occurred in updateProfile event (${_source}), Error: ${e.message}`),

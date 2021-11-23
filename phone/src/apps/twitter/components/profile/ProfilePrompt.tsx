@@ -5,9 +5,9 @@ import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
-import { twitterState } from '../../hooks/state';
+import { twitterState, useSetTwitterProfile } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { Profile, TwitterEvents } from '../../../../../../typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
@@ -29,6 +29,7 @@ export function ProfilePrompt() {
   const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
+  const setTwitterProfile = useSetTwitterProfile();
   const defaultProfileNames = useRecoilValue(twitterState.defaultProfileNames);
   const [profileName, setProfileName] = useState(profile?.profile_name || '');
   const { ResourceConfig } = usePhone();
@@ -40,7 +41,7 @@ export function ProfilePrompt() {
     : TwitterEvents.UPDATE_PROFILE;
 
   const handleUpdate = async () => {
-    fetchNui<ServerPromiseResp<void>>(eventName, { ...profile, profile_name: profileName }).then(
+    fetchNui<ServerPromiseResp<Profile>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
@@ -48,6 +49,8 @@ export function ProfilePrompt() {
             type: 'error',
           });
         }
+
+        setTwitterProfile(resp.data);
       },
     );
   };
