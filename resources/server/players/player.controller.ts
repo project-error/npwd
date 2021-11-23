@@ -65,8 +65,9 @@ if (!config.general.enableMultiChar) {
 // instantiating/deleting a player. The config option must be set to true
 // for these to be available
 if (config.general.enableMultiChar) {
-  // This has to be an event as FXServer does not yet support exports which return a promise.
-  on('npwd:newPlayer', async (playerDTO: PlayerAddData) => {
+  const exp = global.exports;
+
+  exp('newPlayer', async (playerDTO: PlayerAddData) => {
     if (typeof playerDTO.source !== 'number') {
       return playerLogger.error('Source must be passed as a number when loading a player');
     }
@@ -76,7 +77,7 @@ if (config.general.enableMultiChar) {
     emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true);
   });
 
-  on('npwd:unloadPlayer', (src: number) => {
+  exp('unloadPlayer', (src: number) => {
     if (typeof src !== 'number') {
       return playerLogger.error('Source must be passed as a number when unloading a player');
     }
