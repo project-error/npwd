@@ -1,6 +1,7 @@
 import { CreateMessageGroupResult, MessageConversation } from '../../../typings/messages';
 import { mainLogger } from '../sv_logger';
 import MessagesDB from './messages.db';
+import PlayerService from '../players/player.service';
 
 export const messagesLogger = mainLogger.child({ module: 'messages' });
 
@@ -83,17 +84,21 @@ export function createGroupHashID(participants: string[]) {
  * @param phoneNumber - list of phone numbers to add to the grup
  */
 export async function createMessageGroupsFromPhoneNumber(
-  userIdentifier: string,
-  phoneNumber: string,
+  sourceIdentifier: string,
+  tgtPhoneNumber: string,
 ): Promise<CreateMessageGroupResult> {
   // we check that each phoneNumber exists before we create the group
 
-  const identifier = await MessagesDB.getIdentifierFromPhoneNumber(phoneNumber);
+  const tgtIdentifier = await PlayerService.getIdentifierFromPhoneNumber(tgtPhoneNumber, true);
 
-  const conversationId = createGroupHashID([userIdentifier, identifier]);
+  if (!tgtIdentifier) {
+    throw new Error('tgtIdentifier was null');
+  }
 
-  await MessagesDB.createMessageGroup(userIdentifier, conversationId, userIdentifier);
-  await MessagesDB.createMessageGroup(userIdentifier, conversationId, identifier);
+  const conversationId = createGroupHashID([sourceIdentifier, tgtIdentifier]);
+
+  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
+  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
@@ -101,9 +106,9 @@ export async function createMessageGroupsFromPhoneNumber(
   return {
     error: false,
     conversationId,
-    identifiers: [userIdentifier, identifier],
-    phoneNumber,
-    participant: identifier,
+    identifiers: [sourceIdentifier, tgtIdentifier],
+    phoneNumber: tgtPhoneNumber,
+    participant: tgtIdentifier,
   };
 }
 
