@@ -25,7 +25,13 @@ function fetchOnInitialize() {
 }
 
 onNet(PhoneEvents.ON_INIT, () => {
+  (global as any).isPlayerLoaded = true;
+
   fetchOnInitialize();
+});
+
+onNet(PhoneEvents.PLAYER_UNLOADED, () => {
+  (global as any).isPlayerLoaded = false;
 });
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
@@ -41,13 +47,6 @@ const getCurrentGameTime = () => {
 
   return `${hour}:${minute}`;
 };
-
-// Register an event to update the state of isPlayerLoaded
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
-    (global as any).isPlayerLoaded = state;
-  });
-}
 
 /* * * * * * * * * * * * *
  *
