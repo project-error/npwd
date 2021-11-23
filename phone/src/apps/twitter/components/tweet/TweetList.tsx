@@ -17,8 +17,8 @@ const MINIMUM_LOAD_TIME = 700;
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(!!tweets.length);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(!!tweets);
 
   const { addAlert } = useSnackbar();
   const { t } = useTranslation();

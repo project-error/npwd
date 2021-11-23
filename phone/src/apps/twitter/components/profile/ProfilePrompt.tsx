@@ -40,7 +40,7 @@ export function ProfilePrompt() {
     : TwitterEvents.UPDATE_PROFILE;
 
   const handleUpdate = async () => {
-    fetchNui<ServerPromiseResp<any>>(eventName, { ...profile, profile_name: profileName }).then(
+    fetchNui<ServerPromiseResp<void>>(eventName, { ...profile, profile_name: profileName }).then(
       (resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
