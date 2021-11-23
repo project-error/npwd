@@ -71,8 +71,6 @@ if (config.general.enableMultiChar) {
     if (typeof playerDTO.source !== 'number') {
       return playerLogger.error('Source must be passed as a number when loading a player');
     }
-    playerLogger.debug('Receive newPlayer event, data:');
-    playerLogger.debug(playerDTO);
     await PlayerService.handleNewPlayerEvent(playerDTO);
   });
 
