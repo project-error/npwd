@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Box } from '@mui/material';
+import { Button, Box, inputUnstyledClasses } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
+import {
+  MarketplaceDatabaseLimits,
+  MarketplaceEvents,
+  MarketplaceListing,
+} from '../../../../../../typings/marketplace';
 import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@mui/icons-material/Image';
@@ -80,12 +84,6 @@ export const ListingForm: React.FC = () => {
     });
   };
 
-  /*const handleChooseImage = () => {
-		history.push(`/camera?${qs.stringify({
-			referal: encodeURIComponent(pathname + search),
-		})}`)
-	}*/
-
   const handleChooseImage = useCallback(() => {
     history.push(
       `/camera?${qs.stringify({
@@ -93,6 +91,24 @@ export const ListingForm: React.FC = () => {
       })}`,
     );
   }, [history, pathname, search]);
+
+  const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.currentTarget.value;
+    if (inputVal.length === MarketplaceDatabaseLimits.title) return;
+    setTitle(e.currentTarget.value);
+  };
+
+  const handleUrlChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.currentTarget.value;
+    if (inputVal.length === MarketplaceDatabaseLimits.url) return;
+    setUrl(e.currentTarget.value);
+  };
+
+  const handleDescriptionChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const inputVal = e.currentTarget.value;
+    if (inputVal.length === MarketplaceDatabaseLimits.description) return;
+    setDescription(e.currentTarget.value);
+  };
 
   useEffect(() => {
     if (!query?.image) return;
@@ -105,7 +121,8 @@ export const ListingForm: React.FC = () => {
       <h1>New Listing</h1>
       <TextField
         className={classes.input}
-        onChange={(e) => setTitle(e.target.value)}
+        error={title.length >= MarketplaceDatabaseLimits.title}
+        onChange={handleTitleChange}
         label={t('GENERIC.REQUIRED')}
         placeholder={t('APPS_MARKETPLACE_FORM_TITLE')}
         inputProps={{
@@ -131,7 +148,8 @@ export const ListingForm: React.FC = () => {
         className={classes.input}
         placeholder={t('APPS_MARKETPLACE_FORM_IMAGE')}
         value={url}
-        onChange={(e) => setUrl(e.currentTarget.value)}
+        error={url.length >= MarketplaceDatabaseLimits.url}
+        onChange={handleUrlChange}
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: '80%' }}
         size="medium"
@@ -140,8 +158,9 @@ export const ListingForm: React.FC = () => {
 
       <TextField
         className={classes.input}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={handleDescriptionChange}
         label={t('GENERIC.REQUIRED')}
+        error={description.length >= MarketplaceDatabaseLimits.description}
         placeholder={t('APPS_MARKETPLACE_FORM_DESCRIPTION')}
         inputProps={{
           className: classes.multilineFieldInput,

@@ -12,6 +12,12 @@ export interface MarketplaceListingBase {
   description: string;
 }
 
+export enum MarketplaceDatabaseLimits {
+  title = 255,
+  description = 255,
+  url = 255,
+}
+
 export enum MarketplaceEvents {
   ADD_LISTING = 'npwd:addListing',
   FETCH_LISTING = 'npwd:fetchAllListings',
