@@ -50,7 +50,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
 
   const handleReportListing = () => {
     fetchNui<ServerPromiseResp>(MarketplaceEvents.REPORT_LISTING, {
-      listingId: listing.id,
+      id: listing.id,
     }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
