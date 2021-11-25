@@ -41,6 +41,11 @@ export class _MarketplaceDB {
     await DbInterface._rawExec(query, [listingId, identifier]);
   }
 
+  async deleteListingsOnDrop(identifier: string) {
+    const query = `DELETE FROM npwd_marketplace_listings WHERE identifier = ?`;
+    await DbInterface._rawExec(query, [identifier]);
+  }
+
   async getListing(listingId: number): Promise<MarketplaceListing> {
     const query = `SELECT * FROM npwd_marketplace_listings WHERE id = ?`;
     const [results] = await DbInterface._rawExec(query, [listingId]);

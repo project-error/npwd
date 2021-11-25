@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Box, inputUnstyledClasses } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   MarketplaceDatabaseLimits,

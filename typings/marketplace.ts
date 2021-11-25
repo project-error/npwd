@@ -22,6 +22,7 @@ export enum MarketplaceEvents {
   ADD_LISTING = 'npwd:addListing',
   FETCH_LISTING = 'npwd:fetchAllListings',
   DELETE_LISTING = 'npwd:marketplaceDeleteListing',
+  DELETE_LISTINGS_ON_DROP = 'npwd:marketplaceDeleteListingsOnDrop',
   REPORT_LISTING = 'npwd:reportListing',
   BROADCAST_ADD = 'npwd:sendMarketplaceBroadcastAdd',
   BROADCAST_DELETE = 'npwd:sendMarketplaceBroadcastDelete',

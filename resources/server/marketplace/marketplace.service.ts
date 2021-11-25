@@ -8,7 +8,6 @@ import {
   MarketplaceListingBase,
   MarketplaceReportDTO,
 } from '../../../typings/marketplace';
-import { notesLogger } from '../notes/notes.utils';
 import { reportListingToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 
@@ -93,9 +92,17 @@ class _MarketplaceService {
 
       emitNet(MarketplaceEvents.BROADCAST_DELETE, -1, returnObj);
     } catch (e) {
-      notesLogger.error(`Error in handleDeleteListing, ${e.message}`);
+      marketplaceLogger.error(`Error in handleDeleteListing, ${e.message}`);
 
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
+    }
+  }
+
+  async handleDeleteListingsOnDrop(identifier: string) {
+    try {
+      await this.marketplaceDB.deleteListingsOnDrop(identifier);
+    } catch (e) {
+      marketplaceLogger.error(`Error when deleting listings on player drop, ${e.message}`);
     }
   }
 

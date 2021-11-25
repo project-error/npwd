@@ -8,6 +8,8 @@ import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceService from './marketplace.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 import { MarketplaceDeleteDTO } from '../../../typings/marketplace';
+import { ESXServerXPlayer } from 'fivem-esx-js/classes/esx_server_xplayer';
+import PlayerService from '../players/player.service';
 
 onNetPromise<void, MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING, async (reqObj, resp) => {
   MarketplaceService.handleFetchListings(reqObj, resp).catch((e) => {
@@ -44,5 +46,13 @@ onNetPromise<MarketplaceReportDTO>(MarketplaceEvents.REPORT_LISTING, async (reqO
       `Error occurred in report listing event (${reqObj.source}), Error: ${e.message}`,
     );
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
+on(MarketplaceEvents.DELETE_LISTINGS_ON_DROP, (identifier: string) => {
+  MarketplaceService.handleDeleteListingsOnDrop(identifier).catch((e) => {
+    marketplaceLogger.error(
+      `Error occurred when deleting listing on player drop event, Error: ${e.message}`,
+    );
   });
 });
