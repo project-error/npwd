@@ -76,19 +76,19 @@ const ContactsInfoPage: React.FC = () => {
   const [t] = useTranslation();
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const inputVal = e.target.value;
+    const inputVal = e.currentTarget.value;
     if (inputVal.length === ContactsDatabaseLimits.number) return;
     setNumber(e.target.value);
   };
 
   const handleDisplayChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const inputVal = e.target.value;
+    const inputVal = e.currentTarget.value;
     if (inputVal.length === ContactsDatabaseLimits.display) return;
     setName(e.target.value);
   };
 
   const handleAvatarChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const inputVal = e.target.value;
+    const inputVal = e.currentTarget.value;
     if (inputVal.length === ContactsDatabaseLimits.avatar) return;
     setAvatar(e.target.value);
   };
@@ -120,7 +120,7 @@ const ContactsInfoPage: React.FC = () => {
         <MuiAvatar className={classes.avatar} src={avatar} />
         <TextField
           autoFocus
-          error={name.length === ContactsDatabaseLimits.display}
+          error={name.length >= ContactsDatabaseLimits.display}
           className={classes.input}
           value={name}
           onChange={handleDisplayChange}
@@ -132,7 +132,7 @@ const ContactsInfoPage: React.FC = () => {
         />
         <TextField
           className={classes.input}
-          error={number.length === ContactsDatabaseLimits.number}
+          error={number.length >= ContactsDatabaseLimits.number}
           value={number}
           onChange={handleNumberChange}
           label={t('CONTACTS.FORM_NUMBER')}
@@ -142,7 +142,7 @@ const ContactsInfoPage: React.FC = () => {
           }}
         />
         <TextField
-          error={avatar.length === ContactsDatabaseLimits.avatar}
+          error={avatar.length >= ContactsDatabaseLimits.avatar}
           className={classes.input}
           label={t('CONTACTS.FORM_AVATAR')}
           fullWidth
