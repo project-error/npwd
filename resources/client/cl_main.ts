@@ -21,7 +21,9 @@ function fetchOnInitialize() {
   emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 }
 
-onNet(PhoneEvents.ON_INIT, () => {
+onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
+  global.isPlayerLoaded = state;
+
   fetchOnInitialize();
 });
 
@@ -41,7 +43,7 @@ const getCurrentGameTime = () => {
 
 // Register an event to update the state of isPlayerLoaded
 if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
+  onNet(PhoneEvents.SET_PLAYER_LOADED, async (state: boolean) => {
     (global as any).isPlayerLoaded = state;
   });
 }

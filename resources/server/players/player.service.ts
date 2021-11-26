@@ -126,7 +126,7 @@ class _PlayerService {
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
-    emitNet(PhoneEvents.ON_INIT, pSource);
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, pSource, true);
   }
 
   /**
@@ -187,7 +187,7 @@ class _PlayerService {
     playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
     playerLogger.debug(player);
 
-    emitNet(PhoneEvents.ON_INIT, src);
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, src, true);
   }
 
   /**
@@ -226,7 +226,7 @@ class _PlayerService {
     await this.clearPlayerData(src);
 
     this.deletePlayerFromMaps(src);
-
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
   }
 }

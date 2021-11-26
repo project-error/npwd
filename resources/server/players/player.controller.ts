@@ -5,6 +5,8 @@ import { PlayerAddData } from './player.interfaces';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
 
+const exp = global.exports;
+
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
   const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
@@ -65,14 +67,13 @@ if (!config.general.enableMultiChar) {
 // instantiating/deleting a player. The config option must be set to true
 // for these to be available
 if (config.general.enableMultiChar) {
-  const exp = global.exports;
 
   exp('newPlayer', async (playerDTO: PlayerAddData) => {
     if (typeof playerDTO.source !== 'number') {
       return playerLogger.error('Source must be passed as a number when loading a player');
     }
     await PlayerService.handleNewPlayerEvent(playerDTO);
-    emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true);
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, playerDTO.source, true);
   });
 
   exp('unloadPlayer', (src: number) => {
@@ -81,6 +82,5 @@ if (config.general.enableMultiChar) {
     }
     playerLogger.debug(`Received unloadPlayer event for ${src}`);
     PlayerService.handleUnloadPlayerEvent(src);
-    emitNet(PhoneEvents.PLAYER_LOADED, src, false);
   });
 }
