@@ -26,7 +26,7 @@ export const PhoneSnackbar: React.FC = () => {
   const { alert, isOpen, handleClose } = useSnackbar();
 
   return (
-    <Snackbar autoHideDuration={4000} open={isOpen} className={classes.root} onClose={handleClose}>
+    <Snackbar autoHideDuration={2000} open={isOpen} className={classes.root} onClose={handleClose}>
       <Alert severity={alert?.type || 'info'}>{alert?.message || ''}</Alert>
     </Snackbar>
   );
