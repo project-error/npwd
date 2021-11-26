@@ -54,7 +54,7 @@
     },
     "CAMERA": {
       "SHARE_DESTINATION": "Where do you want to share the image",
-      "COPY_IMAGE": "Or just copy the image here",
+      "COPY_IMAGE": "Copy the image url here:",
       "FAILED_TO_DELETE": "Photo could not be deleted :(",
       "FAILED_TO_TAKE_PHOTO": "Photo could not be saved :("
     },

@@ -31,6 +31,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     }
   }, [phoneNumber, getContactByNumber]);
 
+  // TODO: Abstract functionality
   const handleSubmit = useCallback(() => {
     // handles phone numbers in a csv format and strips all spaces and
     // external characters out of them:

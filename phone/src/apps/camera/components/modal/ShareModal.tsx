@@ -28,16 +28,10 @@ export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
     <Modal visible={!!meta} handleClose={onClose}>
       <div className={classes.shareModal}>
         <div className={classes.innerShareModal}>
-          <>
-            <h4 style={{ textAlign: 'center', marginTop: 20 }}>
-              Where do you want to share the photo?
-              {t('CAMERA.SHARE_DESTINATION')}
-            </h4>
-            <h4>{t('CAMERA.COPY_IMAGE')}</h4>
-            <Button onClick={handleCopyImage} variant="contained">
-              Copy image
-            </Button>
-          </>
+          <h4>{t('CAMERA.COPY_IMAGE')}</h4>
+          <Button onClick={handleCopyImage} variant="contained">
+            Copy image
+          </Button>
         </div>
       </div>
     </Modal>
