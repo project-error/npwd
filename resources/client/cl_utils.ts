@@ -71,7 +71,7 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
 export const playerLoaded = () => {
   return new Promise<boolean>((resolve) => {
     setInterval(() => {
-      if ((global as any).isPlayerLoaded) resolve(true);
+      if (global.isPlayerLoaded) resolve(true);
     }, 50);
   });
 };
@@ -85,7 +85,7 @@ export const playerLoaded = () => {
 export const RegisterNuiProxy = (event: string) => {
   RegisterNuiCallbackType(event);
   on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
-    if (!(global as any).isPlayerLoaded) await playerLoaded();
+    if (!global.isPlayerLoaded) await playerLoaded();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
       cb(res);

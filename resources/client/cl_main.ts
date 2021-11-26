@@ -6,9 +6,9 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 
 // All main globals that are set and used across files
-(global as any).isPhoneOpen = false;
-(global as any).isPhoneDisabled = false;
-(global as any).isPlayerLoaded = false;
+global.isPhoneOpen = false;
+global.isPhoneDisabled = false;
+global.isPlayerLoaded = false;
 
 const exps = global.exports;
 
@@ -53,7 +53,7 @@ if (config.general.enableMultiChar) {
  * * * * * * * * * * * * */
 
 export const showPhone = async (): Promise<void> => {
-  (global as any).isPhoneOpen = true;
+  global.isPhoneOpen = true;
   const time = getCurrentGameTime();
   await animationService.openPhone(); // Animation starts before the phone is open
   emitNet(PhoneEvents.FETCH_CREDENTIALS);
@@ -66,7 +66,7 @@ export const showPhone = async (): Promise<void> => {
 };
 
 export const hidePhone = async (): Promise<void> => {
-  (global as any).isPhoneOpen = false;
+  global.isPhoneOpen = false;
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await animationService.closePhone();
   SetNuiFocus(false, false);
@@ -84,7 +84,7 @@ RegisterCommand(
   async () => {
     //-- Toggles Phone
     // Check to see if the phone is marked as disabled
-    if (!(global as any).isPhoneDisabled) await togglePhone();
+    if (!global.isPhoneDisabled) await togglePhone();
   },
   false,
 );
@@ -119,7 +119,7 @@ async function togglePhone(): Promise<void> {
     const canAccess = checkExportCanOpen();
     if (!canAccess) return;
   }
-  if ((global as any).isPhoneOpen) return await hidePhone();
+  if (global.isPhoneOpen) return await hidePhone();
   await showPhone();
 }
 
@@ -156,7 +156,7 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   PhoneEvents.TOGGLE_KEYS,
   async ({ keepGameFocus }, cb) => {
     // We will only
-    if ((global as any).isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+    if (global.isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
     cb({});
   },
 );

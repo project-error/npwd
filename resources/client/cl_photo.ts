@@ -7,7 +7,7 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
-const exp = (global as any).exports;
+const exp = global.exports;
 
 let inCameraMode = false;
 
