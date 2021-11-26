@@ -78,6 +78,7 @@ const handleTakePicture = async () => {
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  emit('npwd:disableControlActions', true);
   const resp = await takePhoto();
   await Delay(200);
   inCameraMode = false;
@@ -112,15 +113,16 @@ const takePhoto = () =>
       {
         encoding: config.images.imageEncoding,
         headers: {
-          authorization: config.images.useAuthorization ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}` : undefined,
+          authorization: config.images.useAuthorization
+            ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`
+            : undefined,
           'content-type': config.images.contentType,
         },
       },
       async (data: any) => {
         try {
           let parsedData = JSON.parse(data);
-          for (const index of config.images.returnedDataIndexes)
-            parsedData = parsedData[index];
+          for (const index of config.images.returnedDataIndexes) parsedData = parsedData[index];
           const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
           res(resp);
         } catch (e) {
