@@ -70,27 +70,28 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   ClearHelp(true);
   emit('npwd:disableControlActions', true);
   await animationService.closeCamera();
+  console.log('anim - closing camera');
 });
 
 const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
+  ClearHelp(true);
   await Delay(0);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  animationService.openPhone();
   emit('npwd:disableControlActions', true);
   const resp = await takePhoto();
   await Delay(200);
   inCameraMode = false;
-  ClearHelp(true);
 
-  animationService.openPhone();
   return resp;
 };
 
 const handleCameraExit = async () => {
   ClearHelp(true);
-  animationService.closeCamera();
+  await animationService.closeCamera();
   emit('npwd:disableControlActions', true);
   DestroyMobilePhone();
   CellCamActivate(false, false);
