@@ -52,16 +52,21 @@ export const useNotifications = (): UseNotificationVal => {
 
       if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
 
-      const id = enqueueSnackbar(<NotificationBase app={app} message={message} />, {
-        autoHideDuration: duration,
-        onExit: notiActiveExitHandler,
-        key: uniqId,
-        anchorOrigin: {
-          horizontal: 'center',
-          vertical: 'top',
+      const addedDate = new Date();
+
+      const id = enqueueSnackbar(
+        <NotificationBase app={app} message={message} timeReceived={addedDate} />,
+        {
+          autoHideDuration: duration,
+          onExit: notiActiveExitHandler,
+          key: uniqId,
+          anchorOrigin: {
+            horizontal: 'center',
+            vertical: 'top',
+          },
+          className: styles.root,
         },
-        className: styles.root,
-      });
+      );
 
       setNotis((curNotis) => {
         if (curNotis[id])
@@ -74,6 +79,7 @@ export const useNotifications = (): UseNotificationVal => {
         const newNotiObj: NPWDNotification = {
           message,
           persist,
+          timeReceived: addedDate,
           duration,
           key: id,
           isRead: false,

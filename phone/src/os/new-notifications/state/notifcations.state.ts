@@ -5,6 +5,7 @@ export interface NPWDNotification extends QueueNotificationOpts {
   isActive: boolean;
   isRead: boolean;
   route?: boolean;
+  timeReceived: Date;
   key: string | number;
 }
 

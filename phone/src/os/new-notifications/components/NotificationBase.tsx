@@ -1,9 +1,10 @@
 import React, { forwardRef } from 'react';
-import { Box, IconProps } from '@mui/material';
+import { Box } from '@mui/material';
 import { SnackbarContent } from 'notistack';
 import { IApp } from '../../apps/config/apps';
 import { styled } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -18,11 +19,11 @@ const StyledMessage = styled('div')({
 interface NotificationBaseProps {
   app: IApp;
   message: string | React.ReactNode;
-  Icon?: React.ComponentType<IconProps>;
+  timeReceived: Date;
 }
 
 export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
-  const { message, app } = props;
+  const { message, app, timeReceived } = props;
   const [t] = useTranslation();
 
   return (
@@ -41,7 +42,7 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
         <Box color="#bfbfbf" fontWeight={400} paddingLeft={1} flexGrow={1} fontSize={16}>
           {t(app.nameLocale)}
         </Box>
-        <Box color="#bfbfbf">1m ago</Box>
+        <Box color="#bfbfbf">{dayjs(timeReceived).fromNow()}</Box>
       </Box>
       <StyledMessage>{message}</StyledMessage>
     </SnackbarContent>

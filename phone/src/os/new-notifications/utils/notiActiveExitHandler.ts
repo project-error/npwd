@@ -2,7 +2,8 @@ import { getRecoil, setRecoil } from '../../../utils/RecoilPortal';
 import { notificationState, NotiMap } from '../state/notifcations.state';
 import lodashDeepClone from 'lodash/cloneDeep';
 
-// Not dependent on react ctx
+// This is a pure function that takes no assumptions of the current context,
+// meaning we can store it in Recoil without an issue.
 export default function notiActiveExitHandler(_: HTMLElement, key: string | number) {
   const notisMap = getRecoil(notificationState);
   const tgtNoti = notisMap[key];
