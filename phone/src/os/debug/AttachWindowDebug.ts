@@ -1,3 +1,5 @@
+import { PhoneEvents } from '../../../../typings/phone';
+
 function dispatchEvent({ method, app, data = {} }: { method: string; app: string; data: unknown }) {
   setTimeout(() => {
     window.dispatchEvent(
@@ -17,6 +19,13 @@ const debugObj = {
     dispatchEvent({ method: 'notiTest', app: 'PHONE', data: {} });
   },
   mockNuiEvent: dispatchEvent,
+  setPhoneVisible: (bool: boolean) => {
+    dispatchEvent({
+      method: PhoneEvents.SET_VISIBILITY,
+      data: bool,
+      app: 'PHONE',
+    });
+  },
 };
 
 const attachWindowDebug = () => {
