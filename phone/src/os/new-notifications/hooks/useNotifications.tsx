@@ -93,13 +93,38 @@ export const useNotifications = (): UseNotificationVal => {
     [enqueueSnackbar, getApp],
   );
 
-  const removeAllActive = () => {
+  const removeAllActive = useCallback(() => {
     closeSnackbar();
-  };
+    setNotis((curNotis) => {
+      const copiedMap: NotiMap = lodashDeepClone(curNotis);
 
-  const removeActive = (key: string | number) => {
-    closeSnackbar(key);
-  };
+      for (const [key, value] of Object.entries(copiedMap)) {
+        if (value?.isActive) {
+          copiedMap[key] = { ...value, isActive: false };
+        }
+      }
+
+      return copiedMap;
+    });
+  }, [closeSnackbar, setNotis]);
+
+  const removeActive = useCallback(
+    (key: string | number) => {
+      closeSnackbar(key);
+      // If the targeted notification isn't currently active, we should bail.
+      if (!activeNotis[key]) return;
+
+      setNotis((curNotis) => {
+        const mapCopy = lodashDeepClone(curNotis);
+        const tgtNoti = mapCopy[key];
+
+        tgtNoti.isActive = false;
+
+        return mapCopy;
+      });
+    },
+    [closeSnackbar, activeNotis, setNotis],
+  );
 
   const markAsRead = useCallback(
     (key: string | number) => {
