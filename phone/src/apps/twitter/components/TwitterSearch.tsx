@@ -5,11 +5,11 @@ import TweetList from './tweet/TweetList';
 import SearchButton from './buttons/SearchButton';
 import { TextField } from '../../../ui/components/Input';
 import { fetchNui } from '../../../utils/fetchNui';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
 import { Tweet, TwitterEvents } from '../../../../../typings/twitter';
 import { useFilteredTweets } from '../hooks/state';
 import { processTweet } from '../utils/tweets';
 import { ServerPromiseResp } from '../../../../../typings/common';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles({
   root: {

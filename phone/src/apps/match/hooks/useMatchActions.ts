@@ -2,7 +2,7 @@ import { FormattedMatch, MatchEvents } from '../../../../../typings/match';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import { useSetFormattedProfiles, useSetMatches } from './state';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 

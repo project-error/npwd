@@ -2,7 +2,7 @@ import React from 'react';
 import { Snackbar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useSnackbar } from '../hooks/useSnackbar';
-import Alert from './Alert';
+import Alert from '../../../ui/components/Alert';
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +27,9 @@ export const PhoneSnackbar: React.FC = () => {
 
   return (
     <Snackbar autoHideDuration={2000} open={isOpen} className={classes.root} onClose={handleClose}>
-      <Alert severity={alert?.type || 'info'}>{alert?.message || ''}</Alert>
+      <Alert severity={alert?.type || 'info'} onClose={handleClose}>
+        {alert?.message || ''}
+      </Alert>
     </Snackbar>
   );
 };

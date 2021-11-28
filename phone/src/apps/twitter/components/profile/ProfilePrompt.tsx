@@ -11,7 +11,7 @@ import { Profile, TwitterEvents } from '../../../../../../typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

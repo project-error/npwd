@@ -5,7 +5,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 function ReportButton({ handleClose, tweetId, isReported }) {
   const { t } = useTranslation();

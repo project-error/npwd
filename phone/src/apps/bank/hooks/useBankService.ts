@@ -4,7 +4,7 @@ import { useTransactions } from './useTransactions';
 import { useCredentials } from './useCredentials';
 import { useSetRecoilState } from 'recoil';
 import { useBankNotification } from './useBankNotification';
-import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { IAlert, useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { BankEvents } from '../../../../../typings/bank';
 

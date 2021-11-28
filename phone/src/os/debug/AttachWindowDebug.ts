@@ -1,4 +1,5 @@
 import { PhoneEvents } from '../../../../typings/phone';
+import { IAlert } from '../snackbar/hooks/useSnackbar';
 
 function dispatchEvent({ method, app, data = {} }: { method: string; app: string; data: unknown }) {
   setTimeout(() => {
@@ -19,6 +20,16 @@ const debugObj = {
     dispatchEvent({ method: 'notiTest', app: 'PHONE', data: {} });
   },
   mockNuiEvent: dispatchEvent,
+  testSnackbar: (message: string, type: IAlert) => {
+    dispatchEvent({
+      app: 'PHONE',
+      data: {
+        message,
+        type,
+      },
+      method: PhoneEvents.ADD_SNACKBAR_ALERT,
+    });
+  },
   setPhoneVisible: (bool: boolean) => {
     dispatchEvent({
       method: PhoneEvents.SET_VISIBILITY,

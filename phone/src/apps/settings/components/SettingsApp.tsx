@@ -33,7 +33,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { ListSubheader } from '@mui/material';
 import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { IContextMenuOption } from '../../../ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
 

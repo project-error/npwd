@@ -7,9 +7,9 @@ import { useCheckedConversationsValue, useIsEditingValue } from '../../hooks/sta
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { MessageEvents } from '../../../../../../typings/messages';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

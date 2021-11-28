@@ -6,7 +6,7 @@ import { MessageEvents } from '../../../../../../typings/messages';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { ContextMenu } from '../../../../ui/components/ContextMenu';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { useSelectedMessageValue } from '../../hooks/state';
 
 interface MessageBubbleMenuProps {

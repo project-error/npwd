@@ -10,7 +10,7 @@ import { MessageBubble } from './MessageBubble';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useConversationId, useSetMessages } from '../../hooks/state';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';

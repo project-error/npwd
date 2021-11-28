@@ -6,7 +6,7 @@ import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { Contact } from '../../../../../../typings/contact';
 import { MessageConversationResponse, MessageEvents } from '../../../../../../typings/messages';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { TextField } from '../../../../ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';

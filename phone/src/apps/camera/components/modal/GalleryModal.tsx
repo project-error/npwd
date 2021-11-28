@@ -12,7 +12,7 @@ import { usePhotoActions } from '../../hooks/usePhotoActions';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 export const GalleryModal = () => {
   const [shareOpen, setShareOpen] = useState(null);

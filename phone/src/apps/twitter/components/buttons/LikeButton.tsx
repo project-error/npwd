@@ -5,8 +5,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 function LikeButton({ tweetId, isLiked }) {
   const [liked, setLiked] = useState(isLiked);

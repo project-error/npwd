@@ -5,9 +5,11 @@ import { phoneState } from './state';
 import { useApps } from '../../apps/hooks/useApps';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
+import { useSnackbar } from '../../snackbar/hooks/useSnackbar';
 
 export const usePhoneService = () => {
   const { getApp } = useApps();
+  const { addAlert } = useSnackbar();
   const history = useHistory();
 
   const setVisibility = useSetRecoilState(phoneState.visibility);
@@ -26,6 +28,7 @@ export const usePhoneService = () => {
     [getApp, history],
   );
 
+  useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);
   useNuiEvent('PHONE', PhoneEvents.SET_VISIBILITY, setVisibility);
   useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, setResourceConfig);
   useNuiEvent('PHONE', PhoneEvents.SET_TIME, setPhoneTime);

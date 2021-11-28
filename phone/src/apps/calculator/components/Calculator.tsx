@@ -3,7 +3,7 @@ import { useCalculator } from '../hooks/useCalculator';
 import { Grid, Box, Paper, Fab, styled } from '@mui/material';
 import { setClipboard } from '../../../os/phone/hooks/useClipboard';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { CalculatorButton } from './CalculatorButton';
 

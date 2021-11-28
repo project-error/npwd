@@ -6,7 +6,7 @@ import {
   MarketplaceEvents,
   MarketplaceListing,
 } from '../../../../../../typings/marketplace';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@mui/icons-material/Image';
 import { useHistory, useLocation } from 'react-router-dom';

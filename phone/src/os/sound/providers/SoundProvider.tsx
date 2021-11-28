@@ -16,10 +16,9 @@ interface ISoundContext {
   playing(url: string): boolean;
   isMounted(url: string): boolean;
 }
-
 export const soundContext = createContext<ISoundContext>(null);
 
-export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
+export const SoundProvider: React.FC = ({ children }) => {
   const soundRefs = useRef<Map<string, { howl: Howl; volume: number }>>();
 
   useEffect(() => {

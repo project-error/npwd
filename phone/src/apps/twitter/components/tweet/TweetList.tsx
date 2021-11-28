@@ -7,10 +7,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { processTweet } from '../../utils/tweets';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { CircularProgress } from '@mui/material';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [page, setPage] = useState<number>(1);

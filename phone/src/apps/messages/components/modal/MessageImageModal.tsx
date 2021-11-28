@@ -9,7 +9,7 @@ import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFro
 import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
 import { MessageEvents } from '../../../../../../typings/messages';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
 interface IProps {
