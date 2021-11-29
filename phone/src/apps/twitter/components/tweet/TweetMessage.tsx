@@ -31,12 +31,6 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     textFieldInputRef.current && textFieldInputRef.current.focus();
   }, [modalVisible]);
 
-  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      onEnter();
-    }
-  };
-
   if (!ResourceConfig) return null;
 
   let errorMessage = null;
@@ -57,6 +51,13 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     errorMessage = newLineWarningPrompt;
   }
 
+  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (overNewLineLimit) return;
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      onEnter();
+    }
+  };
   return (
     <TextField
       value={message}
