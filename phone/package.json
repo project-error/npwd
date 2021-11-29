@@ -12,7 +12,7 @@
     "@mui/lab": "^5.0.0-alpha.45",
     "@mui/material": "^5.0.1",
     "@mui/styles": "^5.0.1",
-    "dayjs": "^1.10.4",
+    "dayjs": "^1.10.7",
     "dompurify": "^2.2.6",
     "emoji-mart": "^3.0.1",
     "enzyme": "^3.11.0",
