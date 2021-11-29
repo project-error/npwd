@@ -5,6 +5,7 @@ import { IApp } from '../../apps/config/apps';
 import { styled } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+import { useHistory } from 'react-router-dom';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -20,14 +21,27 @@ interface NotificationBaseProps {
   app: IApp;
   message: string | React.ReactNode;
   timeReceived: Date;
+  path?: string;
 }
 
 export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
-  const { message, app, timeReceived } = props;
+  const { message, app, timeReceived, path } = props;
+  const history = useHistory();
   const [t] = useTranslation();
 
+  // Should eventually also mark as read/mark as inactive if clicked.
+  const handleGoToApp = () => {
+    if (!path) return;
+    history.push(path);
+  };
+
   return (
-    <SnackbarContent id="test" ref={ref} style={{ minWidth: '340px' }}>
+    <SnackbarContent
+      id="notificationContainer"
+      ref={ref}
+      style={{ minWidth: '340px' }}
+      onClick={handleGoToApp}
+    >
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7} fontSize={14}>
         <Box
           p="5px"

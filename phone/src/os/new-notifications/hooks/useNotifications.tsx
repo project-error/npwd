@@ -17,6 +17,7 @@ export interface QueueNotificationOpts {
   appId: string;
   duration?: number;
   message: React.ReactNode | string;
+  path?: string;
   persist?: boolean;
   uniqId?: string;
 }
@@ -47,7 +48,7 @@ export const useNotifications = (): UseNotificationVal => {
   const { getApp } = useApps();
 
   const queueNotification = useCallback(
-    ({ appId, message, persist, uniqId, duration }: QueueNotificationOpts) => {
+    ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOpts) => {
       const app = getApp(appId);
 
       if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
@@ -55,7 +56,7 @@ export const useNotifications = (): UseNotificationVal => {
       const addedDate = new Date();
 
       const id = enqueueSnackbar(
-        <NotificationBase app={app} message={message} timeReceived={addedDate} />,
+        <NotificationBase app={app} message={message} timeReceived={addedDate} path={path} />,
         {
           autoHideDuration: duration,
           onExit: notiActiveExitHandler,
@@ -78,6 +79,7 @@ export const useNotifications = (): UseNotificationVal => {
         // noinspection UnnecessaryLocalVariableJS
         const newNotiObj: NPWDNotification = {
           message,
+          path,
           persist,
           timeReceived: addedDate,
           duration,

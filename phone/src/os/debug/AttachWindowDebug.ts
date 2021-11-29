@@ -24,6 +24,7 @@ const debugObj = {
       app: 'PHONE',
       data: {
         appId: 'TWITTER',
+        path: '/twitter',
         message: 'Taso just tweeted: You suck bro!',
         duration: 3000,
       },
