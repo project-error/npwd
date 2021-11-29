@@ -4,7 +4,7 @@ import {
   notificationState,
   NotiMap,
   NPWDNotification,
-} from '../state/notifcations.state';
+} from '../state/notifications.state';
 import { useApps } from '../../apps/hooks/useApps';
 import React, { useCallback } from 'react';
 import { NotificationBase } from '../components/NotificationBase';

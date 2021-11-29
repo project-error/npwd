@@ -1,5 +1,5 @@
 import { getRecoil, setRecoil } from '../../../utils/RecoilPortal';
-import { notificationState, NotiMap } from '../state/notifcations.state';
+import { notificationState, NotiMap } from '../state/notifications.state';
 import lodashDeepClone from 'lodash/cloneDeep';
 
 // This is a pure function that takes no assumptions of the current context,

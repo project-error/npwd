@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 import { QueueNotificationOpts } from '../hooks/useNotifications';
+import lodashIsEmpty from 'lodash/isEmpty';
 
 export interface NPWDNotification extends QueueNotificationOpts {
   isActive: boolean;
@@ -29,6 +30,6 @@ export const activeNotifications = selector<NotiMap | null>({
       }
     }
 
-    return foundActive === {} ? null : foundActive;
+    return lodashIsEmpty(foundActive) ? null : foundActive;
   },
 });
