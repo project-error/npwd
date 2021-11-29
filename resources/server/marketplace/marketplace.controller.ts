@@ -8,8 +8,6 @@ import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceService from './marketplace.service';
 import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
 import { MarketplaceDeleteDTO } from '../../../typings/marketplace';
-import { ESXServerXPlayer } from 'fivem-esx-js/classes/esx_server_xplayer';
-import PlayerService from '../players/player.service';
 
 onNetPromise<void, MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING, async (reqObj, resp) => {
   MarketplaceService.handleFetchListings(reqObj, resp).catch((e) => {
