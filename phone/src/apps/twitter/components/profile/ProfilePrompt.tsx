@@ -35,24 +35,37 @@ export function ProfilePrompt() {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
 
-  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName && !profile;
-  const eventName = showDefaultProfileNames
-    ? TwitterEvents.CREATE_PROFILE
-    : TwitterEvents.UPDATE_PROFILE;
+  const showDefaultProfileNames = !profile || !ResourceConfig.twitter.allowEditableProfileName;
+
+  const handleCreate = async () => {
+    fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.CREATE_PROFILE, {
+      profile_name: profileName,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: 'Failed to update profile',
+          type: 'error',
+        });
+      }
+
+      setTwitterProfile(resp.data);
+    });
+  };
 
   const handleUpdate = async () => {
-    fetchNui<ServerPromiseResp<Profile>>(eventName, { ...profile, profile_name: profileName }).then(
-      (resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: 'Failed to update profile',
-            type: 'error',
-          });
-        }
+    fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.UPDATE_PROFILE, {
+      ...profile,
+      profile_name: profileName,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: 'Failed to update profile',
+          type: 'error',
+        });
+      }
 
-        setTwitterProfile(resp.data);
-      },
-    );
+      setTwitterProfile(resp.data);
+    });
   };
 
   // case where profile doesn't exist, couldn't be created automatically
@@ -63,7 +76,7 @@ export function ProfilePrompt() {
         profileName={profileName}
         defaultProfileNames={defaultProfileNames}
         setProfileName={setProfileName}
-        handleUpdate={handleUpdate}
+        handleUpdate={handleCreate}
       />
     );
   }

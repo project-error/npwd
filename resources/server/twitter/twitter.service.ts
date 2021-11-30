@@ -5,7 +5,6 @@ import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
 import { getDefaultProfileNames } from '../players/player.utils';
-import { kMaxLength } from 'buffer';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
