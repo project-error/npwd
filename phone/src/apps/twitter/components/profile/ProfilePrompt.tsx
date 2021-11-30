@@ -35,26 +35,10 @@ export function ProfilePrompt() {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
 
-  const showDefaultProfileNames = !profile || !ResourceConfig.twitter.allowEditableProfileName;
+  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName;
 
   const handleCreate = async () => {
     fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.CREATE_PROFILE, {
-      profile_name: profileName,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: 'Failed to update profile',
-          type: 'error',
-        });
-      }
-
-      setTwitterProfile(resp.data);
-    });
-  };
-
-  const handleUpdate = async () => {
-    fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.UPDATE_PROFILE, {
-      ...profile,
       profile_name: profileName,
     }).then((resp) => {
       if (resp.status !== 'ok') {
@@ -91,7 +75,7 @@ export function ProfilePrompt() {
         handleChange={setProfileName}
         allowChange
       />
-      <ProfileUpdateButton handleClick={handleUpdate} />
+      <ProfileUpdateButton handleClick={handleCreate} />
     </div>
   );
 }

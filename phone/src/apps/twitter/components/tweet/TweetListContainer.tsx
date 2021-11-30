@@ -7,6 +7,7 @@ import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { processTweet } from '../../utils/tweets';
 import { useTweetsState } from '../../hooks/state';
+import TweetSkeletonList from './TweetSkeletonList';
 
 export function TweetListContainer() {
   const { addAlert } = useSnackbar();
@@ -26,7 +27,11 @@ export function TweetListContainer() {
     });
   }, [addAlert, t, setTweets]);
 
-  return <TweetList tweets={tweets} />;
+  return (
+    <React.Suspense fallback={<TweetSkeletonList />}>
+      <TweetList tweets={tweets} />
+    </React.Suspense>
+  );
 }
 
 export default TweetListContainer;

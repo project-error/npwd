@@ -13,12 +13,9 @@ import { useTranslation } from 'react-i18next';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { CircularProgress } from '@mui/material';
 
-const MINIMUM_LOAD_TIME = 700;
-
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
-  const [minimumLoadPassed, setMimimumLoadPassed] = useState(false);
   const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(!!tweets);
+  const [hasMore, setHasMore] = useState<boolean>(!!tweets.length);
 
   const { addAlert } = useSnackbar();
   const { t } = useTranslation();
@@ -47,19 +44,6 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
     );
   }, [page, updateTweets, addAlert, t]);
 
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      setMimimumLoadPassed(true);
-    }, MINIMUM_LOAD_TIME);
-    return () => window.clearTimeout(timeout);
-  }, []);
-
-  // we add a minimum (but short) load time here so that
-  // there isn't a quick flash of loading and immediately
-  // another flash to the tweets screen.
-  const hasLoaded = tweets && minimumLoadPassed;
-
-  if (!hasLoaded) return <TweetSkeletonList />;
   return (
     <List>
       <InfiniteScroll

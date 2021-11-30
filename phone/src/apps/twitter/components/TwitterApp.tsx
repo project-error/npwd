@@ -59,11 +59,11 @@ export const TwitterApp = () => {
           {promptProfileName ? (
             <ProfilePrompt />
           ) : (
-            <React.Suspense fallback={<LoadingSpinner />}>
+            <>
               <Route path="/twitter" exact component={TweetListContainer} />
               <Route path="/twitter/search" component={TwitterSearch} />
               <Route path="/twitter/profile" component={TwitterProfile} />
-            </React.Suspense>
+            </>
           )}
         </AppContent>
         {showTweetButton && <TweetButton openModal={openModal} />}
