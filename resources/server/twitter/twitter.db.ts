@@ -47,7 +47,7 @@ export class _TwitterDB {
     const query = `
         SELECT ${SELECT_FIELDS}
         FROM (
-          SELECT * FROM npwd_twitter_tweets ORDER BY id DESC LIMIT ${TWEETS_PER_PAGE} OFFSET ${
+          SELECT * FROM npwd_twitter_tweets LIMIT ${TWEETS_PER_PAGE} OFFSET ${
       TWEETS_PER_PAGE * currPage
     }
         ) npwd_twitter_tweets
@@ -60,7 +60,7 @@ export class _TwitterDB {
                  LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
                  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
                                  ON retweets.identifier = retweets_profiles.identifier
-        WHERE npwd_twitter_tweets.visible = 1
+        WHERE npwd_twitter_tweets.visible = 1 ORDER BY id DESC
 		`;
     const [results] = await DbInterface._rawExec(query, [profileId, profileId]);
     const tweets = <Tweet[]>results;
