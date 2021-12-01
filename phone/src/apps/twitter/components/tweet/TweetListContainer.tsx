@@ -1,26 +1,37 @@
 import React, { useEffect } from 'react';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { useTweets } from '../../hooks/useTweets';
-import { useTwitterNotifications } from '../../hooks/useTwitterNotifications';
 import TweetList from './TweetList';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { Tweet, TwitterEvents } from '../../../../../../typings/twitter';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
+import { processTweet } from '../../utils/tweets';
+import { useTweetsState } from '../../hooks/state';
+import TweetSkeletonList from './TweetSkeletonList';
 
 export function TweetListContainer() {
-  const Nui = useNuiRequest();
-  const { tweets } = useTweets();
-  const { setUnreadCount } = useTwitterNotifications();
+  const { addAlert } = useSnackbar();
+  const { t } = useTranslation();
+  const [tweets, setTweets] = useTweetsState();
 
   useEffect(() => {
-    Nui.send(TwitterEvents.FETCH_TWEETS, {});
-  }, [Nui]);
+    fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS, { pageId: 0 }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('APPS_TWITTER_FETCH_TWEETS_FAILED'),
+        });
+      }
 
-  useEffect(() => {
-    if (tweets?.length) {
-      setUnreadCount(0);
-    }
-  }, [setUnreadCount, tweets]);
+      setTweets(resp.data.map(processTweet));
+    });
+  }, [addAlert, t, setTweets]);
 
-  return <TweetList tweets={tweets} />;
+  return (
+    <React.Suspense fallback={<TweetSkeletonList />}>
+      <TweetList tweets={tweets} />
+    </React.Suspense>
+  );
 }
 
 export default TweetListContainer;

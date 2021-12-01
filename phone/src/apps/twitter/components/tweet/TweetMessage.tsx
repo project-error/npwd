@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useCallback, useRef } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const TweetMessage = ({ modalVisible, message, handleChange }) => {
+export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
@@ -29,21 +29,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
 
   useEffect(() => {
     textFieldInputRef.current && textFieldInputRef.current.focus();
-    // we pass in modalVisible to this component so that we can
-    // intelligently decide when to focus the input field.
   }, [modalVisible]);
-
-  const _handleChange = useCallback(
-    (e) => {
-      // when the user types scroll the text field to the bottom
-      // so that we always have the latest line and error message
-      // in view
-      e.preventDefault();
-      textFieldInputRef.current.scrollTop = textFieldInputRef.current.scrollHeight;
-      handleChange(e.target.value);
-    },
-    [handleChange],
-  );
 
   if (!ResourceConfig) return null;
 
@@ -65,18 +51,25 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
     errorMessage = newLineWarningPrompt;
   }
 
+  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (overNewLineLimit) return;
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      onEnter();
+    }
+  };
   return (
     <TextField
       value={message}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
-      onChange={_handleChange}
+      onChange={(e) => handleChange(e.currentTarget.value)}
+      onKeyPress={handleOnEnter}
       multiline
       placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-      // ref={textFieldRef}
     />
   );
 };

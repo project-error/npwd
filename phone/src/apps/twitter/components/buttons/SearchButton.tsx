@@ -6,8 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
-    bottom: '15px',
-    right: '15px',
+    bottom: '75px',
+    right: '10px',
   },
 }));
 

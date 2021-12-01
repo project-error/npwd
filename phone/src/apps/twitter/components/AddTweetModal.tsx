@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { v4 as uuidv4 } from 'uuid';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import Modal from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { isImageValid } from '../../../common/utils/isImageValid';
@@ -15,6 +14,11 @@ import IconButtons from './buttons/IconButtons';
 import { usePhone } from '../../../os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
 import { NewTweet, TwitterEvents } from '../../../../../typings/twitter';
+import { fetchNui } from '../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../typings/common';
+import { useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
+import { promiseTimeout } from '../../../utils/promiseTimeout';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,10 +54,11 @@ interface Image {
 }
 
 export const AddTweetModal = () => {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
+  const { t } = useTranslation();
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
@@ -76,7 +81,7 @@ export const AddTweetModal = () => {
     setModalVisible(false);
   };
 
-  const handleimageChange = useCallback((link) => setLink(link), []);
+  const handleImageChange = useCallback((link) => setLink(link), []);
 
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
@@ -87,7 +92,8 @@ export const AddTweetModal = () => {
     if (getNewLineCount(message) < newLineLimit) return true;
   };
 
-  const submitTweet = () => {
+  const submitTweet = async () => {
+    await promiseTimeout(200);
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
     if (!isValidMessage(cleanedMessage)) return;
@@ -98,7 +104,16 @@ export const AddTweetModal = () => {
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
     };
-    Nui.send(TwitterEvents.CREATE_TWEET, data);
+
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.CREATE_TWEET, data).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('APPS_TWITTER_CREATE_FAILED'),
+        });
+      }
+    });
+
     _handleClose();
   };
 
@@ -148,10 +163,11 @@ export const AddTweetModal = () => {
     <Modal visible={modalVisible} handleClose={_handleClose}>
       <TweetMessage
         modalVisible={modalVisible}
+        onEnter={submitTweet}
         message={message}
         handleChange={handleMessageChange}
       />
-      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleimageChange} />
+      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleImageChange} />
       <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
       <ImageDisplay
         visible={!showEmoji && images.length > 0}

@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
-import { Picker } from 'emoji-mart';
+import data from 'emoji-mart/data/google.json';
+
+import { NimblePicker } from 'emoji-mart';
 import { useTheme } from '@mui/material';
 
 export const EmojiSelect = ({ visible, onEmojiClick }) => {
@@ -8,7 +10,13 @@ export const EmojiSelect = ({ visible, onEmojiClick }) => {
   if (!visible) return null;
 
   return (
-    <Picker onClick={onEmojiClick} set="google" theme={theme.palette.mode} showPreview={false} />
+    <NimblePicker
+      data={data}
+      onClick={onEmojiClick}
+      set="google"
+      theme={theme.palette.mode}
+      showPreview={false}
+    />
   );
 };
 

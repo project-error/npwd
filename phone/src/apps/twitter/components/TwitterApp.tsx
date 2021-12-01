@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { AppWrapper } from '../../../ui/components';
@@ -58,11 +58,11 @@ export const TwitterApp = () => {
           {promptProfileName ? (
             <ProfilePrompt />
           ) : (
-            <Switch>
+            <>
               <Route path="/twitter" exact component={TweetListContainer} />
               <Route path="/twitter/search" component={TwitterSearch} />
               <Route path="/twitter/profile" component={TwitterProfile} />
-            </Switch>
+            </>
           )}
         </AppContent>
         {showTweetButton && <TweetButton openModal={openModal} />}

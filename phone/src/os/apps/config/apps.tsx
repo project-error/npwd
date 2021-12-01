@@ -5,7 +5,6 @@ import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
 import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
@@ -35,6 +34,7 @@ import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
+import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 
 export interface IAppConfig {
   id: string;
@@ -135,7 +135,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} emitOnOpen={true} />,
+    Route: () => (
+      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
+    ),
   },
   {
     id: 'MARKETPLACE',

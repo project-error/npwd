@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
-import { SelectChangeEvent } from '@mui/material';
+import { MenuItem, SelectChangeEvent } from '@mui/material';
 
 interface DefaultProfilePromptProps {
   handleUpdate: () => void;
@@ -55,11 +55,10 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
             id: 'profile-name',
           }}
         >
-          <option value="" />
           {defaultProfileNames.map((name) => (
-            <option key={name} value={name}>
+            <MenuItem key={name} value={name}>
               {name}
-            </option>
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
