@@ -40,7 +40,6 @@ export class CallService {
       return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
 
     this.openCallModal(true);
-    animationService.startPhoneCall();
 
     SendNUIMessage({
       app: 'CALL',
