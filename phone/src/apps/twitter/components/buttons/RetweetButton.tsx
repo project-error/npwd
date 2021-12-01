@@ -5,8 +5,8 @@ import { Repeat } from '@mui/icons-material';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 interface IProps {
   tweetId: number;

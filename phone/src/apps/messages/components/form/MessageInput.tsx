@@ -7,7 +7,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import { Message, MessageEvents } from '../../../../../../typings/messages';
 import { TextField } from '../../../../ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useMessageActions } from '../../hooks/useMessageActions';
 

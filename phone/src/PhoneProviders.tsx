@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
 import { usePhoneTheme } from './os/phone/hooks/usePhoneTheme';
-import SnackbarProvider from './ui/providers/SnackbarProvider';
+import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
 import Phone from './Phone';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from './os/sound/providers/SoundProvider';

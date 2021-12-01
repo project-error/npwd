@@ -80,8 +80,8 @@ export function createGroupHashID(participants: string[]) {
  * avoid situations where some participants get added to the group but
  * one fails resulting in a partial group which would be very confusing
  * to the player.
- * @param userIdentifier - user who is creating the group
- * @param phoneNumber - list of phone numbers to add to the grup
+ * @param sourceIdentifier - user who is creating the group
+ * @param tgtPhoneNumber - list of phone numbers to add to the grup
  */
 export async function createMessageGroupsFromPhoneNumber(
   sourceIdentifier: string,

@@ -3,11 +3,11 @@ import TweetList from './TweetList';
 import { Tweet, TwitterEvents } from '../../../../../../typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { processTweet } from '../../utils/tweets';
 import { useTweetsState } from '../../hooks/state';
 import TweetSkeletonList from './TweetSkeletonList';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 
 export function TweetListContainer() {
   const { addAlert } = useSnackbar();

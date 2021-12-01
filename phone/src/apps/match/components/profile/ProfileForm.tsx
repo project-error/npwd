@@ -14,7 +14,7 @@ import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import PageText from '../PageText';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';
 
 const useStyles = makeStyles({
