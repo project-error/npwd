@@ -1,10 +1,7 @@
 import { pool } from './pool';
 import { mainLogger } from '../sv_logger';
-import { ResultSetHeader } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { config } from '../server';
-import { withProfile } from '../utils/withProfile';
-
-const RESOURCE_NAME = GetCurrentResourceName();
 
 // Replicates ghmattimysql API
 class _DbInterface {
@@ -12,10 +9,19 @@ class _DbInterface {
 
   private async _internalQuery(query: string, values?: unknown) {
     try {
-      if (config.database.profileQueries) return await withProfile(pool.execute, query, values);
+      const conn = await pool.getConnection();
 
-      ScheduleResourceTick(RESOURCE_NAME);
-      return await pool.query(query, values);
+      if (config.database.profileQueries) {
+        const startTime = process.hrtime();
+        const result = await conn.execute(query, values);
+        this.logger.info(
+          `${query} (${values}) execution time: ${process.hrtime(startTime)[1] / 1000000}ms`,
+        );
+        return result;
+      }
+
+      conn.release();
+      return await pool.execute(query, values);
     } catch (e) {
       this.logger.error(`Error executing ${query} with error message ${e.message}`);
     }
@@ -28,7 +34,6 @@ class _DbInterface {
    * @deprecated
    */
   public _rawExec(query: string, values?: unknown) {
-    ScheduleResourceTick(RESOURCE_NAME);
     return pool.query(query, values);
   }
 
@@ -38,8 +43,8 @@ class _DbInterface {
    * @param values Variable definition
    **/
   public async exec(query: string, values?: unknown) {
-    const [res] = await this._internalQuery(query, values);
-    return (<ResultSetHeader>res).affectedRows;
+    const [res] = (await this._internalQuery(query, values)) as ResultSetHeader[];
+    return res.affectedRows;
   }
 
   /**
@@ -48,18 +53,17 @@ class _DbInterface {
    * @param values Variable definition
    **/
   public async insert(query: string, values?: unknown) {
-    const [res] = await this._internalQuery(query, values);
-    return (<ResultSetHeader>res).insertId;
+    const [res] = (await this._internalQuery(query, values)) as ResultSetHeader[];
+    return res.insertId;
   }
 
   /**
    * Will exec and return results
    * @todo Type safety can be improved
    */
-  public async fetch<T = unknown>(query: string, values?: unknown): Promise<T> {
-    const [res] = await this._internalQuery(query, values);
-    const castRes = <unknown>res;
-    return <T>castRes;
+  public async fetch(query: string, values?: unknown) {
+    const [res] = (await this._internalQuery(query, values)) as RowDataPacket[];
+    return res;
   }
 }
 const DbInterface = new _DbInterface();
