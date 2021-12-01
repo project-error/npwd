@@ -11,9 +11,8 @@ export enum PhoneEvents {
   SET_TIME = 'npwd:setGameTime',
   SEND_CREDENTIALS = 'npwd:sendCredentials',
   FETCH_CREDENTIALS = 'npwd:getCredentials',
-  ON_INIT = 'npwd:onInit',
   TOGGLE_KEYS = 'npwd:toggleAllControls',
-  PLAYER_LOADED = 'npwd:playerLoaded',
+  SET_PLAYER_LOADED = 'npwd:setPlayerLoaded',
 }
 
 // Used to standardize the server response

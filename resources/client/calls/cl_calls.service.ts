@@ -2,7 +2,7 @@ import { IAlertProps } from '../../../typings/alerts';
 import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
 import { animationService } from '../animations/animation.controller';
 
-const exp = (global as any).exports;
+const exp = global.exports;
 
 export class CallService {
   private currentCall: number;
