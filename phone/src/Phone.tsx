@@ -17,12 +17,10 @@ import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSet
 import { useCallService } from './os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from './os/snackbar/hooks/useSnackbar';
 import { PhoneEvents } from '../../typings/phone';
 import { useKeyboardService } from './os/keyboard/hooks/useKeyboardService';
 import PhoneWrapper from './PhoneWrapper';
@@ -33,6 +31,8 @@ import { TopLevelErrorComponent } from './ui/components/TopLevelErrorComponent';
 import { useConfig } from './os/phone/hooks/useConfig';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
+import { useSnackbar } from './os/snackbar/hooks/useSnackbar';
+import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 
 function Phone() {
   const { t, i18n } = useTranslation();
