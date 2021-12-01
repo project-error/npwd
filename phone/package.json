@@ -31,7 +31,7 @@
     "recoil": "^0.4.1"
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.1",
+    "@craco/craco": "^6.1.1",
     "@sentry/integrations": "^6.15.0",
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
