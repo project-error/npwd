@@ -41,13 +41,6 @@ const getCurrentGameTime = () => {
   return `${hour}:${minute}`;
 };
 
-// Register an event to update the state of isPlayerLoaded
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.SET_PLAYER_LOADED, async (state: boolean) => {
-    (global as any).isPlayerLoaded = state;
-  });
-}
-
 /* * * * * * * * * * * * *
  *
  *  Phone Visibility Handling
