@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState, memo } from 'react';
+import React, { useCallback, useState, memo } from 'react';
 
 import { List } from '../../../../ui/components/List';
 import Tweet from './Tweet';
-import TweetSkeletonList from './TweetSkeletonList';
 import { FormattedTweet, Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchNui } from '../../../../utils/fetchNui';
