@@ -17,6 +17,8 @@ class _PhotoService {
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
     try {
+      if (!reqObj.data) resp({ status: 'error', errorMsg: 'DB_ERROR' });
+
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
 
