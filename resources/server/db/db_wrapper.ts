@@ -20,8 +20,9 @@ class _DbInterface {
         return result;
       }
 
+      const result = await conn.execute(query, values);
       conn.release();
-      return await pool.execute(query, values);
+      return result;
     } catch (e) {
       this.logger.error(`Error executing ${query} with error message ${e.message}`);
     }
