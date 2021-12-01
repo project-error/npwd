@@ -83,6 +83,14 @@ export const messageState = {
     key: 'selectedMessage',
     default: null,
   }),
+  checkedConversations: atom<string[]>({
+    key: 'checkedConversation',
+    default: [],
+  }),
+  isEditing: atom<boolean>({
+    key: 'messageIsEditing',
+    default: false,
+  }),
 };
 
 export const useMessageConversationsValue = () => useRecoilValue(messageState.messageCoversations);
@@ -107,3 +115,9 @@ export const useFilteredConversationsValue = () =>
 
 export const useSetSelectedMessage = () => useSetRecoilState(messageState.selectedMessage);
 export const useSelectedMessageValue = () => useRecoilValue(messageState.selectedMessage);
+
+export const useCheckedConversations = () => useRecoilState(messageState.checkedConversations);
+export const useCheckedConversationsValue = () => useRecoilValue(messageState.checkedConversations);
+
+export const useIsEditing = () => useRecoilState(messageState.isEditing);
+export const useIsEditingValue = () => useRecoilValue(messageState.isEditing);

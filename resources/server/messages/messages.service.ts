@@ -161,11 +161,15 @@ class _MessagesService {
   }
 
   async handleDeleteConversation(
-    reqObj: PromiseRequest<{ conversationId: string }>,
+    reqObj: PromiseRequest<{ conversationsId: string[] }>,
     resp: PromiseEventResp<void>,
   ) {
     try {
-      await this.messagesDB.deleteConversation(reqObj.data.conversationId);
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+
+      for (const id of reqObj.data.conversationsId) {
+        await this.messagesDB.deleteConversation(id, identifier);
+      }
       resp({ status: 'ok' });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });

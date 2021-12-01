@@ -159,11 +159,11 @@ export class _MessagesDB {
     await DbInterface._rawExec(query, [groupId, identifier]);
   }
 
-  async deleteConversation(conversationId: string) {
+  async deleteConversation(conversationId: string, identifier: string) {
     const query = `DELETE
                    FROM npwd_messages_conversations
-                   WHERE conversation_id = ?`;
-    await DbInterface._rawExec(query, [conversationId]);
+                   WHERE conversation_id = ? AND participant_identifier = ?`;
+    await DbInterface._rawExec(query, [conversationId, identifier]);
   }
 
   async deleteMessage(message: Message) {

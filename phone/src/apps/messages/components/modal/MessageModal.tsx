@@ -131,9 +131,8 @@ export const MessageModal = () => {
   };
 
   const handleDeleteConversation = () => {
-    console.log('convo id', groupId);
     fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
-      conversationId: groupId,
+      conversationsId: [groupId],
     }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
@@ -143,7 +142,7 @@ export const MessageModal = () => {
       }
 
       history.push('/messages');
-      removeConversation(groupId);
+      removeConversation([groupId]);
     });
   };
 
