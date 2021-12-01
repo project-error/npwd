@@ -33,7 +33,7 @@ export const DialerHistory: React.FC = () => {
   const calls = useDialHistory();
   const classes = useStyles();
   const history = useHistory();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleCall = (phoneNumber) => {
     initializeCall(phoneNumber);

@@ -17,7 +17,7 @@ export const PictureReveal: React.FC = ({ children }) => {
   const [settings] = useSettings();
   const [covered, setCovered] = useState<boolean>(false);
   const [ready, setReady] = useState<boolean>(false);
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles({ covered });
 
   useEffect(() => {

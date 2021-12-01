@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 export const ImagePrompt = ({ visible, value, handleChange }) => {
   const textFieldRef = useRef(null);
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles();
 
   useEffect(() => {

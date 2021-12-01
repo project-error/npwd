@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function NoProfiles() {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   return (
     <Box className={classes.root}>
       <Typography variant="h5">{t('APPS_MATCH_NO_PROFILES')}</Typography>

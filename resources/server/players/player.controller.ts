@@ -29,11 +29,11 @@ if (!config.general.enableMultiChar) {
 }
 
 // Handle removing from player maps when player disconnects
-on('playerDropped', () => {
+on('playerDropped', async () => {
   const src = getSource();
   // Get identifier for player to remove
   try {
-    PlayerService.handleUnloadPlayerEvent(src);
+    await PlayerService.handleUnloadPlayerEvent(src);
   } catch (e) {
     playerLogger.debug(`${src} failed to unload, likely was never loaded in the first place.`);
   }
@@ -73,7 +73,7 @@ if (config.general.enableMultiChar) {
     playerLogger.debug('Receive newPlayer event, data:');
     playerLogger.debug(playerDTO);
     await PlayerService.handleNewPlayerEvent(playerDTO);
-    emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true)
+    emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true);
   });
 
   on('npwd:unloadPlayer', (src: number) => {
@@ -82,6 +82,6 @@ if (config.general.enableMultiChar) {
     }
     playerLogger.debug(`Received unloadPlayer event for ${src}`);
     PlayerService.handleUnloadPlayerEvent(src);
-    emitNet(PhoneEvents.PLAYER_LOADED, src, false)
+    emitNet(PhoneEvents.PLAYER_LOADED, src, false);
   });
 }

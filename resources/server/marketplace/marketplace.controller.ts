@@ -46,3 +46,11 @@ onNetPromise<MarketplaceReportDTO>(MarketplaceEvents.REPORT_LISTING, async (reqO
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });
+
+on(MarketplaceEvents.DELETE_LISTINGS_ON_DROP, (identifier: string) => {
+  MarketplaceService.handleDeleteListingsOnDrop(identifier).catch((e) => {
+    marketplaceLogger.error(
+      `Error occurred when deleting listing on player drop event, Error: ${e.message}`,
+    );
+  });
+});

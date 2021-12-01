@@ -31,7 +31,7 @@ const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_im
 
 const Profile = ({ profile }: IProps) => {
   const c = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   function parseSecondaryBio(): string | undefined {
     const { location, job } = profile;

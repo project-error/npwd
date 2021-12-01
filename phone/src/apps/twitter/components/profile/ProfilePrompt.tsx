@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
-import { twitterState } from '../../hooks/state';
+import { twitterState, useSetTwitterProfile } from '../../hooks/state';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { Profile, TwitterEvents } from '../../../../../../typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,23 +26,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function ProfilePrompt() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { profile } = useProfile();
+  const setTwitterProfile = useSetTwitterProfile();
   const defaultProfileNames = useRecoilValue(twitterState.defaultProfileNames);
   const [profileName, setProfileName] = useState(profile?.profile_name || '');
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
 
-  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName && !profile;
-  const eventName = showDefaultProfileNames
-    ? TwitterEvents.CREATE_PROFILE
-    : TwitterEvents.UPDATE_PROFILE;
+  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName;
 
-  const handleUpdate = () => {
-    Nui.send(eventName, {
-      ...profile,
+  const handleCreate = async () => {
+    fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.CREATE_PROFILE, {
       profile_name: profileName,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: 'Failed to update profile',
+          type: 'error',
+        });
+      }
+
+      setTwitterProfile(resp.data);
     });
   };
 
@@ -52,7 +60,7 @@ export function ProfilePrompt() {
         profileName={profileName}
         defaultProfileNames={defaultProfileNames}
         setProfileName={setProfileName}
-        handleUpdate={handleUpdate}
+        handleUpdate={handleCreate}
       />
     );
   }
@@ -67,7 +75,7 @@ export function ProfilePrompt() {
         handleChange={setProfileName}
         allowChange
       />
-      <ProfileUpdateButton handleClick={handleUpdate} />
+      <ProfileUpdateButton handleClick={handleCreate} />
     </div>
   );
 }

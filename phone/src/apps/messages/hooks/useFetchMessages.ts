@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../typings/common';
 import { Message, MessageEvents } from '../../../../../typings/messages';
-import { useConversationId, useSetMessages } from './state';
+import { useConversationId } from './state';
 
 function useFetchMessages(page) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -10,7 +10,6 @@ function useFetchMessages(page) {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(null);
   const conversationId = useConversationId();
-  
 
   const getMessages = useCallback(async () => {
     try {
@@ -28,7 +27,7 @@ function useFetchMessages(page) {
 
       setLoading(false);
     } catch (e) {
-      setError(e);
+      setError(true);
     }
   }, [page, conversationId]);
 

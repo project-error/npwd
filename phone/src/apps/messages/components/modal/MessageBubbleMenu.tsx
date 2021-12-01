@@ -15,7 +15,7 @@ interface MessageBubbleMenuProps {
 }
 
 const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose }) => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { deleteMessage } = useMessageActions();
   const { addAlert } = useSnackbar();
   const selectedMessage = useSelectedMessageValue();

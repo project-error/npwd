@@ -6,6 +6,7 @@ import Collection from '@discordjs/collection';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
+import MarketplaceService from '../marketplace/marketplace.service';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
@@ -138,7 +139,7 @@ class _PlayerService {
   async createNewPlayer({
     src,
     identifier,
-    phoneNumber
+    phoneNumber,
   }: {
     src: number;
     identifier: string;
@@ -165,8 +166,18 @@ class _PlayerService {
    * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
    *
    */
-  async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
-    const player = await this.createNewPlayer({ src, identifier: identifier.toString(), phoneNumber });
+  async handleNewPlayerEvent({
+    source: src,
+    identifier,
+    phoneNumber,
+    firstname,
+    lastname,
+  }: PlayerAddData) {
+    const player = await this.createNewPlayer({
+      src,
+      identifier: identifier.toString(),
+      phoneNumber,
+    });
 
     if (firstname) player.setFirstName(firstname);
     if (lastname) player.setLastName(lastname);
@@ -196,10 +207,24 @@ class _PlayerService {
   }
 
   /**
+   * Clear all data from the database we don't want to stored after the player as disconnected.
+   */
+  async clearPlayerData(src: number) {
+    const identifier = this.getIdentifier(src);
+    try {
+      await MarketplaceService.handleDeleteListingsOnDrop(identifier);
+    } catch (e) {
+      playerLogger.error(`Failed to clear player data when dropped, Error: ${e.message}`);
+    }
+  }
+
+  /**
    * Unload event handler
    * @param src - Source of player being unloaded
    **/
-  handleUnloadPlayerEvent(src: number) {
+  async handleUnloadPlayerEvent(src: number) {
+    await this.clearPlayerData(src);
+
     this.deletePlayerFromMaps(src);
 
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);

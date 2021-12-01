@@ -1,4 +1,3 @@
-import { Server } from 'esx.js';
 import { ResourceConfig } from '../../typings/config';
 import { RewriteFrames } from '@sentry/integrations';
 // Setup and export config loaded at runtime
@@ -17,7 +16,6 @@ import './messages/messages.controller';
 import './marketplace/marketplace.controller';
 import './twitter/twitter.controller';
 import './match/match.controller';
-import './bank/bank.controller';
 
 // setup exports
 import './bridge/sv_exports';
@@ -37,10 +35,6 @@ if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
     tracesSampleRate: 1.0,
   });
 }
-
-export let ESX: Server = null;
-
-emit('esx:getSharedObject', (obj: Server) => (ESX = obj));
 
 on('onServerResourceStart', (resource: string) => {
   if (resource === GetCurrentResourceName()) {

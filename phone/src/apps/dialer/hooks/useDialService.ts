@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export const useDialService = () => {
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleAddAlert = ({ message, type }: IAlert) => {
     addAlert({

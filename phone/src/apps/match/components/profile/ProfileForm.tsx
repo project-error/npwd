@@ -43,7 +43,7 @@ interface IProps {
 
 export function ProfileForm({ profile, showPreview }: IProps) {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const setMyProfile = useSetMyProfile();
@@ -95,7 +95,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     });
   };
 
-  if (!profile /* && !ResourceConfig.match.allowEditableProfileName*/) {
+  if (!profile && !ResourceConfig.match.allowEditableProfileName) {
     return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
   }
 

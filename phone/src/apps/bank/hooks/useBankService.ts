@@ -13,10 +13,11 @@ export const useBankService = () => {
   const setCredentials = useSetRecoilState(bankState.bankCredentials);
   const setNotification = useSetRecoilState(bankState.notification);
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleAddAlert = ({ message, type }: IAlert) => {
     addAlert({
+      // @ts-ignore
       message: t(`APPS_${message}`),
       type,
     });

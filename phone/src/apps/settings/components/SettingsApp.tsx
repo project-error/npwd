@@ -61,7 +61,7 @@ export const SettingsApp = () => {
   const [config] = usePhoneConfig();
   const myNumber = useMyPhoneNumber();
   const [settings, setSettings] = useSettings();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
 
   const { addAlert } = useSnackbar();

@@ -52,7 +52,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
   icon,
   notification,
 }) => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles({
     backgroundColor: backgroundColor || green[50],
     color: color || green[400],

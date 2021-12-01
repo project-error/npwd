@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 function MatchList() {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { matches, error } = useMatches();
 
   if (error) return <PageText text={t('APPS_MATCH_MATCHES_ERROR')} />;

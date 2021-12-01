@@ -10,7 +10,7 @@ export const useMatchActions = () => {
   const setProfiles = useSetFormattedProfiles();
   const setMatches = useSetMatches();
   const { addAlert } = useSnackbar();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const setViewed = useCallback(
     (id: number, liked: boolean) => {

@@ -165,7 +165,7 @@
       "value": "default.png"
     },
     "theme": {
-      "label": "Taso Dark",
+      "label": "Dark",
       "value": "taso-dark"
     },
     "zoom": {
@@ -215,20 +215,12 @@
   ],
   "themes": [
     {
-      "label": "Taso Dark",
+      "label": "Dark",
       "value": "taso-dark"
     },
     {
-      "label": "Default Dark",
-      "value": "default-dark"
-    },
-    {
-      "label": "Default Light",
+      "label": "Light",
       "value": "default-light"
-    },
-    {
-      "label": "Kiddo Dark",
-      "value": "kiddo-dark"
     }
   ],
   "debug": {

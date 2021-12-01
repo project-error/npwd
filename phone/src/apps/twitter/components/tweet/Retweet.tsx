@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Retweet({ profileName }: IProps) {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const classes = useStyles();
   return (
     <div className={classes.root}>

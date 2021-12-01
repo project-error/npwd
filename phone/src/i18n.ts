@@ -8,11 +8,12 @@ import sv from './locale/sv.json';
 import no from './locale/no.json';
 import tr from './locale/tr.json';
 import ptbr from './locale/ptbr.json';
-import hu from "./locale/hu.json"
+import hu from './locale/hu.json';
 import pt from './locale/pt.json';
-import config from './config/default.json';
 
-const resources = {
+export const defaultNS = 'ns1';
+
+export const resources = {
   en,
   es,
   fr,
@@ -22,22 +23,15 @@ const resources = {
   tr,
   ptbr,
   pt,
-  hu
-};
+  hu,
+} as const;
 
-i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources,
-    lng: config.defaultLanguage,
-    react: {
-      bindI18n: 'languageChanged',
-    },
-    keySeparator: '.', // we do not use keys in form messages.welcome
-
-    interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
-  });
+i18n.use(initReactI18next).init({
+  lng: 'en',
+  interpolation: {
+    escapeValue: false, // not needed for react as it escapes by default
+  },
+  resources,
+});
 
 export default i18n;

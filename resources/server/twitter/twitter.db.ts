@@ -27,6 +27,8 @@ const SELECT_FIELDS = `
   TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
 `;
 
+const TWEETS_PER_PAGE = 25;
+
 const formatTweets =
   (profileId: number) =>
   (tweet: Tweet): Tweet => ({
@@ -40,11 +42,14 @@ export class _TwitterDB {
    * Retrieve the latest 50 tweets
    * @param profileId - twitter profile id of the player
    */
-  async fetchAllTweets(profileId: number): Promise<Tweet[]> {
+  async fetchAllTweets(profileId: number, currPage: number): Promise<Tweet[]> {
+    currPage = typeof currPage === 'number' ? currPage : 1; // avoid sql injection without prepared query
     const query = `
         SELECT ${SELECT_FIELDS}
         FROM (
-          SELECT * FROM npwd_twitter_tweets ORDER BY id DESC LIMIT 50
+          SELECT * FROM npwd_twitter_tweets LIMIT ${TWEETS_PER_PAGE} OFFSET ${
+      TWEETS_PER_PAGE * currPage
+    }
         ) npwd_twitter_tweets
                  LEFT OUTER JOIN npwd_twitter_profiles
                                  ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
@@ -55,7 +60,7 @@ export class _TwitterDB {
                  LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
                  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
                                  ON retweets.identifier = retweets_profiles.identifier
-        WHERE npwd_twitter_tweets.visible = 1
+        WHERE npwd_twitter_tweets.visible = 1 ORDER BY id DESC
 		`;
     const [results] = await DbInterface._rawExec(query, [profileId, profileId]);
     const tweets = <Tweet[]>results;
@@ -84,7 +89,7 @@ export class _TwitterDB {
                                  ON retweets.identifier = retweets_profiles.identifier
         WHERE npwd_twitter_tweets.visible = 1
           AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
-        ORDER BY npwd_twitter_tweets.id DESC LIMIT 100
+        ORDER BY npwd_twitter_tweets.id DESC LIMIT 25
 		`;
     const [results] = await DbInterface._rawExec(query, [
       profileId,
@@ -213,7 +218,7 @@ export class _TwitterDB {
     return profile || (await this.createDefaultProfile(identifier));
   }
 
-  async updateProfile(identifier: string, profile: Profile) {
+  async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
     const { avatar_url, profile_name, bio, location, job } = profile;
     const query = `
         UPDATE npwd_twitter_profiles
@@ -225,6 +230,8 @@ export class _TwitterDB {
         WHERE identifier = ?
 		`;
     await pool.execute(query, [avatar_url, profile_name, bio, location, job, identifier]);
+
+    return profile;
   }
 
   /**

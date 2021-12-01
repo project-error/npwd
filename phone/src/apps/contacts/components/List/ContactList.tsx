@@ -50,7 +50,18 @@ export const ContactList: React.FC = () => {
                 <MuiAvatar>{contact.display.slice(0, 1).toUpperCase()}</MuiAvatar>
               )}
             </ListItemAvatar>
-            <ListItemText primary={contact.display} secondary={contact.number} />
+            <ListItemText
+              primary={contact.display}
+              secondary={contact.number}
+              primaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              secondaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            />
             <Button onClick={() => startCall(contact.number)}>
               <PhoneIcon />
             </Button>

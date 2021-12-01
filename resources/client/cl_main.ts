@@ -21,7 +21,7 @@ const exps = global.exports;
  *
  * * * * * * * * * * * * */
 function fetchOnInitialize() {
-  emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
+  //emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
 }
 
 onNet(PhoneEvents.ON_INIT, () => {

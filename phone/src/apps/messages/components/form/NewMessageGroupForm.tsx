@@ -12,15 +12,17 @@ import { useContactsValue } from '../../../contacts/hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '../../../../../../typings/common';
 import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageConversationsValue } from '../../hooks/state';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   const [participant, setParticipant] = useState<any>('');
   const { getDisplayByNumber, getPictureByNumber, getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
   const { updateConversations } = useMessageActions();
+  const messageConversations = useMessageConversationsValue();
 
   useEffect(() => {
     if (phoneNumber) {
@@ -29,6 +31,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     }
   }, [phoneNumber, getContactByNumber]);
 
+  // TODO: Abstract functionality
   const handleSubmit = useCallback(() => {
     // handles phone numbers in a csv format and strips all spaces and
     // external characters out of them:
@@ -49,6 +52,15 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           });
         }
 
+        const doesConversationExist = messageConversations.find(
+          (c) => c.conversation_id === resp.data.conversation_id,
+        );
+        if (doesConversationExist)
+          return addAlert({
+            message: 'This conversation does already exist',
+            type: 'error',
+          });
+
         const display = getDisplayByNumber(resp.data.phoneNumber);
         const avatar = getPictureByNumber(resp.data.phoneNumber);
 
@@ -67,6 +79,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   }, [
     history,
     participant,
+    messageConversations,
     addAlert,
     t,
     updateConversations,

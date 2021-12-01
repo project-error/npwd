@@ -21,7 +21,7 @@ interface ErrorDialogCompProps {
 }
 
 const ErrorDialogComp: React.FC<ErrorDialogCompProps> = ({ isOpen, errorMsg }) => {
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   const handleReloadClick = () => window.location.reload();
 

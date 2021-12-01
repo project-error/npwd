@@ -70,7 +70,7 @@ export const Calculator: React.FC = () => {
     });
   };
 
-  const { t } = useTranslation();
+  const [t] = useTranslation();
 
   return (
     <Box display="flex" flexDirection="column">

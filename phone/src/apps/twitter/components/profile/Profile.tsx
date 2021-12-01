@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useProfile } from '../../hooks/useProfile';
 import Avatar from '../Avatar';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { usePhone } from '../../../../os/phone/hooks/usePhone';
 import { TwitterEvents } from '../../../../../../typings/twitter';
 import ProfileField from '../../../../ui/components/ProfileField';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: 'relative',
     width: '100%',
@@ -22,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Profile() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -47,7 +49,20 @@ export function Profile() {
       location,
       job,
     };
-    Nui.send(TwitterEvents.UPDATE_PROFILE, data);
+
+    fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t(''),
+          type: 'error',
+        });
+      }
+
+      addAlert({
+        message: t('TWITTER_EDIT_PROFILE_SUCCESS'),
+        type: 'success',
+      });
+    });
   };
 
   // fetching the config is an asynchronous call so defend against it

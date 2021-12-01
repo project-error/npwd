@@ -18,7 +18,7 @@ const NoteList = () => {
   const classes = useStyles();
   const notes = useNotesValue();
   const setNote = useSetSelectedNote();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const setModalVisible = useSetModalVisible();
 
   const handleNoteModal = (note: NoteItem) => {

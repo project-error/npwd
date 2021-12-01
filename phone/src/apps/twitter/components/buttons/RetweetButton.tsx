@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { CircularProgress, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { Repeat } from '@mui/icons-material';
 import { TwitterEvents } from '../../../../../../typings/twitter';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   tweetId: number;
@@ -20,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
 const LOADING_TIME = 1250;
 
 export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
-  const Nui = useNuiRequest();
   const [retweeted, setRetweeted] = useState(false);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
+  const { t } = useTranslation();
+  const { addAlert } = useSnackbar();
 
   const handleClick = () => {
     // don't allow someone to spam retweet
@@ -35,12 +39,22 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     // if someone is retweeting something that is itself a retweet
     // then we want to retweet the original post (if we haven't already)
     const idToRetweet = isRetweet ? retweetId : tweetId;
-    Nui.send(TwitterEvents.RETWEET, idToRetweet);
-    setLoading(true);
-    window.setTimeout(() => {
-      setRetweeted(true);
-      setLoading(false);
-    }, LOADING_TIME);
+
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.RETWEET, { tweetId: idToRetweet }).then(
+      (resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('APPS_TWITTER_RETWEET_FAILED'),
+            type: 'error',
+          });
+        }
+
+        window.setTimeout(() => {
+          setRetweeted(true);
+          setLoading(false);
+        }, LOADING_TIME);
+      },
+    );
   };
 
   if (loading) {

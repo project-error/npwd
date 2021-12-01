@@ -70,26 +70,28 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   ClearHelp(true);
   emit('npwd:disableControlActions', true);
   await animationService.closeCamera();
+  console.log('anim - closing camera');
 });
 
 const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
+  ClearHelp(true);
   await Delay(0);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
+  animationService.openPhone();
+  emit('npwd:disableControlActions', true);
   const resp = await takePhoto();
   await Delay(200);
   inCameraMode = false;
-  ClearHelp(true);
 
-  animationService.openPhone();
   return resp;
 };
 
 const handleCameraExit = async () => {
   ClearHelp(true);
-  animationService.closeCamera();
+  await animationService.closeCamera();
   emit('npwd:disableControlActions', true);
   DestroyMobilePhone();
   CellCamActivate(false, false);
@@ -112,15 +114,16 @@ const takePhoto = () =>
       {
         encoding: config.images.imageEncoding,
         headers: {
-          authorization: config.images.useAuthorization ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}` : undefined,
+          authorization: config.images.useAuthorization
+            ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`
+            : undefined,
           'content-type': config.images.contentType,
         },
       },
       async (data: any) => {
         try {
           let parsedData = JSON.parse(data);
-          for (const index of config.images.returnedDataIndexes)
-            parsedData = parsedData[index];
+          for (const index of config.images.returnedDataIndexes) parsedData = parsedData[index];
           const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
           res(resp);
         } catch (e) {

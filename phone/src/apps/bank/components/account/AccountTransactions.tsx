@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import { useTransactions } from '../../hooks/useTransactions';
@@ -14,7 +13,7 @@ export const AccountTransactions = (): any => {
   };
 
   const transactionList = useTransactions();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   return (
     <div id="account-section">
       <div className={classes.header}>

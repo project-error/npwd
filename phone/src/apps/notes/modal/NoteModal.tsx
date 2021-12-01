@@ -14,7 +14,7 @@ export const NoteModal: React.FC = () => {
   const classes = useStyles();
   const { addNewNote, deleteNote, updateNote } = useNotesAPI();
   const [modalVisible, setModalVisible] = useModalVisible();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [selectedNote, setSelectedNote] = useSelectedNote();
   const [noteTitle, setNoteTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');

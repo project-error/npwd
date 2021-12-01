@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 function ProfileEditor() {
   const { profile, noProfileExists } = useProfile();
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
   const [showPreview, setShowPreview] = useState(false);
 
   const toggleSwitch = () => {
@@ -33,7 +33,7 @@ function ProfileEditor() {
       <Box className={classes.switch}>
         <FormControlLabel
           control={<Switch checked={showPreview} onChange={toggleSwitch} />}
-          label={t('APPS_MATCH_EDIT_PROFILE_PREVIEW')}
+          label={t<string>('APPS_MATCH_EDIT_PROFILE_PREVIEW')}
         />
       </Box>
       <ProfileForm showPreview={showPreview} profile={profile} />
