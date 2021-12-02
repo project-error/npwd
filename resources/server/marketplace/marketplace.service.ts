@@ -118,7 +118,7 @@ class _MarketplaceService {
       const rListing = await this.marketplaceDB.getListing(reqObj.data.id);
       const reportExists = await this.marketplaceDB.doesReportExist(
         reqObj.data.id,
-        rListing.number,
+        rListing.name || rListing.username,
       );
 
       const reportingPlayer = GetPlayerName(reqObj.source.toString());
@@ -128,7 +128,7 @@ class _MarketplaceService {
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
       }
 
-      await this.marketplaceDB.reportListing(rListing.id, rListing.name);
+      await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
       await reportListingToDiscord(rListing, reportingPlayer);
     } catch (e) {
       marketplaceLogger.error(`Failed to report listing ${e.message}`, {
