@@ -31,6 +31,7 @@ const useStyles = makeStyles({
   conversationContainer: {
     zIndex: -1,
     display: 'flex',
+    flexGrow: 1,
     flexFlow: 'row wrap',
     flexDirection: 'column',
   },
