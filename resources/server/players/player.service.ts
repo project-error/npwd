@@ -7,6 +7,7 @@ import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
+import { Delay } from '../../utils/fivem';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
@@ -126,6 +127,14 @@ class _PlayerService {
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
+
+    // This is a stupid hack for development reloading
+    // Client handlers are experiencing a race condition where the event
+    // is sent out before the client handlers can load.
+    if (process.env.NODE_ENV === 'development') {
+      await Delay(100);
+    }
+
     emitNet(PhoneEvents.SET_PLAYER_LOADED, pSource, true);
   }
 
