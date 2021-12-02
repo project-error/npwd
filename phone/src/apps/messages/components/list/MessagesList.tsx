@@ -51,7 +51,7 @@ const MessagesList = (): any => {
 
   return (
     <Box display="flex" flexDirection="column">
-      {conversations.length && (
+      {!!conversations.length && (
         <Box position="absolute" top={10} right={3}>
           <IconButton onClick={toggleEdit}>
             <EditIcon />
