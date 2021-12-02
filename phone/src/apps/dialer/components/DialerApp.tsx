@@ -27,7 +27,9 @@ export const DialerApp: React.FC = () => {
                 <DialerHistory />
               </React.Suspense>
             </Route>
-            <Route path="/phone/contacts" component={ContactList} />
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <Route path="/phone/contacts" component={ContactList} />
+            </React.Suspense>
           </Switch>
         </AppContent>
         <DialerNavBar />

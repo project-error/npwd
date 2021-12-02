@@ -1,8 +1,8 @@
-import { contactsState } from './state';
+import { contactsState, useSetContacts } from './state';
 
 import { Contact } from '@typings/contact';
 import { useCallback } from 'react';
-import { useRecoilStateLoadable } from 'recoil';
+import { useRecoilCallback, useRecoilStateLoadable } from 'recoil';
 
 interface UseContactsValue {
   getDisplayByNumber: (number: string) => string;
@@ -15,84 +15,99 @@ interface UseContactsValue {
 }
 
 export const useContactActions = (): UseContactsValue => {
-  const [{ state, contents }, setContacts] = useRecoilStateLoadable(contactsState.contacts);
+  const setContacts = useSetContacts();
 
-  const getDisplayByNumber = useCallback(
-    (number: string) => {
-      if (state !== 'hasValue') return null;
+  const getDisplayByNumber = useRecoilCallback<[string], string>(
+    ({ snapshot }) =>
+      (number: string) => {
+        const { state, contents } = snapshot.getLoadable(contactsState.contacts);
 
-      const found = contents.find((contact) => contact.number === number);
-      return found ? found.display : number;
-    },
-    [contents, state],
+        if (state !== 'hasValue') return number;
+
+        const found = contents.find((contact) => contact.number === number);
+        return found ? found.display : number;
+      },
+    [],
   );
 
-  const getPictureByNumber = useCallback(
-    (number: string) => {
-      if (state !== 'hasValue') return null;
+  const getPictureByNumber = useRecoilCallback<[string], string>(
+    ({ snapshot }) =>
+      (number: string) => {
+        const { state, contents } = snapshot.getLoadable(contactsState.contacts);
+        if (state !== 'hasValue') return null;
 
-      const found = contents.find((contact) => contact.number === number);
-      return found ? found.avatar : null;
-    },
-    [contents, state],
+        const found = contents.find((contact) => contact.number === number);
+        return found ? found.avatar : null;
+      },
+    [],
   );
 
-  const getContactByNumber = useCallback(
-    (number: string): Contact | null => {
-      if (state !== 'hasValue') return null;
+  const getContactByNumber = useRecoilCallback<[string], Contact | null>(
+    ({ snapshot }) =>
+      (number: string) => {
+        const { state, contents } = snapshot.getLoadable(contactsState.contacts);
+        if (state !== 'hasValue') return null;
 
-      for (const contact of contents) {
-        if (contact.number === number) return contact;
-      }
-      return null;
-    },
-    [contents, state],
+        for (const contact of contents) {
+          if (contents.number === number) return contact;
+        }
+        return null;
+      },
+    [],
   );
 
-  const getContact = useCallback(
-    (id: number): Contact | null => {
-      if (state !== 'hasValue') return null;
+  const getContact = useRecoilCallback<[number], Contact | null>(
+    ({ snapshot }) =>
+      (id: number) => {
+        const { state, contents } = snapshot.getLoadable(contactsState.contacts);
+        if (state !== 'hasValue') return null;
 
-      for (const contact of contents) {
-        if (contact.id === id) return contact;
-      }
-      return null;
-    },
-    [contents, state],
+        for (const contact of contents) {
+          if (contact.id === id) return contact;
+        }
+        return null;
+      },
+    [],
   );
 
-  const deleteLocalContact = useCallback(
-    (id: number): void => {
-      if (state !== 'hasValue') return null;
+  const deleteLocalContact = useRecoilCallback<[number], void>(
+    ({ snapshot }) =>
+      (id: number) => {
+        const { state } = snapshot.getLoadable(contactsState.contacts);
+        if (state !== 'hasValue') return null;
 
-      setContacts((curContacts) => [...curContacts].filter((contact) => contact.id !== id));
-    },
-    [setContacts, state],
+        setContacts((curContacts) => [...curContacts].filter((contact) => contact.id !== id));
+      },
+    [],
   );
 
-  const addLocalContact = useCallback(
-    (contact: Contact) => {
-      if (state !== 'hasValue') return null;
-
-      setContacts((curContacts) => [...curContacts, contact]);
-    },
-    [setContacts, state],
+  const addLocalContact = useRecoilCallback<[Contact], void>(
+    ({ snapshot }) =>
+      (contact) => {
+        const { state } = snapshot.getLoadable(contactsState.contacts);
+        if (state !== 'hasValue') return null;
+        setContacts((curContacts) => [...curContacts, contact]);
+      },
+    [],
   );
 
-  const updateLocalContact = useCallback(
-    (updatedContact: Contact) => {
-      if (state !== 'hasValue') return null;
+  const updateLocalContact = useRecoilCallback<[Contact], void>(
+    ({ snapshot }) =>
+      (updatedContact) => {
+        const { state } = snapshot.getLoadable(contactsState.contacts);
 
-      setContacts((curContacts) => {
-        const targetContactIndex = curContacts.findIndex(
-          (contact) => contact.id === updatedContact.id,
-        );
-        const newContactsArray = [...curContacts];
-        newContactsArray[targetContactIndex] = updatedContact;
-        return newContactsArray;
-      });
-    },
-    [setContacts, state],
+        if (state !== 'hasValue') return null;
+
+        setContacts((curContacts) => {
+          const targetContactIndex = curContacts.findIndex(
+            (contact) => contact.id === updatedContact.id,
+          );
+          const newContactsArray = [...curContacts];
+          newContactsArray[targetContactIndex] = updatedContact;
+          return newContactsArray;
+        });
+      },
+    [],
   );
 
   return {
