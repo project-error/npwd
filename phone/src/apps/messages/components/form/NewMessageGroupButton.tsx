@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Add, Delete } from '@mui/icons-material';
 import { Fab } from '@mui/material';
-import { useCheckedConversationsValue, useIsEditingValue } from '../../hooks/state';
+import { useCheckedConversationsValue, useIsEditing } from '../../hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
@@ -25,7 +25,7 @@ interface NewMessageGroupButtonProps {
 export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ onClick }) => {
   const classes = useStyles();
   const checkedConversations = useCheckedConversationsValue();
-  const isEditing = useIsEditingValue();
+  const [isEditing, setIsEditing] = useIsEditing();
   const { addAlert } = useSnackbar();
   const { removeConversation } = useMessageActions();
   const [t] = useTranslation();
@@ -42,6 +42,7 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
       }
 
       removeConversation(checkedConversations);
+      setIsEditing(false);
     });
   };
 
