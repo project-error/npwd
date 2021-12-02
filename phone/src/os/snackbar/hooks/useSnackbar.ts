@@ -4,6 +4,7 @@ import { SnackbarContext } from '../providers/SnackbarProvider';
 export interface IAlert {
   message: string;
   type: AlertType;
+  duration?: number;
 }
 
 export type AlertType = 'success' | 'error' | 'info' | 'warning';

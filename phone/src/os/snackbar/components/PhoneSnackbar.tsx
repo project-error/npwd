@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: 'auto',
-    width: 'auto',
+    maxWidth: 280,
     overflow: 'auto',
     margin: '0 auto',
     position: 'absolute',
@@ -26,7 +26,12 @@ export const PhoneSnackbar: React.FC = () => {
   const { alert, isOpen, handleClose } = useSnackbar();
 
   return (
-    <Snackbar autoHideDuration={2000} open={isOpen} className={classes.root} onClose={handleClose}>
+    <Snackbar
+      autoHideDuration={alert?.duration ?? 3000}
+      open={isOpen}
+      className={classes.root}
+      onClose={handleClose}
+    >
       <Alert severity={alert?.type || 'info'} onClose={handleClose}>
         {alert?.message || ''}
       </Alert>
