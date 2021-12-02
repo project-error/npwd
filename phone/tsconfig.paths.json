@@ -4,6 +4,7 @@
     "paths": {
       "@os/*": ["./os/*"],
       "@ui/*": ["./ui/*"],
+      "@apps/*": ["./apps"],
       "@common/*": ["./common/*"],
       "@typings/*": ["../../typings/*"]
     }
