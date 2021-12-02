@@ -62,6 +62,7 @@ export interface CreateMessageGroupResult {
   mine?: boolean;
   participant: string;
   identifiers: string[];
+  doesExist: UnformattedMessageConversation | null;
 }
 
 export interface CreateMessageBroadcast {

@@ -96,21 +96,41 @@ export async function createMessageGroupsFromPhoneNumber(
   }
 
   const conversationId = createGroupHashID([sourceIdentifier, tgtIdentifier]);
+  const existingConversation = await MessagesDB.doesConversationExist(
+    conversationId,
+    tgtIdentifier,
+  );
 
-  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
-  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
+  if (existingConversation) {
+    await MessagesDB.createMessageGroup(
+      existingConversation.user_identifier,
+      conversationId,
+      sourceIdentifier,
+    );
+  } else {
+    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
+    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
+  }
+
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
 
   return {
     error: false,
+    doesExist: existingConversation,
     conversationId,
     identifiers: [sourceIdentifier, tgtIdentifier],
     phoneNumber: tgtPhoneNumber,
     participant: tgtIdentifier,
   };
 }
+
+export async function restoreMessageConversation(
+  userIdentifier: string,
+  participantIdentifier: string,
+  conversationId: string,
+) {}
 
 // getting the participants from groupId.
 // this should return the source or and array of identifiers

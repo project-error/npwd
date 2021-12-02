@@ -41,6 +41,7 @@ class _MessagesService {
   ) {
     try {
       const sourcePlayer = PlayerService.getPlayer(reqObj.source);
+
       const result = await createMessageGroupsFromPhoneNumber(
         sourcePlayer.getIdentifier(),
         reqObj.data.targetNumber,
@@ -50,17 +51,20 @@ class _MessagesService {
         return resp({ status: 'error' });
       }
 
-      try {
-        const participant = PlayerService.getPlayerFromIdentifier(result.participant);
+      if (!result.doesExist) {
+        try {
+          const participant = PlayerService.getPlayerFromIdentifier(result.participant);
 
-        if (participant) {
-          emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
-            conversation_id: result.conversationId,
-            phoneNumber: sourcePlayer.getPhoneNumber(),
-          });
+          if (participant) {
+            emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
+              conversation_id: result.conversationId,
+              phoneNumber: sourcePlayer.getPhoneNumber(),
+            });
+          }
+        } catch (e) {
+          resp({ status: 'error', errorMsg: e.message });
+          messagesLogger.error(e.message);
         }
-      } catch (e) {
-        messagesLogger.error(e.message);
       }
 
       resp({
