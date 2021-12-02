@@ -127,14 +127,14 @@ class _MessagesService {
         if (participantId !== player.getIdentifier()) {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
 
-          if (!participantPlayer) return;
-
-          emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
-          emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-            conversationName: player.getPhoneNumber(),
-            conversationId: messageData.conversationId,
-            message: messageData.message,
-          });
+          if (participantPlayer) {
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
+            emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
+              conversationName: player.getPhoneNumber(),
+              conversationId: messageData.conversationId,
+              message: messageData.message,
+            });
+          }
         }
       }
     } catch (e) {
