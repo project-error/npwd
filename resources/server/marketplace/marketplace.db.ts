@@ -58,6 +58,14 @@ export class _MarketplaceDB {
     await DbInterface._rawExec(query, [listingId, profile]);
   }
 
+  async doesListingExist(listing: MarketplaceListingBase): Promise<boolean> {
+    const query = `SELECT * FROM npwd_marketplace_listings WHERE title = ?`;
+    const [results] = await DbInterface._rawExec(query, [listing.title]);
+    const listings = <MarketplaceListingBase[]>results;
+
+    return listings.length > 0;
+  }
+
   async doesReportExist(listingId: number, profile: string): Promise<boolean> {
     const query = `SELECT * FROM npwd_marketplace_reports WHERE listing_id = ? AND profile = ?`;
     const [results] = await DbInterface._rawExec(query, [listingId, profile]);

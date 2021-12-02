@@ -1,4 +1,5 @@
 import {
+  ListingTypeResp,
   MarketplaceEvents,
   MarketplaceListing,
   MarketplaceListingBase,
@@ -18,14 +19,17 @@ onNetPromise<void, MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING, async 
   });
 });
 
-onNetPromise<MarketplaceListingBase, void>(MarketplaceEvents.ADD_LISTING, async (reqObj, resp) => {
-  MarketplaceService.handleAddListing(reqObj, resp).catch((e) => {
-    marketplaceLogger.error(
-      `Error occurred in add listing event (${reqObj.source}), Error: ${e.message}`,
-    );
-    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-  });
-});
+onNetPromise<MarketplaceListingBase, ListingTypeResp>(
+  MarketplaceEvents.ADD_LISTING,
+  async (reqObj, resp) => {
+    MarketplaceService.handleAddListing(reqObj, resp).catch((e) => {
+      marketplaceLogger.error(
+        `Error occurred in add listing event (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
 
 onNetPromise<MarketplaceDeleteDTO>(MarketplaceEvents.DELETE_LISTING, async (reqObj, resp) => {
   // TODO: Needs a permission check of some sort here eventually

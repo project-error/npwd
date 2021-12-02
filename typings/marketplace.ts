@@ -18,6 +18,10 @@ export enum MarketplaceDatabaseLimits {
   url = 255,
 }
 
+export enum ListingTypeResp {
+  DUPLICATE = 'duplicate',
+}
+
 export enum MarketplaceEvents {
   ADD_LISTING = 'npwd:addListing',
   FETCH_LISTING = 'npwd:fetchAllListings',

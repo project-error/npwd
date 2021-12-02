@@ -2,6 +2,7 @@ import PlayerService from '../players/player.service';
 import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import {
+  ListingTypeResp,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
   MarketplaceListing,
@@ -21,7 +22,7 @@ class _MarketplaceService {
 
   async handleAddListing(
     reqObj: PromiseRequest<MarketplaceListingBase>,
-    resp: PromiseEventResp<void>,
+    resp: PromiseEventResp<ListingTypeResp>,
   ): Promise<void> {
     marketplaceLogger.debug('Handling add listing, listing:');
     marketplaceLogger.debug(reqObj.data);
@@ -29,6 +30,9 @@ class _MarketplaceService {
     const player = PlayerService.getPlayer(reqObj.source);
 
     try {
+      const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data);
+      if (doesListingExist) return resp({ status: 'error', data: ListingTypeResp.DUPLICATE });
+
       const listingId = await this.marketplaceDB.addListing(
         player.getIdentifier(),
         player.username,

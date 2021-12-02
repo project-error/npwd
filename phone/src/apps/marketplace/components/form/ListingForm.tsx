@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Box } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
+  ListingTypeResp,
   MarketplaceDatabaseLimits,
   MarketplaceEvents,
-  MarketplaceListing,
 } from '@typings/marketplace';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
@@ -64,12 +64,19 @@ export const ListingForm: React.FC = () => {
       });
     }
 
-    fetchNui<ServerPromiseResp<MarketplaceListing[]>>(MarketplaceEvents.ADD_LISTING, {
+    fetchNui<ServerPromiseResp<ListingTypeResp>>(MarketplaceEvents.ADD_LISTING, {
       title,
       description,
       url,
     }).then((resp) => {
       if (resp.status !== 'ok') {
+        if (resp.data === ListingTypeResp.DUPLICATE) {
+          return addAlert({
+            message: 'APPS_MARKETPLACE_DUPLICATE_LISTING',
+            type: 'error',
+          });
+        }
+
         return addAlert({
           message: t('APPS_MARKETPLACE_CREATE_LISTING_FAILED'),
           type: 'error',
