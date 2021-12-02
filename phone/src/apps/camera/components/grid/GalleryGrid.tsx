@@ -3,15 +3,15 @@ import { Box, Button, CircularProgress } from '@mui/material';
 import useStyles from './grid.styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from 'react-router-dom';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { addQueryToLocation } from '../../../../common/utils/addQueryToLocation';
-import { getLocationFromUrl } from '../../../../common/utils/getLocationFromUrl';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { addQueryToLocation } from '@common/utils/addQueryToLocation';
+import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { GalleryPhoto, PhotoEvents } from '../../../../../../typings/photo';
+import { ServerPromiseResp } from '@typings/common';
+import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
 import { usePhotosValue } from '../../hooks/state';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
 export const GalleryGrid = () => {

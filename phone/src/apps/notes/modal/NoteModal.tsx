@@ -3,11 +3,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import { useTranslation } from 'react-i18next';
-import { StatusButton } from '../../../ui/components/StatusButton';
-import { TextField } from '../../../ui/components/Input';
+import { StatusButton } from '@ui/components/StatusButton';
+import { TextField } from '@ui/components/Input';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useHistory, useLocation } from 'react-router';
-import { useApps } from '../../../os/apps/hooks/useApps';
+import { useApps } from '@os/apps/hooks/useApps';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
 export const NoteModal: React.FC = () => {

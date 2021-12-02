@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
-import { DEFAULT_ALERT_HIDE_TIME } from '../../notifications/notifications.constants';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
+import { DEFAULT_ALERT_HIDE_TIME } from '@os/notifications/notifications.constants';
 import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {

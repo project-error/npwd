@@ -1,4 +1,4 @@
-import { Message, MessageConversation } from '../../../../../typings/messages';
+import { Message, MessageConversation } from '@typings/messages';
 
 export const MockMessageConversations: MessageConversation[] = [
   {

@@ -1,4 +1,4 @@
-import { PhoneEvents } from '../../../../typings/phone';
+import { PhoneEvents } from '@typings/phone';
 import { IAlert } from '../snackbar/hooks/useSnackbar';
 
 function dispatchEvent({ method, app, data = {} }: { method: string; app: string; data: unknown }) {

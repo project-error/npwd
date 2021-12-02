@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { Message, MessageEvents } from '../../../../../typings/messages';
+import { ServerPromiseResp } from '@typings/common';
+import { Message, MessageEvents } from '@typings/messages';
 import { useConversationId } from './state';
 
 function useFetchMessages(page) {

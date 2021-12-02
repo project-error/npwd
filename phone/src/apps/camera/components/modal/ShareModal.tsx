@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from '../../../../ui/components/Modal';
 import { Button } from '@mui/material';
-import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
+import { setClipboard } from '@os/phone/hooks/useClipboard';
 
 import useStyles from './modal.styles';
 import { useHistory } from 'react-router-dom';
-import { GalleryPhoto } from '../../../../../../typings/photo';
+import { GalleryPhoto } from '@typings/photo';
 import { useTranslation } from 'react-i18next';
 
 interface IShareModalProps {

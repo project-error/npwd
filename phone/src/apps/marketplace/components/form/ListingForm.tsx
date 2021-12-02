@@ -5,17 +5,17 @@ import {
   MarketplaceDatabaseLimits,
   MarketplaceEvents,
   MarketplaceListing,
-} from '../../../../../../typings/marketplace';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+} from '@typings/marketplace';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@mui/icons-material/Image';
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
-import { TextField } from '../../../../ui/components/Input';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
+import { TextField } from '@ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -4,13 +4,13 @@ import { Box, Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { Contact } from '../../../../../../typings/contact';
-import { MessageConversationResponse, MessageEvents } from '../../../../../../typings/messages';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
-import { TextField } from '../../../../ui/components/Input';
+import { Contact } from '@typings/contact';
+import { MessageConversationResponse, MessageEvents } from '@typings/messages';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { TextField } from '@ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessageConversationsValue } from '../../hooks/state';
 

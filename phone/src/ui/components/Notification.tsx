@@ -4,9 +4,9 @@ import Snackbar from '@mui/material/Snackbar';
 import Fade from '@mui/material/Fade';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { usePhone } from '../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 
-import { usePhoneTheme } from '../../os/phone/hooks/usePhoneTheme';
+import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 
 const useStyles = makeStyles({
   paper: {

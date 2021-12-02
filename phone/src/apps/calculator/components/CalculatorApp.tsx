@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
-import { AppTitle } from '../../../ui/components/AppTitle';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppWrapper } from '@ui/components';
+import { AppTitle } from '@ui/components/AppTitle';
+import { AppContent } from '@ui/components/AppContent';
 import { Calculator } from './Calculator';
-import { useApp } from '../../../os/apps/hooks/useApps';
+import { useApp } from '@os/apps/hooks/useApps';
 
 export const CalculatorApp: React.FC = () => {
   const calculator = useApp('CALCULATOR');

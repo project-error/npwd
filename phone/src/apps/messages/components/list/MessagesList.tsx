@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, IconButton, List } from '@mui/material';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
 import useStyles from './list.styles';
-import { SearchField } from '../../../../ui/components/SearchField';
+import { SearchField } from '@ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
 import {
   useCheckedConversations,

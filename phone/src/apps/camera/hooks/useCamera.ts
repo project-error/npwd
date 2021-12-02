@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SetterOrUpdater, useRecoilState } from 'recoil';
-import { GalleryPhoto, PhotoEvents } from '../../../../../typings/photo';
+import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { useNuiEvent, useNuiCallback } from 'fivem-nui-react-lib/';
-import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { photoState } from './state';
 
 interface IUseCamera {

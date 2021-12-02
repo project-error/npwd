@@ -3,7 +3,7 @@ import CallIcon from '@mui/icons-material/Call';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import { useCall } from '../hooks/useCall';
 import { useCallModal } from '../hooks/useCallModal';
-import { StatusIconButton } from '../../../ui/components/StatusIconButton';
+import { StatusIconButton } from '@ui/components/StatusIconButton';
 import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useHistory } from 'react-router-dom';

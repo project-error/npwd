@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 
-import { usePhone } from '../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from '../utils/constants';
 
 const useStyles = makeStyles({

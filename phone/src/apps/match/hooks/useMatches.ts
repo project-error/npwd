@@ -1,6 +1,6 @@
 import { matchState, useFormattedMatches } from './state';
 import { useRecoilValue } from 'recoil';
-import { FormattedMatch } from '../../../../../typings/match';
+import { FormattedMatch } from '@typings/match';
 
 interface UseMatchProps {
   matches: FormattedMatch[];

@@ -1,12 +1,12 @@
-import { ActiveCall } from '../../../../../typings/call';
+import { ActiveCall } from '@typings/call';
 import { useCurrentCall } from './state';
-import { CallEvents } from '../../../../../typings/call';
+import { CallEvents } from '@typings/call';
 import { fetchNui } from '../../../utils/fetchNui';
 import { useCallback } from 'react';
-import { useMyPhoneNumber } from '../../simcard/hooks/useMyPhoneNumber';
-import { useSnackbar } from '../../snackbar/hooks/useSnackbar';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { ServerPromiseResp } from '../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 
 interface CallHook {
   call: ActiveCall;

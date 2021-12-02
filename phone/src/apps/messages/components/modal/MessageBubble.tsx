@@ -2,10 +2,10 @@ import { Box, IconButton, Paper } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
-import { Message } from '../../../../../../typings/messages';
-import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { PictureReveal } from '../../../../ui/components/PictureReveal';
-import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import { Message } from '@typings/messages';
+import { PictureResponsive } from '@ui/components/PictureResponsive';
+import { PictureReveal } from '@ui/components/PictureReveal';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 

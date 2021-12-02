@@ -2,11 +2,11 @@ import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { MessageEvents } from '../../../../../../typings/messages';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { MessageEvents } from '@typings/messages';
+import { ServerPromiseResp } from '@typings/common';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import { ContextMenu } from '../../../../ui/components/ContextMenu';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { ContextMenu } from '@ui/components/ContextMenu';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSelectedMessageValue } from '../../hooks/state';
 
 interface MessageBubbleMenuProps {

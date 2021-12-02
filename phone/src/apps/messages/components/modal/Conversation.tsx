@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 
-import { Message, MessageConversation, MessageEvents } from '../../../../../../typings/messages';
+import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import MessageInput from '../form/MessageInput';
 import useStyles from './modal.styles';
 import { MessageImageModal } from './MessageImageModal';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { useQueryParams } from '@common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useConversationId, useSetMessages } from '../../hooks/state';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';

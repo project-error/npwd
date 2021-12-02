@@ -1,8 +1,8 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
-import { AppTitle } from '../../../ui/components/AppTitle';
-import { AppContent } from '../../../ui/components/AppContent';
-import { useApp } from '../../../os/apps/hooks/useApps';
+import { AppWrapper } from '@ui/components';
+import { AppTitle } from '@ui/components/AppTitle';
+import { AppContent } from '@ui/components/AppContent';
+import { useApp } from '@os/apps/hooks/useApps';
 import { Route } from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import { ContactPage } from './views/ContactsPage';
@@ -12,7 +12,7 @@ import Fab from '@mui/material/Fab';
 import { useHistory, useLocation } from 'react-router';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const useStyles = makeStyles((theme: Theme) => ({
   absolute: {

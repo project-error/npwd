@@ -1,4 +1,4 @@
-import { FormattedTweet, Profile, Tweet } from '../../../../../typings/twitter';
+import { FormattedTweet, Profile, Tweet } from '@typings/twitter';
 import { IMAGE_DELIMITER } from './images';
 import { v4 as uuidv4 } from 'uuid';
 

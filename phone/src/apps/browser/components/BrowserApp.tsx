@@ -1,7 +1,7 @@
-import { AppWrapper } from '../../../ui/components';
+import { AppWrapper } from '@ui/components';
 import { styled } from '@mui/material/styles';
 import React, { Reducer, useReducer, useRef } from 'react';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppContent } from '@ui/components/AppContent';
 import { Box } from '@mui/material';
 import { BrowserURLBar } from './BrowserURLBar';
 import { promiseTimeout } from '../../../utils/promiseTimeout';

@@ -5,11 +5,11 @@ import FireIcon from '@mui/icons-material/Whatshot';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
-import { FormattedProfile } from '../../../../../typings/match';
+import { FormattedProfile } from '@typings/match';
 import Draggable from './Draggable';
 import StatusDisplay from './StatusDisplay';
 import Profile from './profile/Profile';
-import { Tooltip } from '../../../ui/components/Tooltip';
+import { Tooltip } from '@ui/components/Tooltip';
 
 const useStyles = makeStyles({
   root: {

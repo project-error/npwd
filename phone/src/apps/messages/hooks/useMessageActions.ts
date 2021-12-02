@@ -1,6 +1,6 @@
 import { messageState, useSetMessageConversations, useSetMessages } from './state';
 import { useCallback } from 'react';
-import { Message, MessageConversation } from '../../../../../typings/messages';
+import { Message, MessageConversation } from '@typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
 
 interface MessageActionProps {

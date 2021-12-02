@@ -3,19 +3,19 @@ import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
 import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { List } from '../../../../ui/components/List';
-import { ListItem } from '../../../../ui/components/ListItem';
+import { List } from '@ui/components/List';
+import { ListItem } from '@ui/components/ListItem';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { CallHistoryItem } from '../../../../../../typings/call';
+import { CallHistoryItem } from '@typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import dayjs from 'dayjs';
-import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useDialHistory } from '../../hooks/useDialHistory';
-import { useCall } from '../../../../os/call/hooks/useCall';
+import { useCall } from '@os/call/hooks/useCall';
 
 const useStyles = makeStyles((theme: Theme) => ({
   callForward: {

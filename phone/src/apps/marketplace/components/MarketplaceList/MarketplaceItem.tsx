@@ -1,11 +1,11 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Typography, Paper } from '@mui/material';
-import { ListItem } from '../../../../ui/components/ListItem';
-import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { MarketplaceListing } from '../../../../../../typings/marketplace';
+import { ListItem } from '@ui/components/ListItem';
+import { PictureResponsive } from '@ui/components/PictureResponsive';
+import { MarketplaceListing } from '@typings/marketplace';
 import { ListingActions } from './ListingActions';
-import { PictureReveal } from '../../../../ui/components/PictureReveal';
+import { PictureReveal } from '@ui/components/PictureReveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,5 +1,5 @@
 import { useMyProfile, useProfileExists } from './state';
-import { FormattedProfile } from '../../../../../typings/match';
+import { FormattedProfile } from '@typings/match';
 
 interface UseProfileProps {
   profile: FormattedProfile;

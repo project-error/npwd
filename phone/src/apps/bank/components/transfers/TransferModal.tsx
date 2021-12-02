@@ -3,9 +3,9 @@ import Modal from '../../../../ui/components/Modal';
 import { Button, List, ListItem } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useBankModal } from '../../hooks/useBankModal';
-import { BankEvents } from '../../../../../../typings/bank';
+import { BankEvents } from '@typings/bank';
 import { useNuiRequest } from 'fivem-nui-react-lib';
-import { TextField } from '../../../../ui/components/Input';
+import { TextField } from '@ui/components/Input';
 
 const useStyles = makeStyles((theme) => ({
   input: {

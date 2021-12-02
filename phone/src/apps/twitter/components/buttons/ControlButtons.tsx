@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import { Button } from '@mui/material';
-import { StatusButton } from '../../../../ui/components/StatusButton';
+import { StatusButton } from '@ui/components/StatusButton';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {

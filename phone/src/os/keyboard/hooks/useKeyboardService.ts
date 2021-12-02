@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
-import { usePhone } from '../../phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 
 const keyboardState = {
   ArrowRight: atom({

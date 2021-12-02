@@ -5,8 +5,8 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import AppsIcon from '@mui/icons-material/Apps';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { usePhone } from '../../phone/hooks/usePhone';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
+import { usePhone } from '@os/phone/hooks/usePhone';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -5,11 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Fab } from '@mui/material';
 import { useCheckedConversationsValue, useIsEditingValue } from '../../hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { ServerPromiseResp } from '@typings/common';
+import { MessageEvents } from '@typings/messages';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

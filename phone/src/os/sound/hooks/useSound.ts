@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { usePreviousState } from '../../../common/utils/usePreviousState';
+import { usePreviousState } from '@common/utils/usePreviousState';
 import { useSoundProvider } from './useSoundProvider';
 
 interface ISoundOptions {

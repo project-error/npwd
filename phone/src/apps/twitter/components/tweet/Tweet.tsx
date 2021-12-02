@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import { ListItemAvatar, Avatar as MuiAvatar, ListItem, Typography } from '@mui/material';
 
-import { FormattedTweet } from '../../../../../../typings/twitter';
+import { FormattedTweet } from '@typings/twitter';
 import { secondsToHumanReadable } from '../../utils/time';
 import LikeButton from '../buttons/LikeButton';
 import ReplyButton from '../buttons/ReplyButton';
 import ImageDisplay from '../images/ImageDisplay';
 import Avatar from '../Avatar';
 import { RetweetButton } from '../buttons/RetweetButton';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import Retweet from './Retweet';
 import ShowMore from './ShowMore';
 

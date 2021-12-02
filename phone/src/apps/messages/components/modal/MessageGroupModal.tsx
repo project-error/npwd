@@ -4,7 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import NewMessageGroupForm from '../form/NewMessageGroupForm';
 import { useHistory, useParams } from 'react-router-dom';
-import { LoadingSpinner } from '../../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const MessageGroupModal = () => {
   const classes = useStyles();

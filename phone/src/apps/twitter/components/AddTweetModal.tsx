@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
-import { isImageValid } from '../../../common/utils/isImageValid';
+import { isImageValid } from '@common/utils/isImageValid';
 import { useModal } from '../hooks/useModal';
 import EmojiSelect from './EmojiSelect';
 import ImageDisplay from './images/ImageDisplay';
@@ -11,14 +11,14 @@ import ImagePrompt from './images/ImagePrompt';
 import TweetMessage from './tweet/TweetMessage';
 import ControlButtons from './buttons/ControlButtons';
 import IconButtons from './buttons/IconButtons';
-import { usePhone } from '../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
-import { NewTweet, TwitterEvents } from '../../../../../typings/twitter';
+import { NewTweet, TwitterEvents } from '@typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
-import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

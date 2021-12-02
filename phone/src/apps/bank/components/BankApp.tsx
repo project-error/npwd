@@ -1,8 +1,8 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { BankTitle } from './BankTitle';
-import { AppWrapper } from '../../../ui/components';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
 import './BankApp.css';
 import { TransferModal } from './transfers/TransferModal';
 

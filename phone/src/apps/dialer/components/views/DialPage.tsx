@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import DialGrid from '../DialPadGrid';
 import { DialerInput } from '../DialerInput';
 import { DialInputCtx } from '../../context/InputContext';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { useQueryParams } from '@common/hooks/useQueryParams';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

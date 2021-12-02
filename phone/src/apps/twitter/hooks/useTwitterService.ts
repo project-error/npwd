@@ -4,10 +4,10 @@ import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState } from './state';
-import { IAlert, useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+import { IAlert, useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTwitterNotifications } from './useTwitterNotifications';
 import { useTranslation } from 'react-i18next';
-import { Tweet, TwitterEvents } from '../../../../../typings/twitter';
+import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 

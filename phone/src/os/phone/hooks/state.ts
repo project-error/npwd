@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { ResourceConfig } from '../../../../../typings/config';
+import { ResourceConfig } from '@typings/config';
 
 export const phoneState = {
   visibility: atom<boolean>({

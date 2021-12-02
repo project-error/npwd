@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { TwitterEvents } from '@typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 function LikeButton({ tweetId, isLiked }) {
   const [liked, setLiked] = useState(isLiked);

@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { MarketplaceEvents, MarketplaceListing } from '../../../../../../typings/marketplace';
+import { MarketplaceEvents, MarketplaceListing } from '@typings/marketplace';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReportIcon from '@mui/icons-material/Report';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -10,11 +10,11 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
-import { useCall } from '../../../../os/call/hooks/useCall';
-import { Tooltip } from '../../../../ui/components/Tooltip';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { useCall } from '@os/call/hooks/useCall';
+import { Tooltip } from '@ui/components/Tooltip';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {

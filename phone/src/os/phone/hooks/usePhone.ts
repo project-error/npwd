@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
-import { ResourceConfig } from '../../../../../typings/config';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
+import { ResourceConfig } from '@typings/config';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useNuiRequest } from 'fivem-nui-react-lib';
 import { phoneState } from './state';
-import { PhoneEvents } from '../../../../../typings/phone';
+import { PhoneEvents } from '@typings/phone';
 
 interface IUsePhone {
   ResourceConfig?: ResourceConfig;

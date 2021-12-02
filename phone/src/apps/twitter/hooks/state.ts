@@ -1,7 +1,7 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
-import { FormattedTweet, Profile, TwitterEvents } from '../../../../../typings/twitter';
+import { FormattedTweet, Profile, TwitterEvents } from '@typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 
 export const twitterState = {
   profile: atom({

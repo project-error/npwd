@@ -9,7 +9,7 @@ import {
   ListItemIcon,
 } from '@mui/material';
 
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { listingState, useSetListings } from './state';
-import { MarketplaceListing } from '../../../../../typings/marketplace';
+import { MarketplaceListing } from '@typings/marketplace';
 import { useRecoilValueLoadable } from 'recoil';
 
 interface MarketplaceActionValues {

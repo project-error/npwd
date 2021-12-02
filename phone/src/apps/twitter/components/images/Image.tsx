@@ -2,8 +2,8 @@ import React from 'react';
 import { IconButton } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import CloseIcon from '@mui/icons-material/Close';
-import { PictureReveal } from '../../../../ui/components/PictureReveal';
-import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
+import { PictureReveal } from '@ui/components/PictureReveal';
+import { PictureResponsive } from '@ui/components/PictureResponsive';
 
 const useStyles = makeStyles(() => ({
   root: {

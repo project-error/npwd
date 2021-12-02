@@ -6,12 +6,12 @@ import { useProfile } from '../../hooks/useProfile';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { useRecoilValue } from 'recoil';
 import { twitterState, useSetTwitterProfile } from '../../hooks/state';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import { Profile, TwitterEvents } from '../../../../../../typings/twitter';
+import { usePhone } from '@os/phone/hooks/usePhone';
+import { Profile, TwitterEvents } from '@typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

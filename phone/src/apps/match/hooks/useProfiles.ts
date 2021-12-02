@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { matchState, useFormattedProfiles } from './state';
 
-import { FormattedProfile } from '../../../../../typings/match';
+import { FormattedProfile } from '@typings/match';
 
 interface UseProfilesProps {
   profiles: FormattedProfile[];

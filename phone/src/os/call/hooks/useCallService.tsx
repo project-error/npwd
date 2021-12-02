@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { useCall } from './useCall';
 
-import { CallEvents, ActiveCall } from '../../../../../typings/call';
+import { CallEvents, ActiveCall } from '@typings/call';
 import { useCallModal } from './useCallModal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';

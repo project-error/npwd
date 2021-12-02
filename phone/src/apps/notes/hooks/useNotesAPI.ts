@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '../../../../../typings/notes';
-import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
+import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '@typings/notes';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useNotesActions } from './useNotesActions';
 

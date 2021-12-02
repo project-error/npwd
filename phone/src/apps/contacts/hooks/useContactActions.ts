@@ -1,6 +1,6 @@
 import { contactsState } from './state';
 
-import { Contact } from '../../../../../typings/contact';
+import { Contact } from '@typings/contact';
 import { useCallback } from 'react';
 import { useRecoilStateLoadable } from 'recoil';
 

@@ -1,9 +1,9 @@
 import React, { createContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { phoneState } from '../../phone/hooks/state';
-import { useSoundProvider } from '../../sound/hooks/useSoundProvider';
-import { getSoundSettings } from '../../sound/utils/getSoundSettings';
+import { phoneState } from '@os/phone/hooks/state';
+import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
+import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {

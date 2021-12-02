@@ -4,11 +4,11 @@ import { Paper, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import SendIcon from '@mui/icons-material/Send';
 import ImageIcon from '@mui/icons-material/Image';
-import { Message, MessageEvents } from '../../../../../../typings/messages';
-import { TextField } from '../../../../ui/components/Input';
+import { Message, MessageEvents } from '@typings/messages';
+import { TextField } from '@ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
 import { useMessageActions } from '../../hooks/useMessageActions';
 
 interface IProps {

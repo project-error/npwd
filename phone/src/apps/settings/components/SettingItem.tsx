@@ -10,7 +10,7 @@ import {
   Typography,
   Switch,
 } from '@mui/material';
-import { Tooltip } from '../../../ui/components/Tooltip';
+import { Tooltip } from '@ui/components/Tooltip';
 
 interface ISettingItem {
   options?: any;

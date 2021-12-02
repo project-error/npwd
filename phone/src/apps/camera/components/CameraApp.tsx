@@ -1,10 +1,10 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
 import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
 import { Route, Switch } from 'react-router-dom';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const CameraApp: React.FC = () => (
   <AppWrapper id="camera-app">

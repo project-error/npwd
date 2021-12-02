@@ -1,8 +1,8 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
+import { AppWrapper } from '@ui/components';
 import { Box } from '@mui/material';
-import { GridMenu } from '../../../ui/components/GridMenu';
-import { useApps } from '../../../os/apps/hooks/useApps';
+import { GridMenu } from '@ui/components/GridMenu';
+import { useApps } from '@os/apps/hooks/useApps';
 
 export const HomeApp: React.FC = () => {
   const { apps } = useApps();

@@ -19,11 +19,11 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { Message, MessageEvents } from '../../../../../../typings/messages';
+import { Message, MessageEvents } from '@typings/messages';
 import Modal from '../../../../ui/components/Modal';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessagesState } from '../../hooks/state';
 

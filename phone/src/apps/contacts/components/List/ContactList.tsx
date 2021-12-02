@@ -8,7 +8,7 @@ import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
-import { useCall } from '../../../../os/call/hooks/useCall';
+import { useCall } from '@os/call/hooks/useCall';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();

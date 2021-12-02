@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useSoundProvider } from '../../sound/hooks/useSoundProvider';
+import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 
 interface useDialingSoundValue {
   startDialTone: () => void;

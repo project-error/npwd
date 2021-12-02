@@ -2,7 +2,7 @@ import React, { FocusEventHandler, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, IconButton } from '@mui/material';
 import { Cached, KeyboardArrowLeft } from '@mui/icons-material';
-import { InputBase } from '../../../ui/components/Input';
+import { InputBase } from '@ui/components/Input';
 
 const PREFIX = 'BrowserURLBar';
 

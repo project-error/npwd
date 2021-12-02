@@ -5,14 +5,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShareIcon from '@mui/icons-material/Share';
 import { useHistory } from 'react-router-dom';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import { useQueryParams } from '@common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
-import { GalleryPhoto, PhotoEvents } from '../../../../../../typings/photo';
+import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
-import { useSnackbar } from '../../../../os/snackbar/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 export const GalleryModal = () => {
   const [shareOpen, setShareOpen] = useState(null);

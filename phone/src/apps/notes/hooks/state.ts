@@ -1,7 +1,7 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { NoteItem, NotesEvents } from '../../../../../typings/notes';
+import { ServerPromiseResp } from '@typings/common';
+import { NoteItem, NotesEvents } from '@typings/notes';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { BrowserNotesData } from '../utils/constants';

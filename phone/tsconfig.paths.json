@@ -3,6 +3,8 @@
     "baseUrl": "./src",
     "paths": {
       "@os/*": ["./os/*"],
+      "@ui/*": ["./ui/*"],
+      "@common/*": ["./common/*"],
       "@typings/*": ["../../typings/*"]
     }
   }

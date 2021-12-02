@@ -1,9 +1,9 @@
 import { atom, DefaultValue, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '../../../../../typings/twitter';
+import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '@typings/twitter';
 import config from '../../../config/default.json';
-import { SettingOption } from '../../../ui/hooks/useContextMenu';
+import { SettingOption } from '@ui/hooks/useContextMenu';
 import { Schema, Validator } from 'jsonschema';
-import { IconSetObject } from '../../../os/apps/hooks/useApps';
+import { IconSetObject } from '@os/apps/hooks/useApps';
 
 const NPWD_STORAGE_KEY = 'npwd_settings';
 

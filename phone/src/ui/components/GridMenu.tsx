@@ -2,7 +2,7 @@ import React from 'react';
 import { AppIcon } from './AppIcon';
 import { Box, Grid, GridSize } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { IApp } from '../../os/apps/config/apps';
+import { IApp } from '@os/apps/config/apps';
 
 interface GridMenuProps {
   items: IApp[];
