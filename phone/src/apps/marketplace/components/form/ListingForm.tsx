@@ -72,7 +72,7 @@ export const ListingForm: React.FC = () => {
       if (resp.status !== 'ok') {
         if (resp.data === ListingTypeResp.DUPLICATE) {
           return addAlert({
-            message: 'APPS_MARKETPLACE_DUPLICATE_LISTING',
+            message: t('APPS_MARKETPLACE_DUPLICATE_LISTING'),
             type: 'error',
           });
         }
