@@ -79,7 +79,7 @@ export const APPS: IAppConfig[] = [
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
     Route: () => (
-      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={true} />
+      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
   },
   {
