@@ -1,7 +1,6 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Add, Delete } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 import { useCheckedConversationsValue, useIsEditingValue } from '../../hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
@@ -19,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface INewMessageGroupButtonProps {
+interface NewMessageGroupButtonProps {
   onClick(): void;
 }
 
-export function NewMessageGroupButton({ onClick }: INewMessageGroupButtonProps) {
+export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ onClick }) => {
   const classes = useStyles();
   const checkedConversations = useCheckedConversationsValue();
   const isEditing = useIsEditingValue();
@@ -52,9 +51,9 @@ export function NewMessageGroupButton({ onClick }: INewMessageGroupButtonProps) 
       color="primary"
       onClick={!isEditing ? onClick : deleteConversations}
     >
-      {!isEditing ? <AddIcon /> : <DeleteIcon />}
+      {!isEditing ? <Add /> : <Delete />}
     </Fab>
   );
-}
+};
 
 export default NewMessageGroupButton;

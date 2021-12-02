@@ -149,7 +149,7 @@ export const MessageModal = () => {
   const targetNumber = activeMessageConversation.phoneNumber;
 
   return (
-    <div>
+    <>
       <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
         <Box>
           <Button variant="contained" color="primary" onClick={handleDeleteConversation}>
@@ -195,6 +195,6 @@ export const MessageModal = () => {
           )}
         </Paper>
       </Slide>
-    </div>
+    </>
   );
 };

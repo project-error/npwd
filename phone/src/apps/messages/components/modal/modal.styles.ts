@@ -2,10 +2,11 @@ import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   modalRoot: {
-    zIndex: 9,
-    position: 'absolute',
     height: '100%',
     width: '100%',
+    display: 'flex',
+    flexGrow: 1,
+    flexDirection: 'column',
     overflowY: 'hidden',
   },
   backgroundModal: {
@@ -32,11 +33,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexFlow: 'row wrap',
     flexDirection: 'column',
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
   },
   overflowAutoY: {
     height: '550px',

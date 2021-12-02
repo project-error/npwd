@@ -23,9 +23,7 @@ export const MessagesApp = () => {
           <React.Suspense fallback={<LoadingSpinner />}>
             <Switch>
               <Route path="/messages/conversations/:groupId">
-                <div>
-                  <MessageModal />
-                </div>
+                <MessageModal />
               </Route>
               <Route exact path="/messages">
                 <MessagesList />

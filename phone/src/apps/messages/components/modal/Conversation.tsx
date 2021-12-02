@@ -64,48 +64,54 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
   }, [addAlert, conversationId, setMessages, history, t, page, setPage]);
 
   return (
-    <Box className={classes.conversationContainer}>
-      <MessageImageModal
-        image={referalImage}
-        onClose={() => setImageModalOpen(false)}
-        isOpen={imageModalOpen}
-        messageGroupId={activeMessageGroup.conversation_id}
-      />
-      <Box
-        id={CONVERSATION_ELEMENT_ID}
-        height="85%"
-        pt={6}
-        style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
-      >
+    <>
+      <Box className={classes.conversationContainer}>
+        <MessageImageModal
+          image={referalImage}
+          onClose={() => setImageModalOpen(false)}
+          isOpen={imageModalOpen}
+          messageGroupId={activeMessageGroup.conversation_id}
+        />
         <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: 'min-content',
-            width: '100%',
-          }}
+          id={CONVERSATION_ELEMENT_ID}
+          height="85%"
+          pt={6}
+          style={{ flex: 1, display: 'flex', overflowY: 'auto' }}
         >
-          <div
-            id="scrollableDiv"
+          <Box
             style={{
-              overflow: 'auto',
               display: 'flex',
-              flexDirection: 'column-reverse',
+              flexDirection: 'column',
+              minHeight: 'min-content',
+              width: '100%',
             }}
           >
-            <InfiniteScroll
-              next={handleNextPage}
-              scrollableTarget="scrollableDiv"
-              hasMore={hasMore}
-              inverse={true}
-              loader={<CircularProgress />}
-              dataLength={messages.length}
+            <div
+              id="scrollableDiv"
+              style={{
+                overflow: 'auto',
+                display: 'flex',
+                flexDirection: 'column-reverse',
+              }}
             >
-              {messages.map((message) => (
-                <MessageBubble onClickDisplay={onClickDisplay} key={message.id} message={message} />
-              ))}
-            </InfiniteScroll>
-          </div>
+              <InfiniteScroll
+                next={handleNextPage}
+                scrollableTarget="scrollableDiv"
+                hasMore={hasMore}
+                inverse={true}
+                loader={<CircularProgress />}
+                dataLength={messages.length}
+              >
+                {messages.map((message) => (
+                  <MessageBubble
+                    onClickDisplay={onClickDisplay}
+                    key={message.id}
+                    message={message}
+                  />
+                ))}
+              </InfiniteScroll>
+            </div>
+          </Box>
         </Box>
       </Box>
       <MessageInput
@@ -113,7 +119,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, onClickD
         messageConversationId={activeMessageGroup.conversation_id}
         onAddImageClick={() => setImageModalOpen(true)}
       />
-    </Box>
+    </>
   );
 };
 

@@ -87,6 +87,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     getPictureByNumber,
   ]);
 
+  const handleCancel = () => {
+    history.push('/messages');
+  };
+
   const renderAutocompleteInput = (params) => (
     <TextField
       {...params}
@@ -116,10 +120,14 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           disabled={submitDisabled}
           variant="contained"
           fullWidth
+          sx={{ mb: 1 }}
           color="primary"
           type="submit"
         >
           {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
+        </Button>
+        <Button onClick={handleCancel} variant="contained" fullWidth color="error">
+          {t('GENERIC_CANCEL')}
         </Button>
       </Box>
     </Box>
