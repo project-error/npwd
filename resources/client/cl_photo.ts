@@ -32,6 +32,7 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
+// TODO: The flow here seems a little convuluted, we need to take a look at it.
 RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   await animationService.openCamera();
   emit('npwd:disableControlActions', false);

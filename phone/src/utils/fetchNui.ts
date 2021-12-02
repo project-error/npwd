@@ -16,7 +16,7 @@ export async function fetchNui<T = any>(eventName: string, data?: any): Promise<
     body: JSON.stringify(data),
   };
 
-  LogDebugEvent({ data, action: 'fetchNui' });
+  LogDebugEvent({ data, action: `fetchNui (${eventName})` });
 
   const resourceName = (window as any).GetParentResourceName
     ? (window as any).GetParentResourceName()

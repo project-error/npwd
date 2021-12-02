@@ -1,6 +1,5 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { TwitterEvents } from '../../typings/twitter';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
@@ -17,14 +16,9 @@ const exps = global.exports;
  *  Phone initialize data
  *
  * * * * * * * * * * * * */
-function fetchOnInitialize() {
-  //emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-}
 
 onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
   global.isPlayerLoaded = state;
-
-  fetchOnInitialize();
 });
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
@@ -89,7 +83,6 @@ RegisterCommand(
   async () => {
     await hidePhone();
     sendMessage('PHONE', 'phoneRestart', {});
-    fetchOnInitialize();
   },
   false,
 );
