@@ -1,5 +1,6 @@
+import { ConnectionOptions } from 'mysql2';
+
 export const CONNECTION_STRING = 'mysql_connection_string';
-export const DEFAULT_PORT = 3306;
 export const DEFAULT_HOST = 'localhost';
 export const DEFAULT_USER = 'root';
 
@@ -12,59 +13,32 @@ interface Map {
  * @param connectionString - mysql_connection_string value
  */
 export function parseSemiColonFormat(connectionString: string): Map {
-  const parts = connectionString.split(';');
-  if (parts.length === 1) {
-    throw new Error(
-      `Connection string ${connectionString} is in the incorrect format. Please follow the README.`,
-    );
-  }
+  const options = connectionString
+    .replace(/(?:host(?:name)|ip|server|data\s?source|addr(?:ess)?)=/gi, 'host=')
+    .replace(/(?:user\s?(?:id|name)?|uid)=/gi, 'user=')
+    .replace(/(?:pwd|pass)=/gi, 'password=')
+    .replace(/(?:db)=/gi, 'database=')
+    .split(';')
+    .reduce((connectionInfo: Map, parameter: string) => {
+      const [key, value] = parameter.split('=');
+      connectionInfo[key] = value;
+      return connectionInfo;
+    }, {});
 
-  return parts.reduce((connectionInfo: Map, part) => {
-    const [key, value] = part.split('=');
-    connectionInfo[key] = value;
-    return connectionInfo;
-  }, {});
+  options.user = options.user || DEFAULT_USER;
+  options.host = options.host || DEFAULT_HOST;
+
+  return options;
 }
 
 /**
- * allowed variable names: host | server | data source | datasource | addr | address
- * @param config - database config variables parsed from mysql_connection_string
+ * sets default connection options when creating the mysql pool connection
  */
-export function getServerHost(config: Map): string {
-  return (
-    config.host ||
-    config.server ||
-    config['data source'] ||
-    config.datasource ||
-    config.addr ||
-    config.address ||
-    DEFAULT_HOST
-  );
-}
+export function connectionOptions(options: ConnectionOptions): ConnectionOptions {
+  options.namedPlaceholders = true;
+  options.waitForConnections = true;
+  options.connectionLimit = 10;
+  options.queueLimit = 0;
 
-/**
- * allowed variable names: user | user id | userid | user name | username | uid
- * @param config - database config variables parsed from mysql_connection_string
- */
-export function getUserId(config: Map): string {
-  return (
-    config.user ||
-    config['user id'] ||
-    config.userid ||
-    config['user name'] ||
-    config.username ||
-    config.uid ||
-    DEFAULT_USER
-  );
-}
-
-/**
- * Note: We are allowing no password as many FiveM servers love to not use one for an ungodly reason.
- * allowed variable names: password | pwd
- * @param config - database config variables parsed from mysql_connection_string
- */
-export function getPassword(config: Map): string | undefined {
-  const password = config.password || config.pwd;
-  if (!password) return undefined;
-  return password;
+  return options;
 }
