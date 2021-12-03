@@ -25,10 +25,10 @@ const generateUsNumber = (): string => {
 
 /**/
 export async function generateUniquePhoneNumber(): Promise<string> {
-  const query = `SELECT EXISTS(SELECT * FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?)`;
+  const query = `SELECT EXISTS(SELECT 1 FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?)`;
   const dashNumber = generateUsNumber();
 
-  const [results] = await DbInterface._rawExec(query, dashNumber);
+  const results = await DbInterface.fetch(query, dashNumber);
 
   if (!results) return generateUniquePhoneNumber();
 

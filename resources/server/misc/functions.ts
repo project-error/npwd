@@ -5,10 +5,10 @@ import { playerLogger } from '../players/player.utils';
 
 export async function findOrGeneratePhoneNumber(identifier: string): Promise<string> {
   const query = `SELECT ${config.database.phoneNumberColumn} FROM ${config.database.playerTable} WHERE ${config.database.identifierColumn} = ? LIMIT 1`;
-  const res = await DbInterface.fetch(query, [identifier]);
+  const result = await DbInterface.fetch(query, [identifier]);
 
-  if (res && res[0][config.database.phoneNumberColumn])
-    return res[0][config.database.phoneNumberColumn] as string;
+  if (result && result[0][config.database.phoneNumberColumn])
+    return result[0][config.database.phoneNumberColumn] as string;
 
   playerLogger.debug('Phone number was returned as null, generating new number');
   const gennedNumber = await generateUniquePhoneNumber();

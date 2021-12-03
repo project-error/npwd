@@ -1,6 +1,5 @@
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import { config } from '../server';
-import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
 const MESSAGES_PER_PAGE = 20;
@@ -22,14 +21,14 @@ export class _MessagesDB {
     const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id)
                    VALUES (?, ?, ?, ?)`;
 
-    const [results] = await DbInterface._rawExec(query, [
+    const insertId = await DbInterface.insert(query, [
       userIdentifier,
       author,
       message,
       conversationId,
     ]);
 
-    return (<ResultSetHeader>results).insertId;
+    return insertId;
   }
 
   // Not sure if we're going to query this exactly as its done here.
@@ -58,7 +57,7 @@ export class _MessagesDB {
                                                REGEXP_REPLACE(${config.database.playerTable}.${config.database.phoneNumberColumn}, '[^0-9]', '')
                                                 AND npwd_phone_contacts.identifier = ?`;
 
-    const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
+    const results = await DbInterface.fetch(query, [identifier, identifier]);
     return <UnformattedMessageConversation[]>results;
   }
 
@@ -74,11 +73,7 @@ export class _MessagesDB {
                    WHERE npwd_messages.conversation_id = ?
                    ORDER BY id DESC LIMIT ? OFFSET ?`;
 
-    const [results] = await DbInterface._rawExec(query, [
-      conversationId,
-      MESSAGES_PER_PAGE,
-      offset,
-    ]);
+    const results = await DbInterface.fetch(query, [conversationId, MESSAGES_PER_PAGE, offset]);
 
     return <Message[]>results;
   }
@@ -101,7 +96,7 @@ export class _MessagesDB {
             (user_identifier, conversation_id, participant_identifier)
         VALUES (?, ?, ?)
 		`;
-    await DbInterface._rawExec(query, [userIdentifier, conversationId, participantIdentifier]);
+    await DbInterface.insert(query, [userIdentifier, conversationId, participantIdentifier]);
   }
 
   /**
@@ -115,7 +110,7 @@ export class _MessagesDB {
         WHERE ${config.database.phoneNumberColumn} = ?
         LIMIT 1
 		`;
-    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
+    const results = await DbInterface.fetch(query, [phoneNumber]);
     const result = <any>results;
     return result[0].identifier;
   }
@@ -133,7 +128,7 @@ export class _MessagesDB {
       FROM npwd_messages_groups
       WHERE group_id = ?;
     `;
-    const [results] = await DbInterface._rawExec(query, [groupId]);
+    const results = await DbInterface.fetch(query, [groupId]);
     const result = <any>results;
     const count = result[0].count;
     return count > 0;
@@ -144,7 +139,7 @@ export class _MessagesDB {
         SELECT COUNT(*) as count
         FROM npwd_messages
         WHERE conversation_id = ?`;
-    const [results] = await DbInterface._rawExec(query, [groupId]);
+    const results = await DbInterface.fetch(query, [groupId]);
     const result = <any>results;
     return result[0].count;
   }
@@ -156,20 +151,20 @@ export class _MessagesDB {
    */
   async setMessageRead(groupId: string, identifier: string) {
     const query = `UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [groupId, identifier]);
+    await DbInterface.exec(query, [groupId, identifier]);
   }
 
   async deleteConversation(conversationId: string, identifier: string) {
     const query = `DELETE
                    FROM npwd_messages_conversations
                    WHERE conversation_id = ? AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [conversationId, identifier]);
+    await DbInterface.exec(query, [conversationId, identifier]);
   }
 
   async deleteMessage(message: Message) {
     const query = `DELETE FROM npwd_messages WHERE id = ? AND conversation_id = ?`;
 
-    await DbInterface._rawExec(query, [message.id, message.conversation_id]);
+    await DbInterface.exec(query, [message.id, message.conversation_id]);
   }
 }
 

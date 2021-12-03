@@ -34,7 +34,7 @@ export class _MatchDB {
         ORDER BY npwd_match_profiles.updatedAt DESC
         LIMIT 25
 		`;
-    const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
+    const results = await DbInterface.fetch(query, [identifier, identifier]);
     return <Profile[]>results;
   }
 
@@ -49,7 +49,7 @@ export class _MatchDB {
                    VALUES ?`;
     const formattedLikes = likes.map((like) => [identifier, like.id, like.liked]);
 
-    const results = await DbInterface._rawExec(query, [formattedLikes]);
+    const results = await DbInterface.fetch(query, [formattedLikes]);
     return <ResultSetHeader[]>results;
   }
 
@@ -72,7 +72,7 @@ export class _MatchDB {
           AND targetProfile.id = ?
           AND Liked = 1
 		`;
-    const [results] = await DbInterface._rawExec(query, [identifier, id]);
+    const results = await DbInterface.fetch(query, [identifier, id]);
     return <Profile[]>results;
   }
 
@@ -100,7 +100,7 @@ export class _MatchDB {
           AND targetViews.liked = 1
         ORDER BY matchedAt DESC
 		`;
-    const [results] = await DbInterface._rawExec(query, [identifier]);
+    const results = await DbInterface.fetch(query, [identifier]);
     return <Match[]>results;
   }
 
@@ -117,7 +117,7 @@ export class _MatchDB {
         WHERE identifier = ?
         LIMIT 1
 		`;
-    const [results] = await DbInterface._rawExec(query, [identifier]);
+    const results = await DbInterface.fetch(query, [identifier]);
     const profiles = <Profile[]>results;
     return profiles[0];
   }
