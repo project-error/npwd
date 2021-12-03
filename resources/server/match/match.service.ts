@@ -8,7 +8,7 @@ import {
   Profile,
 } from '../../../typings/match';
 import PlayerService from '../players/player.service';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _MatchService {
   private readonly matchDB: _MatchDB;

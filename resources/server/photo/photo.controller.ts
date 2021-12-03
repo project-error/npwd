@@ -1,7 +1,7 @@
 import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
 import PhotoService from './photo.service';
 import { photoLogger } from './photo.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<string, GalleryPhoto>(PhotoEvents.UPLOAD_PHOTO, (reqObj, resp) => {
   PhotoService.handleUploadPhoto(reqObj, resp).catch((e) => {

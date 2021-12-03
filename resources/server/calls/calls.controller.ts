@@ -9,7 +9,7 @@ import {
 import { getSource, onNetTyped } from '../utils/miscUtils';
 import CallService from './calls.service';
 import { callLogger } from './calls.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, (reqObj, resp) => {
   CallService.handleInitializeCall(reqObj, resp).catch((e) => {

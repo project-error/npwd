@@ -7,7 +7,7 @@ import {
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,

@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import { GalleryPhoto } from '../../../typings/photo';
 import PhotoDB, { _PhotoDB } from './photo.db';
 import { photoLogger } from './photo.utils';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _PhotoService {
   private readonly photoDB: _PhotoDB;

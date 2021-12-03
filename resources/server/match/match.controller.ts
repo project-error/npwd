@@ -9,7 +9,7 @@ import MatchService from './match.service';
 import { getSource } from '../utils/miscUtils';
 import { matchLogger } from './match.utils';
 import { config } from '../server';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, FormattedProfile[]>(MatchEvents.GET_PROFILES, (reqObj, resp) => {
   MatchService.handleGetProfiles(reqObj, resp).catch((e) => {

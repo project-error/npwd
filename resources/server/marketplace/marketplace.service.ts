@@ -10,7 +10,7 @@ import {
   MarketplaceReportDTO,
 } from '../../../typings/marketplace';
 import { reportListingToDiscord } from '../misc/discord';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _MarketplaceService {
   private readonly marketplaceDB: _MarketplaceDB;

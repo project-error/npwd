@@ -3,7 +3,7 @@ import TwitterDB, { _TwitterDB } from './twitter.db';
 import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { getDefaultProfileNames } from '../players/player.utils';
 
 class _TwitterService {

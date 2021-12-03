@@ -7,7 +7,7 @@ import {
 } from '../../../typings/marketplace';
 import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceService from './marketplace.service';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { MarketplaceDeleteDTO } from '../../../typings/marketplace';
 
 onNetPromise<void, MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING, async (reqObj, resp) => {

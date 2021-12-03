@@ -12,7 +12,7 @@ import {
   getIdentifiersFromParticipants,
   messagesLogger,
 } from './messages.utils';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 // felt good to just remove group chats.
 class _MessagesService {

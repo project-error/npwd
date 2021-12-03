@@ -11,7 +11,7 @@ import CallsDB, { CallsRepo } from './calls.db';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { emitNetTyped } from '../utils/miscUtils';
 import { mainLogger } from '../sv_logger';
 
