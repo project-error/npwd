@@ -7,6 +7,7 @@ import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
+import { Delay } from '../../utils/fivem';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
@@ -65,7 +66,7 @@ class _PlayerService {
   getPlayerFromIdentifier(identifier: string): Player | null {
     const player = this.playersByIdentifier.get(identifier);
     if (!player) {
-      throw new Error(`Could not find corresponding player for identifier: ${identifier}`);
+      return null;
     }
     return player;
   }
@@ -126,7 +127,15 @@ class _PlayerService {
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
-    emitNet(PhoneEvents.ON_INIT, pSource);
+
+    // This is a stupid hack for development reloading
+    // Client handlers are experiencing a race condition where the event
+    // is sent out before the client handlers can load.
+    if (process.env.NODE_ENV === 'development') {
+      await Delay(100);
+    }
+
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, pSource, true);
   }
 
   /**
@@ -187,7 +196,7 @@ class _PlayerService {
     playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
     playerLogger.debug(player);
 
-    emitNet(PhoneEvents.ON_INIT, src);
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, src, true);
   }
 
   /**
@@ -226,7 +235,7 @@ class _PlayerService {
     await this.clearPlayerData(src);
 
     this.deletePlayerFromMaps(src);
-
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
   }
 }

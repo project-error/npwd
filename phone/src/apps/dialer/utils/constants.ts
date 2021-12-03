@@ -1,4 +1,4 @@
-import { CallHistoryItem } from '../../../../../typings/call';
+import { CallHistoryItem } from '@typings/call';
 
 export const MockHistoryData: CallHistoryItem[] = [
   {

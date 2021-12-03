@@ -1,29 +1,28 @@
 import React from 'react';
-import { Slide, Paper, Button } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import useStyles from './modal.styles';
+import { Slide, Paper } from '@mui/material';
 import NewMessageGroupForm from '../form/NewMessageGroupForm';
-import { useHistory, useParams } from 'react-router-dom';
-import { LoadingSpinner } from '../../../../ui/components/LoadingSpinner';
+import { useParams } from 'react-router-dom';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { styled } from '@mui/styles';
+
+const StyledFormModal = styled(Paper)({
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  flexGrow: 1,
+  flexDirection: 'column',
+});
 
 const MessageGroupModal = () => {
-  const classes = useStyles();
-  const history = useHistory();
-
-  const handleClose = () => history.push('/messages');
-
   const params = useParams<{ phoneNumber?: string }>();
 
   return (
     <Slide direction="left" in>
-      <Paper className={classes.modalRoot}>
+      <StyledFormModal>
         <React.Suspense fallback={<LoadingSpinner />}>
-          <Button onClick={handleClose}>
-            <ArrowBackIcon fontSize="large" />
-          </Button>
           <NewMessageGroupForm phoneNumber={params.phoneNumber} />
         </React.Suspense>
-      </Paper>
+      </StyledFormModal>
     </Slide>
   );
 };

@@ -19,8 +19,8 @@ exps('openApp', (app: string) => {
 exps('setPhoneVisible', async (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
 
-  const isPhoneDisabled = (global as any).isPhoneDisabled;
-  const isPhoneOpen = (global as any).isPhoneOpen;
+  const isPhoneDisabled = global.isPhoneDisabled;
+  const isPhoneOpen = global.isPhoneOpen;
   // We need to make sure that the phone isn't disabled before we use the setter
   if (isPhoneDisabled && !bool && isPhoneOpen) return;
 
@@ -31,16 +31,16 @@ exps('setPhoneVisible', async (bool: boolean | number) => {
 });
 
 // Getter equivalent of above
-exps('isPhoneVisible', () => (global as any).isPhoneOpen);
+exps('isPhoneVisible', () => global.isPhoneOpen);
 
 // Will prevent the phone from being opened
 exps('setPhoneDisabled', (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
   const coercedType = !!bool;
-  (global as any).isPhoneDisabled = coercedType;
+  global.isPhoneDisabled = coercedType;
 });
 
-exps('isPhoneDisabled', () => (global as any).isPhoneDisabled);
+exps('isPhoneDisabled', () => global.isPhoneDisabled);
 
 // Takes in a number to start the call with
 exps('startPhoneCall', (number: string) => {

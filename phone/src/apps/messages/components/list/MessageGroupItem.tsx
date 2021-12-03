@@ -1,25 +1,50 @@
 import React from 'react';
-import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar, Badge } from '@mui/material';
+import {
+  ListItem,
+  ListItemText,
+  Checkbox,
+  ListItemAvatar,
+  Avatar as MuiAvatar,
+  Badge,
+  ListItemIcon,
+} from '@mui/material';
 
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
+  isEditing: boolean;
+  checked: string[];
+  handleToggle: (id: string) => void;
 }
 
-const MessageGroupItem = ({ messageConversation, handleClick }: IProps): any => {
-  // get unread messages, check the length. If we have any, get the groupId,
-  // and show the badge
-
-  /* const hasUnread = messageConversation.unreadCount > 0; */
+const MessageGroupItem = ({
+  messageConversation,
+  handleClick,
+  isEditing,
+  checked,
+  handleToggle,
+}: IProps): any => {
+  const toggleCheckbox = () => {
+    handleToggle(messageConversation.conversation_id);
+  };
 
   return (
     <ListItem
       key={messageConversation.conversation_id}
-      onClick={handleClick(messageConversation)}
+      onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
       divider
       button
     >
+      {isEditing && (
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={checked.indexOf(messageConversation.conversation_id) !== -1}
+            disableRipple
+          />
+        </ListItemIcon>
+      )}
       <ListItemAvatar>
         <Badge color="error" variant="dot" invisible={messageConversation.unread > 0}>
           <MuiAvatar src={messageConversation.avatar} />

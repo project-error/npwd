@@ -3,7 +3,7 @@ import {
   MarketplaceBroadcastAddDTO,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
-} from '../../../../../typings/marketplace';
+} from '@typings/marketplace';
 import { useMarketplaceActions } from './useMarketplaceActions';
 import { useCallback } from 'react';
 

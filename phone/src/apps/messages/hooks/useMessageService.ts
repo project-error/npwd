@@ -1,14 +1,10 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import {
-  Message,
-  MessageConversationResponse,
-  MessageEvents,
-} from '../../../../../typings/messages';
+import { Message, MessageConversationResponse, MessageEvents } from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useLocation } from 'react-router';
-import { usePhoneVisibility } from '../../../os/phone/hooks/usePhoneVisibility';
+import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 export const useMessagesService = () => {

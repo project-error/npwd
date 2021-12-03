@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import {
-  Profile as IProfile,
-  FormattedProfile,
-  MatchEvents,
-} from '../../../../../../typings/match';
-import ProfileField from '../../../../ui/components/ProfileField';
-import UpdateButton from '../../../../ui/components/UpdateButton';
+import { Profile as IProfile, FormattedProfile, MatchEvents } from '@typings/match';
+import ProfileField from '@ui/components/ProfileField';
+import UpdateButton from '@ui/components/UpdateButton';
 import { Card } from '@mui/material';
 import Profile from './Profile';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';
 
 const useStyles = makeStyles({
@@ -140,7 +136,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         maxLength={50}
       />
       <ProfileField label={t('APPS_MATCH_EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
-      <UpdateButton handleClick={handleUpdate} loading={false} />
+      <UpdateButton handleClick={handleUpdate} />
     </div>
   );
 }

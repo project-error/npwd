@@ -1,21 +1,21 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Box } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
+  ListingTypeResp,
   MarketplaceDatabaseLimits,
   MarketplaceEvents,
-  MarketplaceListing,
-} from '../../../../../../typings/marketplace';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+} from '@typings/marketplace';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import ImageIcon from '@mui/icons-material/Image';
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
-import { useQueryParams } from '../../../../common/hooks/useQueryParams';
-import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
-import { TextField } from '../../../../ui/components/Input';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
+import { TextField } from '@ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,12 +64,19 @@ export const ListingForm: React.FC = () => {
       });
     }
 
-    fetchNui<ServerPromiseResp<MarketplaceListing[]>>(MarketplaceEvents.ADD_LISTING, {
+    fetchNui<ServerPromiseResp<ListingTypeResp>>(MarketplaceEvents.ADD_LISTING, {
       title,
       description,
       url,
     }).then((resp) => {
       if (resp.status !== 'ok') {
+        if (resp.data === ListingTypeResp.DUPLICATE) {
+          return addAlert({
+            message: t('APPS_MARKETPLACE_DUPLICATE_LISTING'),
+            type: 'error',
+          });
+        }
+
         return addAlert({
           message: t('APPS_MARKETPLACE_CREATE_LISTING_FAILED'),
           type: 'error',

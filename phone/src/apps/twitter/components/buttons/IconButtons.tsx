@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Button } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import EmojiIcon from '@mui/icons-material/SentimentSatisfied';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 
 const useStyles = makeStyles({
   buttons: {

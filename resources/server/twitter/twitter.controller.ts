@@ -3,7 +3,7 @@ import { twitterLogger } from './twitter.utils';
 import { Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, Profile | string[]>(
   TwitterEvents.GET_OR_CREATE_PROFILE,

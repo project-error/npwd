@@ -3,7 +3,7 @@ import { CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
-import { FormattedProfile, FormattedMatch } from '../../../../../../typings/match';
+import { FormattedProfile, FormattedMatch } from '@typings/match';
 
 const useStyles = makeStyles({
   tags: {

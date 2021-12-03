@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import ProfileEditor from './views/ProfileEditor';
 import { Route } from 'react-router-dom';
 import MatchPage from './views/MatchPage';

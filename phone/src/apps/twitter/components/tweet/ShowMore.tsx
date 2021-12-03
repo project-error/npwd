@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import ReportButton from '../buttons/ReportButton';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { TwitterEvents } from '@typings/twitter';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { ServerPromiseResp } from '@typings/common';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 export const ShowMore = ({ id, isReported, isMine }) => {
   const { t } = useTranslation();

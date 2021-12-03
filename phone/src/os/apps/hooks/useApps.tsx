@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@mui/icons-material';

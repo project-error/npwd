@@ -1,7 +1,7 @@
 import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
 import ContactService from './contacts.service';
 import { contactsLogger } from './contacts.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, Contact[]>(ContactEvents.GET_CONTACTS, (reqObj, resp) => {
   ContactService.handleFetchContacts(reqObj, resp).catch((e) => {

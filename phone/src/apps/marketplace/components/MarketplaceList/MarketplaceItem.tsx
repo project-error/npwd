@@ -1,11 +1,11 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Typography, Paper } from '@mui/material';
-import { ListItem } from '../../../../ui/components/ListItem';
-import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { MarketplaceListing } from '../../../../../../typings/marketplace';
+import { ListItem } from '@ui/components/ListItem';
+import { PictureResponsive } from '@ui/components/PictureResponsive';
+import { MarketplaceListing } from '@typings/marketplace';
 import { ListingActions } from './ListingActions';
-import { PictureReveal } from '../../../../ui/components/PictureReveal';
+import { PictureReveal } from '@ui/components/PictureReveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: 'flex',
-    marginTop: '-10px',
     flexFlow: 'column nowrap',
     width: '100%',
   },
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: 'column',
     alignItems: 'flex',
     height: 'auto',
-    background: theme.palette.background.default,
+    background: theme.palette.background.paper,
     marginBottom: 20,
   },
   listingContent: {
@@ -47,7 +46,7 @@ export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...lis
   return (
     <ListItem className={classes.root}>
       <div className={classes.content}>
-        <Paper elevation={2} className={classes.paper}>
+        <Paper elevation={2} variant="outlined" className={classes.paper}>
           <div style={{ margin: 10 }}>
             <Typography style={{ margin: 5 }} variant="h5">
               {listing.name}

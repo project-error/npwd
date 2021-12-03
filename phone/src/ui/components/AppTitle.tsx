@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react';
 import { Typography, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { IApp } from '../../os/apps/config/apps';
+import { IApp } from '@os/apps/config/apps';
 import { OverridableStringUnion } from '@mui/types';
 import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
 import { Variant } from '@mui/material/styles/createTypography';

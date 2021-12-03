@@ -1,4 +1,4 @@
-import { NoteItem } from '../../../../../typings/notes';
+import { NoteItem } from '@typings/notes';
 
 export const BrowserNotesData: NoteItem[] = [
   {

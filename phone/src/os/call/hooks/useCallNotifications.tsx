@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { ActiveCall } from '../../../../../typings/call';
-import { useApp } from '../../apps/hooks/useApps';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
-import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
+import { ActiveCall } from '@typings/call';
+import { useApp } from '@os/apps/hooks/useApps';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
+import { useRingtoneSound } from '@os/sound/hooks/useRingtoneSound';
 import { CallNotification } from '../components/CallNotification';
 
 const NOTIFICATION_ID = 'call:current';

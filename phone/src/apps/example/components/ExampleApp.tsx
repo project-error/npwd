@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { AppWrapper } from '../../../ui/components';
-import { AppContent } from '../../../ui/components/AppContent';
-import { useApp } from '../../../os/apps/hooks/useApps';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
+import { useApp } from '@os/apps/hooks/useApps';
 import { ExampleThemeProvider } from '../providers/ExampleThemeProvider';
-import { AppTitle } from '../../../ui/components/AppTitle';
+import { AppTitle } from '@ui/components/AppTitle';
 import PlayIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import { Button, IconButton } from '@mui/material';

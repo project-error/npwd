@@ -7,7 +7,7 @@ import {
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
@@ -54,7 +54,7 @@ onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, r
   });
 });
 
-onNetPromise<{ conversationId: string }, void>(
+onNetPromise<{ conversationsId: string[] }, void>(
   MessageEvents.DELETE_CONVERSATION,
   async (reqObj, resp) => {
     MessagesService.handleDeleteConversation(reqObj, resp).catch((e) => {

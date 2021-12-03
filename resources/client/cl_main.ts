@@ -1,17 +1,13 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { TwitterEvents } from '../../typings/twitter';
-import { MessageEvents } from '../../typings/messages';
 import { config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 
 // All main globals that are set and used across files
-(global as any).isPhoneOpen = false;
-(global as any).isPhoneDisabled = false;
-
-// Set a global function to check if the player has been loaded
-(global as any).isPlayerLoaded = config.general.enableMultiChar ? false : true;
+global.isPhoneOpen = false;
+global.isPhoneDisabled = false;
+global.isPlayerLoaded = false;
 
 const exps = global.exports;
 
@@ -20,12 +16,9 @@ const exps = global.exports;
  *  Phone initialize data
  *
  * * * * * * * * * * * * */
-function fetchOnInitialize() {
-  //emitNet(TwitterEvents.GET_OR_CREATE_PROFILE);
-}
 
-onNet(PhoneEvents.ON_INIT, () => {
-  fetchOnInitialize();
+onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
+  global.isPlayerLoaded = state;
 });
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
@@ -42,13 +35,6 @@ const getCurrentGameTime = () => {
   return `${hour}:${minute}`;
 };
 
-// Register an event to update the state of isPlayerLoaded
-if (config.general.enableMultiChar) {
-  onNet(PhoneEvents.PLAYER_LOADED, async (state: boolean) => {
-    (global as any).isPlayerLoaded = state;
-  });
-}
-
 /* * * * * * * * * * * * *
  *
  *  Phone Visibility Handling
@@ -56,7 +42,7 @@ if (config.general.enableMultiChar) {
  * * * * * * * * * * * * */
 
 export const showPhone = async (): Promise<void> => {
-  (global as any).isPhoneOpen = true;
+  global.isPhoneOpen = true;
   const time = getCurrentGameTime();
   await animationService.openPhone(); // Animation starts before the phone is open
   emitNet(PhoneEvents.FETCH_CREDENTIALS);
@@ -69,7 +55,7 @@ export const showPhone = async (): Promise<void> => {
 };
 
 export const hidePhone = async (): Promise<void> => {
-  (global as any).isPhoneOpen = false;
+  global.isPhoneOpen = false;
   sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
   await animationService.closePhone();
   SetNuiFocus(false, false);
@@ -87,7 +73,7 @@ RegisterCommand(
   async () => {
     //-- Toggles Phone
     // Check to see if the phone is marked as disabled
-    if (!(global as any).isPhoneDisabled) await togglePhone();
+    if (!global.isPhoneDisabled) await togglePhone();
   },
   false,
 );
@@ -97,7 +83,6 @@ RegisterCommand(
   async () => {
     await hidePhone();
     sendMessage('PHONE', 'phoneRestart', {});
-    fetchOnInitialize();
   },
   false,
 );
@@ -122,7 +107,7 @@ async function togglePhone(): Promise<void> {
     const canAccess = checkExportCanOpen();
     if (!canAccess) return;
   }
-  if ((global as any).isPhoneOpen) return await hidePhone();
+  if (global.isPhoneOpen) return await hidePhone();
   await showPhone();
 }
 
@@ -159,7 +144,7 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   PhoneEvents.TOGGLE_KEYS,
   async ({ keepGameFocus }, cb) => {
     // We will only
-    if ((global as any).isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+    if (global.isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
     cb({});
   },
 );

@@ -1,6 +1,6 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { CallEvents } from '../../../../../typings/call';
-import { IAlert, useSnackbar } from '../../../ui/hooks/useSnackbar';
+import { CallEvents } from '@typings/call';
+import { IAlert, useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
 export const useDialService = () => {

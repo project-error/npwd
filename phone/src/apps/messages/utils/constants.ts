@@ -1,4 +1,5 @@
-import { Message, MessageConversation } from '../../../../../typings/messages';
+import { Message, MessageConversation } from '@typings/messages';
+import { ServerPromiseResp } from '@typings/common';
 
 export const MockMessageConversations: MessageConversation[] = [
   {
@@ -17,7 +18,7 @@ export const MockMessageConversations: MessageConversation[] = [
   },
 ];
 
-export const MockConversationMessages: Message[] = [
+const MockConversationMessages: Message[] = [
   {
     id: 1,
     author: '215-8139',
@@ -31,15 +32,25 @@ export const MockConversationMessages: Message[] = [
       'Hi asljdf klasdfjkasjdf sdfjf asdf djkjas k kksdfjjsl ks kldfs d fd asd asdfjasdjfjasdkljjfklasjldfjlj asdf sadfdsdkafjkljsdklfjklfjdf',
   },
   {
-    id: 1,
+    id: 3,
     author: '215-8139',
     message: 'Hello',
     conversation_id: '4444+5555',
   },
   {
-    id: 3,
+    id: 4,
     author: '215-8139',
     message: 'Hello Rocky',
     conversation_id: '4444+7777',
   },
+  {
+    id: 5,
+    author: '215-8139',
+    message: 'https://i.tasoagc.dev/LtuA.png',
+  },
 ];
+
+export const MockConversationServerResp: ServerPromiseResp<Message[]> = {
+  data: MockConversationMessages,
+  status: 'ok',
+};

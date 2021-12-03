@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
-import { MessageConversation } from '../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 import { messageState, useSetConversationId } from './state';
 import { useHistory } from 'react-router';
 

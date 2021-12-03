@@ -1,6 +1,6 @@
 import { atom, selector, useRecoilValue } from 'recoil';
 import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 

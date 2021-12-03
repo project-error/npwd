@@ -2,6 +2,7 @@ import PlayerService from '../players/player.service';
 import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import {
+  ListingTypeResp,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
   MarketplaceListing,
@@ -9,7 +10,7 @@ import {
   MarketplaceReportDTO,
 } from '../../../typings/marketplace';
 import { reportListingToDiscord } from '../misc/discord';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _MarketplaceService {
   private readonly marketplaceDB: _MarketplaceDB;
@@ -21,7 +22,7 @@ class _MarketplaceService {
 
   async handleAddListing(
     reqObj: PromiseRequest<MarketplaceListingBase>,
-    resp: PromiseEventResp<void>,
+    resp: PromiseEventResp<ListingTypeResp>,
   ): Promise<void> {
     marketplaceLogger.debug('Handling add listing, listing:');
     marketplaceLogger.debug(reqObj.data);
@@ -29,6 +30,9 @@ class _MarketplaceService {
     const player = PlayerService.getPlayer(reqObj.source);
 
     try {
+      const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data);
+      if (doesListingExist) return resp({ status: 'error', data: ListingTypeResp.DUPLICATE });
+
       const listingId = await this.marketplaceDB.addListing(
         player.getIdentifier(),
         player.username,
@@ -114,7 +118,7 @@ class _MarketplaceService {
       const rListing = await this.marketplaceDB.getListing(reqObj.data.id);
       const reportExists = await this.marketplaceDB.doesReportExist(
         reqObj.data.id,
-        rListing.number,
+        rListing.name || rListing.username,
       );
 
       const reportingPlayer = GetPlayerName(reqObj.source.toString());
@@ -124,7 +128,7 @@ class _MarketplaceService {
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
       }
 
-      await this.marketplaceDB.reportListing(rListing.id, rListing.name);
+      await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
       await reportListingToDiscord(rListing, reportingPlayer);
     } catch (e) {
       marketplaceLogger.error(`Failed to report listing ${e.message}`, {

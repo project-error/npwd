@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import { Tweet } from '../../../../../typings/twitter';
+import { Tweet } from '@typings/twitter';
 
-import { useApp } from '../../../os/apps/hooks/useApps';
-import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
+import { useApp } from '@os/apps/hooks/useApps';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useSettings } from '../../settings/hooks/useSettings';
 import { SETTING_MENTIONS } from '../utils/constants';
 import { twitterState } from './state';

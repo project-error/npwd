@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import { contactsLogger } from './contacts.utils';
 import ContactsDB, { _ContactsDB } from './contacts.db';
 import { Contact, ContactDeleteDTO, PreDBContact } from '../../../typings/contact';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _ContactService {
   private readonly contactsDB: _ContactsDB;

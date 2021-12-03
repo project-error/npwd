@@ -1,4 +1,4 @@
-import { getSource } from '../miscUtils';
+import { getSource } from '../../utils/miscUtils';
 import { mainLogger } from '../../sv_logger';
 import { CBSignature, PromiseEventResp, PromiseRequest } from './promise.types';
 import { ServerPromiseResp } from '../../../../typings/common';
@@ -9,6 +9,12 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
   onNet(eventName, async (respEventName: string, data: T) => {
     const startTime = process.hrtime.bigint();
     const src = getSource();
+
+    if (!respEventName) {
+      return netEventLogger.warn(
+        `Promise event (${eventName}) was called with wrong struct by ${src} (maybe originator wasn't a promiseEvent`,
+      );
+    }
 
     const promiseRequest: PromiseRequest<T> = {
       source: src,

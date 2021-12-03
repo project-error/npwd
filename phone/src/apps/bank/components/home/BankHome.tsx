@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { Button } from '../../../../ui/components/Button';
+import { Button } from '@ui/components/Button';
 import { useTranslation } from 'react-i18next';
 
 import { useBankModal } from '../../hooks/useBankModal';

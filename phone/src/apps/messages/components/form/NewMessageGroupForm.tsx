@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Popper } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { Contact } from '../../../../../../typings/contact';
-import { MessageConversationResponse, MessageEvents } from '../../../../../../typings/messages';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
-import { TextField } from '../../../../ui/components/Input';
+import { Contact } from '@typings/contact';
+import { MessageConversationResponse, MessageEvents } from '@typings/messages';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { TextField } from '@ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '../../../../../../typings/common';
+import { ServerPromiseResp } from '@typings/common';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessageConversationsValue } from '../../hooks/state';
 
@@ -87,6 +87,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     getPictureByNumber,
   ]);
 
+  const handleCancel = () => {
+    history.push('/messages');
+  };
+
   const renderAutocompleteInput = (params) => (
     <TextField
       {...params}
@@ -103,8 +107,12 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       <Box px={2} py={3}>
         <Autocomplete<Contact, boolean, boolean, boolean>
           freeSolo
+          disablePortal
+          PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
           autoHighlight
           options={contacts}
+          // I am so sorry
+          ListboxProps={{ style: { marginLeft: 10 } }}
           getOptionLabel={(contact) => contact.display || contact.number || participant}
           onChange={(e, value: any) => setParticipant(value)}
           renderInput={renderAutocompleteInput}
@@ -116,10 +124,14 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           disabled={submitDisabled}
           variant="contained"
           fullWidth
+          sx={{ mb: 1 }}
           color="primary"
           type="submit"
         >
           {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
+        </Button>
+        <Button onClick={handleCancel} variant="contained" fullWidth color="error">
+          {t('GENERIC_CANCEL')}
         </Button>
       </Box>
     </Box>

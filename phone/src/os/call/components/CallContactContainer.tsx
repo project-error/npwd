@@ -1,21 +1,12 @@
 import React from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
 import { useCall } from '../hooks/useCall';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles({
-  image: {
-    width: 80,
-    height: 80,
-  },
-});
-
 const CallContactContainer = () => {
   const [t] = useTranslation();
   const { call } = useCall();
-  const classes = useStyles();
 
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
@@ -24,7 +15,7 @@ const CallContactContainer = () => {
 
   return (
     <Box display="flex" alignItems="center">
-      <Box style={{ flexGrow: 1 }}>
+      <Box flexGrow={1} overflow="hidden" textOverflow="ellipsis">
         <Typography variant="body1">
           {call.isTransmitter
             ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
@@ -33,7 +24,7 @@ const CallContactContainer = () => {
         <Typography variant="h4">{getDisplayOrNumber()}</Typography>
       </Box>
       <Avatar
-        className={classes.image}
+        sx={{ ml: 1, height: 80, width: 80 }}
         alt={getDisplayOrNumber()}
         src={
           call.isTransmitter

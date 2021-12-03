@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { AppWrapper } from '../../ui/components';
-import { AppContent } from '../../ui/components/AppContent';
-import { AppTitle } from '../../ui/components/AppTitle';
-import { useApp } from '../../os/apps/hooks/useApps';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
+import { AppTitle } from '@ui/components/AppTitle';
+import { useApp } from '@os/apps/hooks/useApps';
 import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
 import { Fab } from '@mui/material';
@@ -11,9 +11,9 @@ import useStyles from './notes.styles';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route } from 'react-router-dom';
 import { useSetModalVisible, useSetSelectedNote } from './hooks/state';
-import { LoadingSpinner } from '../../ui/components/LoadingSpinner';
-import { useQueryParams } from '../../common/hooks/useQueryParams';
-import { AddNoteExportData } from '../../../../typings/notes';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { AddNoteExportData } from '@typings/notes';
 
 export const NotesApp: React.FC = () => {
   const classes = useStyles();

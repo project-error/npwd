@@ -1,12 +1,10 @@
 {
-  "Locale": "en",
   "PhoneAsItem": {
     "enabled": false,
     "exportResource": "my-core-resource",
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useDashNumber": true,
     "enableMultiChar": false
   },
   "database": {
@@ -24,10 +22,7 @@
     "contentType": "multipart/form-data",
     "authorizationPrefix": "Client-ID",
     "useAuthorization": true,
-    "returnedDataIndexes": [
-      "data",
-      "link"
-    ]
+    "returnedDataIndexes": ["data", "link"]
   },
   "twitter": {
     "showNotifications": true,
@@ -45,9 +40,6 @@
   "match": {
     "generateProfileNameFromUsers": true,
     "allowEditableProfileName": true
-  },
-  "bank": {
-    "showNotifications": true
   },
   "debug": {
     "level": "silly",

@@ -1,6 +1,6 @@
 import { useSetNotes } from './state';
 import { useCallback } from 'react';
-import { NoteItem } from '../../../../../typings/notes';
+import { NoteItem } from '@typings/notes';
 
 interface UseNotesActionsValue {
   deleteLocalNote: (id: number) => void;

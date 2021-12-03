@@ -1,4 +1,8 @@
-import { Message, UnformattedMessageConversation } from '../../../typings/messages';
+import {
+  Message,
+  MessageConversation,
+  UnformattedMessageConversation,
+} from '../../../typings/messages';
 import { config } from '../server';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
@@ -159,17 +163,27 @@ export class _MessagesDB {
     await DbInterface._rawExec(query, [groupId, identifier]);
   }
 
-  async deleteConversation(conversationId: string) {
+  async deleteConversation(conversationId: string, identifier: string) {
     const query = `DELETE
                    FROM npwd_messages_conversations
-                   WHERE conversation_id = ?`;
-    await DbInterface._rawExec(query, [conversationId]);
+                   WHERE conversation_id = ? AND participant_identifier = ?`;
+    await DbInterface._rawExec(query, [conversationId, identifier]);
   }
 
   async deleteMessage(message: Message) {
     const query = `DELETE FROM npwd_messages WHERE id = ? AND conversation_id = ?`;
 
     await DbInterface._rawExec(query, [message.id, message.conversation_id]);
+  }
+
+  async doesConversationExist(
+    conversationId: string,
+    identifier: string,
+  ): Promise<UnformattedMessageConversation | null> {
+    const query = `SELECT * FROM npwd_messages_conversations WHERE conversation_id = ? AND participant_identifier = ?`;
+    const [results] = await DbInterface._rawExec(query, [conversationId, identifier]);
+    const conversations = <UnformattedMessageConversation[]>results;
+    return conversations[0];
   }
 }
 

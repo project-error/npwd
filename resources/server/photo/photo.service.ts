@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import { GalleryPhoto } from '../../../typings/photo';
 import PhotoDB, { _PhotoDB } from './photo.db';
 import { photoLogger } from './photo.utils';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _PhotoService {
   private readonly photoDB: _PhotoDB;
@@ -17,6 +17,8 @@ class _PhotoService {
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
     try {
+      if (!reqObj.data) resp({ status: 'error', errorMsg: 'DB_ERROR' });
+
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
 

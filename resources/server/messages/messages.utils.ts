@@ -80,8 +80,8 @@ export function createGroupHashID(participants: string[]) {
  * avoid situations where some participants get added to the group but
  * one fails resulting in a partial group which would be very confusing
  * to the player.
- * @param userIdentifier - user who is creating the group
- * @param phoneNumber - list of phone numbers to add to the grup
+ * @param sourceIdentifier - user who is creating the group
+ * @param tgtPhoneNumber - list of phone numbers to add to the grup
  */
 export async function createMessageGroupsFromPhoneNumber(
   sourceIdentifier: string,
@@ -96,21 +96,41 @@ export async function createMessageGroupsFromPhoneNumber(
   }
 
   const conversationId = createGroupHashID([sourceIdentifier, tgtIdentifier]);
+  const existingConversation = await MessagesDB.doesConversationExist(
+    conversationId,
+    tgtIdentifier,
+  );
 
-  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
-  await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
+  if (existingConversation) {
+    await MessagesDB.createMessageGroup(
+      existingConversation.user_identifier,
+      conversationId,
+      sourceIdentifier,
+    );
+  } else {
+    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
+    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
+  }
+
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
   // so we are not left in a situation where only some of the member of the
   // group exist while other are left off.
 
   return {
     error: false,
+    doesExist: existingConversation,
     conversationId,
     identifiers: [sourceIdentifier, tgtIdentifier],
     phoneNumber: tgtPhoneNumber,
     participant: tgtIdentifier,
   };
 }
+
+export async function restoreMessageConversation(
+  userIdentifier: string,
+  participantIdentifier: string,
+  conversationId: string,
+) {}
 
 // getting the participants from groupId.
 // this should return the source or and array of identifiers

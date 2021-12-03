@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
     `avatar`     varchar(255)          DEFAULT NULL,
     `number`     varchar(20)           DEFAULT NULL,
     `display`    varchar(255) NOT NULL DEFAULT '',
-    PRIMARY KEY (id)
+    PRIMARY KEY (`id`),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
@@ -23,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
     `visible`    tinyint       NOT NULL DEFAULT '1',
     `images`     varchar(1000)          DEFAULT '',
     `retweet`    int                    DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    INDEX `identifier` (`identifier`)
 );
 
 
@@ -40,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
     `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `profile_name_UNIQUE` (`profile_name`)
+    UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
@@ -83,7 +86,8 @@ CREATE TABLE IF NOT EXISTS `npwd_match_views`
     `updatedAt`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `match_profile_idx` (`profile`),
-    CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`)
+    CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_notes`
@@ -92,7 +96,8 @@ CREATE TABLE IF NOT EXISTS `npwd_notes`
     `identifier` varchar(48)  NOT NULL,
     `title`      varchar(255) NOT NULL,
     `content`    varchar(255) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
@@ -107,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     `description` varchar(255) NOT NULL,
     `createdAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_marketplace_reports`
@@ -142,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `updatedAt`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP,
     `visible`         tinyint(4)   NOT NULL DEFAULT 1,
     `author`          varchar(255) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX `user_identifier` (`user_identifier`)
 );
 
 CREATE TABLE `npwd_messages_conversations`
@@ -156,7 +163,8 @@ CREATE TABLE `npwd_messages_conversations`
     `label`                  varchar(60)           DEFAULT '',
     `unreadCount`            int(11)      NOT NULL DEFAULT 0,
     `unread`                 int(11)               DEFAULT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX `user_identifier` (`user_identifier`)
 );
 CREATE TABLE IF NOT EXISTS `npwd_calls`
 (
@@ -167,13 +175,15 @@ CREATE TABLE IF NOT EXISTS `npwd_calls`
     `is_accepted` tinyint(4)   DEFAULT 0,
     `start`       varchar(255) DEFAULT NULL,
     end           varchar(255) DEFAULT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS npwd_phone_gallery
 (
     `id`         int(11) NOT NULL AUTO_INCREMENT,
     `identifier` varchar(48)  DEFAULT NULL,
-    `image`      varchar(255) DEFAULT NULL,
-    PRIMARY KEY (id)
+    `image`      varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+    INDEX `identifier` (`identifier`)
 );

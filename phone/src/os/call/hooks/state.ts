@@ -1,5 +1,5 @@
 import { atom, useRecoilState } from 'recoil';
-import { ActiveCall } from '../../../../../typings/call';
+import { ActiveCall } from '@typings/call';
 
 export const callerState = {
   currentCall: atom<ActiveCall | null>({

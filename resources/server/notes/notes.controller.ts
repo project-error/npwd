@@ -1,7 +1,7 @@
 import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '../../../typings/notes';
 import NotesService from './notes.service';
 import { notesLogger } from './notes.utils';
-import { onNetPromise } from '../utils/PromiseNetEvents/onNetPromise';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<BeforeDBNote, NoteItem>(NotesEvents.ADD_NOTE, (reqObj, resp) => {
   NotesService.handleAddNote(reqObj, resp).catch((e) => {

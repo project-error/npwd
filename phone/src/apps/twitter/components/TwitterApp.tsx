@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles';
 
-import { AppWrapper } from '../../../ui/components';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
 import AddTweetModal from './AddTweetModal';
 import { useModal } from '../hooks/useModal';
@@ -19,7 +19,7 @@ import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
-import { TwitterEvents } from '../../../../../typings/twitter';
+import { TwitterEvents } from '@typings/twitter';
 
 const useStyles = makeStyles(() => ({
   backgroundModal: {

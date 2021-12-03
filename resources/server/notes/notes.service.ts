@@ -2,7 +2,7 @@ import { BeforeDBNote, DeleteNoteDTO, NoteItem } from '../../../typings/notes';
 import PlayerService from '../players/player.service';
 import NotesDB, { _NotesDB } from './notes.db';
 import { notesLogger } from './notes.utils';
-import { PromiseEventResp, PromiseRequest } from '../utils/PromiseNetEvents/promise.types';
+import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _NotesService {
   private readonly notesDB: _NotesDB;

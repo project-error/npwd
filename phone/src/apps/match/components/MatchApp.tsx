@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import { AppWrapper } from '../../../ui/components';
-import { AppTitle } from '../../../ui/components/AppTitle';
-import { AppContent } from '../../../ui/components/AppContent';
-import { useApp } from '../../../os/apps/hooks/useApps';
+import { AppWrapper } from '@ui/components';
+import { AppTitle } from '@ui/components/AppTitle';
+import { AppContent } from '@ui/components/AppContent';
+import { useApp } from '@os/apps/hooks/useApps';
 import { MatchThemeProvider } from '../providers/MatchThemeProvider';
 import MatchBottomNavigation from '../components/BottomNavigation';
 import MatchContainer from './MatchContainer';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 export const MatchApp = () => {
   const match = useApp('MATCH');

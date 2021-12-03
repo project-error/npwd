@@ -1,14 +1,10 @@
 import { useContactActions } from './useContactActions';
 import { useNuiEvent } from 'fivem-nui-react-lib/';
-import {
-  AddContactExportData,
-  ContactEvents,
-  ContactsDatabaseLimits,
-} from '../../../../../typings/contact';
+import { AddContactExportData, ContactEvents, ContactsDatabaseLimits } from '@typings/contact';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import qs from 'qs';
-import { useApps } from '../../../os/apps/hooks/useApps';
+import { useApps } from '@os/apps/hooks/useApps';
 
 export const useContactsListener = () => {
   const { getContactByNumber } = useContactActions();

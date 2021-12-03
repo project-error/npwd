@@ -1,12 +1,12 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
-import { AppTitle } from '../../../ui/components/AppTitle';
-import { AppContent } from '../../../ui/components/AppContent';
-import { useContextMenu, MapSettingItem, SettingOption } from '../../../ui/hooks/useContextMenu';
+import { AppWrapper } from '@ui/components';
+import { AppTitle } from '@ui/components/AppTitle';
+import { AppContent } from '@ui/components/AppContent';
+import { useContextMenu, MapSettingItem, SettingOption } from '@ui/hooks/useContextMenu';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
-import { List } from '../../../ui/components/List';
-import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
-import { IconSetObject, useApp } from '../../../os/apps/hooks/useApps';
+import { List } from '@ui/components/List';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { IconSetObject, useApp } from '@os/apps/hooks/useApps';
 import {
   SettingItem,
   SettingItemIconAction,
@@ -32,9 +32,9 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { ListSubheader } from '@mui/material';
 import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
-import { setClipboard } from '../../../os/phone/hooks/useClipboard';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { IContextMenuOption } from '../../../ui/components/ContextMenu';
+import { setClipboard } from '@os/phone/hooks/useClipboard';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { IContextMenuOption } from '@ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
 
 const SubHeaderComp = (props: { text: string }) => (

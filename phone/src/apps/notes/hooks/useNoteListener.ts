@@ -1,6 +1,6 @@
 import { useNuiEvent } from 'fivem-nui-react-lib/';
-import { AddNoteExportData, NotesEvents } from '../../../../../typings/notes';
-import { useApps } from '../../../os/apps/hooks/useApps';
+import { AddNoteExportData, NotesEvents } from '@typings/notes';
+import { useApps } from '@os/apps/hooks/useApps';
 import { useHistory } from 'react-router';
 import qs from 'qs';
 

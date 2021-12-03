@@ -1,4 +1,4 @@
-import { FormattedTweet } from '../../../../../typings/twitter';
+import { FormattedTweet } from '@typings/twitter';
 import { useSetFilteredTweets, useSetTweets } from './state';
 import { useCallback } from 'react';
 

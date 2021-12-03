@@ -7,7 +7,7 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
-const exp = (global as any).exports;
+const exp = global.exports;
 
 let inCameraMode = false;
 
@@ -32,6 +32,7 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
+// TODO: The flow here seems a little convuluted, we need to take a look at it.
 RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   await animationService.openCamera();
   emit('npwd:disableControlActions', false);

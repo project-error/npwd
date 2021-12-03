@@ -1,4 +1,4 @@
-import { FormattedMatch, FormattedProfile } from '../../../../../typings/match';
+import { FormattedMatch, FormattedProfile } from '@typings/match';
 
 export const MockProfilesData: FormattedProfile[] = [
   {

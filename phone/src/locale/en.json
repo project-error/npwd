@@ -270,6 +270,7 @@
     "APPS_MARKETPLACE_DELETE_LISTING_SUCCESS": "Successfully delete listing",
     "APPS_MARKETPLACE_DELETE_LISTING_FAILED": "Failed to delete listing",
     "APPS_MARKETPLACE_REPORT_LISTING_FAILED": "This listing has already been reported",
+    "APPS_MARKETPLACE_DUPLICATE_LISTING": "You cannot upload a duplicated listing!",
     "APPS_MARKETPLACE_REPORT_LISTING_SUCCESS": "Successfully reported listing",
     "APPS_MARKETPLACE_REQUIRED_FIELDS": "All required fields must be filled!",
     "APPS_MARKETPLACE_FORM_TITLE": "Title",

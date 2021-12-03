@@ -31,7 +31,7 @@ import {
 } from '../../../apps/twitter/twitter.theme';
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 import { SvgIconProps } from '@mui/material';
-import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
+import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
@@ -79,7 +79,7 @@ export const APPS: IAppConfig[] = [
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
     Route: () => (
-      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={true} />
+      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
   },
   {

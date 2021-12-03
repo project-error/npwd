@@ -1,7 +1,6 @@
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
 import { config } from '../server';
-import { PlayerAddData } from './player.interfaces';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
 
@@ -58,30 +57,5 @@ if (!config.general.enableMultiChar) {
         await PlayerService.handleNewPlayerJoined(parseInt(player));
       }
     }
-  });
-}
-
-// For multicharacter frameworks, we enable these events for
-// instantiating/deleting a player. The config option must be set to true
-// for these to be available
-if (config.general.enableMultiChar) {
-  // This has to be an event as FXServer does not yet support exports which return a promise.
-  on('npwd:newPlayer', async (playerDTO: PlayerAddData) => {
-    if (typeof playerDTO.source !== 'number') {
-      return playerLogger.error('Source must be passed as a number when loading a player');
-    }
-    playerLogger.debug('Receive newPlayer event, data:');
-    playerLogger.debug(playerDTO);
-    await PlayerService.handleNewPlayerEvent(playerDTO);
-    emitNet(PhoneEvents.PLAYER_LOADED, playerDTO.source, true);
-  });
-
-  on('npwd:unloadPlayer', (src: number) => {
-    if (typeof src !== 'number') {
-      return playerLogger.error('Source must be passed as a number when unloading a player');
-    }
-    playerLogger.debug(`Received unloadPlayer event for ${src}`);
-    PlayerService.handleUnloadPlayerEvent(src);
-    emitNet(PhoneEvents.PLAYER_LOADED, src, false);
   });
 }

@@ -1,9 +1,9 @@
 import React, { memo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
-import { TextField } from '../../../../ui/components/Input';
+import { TextField } from '@ui/components/Input';
 
 const useStyles = makeStyles({
   textField: {

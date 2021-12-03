@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppWrapper } from '../../../ui/components';
-import { AppContent } from '../../../ui/components/AppContent';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
 import { CallControls } from './CallControls';
@@ -10,7 +10,7 @@ import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
 import makeStyles from '@mui/styles/makeStyles';
 import RingingText from './RingingText';
-import { LoadingSpinner } from '../../../ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const useStyles = makeStyles({
   root: {
