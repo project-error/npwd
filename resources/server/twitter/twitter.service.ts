@@ -35,13 +35,11 @@ class _TwitterService {
       if (!profile) {
         const defaultProfileNames = await getDefaultProfileNames(reqObj.source);
         if (!defaultProfileNames) return;
-
-        emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_NULL, reqObj.source, defaultProfileNames);
       } else {
         resp({ status: 'ok', data: profile });
       }
     } catch (e) {
-      emitNet(TwitterEvents.GET_OR_CREATE_PROFILE_FAILURE, reqObj.source);
+      resp({ status: 'error', errorMsg: e.message });
       twitterLogger.error(`Failed to get or create profile, ${e.message}`, {
         source: reqObj.source,
       });
@@ -131,10 +129,7 @@ class _TwitterService {
       twitterLogger.error(`Create tweet failed, ${e.message}`, {
         source: reqObj.source,
       });
-      emitNet(TwitterEvents.CREATE_TWEET_RESULT, reqObj.source, {
-        message: 'TWITTER_CREATE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: e.message });
     }
   }
 
@@ -188,9 +183,9 @@ class _TwitterService {
       // alert the player that they have already retweeted
       // this post (or that they are the original poster)
       if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
-        return emitNet(TwitterEvents.RETWEET_EXISTS, reqObj.source, {
-          message: 'TWITTER_RETWEET_EXISTS',
-          type: 'error',
+        resp({
+          status: 'error',
+          errorMsg: 'TWITTER_RETWEET_EXISTS',
         });
       }
 

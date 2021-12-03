@@ -32,7 +32,6 @@ onNetPromise<MarketplaceListingBase, ListingTypeResp>(
 );
 
 onNetPromise<MarketplaceDeleteDTO>(MarketplaceEvents.DELETE_LISTING, async (reqObj, resp) => {
-  // TODO: Needs a permission check of some sort here eventually
   MarketplaceService.handleDeleteListing(reqObj, resp).catch((e) => {
     marketplaceLogger.error(
       `Error occurred in delete listing event (${reqObj.source}), Error: ${e.message}`,

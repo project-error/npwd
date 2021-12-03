@@ -40,22 +40,6 @@ export const twitterState = {
     key: 'modalMessage',
     default: '',
   }),
-  createTweetLoading: atom({
-    key: 'createTweetLoading',
-    default: false,
-  }),
-  createTweetSuccessful: atom({
-    key: 'createTweetSuccessful',
-    default: null,
-  }),
-  updateProfileLoading: atom({
-    key: 'updateProfileLoading',
-    default: false,
-  }),
-  updateProfileSuccess: atom({
-    key: 'updateProfileSuccess',
-    default: null,
-  }),
   unreadTweetsCount: atom({
     key: 'unreadTweetsCount',
     default: 0,
