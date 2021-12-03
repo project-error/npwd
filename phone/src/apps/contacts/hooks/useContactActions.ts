@@ -1,8 +1,7 @@
 import { contactsState, useSetContacts } from './state';
 
 import { Contact } from '@typings/contact';
-import { useCallback } from 'react';
-import { useRecoilCallback, useRecoilStateLoadable } from 'recoil';
+import { useRecoilCallback } from 'recoil';
 
 interface UseContactsValue {
   getDisplayByNumber: (number: string) => string;
