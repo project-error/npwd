@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Popper } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
@@ -107,8 +107,12 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       <Box px={2} py={3}>
         <Autocomplete<Contact, boolean, boolean, boolean>
           freeSolo
+          disablePortal
+          PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
           autoHighlight
           options={contacts}
+          // I am so sorry
+          ListboxProps={{ style: { marginLeft: 10 } }}
           getOptionLabel={(contact) => contact.display || contact.number || participant}
           onChange={(e, value: any) => setParticipant(value)}
           renderInput={renderAutocompleteInput}
