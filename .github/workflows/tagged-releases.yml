@@ -53,7 +53,7 @@ jobs:
           # Make sure we copy our one lua boy
           mkdir ./temp/npwd/resources/client
           cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
-          cd ./temp && zip -r ../npwd.zip npwd
+          cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
