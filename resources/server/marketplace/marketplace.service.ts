@@ -126,10 +126,10 @@ class _MarketplaceService {
       if (reportExists) {
         marketplaceLogger.error(`This listing has already been reported`);
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
+      } else {
+        await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
+        await reportListingToDiscord(rListing, reportingPlayer);
       }
-
-      await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
-      await reportListingToDiscord(rListing, reportingPlayer);
     } catch (e) {
       marketplaceLogger.error(`Failed to report listing ${e.message}`, {
         source: reqObj.source,
