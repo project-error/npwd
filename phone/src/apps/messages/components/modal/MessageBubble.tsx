@@ -10,11 +10,6 @@ import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '&:first-child': {
-      marginTop: 'auto',
-    },
-  },
   mySms: {
     float: 'right',
     margin: theme.spacing(1),
@@ -53,28 +48,25 @@ const isImage = (url) => {
   return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
 };
 
-export const MessageBubble = ({
-  message,
-  onClickDisplay,
-}: {
+interface MessageBubbleProps {
   message: Message;
-  onClickDisplay(phoneNumber: string): void;
-}) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const setSelectedMessage = useSetSelectedMessage();
+}
 
+export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
+  const classes = useStyles();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const setSelectedMessage = useSetSelectedMessage();
   const openMenu = () => {
     setMenuOpen(true);
     setSelectedMessage(message);
   };
-
-  const classes = useStyles();
   const myNumber = useMyPhoneNumber();
 
   const isMine = message.author === myNumber;
 
   return (
-    <div className={classes.root}>
+    <>
       <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
         <Box className={classes.message}>
           {isImage(message.message) ? (
@@ -82,7 +74,7 @@ export const MessageBubble = ({
               <PictureResponsive src={message.message} alt="message multimedia" />
             </PictureReveal>
           ) : (
-            <div>{message.message}</div>
+            <>{message.message}</>
           )}
           {isMine && (
             <IconButton onClick={openMenu}>
@@ -92,6 +84,6 @@ export const MessageBubble = ({
         </Box>
       </Paper>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
-    </div>
+    </>
   );
 };
