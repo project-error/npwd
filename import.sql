@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
     `avatar`     varchar(255)          DEFAULT NULL,
     `number`     varchar(20)           DEFAULT NULL,
     `display`    varchar(255) NOT NULL DEFAULT '',
-    PRIMARY KEY (id),
-    INDEX identifier (identifier)
+    PRIMARY KEY (`id`),
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
     `images`     varchar(1000)          DEFAULT '',
     `retweet`    int                    DEFAULT NULL,
     PRIMARY KEY (`id`),
-    INDEX identifier (identifier)
+    INDEX `identifier` (`identifier`)
 );
 
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
     `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
-    INDEX identifier (identifier)
+    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
     KEY `profile_idx` (`profile_id`),
     KEY `tweet_idx` (`tweet_id`),
     CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
-    CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_match_profiles`
