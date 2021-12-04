@@ -32,7 +32,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
           setMessage('');
 
           return addAlert({
-            message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
             type: 'error',
           });
         }
@@ -63,7 +63,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
           inputProps={{ style: { fontSize: '1.3em' } }}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder={t('APPS_MESSAGES_NEW_MESSAGE')}
+          placeholder={t('MESSAGES.NEW_MESSAGE')}
         />
       </Box>
       <Box>

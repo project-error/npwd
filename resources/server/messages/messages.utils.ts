@@ -126,12 +126,6 @@ export async function createMessageGroupsFromPhoneNumber(
   };
 }
 
-export async function restoreMessageConversation(
-  userIdentifier: string,
-  participantIdentifier: string,
-  conversationId: string,
-) {}
-
 // getting the participants from groupId.
 // this should return the source or and array of identifiers
 export function getIdentifiersFromParticipants(conversationId: string) {

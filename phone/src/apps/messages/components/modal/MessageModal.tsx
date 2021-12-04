@@ -93,7 +93,7 @@ export const MessageModal = () => {
     ).then((resp) => {
       if (resp.status !== 'ok') {
         addAlert({
-          message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+          message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
           type: 'error',
         });
 
@@ -164,7 +164,7 @@ export const MessageModal = () => {
     }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_MESSAGES_DELETE_CONVERSATION_FAILED'),
+          message: t('MESSAGES.FEEDBACK.DELETE_CONVERSATION_FAILED'),
           type: 'error',
         });
       }
@@ -181,7 +181,7 @@ export const MessageModal = () => {
       <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
         <Box>
           <Button variant="contained" color="primary" onClick={handleDeleteConversation}>
-            {t('APPS_MESSAGES_DELETE_CONVERSATION')}
+            {t('MESSAGES.DELETE_CONVERSATION')}
           </Button>
         </Box>
       </Modal>
@@ -206,7 +206,7 @@ export const MessageModal = () => {
             </Typography>
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
-              title={t('APPS_MESSAGES_ACTIONS_TITLE')}
+              title={t('MESSAGES.ACTIONS_TITLE')}
               placement="left"
             >
               <IconButton onClick={() => setGroupActionsOpen(true)}>
