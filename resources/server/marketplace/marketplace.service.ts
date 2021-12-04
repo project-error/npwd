@@ -28,9 +28,10 @@ class _MarketplaceService {
     marketplaceLogger.debug(reqObj.data);
 
     const player = PlayerService.getPlayer(reqObj.source);
+    const identifier = player.getIdentifier();
 
     try {
-      const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data);
+      const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data, identifier);
       if (doesListingExist) return resp({ status: 'error', data: ListingTypeResp.DUPLICATE });
 
       const listingId = await this.marketplaceDB.addListing(
