@@ -167,12 +167,8 @@ export const ListingForm: React.FC = () => {
         className={classes.input}
         onChange={handleDescriptionChange}
         label={t('GENERIC.REQUIRED')}
-<<<<<<< HEAD
         error={description.length >= MarketplaceDatabaseLimits.description}
-        placeholder={t('APPS_MARKETPLACE_FORM_DESCRIPTION')}
-=======
         placeholder={t('MARKETPLACE.FORM_DESCRIPTION')}
->>>>>>> 453bd020 (feat(translation): reformat en.json)
         inputProps={{
           className: classes.multilineFieldInput,
           maxLength: 130,
