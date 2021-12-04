@@ -28,9 +28,9 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
   const addListing = useRecoilCallback(
     ({ snapshot }) =>
       (listing: MarketplaceListing) => {
-        const { contents } = snapshot.getLoadable(listingState);
+        const { state } = snapshot.getLoadable(listingState);
         // Make sure our atom is actually loaded before we attempt a dispatch
-        if (contents !== 'hasValue') return;
+        if (state !== 'hasValue') return;
 
         setListings((curListings) => [listing, ...curListings]);
       },
