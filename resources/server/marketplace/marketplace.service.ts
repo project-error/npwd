@@ -128,8 +128,9 @@ class _MarketplaceService {
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
         return;
       }
-        await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
-        await reportListingToDiscord(rListing, reportingPlayer);
+
+      await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
+      await reportListingToDiscord(rListing, reportingPlayer);
     } catch (e) {
       marketplaceLogger.error(`Failed to report listing ${e.message}`, {
         source: reqObj.source,
