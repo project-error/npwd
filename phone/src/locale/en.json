@@ -232,17 +232,6 @@
     "APPS_CAMERA": "Camera",
     "APPS_MATCH": "Matchmaker",
 
-    "APPS_BANK_TRANSFER": "Transfer",
-    "APPS_BANK_HOME_TITLE": "Welcome",
-    "APPS_BANK_ACCOUNT_LINK": "Account",
-    "APPS_BANK_TIME_JUST_NOW": "Just now",
-    "APPS_BANK_ACCOUNT_TITLE": "Account Summary",
-    "APPS_BANK_ACCOUNT_TRANSACTIONS": "Transactions",
-    "APPS_BANK_ACCOUNT_SEE_TRANSACTION": "See all",
-    "APPS_BANK_ACTIONS_TRANSFER": "Transfer",
-    "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transfer done successfully!",
-    "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transfer failed!",
-
     "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Search messages...",
     "APPS_MESSAGES_NEW_MESSAGE": "Message...",
     "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
