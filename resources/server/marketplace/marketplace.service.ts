@@ -126,6 +126,7 @@ class _MarketplaceService {
       if (reportExists) {
         marketplaceLogger.error(`This listing has already been reported`);
         resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
+        return;
       }
 
       await this.marketplaceDB.reportListing(rListing.id, rListing.name || rListing.username);
