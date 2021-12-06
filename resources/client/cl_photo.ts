@@ -43,10 +43,13 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   CellCamActivate(true, true);
   // Hide phone from rendering temporary
   closePhoneTemp();
-
   SetNuiFocus(false, false);
 
   inCameraMode = true;
+
+  // We want to emit this event for UI handling in other resources
+  // We hide nothing in NPWD by default
+  emit(PhotoEvents.NPWD_PHOTO_MODE_STARTED);
 
   while (inCameraMode) {
     await Delay(0);
@@ -68,10 +71,14 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
     }
     displayHelperText();
   }
+
   ClearHelp(true);
+  // We can now signal to other resources for ending photo mode
+  // and redisplaying HUD components
+  emit(PhotoEvents.NPWD_PHOTO_MODE_ENDED);
+
   emit('npwd:disableControlActions', true);
   await animationService.closeCamera();
-  console.log('anim - closing camera');
 });
 
 const handleTakePicture = async () => {
