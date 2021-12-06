@@ -1,55 +1,55 @@
 {
   "translation": {
     "MISC": {
-      "TOP_LEVEL_ERR_TITLE": "Fatal Error",
-      "TOP_LEVEL_ERR_ACTION": "Reload",
-      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+      "TOP_LEVEL_ERR_TITLE": "Fatální chyba",
+      "TOP_LEVEL_ERR_ACTION": "Znovu načíst",
+      "TOP_LEVEL_ERR_MSG": "Služba NPWD se setkala s chybou, ze které se nedokázala zotavit. Bude nutné znovu načíst okno NUI. Chyba je pro vývojáře uvedena níže."
     },
     "NOTIFICATIONS": {
-      "NO_UNREAD": "No unread notifications"
+      "NO_UNREAD": "Žádná nepřečtená oznámení"
     },
     "NOTES": {
       "FEEDBACK": {
-        "NO_NOTES": "You have no notes"
+        "NO_NOTES": "Nemáš žádné poznámky"
       }
     },
     "DATE_FORMAT": "MM/DD/YYYY",
     "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
       "MESSAGES": {
-        "RINGING": "Ringing",
-        "OUTGOING": "Outgoing call",
-        "INCOMING": "Incoming call"
+        "RINGING": "Zvonění",
+        "OUTGOING": "Odchozí hovor",
+        "INCOMING": "Příchozí hovor"
       },
       "FEEDBACK": {
-        "ERROR_MYSELF": "You cannot call your own phone number!",
-        "ERROR": "Error occurred while completing this call"
+        "ERROR_MYSELF": "Nemůžeš volat na své vlastní telefonní číslo!",
+        "ERROR": "Při dokončování tohoto volání došlo k chybě"
       }
     },
     "BROWSER": {
-      "NAME": "Browser"
+      "NAME": "Prohlížeč"
     },
     "SETTINGS": {
       "CATEGORY": {
-        "APPEARANCE": "Appearance",
-        "PHONE": "Phone",
-        "ACTIONS": "Actions"
+        "APPEARANCE": "Vzhled",
+        "PHONE": "Telefon",
+        "ACTIONS": "Akce"
       },
       "OPTIONS": {
-        "ICONSET": "Icon Set",
-        "LANGUAGE": "Language",
-        "RESET_SETTINGS": "Reset Settings",
-        "RESET_SETTINGS_DESC": "This will clear your locally stored data",
+        "ICONSET": "Sada ikonek",
+        "LANGUAGE": "Jazyk",
+        "RESET_SETTINGS": "Obnovit nastavení",
+        "RESET_SETTINGS_DESC": "Dojde k vymazání lokálně uložených dat.",
         "CUSTOM_WALLPAPER": {
-          "DIALOG_TITLE": "Custom Wallpaper",
-          "DIALOG_CONTENT": "Set a custom wallpaper by entering the URL of the image below!",
-          "DIALOG_PLACEHOLDER": "Image URL",
-          "DIALOG_ERROR": "Invalid image or link"
+          "DIALOG_TITLE": "Vlastní tapeta",
+          "DIALOG_CONTENT": "Nastavte si vlastní tapetu zadáním adresy URL obrázku níže!",
+          "DIALOG_PLACEHOLDER": "URL adresa obrázku",
+          "DIALOG_ERROR": "Neplatný obrázek nebo odkaz"
         }
       },
       "MESSAGES": {
-        "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
-        "SETTINGS_RESET": "Settings have been reset!"
+        "INVALID_SETTINGS": "Nesprávné uložené nastavení! Obnovte nastavení v aplikaci Nastavení.",
+        "SETTINGS_RESET": "Nastavení bylo obnoveno!"
       }
     },
     "CAMERA": {
