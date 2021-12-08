@@ -111,7 +111,11 @@
     {
       "label": "Czech",
       "value": "cs"
+<<<<<<< HEAD
     },
+=======
+    },    
+>>>>>>> fc2edce1263eefabd0da9758f8c2aca7402cb39a
     {
       "label": "Hungarian",
       "value": "hu"
