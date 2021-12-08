@@ -43,3 +43,10 @@ export interface MarketplaceDeleteDTO {
 export interface MarketplaceReportDTO {
   id: number;
 }
+
+export type ReportListingDTO = {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+};
