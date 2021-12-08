@@ -3,7 +3,7 @@ import { MarketplaceListing } from '@typings/marketplace';
 import { useRecoilCallback } from 'recoil';
 
 interface MarketplaceActionValues {
-  deleteListing: (id: number) => void;
+  deleteListing: (ids: number[]) => void;
   addListing: (listing: MarketplaceListing) => void;
 }
 
@@ -12,7 +12,7 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
 
   const deleteListing = useRecoilCallback(
     ({ snapshot }) =>
-      (id: number) => {
+      (ids: number[]) => {
         const { state, contents } = snapshot.getLoadable(listingState);
         // Make sure our atom is actually loaded before we attempt a dispatch
         if (state !== 'hasValue') return;
@@ -20,7 +20,9 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
         // block dispatch
         if (!contents.length) return;
 
-        setListings((curListings) => [...curListings].filter((listing) => listing.id !== id));
+        setListings((curListings) =>
+          [...curListings].filter((listing) => !ids.includes(listing.id)),
+        );
       },
     [],
   );

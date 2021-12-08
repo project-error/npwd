@@ -91,11 +91,9 @@ class _MarketplaceService {
 
       resp({ status: 'ok' });
 
-      const returnObj: MarketplaceDeleteDTO = {
-        id: reqObj.data.id,
-      };
+      const returnObj = reqObj.data.id;
 
-      emitNet(MarketplaceEvents.BROADCAST_DELETE, -1, returnObj);
+      emitNet(MarketplaceEvents.BROADCAST_DELETE, -1, [returnObj]);
     } catch (e) {
       marketplaceLogger.error(`Error in handleDeleteListing, ${e.message}`);
 
@@ -105,6 +103,10 @@ class _MarketplaceService {
 
   async handleDeleteListingsOnDrop(identifier: string) {
     try {
+      const listingIds = await this.marketplaceDB.getListingIdsByIdentifier(identifier);
+
+      emitNet(MarketplaceEvents.BROADCAST_DELETE, -1, listingIds);
+
       await this.marketplaceDB.deleteListingsOnDrop(identifier);
     } catch (e) {
       marketplaceLogger.error(`Error when deleting listings on player drop, ${e.message}`);

@@ -1,4 +1,5 @@
 import {
+  MarketplaceDeleteDTO,
   MarketplaceListing,
   MarketplaceListingBase,
   ReportListingDTO,
@@ -55,6 +56,13 @@ export class _MarketplaceDB {
     const [results] = await DbInterface._rawExec(query, [listingId]);
     const listings = <MarketplaceListing[]>results;
     return listings[0];
+  }
+
+  async getListingIdsByIdentifier(identifier: string): Promise<MarketplaceDeleteDTO[]> {
+    const query = `SELECT id FROM npwd_marketplace_listings WHERE identifier = ?`;
+    const [results] = await DbInterface._rawExec(query, [identifier]);
+
+    return <MarketplaceDeleteDTO[]>results;
   }
 
   async reportListing(listing: ReportListingDTO, profile: string): Promise<void> {
