@@ -59,7 +59,7 @@ const Profile = ({ profile }: IProps) => {
           {profile.name}
         </Typography>
         <Typography gutterBottom color="textSecondary" component="p">
-          {t('APPS_MATCH_PROFILE_LAST_ACTIVE', { lastActive: profile.lastActiveFormatted })}
+          {t('MATCH.MESSAGES.PROFILE_LAST_ACTIVE', { lastActive: profile.lastActiveFormatted })}
         </Typography>
         {bioSecondary && (
           <Typography gutterBottom variant="body1" color="textSecondary" component="p">

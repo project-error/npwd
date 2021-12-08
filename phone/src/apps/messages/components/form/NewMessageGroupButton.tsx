@@ -36,7 +36,7 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
     }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_MESSAGES_DELETE_CONVERSATION_FAILED'),
+          message: t('MESSAGES.DELETE_CONVERSATION_FAILED'),
           type: 'error',
         });
       }

@@ -37,7 +37,7 @@ function ReportButton({ handleClose, tweetId, isReported }) {
     return (
       <MenuItem onClick={handleClose}>
         <DoneIcon />
-        <span style={{ marginLeft: '5px' }}>{t('APPS_TWITTER_REPORTED')}</span>
+        <span style={{ marginLeft: '5px' }}>{t('TWITTER.REPORTED')}</span>
       </MenuItem>
     );
   }
@@ -50,7 +50,7 @@ function ReportButton({ handleClose, tweetId, isReported }) {
     );
   }
 
-  return <MenuItem onClick={handleClick}>{t('APPS_TWITTER_REPORT')}</MenuItem>;
+  return <MenuItem onClick={handleClick}>{t('TWITTER.REPORT')}</MenuItem>;
 }
 
 export default ReportButton;

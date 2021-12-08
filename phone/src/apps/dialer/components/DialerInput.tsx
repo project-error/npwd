@@ -48,7 +48,7 @@ export const DialerInput: React.FC = () => {
   return (
     <Box component={Paper} className={classes.root}>
       <InputBase
-        placeholder={t('APPS_DIALER_INPUT_PLACEHOLDER')}
+        placeholder={t('DIALER.INPUT_PLACEHOLDER')}
         className={classes.input}
         value={inputVal}
         onChange={(e) => set(e.target.value)}

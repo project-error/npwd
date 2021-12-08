@@ -138,7 +138,7 @@ export const SettingsApp = () => {
     selected: false,
     onClick: () => setCustomWallpaperState(true),
     key: 'CUSTOM_WALLPAPER',
-    label: t('APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER'),
+    label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
   };
 
   const handleCopyPhoneNumber = () => {
@@ -180,7 +180,7 @@ export const SettingsApp = () => {
       >
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
-            label={t('APPS_SETTINGS_PHONE_NUMBER')}
+            label={t('SETTINGS.PHONE_NUMBER')}
             labelSecondary={myNumber}
             actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
               content: 'number',
@@ -190,34 +190,34 @@ export const SettingsApp = () => {
             handleAction={handleCopyPhoneNumber}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_RINGTONE')}
+            label={t('SETTINGS.OPTIONS.RINGTONE')}
             value={settings.ringtone.label}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
           <SettingItemSlider
-            label={t('APPS_SETTINGS_OPTION_RINGTONEVOL')}
+            label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
             icon={<VolumeUp />}
             value={settings.ringtoneVol}
             onCommit={(e, val) => handleSettingChange('ringtoneVol', val)}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
+            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
             value={settings.notiSound.label}
             options={notifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
           <SettingItemSlider
-            label={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
             icon={<VolumeUp />}
             value={settings.notiSoundVol}
             onCommit={(e, val) => handleSettingChange('notiSoundVol', val)}
           />
           <SettingSwitch
-            label={t('APPS_SETTINGS_OPTION_STREAMER_MODE')}
-            secondary={t('APPS_SETTING_STREAMER_MODE_DESC')}
+            label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
+            secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
             icon={<VisibilityOffIcon />}
             value={settings.streamerMode}
             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
@@ -232,7 +232,7 @@ export const SettingsApp = () => {
             icon={<Book />}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_THEME')}
+            label={t('SETTINGS.OPTIONS.THEME')}
             value={settings.theme.label}
             options={themes}
             onClick={openMenu}
@@ -246,21 +246,21 @@ export const SettingsApp = () => {
             icon={<Apps />}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_WALLPAPER')}
+            label={t('SETTINGS.OPTIONS.WALLPAPER')}
             value={t(settings.wallpaper.label)}
             options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_FRAME')}
+            label={t('SETTINGS.OPTIONS.FRAME')}
             value={settings.frame.label}
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_ZOOM')}
+            label={t('SETTINGS.OPTIONS.ZOOM')}
             value={settings.zoom.label}
             options={zoomOptions}
             onClick={openMenu}
@@ -269,21 +269,21 @@ export const SettingsApp = () => {
         </List>
         <List disablePadding subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}>
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_NOTIFICATION_FILTER')}
+            label={t('SETTINGS.OPTIONS.NOTIFICATION_FILTER')}
             value={settings.TWITTER_notiFilter.label}
             options={twitterNotificationFilters}
             onClick={openMenu}
             icon={<FilterList />}
           />
           <SettingItem
-            label={t('APPS_SETTINGS_OPTION_NOTIFICATION')}
+            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
             value={settings.TWITTER_notiSound.label}
             options={twitterNotifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
           <SettingItemSlider
-            label={t('APPS_SETTINGS_OPTION_NOTIFICATIONVOL')}
+            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
             value={settings.TWITTER_notiSoundVol}
             onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
             icon={<VolumeUp />}

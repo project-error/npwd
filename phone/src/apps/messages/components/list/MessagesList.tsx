@@ -62,7 +62,7 @@ const MessagesList = (): any => {
         <SearchField
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          placeholder={t('APPS_MESSAGES_SEARCH_PLACEHOLDER')}
+          placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
         />
       </Box>
       <Box display="flex" flexDirection="column">

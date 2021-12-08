@@ -23,7 +23,7 @@ const WallpaperModal: React.FC = () => {
   const handleNewWallpaper = () => {
     if (isImageAndUrl(value)) {
       handleSettingChange('wallpaper', {
-        label: 'APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER',
+        label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
         value,
       });
       setCustomWallpaperModal(false);

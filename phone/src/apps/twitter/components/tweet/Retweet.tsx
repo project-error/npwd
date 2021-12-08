@@ -26,7 +26,7 @@ function Retweet({ profileName }: IProps) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Repeat /> {profileName} {t('APPS_TWITTER_RETWEETED')}
+      <Repeat /> {profileName} {t('TWITTER.RETWEETED')}
     </div>
   );
 }

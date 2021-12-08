@@ -77,7 +77,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_MATCH_UPDATE_PROFILE_FAILED'),
+          message: t('MATCH.FEEDBACK.UPDATE_PROFILE_FAILED'),
           type: 'error',
         });
       }
@@ -85,14 +85,14 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       setMyProfile(resp.data);
 
       addAlert({
-        message: t('APPS_MATCH_UPDATE_PROFILE_SUCCEEDED'),
+        message: t('MATCH.FEEDBACK.UPDATE_PROFILE_SUCCEEDED'),
         type: 'success',
       });
     });
   };
 
   if (!profile && !ResourceConfig.match.allowEditableProfileName) {
-    return <PageText text={t('APPS_MATCH_PROFILE_CONFIGURATION')} />;
+    return <PageText text={t('MATCH.PROFILE_CONFIGURATION')} />;
   }
 
   if (showPreview) {
@@ -106,36 +106,36 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   return (
     <div className={classes.root}>
       <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_IMAGE')}
+        label={t('MATCH.EDIT_PROFILE_IMAGE')}
         value={update.image}
         handleChange={setImage}
         allowChange
       />
       <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_NAME')}
+        label={t('MATCH.EDIT_PROFILE_NAME')}
         value={name}
         handleChange={setName}
         allowChange={ResourceConfig.match.allowEditableProfileName}
       />
       <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_BIO')}
+        label={t('MATCH.EDIT_PROFILE_BIO')}
         value={update.bio}
         handleChange={setBio}
         multiline
         maxLength={250}
       />
       <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_LOCATION')}
+        label={t('MATCH.EDIT_PROFILE_LOCATION')}
         value={update.location}
         handleChange={setLocation}
       />
       <ProfileField
-        label={t('APPS_MATCH_EDIT_PROFILE_JOB')}
+        label={t('MATCH.EDIT_PROFILE_JOB')}
         value={update.job}
         handleChange={setJob}
         maxLength={50}
       />
-      <ProfileField label={t('APPS_MATCH_EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
+      <ProfileField label={t('MATCH.EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
       <UpdateButton handleClick={handleUpdate} />
     </div>
   );

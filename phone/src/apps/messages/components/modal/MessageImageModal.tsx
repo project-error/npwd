@@ -40,7 +40,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           if (resp !== 'ok') {
             onClose();
             return addAlert({
-              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+              message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
               type: 'error',
             });
           }

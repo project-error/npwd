@@ -36,14 +36,10 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
   let errorMessage = null;
 
   const overCharacterLimit = message.trim().length > characterLimit;
-  const characterWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT',
-  )} (${characterLimit})`;
+  const characterWarningPrompt = `${t('TWITTER,TWEET_MESSAGE_CHAR_LIMIT')} (${characterLimit})`;
 
   const overNewLineLimit = getNewLineCount(message) > newLineLimit;
-  const newLineWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT',
-  )} (${newLineLimit})`;
+  const newLineWarningPrompt = `${t('TWITTER.TWEET_MESSAGE_NEW_LINE_LIMIT')} (${newLineLimit})`;
 
   if (overCharacterLimit) {
     errorMessage = characterWarningPrompt;
@@ -66,7 +62,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
       onChange={(e) => handleChange(e.currentTarget.value)}
       onKeyPress={handleOnEnter}
       multiline
-      placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
+      placeholder={t('TWITTER.TWEET_MESSAGE_PLACEHOLDER')}
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}

@@ -2,10 +2,10 @@ const ONE_MINUTE = 60;
 const ONE_HOUR = 60 * ONE_MINUTE;
 const ONE_DAY = 24 * ONE_HOUR;
 
-const JUST_NOW = 'APPS_TWITTER_TIME_JUST_NOW';
-const MINUTES = 'APPS_TWITTER_TIME_MINUTES';
-const HOURS = 'APPS_TWITTER_TIME_HOURS';
-const DAYS = 'APPS_TWITTER_TIME_DAYS';
+const JUST_NOW = 'TWITTER.TIME_JUST_NOW';
+const MINUTES = 'TWITTER.TIME_MINUTES';
+const HOURS = 'TWITTER.TIME_HOURS';
+const DAYS = 'TWITTER.TIME_DAYS';
 
 /**
  * Convert seconds to a human readable format i.e. "Just Now", "2m", "3d"

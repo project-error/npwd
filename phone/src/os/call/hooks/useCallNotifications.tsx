@@ -45,12 +45,12 @@ export const useCallNotifications = () => {
         ...callNotificationBase,
         content: (
           <CallNotification>
-            {t('APPS_DIALER_CURRENT_CALL_WITH', {
+            {t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
               transmitter: call.transmitter,
             })}
           </CallNotification>
         ),
-        title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
+        title: t('DIALER.MESSAGES.CURRENT_CALL_TITLE'),
       });
     }
     if (!call.isTransmitter && !call.is_accepted) {
@@ -59,13 +59,13 @@ export const useCallNotifications = () => {
       addNotificationAlert(
         {
           ...callNotificationBase,
-          title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
+          title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
             transmitter: call.transmitter,
           }),
           keepWhenPhoneClosed: true,
           content: (
             <CallNotification>
-              {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {
+              {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
                 transmitter: call.transmitter,
               })}
             </CallNotification>

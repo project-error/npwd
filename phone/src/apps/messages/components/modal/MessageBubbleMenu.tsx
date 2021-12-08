@@ -24,7 +24,7 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose
     fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_MESSAGE, selectedMessage).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_MESSAGES_DELETE_MESSAGE_FAILED'),
+          message: t('MESSAGES.FEEDBACK.DELETE_MESSAGE_FAILED'),
           type: 'error',
         });
       }
@@ -36,7 +36,7 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose
   const menuOptions = useMemo(
     () => [
       {
-        label: t('APPS_MESSAGE_DELETE_MESSAGE'),
+        label: t('MESSAGES.FEEDBACK.DELETE_MESSAGE'),
         icon: <PhotoLibraryIcon />,
         onClick: handleDeleteMessage,
       },
