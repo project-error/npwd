@@ -56,7 +56,6 @@ class _TwitterService {
       twitterLogger.error(`Failed to create twitter profile: ${e.message}`, {
         source: reqObj.source,
       });
-
       resp({ status: 'error', errorMsg: e.message });
     }
   }
@@ -185,7 +184,7 @@ class _TwitterService {
       if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
         resp({
           status: 'error',
-          errorMsg: 'TWITTER_RETWEET_EXISTS',
+          errorMsg: 'FEEDBACK.RETWEET_EXISTS',
         });
       }
 

@@ -52,7 +52,7 @@ export const useMessageNotifications = () => {
         addNotification({
           ...n,
           title: group.phoneNumber || group.display,
-          content: t('APPS_MESSAGES_UNREAD_MESSAGES', {
+          content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
             count: group.unread,
           }),
         });

@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'column',
     alignItems: 'flex',
+    borderWidth: 2,
     height: 'auto',
     background: theme.palette.background.paper,
     marginBottom: 20,

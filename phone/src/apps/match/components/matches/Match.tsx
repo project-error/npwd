@@ -36,7 +36,7 @@ export const Match = ({ match }: IProps) => {
     setShowProfile((show) => !show);
   };
 
-  const secondaryText = t('APPS_MATCH_PROFILE_MATCHED_AT', {
+  const secondaryText = t('MATCH.MESSAGES.PROFILE_MATCHED_AT', {
     matchedAt: match.matchedAtFormatted,
   });
 

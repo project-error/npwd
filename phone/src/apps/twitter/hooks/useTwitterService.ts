@@ -35,7 +35,6 @@ export const useTwitterService = () => {
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
       if (profileLoading !== 'hasValue') return;
-
       if (!profileContent) return;
 
       setNotification(tweet);

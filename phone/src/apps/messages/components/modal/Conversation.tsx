@@ -40,7 +40,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
     }).then((resp) => {
       if (resp.status !== 'ok') {
         addAlert({
-          message: t('APPS_MESSAGES_FETCHED_MESSAGES_FAILED'),
+          message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
           type: 'error',
         });
 

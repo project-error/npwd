@@ -47,7 +47,9 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       ).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('APPS_MESSAGES_MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED'),
+            message: t('MESSAGES.FEEDBACK.MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED', {
+              number: participant.number || participant,
+            }),
             type: 'error',
           });
         }
@@ -57,7 +59,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         );
         if (doesConversationExist)
           return addAlert({
-            message: 'This conversation does already exist',
+            message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
             type: 'error',
           });
 
@@ -95,7 +97,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     <TextField
       {...params}
       fullWidth
-      label={t('APPS_MESSAGES_INPUT_NAME_OR_NUMBER')}
+      label={t('MESSAGES.INPUT_NAME_OR_NUMBER')}
       onChange={(e) => setParticipant(e.currentTarget.value)}
     />
   );
@@ -128,7 +130,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           color="primary"
           type="submit"
         >
-          {t('APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT')}
+          {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
         </Button>
         <Button onClick={handleCancel} variant="contained" fullWidth color="error">
           {t('GENERIC_CANCEL')}

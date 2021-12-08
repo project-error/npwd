@@ -128,13 +128,13 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     <>
       <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
         <Card raised className={c.root}>
-          <StatusDisplay className={likeClass} text={t('APPS_MATCH_LIKED')} visible={isLiked} />
-          <StatusDisplay className={nopeClass} text={t('APPS_MATCH_NOPE')} visible={notLiked} />
+          <StatusDisplay className={likeClass} text={t('MATCH.LIKED')} visible={isLiked} />
+          <StatusDisplay className={nopeClass} text={t('MATCH.NOPE')} visible={notLiked} />
           <Profile profile={profile} />
         </Card>
       </Draggable>
       <Box className={c.buttons} display="flex" justifyContent="center">
-        <Tooltip title={t('APPS_MATCH_DISLIKE')} aria-label="dislike">
+        <Tooltip title={t('MATCH.DISLIKE')} aria-label="dislike">
           <Fab
             size="large"
             color="secondary"
@@ -145,7 +145,7 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
             <CancelIcon />
           </Fab>
         </Tooltip>
-        <Tooltip title={t('APPS_MATCH_LIKE')} aria-label="like">
+        <Tooltip title={t('MATCH.LIKE')} aria-label="like">
           <Fab
             size="large"
             color="primary"

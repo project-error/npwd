@@ -70,9 +70,7 @@ export const ShowMore = ({ id, isReported, isMine }) => {
           horizontal: 'left',
         }}
       >
-        {allowedToDelete && (
-          <MenuItem onClick={handleDeleteTweet}>{t('APPS_TWITTER_DELETE')}</MenuItem>
-        )}
+        {allowedToDelete && <MenuItem onClick={handleDeleteTweet}>{t('GENERIC.DELETE')}</MenuItem>}
         {allowedToReport && (
           <ReportButton handleClose={handleClose} isReported={isReported} tweetId={id} />
         )}

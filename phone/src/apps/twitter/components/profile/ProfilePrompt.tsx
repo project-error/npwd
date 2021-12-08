@@ -70,7 +70,7 @@ export function ProfilePrompt() {
   return (
     <div className={classes.root}>
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_NAME')}
+        label={t('TWITTER.EDIT_PROFILE_NAME')}
         value={profileName}
         handleChange={setProfileName}
         allowChange

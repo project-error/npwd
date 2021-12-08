@@ -44,9 +44,7 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   return (
     <div className={classes.root}>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="profile-name">
-          {t('APPS_TWITTER_EDIT_DEFAULT_PROFILE_NAME')}
-        </InputLabel>
+        <InputLabel htmlFor="profile-name">{t('TWITTER.EDIT_DEFAULT_PROFILE_NAME')}</InputLabel>
         <Select
           value={profileName}
           onChange={handleChange}
