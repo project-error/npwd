@@ -1,7 +1,10 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
-import { FormattedTweet, Profile, TwitterEvents } from '@typings/twitter';
+import { FormattedTweet, Profile, Tweet, TwitterEvents } from '@typings/twitter';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
+import { isEnvBrowser } from '../../../utils/misc';
+import { MockTweets, MockTwitterProfile } from '../utils/constants';
+import { processTweet } from '../utils/tweets';
 
 export const twitterState = {
   profile: atom({
@@ -15,6 +18,9 @@ export const twitterState = {
           );
           return resp.data;
         } catch (e) {
+          if (isEnvBrowser()) {
+            return MockTwitterProfile;
+          }
           return null;
         }
       },
@@ -26,7 +32,22 @@ export const twitterState = {
   }),
   tweets: atom<FormattedTweet[]>({
     key: 'tweets',
-    default: [],
+    default: selector({
+      key: 'defaultTweetsValue',
+      get: async () => {
+        try {
+          const resp = await fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS, {
+            pageId: 0,
+          });
+          return resp.data.map(processTweet);
+        } catch (e) {
+          if (isEnvBrowser()) {
+            return MockTweets;
+          }
+          return [];
+        }
+      },
+    }),
   }),
   filteredTweets: atom({
     key: 'filteredTweets',
