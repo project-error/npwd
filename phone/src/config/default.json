@@ -119,7 +119,7 @@
     {
       "label": "Nederlands",
       "value": "nl"
-    }
+   {
   ],
   "ringtones": [
     {
@@ -164,8 +164,8 @@
       }
     },
     "wallpaper": {
-      "label": "Default",
-      "value": "default.jpg"
+      "label": "Minimal",
+      "value": "minimal.jpg"
     },
     "customWallpaper": "",
     "frame": {
@@ -177,8 +177,8 @@
       "value": "taso-dark"
     },
     "zoom": {
-      "label": "100%",
-      "value": 1
+      "label": "90%",
+      "value": 0.9
     },
     "streamerMode": false,
     "ringtone": {
@@ -199,7 +199,7 @@
       "label": "Online",
       "value": "online"
     },
-    "TWITTER_notiSoundVol": 50,
+    "TWITTER_notiSoundVol": 25,
     "TWITTER_notifyNewFeedTweet": true
   },
   "appSettings": {

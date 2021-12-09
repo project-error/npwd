@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
   buttons: {
     position: 'absolute',
-    bottom: '3px',
+    bottom: '10px',
     width: '100%',
     height: '55px',
   },
@@ -128,8 +128,8 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     <>
       <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
         <Card raised className={c.root}>
-          <StatusDisplay className={likeClass} text={t('MATCH.LIKED')} visible={isLiked} />
-          <StatusDisplay className={nopeClass} text={t('MATCH.NOPE')} visible={notLiked} />
+          <StatusDisplay className={likeClass} text={t('MATCH.MESSAGES.LIKED')} visible={isLiked} />
+          <StatusDisplay className={nopeClass} text={t('MATCH.MESSAGES.NOPE')} visible={notLiked} />
           <Profile profile={profile} />
         </Card>
       </Draggable>

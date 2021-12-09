@@ -1,0 +1,282 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Závažná chyba",
+      "TOP_LEVEL_ERR_ACTION": "Znovu načíst",
+      "TOP_LEVEL_ERR_MSG": "NPWD narazil na chybu, ze které nebylo možné se zotavit. Budete muset znovu načíst okno NUI. Chyba je pro vývojáře uvedena níže."
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Žádná nepřečtená upozornění"
+    },
+    "DATE_FORMAT": "MM/DD/RRRR",
+    "DATE_TIME_FORMAT": "MM/DD/RRRR hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Zvonění",
+        "OUTGOING": "Odchozí hovor",
+        "INCOMING": "Příchozí hovor"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "Nemůžete volat na své vlastní telefonní číslo!",
+        "ERROR": "Při dokončování tohoto hovoru došlo k chybě"
+      }
+    },
+    "BROWSER": {
+      "NAME": "Prohlížeč"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Telefonní číslo",
+      "CATEGORY": {
+        "APPEARANCE": "Vzhled",
+        "PHONE": "Telefon",
+        "ACTIONS": "Akce"
+      },
+      "OPTIONS": {
+        "ICONSET": "Sada ikon",
+        "THEME": "Téma",
+        "LANGUAGE": "Jazyk",
+        "FRAME": "Frame",
+        "ZOOM": "Zoom",
+        "WALLPAPER": "Tapeta",
+        "RESET_SETTINGS": "Obnovit nastavení",
+        "RESET_SETTINGS_DESC": "Toto vymaže vaše lokálně uložená data",
+        "STREAMER_MODE": {
+          "TITLE": "Režim streamování",
+          "DESCRIPTION": "Skrýt obrázky, než se zobrazí"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Vlastní tapeta",
+          "DIALOG_CONTENT": "Nastavte si vlastní tapetu zadáním adresy URL obrázku níže!",
+          "DIALOG_PLACEHOLDER": "URL obrázku",
+          "DIALOG_ERROR": "Neplatný obrázek nebo odkaz"
+        },
+        "RINGTONE": "Vyzváněcí tón",
+        "RINGTONE_VOLUME": "Hlasitost vyzvánění",
+        "NOTIFICATION": "Oznámení",
+        "NOTIFICATION_VOLUME": "Hlasitost oznámení",
+        "NOTIFICATION_FILTER": "Filtry oznámení"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Neplatná uložená nastavení! Proveďte reset v aplikaci Nastavení.",
+        "SETTINGS_RESET": "Nastavení byla resetována!"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Kde chcete sdílet obrázek",
+      "COPY_IMAGE": "Zkopírujte adresu URL obrázku sem:",
+      "FAILED_TO_DELETE": "Fotku nelze smazat :(",
+      "FAILED_TO_TAKE_PHOTO": "Fotku nelze uložit :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Nepodařilo se vytvořit kontakt!",
+        "ADD_SUCCESS": "Kontakt byl úspěšně vytvořen!",
+        "UPDATE_FAILED": "Kontakt se nepodařilo aktualizovat!",
+        "UPDATE_SUCCESS": "Kontakt byl úspěšně aktualizován!",
+        "DELETE_FAILED": "Nepodařilo se smazat kontakt!",
+        "DELETE_SUCCESS": "Kontakt byl úspěšně smazán!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Hledat kontakty...",
+      "FORM_NAME": "Jméno",
+      "FORM_NUMBER": "Číslo",
+      "FORM_AVATAR": "Adresa URL avatara",
+      "MODAL_BUTTON_ADD": "Přidat kontakt"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "Aktuální telefonní hovor",
+        "INCOMING_CALL_TITLE": "Příchozí telefonní hovor",
+        "CURRENT_CALL_WITH": "V hovoru s {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "Volá tě {{ transmitter }}!"
+      },
+      "INPUT_PLACEHOLDER": "Zadejte číslo",
+      "NAVBAR_HISTORY": "Historie",
+      "NAVBAR_DIAL": "Vytočit",
+      "NAVBAR_CONTACTS": "Kontakty",
+      "NO_HISTORY": "Nemáte žádnou historii hovorů"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Váš profil byl úspěšně vytvořen",
+        "CREATE_PROFILE_FAILURE": "Nepodařilo se vytvořit váš profil",
+        "EDIT_PROFILE_SUCCESS": "Váš profil byl úspěšně aktualizován",
+        "EDIT_PROFILE_FAILURE": "Nepodařilo se aktualizovat váš profil",
+        "CREATE_FAILED": "Nepodařilo se odeslat váš tweet",
+        "RETWEET_EXISTS": "Tento tweet jste již retweetli!"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} někoho retweetnul!",
+        "NEW_BROADCAST": "Nový tweet od @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Ve své časové ose máte {{ count }} nových tweetů!"
+      },
+      "SUBMIT_IMAGE": "Přidat média",
+      "TWEET": "Tweet",
+      "REPORTED": "Nahlášeno",
+      "REPORT": "Report",
+      "IMAGE_PLACEHOLDER": "Odkaz na váš obrázek nebo gif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Vyberte název profilu",
+      "EDIT_PROFILE_AVATAR": "Adresa URL avatara",
+      "EDIT_PROFILE_NAME": "Název profilu",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Umístění",
+      "EDIT_PROFILE_JOB": "Zaměstnání",
+      "RETWEETED": "Retweetováno",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Zpráva překračuje povolený počet znaků",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Zpráva překračuje limit nového řádku",
+      "TWEET_MESSAGE_PLACEHOLDER": "Co se děje?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Hledat podle názvu profilu nebo zprávy",
+      "SEARCH_TWEETS": "Hledat tweety",
+      "TIME_JUST_NOW": "Právě teď",
+      "TIME_MINUTES": "m",
+      "TIME_HOURS": "h",
+      "TIME_DAYS": "d"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Shoda: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Poslední aktivní: {{ lastActive }}",
+        "LIKED": "LIKE",
+        "NOPE": "NE"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Profil se nepodařilo aktualizovat",
+        "UPDATE_PROFILE_SUCCEEDED": "Profil úspěšně aktualizovaný",
+        "MATCHES_ERROR": "Chyba při načítání shod",
+        "NO_MATCHES": "Nebyly nalezeny žádné shody",
+        "NO_PROFILES": "Nebyly nalezeny žádné nedávné profily",
+        "PROFILES_ERROR": "Chyba při načítání profilů",
+        "SAVE_LIKES_FAILED": "Nepodařilo se uložit hodnocení Líbí se mi",
+        "NEW_LIKE_FOUND": "Byla nalezena nová shoda!"
+      },
+      "PROFILE_CONFIGURATION": "Aplikace je nesprávně nakonfigurována - nelze vytvořit profil. Kontaktujte prosím administrátora.",
+      "EDIT_PROFILE_IMAGE": "URL obrázku",
+      "EDIT_PROFILE_NAME": "Název profilu",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Umístění",
+      "EDIT_PROFILE_JOB": "Zaměstnání",
+      "EDIT_PROFILE_TAGS": "Značky",
+      "EDIT_PROFILE_PREVIEW": "Zobrazit náhled",
+      "LIKE": "To se mi líbí",
+      "DISLIKE": "Nelíbí se"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "Nemáte žádné poznámky",
+        "ADD_FAILED": "Nepodařilo se uložit poznámku.",
+        "ADD_SUCCESS": "Poznámka byla úspěšně uložena.",
+        "DELETE_SUCCESS": "Poznámka byla úspěšně smazána.",
+        "DELETE_FAILED": "Nepodařilo se smazat poznámku.",
+        "UPDATE_FAILED": "Nepodařilo se aktualizovat poznámku.",
+        "UPDATE_SUCCESS": "Poznámka byla úspěšně aktualizována."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "Musí být vyplněna všechna povinná pole!",
+        "CREATE_LISTING_FAILED": "Nepodařilo se vytvořit nový zápis",
+        "CREATE_LISTING_SUCCESS": "Nový zápis byl úspěšně vytvořen",
+        "DELETE_LISTING_FAILED": "Nepodařilo se smazat zápis",
+        "DELETE_LISTING_SUCCESS": "Záznam byl úspěšně smazán",
+        "REPORT_LISTING_FAILED": "Tento zápis již byl nahlášen",
+        "REPORT_LISTING_SUCCESS": "Zápis byl úspěšně nahlášen"
+      },
+      "FORM_TITLE": "Název",
+      "FORM_IMAGE": "Obrázek nebo adresa URL",
+      "FORM_DESCRIPTION": "Popis"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Žádné z telefonních čísel nebylo nalezeno!",
+        "UNREAD_MESSAGES": "Máte {{ count }} nepřečtených zpráv",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) nejsou registrovaná čísla."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} není registrované číslo",
+        "NEW_MESSAGE_FAILED:": "Nepodařilo se odeslat zprávu",
+        "INVALID_PHONE_NUMBER": "Neplatné telefonní číslo",
+        "MESSAGE_CONVERSATION_DUPLICATE": "Tato konverzace již existuje!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Nepodařilo se vytvořit skupinu zpráv",
+        "MESSAGE_GROUP_CREATE_MINE": "Nemůžete se přidat!",
+        "FETCHED_MESSAGES_FAILED": "Nepodařilo se načíst zprávy",
+        "DELETE_MESSAGE": "Smazat zprávu",
+        "DELETE_MESSAGE_FAILED": "Smazání zprávy se nezdařilo",
+        "DELETE_CONVERSATION_FAILED": "Konverzaci se nepodařilo smazat"
+      },
+      "SEARCH_PLACEHOLDER": "Hledat zprávy...",
+      "DELETE_CONVERSATION": "Smazat konverzaci",
+      "NEW_MESSAGE": "Zpráva...",
+      "NEW_MESSAGE_GROUP": "Telefonní čísla...",
+      "GROUP_CHAT_LABEL": "Štítek skupinového chatu...",
+      "MEDIA_OPTION": "Fotoaparát / galerie",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Odeslat",
+      "INPUT_NAME_OR_NUMBER": "Vyhledejte kontakty nebo zadejte číslo a stiskněte Enter",
+      "ACTIONS_TITLE": "Akce",
+      "ME": "Já"
+    },
+    "RELATIVE_TIME": {
+      "future": "v %s",
+      "past": "před %s",
+      "s": "několik sekund",
+      "m": "minuta",
+      "mm": "%d minut",
+      "h": "hodinu",
+      "hh": "%d hodin",
+      "d": "den",
+      "dd": "%d dnů",
+      "M": "měsíc",
+      "MM": "%d měsíců",
+      "y": "rok",
+      "yy": "%d let"
+    },
+    "GENERIC": {
+      "LOADING": "Načítání...",
+      "WAIT": "Počkejte prosím...",
+      "SAVE": "Uložit",
+      "EDIT": "Upravit",
+      "UPDATE": "Aktualizovat",
+      "REQUIRED": "Required",
+      "DELETE": "Smazat",
+      "REPORT": "Report",
+      "CALL":   "volat",
+      "MESSAGE": "Zpráva",
+      "CLOSE": "Zavřít",
+      "CANCEL": "Zrušit",
+      "TITLE": "Titul",
+      "CONTENT": "Obsah",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopírovat {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Zkopírováno {{content}} do schránky!"
+    },
+    "COMING_SOON": "Už brzy...",
+    "INITIALIZING": "Inicializace",
+    "APPS_DIALER": "Telefon",
+    "APPS_CONTACTS": "Kontakty",
+    "APPS_MESSAGES": "Zprávy",
+    "APPS_CALCULATOR": "Kalkulačka",
+    "APPS_SETTINGS": "Nastavení",
+    "APPS_BANK": "WhoDis Banking",
+    "APPS_NOTES": "Poznámky",
+    "APPS_EXAMPLE": "Ukázková aplikace",
+    "APPS_TWITTER": "Twitter",
+    "APPS_MARKETPLACE": "Tržiště",
+    "APPS_CAMERA": "Fotoaparát",
+    "APPS_MATCH": "Dohazovač",
+    "APPS_CALCULATOR_COPIED": "Výsledek byl zkopírován do schránky!",
+    "GENERIC_CLICK_TO_REVEAL": "Kliknutím zobrazíte",
+    "GENERIC_LOADING": "Načítání...",
+    "GENERIC_WAIT": "Počkejte prosím...",
+    "GENERIC_SAVE": "Uložit",
+    "GENERIC_EDIT": "Upravit",
+    "GENERIC_UPDATE": "Aktualizovat",
+    "GENERIC_REQUIRED": "Povinné",
+    "GENERIC_DELETE": "Smazat",
+    "GENERIC_REPORT": "Hlášení",
+    "GENERIC_CALL": "Zavolat",
+    "GENERIC_MESSAGE": "Zpráva",
+    "GENERIC_CLOSE": "Zavřít",
+    "GENERIC_CANCEL": "Zrušit",
+    "GENERIC_TITLE": "Název",
+    "GENERIC_CONTENT": "Obsah",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopírovat {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Zkopírováno {{content}} do schránky!"
+  }
+}

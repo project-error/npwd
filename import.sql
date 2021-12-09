@@ -112,19 +112,9 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     `description` varchar(255) NOT NULL,
     `createdAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
+    `reported`    tinyint      NOT NULL DEFAULT 0,
+        PRIMARY KEY (id),
     INDEX `identifier` (`identifier`)
-);
-
-CREATE TABLE IF NOT EXISTS `npwd_marketplace_reports`
-(
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
-    `listing_id`  int(11)      DEFAULT NULL,
-    `profile`     varchar(255) DEFAULT NULL,
-    `title`       varchar(255) NOT NULL,
-    `description` varchar(255) NOT NULL,
-    `url`         varchar(255) NOT NULL,
-    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_reports`
@@ -155,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     INDEX `user_identifier` (`user_identifier`)
 );
 
-CREATE TABLE `npwd_messages_conversations`
+CREATE TABLE IF NOT EXISTS `npwd_messages_conversations`
 (
     `id`                     int(11)      NOT NULL AUTO_INCREMENT,
     `user_identifier`        varchar(48)  NOT NULL,
