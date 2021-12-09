@@ -34,7 +34,7 @@ export class _MarketplaceDB {
   }
 
   async fetchListings(): Promise<MarketplaceListing[]> {
-    const query = 'SELECT * FROM npwd_marketplace_listings ORDER BY id DESC';
+    const query = 'SELECT * FROM npwd_marketplace_listings WHERE reported = 0 ORDER BY id DESC';
 
     const [results] = await DbInterface._rawExec(query);
     return <MarketplaceListing[]>results;
@@ -47,7 +47,7 @@ export class _MarketplaceDB {
   }
 
   async deleteListingsOnDrop(identifier: string) {
-    const query = `DELETE FROM npwd_marketplace_listings WHERE identifier = ?`;
+    const query = `DELETE FROM npwd_marketplace_listings WHERE identifier = ? AND reported = 0`;
     await DbInterface._rawExec(query, [identifier]);
   }
 
@@ -65,15 +65,9 @@ export class _MarketplaceDB {
     return <MarketplaceDeleteDTO[]>results;
   }
 
-  async reportListing(listing: ReportListingDTO, profile: string): Promise<void> {
-    const query = `INSERT INTO npwd_marketplace_reports (listing_id, profile, title, description, url) VALUES (?, ?, ?, ?, ?)`;
-    await DbInterface._rawExec(query, [
-      listing.id,
-      profile,
-      listing.title,
-      listing.description,
-      listing.url,
-    ]);
+  async reportListing(listing: ReportListingDTO): Promise<void> {
+    const query = `UPDATE npwd_marketplace_listings SET reported = 1 WHERE id = ?`;
+    await DbInterface._rawExec(query, [listing.id]);
   }
 
   async doesListingExist(listing: MarketplaceListingBase, identifier: string): Promise<boolean> {
@@ -85,7 +79,7 @@ export class _MarketplaceDB {
   }
 
   async doesReportExist(listingId: number, profile: string): Promise<boolean> {
-    const query = `SELECT * FROM npwd_marketplace_reports WHERE listing_id = ? AND profile = ?`;
+    const query = `SELECT * FROM npwd_marketplace_listings WHERE id = ? AND username = ? AND reported = 1`;
     const [results] = await DbInterface._rawExec(query, [listingId, profile]);
     const result = <any>results;
 

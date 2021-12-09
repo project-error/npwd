@@ -116,17 +116,6 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     INDEX `identifier` (`identifier`)
 );
 
-CREATE TABLE IF NOT EXISTS `npwd_marketplace_reports`
-(
-    `id`          int(11)      NOT NULL AUTO_INCREMENT,
-    `listing_id`  int(11)      DEFAULT NULL,
-    `profile`     varchar(255) DEFAULT NULL,
-    `title`       varchar(255) NOT NULL,
-    `description` varchar(255) NOT NULL,
-    `url`         varchar(255) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS `npwd_twitter_reports`
 (
     `id`         int NOT NULL AUTO_INCREMENT,
