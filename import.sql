@@ -112,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     `description` varchar(255) NOT NULL,
     `createdAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
+    `reported`    tinyint      NOT NULL DEFAULT 0,
+        PRIMARY KEY (id),
     INDEX `identifier` (`identifier`)
 );
 
