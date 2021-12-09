@@ -134,8 +134,8 @@ export class _MessagesDB {
   async checkIfMessageGroupExists(groupId: string): Promise<boolean> {
     const query = `
       SELECT COUNT(*) as count
-      FROM npwd_messages_groups
-      WHERE group_id = ?;
+      FROM npwd_messages_conversations
+      WHERE conversation_id = ?;
     `;
     const [results] = await DbInterface._rawExec(query, [groupId]);
     const result = <any>results;
@@ -159,7 +159,7 @@ export class _MessagesDB {
    * @param identifier The identifier for the player
    */
   async setMessageRead(groupId: string, identifier: string) {
-    const query = `UPDATE npwd_messages_groups SET unreadCount = 0 WHERE group_id = ? AND participant_identifier = ?`;
+    const query = `UPDATE npwd_messages_conversations SET unreadCount = 0 WHERE conversation_id = ? AND participant_identifier = ?`;
     await DbInterface._rawExec(query, [groupId, identifier]);
   }
 

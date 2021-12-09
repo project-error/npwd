@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     INDEX `user_identifier` (`user_identifier`)
 );
 
-CREATE TABLE `npwd_messages_conversations`
+CREATE TABLE IF NOT EXISTS `npwd_messages_conversations`
 (
     `id`                     int(11)      NOT NULL AUTO_INCREMENT,
     `user_identifier`        varchar(48)  NOT NULL,
