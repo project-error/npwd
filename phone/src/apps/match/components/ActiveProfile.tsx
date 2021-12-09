@@ -90,7 +90,6 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   idRef.current = profile.id;
 
   function onDrag(deltaX: number): void {
-    console.log('onDrag', deltaX);
     const hasDecision = status !== null;
     if (!hasDecision && deltaX > DECISION_THRESHOLD_X_px) {
       setStatus(true);
@@ -104,7 +103,6 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   // handles when user uses mouse to "swipe", or
   // more specifically drag the card to one side or the other
   const handleSwipe = () => {
-    console.log('handleSwipe');
     onSwipe(idRef.current, statusRef.current);
     setStatus(null);
   };
