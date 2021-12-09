@@ -5,7 +5,7 @@ import { LikeorDislikeDraggableElement } from '../utils/drag';
 
 const useStyles = makeStyles({
   root: {
-    position: 'relative',
+    position: 'absolute',
     height: '100%',
     width: '100%',
   },

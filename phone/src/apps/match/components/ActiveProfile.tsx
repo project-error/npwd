@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
   buttons: {
     position: 'absolute',
-    bottom: '3px',
+    bottom: '10px',
     width: '100%',
     height: '55px',
   },
@@ -90,6 +90,7 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   idRef.current = profile.id;
 
   function onDrag(deltaX: number): void {
+    console.log('onDrag', deltaX);
     const hasDecision = status !== null;
     if (!hasDecision && deltaX > DECISION_THRESHOLD_X_px) {
       setStatus(true);
@@ -103,6 +104,7 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   // handles when user uses mouse to "swipe", or
   // more specifically drag the card to one side or the other
   const handleSwipe = () => {
+    console.log('handleSwipe');
     onSwipe(idRef.current, statusRef.current);
     setStatus(null);
   };
@@ -128,8 +130,8 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     <>
       <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
         <Card raised className={c.root}>
-          <StatusDisplay className={likeClass} text={t('MATCH.LIKED')} visible={isLiked} />
-          <StatusDisplay className={nopeClass} text={t('MATCH.NOPE')} visible={notLiked} />
+          <StatusDisplay className={likeClass} text={t('MATCH.MESSAGES.LIKED')} visible={isLiked} />
+          <StatusDisplay className={nopeClass} text={t('MATCH.MESSAGES.NOPE')} visible={notLiked} />
           <Profile profile={profile} />
         </Card>
       </Draggable>
