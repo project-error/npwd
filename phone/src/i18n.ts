@@ -10,6 +10,7 @@ import tr from './locale/tr.json';
 import ptbr from './locale/ptbr.json';
 import hu from './locale/hu.json';
 import pt from './locale/pt.json';
+import nl from './locale/nl.json';
 
 export const defaultNS = 'ns1';
 
@@ -24,6 +25,7 @@ export const resources = {
   ptbr,
   pt,
   hu,
+  nl,
 } as const;
 
 i18n.use(initReactI18next).init({
