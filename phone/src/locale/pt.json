@@ -1,127 +1,282 @@
 {
   "translation": {
-    "DATE_FORMAT": "MM/DD/YYYY",
-    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
-
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Erro Fatal",
+      "TOP_LEVEL_ERR_ACTION": "Recarregar",
+      "TOP_LEVEL_ERR_MSG": "NPWD encontrou um erro e não foi capaz de reiniciar. Você vai ter que reiniciar a janela NUI. O erro é mostrado abaixo para referência do desenvolvedor."
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Nenhuma notificação por ler"
+    },
+    "DATE_FORMAT": "DD/MM/YYYY",
+    "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "A tocar",
+        "OUTGOING": "A telefonar",
+        "INCOMING": "A receber chamada"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "Você não pode telefonar para sí mesmo!",
+        "ERROR": "Erro ao completar chamada"
+      }
+    },
+    "BROWSER": {
+      "NAME": "Navegador"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Número de Telefone",
+      "CATEGORY": {
+        "APPEARANCE": "Aparência",
+        "PHONE": "Telefone",
+        "ACTIONS": "Ações"
+      },
+      "OPTIONS": {
+        "ICONSET": "Tema de icones",
+        "THEME": "Tema",
+        "LANGUAGE": "Linguagem",
+        "FRAME": "Borda",
+        "ZOOM": "Ampliação",
+        "WALLPAPER": "Papel de parede",
+        "RESET_SETTINGS": "Resetar definições",
+        "RESET_SETTINGS_DESC": "Isto vai limpar os dados salvos localmente",
+        "STREAMER_MODE": {
+          "TITLE": "Modo de Transmissão",
+          "DESCRIPTION": "Esconder imagens antes de serem mostradas"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Papel de Parede customizado",
+          "DIALOG_CONTENT": "Usar um papel de parede customizado ao colocar URL a baixo!",
+          "DIALOG_PLACEHOLDER": "URL da Imagem",
+          "DIALOG_ERROR": "Imagem ou link inválido"
+        },
+        "RINGTONE": "Toque",
+        "RINGTONE_VOLUME": "Volume do toque",
+        "NOTIFICATION": "Notificação",
+        "NOTIFICATION_VOLUME": "Volume da notificação",
+        "NOTIFICATION_FILTER": "Filtros de notificação"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Definições inválidas guardadas! Por favor resete nas definições.",
+        "SETTINGS_RESET": "As definições foram restauradas!"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Onde quer partilhar a imagem?",
+      "COPY_IMAGE": "Copie o URL da foto aqui:",
+      "FAILED_TO_DELETE": "Foto não pode ser apagada :(",
+      "FAILED_TO_TAKE_PHOTO": "Foto não pode ser salva :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Falha ao criar contacto!",
+        "ADD_SUCCESS": "Contacto criado com sucesso!",
+        "UPDATE_FAILED": "Falha ao atualizar contacto",
+        "UPDATE_SUCCESS": "Contacto atualizado com sucesso!",
+        "DELETE_FAILED": "Falha ao apagar contacto!",
+        "DELETE_SUCCESS": "Contacto apagado com sucesso!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Procurar contactos...",
+      "FORM_NAME": "Nome",
+      "FORM_NUMBER": "Numero",
+      "FORM_AVATAR": "URL do avatar",
+      "MODAL_BUTTON_ADD": "Adicionar contacto"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "Chamada telefónica atual",
+        "INCOMING_CALL_TITLE": "Chamada recebida",
+        "CURRENT_CALL_WITH": "Em chamada com {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} Está a telefonar!"
+      },
+      "INPUT_PLACEHOLDER": "Digite um numero",
+      "NAVBAR_HISTORY": "Histórico",
+      "NAVBAR_DIAL": "Telefonar",
+      "NAVBAR_CONTACTS": "Contactos",
+      "NO_HISTORY": "Você não tem histórico de chamadas"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Perfil criado com sucesso",
+        "CREATE_PROFILE_FAILURE": "Falha ao criar perfil",
+        "EDIT_PROFILE_SUCCESS": "Perfil atualizado com sucesso",
+        "EDIT_PROFILE_FAILURE": "Falha ao atualizar perfil",
+        "CREATE_FAILED": "Falha ao enviar tweet",
+        "RETWEET_EXISTS": "Você já retweetou este tweet!"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetou alguém!",
+        "NEW_BROADCAST": "Novo tweet de @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Você tem {{ count }} novos tweets na sua timeline!"
+      },
+      "SUBMIT_IMAGE": "Adicionar Media",
+      "TWEET": "Tweetar",
+      "REPORTED": " Reportado",
+      "REPORT": "Reportar",
+      "IMAGE_PLACEHOLDER": "Um link para a tua imagem ougif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Escolher nome de perfil",
+      "EDIT_PROFILE_AVATAR": "URL do Avatar",
+      "EDIT_PROFILE_NAME": "Nome de perfil",
+      "EDIT_PROFILE_BIO": "Biografia",
+      "EDIT_PROFILE_LOCATION": "Localização",
+      "EDIT_PROFILE_JOB": "Trabalho",
+      "RETWEETED": "Retweetado",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Mensagem passa do limite de caracteres",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Mensagem passa do limite de nova linha",
+      "TWEET_MESSAGE_PLACEHOLDER": "O que se passa?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Procurar por nome do perfil ou mensagem",
+      "SEARCH_TWEETS": "Procurar tweets",
+      "TIME_JUST_NOW": "Agora mesmo",
+      "TIME_MINUTES": "m",
+      "TIME_HOURS": "h",
+      "TIME_DAYS": "d"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Ultima vez visto: {{ lastActive }}",
+        "LIKED": "GOSTO",
+        "NOPE": "NOPE"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Falha ao atualizar perfil",
+        "UPDATE_PROFILE_SUCCEEDED": "Perfil atualizado com sucesso",
+        "MATCHES_ERROR": "Falha ao carregar matches",
+        "NO_MATCHES": "Nenhum match encontrado",
+        "NO_PROFILES": "Nenhum perfil recente encontrado",
+        "PROFILES_ERROR": "Falha ao carregar gostos",
+        "SAVE_LIKES_FAILED": "Falha ao salvar gostos",
+        "NEW_LIKE_FOUND": "Novo match encontrado!"
+      },
+      "PROFILE_CONFIGURATION": "Aplicativo configurado incorretamente - Impossível criar perfil. Por favor contacte um Administrador.",
+      "EDIT_PROFILE_IMAGE": "URL da Imagem",
+      "EDIT_PROFILE_NAME": "Nome de perfil",
+      "EDIT_PROFILE_BIO": "Biografia",
+      "EDIT_PROFILE_LOCATION": "Localização",
+      "EDIT_PROFILE_JOB": "Trabalho",
+      "EDIT_PROFILE_TAGS": "Etiquetas",
+      "EDIT_PROFILE_PREVIEW": "Mostrar pré-visualização",
+      "LIKE": "Gostei",
+      "DISLIKE": "Não gostei"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "Você não tem notas",
+        "ADD_FAILED": "Falha ao salvar nota.",
+        "ADD_SUCCESS": "Nota salva com sucesso.",
+        "DELETE_SUCCESS": "Nota apagada com sucesso.",
+        "DELETE_FAILED": "Falha ao apagar nota.",
+        "UPDATE_FAILED": "Falha ao atualizar nota.",
+        "UPDATE_SUCCESS": "Nota atualizada com sucesso."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "Todos os campos necessários têm que ser preenchidos!",
+        "CREATE_LISTING_FAILED": "Falha ao criar nova listagem",
+        "CREATE_LISTING_SUCCESS": "Listagem criada com sucesso",
+        "DELETE_LISTING_FAILED": "Falha ao apagar listagem",
+        "DELETE_LISTING_SUCCESS": "Listagem apagada com sucesso!",
+        "REPORT_LISTING_FAILED": "Esta listagem já foi reportada!",
+        "REPORT_LISTING_SUCCESS": "Listagem reportada com sucesso!"
+      },
+      "FORM_TITLE": "Titulo",
+      "FORM_IMAGE": "Imagem ou URL",
+      "FORM_DESCRIPTION": "Descrição"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Nenhum dos números de telefone foram encontrados!",
+        "UNREAD_MESSAGES": "Você tem {{ count }} mensagens não lidas",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) não são números registados."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} não é um número registado",
+        "NEW_MESSAGE_FAILED:": "Falha ao enviar mensage,",
+        "INVALID_PHONE_NUMBER": "Número de Telefone inválido",
+        "MESSAGE_CONVERSATION_DUPLICATE": "Esta conversa já existe!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Falha ao criar este grupo",
+        "MESSAGE_GROUP_CREATE_MINE": "Não te podes adicionar a ti mesmo!",
+        "FETCHED_MESSAGES_FAILED": "Falha ao obter mensagens",
+        "DELETE_MESSAGE": "Apagar mensagem",
+        "DELETE_MESSAGE_FAILED": "Falha ao apagar mensagem",
+        "DELETE_CONVERSATION_FAILED": "Falha ao apagar conversa"
+      },
+      "SEARCH_PLACEHOLDER": "Procurar mensagens...",
+      "DELETE_CONVERSATION": "Apagar conversa",
+      "NEW_MESSAGE": "Mensagem...",
+      "NEW_MESSAGE_GROUP": "Numeros de Telefone...",
+      "GROUP_CHAT_LABEL": "Nome do chat de grupo...",
+      "MEDIA_OPTION": "Camera / Galeria",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Enviar",
+      "INPUT_NAME_OR_NUMBER": "Procure contactos ou digite um numero e pressione Enter",
+      "ACTIONS_TITLE": "Ações",
+      "ME": "Eu"
+    },
+    "RELATIVE_TIME": {
+      "future": "em %s",
+      "past": "%s atrás",
+      "s": "Alguns segundos",
+      "m": "um minuto",
+      "mm": "%d minutos",
+      "h": "uma hora",
+      "hh": "%d horas",
+      "d": "um dia",
+      "dd": "%d dias",
+      "M": "um mês",
+      "MM": "%d meses",
+      "y": "um ano",
+      "yy": "%d anos"
+    },
+    "GENERIC": {
+      "LOADING": "A carregar...",
+      "WAIT": "Por favor agurade...",
+      "SAVE": "Salvar",
+      "EDIT": "Editar",
+      "UPDATE": "Atualização",
+      "REQUIRED": "Necessário",
+      "DELETE": "Apagar",
+      "REPORT": "Reportar",
+      "CALL": "Telefonar",
+      "MESSAGE": "Mensagem",
+      "CLOSE": "Fechar",
+      "CANCEL": "Cancelar",
+      "TITLE": "Titulo",
+      "CONTENT": "Conteudo",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copiar {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copiado para a área de transfêrencia!"
+    },
     "COMING_SOON": "Em breve...",
-
-    "APPS_DIALER": "Telefone",
+    "INITIALIZING": "A iniciar",
+    "APPS_DIALER": "Telefonar",
     "APPS_CONTACTS": "Contactos",
     "APPS_MESSAGES": "Mensagens",
     "APPS_CALCULATOR": "Calculadora",
     "APPS_SETTINGS": "Definições",
-    "APPS_BANK": "WhoDis Banco",
+    "APPS_BANK": "Banco WhoDis",
     "APPS_NOTES": "Notas",
-    "APPS_EXAMPLE": "Aplicativo exemplo",
+    "APPS_EXAMPLE": "Aplicativo Exemplo",
     "APPS_TWITTER": "Twitter",
-    "APPS_MARKETPLACE": "Market",
+    "APPS_MARKETPLACE": "Mercado",
     "APPS_CAMERA": "Camera",
-
-    "APPS_DIALER_INCOMING_CALL_TITLE": "Incoming Phone Call",
-    "APPS_DIALER_CURRENT_CALL_TITLE": "Current Phone Call",
-    "APPS_DIALER_CURRENT_CALL_WITH": "In call with {{ transmitter }}",
-    "APPS_DIALER_TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
-    "APPS_DIALER_ACCEPT_CALL": "Accept",
-    "APPS_DIALER_REJECT_CALL": "Reject",
-    "APPS_DIALER_END_CALL": "End",
-
-    "APPS_TWITTER_TWEET": "Tweet",
-    "APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER": "O que se passa?",
-    "APPS_TWITTER_IMAGE_PLACEHOLDER": "Link para imagem ou gif",
-    "APPS_TWITTER_SUBMIT_IMAGE": "Adicionar Mídia",
-    "APPS_TWITTER_CLOSE_IMAGE": "Fechar",
-    "APPS_TWITTER_CLOSE": "Fechar",
-    "APPS_TWITTER_DELETE": "Apagar",
-    "APPS_TWITTER_REPORT": "Reportar",
-    "APPS_TWITTER_REPORTED": " Reportado",
-    "APPS_TWITTER_JUST_NOW": "Agora",
-    "APPS_TWITTER_SEARCH_TWEETS": "Procurar por tweets",
-    "APPS_TWITTER_SEARCH_TWEETS_PLACEHOLDER": "Procurar por nome de perfil ou mensagem",
-    "APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT": "Mensagem maior que o límite de caracteres",
-    "APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
-    "APPS_TWITTER_CREATE_SUCCESS": "Tweet enviado com sucesso!",
-    "APPS_TWITTER_CREATE_FAILED": "Falha a enviar o seu tweet",
-    "APPS_TWITTER_EDIT_PROFILE_AVATAR": "URL do Avatar",
-    "APPS_TWITTER_EDIT_PROFILE_NAME": "Nome de perfil",
-    "APPS_TWITTER_EDIT_PROFILE_BIO": "Biografia",
-    "APPS_TWITTER_EDIT_PROFILE_LOCATION": "Localização",
-    "APPS_TWITTER_EDIT_PROFILE_JOB": "Trabalho",
-    "APPS_TWITTER_EDIT_PROFILE_SUCCESS": "Perfil atualizado com sucesso",
-    "APPS_TWITTER_EDIT_PROFILE_FAILURE": "Falha a atualizar o seu perfil",
-    "APPS_TWITTER_TIME_JUST_NOW": "Agora",
-    "APPS_TWITTER_TIME_MINUTES": "m",
-    "APPS_TWITTER_TIME_HOURS": "h",
-    "APPS_TWITTER_TIME_DAYS": "d",
-    "APPS_TWITTER_NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
-    "APPS_TWITTER_UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!",
-
-    "APPS_BANK_TRANSFER": "Transferir",
-    "APPS_BANK_HOME_TITLE": "Bem-vindo",
-    "APPS_BANK_ACCOUNT_LINK": "Conta",
-    "APPS_BANK_TIME_JUST_NOW": "Agora",
-    "APPS_BANK_ACCOUNT_TITLE": "Resumo da conta",
-    "APPS_BANK_ACCOUNT_TRANSACTIONS": "Transações",
-    "APPS_BANK_ACCOUNT_SEE_TRANSACTION": "Ver todos",
-    "APPS_BANK_ACTIONS_TRANSFER": "Transferir",
-    "APPS_BANK_ALERT_TRANSFER_SUCCESS": "Transferência feita com sucesso!",
-    "APPS_BANK_ALERT_TRANSFER_FAILURE": "Transferência falhada!",
-
-    "APPS_MESSAGES_SEARCH_PLACEHOLDER": "Procurar mensagens...",
-    "APPS_MESSAGES_NEW_MESSAGE": "Mensagem...",
-    "APPS_MESSAGES_NEW_MESSAGE_FAILED:": "Failed to send message",
-    "APPS_MESSAGES_NEW_MESSAGE_GROUP": "Números de telefone...",
-    "APPS_MESSAGES_GROUP_CHAT_LABEL": "Nome do grupo...",
-    "APPS_MESSAGES_NEW_MESSAGE_GROUP_SUBMIT": "Enviar",
-    "APPS_MESSAGES_INVALID_PHONE_NUMBER": "Número de telefone inválido: ",
-    "APPS_MESSAGES_MESSAGE_GROUP_DUPLICATE": "Este grupo já existe",
-    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_FAILED": "Falha a criar grupo",
-    "APPS_MESSAGES_MESSAGE_GROUP_CREATE_MINE": "Não te podes adicionar a tí mesmo!",
-    "APPS_MESSAGES_INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
-
-    "APPS_CONTACT_FORM_NAME": "Nome",
-    "APPS_CONTACT_FORM_NUMBER": "Numero",
-    "APPS_CONTACT_FORM_AVATAR": "URL do avatar",
-
-    "APPS_CONTACT_ADD_SUCCESS": "Contacto criado com sucesso!",
-    "APPS_CONTACT_ADD_FAILED": "Falha a criar contacto!",
-    "APPS_CONTACT_UPDATE_SUCCESS": "Contacto atualizado com sucesso!",
-    "APPS_CONTACT_UPDATE_FAILED": "Falha a atualizar contacto!",
-    "APPS_CONTACT_DELETE_SUCCESS": "Contacto apagado com sucesso!",
-    "APPS_CONTACT_DELETE_FAILED": "Falha a apagar contacto!",
-    "APPS_CONTACT_PLACEHOLDER_SEARCH_CONTACTS": "Procurar contactos",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_NAME": "Nome",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_NUMBER": "Numero",
-    "APPS_CONTACT_MODAL_PLACEHOLDER_AVATAR": "Avatar",
-    "APPS_CONTACT_MODAL_BUTTON_ADD": "Adicionar contacto",
-
-    "APPS_NOTES_ADD_SUCCESS": "Successfully saved note.",
-    "APPS_NOTES_ADD_FAILED": "Failed to save note.",
-    "APPS_NOTES_UPDATE_SUCCESS": "Successfully updated note.",
-    "APPS_NOTES_UPDATE_FAILED": "Failed to update note.",
-    "APPS_NOTES_DELETE_SUCCESS": "Successfully deleted note.",
-    "APPS_NOTES_DELETE_FAILED": "Failed to delete note.",
-
-    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
-
-    "APPS_MARKETPLACE_CREATE_LISTING_SUCCESS": "Successfully created a new listing",
-    "APPS_MARKETPALCE_CREATE_LISTING_FAILED": "Failed to create a new listing",
-
-    "APPS_SETTINGS_PHONE_NUMBER": "Número de telefone",
-    "APPS_SETTINGS_OPTION_WALLPAPER": "Papél de parede",
-    "APPS_SETTINGS_OPTION_FRAME": "Borda",
-    "APPS_SETTINGS_OPTION_THEME": "Tema",
-    "APPS_SETTINGS_OPTION_ZOOM": "Zoom",
-    "APPS_SETTINGS_OPTION_RINGTONE": "Toque",
-    "APPS_SETTINGS_OPTION_RINGTONEVOL": "Volume do toque",
-    "APPS_SETTINGS_OPTION_NOTIFICATION": "Notification",
-    "APPS_SETTINGS_OPTION_NOTIFICATIONVOL": "Notification Volume",
-
-    "GENERIC_SAVE": "Save",
+    "APPS_MATCH": "Matchmaker",
+    "APPS_CALCULATOR_COPIED": "Resultado copiado para a área de transfêrencia!",
+    "GENERIC_CLICK_TO_REVEAL": "Clique para Revelar",
+    "GENERIC_LOADING": "A carregar...",
+    "GENERIC_WAIT": "Por favor aguarde...",
+    "GENERIC_SAVE": "Salvar",
+    "GENERIC_EDIT": "Editar",
     "GENERIC_UPDATE": "Atualizar",
+    "GENERIC_REQUIRED": "Necessário",
     "GENERIC_DELETE": "Apagar",
-    "GENERIC_CLOSE": "Close",
-    "GENERIC_CANCEL": "Cancel",
-    "GENERIC_TITLE": "Title",
-    "GENERIC_CONTENT": "Content"
+    "GENERIC_REPORT": "Reportar",
+    "GENERIC_CALL": "Telefonar",
+    "GENERIC_MESSAGE": "Mensagem",
+    "GENERIC_CLOSE": "Fechar",
+    "GENERIC_CANCEL": "Cancelar",
+    "GENERIC_TITLE": "Titulo",
+    "GENERIC_CONTENT": "Conteudo",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copiar {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copiado para a área de transferência!"
   }
 }
