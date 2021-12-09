@@ -1,4 +1,3 @@
-import { FormattedMatch } from '../../../../../typings/match';
 import { FormattedTweet } from '../../../../../typings/twitter';
 
 export const IMG_DEFAULT_AVATAR = 'https://i.file.glass/QrEvq.png';
