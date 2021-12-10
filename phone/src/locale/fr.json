@@ -12,7 +12,7 @@
     "DATE_TIME_FORMAT": "MM/JJ/AAAA hh:mm A",
     "CALLS": {
       "MESSAGES": {
-        "RINGING": "Appel...",
+        "RINGING": "Appel",
         "OUTGOING": "Appel sortant",
         "INCOMING": "Appel entrant"
       },
