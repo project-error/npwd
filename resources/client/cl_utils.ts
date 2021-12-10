@@ -69,11 +69,11 @@ export const RegisterNuiCB = <T = any>(event: string, callback: CallbackFn<T>) =
  * Returns a promise that will be resolved once the client has been loaded.
  */
 export const playerLoaded = () => {
-  return new Promise<boolean>((resolve) => {
-    setInterval(() => {
-      if (global.isPlayerLoaded) resolve(true);
+  return new Promise<any>((resolve) => {
+    const id = setInterval(() => {
+      if (global.isPlayerLoaded) resolve(id);
     }, 50);
-  });
+  }).then((id) => clearInterval(id));
 };
 
 /**
