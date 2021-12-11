@@ -1,15 +1,15 @@
 {
   "translation": {
     "MISC": {
-      "TOP_LEVEL_ERR_TITLE": "Závažná chyba",
+      "TOP_LEVEL_ERR_TITLE": "Fatální chyba",
       "TOP_LEVEL_ERR_ACTION": "Znovu načíst",
-      "TOP_LEVEL_ERR_MSG": "NPWD narazil na chybu, ze které nebylo možné se zotavit. Budete muset znovu načíst okno NUI. Chyba je pro vývojáře uvedena níže."
+      "TOP_LEVEL_ERR_MSG": "NPWD se setkalo s chybou. Budete muset znovu načíst NUI. Error je uvedený níže k referenci pro developery."
     },
     "NOTIFICATIONS": {
-      "NO_UNREAD": "Žádná nepřečtená upozornění"
+      "NO_UNREAD": "Žádná nepřečtená oznámení"
     },
-    "DATE_FORMAT": "MM/DD/RRRR",
-    "DATE_TIME_FORMAT": "MM/DD/RRRR hh:mm A",
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Zvonění",
@@ -35,19 +35,19 @@
         "ICONSET": "Sada ikon",
         "THEME": "Téma",
         "LANGUAGE": "Jazyk",
-        "FRAME": "Frame",
-        "ZOOM": "Zoom",
+        "FRAME": "Rámeček",
+        "ZOOM": "Přiblížení",
         "WALLPAPER": "Tapeta",
         "RESET_SETTINGS": "Obnovit nastavení",
-        "RESET_SETTINGS_DESC": "Toto vymaže vaše lokálně uložená data",
+        "RESET_SETTINGS_DESC": "Dojde k vymazání lokálně uložených dat",
         "STREAMER_MODE": {
-          "TITLE": "Režim streamování",
-          "DESCRIPTION": "Skrýt obrázky, než se zobrazí"
+          "TITLE": "Režim pro streamery",
+          "DESCRIPTION": "Schová obrázky před zobrazením"
         },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Vlastní tapeta",
-          "DIALOG_CONTENT": "Nastavte si vlastní tapetu zadáním adresy URL obrázku níže!",
-          "DIALOG_PLACEHOLDER": "URL obrázku",
+          "DIALOG_CONTENT": "Nastavte si vlastní tapetu zadáním adresy URL obrázku níže",
+          "DIALOG_PLACEHOLDER": "URL adresa obrázku",
           "DIALOG_ERROR": "Neplatný obrázek nebo odkaz"
         },
         "RINGTONE": "Vyzváněcí tón",
@@ -57,75 +57,75 @@
         "NOTIFICATION_FILTER": "Filtry oznámení"
       },
       "MESSAGES": {
-        "INVALID_SETTINGS": "Neplatná uložená nastavení! Proveďte reset v aplikaci Nastavení.",
-        "SETTINGS_RESET": "Nastavení byla resetována!"
+        "INVALID_SETTINGS": "Uložené nastavení je neplatné! Obnovte si ho v aplikaci Nastavení.",
+        "SETTINGS_RESET": "Nastavení bylo obnoveno!"
       }
     },
     "CAMERA": {
-      "SHARE_DESTINATION": "Kde chcete sdílet obrázek",
-      "COPY_IMAGE": "Zkopírujte adresu URL obrázku sem:",
-      "FAILED_TO_DELETE": "Fotku nelze smazat :(",
-      "FAILED_TO_TAKE_PHOTO": "Fotku nelze uložit :("
+      "SHARE_DESTINATION": "Kam chcete sdílet obrázek",
+      "COPY_IMAGE": "Zde zkopírujte URL adresu obrázku:",
+      "FAILED_TO_DELETE": "Fotku se nepodařilo vymazat :(",
+      "FAILED_TO_TAKE_PHOTO": "Fotku se nepodařilo uložit :("
     },
     "CONTACTS": {
       "FEEDBACK": {
         "ADD_FAILED": "Nepodařilo se vytvořit kontakt!",
-        "ADD_SUCCESS": "Kontakt byl úspěšně vytvořen!",
-        "UPDATE_FAILED": "Kontakt se nepodařilo aktualizovat!",
-        "UPDATE_SUCCESS": "Kontakt byl úspěšně aktualizován!",
-        "DELETE_FAILED": "Nepodařilo se smazat kontakt!",
-        "DELETE_SUCCESS": "Kontakt byl úspěšně smazán!"
+        "ADD_SUCCESS": "Kontakt byl vytvořen!",
+        "UPDATE_FAILED": "Nepodařilo se aktualizovat kontakt!",
+        "UPDATE_SUCCESS": "Kontakt byl aktualizován!",
+        "DELETE_FAILED": "Nepodařilo se vymazat kontakt!",
+        "DELETE_SUCCESS": "Kontakt byl vymazán!"
       },
-      "PLACEHOLDER_SEARCH_CONTACTS": "Hledat kontakty...",
+      "PLACEHOLDER_SEARCH_CONTACTS": "Vyhledat kontakty...",
       "FORM_NAME": "Jméno",
       "FORM_NUMBER": "Číslo",
-      "FORM_AVATAR": "Adresa URL avatara",
+      "FORM_AVATAR": "URL fotky",
       "MODAL_BUTTON_ADD": "Přidat kontakt"
     },
     "DIALER": {
       "MESSAGES": {
-        "CURRENT_CALL_TITLE": "Aktuální telefonní hovor",
-        "INCOMING_CALL_TITLE": "Příchozí telefonní hovor",
+        "CURRENT_CALL_TITLE": "Aktuální hovor",
+        "INCOMING_CALL_TITLE": "Příchozí hovor",
         "CURRENT_CALL_WITH": "V hovoru s {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "Volá tě {{ transmitter }}!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vám volá!"
       },
       "INPUT_PLACEHOLDER": "Zadejte číslo",
       "NAVBAR_HISTORY": "Historie",
       "NAVBAR_DIAL": "Vytočit",
       "NAVBAR_CONTACTS": "Kontakty",
-      "NO_HISTORY": "Nemáte žádnou historii hovorů"
+      "NO_HISTORY": "Nemáte historii volání"
     },
     "TWITTER": {
       "FEEDBACK": {
-        "CREATE_PROFILE_SUCCESS": "Váš profil byl úspěšně vytvořen",
-        "CREATE_PROFILE_FAILURE": "Nepodařilo se vytvořit váš profil",
-        "EDIT_PROFILE_SUCCESS": "Váš profil byl úspěšně aktualizován",
-        "EDIT_PROFILE_FAILURE": "Nepodařilo se aktualizovat váš profil",
-        "CREATE_FAILED": "Nepodařilo se odeslat váš tweet",
-        "RETWEET_EXISTS": "Tento tweet jste již retweetli!"
+        "CREATE_PROFILE_SUCCESS": "Profil byl úspěšně vytvořen",
+        "CREATE_PROFILE_FAILURE": "Nepodařilo se vytvořit profil",
+        "EDIT_PROFILE_SUCCESS": "Profil byl úspěšně aktualizován",
+        "EDIT_PROFILE_FAILURE": "Nepodařilo se aktualizovat profil",
+        "CREATE_FAILED": "Nepodařilo se odeslat tweet",
+        "RETWEET_EXISTS": "Tento tweet byl již retweetnut"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} někoho retweetnul!",
         "NEW_BROADCAST": "Nový tweet od @{{ profile_name }}!",
-        "UNREAD_MESSAGES": "Ve své časové ose máte {{ count }} nových tweetů!"
+        "UNREAD_MESSAGES": "Máte {{ count }} nových tweetu na zdi!"
       },
       "SUBMIT_IMAGE": "Přidat média",
       "TWEET": "Tweet",
       "REPORTED": "Nahlášeno",
-      "REPORT": "Report",
-      "IMAGE_PLACEHOLDER": "Odkaz na váš obrázek nebo gif",
-      "EDIT_DEFAULT_PROFILE_NAME": "Vyberte název profilu",
-      "EDIT_PROFILE_AVATAR": "Adresa URL avatara",
-      "EDIT_PROFILE_NAME": "Název profilu",
+      "REPORT": "Nahlásit",
+      "IMAGE_PLACEHOLDER": "Odkaz na obrázek nebo gif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Vyberte uživatelské jméno",
+      "EDIT_PROFILE_AVATAR": "URL profilové fotky",
+      "EDIT_PROFILE_NAME": "Uživatelské jméno",
       "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Umístění",
+      "EDIT_PROFILE_LOCATION": "Lokace",
       "EDIT_PROFILE_JOB": "Zaměstnání",
-      "RETWEETED": "Retweetováno",
+      "RETWEETED": "Retweetnuto",
       "TWEET_MESSAGE_CHAR_LIMIT": "Zpráva překračuje povolený počet znaků",
-      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Zpráva překračuje limit nového řádku",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Zpráva překračuje limit řádků",
       "TWEET_MESSAGE_PLACEHOLDER": "Co se děje?",
-      "SEARCH_TWEETS_PLACEHOLDER": "Hledat podle názvu profilu nebo zprávy",
-      "SEARCH_TWEETS": "Hledat tweety",
+      "SEARCH_TWEETS_PLACEHOLDER": "Hledat podle profilu nebo zprávy",
+      "SEARCH_TWEETS": "Vyhledat tweet",
       "TIME_JUST_NOW": "Právě teď",
       "TIME_MINUTES": "m",
       "TIME_HOURS": "h",
@@ -133,96 +133,96 @@
     },
     "MATCH": {
       "MESSAGES": {
-        "PROFILE_MATCHED_AT": "Shoda: {{ matchedAt }}",
-        "PROFILE_LAST_ACTIVE": "Poslední aktivní: {{ lastActive }}",
-        "LIKED": "LIKE",
-        "NOPE": "NE"
+        "PROFILE_MATCHED_AT": "Spojeni: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Naposledy aktivní: {{ lastActive }}",
+        "LIKED": "LÍBÍ",
+        "NOPE": "NELÍBÍ"
       },
       "FEEDBACK": {
-        "UPDATE_PROFILE_FAILED": "Profil se nepodařilo aktualizovat",
-        "UPDATE_PROFILE_SUCCEEDED": "Profil úspěšně aktualizovaný",
+        "UPDATE_PROFILE_FAILED": "Nepodařilo se aktualizovat profil",
+        "UPDATE_PROFILE_SUCCEEDED": "Profil byl úspěšně aktualizován",
         "MATCHES_ERROR": "Chyba při načítání shod",
         "NO_MATCHES": "Nebyly nalezeny žádné shody",
         "NO_PROFILES": "Nebyly nalezeny žádné nedávné profily",
         "PROFILES_ERROR": "Chyba při načítání profilů",
-        "SAVE_LIKES_FAILED": "Nepodařilo se uložit hodnocení Líbí se mi",
+        "SAVE_LIKES_FAILED": "Nepodařilo se uložit hodnocení",
         "NEW_LIKE_FOUND": "Byla nalezena nová shoda!"
       },
-      "PROFILE_CONFIGURATION": "Aplikace je nesprávně nakonfigurována - nelze vytvořit profil. Kontaktujte prosím administrátora.",
-      "EDIT_PROFILE_IMAGE": "URL obrázku",
-      "EDIT_PROFILE_NAME": "Název profilu",
+      "PROFILE_CONFIGURATION": "Aplikace není správně nakonfigurována - nelze vytvořit profil. Kontaktujte prosím administrátora.",
+      "EDIT_PROFILE_IMAGE": "URL profilové fotky",
+      "EDIT_PROFILE_NAME": "Uživatelské jméno",
       "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Umístění",
+      "EDIT_PROFILE_LOCATION": "Lokace",
       "EDIT_PROFILE_JOB": "Zaměstnání",
       "EDIT_PROFILE_TAGS": "Značky",
       "EDIT_PROFILE_PREVIEW": "Zobrazit náhled",
       "LIKE": "To se mi líbí",
-      "DISLIKE": "Nelíbí se"
+      "DISLIKE": "Nelíbí se mi"
     },
     "NOTES": {
       "FEEDBACK": {
         "NO_NOTES": "Nemáte žádné poznámky",
-        "ADD_FAILED": "Nepodařilo se uložit poznámku.",
-        "ADD_SUCCESS": "Poznámka byla úspěšně uložena.",
-        "DELETE_SUCCESS": "Poznámka byla úspěšně smazána.",
-        "DELETE_FAILED": "Nepodařilo se smazat poznámku.",
-        "UPDATE_FAILED": "Nepodařilo se aktualizovat poznámku.",
-        "UPDATE_SUCCESS": "Poznámka byla úspěšně aktualizována."
+        "ADD_FAILED": "Nepodařilo se uložit poznámku",
+        "ADD_SUCCESS": "Poznámka byla úspěšně uložena",
+        "DELETE_SUCCESS": "Poznámka byla úspěšně vymazána",
+        "DELETE_FAILED": "Nepodařilo se vymazat poznámku",
+        "UPDATE_FAILED": "Nepodařilo se aktualizovat poznámku",
+        "UPDATE_SUCCESS": "Poznámka byla úspěšně aktualizována"
       }
     },
     "MARKETPLACE": {
       "FEEDBACK": {
         "REQUIRED_FIELDS": "Musí být vyplněna všechna povinná pole!",
-        "CREATE_LISTING_FAILED": "Nepodařilo se vytvořit nový zápis",
-        "CREATE_LISTING_SUCCESS": "Nový zápis byl úspěšně vytvořen",
-        "DELETE_LISTING_FAILED": "Nepodařilo se smazat zápis",
-        "DELETE_LISTING_SUCCESS": "Záznam byl úspěšně smazán",
-        "REPORT_LISTING_FAILED": "Tento zápis již byl nahlášen",
-        "REPORT_LISTING_SUCCESS": "Zápis byl úspěšně nahlášen"
+        "CREATE_LISTING_FAILED": "Nepodařilo se vytvořit nový inzerát",
+        "CREATE_LISTING_SUCCESS": "Inzerát byl úspěšně vytvořen",
+        "DELETE_LISTING_FAILED": "Nepodařilo se vymazat inzerát",
+        "DELETE_LISTING_SUCCESS": "Inzerát byl úspěšně vymazán",
+        "REPORT_LISTING_FAILED": "Tento inzerát byl již nahlášen",
+        "REPORT_LISTING_SUCCESS": "Inzerát byl úspěšně nahlášen"
       },
       "FORM_TITLE": "Název",
-      "FORM_IMAGE": "Obrázek nebo adresa URL",
+      "FORM_IMAGE": "Obrázek nebo URL adresa",
       "FORM_DESCRIPTION": "Popis"
     },
     "MESSAGES": {
       "MESSAGES": {
-        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Žádné z telefonních čísel nebylo nalezeno!",
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Žádné ze zadaných čísel nebylo nalezeno!",
         "UNREAD_MESSAGES": "Máte {{ count }} nepřečtených zpráv",
-        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) nejsou registrovaná čísla."
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) nejsou registrovaná čísla"
       },
       "FEEDBACK": {
         "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} není registrované číslo",
         "NEW_MESSAGE_FAILED:": "Nepodařilo se odeslat zprávu",
         "INVALID_PHONE_NUMBER": "Neplatné telefonní číslo",
         "MESSAGE_CONVERSATION_DUPLICATE": "Tato konverzace již existuje!",
-        "MESSAGE_GROUP_CREATE_FAILED": "Nepodařilo se vytvořit skupinu zpráv",
-        "MESSAGE_GROUP_CREATE_MINE": "Nemůžete se přidat!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Nepodařilo se vytvořit novou skupinu",
+        "MESSAGE_GROUP_CREATE_MINE": "Nemůžete přidat sebe!",
         "FETCHED_MESSAGES_FAILED": "Nepodařilo se načíst zprávy",
-        "DELETE_MESSAGE": "Smazat zprávu",
-        "DELETE_MESSAGE_FAILED": "Smazání zprávy se nezdařilo",
-        "DELETE_CONVERSATION_FAILED": "Konverzaci se nepodařilo smazat"
+        "DELETE_MESSAGE": "Vymazat zprávu",
+        "DELETE_MESSAGE_FAILED": "Nepodařilo se vymazat zprávu",
+        "DELETE_CONVERSATION_FAILED": "Nepodařilo se vymazat skupinu"
       },
-      "SEARCH_PLACEHOLDER": "Hledat zprávy...",
-      "DELETE_CONVERSATION": "Smazat konverzaci",
+      "SEARCH_PLACEHOLDER": "Vyhledat zprávy...",
+      "DELETE_CONVERSATION": "Vymazat konverzaci",
       "NEW_MESSAGE": "Zpráva...",
       "NEW_MESSAGE_GROUP": "Telefonní čísla...",
-      "GROUP_CHAT_LABEL": "Štítek skupinového chatu...",
-      "MEDIA_OPTION": "Fotoaparát / galerie",
+      "GROUP_CHAT_LABEL": "Název skupiny...",
+      "MEDIA_OPTION": "Fotoaparát / Galerie",
       "NEW_MESSAGE_GROUP_SUBMIT": "Odeslat",
-      "INPUT_NAME_OR_NUMBER": "Vyhledejte kontakty nebo zadejte číslo a stiskněte Enter",
+      "INPUT_NAME_OR_NUMBER": "Vyhledejte kontakt / číslo a stiskněte Enter",
       "ACTIONS_TITLE": "Akce",
       "ME": "Já"
     },
     "RELATIVE_TIME": {
-      "future": "v %s",
+      "future": "za %s",
       "past": "před %s",
-      "s": "několik sekund",
+      "s": "několik vteřin",
       "m": "minuta",
       "mm": "%d minut",
-      "h": "hodinu",
+      "h": "hodina",
       "hh": "%d hodin",
       "d": "den",
-      "dd": "%d dnů",
+      "dd": "%d dní",
       "M": "měsíc",
       "MM": "%d měsíců",
       "y": "rok",
@@ -230,23 +230,23 @@
     },
     "GENERIC": {
       "LOADING": "Načítání...",
-      "WAIT": "Počkejte prosím...",
+      "WAIT": "Čekejte prosím...",
       "SAVE": "Uložit",
       "EDIT": "Upravit",
       "UPDATE": "Aktualizovat",
-      "REQUIRED": "Required",
-      "DELETE": "Smazat",
-      "REPORT": "Report",
-      "CALL":   "volat",
+      "REQUIRED": "Povinné",
+      "DELETE": "Vymazat",
+      "REPORT": "Nahlásit",
+      "CALL": "Zavolat",
       "MESSAGE": "Zpráva",
       "CLOSE": "Zavřít",
       "CANCEL": "Zrušit",
-      "TITLE": "Titul",
+      "TITLE": "Název",
       "CONTENT": "Obsah",
-      "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopírovat {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Zkopírováno {{content}} do schránky!"
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Zkopírovat {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} zkopírován do schránky!"
     },
-    "COMING_SOON": "Už brzy...",
+    "COMING_SOON": "Již brzy...",
     "INITIALIZING": "Inicializace",
     "APPS_DIALER": "Telefon",
     "APPS_CONTACTS": "Kontakty",
@@ -259,24 +259,24 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Tržiště",
     "APPS_CAMERA": "Fotoaparát",
-    "APPS_MATCH": "Dohazovač",
-    "APPS_CALCULATOR_COPIED": "Výsledek byl zkopírován do schránky!",
+    "APPS_MATCH": "Seznamka",
+    "APPS_CALCULATOR_COPIED": "Výsledek byl zkopírován!",
     "GENERIC_CLICK_TO_REVEAL": "Kliknutím zobrazíte",
     "GENERIC_LOADING": "Načítání...",
-    "GENERIC_WAIT": "Počkejte prosím...",
+    "GENERIC_WAIT": "Čekejte prosím...",
     "GENERIC_SAVE": "Uložit",
     "GENERIC_EDIT": "Upravit",
     "GENERIC_UPDATE": "Aktualizovat",
     "GENERIC_REQUIRED": "Povinné",
     "GENERIC_DELETE": "Smazat",
-    "GENERIC_REPORT": "Hlášení",
+    "GENERIC_REPORT": "Nahlásit",
     "GENERIC_CALL": "Zavolat",
     "GENERIC_MESSAGE": "Zpráva",
     "GENERIC_CLOSE": "Zavřít",
     "GENERIC_CANCEL": "Zrušit",
     "GENERIC_TITLE": "Název",
     "GENERIC_CONTENT": "Obsah",
-    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopírovat {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Zkopírováno {{content}} do schránky!"
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Zkopírovat {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} zkopírován do schránky!"
   }
 }
