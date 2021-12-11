@@ -221,7 +221,7 @@ class CallsService {
 
     // Just in case currentCall for some reason at this point is falsy
     // lets protect against that
-    if (currentCall?.is_accepted) {
+    if (currentCall) {
       emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
       emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
     }
