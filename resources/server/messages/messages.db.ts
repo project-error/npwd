@@ -183,7 +183,7 @@ export class _MessagesDB {
     const query = `SELECT * FROM npwd_messages_conversations WHERE conversation_id = ? AND participant_identifier = ?`;
     const [results] = await DbInterface._rawExec(query, [conversationId, identifier]);
     const conversations = <UnformattedMessageConversation[]>results;
-    return conversations[0];
+    return conversations[0] || null;
   }
 }
 

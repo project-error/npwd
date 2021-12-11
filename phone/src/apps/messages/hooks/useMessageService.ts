@@ -12,7 +12,7 @@ export const useMessagesService = () => {
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
   const { visibility } = usePhoneVisibility();
-  const { getContactByNumber } = useContactActions();
+  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
   const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
     if (visibility && pathname.includes('/messages/conversations')) {
@@ -32,17 +32,18 @@ export const useMessagesService = () => {
 
   const handleAddConversation = useCallback(
     (conversation: MessageConversationResponse) => {
-      const contact = getContactByNumber(conversation.phoneNumber);
+      const display = getDisplayByNumber(conversation.phoneNumber);
+      const avatar = getPictureByNumber(conversation.phoneNumber);
 
       updateConversations({
         phoneNumber: conversation.phoneNumber,
         conversation_id: conversation.conversation_id,
-        avatar: contact.avatar || null,
+        avatar,
         unread: 0,
-        display: contact.display || null,
+        display,
       });
     },
-    [updateConversations, getContactByNumber],
+    [updateConversations, getDisplayByNumber, getPictureByNumber],
   );
 
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
