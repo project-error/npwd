@@ -71,7 +71,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   };
 
   const handleMessage = () => {
-    history.push(`/messages/new/${listing.number}`);
+    history.push(`/messages/new?phoneNumber=${listing.number}`);
   };
 
   return (

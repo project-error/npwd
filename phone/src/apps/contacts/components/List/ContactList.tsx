@@ -34,7 +34,7 @@ export const ContactList: React.FC = () => {
       level: 1,
       data: { phoneNumber },
     });
-    history.push(`/messages/new/${phoneNumber}`);
+    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 
   return (

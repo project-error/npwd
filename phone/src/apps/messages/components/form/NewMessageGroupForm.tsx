@@ -4,7 +4,6 @@ import { Box, Button, Popper } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { Contact } from '@typings/contact';
 import { MessageConversationResponse, MessageEvents } from '@typings/messages';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { TextField } from '@ui/components/Input';
@@ -19,6 +18,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const [t] = useTranslation();
   const { addAlert } = useSnackbar();
   const [participant, setParticipant] = useState<any>('');
+  const [participantValue, setParticipantValue] = useState('');
   const { getDisplayByNumber, getPictureByNumber, getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
   const { updateConversations } = useMessageActions();
@@ -26,8 +26,13 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   useEffect(() => {
     if (phoneNumber) {
-      const find = getContactByNumber(phoneNumber) || phoneNumber;
-      setParticipant(find);
+      console.log('phone number', phoneNumber);
+      const find = getContactByNumber(phoneNumber);
+      if (find) {
+        setParticipant(find);
+      } else {
+        setParticipantValue(phoneNumber);
+      }
     }
   }, [phoneNumber, getContactByNumber]);
 
@@ -38,17 +43,17 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     // 123-4567, 987-6543, 333-4444
     /* participant.map(({ number }) => number.replace(/[^0-9]/g, '')); */
 
-    if (participant) {
+    if (participantValue || participant) {
       fetchNui<ServerPromiseResp<MessageConversationResponse>>(
         MessageEvents.CREATE_MESSAGE_CONVERSATION,
         {
-          targetNumber: participant.number || participant,
+          targetNumber: participant.number ?? participantValue,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
             message: t('MESSAGES.FEEDBACK.MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED', {
-              number: participant.number || participant,
+              number: participant.number ?? participantValue,
             }),
             type: 'error',
           });
@@ -80,6 +85,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     }
   }, [
     history,
+    participantValue,
     participant,
     messageConversations,
     addAlert,
@@ -102,12 +108,14 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     />
   );
 
-  const submitDisabled = !participant;
+  const submitDisabled = !participantValue && !participant;
 
   return (
     <Box>
       <Box px={2} py={3}>
-        <Autocomplete<Contact, boolean, boolean, boolean>
+        <Autocomplete
+          value={participant}
+          inputValue={participantValue}
           freeSolo
           disablePortal
           PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
@@ -117,6 +125,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           ListboxProps={{ style: { marginLeft: 10 } }}
           getOptionLabel={(contact) => contact.display || contact.number || participant}
           onChange={(e, value: any) => setParticipant(value)}
+          onInputChange={(e, value: any) => setParticipantValue(value)}
           renderInput={renderAutocompleteInput}
         />
       </Box>
