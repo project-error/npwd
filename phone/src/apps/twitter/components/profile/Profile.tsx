@@ -59,7 +59,7 @@ export function Profile() {
       }
 
       addAlert({
-        message: t('TWITTER_EDIT_PROFILE_SUCCESS'),
+        message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
         type: 'success',
       });
     });
