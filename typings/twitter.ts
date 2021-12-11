@@ -47,6 +47,14 @@ export interface Profile {
   updatedAt: string;
 }
 
+export interface UpdateProfileProps {
+  avatar_url: string;
+  profile_name: string;
+  bio: string;
+  location: string;
+  job: string;
+}
+
 export enum TwitterEvents {
   FETCH_TWEETS = 'npwd:fetchTweets',
   FETCH_TWEETS_FILTERED = 'npwd:fetchTweetsFiltered',
