@@ -142,7 +142,9 @@ export const MessageModal = () => {
     );
 
   // don't allow too many characters, it takes too much room
-  let header = activeMessageConversation.display || activeMessageConversation.phoneNumber;
+  let header =
+    getDisplayByNumber(activeMessageConversation.phoneNumber) ||
+    activeMessageConversation.phoneNumber;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 

@@ -45,9 +45,7 @@ export const useContactActions = (): UseContactsValue => {
     ({ snapshot }) =>
       (number: string) => {
         const { state, contents } = snapshot.getLoadable(contactsState.contacts);
-        console.log('contents', contents);
         if (state !== 'hasValue') return null;
-        console.log('wowowow');
 
         for (const contact of contents) {
           if (contact.number === number) return contact;

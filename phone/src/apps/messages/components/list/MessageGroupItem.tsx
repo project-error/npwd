@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import { MessageConversation } from '@typings/messages';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
@@ -28,6 +29,9 @@ const MessageGroupItem = ({
   const toggleCheckbox = () => {
     handleToggle(messageConversation.conversation_id);
   };
+  const { getContactByNumber } = useContactActions();
+
+  const conversationContact = getContactByNumber(messageConversation.phoneNumber);
 
   return (
     <ListItem
@@ -47,10 +51,10 @@ const MessageGroupItem = ({
       )}
       <ListItemAvatar>
         <Badge color="error" variant="dot" invisible={messageConversation.unread > 0}>
-          <MuiAvatar src={messageConversation.avatar} />
+          <MuiAvatar src={conversationContact?.avatar} />
         </Badge>
       </ListItemAvatar>
-      <ListItemText>{messageConversation.display || messageConversation.phoneNumber}</ListItemText>
+      <ListItemText>{conversationContact?.display || messageConversation.phoneNumber}</ListItemText>
     </ListItem>
   );
 };
