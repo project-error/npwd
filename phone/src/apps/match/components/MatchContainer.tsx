@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileEditor from './views/ProfileEditor';
 import { Route } from 'react-router-dom';
 import MatchPage from './views/MatchPage';
@@ -8,10 +8,14 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { AppWrapper } from '../../../ui/components';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { useApp } from '../../../os/apps/hooks/useApps';
+import MatchBottomNavigation from './BottomNavigation';
 
 const MatchContainer: React.FC = () => {
   const { profile, noProfileExists, setNoProfileExists } = useProfile();
   const match = useApp('MATCH');
+  const [activePage, setActivePage] = useState(0);
+
+  const handlePageChange = (e, page) => setActivePage(page);
 
   useEffect(() => {
     if (!profile) {
@@ -35,6 +39,7 @@ const MatchContainer: React.FC = () => {
           </>
         )}
       </AppContent>
+      <MatchBottomNavigation activePage={activePage} handleChange={handlePageChange} />
     </AppWrapper>
   );
 };
