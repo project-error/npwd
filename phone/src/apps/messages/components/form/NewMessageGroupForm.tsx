@@ -26,7 +26,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   useEffect(() => {
     if (phoneNumber) {
-      console.log('phone number', phoneNumber);
       const find = getContactByNumber(phoneNumber);
       if (find) {
         setParticipant(find);
@@ -52,7 +51,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       ).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('MESSAGES.FEEDBACK.MESSAGE_GROUP_CREATE_ONE_NUMBER_FAILED', {
+            message: t('MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED"', {
               number: participant.number ?? participantValue,
             }),
             type: 'error',
