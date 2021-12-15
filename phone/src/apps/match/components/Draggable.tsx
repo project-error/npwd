@@ -50,11 +50,11 @@ function Draggable({ id, children, onDrag, onDrop }: IProps) {
   }, [elementRef]); // eslint-disable-line
 
   return (
-    <>
+    <div>
       <div ref={elementRef} key={id} id={id} className={classes.root}>
         {children}
       </div>
-    </>
+    </div>
   );
 }
 
