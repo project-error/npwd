@@ -22,11 +22,6 @@ jobs:
         with:
           node-version: 16.x
           cache: 'yarn'
-      - name: Yarn Cache Call
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
