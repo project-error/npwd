@@ -41,7 +41,9 @@ module.exports = {
     },
   ],
   devServer: (devServerConfig) => {
-    devServerConfig.writeToDisk = true;
+    if (process.env.REACT_APP_IN_GAME) {
+      devServerConfig.devMiddleware.writeToDisk = true;
+    }
     return devServerConfig;
   },
 };
