@@ -54,7 +54,9 @@ const MessageGroupItem = ({
           <MuiAvatar src={conversationContact?.avatar} />
         </Badge>
       </ListItemAvatar>
-      <ListItemText>{conversationContact?.display || messageConversation.phoneNumber}</ListItemText>
+      <ListItemText sx={{ overflow: 'hidden' }}>
+        {conversationContact?.display || messageConversation.phoneNumber}
+      </ListItemText>
     </ListItem>
   );
 };
