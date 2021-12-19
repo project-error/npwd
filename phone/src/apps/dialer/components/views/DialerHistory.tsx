@@ -67,6 +67,10 @@ export const DialerHistory: React.FC = () => {
                 // TODO: Locale changes are pending #168 merge
                 dayjs().to(dayjs.unix(parseInt(call.start)))
               }
+              primaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
             />
             <IconButton onClick={() => handleCall(call.receiver)} size="large">
               {<PhoneIcon />}
@@ -95,6 +99,10 @@ export const DialerHistory: React.FC = () => {
                 // TODO: Locale changes are pending #168 merge
                 dayjs().to(dayjs.unix(parseInt(call.start)))
               }
+              primaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
             />
             <IconButton onClick={() => handleCall(call.transmitter)} size="large">
               <PhoneIcon />

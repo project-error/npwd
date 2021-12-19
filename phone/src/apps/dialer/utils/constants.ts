@@ -4,7 +4,7 @@ export const MockHistoryData: CallHistoryItem[] = [
   {
     id: 1,
     identifier: 'ca839e8c-ef9d-40bd-b6a3-d531ee58149f',
-    transmitter: '704-1549',
+    transmitter: '215-8139',
     receiver: '704-1549',
     is_accepted: true,
     start: '1615939174',
