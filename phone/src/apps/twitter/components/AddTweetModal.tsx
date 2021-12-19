@@ -19,6 +19,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { toggleKeys } from '../../../ui/components/Input';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -145,10 +146,12 @@ export const AddTweetModal = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
     setShowImagePrompt(!showImagePrompt);
   };
-  const toggleShowEmoji = () => {
+  const toggleShowEmoji = async () => {
     // clear the images so we can seemlessly toggle between emoji/images
     setShowImagePrompt(false);
     setShowEmoji(!showEmoji);
+
+    await toggleKeys(showEmoji);
   };
 
   // this is when a user clicks on an emoji icon itself (i.e. a smiley face)

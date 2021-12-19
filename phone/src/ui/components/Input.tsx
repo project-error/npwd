@@ -5,7 +5,7 @@ import { PhoneEvents } from '@typings/phone';
 import { fetchNui } from '../../utils/fetchNui';
 import { isEnvBrowser } from '../../utils/misc';
 
-const toggleKeys = (keepGameFocus: boolean) =>
+export const toggleKeys = (keepGameFocus: boolean) =>
   fetchNui(PhoneEvents.TOGGLE_KEYS, {
     keepGameFocus,
   }).catch((e) => (isEnvBrowser() ? () => {} : console.error(e)));
