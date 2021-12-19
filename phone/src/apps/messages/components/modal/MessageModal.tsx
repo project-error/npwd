@@ -61,6 +61,8 @@ const useStyles = makeStyles({
     width: '300px',
     paddingTop: '8px',
     fontSize: '20px',
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
   },
 });
 

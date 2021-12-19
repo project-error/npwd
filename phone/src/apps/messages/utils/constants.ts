@@ -12,9 +12,9 @@ export const MockMessageConversations: MessageConversation[] = [
   {
     conversation_id: '4444+7777',
     avatar: '',
-    phoneNumber: '4355345',
+    phoneNumber: '603-275-8373',
     unread: 3,
-    display: 'Rocky',
+    display: 'Chip',
   },
 ];
 
