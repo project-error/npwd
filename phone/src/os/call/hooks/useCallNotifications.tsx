@@ -39,7 +39,7 @@ export const useCallNotifications = () => {
       return;
     }
 
-    if (call.is_accepted) {
+    if (call?.is_accepted) {
       removeId(NOTIFICATION_ID);
       addNotification({
         ...callNotificationBase,
@@ -53,7 +53,7 @@ export const useCallNotifications = () => {
         title: t('DIALER.MESSAGES.CURRENT_CALL_TITLE'),
       });
     }
-    if (!call.isTransmitter && !call.is_accepted) {
+    if (!call?.isTransmitter && !call?.is_accepted) {
       play();
       removeId(NOTIFICATION_ID);
       addNotificationAlert(
@@ -62,7 +62,7 @@ export const useCallNotifications = () => {
           title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
             transmitter: call.transmitter,
           }),
-          keepWhenPhoneClosed: true,
+          keepWhenPhoneClosed: false,
           content: (
             <CallNotification>
               {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {

@@ -41,7 +41,7 @@ export const CallModal: React.FC = () => {
           <Box className={classes.root} padding={5}>
             <Box>
               <CallContactContainer />
-              {call.is_accepted ? <CallTimer /> : call.isTransmitter && <RingingText />}
+              {call?.is_accepted ? <CallTimer /> : call?.isTransmitter && <RingingText />}
             </Box>
             <CallControls />
           </Box>

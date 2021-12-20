@@ -49,7 +49,7 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
 
   // We display only the hang up if the call is accepted
   // or we are the one calling
-  if (call.is_accepted || call.isTransmitter)
+  if (call?.is_accepted || call?.isTransmitter)
     return (
       <Box display="flex" justifyContent="center" px={2} my={2}>
         <StatusIconButton
