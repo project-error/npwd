@@ -85,12 +85,12 @@ const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
   ClearHelp(true);
   await Delay(0);
+  const resp = await takePhoto();
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
   animationService.openPhone();
   emit('npwd:disableControlActions', true);
-  const resp = await takePhoto();
   await Delay(200);
   inCameraMode = false;
 
