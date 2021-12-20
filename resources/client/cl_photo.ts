@@ -65,7 +65,7 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
       console.error(
         'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
       );
-    } else if (IsControlJustPressed(1, 177)) {
+    } else if (IsControlJustPressed(1, 194)) {
       await handleCameraExit();
       break;
     }
@@ -98,16 +98,14 @@ const handleTakePicture = async () => {
 };
 
 const handleCameraExit = async () => {
+  sendCameraEvent(PhotoEvents.CAMERA_EXITED);
   ClearHelp(true);
   await animationService.closeCamera();
   emit('npwd:disableControlActions', true);
   DestroyMobilePhone();
   CellCamActivate(false, false);
   openPhoneTemp();
-  sendCameraEvent(PhotoEvents.TAKE_PHOTO_SUCCESS, false);
   inCameraMode = false;
-
-  await animationService.openCamera();
 };
 
 const takePhoto = () =>

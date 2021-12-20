@@ -46,6 +46,7 @@ export const useCamera = (): IUseCamera => {
   );
 
   useNuiEvent('CAMERA', PhotoEvents.UPLOAD_PHOTO, () => setUploading(true));
+  useNuiEvent('CAMERA', PhotoEvents.CAMERA_EXITED, () => setUploading(false));
 
   const takePhoto = () => {
     // Timeout at 1 minute
