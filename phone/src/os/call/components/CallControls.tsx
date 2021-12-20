@@ -44,7 +44,7 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const handleEndCall = (e) => {
     e.stopPropagation();
     setModal(false);
-    endCall();
+    if (!call.isUnavailable) endCall();
   };
 
   // We display only the hang up if the call is accepted

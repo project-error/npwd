@@ -33,7 +33,12 @@ export class CallService {
     CallService.sendCallAction(CallEvents.SET_CALLER, null);
   }
 
-  handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean) {
+  handleStartCall(
+    transmitter: string,
+    receiver: string,
+    isTransmitter: boolean,
+    isUnavailable: boolean,
+  ) {
     // If we're already in a call we want to automatically reject
     if (this.isInCall())
       return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
@@ -49,6 +54,7 @@ export class CallService {
         receiver: receiver,
         isTransmitter: isTransmitter,
         accepted: false,
+        isUnavailable: isUnavailable,
       },
     });
   }

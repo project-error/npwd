@@ -64,19 +64,6 @@ class CallsService {
     // Will be null if the player is offline
     const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
 
-    callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
-    callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
-
-    const callObj: ActiveCallRaw = {
-      identifier: callIdentifier,
-      transmitter: transmitterNumber,
-      transmitterSource: transmittingPlayer.source,
-      receiver: reqObj.data.receiverNumber,
-      receiverSource: receivingPlayer.source,
-      start: startCallTimeUnix.toString(),
-      is_accepted: false,
-    };
-
     // Now if the player is offline, we send the same resp
     // as before
     if (!receivingPlayer) {
@@ -91,6 +78,19 @@ class CallsService {
         },
       });
     }
+
+    callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
+    callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
+
+    const callObj: ActiveCallRaw = {
+      identifier: callIdentifier,
+      transmitter: transmitterNumber,
+      transmitterSource: transmittingPlayer.source,
+      receiver: reqObj.data.receiverNumber,
+      receiverSource: receivingPlayer.source,
+      start: startCallTimeUnix.toString(),
+      is_accepted: false,
+    };
 
     // Now we can add the call to our memory map
     this.setCallInMap(callObj.transmitter, callObj);
