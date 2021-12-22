@@ -43,7 +43,7 @@ class _MessagesService {
       const sourcePlayer = PlayerService.getPlayer(reqObj.source);
 
       const result = await createMessageGroupsFromPhoneNumber(
-        sourcePlayer.getIdentifier(),
+        sourcePlayer.getPhoneNumber(),
         reqObj.data.targetNumber,
       );
 
@@ -169,10 +169,10 @@ class _MessagesService {
     resp: PromiseEventResp<void>,
   ) {
     try {
-      const identifier = PlayerService.getIdentifier(reqObj.source);
+      const sourcePhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
 
       for (const id of reqObj.data.conversationsId) {
-        await this.messagesDB.deleteConversation(id, identifier);
+        await this.messagesDB.deleteConversation(id, sourcePhoneNumber);
       }
       resp({ status: 'ok' });
     } catch (e) {

@@ -80,11 +80,11 @@ export function createGroupHashID(participants: string[]) {
  * avoid situations where some participants get added to the group but
  * one fails resulting in a partial group which would be very confusing
  * to the player.
- * @param sourceIdentifier - user who is creating the group
+ * @param sourcePhoneNumber - user who is creating the group
  * @param tgtPhoneNumber - list of phone numbers to add to the grup
  */
 export async function createMessageGroupsFromPhoneNumber(
-  sourceIdentifier: string,
+  sourcePhoneNumber: string,
   tgtPhoneNumber: string,
 ): Promise<CreateMessageGroupResult> {
   // we check that each phoneNumber exists before we create the group
@@ -95,21 +95,21 @@ export async function createMessageGroupsFromPhoneNumber(
     throw new Error('tgtIdentifier was null');
   }
 
-  const conversationId = createGroupHashID([sourceIdentifier, tgtIdentifier]);
+  const conversationId = createGroupHashID([sourcePhoneNumber, tgtPhoneNumber]);
   const existingConversation = await MessagesDB.doesConversationExist(
     conversationId,
-    tgtIdentifier,
+    tgtPhoneNumber,
   );
 
   if (existingConversation) {
     await MessagesDB.createMessageGroup(
       existingConversation.user_identifier,
       conversationId,
-      sourceIdentifier,
+      sourcePhoneNumber,
     );
   } else {
-    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, sourceIdentifier);
-    await MessagesDB.createMessageGroup(sourceIdentifier, conversationId, tgtIdentifier);
+    await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, sourcePhoneNumber);
+    await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, tgtPhoneNumber);
   }
 
   // wrap this in a transaction to make sure ALL of these INSERTs succeed
@@ -120,7 +120,7 @@ export async function createMessageGroupsFromPhoneNumber(
     error: false,
     doesExist: existingConversation,
     conversationId,
-    identifiers: [sourceIdentifier, tgtIdentifier],
+    identifiers: [sourcePhoneNumber, tgtPhoneNumber],
     phoneNumber: tgtPhoneNumber,
     participant: tgtIdentifier,
   };
