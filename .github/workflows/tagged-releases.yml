@@ -29,16 +29,14 @@ jobs:
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 
       - name: Create Sentry Release (NPWD)
-        uses: tclindner/sentry-releases-action@v1.2.0
+        uses: getsentry/action-release@v1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: 'project-error'
           SENTRY_PROJECT: 'npwd'
-          SENTRY_URL: https://sentry.projecterror.dev/
         with:
           environment: production
-          tagName: ${{ steps.get_tag.outputs.VERSION_TAG }}
-          sourceMapOptions: '{"include": ["resources/html"], "urlPrefix": "~/resources/html"}'
+          version: ${{ steps.get_tag.outputs.VERSION_TAG }}
 
       - name: Bundle built files
         run: |
