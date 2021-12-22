@@ -29,14 +29,18 @@ jobs:
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 
       - name: Create Sentry Release (NPWD)
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: 'project-error'
-          SENTRY_PROJECT: 'npwd'
-        with:
-          environment: production
-          version: ${{ steps.get_tag.outputs.VERSION_TAG }}
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+          export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          export SENTRY_ORG='project-error'
+          export SENTRY_PROJECT='npwd'
+          export SENTRY_URL='https://sentry.projecterror.dev/'
+          export VERSION=${{ steps.get_tag.outputs.VERSION_TAG }}
+
+          sentry-cli releases new "$VERSION"
+          sentry-cli releases set-commits "$VERSION" --auto
+          sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --url-prefix '~/resources/html'
+          sentry-cli releases finalize "$VERSION"
 
       - name: Bundle built files
         run: |
