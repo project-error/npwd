@@ -1,0 +1,283 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "schwerwiegender Fehler",
+      "TOP_LEVEL_ERR_ACTION": "Lädt erneut",
+      "TOP_LEVEL_ERR_MSG": "Es ist ein Fehler für NPDW aufgetreten, sie müssen das NUI Fenster neu laden. Dieser Fehler wird unten angezeigt für Developer Referenzen."
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Keine neuen Mitteilungen"
+    },
+    "DATE_FORMAT": "DD/MM/YYYY",
+    "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Klingelt",
+        "OUTGOING": "Ausgehender Anruf",
+        "INCOMING": "Eingehender Anruf"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "Sie können nicht ihre eigene Nummer anrufen!",
+        "ERROR": "Bei diesem Anruf gab es ein problem, versuchen sie es erneut."
+      }
+    },
+    "BROWSER": {
+      "NAME": "Browser"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Telefonnummer",
+      "CATEGORY": {
+        "APPEARANCE": "Benutzeroberfläche",
+        "PHONE": "Handy",
+        "ACTIONS": "Aktionen"
+      },
+      "OPTIONS": {
+        "ICONSET": "Zeichen",
+        "THEME": "Aussehen",
+        "LANGUAGE": "Sprache",
+        "FRAME": "Rahmen",
+        "ZOOM": "Zoom",
+        "WALLPAPER": "Hintergrundbild",
+        "RESET_SETTINGS": "Kehre zu den Standard Einstellungen zurück",
+        "RESET_SETTINGS_DESC": "Lösche den lokalen Speicher",
+        "STREAMER_MODE": {
+          "TITLE": "Streamer Modus",
+          "DESCRIPTION": "Versteckt Bilder bevor diese gezeigt werden"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "eigenes Hintergrundbild",
+          "DIALOG_CONTENT": "füge ein eigenes Hintergrundbild ein indem du unten einen Link zum Bild angibst!",
+          "DIALOG_PLACEHOLDER": "LINK",
+          "DIALOG_ERROR": "ungültiges Bild oder Link"
+        },
+        "RINGTONE": "Klingelton",
+        "RINGTONE_VOLUME": "Klingelton Lautstärke",
+        "NOTIFICATION": "Mitteilung",
+        "NOTIFICATION_VOLUME": "Mitteilungs Lautstärke",
+        "NOTIFICATION_FILTER": "Mitteilungsfilter"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "fehlerhafte Einstellungen! Bitte setzte deine Einstellungen zurück.",
+        "SETTINGS_RESET": "die Standard Einstellungen wurden wiederhergestellt!"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Wo wollen sie das Bild teilen?",
+      "COPY_IMAGE": "Kopieren sie einen Link zum Bild hier:",
+      "FAILED_TO_DELETE": "Bild konnte nicht gelöscht werden!",
+      "FAILED_TO_TAKE_PHOTO": "Bild konnte nicht gespeichert werden!"
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Kontakt konnte nicht zu den Kontakten hinzugefügt werden!",
+        "ADD_SUCCESS": "Zu den Kontakten hinzugefügt!",
+        "UPDATE_FAILED": "Kontakt konnte nicht bearbeitet werden!",
+        "UPDATE_SUCCESS": "Kontakt wurde bearbeitet!",
+        "DELETE_FAILED": "Kontakt konnte nicht gelöscht werden!",
+        "DELETE_SUCCESS": "Kontakt wurde gelöscht!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Suche nach Kontakten...",
+      "FORM_NAME": "Name",
+      "FORM_NUMBER": "Nummer",
+      "FORM_AVATAR": "Avatar URL",
+      "MODAL_BUTTON_ADD": "Kontakt hinzufügen"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "letzer Anruf",
+        "INCOMING_CALL_TITLE": "eingehender Anruf",
+        "CURRENT_CALL_WITH": "In einem Gespräch mit {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "eingehender Anruf von {{ transmitter }}!"
+      },
+      "INPUT_PLACEHOLDER": "Geben sie eine Nummer ein",
+      "NAVBAR_HISTORY": "Verlauf",
+      "NAVBAR_DIAL": "Wählen",
+      "NAVBAR_CONTACTS": "Kontakte",
+      "NO_HISTORY": "Sie haben keinen Anrufs Verlauf"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Ihr Profil wurde erstellt",
+        "CREATE_PROFILE_FAILURE": "Ihr Profil konnte nicht erstellt werden",
+        "EDIT_PROFILE_SUCCESS": "Ihr Profil wurde bearbeitet",
+        "EDIT_PROFILE_FAILURE": "Ihr Profil konnte nicht bearbeitet werden",
+        "CREATE_FAILED": "Ihr Tweet konnte nicht gesendet werden!",
+        "RETWEET_EXISTS": "Sie haben diesen Tweet bereits retweetet!"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} hat jemanden retweetet!",
+        "NEW_BROADCAST": "Neuer Tweet von @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Sie haben {{ count }} neue Tweets!"
+      },
+      "SUBMIT_IMAGE": "Füge ein Bild hinzu",
+      "TWEET": "Tweet",
+      "REPORTED": "Gemeldet",
+      "REPORT": "Melden",
+      "IMAGE_PLACEHOLDER": "Ein Link zu ihrem Bild oder GIF",
+      "EDIT_DEFAULT_PROFILE_NAME": "Geben sie ihren Namen ein",
+      "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "EDIT_PROFILE_NAME": "Profil Name",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Standort",
+      "EDIT_PROFILE_JOB": "Job",
+      "RETWEETED": "Retweeted",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Diese Nachricht ist zu lang!",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Diese Nachricht überschreitet das neue Zeilenlimit",
+      "TWEET_MESSAGE_PLACEHOLDER": "Was gibt es neues?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Suche nach Profil Name oder einer Nachricht",
+      "SEARCH_TWEETS": "Suche nach Tweets",
+      "TIME_JUST_NOW": "Gerade eben",
+      "TIME_MINUTES": "m",
+      "TIME_HOURS": "h",
+      "TIME_DAYS": "d"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Zuletzt online: {{ lastActive }}",
+        "LIKED": "Gefällt mir",
+        "NOPE": "Gefällt mir nicht"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Ihr Profil konnte nicht bearbeitet werden",
+        "UPDATE_PROFILE_SUCCEEDED": "Ihr Profil wurde bearbeitet",
+        "MATCHES_ERROR": "Es gab einen Fehler beim Laden der Matches",
+        "NO_MATCHES": "Es konnten keine Matches gefunden werden",
+        "NO_PROFILES": "Es konnten keine zuletzt aufgerufenen Profile gefunden werden",
+        "PROFILES_ERROR": "Profile konnten nicht geladen werden",
+        "SAVE_LIKES_FAILED": "Gefällt mir Angaben konnte nicht gespeicherrt werden",
+        "NEW_LIKE_FOUND": "Neues Match gefunden!"
+      },
+      "PROFILE_CONFIGURATION": "Die App ist nicht richtig konfiguriert. Bitte kontaktieren sie einen Server-Admin.",
+      "EDIT_PROFILE_IMAGE": "Bild URL",
+      "EDIT_PROFILE_NAME": "Profil Name",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Standort",
+      "EDIT_PROFILE_JOB": "Job",
+      "EDIT_PROFILE_TAGS": "Stichworte",
+      "EDIT_PROFILE_PREVIEW": "Zeige Vorschau",
+      "LIKE": "Gefällt mir",
+      "DISLIKE": "Gefällt mir nicht"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "Sie haben keine Notizen",
+        "ADD_FAILED": "Notiz konnte nicht hinzugefügt werden.",
+        "ADD_SUCCESS": "Notiz wurde hinzugefügt.",
+        "DELETE_SUCCESS": "Notiz wurde gelöscht.",
+        "DELETE_FAILED": "Notiz konnte nicht gelöscht werden.",
+        "UPDATE_FAILED": "Notiz konnte nicht bearbeitet werden.",
+        "UPDATE_SUCCESS": "Notiz wurde bearbeitet."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "Alle notwendigen Felder müssen ausgefüllt werden!",
+        "CREATE_LISTING_FAILED": "Ihre Anzeige konnte nicht erstellt werden",
+        "CREATE_LISTING_SUCCESS": "Ihre Anzeige wurde erstellt",
+        "DELETE_LISTING_FAILED": "Ihre Anzeige konnte nicht gelöscht werden",
+        "DUPLICATE_LISTING": "Sie können nicht zwei Anzeigen mit dem selben Titel schalten!",
+        "DELETE_LISTING_SUCCESS": "Ihre Anzeige wurde gelöscht",
+        "REPORT_LISTING_FAILED": "Diese Anzeige wurde bereits gemeldet",
+        "REPORT_LISTING_SUCCESS": "Sie haben diese Anzeige gemeldet"
+      },
+      "FORM_TITLE": "Titel",
+      "FORM_IMAGE": "Bild oder URL",
+      "FORM_DESCRIPTION": "Beschreibung"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Es konnten keine Telefonnummern gefunden werden!",
+        "UNREAD_MESSAGES": "Sie haben {{ count }} ungelesene Mitteilungen",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) sind Telefonnummern welche sich nicht in ihren Kontakten befinden."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} ist eine Telefonnummer welche sich nicht in ihren Kontakten befindet",
+        "NEW_MESSAGE_FAILED:": "Ihre Nachricht konnte nicht versendet werden",
+        "INVALID_PHONE_NUMBER": "ungültige Telefonnummer",
+        "MESSAGE_CONVERSATION_DUPLICATE": "Dieser Chat existiert bereits!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Es konnte keine Gruppe erstellt werden",
+        "MESSAGE_GROUP_CREATE_MINE": "Sie können sich selbst nicht hinzufügen!",
+        "FETCHED_MESSAGES_FAILED": "Nachrichten konnten nicht geladen werden",
+        "DELETE_MESSAGE": "Gelöschte Nachricht",
+        "DELETE_MESSAGE_FAILED": "Die Nachricht konnte nicht gelöscht werden",
+        "DELETE_CONVERSATION_FAILED": "Der Chat konnte nicht gelöscht werden"
+      },
+      "SEARCH_PLACEHOLDER": "Suche nach Nachrichten...",
+      "DELETE_CONVERSATION": "Löschen sie einen Chat",
+      "NEW_MESSAGE": "Nachricht...",
+      "NEW_MESSAGE_GROUP": "Telefonnummer...",
+      "GROUP_CHAT_LABEL": "Gruppenname...",
+      "MEDIA_OPTION": "Kamera / Fotos",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Senden",
+      "INPUT_NAME_OR_NUMBER": "Suchen sie nach einem Kontakt oder einer Nummber, zum suchen drücken sie Enter",
+      "ACTIONS_TITLE": "Aktionen",
+      "ME": "Ich"
+    },
+    "RELATIVE_TIME": {
+      "future": "in %s",
+      "past": "vor %s",
+      "s": "vor ein Paar Sekunden",
+      "m": "vor einer Minute",
+      "mm": "%d Minuten",
+      "h": "eine Stunde",
+      "hh": "%d Stunde",
+      "d": "ein Tag",
+      "dd": "%d Tage",
+      "M": "ein Monat",
+      "MM": "%d Monate",
+      "y": "ein Jahr",
+      "yy": "%d Jahre"
+    },
+    "GENERIC": {
+      "LOADING": "Lädt...",
+      "WAIT": "Bitte warten sie...",
+      "SAVE": "Speichern",
+      "EDIT": "Bearbeiten",
+      "UPDATE": "Aktualisieren",
+      "REQUIRED": "Notwendig",
+      "DELETE": "Löschen",
+      "REPORT": "Melden",
+      "CALL": "Anrufen",
+      "MESSAGE": "Nachrichte",
+      "CLOSE": "Schließen",
+      "CANCEL": "Abbrechen",
+      "TITLE": "Titel",
+      "CONTENT": "Inhalt",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
+    },
+    "COMING_SOON": "Demnächst...",
+    "INITIALIZING": "Initialisiere",
+    "APPS_DIALER": "Handy",
+    "APPS_CONTACTS": "Kontakte",
+    "APPS_MESSAGES": "Nachrichten",
+    "APPS_CALCULATOR": "Rechner",
+    "APPS_SETTINGS": "Einstellungen",
+    "APPS_BANK": "WhoDis Online-Banking",
+    "APPS_NOTES": "Notizen",
+    "APPS_EXAMPLE": "Beispiel App",
+    "APPS_TWITTER": "Twitter",
+    "APPS_MARKETPLACE": "Marktplatz",
+    "APPS_CAMERA": "Kamera",
+    "APPS_MATCH": "Matchmaker",
+    "APPS_CALCULATOR_COPIED": "Ergebnis wurde in die Zwischenablage kopiert!",
+    "GENERIC_CLICK_TO_REVEAL": "Klicke zum aufdecken",
+    "GENERIC_LOADING": "Lädt...",
+    "GENERIC_WAIT": "Bitte warten sie...",
+    "GENERIC_SAVE": "Speichern",
+    "GENERIC_EDIT": "Bearbeiten",
+    "GENERIC_UPDATE": "Aktualisieren",
+    "GENERIC_REQUIRED": "Notwendig",
+    "GENERIC_DELETE": "Löschen",
+    "GENERIC_REPORT": "Melden",
+    "GENERIC_CALL": "Anrufen",
+    "GENERIC_MESSAGE": "Nachricht",
+    "GENERIC_CLOSE": "Schließen",
+    "GENERIC_CANCEL": "Abbrechen",
+    "GENERIC_TITLE": "Titel",
+    "GENERIC_CONTENT": "Inhalt",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
+  }
+}
