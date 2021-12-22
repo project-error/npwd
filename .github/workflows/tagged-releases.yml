@@ -32,8 +32,8 @@ jobs:
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
           export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-          export SENTRY_ORG='project-error'
-          export SENTRY_PROJECT='npwd'
+          export SENTRY_ORG=project-error
+          export SENTRY_PROJECT=npwd
           export SENTRY_URL='https://sentry.projecterror.dev/'
           export VERSION=${{ steps.get_tag.outputs.VERSION_TAG }}
 
