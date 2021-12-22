@@ -26,7 +26,7 @@ const debugObj = {
         appId: 'TWITTER',
         path: '/twitter',
         message: 'Taso just tweeted: You suck bro!',
-        duration: 3000,
+        duration: 500000,
       },
     });
   },

@@ -1,9 +1,10 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import {
   activeNotifications,
   notificationState,
   NotiMap,
   NPWDNotification,
+  storedNotificationsFamily,
 } from '../state/notifications.state';
 import { useApps } from '../../apps/hooks/useApps';
 import React, { useCallback } from 'react';
@@ -19,7 +20,7 @@ export interface QueueNotificationOpts {
   message: React.ReactNode | string;
   path?: string;
   persist?: boolean;
-  uniqId?: string;
+  uniqId: string;
 }
 
 interface UseNotificationVal {
@@ -46,6 +47,29 @@ export const useNotifications = (): UseNotificationVal => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { getApp } = useApps();
+
+  const createNotification = useRecoilCallback(
+    ({ set }) =>
+      ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOpts) => {
+        const app = getApp(appId);
+
+        if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
+
+        set(storedNotificationsFamily(uniqId), {
+          appId,
+          isActive: true,
+          timeReceived: new Date(),
+          isRead: false,
+          route: path,
+          message,
+          persist,
+          uniqId,
+          duration,
+          path,
+        });
+      },
+    [getApp],
+  );
 
   const queueNotification = useCallback(
     ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOpts) => {
@@ -83,7 +107,6 @@ export const useNotifications = (): UseNotificationVal => {
           persist,
           timeReceived: addedDate,
           duration,
-          key: id,
           isRead: false,
           isActive: true,
           appId,

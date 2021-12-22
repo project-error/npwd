@@ -1,11 +1,12 @@
 import React, { forwardRef } from 'react';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { SnackbarContent } from 'notistack';
 import { IApp } from '../../apps/config/apps';
 import { styled } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
+import { Close } from '@mui/icons-material';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -42,6 +43,11 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
       style={{ minWidth: '340px' }}
       onClick={handleGoToApp}
     >
+      <Box>
+        <IconButton>
+          <Close />
+        </IconButton>
+      </Box>
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7} fontSize={14}>
         <Box
           p="5px"
