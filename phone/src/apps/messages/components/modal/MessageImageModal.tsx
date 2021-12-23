@@ -67,7 +67,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const menuOptions = useMemo(
     () => [
       {
-        label: t('APPS_MESSAGE_MEDIA_OPTION'),
+        label: t('MESSAGES.MEDIA_OPTION'),
         icon: <PhotoLibraryIcon />,
         onClick: () =>
           history.push(
