@@ -32,7 +32,7 @@ export const ShowMore = ({ id, isReported, isMine }) => {
     fetchNui<ServerPromiseResp<void>>(TwitterEvents.DELETE_TWEET, { tweetId: id }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_TWITTER_DELETE_TWEET_FAILED'),
+          message: t('TWITTER.FEEDBACK.DELETE_TWEET_FAILED'),
           type: 'error',
         });
       }

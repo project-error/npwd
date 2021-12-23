@@ -110,7 +110,7 @@ export const AddTweetModal = () => {
       if (resp.status !== 'ok') {
         return addAlert({
           type: 'error',
-          message: t('APPS_TWITTER_CREATE_FAILED'),
+          message: t('TWITTER.FEEDBACK.CREATE_PROFILE_FAILURE'),
         });
       }
     });

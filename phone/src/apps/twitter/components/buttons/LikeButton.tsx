@@ -19,7 +19,7 @@ function LikeButton({ tweetId, isLiked }) {
     fetchNui<ServerPromiseResp<void>>(TwitterEvents.TOGGLE_LIKE, { tweetId }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('APPS_TWITTER_LIKE_TWEET_FAILED'),
+          message: t('TWITTER.FEEDBACK.LIKE_TWEET_FAILED'),
           type: 'error',
         });
       }

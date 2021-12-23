@@ -102,7 +102,13 @@
         "EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
         "EDIT_PROFILE_FAILURE": "Failed to update your profile",
         "CREATE_FAILED": "Failed to send your tweet",
-        "RETWEET_EXISTS": "You have already retweeted this tweet!"
+        "RETWEET_FAILED": "Failed to retweet this tweet",
+        "RETWEET_EXISTS": "You have already retweeted this tweet!",
+        "LIKE_TWEET_FAILED": "Failed to like tweet",
+        "REPORT_TWEET_SUCCESS": "Successfully reported tweet",
+        "REPORT_TWEET_FAILED": "Failed to report tweet",
+        "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
+        "DELETE_TWEET_FAILED": "Failed to delete tweet"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",

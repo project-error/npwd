@@ -26,7 +26,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
         if (resp.status !== 'ok') {
           return addAlert({
             type: 'error',
-            message: t('APPS_TWITTER_FETCH_TWEETS_FAILED'),
+            message: t('TWITTER.FEEDBACK.FETCH_TWEETS_FAILED'),
           });
         }
 
