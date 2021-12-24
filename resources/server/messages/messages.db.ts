@@ -40,9 +40,9 @@ export class _MessagesDB {
   /**
    * Retrieve all message conversations associated with a user. This will
    * populate the list of message conversations on the UI
-   * @param identifier - identifier of the user to get message conversations for
+   * @param phoneNumber - phoneNumber of the user to get message conversations for
    */
-  async getMessageConversations(identifier: string): Promise<UnformattedMessageConversation[]> {
+  async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
     const query = `SELECT npwd_messages_conversations.unread,
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
@@ -57,7 +57,7 @@ export class _MessagesDB {
                                             ON ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_conversations.participant_identifier
 		`;
 
-    const [results] = await DbInterface._rawExec(query, [identifier, identifier]);
+    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
     return <UnformattedMessageConversation[]>results;
   }
 

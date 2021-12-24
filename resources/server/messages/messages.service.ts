@@ -25,8 +25,9 @@ class _MessagesService {
 
   async handleFetchMessageConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
     try {
-      const identifier = PlayerService.getIdentifier(reqObj.source);
-      const messageConversations = await getFormattedMessageConversations(identifier);
+      //const identifier = PlayerService.getIdentifier(reqObj.source);
+      const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+      const messageConversations = await getFormattedMessageConversations(phoneNumber);
 
       resp({ status: 'ok', data: messageConversations });
     } catch (e) {
