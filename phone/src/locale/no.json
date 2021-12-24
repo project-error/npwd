@@ -2,7 +2,7 @@
   "translation": {
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Kritisk Feil",
-      "TOP_LEVEL_ERR_ACTION": "Reload",
+      "TOP_LEVEL_ERR_ACTION": "Restart",
       "TOP_LEVEL_ERR_MSG": "NPWD har støtt på en feil den ikke kunne gjenopprette fra. Du må laste inn NUI-vinduet på nytt. Feilen er vist nedenfor for utviklerreferanse."
     },
     "NOTIFICATIONS": {
@@ -38,7 +38,7 @@
         "FRAME": "Deksel",
         "ZOOM": "Zoom",
         "WALLPAPER": "Bakgrunn",
-        "RESET_SETTINGS": "Reset Innstillinger",
+        "RESET_SETTINGS": "Fabrikkinstill",
         "RESET_SETTINGS_DESC": "Dette fjerner all lokal data",
         "STREAMER_MODE": {
           "TITLE": "Strømmermodus",
