@@ -102,7 +102,7 @@
         "EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès !",
         "EDIT_PROFILE_FAILURE": "Erreur lors de la mise à jour de votre profil",
         "CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
-        "RETWEET_FAILED": "Errur lors du rewteet",
+        "RETWEET_FAILED": "Erreur lors du rewteet",
         "RETWEET_EXISTS": "Vous avez déjà retweeté ce tweet!",
         "LIKE_TWEET_FAILED": "Erreur lors du like du tweet",
         "REPORT_TWEET_SUCCESS": "Tweet signalé avec succès",
