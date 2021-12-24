@@ -11,6 +11,7 @@ import { MessageEvents } from '@typings/messages';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 interface IProps {
   isOpen: boolean;
@@ -27,7 +28,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const { pathname, search } = useLocation();
   const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
-
+  const { updateMessages } = useMessageActions();
   const removeQueryParamImage = useCallback(() => {
     setQueryParamImagePreview(null);
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
@@ -37,7 +38,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     (m) => {
       fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageGroupId, message: m }).then(
         (resp) => {
-          if (resp !== 'ok') {
+          if (resp.status !== 'ok') {
             onClose();
             return addAlert({
               message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
@@ -45,6 +46,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
             });
           }
           onClose();
+          updateMessages(resp.data);
         },
       );
     },
