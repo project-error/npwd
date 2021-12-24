@@ -54,7 +54,7 @@ export class _MessagesDB {
                             LEFT OUTER JOIN npwd_messages_conversations
                                             ON npwd_messages_conversations.conversation_id = t.conversation_id
                             LEFT OUTER JOIN ${config.database.playerTable}
-                                            ON ${config.database.playerTable}.${config.database.identifierColumn} = npwd_messages_conversations.participant_identifier
+                                            ON ${config.database.playerTable}.${config.database.phoneNumberColumn} = npwd_messages_conversations.participant_identifier
 		`;
 
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
