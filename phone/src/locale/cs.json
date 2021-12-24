@@ -102,7 +102,13 @@
         "EDIT_PROFILE_SUCCESS": "Profil byl úspěšně aktualizován",
         "EDIT_PROFILE_FAILURE": "Nepodařilo se aktualizovat profil",
         "CREATE_FAILED": "Nepodařilo se odeslat tweet",
-        "RETWEET_EXISTS": "Tento tweet byl již retweetnut"
+        "RETWEET_FAILED": "Nepodařilo se přeposlat tweet",
+        "RETWEET_EXISTS": "Tento tweet byl již přeposlán",
+        "LIKE_TWEET_FAILED": "Nepodařilo se ohodnotit tweet",
+        "REPORT_TWEET_SUCCESS": "Tweet byl úspěšně nahlášen",
+        "REPORT_TWEET_FAILED": "Nepodařilo se nahlásit tweet",
+        "FETCH_TWEETS_FAILED": "Nepodařilo se načíst tweety",
+        "DELETE_TWEET_FAILED": "Nepodařilo se vymazat tweet"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} někoho retweetnul!",
@@ -176,6 +182,7 @@
         "CREATE_LISTING_FAILED": "Nepodařilo se vytvořit nový inzerát",
         "CREATE_LISTING_SUCCESS": "Inzerát byl úspěšně vytvořen",
         "DELETE_LISTING_FAILED": "Nepodařilo se vymazat inzerát",
+        "DUPLICATE_LISTING": "Nemůžete zveřejnit inzerát se stejným názvem",
         "DELETE_LISTING_SUCCESS": "Inzerát byl úspěšně vymazán",
         "REPORT_LISTING_FAILED": "Tento inzerát byl již nahlášen",
         "REPORT_LISTING_SUCCESS": "Inzerát byl úspěšně nahlášen"
@@ -192,7 +199,7 @@
       },
       "FEEDBACK": {
         "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} není registrované číslo",
-        "NEW_MESSAGE_FAILED:": "Nepodařilo se odeslat zprávu",
+        "NEW_MESSAGE_FAILED": "Nepodařilo se odeslat zprávu",
         "INVALID_PHONE_NUMBER": "Neplatné telefonní číslo",
         "MESSAGE_CONVERSATION_DUPLICATE": "Tato konverzace již existuje!",
         "MESSAGE_GROUP_CREATE_FAILED": "Nepodařilo se vytvořit novou skupinu",
@@ -277,6 +284,6 @@
     "GENERIC_TITLE": "Název",
     "GENERIC_CONTENT": "Obsah",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Zkopírovat {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} zkopírován do schránky!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} zkopírován do schránky!"
   }
 }
