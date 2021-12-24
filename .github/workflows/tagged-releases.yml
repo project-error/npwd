@@ -42,6 +42,7 @@ jobs:
           sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --ext map --url-prefix '~/resources/html/'
           sentry-cli releases finalize "$VERSION"
 
+          sentry-cli releases deploys "$VERSION" new -e production
       - name: Bundle built files
         run: |
           mkdir -p ./temp/npwd/resources
