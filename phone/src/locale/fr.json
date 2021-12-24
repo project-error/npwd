@@ -102,7 +102,13 @@
         "EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès !",
         "EDIT_PROFILE_FAILURE": "Erreur lors de la mise à jour de votre profil",
         "CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
-        "RETWEET_EXISTS": "Vous avez déjà retweeté ce tweet!"
+        "RETWEET_FAILED": "Erreur lors du retweet",
+        "RETWEET_EXISTS": "Vous avez déjà retweeté ce tweet!",
+        "LIKE_TWEET_FAILED": "Erreur lors du like du tweet",
+        "REPORT_TWEET_SUCCESS": "Tweet signalé avec succès",
+        "REPORT_TWEET_FAILED": "Erreur lors du signalement du tweet",
+        "FETCH_TWEETS_FAILED": "Erreur lors de la recherche des tweets",
+        "DELETE_TWEET_FAILED": "Erreur lors de la suppression de tweet"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} a rewteeté quelqu'un!",
@@ -119,7 +125,7 @@
       "EDIT_PROFILE_NAME": "Pseudonyme",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Localisation",
-      "EDIT_PROFILE_JOB": "Job",
+      "EDIT_PROFILE_JOB": "Métier",
       "RETWEETED": "Retweeté",
       "TWEET_MESSAGE_CHAR_LIMIT": "Votre message dépasse la limite de caractères",
       "TWEET_MESSAGE_NEW_LINE_LIMIT": "Votre message dépasse la limite de ligne",
@@ -178,6 +184,7 @@
         "DELETE_LISTING_FAILED": "Erreur lors de la suppression d'une liste",
         "DELETE_LISTING_SUCCESS": "Liste supprimée avec succès",
         "REPORT_LISTING_FAILED": "Cette liste a déjà été signalée",
+        "DUPLICATE_LISTING": "Vous ne pouvez pas créer une liste avec le même titre!",
         "REPORT_LISTING_SUCCESS": "Liste signalée avec succès"
       },
       "FORM_TITLE": "Titre",
