@@ -90,7 +90,7 @@
         "TRANSMITTER_IS_CALLING": "{{ transmitter }} ringer deg!"
       },
       "INPUT_PLACEHOLDER": "Skriv et nummer",
-      "NAVBAR_HISTORY": "History",
+      "NAVBAR_HISTORY": "Historikk",
       "NAVBAR_DIAL": "Ring",
       "NAVBAR_CONTACTS": "Kontakter",
       "NO_HISTORY": "Du har ingen samtalehistorikk"
