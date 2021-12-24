@@ -142,10 +142,7 @@ class _MessagesService {
         }
       }
     } catch (e) {
-      emitNet(MessageEvents.ACTION_RESULT, reqObj.source, {
-        message: 'MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED',
-        type: 'error',
-      });
+      resp({ status: 'error', errorMsg: e.message });
       messagesLogger.error(`Failed to send message, ${e.message}`, {
         source: reqObj.source,
       });
