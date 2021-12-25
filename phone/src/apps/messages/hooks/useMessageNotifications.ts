@@ -39,7 +39,7 @@ export const useMessageNotifications = () => {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: group.display || group.phoneNumber || conversationName,
+      title: group?.display || group.phoneNumber || conversationName,
       onClick: () => goToConversation(group),
       content: message,
       icon,
@@ -51,7 +51,7 @@ export const useMessageNotifications = () => {
       if (group.unread > 1) {
         addNotification({
           ...n,
-          title: group.phoneNumber || group.display,
+          title: group.phoneNumber || group?.display,
           content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
             count: group.unread,
           }),
