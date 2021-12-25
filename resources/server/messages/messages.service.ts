@@ -128,9 +128,13 @@ class _MessagesService {
         },
       });
 
+      // participantId is the participants phone number
       for (const participantId of participants) {
-        if (participantId !== player.getIdentifier()) {
-          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
+        if (participantId !== player.getPhoneNumber()) {
+          const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
+            participantId,
+          );
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
             emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
