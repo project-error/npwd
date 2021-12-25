@@ -14,7 +14,6 @@ import {
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
-// felt good to just remove group chats.
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
 
@@ -25,7 +24,6 @@ class _MessagesService {
 
   async handleFetchMessageConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
     try {
-      //const identifier = PlayerService.getIdentifier(reqObj.source);
       const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
       const messageConversations = await getFormattedMessageConversations(phoneNumber);
 
