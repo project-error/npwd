@@ -1,0 +1,289 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Fatal Error",
+      "TOP_LEVEL_ERR_ACTION": "Reload",
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "No unread notifications"
+    },
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Ringing",
+        "OUTGOING": "Outgoing call",
+        "INCOMING": "Incoming call"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "You cannot call your own phone number!",
+        "ERROR": "Error occurred while completing this call"
+      }
+    },
+    "BROWSER": {
+      "NAME": "Browser"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Phone Number",
+      "CATEGORY": {
+        "APPEARANCE": "Appearance",
+        "PHONE": "Phone",
+        "ACTIONS": "Actions"
+      },
+      "OPTIONS": {
+        "ICONSET": "Icon Set",
+        "THEME": "Theme",
+        "LANGUAGE": "Language",
+        "FRAME": "Frame",
+        "ZOOM": "Zoom",
+        "WALLPAPER": "Wallpaper",
+        "RESET_SETTINGS": "Reset Settings",
+        "RESET_SETTINGS_DESC": "This will clear your locally stored data",
+        "STREAMER_MODE": {
+          "TITLE": "Streamer mode",
+          "DESCRIPTION": "Hide images before they are shown"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Custom Wallpaper",
+          "DIALOG_CONTENT": "Set a custom wallpaper by entering the URL of the image below!",
+          "DIALOG_PLACEHOLDER": "Image URL",
+          "DIALOG_ERROR": "Invalid image or link"
+        },
+        "RINGTONE": "Ringtone",
+        "RINGTONE_VOLUME": "Ringtone Volume",
+        "NOTIFICATION": "Notification",
+        "NOTIFICATION_VOLUME": "Notification Volume",
+        "NOTIFICATION_FILTER": "Notification Filters"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
+        "SETTINGS_RESET": "Settings have been reset!"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Where do you want to share the image",
+      "COPY_IMAGE": "Copy the image url here:",
+      "FAILED_TO_DELETE": "Photo could not be deleted :(",
+      "FAILED_TO_TAKE_PHOTO": "Photo could not be saved :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Failed to created contact!",
+        "ADD_SUCCESS": "Successfully created contact!",
+        "UPDATE_FAILED": "Failed to update contact!",
+        "UPDATE_SUCCESS": "Successfully updated contact!",
+        "DELETE_FAILED": "Failed to delete contact!",
+        "DELETE_SUCCESS": "Successfully deleted contact!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Search contacts...",
+      "FORM_NAME": "Name",
+      "FORM_NUMBER": "Number",
+      "FORM_AVATAR": "Avatar URL",
+      "MODAL_BUTTON_ADD": "Add Contact"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "Current Phone Call",
+        "INCOMING_CALL_TITLE": "Incoming Phone Call",
+        "CURRENT_CALL_WITH": "In call with {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!"
+      },
+      "INPUT_PLACEHOLDER": "Enter a number",
+      "NAVBAR_HISTORY": "History",
+      "NAVBAR_DIAL": "Dial",
+      "NAVBAR_CONTACTS": "Contacts",
+      "NO_HISTORY": "You have no call history"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Successfully created your profile",
+        "CREATE_PROFILE_FAILURE": "Failed to create your profile",
+        "EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
+        "EDIT_PROFILE_FAILURE": "Failed to update your profile",
+        "CREATE_FAILED": "Failed to send your tweet",
+        "RETWEET_FAILED": "Failed to retweet this tweet",
+        "RETWEET_EXISTS": "You have already retweeted this tweet!",
+        "LIKE_TWEET_FAILED": "Failed to like tweet",
+        "REPORT_TWEET_SUCCESS": "Successfully reported tweet",
+        "REPORT_TWEET_FAILED": "Failed to report tweet",
+        "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
+        "DELETE_TWEET_FAILED": "Failed to delete tweet"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
+        "NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!"
+      },
+      "SUBMIT_IMAGE": "Add Media",
+      "TWEET": "Tweet",
+      "REPORTED": " Reported",
+      "REPORT": "Report",
+      "IMAGE_PLACEHOLDER": "A link to your image or gif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Choose Profile Name",
+      "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "EDIT_PROFILE_NAME": "Profile name",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Location",
+      "EDIT_PROFILE_JOB": "Job",
+      "RETWEETED": "Retweeted",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Message is over the character limit",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
+      "TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
+      "SEARCH_TWEETS": "Search for tweets",
+      "TIME_JUST_NOW": "Just now",
+      "TIME_MINUTES": "m",
+      "TIME_HOURS": "h",
+      "TIME_DAYS": "d"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Last Active: {{ lastActive }}",
+        "LIKED": "LIKE",
+        "NOPE": "NOPE"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Failed to update profile",
+        "UPDATE_PROFILE_SUCCEEDED": "Successfully updated profile",
+        "MATCHES_ERROR": "Error loading matches",
+        "NO_MATCHES": "No matches Found",
+        "NO_PROFILES": "No Recent Profiles Found",
+        "PROFILES_ERROR": "Error loading profiles",
+        "SAVE_LIKES_FAILED": "Failed to save likes",
+        "NEW_LIKE_FOUND": "New match found!"
+      },
+      "PROFILE_CONFIGURATION": "App is incorrectly configured - cannot create profile. Please contact an administrator.",
+      "EDIT_PROFILE_IMAGE": "Image URL",
+      "EDIT_PROFILE_NAME": "Profile name",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Location",
+      "EDIT_PROFILE_JOB": "Job",
+      "EDIT_PROFILE_TAGS": "Tags",
+      "EDIT_PROFILE_PREVIEW": "Show Preview",
+      "LIKE": "Like",
+      "DISLIKE": "Dislike"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "You have no notes",
+        "ADD_FAILED": "Failed to save note.",
+        "ADD_SUCCESS": "Successfully saved note.",
+        "DELETE_SUCCESS": "Successfully deleted note.",
+        "DELETE_FAILED": "Failed to delete note.",
+        "UPDATE_FAILED": "Failed to update note.",
+        "UPDATE_SUCCESS": "Successfully updated note."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "All required fields must be filled!",
+        "CREATE_LISTING_FAILED": "Failed to create a new listing",
+        "CREATE_LISTING_SUCCESS": "Successfully created a new listing",
+        "DELETE_LISTING_FAILED": "Failed to delete listing",
+        "DUPLICATE_LISTING": "You cannot publish a listing with the same title!",
+        "DELETE_LISTING_SUCCESS": "Successfully delete listing",
+        "REPORT_LISTING_FAILED": "This listing has already been reported",
+        "REPORT_LISTING_SUCCESS": "Successfully reported listing"
+      },
+      "FORM_TITLE": "Title",
+      "FORM_IMAGE": "Image or URL",
+      "FORM_DESCRIPTION": "Description"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "None of the phone numbers could be found!",
+        "UNREAD_MESSAGES": "You have {{ count }} unread messages",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) are not registered numbers."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} is not a registered number",
+        "NEW_MESSAGE_FAILED": "Failed to send message",
+        "INVALID_PHONE_NUMBER": "Invalid phone number",
+        "MESSAGE_CONVERSATION_DUPLICATE": "This conversation already exists!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
+        "MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
+        "FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
+        "DELETE_MESSAGE": "Delete message",
+        "DELETE_MESSAGE_FAILED": "Failed to delete message",
+        "DELETE_CONVERSATION_FAILED": "Failed to delete conversation"
+      },
+      "SEARCH_PLACEHOLDER": "Search messages...",
+      "DELETE_CONVERSATION": "Delete conversation",
+      "NEW_MESSAGE": "Message...",
+      "NEW_MESSAGE_GROUP": "Phone numbers...",
+      "GROUP_CHAT_LABEL": "Group chat label...",
+      "MEDIA_OPTION": "Camera / Gallery",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Send",
+      "INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
+      "ACTIONS_TITLE": "Actions",
+      "ME": "Me"
+    },
+    "RELATIVE_TIME": {
+      "future": "in %s",
+      "past": "%s ago",
+      "s": "a few seconds",
+      "m": "a minute",
+      "mm": "%d minutes",
+      "h": "an hour",
+      "hh": "%d hours",
+      "d": "a day",
+      "dd": "%d days",
+      "M": "a month",
+      "MM": "%d months",
+      "y": "a year",
+      "yy": "%d years"
+    },
+    "GENERIC": {
+      "LOADING": "Loading...",
+      "WAIT": "Please wait...",
+      "SAVE": "Save",
+      "EDIT": "Edit",
+      "UPDATE": "Update",
+      "REQUIRED": "Required",
+      "DELETE": "Delete",
+      "REPORT": "Report",
+      "CALL": "Call",
+      "MESSAGE": "Message",
+      "CLOSE": "Close",
+      "CANCEL": "Cancel",
+      "TITLE": "Title",
+      "CONTENT": "Content",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    },
+    "COMING_SOON": "Coming soon...",
+    "INITIALIZING": "Initializing",
+    "APPS_DIALER": "Phone",
+    "APPS_CONTACTS": "Contacts",
+    "APPS_MESSAGES": "Messages",
+    "APPS_CALCULATOR": "Calculator",
+    "APPS_SETTINGS": "Settings",
+    "APPS_BANK": "WhoDis Banking",
+    "APPS_NOTES": "Notes",
+    "APPS_EXAMPLE": "Example app",
+    "APPS_TWITTER": "Twitter",
+    "APPS_MARKETPLACE": "Marketplace",
+    "APPS_CAMERA": "Camera",
+    "APPS_MATCH": "Matchmaker",
+    "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
+    "GENERIC_LOADING": "Loading...",
+    "GENERIC_WAIT": "Please wait...",
+    "GENERIC_SAVE": "Save",
+    "GENERIC_EDIT": "Edit",
+    "GENERIC_UPDATE": "Update",
+    "GENERIC_REQUIRED": "Required",
+    "GENERIC_DELETE": "Delete",
+    "GENERIC_REPORT": "Report",
+    "GENERIC_CALL": "Call",
+    "GENERIC_MESSAGE": "Message",
+    "GENERIC_CLOSE": "Close",
+    "GENERIC_CANCEL": "Cancel",
+    "GENERIC_TITLE": "Title",
+    "GENERIC_CONTENT": "Content",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+  }
+}
