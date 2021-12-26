@@ -6,7 +6,7 @@ import PlayerService from '../players/player.service';
 export const messagesLogger = mainLogger.child({ module: 'messages' });
 
 // Functions
-export async function getConsolidatedMessageGroups(identifier: any): Promise<any> {
+export async function getConsolidatedMessageGroups(identifier: string): Promise<any> {
   const messageConversations = await MessagesDB.getMessageConversations(identifier);
   return messageConversations.reduce((mapping: any, conversation: any) => {
     const groupId = conversation.conversation_id;

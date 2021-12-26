@@ -14,7 +14,6 @@ import {
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
-// felt good to just remove group chats.
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
 
@@ -25,8 +24,8 @@ class _MessagesService {
 
   async handleFetchMessageConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
     try {
-      const identifier = PlayerService.getIdentifier(reqObj.source);
-      const messageConversations = await getFormattedMessageConversations(identifier);
+      const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+      const messageConversations = await getFormattedMessageConversations(phoneNumber);
 
       resp({ status: 'ok', data: messageConversations });
     } catch (e) {
@@ -127,9 +126,13 @@ class _MessagesService {
         },
       });
 
+      // participantId is the participants phone number
       for (const participantId of participants) {
-        if (participantId !== player.getIdentifier()) {
-          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantId);
+        if (participantId !== player.getPhoneNumber()) {
+          const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
+            participantId,
+          );
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
             emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);

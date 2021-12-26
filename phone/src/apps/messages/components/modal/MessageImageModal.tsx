@@ -50,7 +50,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
         },
       );
     },
-    [messageGroupId, onClose, addAlert, t],
+    [messageGroupId, onClose, updateMessages, addAlert, t],
   );
 
   const sendFromQueryParam = useCallback(

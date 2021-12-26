@@ -13,9 +13,12 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
 import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
+import { createBrowserHistory } from 'history';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
+
+const history = createBrowserHistory();
 
 const rootDir = __dirname ?? process.cwd();
 // Enable Sentry when config setting is true and when in prod
@@ -25,7 +28,9 @@ if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
     autoSessionTracking: true,
     release: process.env.REACT_APP_VERSION ?? 'unknown',
     integrations: [
-      new Integrations.BrowserTracing(),
+      new Integrations.BrowserTracing({
+        routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+      }),
       // @ts-ignore
       new RewriteFrames({
         root: rootDir,
@@ -39,7 +44,7 @@ if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
     ],
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.5,
   });
 }
 

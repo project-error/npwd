@@ -51,7 +51,7 @@ export const messageState = {
 
       return messageConversations.filter(
         (conversation) =>
-          conversation.display.match(regExp) || conversation.phoneNumber.match(regExp),
+          conversation?.display?.match(regExp) || conversation.phoneNumber.match(regExp),
       );
     },
   }),

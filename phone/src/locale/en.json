@@ -202,7 +202,7 @@
         "NEW_MESSAGE_FAILED": "Failed to send message",
         "INVALID_PHONE_NUMBER": "Invalid phone number",
         "MESSAGE_CONVERSATION_DUPLICATE": "This conversation already exists!",
-        "MESSAGE_GROUP_CREATE_FAILED": "Failed to create message group",
+        "MESSAGE_GROUP_CREATE_FAILED": "Failed to create message conversation",
         "MESSAGE_GROUP_CREATE_MINE": "You cannot add yourself!",
         "FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
         "DELETE_MESSAGE": "Delete message",
