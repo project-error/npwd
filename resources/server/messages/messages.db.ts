@@ -47,7 +47,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
                           npwd_messages_conversations.participant_identifier,
-                          ${config.database.playerTable}.${config.database.phoneNumberColumn}
+                          ${config.database.playerTable}.${config.database.phoneNumberColumn} AS phone_number
                    FROM (SELECT conversation_id
                          FROM npwd_messages_conversations
                          WHERE npwd_messages_conversations.participant_identifier = ?) AS t
