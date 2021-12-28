@@ -45,6 +45,8 @@ export const SoundProvider: React.FC = ({ children }) => {
 
         const instance = new Howl({
           src: url,
+          onload: () => console.log('Loaded'),
+          onloaderror: (id, err) => console.log('Error', err),
           loop,
           volume,
           autoplay,

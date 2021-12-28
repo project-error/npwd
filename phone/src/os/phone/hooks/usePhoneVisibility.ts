@@ -2,22 +2,22 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from './state';
-import { useNotifications } from '../../new-notifications/hooks/useNotifications';
+import { useNotifications } from '@os/new-notifications/hooks/useNotifications';
 
 export const usePhoneVisibility = () => {
   const visibility = useRecoilValue(phoneState.visibility);
-  const { activeNotis } = useNotifications();
+  const { activeNotifications } = useNotifications();
   const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
   useEffect(() => {
-    if (activeNotis && !visibility) {
+    if (activeNotifications.length && !visibility) {
       setNotifVisibility(true);
     } else {
       setNotifVisibility(false);
     }
-  }, [activeNotis, visibility]);
+  }, [activeNotifications, visibility]);
 
   const bottom = useMemo(() => {
     if (!visibility) {

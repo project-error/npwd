@@ -14,7 +14,7 @@ const DEFAULT_OPTIONS = { volume: 1, interrupt: false, loop: false };
  * A hook allowing to play sound
  * @param url The url of the sound you would like to play
  *
- * @param { volume, interrupt, loop} Additional options
+ * @param options
  **/
 const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
   const { volume: vol, loop: isLoop, interrupt } = options;

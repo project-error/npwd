@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
-import { Box, IconButton } from '@mui/material';
+import { Box } from '@mui/material';
 import { SnackbarContent } from 'notistack';
 import { IApp } from '../../apps/config/apps';
 import { styled } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
-import { Close } from '@mui/icons-material';
+import { useNotifications } from '@os/new-notifications/hooks/useNotifications';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -20,20 +20,24 @@ const StyledMessage = styled('div')({
 
 interface NotificationBaseProps {
   app: IApp;
+  uniqId: string;
   message: string | React.ReactNode;
   timeReceived: Date;
   path?: string;
 }
 
 export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
-  const { message, app, timeReceived, path } = props;
+  const { message, app, timeReceived, path, uniqId } = props;
   const history = useHistory();
   const [t] = useTranslation();
+  const { markAsRead } = useNotifications();
 
   // Should eventually also mark as read/mark as inactive if clicked.
   const handleGoToApp = () => {
     if (!path) return;
     history.push(path);
+
+    markAsRead(uniqId);
   };
 
   return (
@@ -43,11 +47,6 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
       style={{ minWidth: '340px' }}
       onClick={handleGoToApp}
     >
-      <Box>
-        <IconButton>
-          <Close />
-        </IconButton>
-      </Box>
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7} fontSize={14}>
         <Box
           p="5px"

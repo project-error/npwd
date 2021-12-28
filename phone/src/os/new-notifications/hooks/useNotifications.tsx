@@ -1,35 +1,39 @@
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import {
-  activeNotifications,
-  notificationState,
-  NotiMap,
-  NPWDNotification,
+  activeNotificationsIds,
+  allNotificationIds,
   storedNotificationsFamily,
 } from '../state/notifications.state';
-import { useApps } from '../../apps/hooks/useApps';
-import React, { useCallback } from 'react';
+import { useApps } from '@os/apps/hooks/useApps';
+import React, { useState } from 'react';
 import { NotificationBase } from '../components/NotificationBase';
 import { useSnackbar } from 'notistack';
 import { css } from '@emotion/css';
-import lodashDeepClone from 'lodash/cloneDeep';
 import notiActiveExitHandler from '../utils/notiActiveExitHandler';
+import useSound from '@os/sound/hooks/useSound';
+import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
+import { IApp } from '@os/apps/config/apps';
+import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
+import apps from '../../../../../resources/utils/apps';
 
-export interface QueueNotificationOpts {
+export type QueueNotificationOptsReadonly = Readonly<QueueNotificationBase>;
+
+interface QueueNotificationBase {
   appId: string;
   duration?: number;
-  message: React.ReactNode | string;
+  message: string;
   path?: string;
   persist?: boolean;
   uniqId: string;
 }
 
 interface UseNotificationVal {
-  activeNotis: NotiMap;
-  allNotis: NotiMap;
-  queueNotification: (opts: QueueNotificationOpts) => void;
+  createNotification: (opts: QueueNotificationOptsReadonly) => void;
   removeAllActive: () => void;
-  removeActive: (key: string | number) => void;
-  markAsRead: (key: string | number) => void;
+  activeNotifications: string[];
+  removeActive: (key: string) => void;
+  markAsRead: (key: string) => void;
+  clearAllNotifications: () => void;
 }
 
 const styles = {
@@ -42,152 +46,175 @@ const styles = {
 };
 
 export const useNotifications = (): UseNotificationVal => {
-  const [notis, setNotis] = useRecoilState(notificationState);
-  const activeNotis = useRecoilValue(activeNotifications);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [soundSettings, setSoundSettings] = useState({
+    sound: 'media/notifications/online.ogg',
+    volume: 0,
+  });
+
+  const settings = useSettingsValue();
+  const { play, playing } = useSound(soundSettings.sound, {
+    loop: false,
+    volume: soundSettings.volume,
+  });
+
+  const activeNotifications = useRecoilValue(activeNotificationsIds);
+
+  const setupSoundForNotification = (app: IApp) => {
+    const { sound, volume } = getSoundSettings('notiSound', settings, app.id);
+    setSoundSettings({ sound, volume });
+    if (!playing) {
+      play();
+    }
+  };
 
   const { getApp } = useApps();
 
   const createNotification = useRecoilCallback(
     ({ set }) =>
-      ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOpts) => {
+      ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOptsReadonly) => {
         const app = getApp(appId);
 
         if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
 
+        const addedDate = new Date();
+
         set(storedNotificationsFamily(uniqId), {
           appId,
-          isActive: true,
-          timeReceived: new Date(),
-          isRead: false,
-          route: path,
           message,
+          timeReceived: addedDate,
+          isActive: true,
+          isRead: false,
           persist,
           uniqId,
           duration,
           path,
         });
+
+        setupSoundForNotification(app);
+        set(allNotificationIds, (curIds) => [...curIds, uniqId]);
+        set(activeNotificationsIds, (curIds) => [...curIds, uniqId]);
+
+        enqueueSnackbar(
+          <NotificationBase
+            uniqId={uniqId}
+            app={app}
+            message={message}
+            timeReceived={addedDate}
+            path={path}
+          />,
+          {
+            autoHideDuration: duration,
+            onExit: notiActiveExitHandler,
+            key: uniqId,
+            anchorOrigin: {
+              horizontal: 'center',
+              vertical: 'top',
+            },
+            className: styles.root,
+          },
+        );
       },
     [getApp],
   );
 
-  const queueNotification = useCallback(
-    ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOpts) => {
-      const app = getApp(appId);
+  const removeAllActive = useRecoilCallback(
+    ({ reset, snapshot, set }) =>
+      async () => {
+        const allActiveIds = await snapshot.getPromise(activeNotificationsIds);
 
-      if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
+        for (const id of allActiveIds) {
+          const noti = await snapshot.getPromise(storedNotificationsFamily(id));
 
-      const addedDate = new Date();
+          if (!noti) continue;
 
-      const id = enqueueSnackbar(
-        <NotificationBase app={app} message={message} timeReceived={addedDate} path={path} />,
-        {
-          autoHideDuration: duration,
-          onExit: notiActiveExitHandler,
-          key: uniqId,
-          anchorOrigin: {
-            horizontal: 'center',
-            vertical: 'top',
-          },
-          className: styles.root,
-        },
-      );
-
-      setNotis((curNotis) => {
-        if (curNotis[id])
-          throw new Error(`Notification with uniqId of "${uniqId}" already exists!`);
-
-        // Need to clone for immutability sake
-        const notisCloned: NotiMap = lodashDeepClone(curNotis);
-
-        // noinspection UnnecessaryLocalVariableJS
-        const newNotiObj: NPWDNotification = {
-          message,
-          path,
-          persist,
-          timeReceived: addedDate,
-          duration,
-          isRead: false,
-          isActive: true,
-          appId,
-        };
-        // Assign and set our initial notification state
-        notisCloned[id] = newNotiObj;
-
-        return notisCloned;
-      });
-
-      return id;
-    },
-    // Ignore curNotis in deps as its considered stable.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [enqueueSnackbar, getApp],
-  );
-
-  const removeAllActive = useCallback(() => {
-    closeSnackbar();
-    setNotis((curNotis) => {
-      const copiedMap: NotiMap = lodashDeepClone(curNotis);
-
-      for (const [key, value] of Object.entries(copiedMap)) {
-        if (value?.isActive) {
-          copiedMap[key] = { ...value, isActive: false };
-        }
-      }
-
-      return copiedMap;
-    });
-  }, [closeSnackbar, setNotis]);
-
-  const removeActive = useCallback(
-    (key: string | number) => {
-      closeSnackbar(key);
-      // If the targeted notification isn't currently active, we should bail.
-      if (!activeNotis[key]) return;
-
-      setNotis((curNotis) => {
-        const mapCopy = lodashDeepClone(curNotis);
-        const tgtNoti = mapCopy[key];
-
-        tgtNoti.isActive = false;
-
-        return mapCopy;
-      });
-    },
-    [closeSnackbar, activeNotis, setNotis],
-  );
-
-  const markAsRead = useCallback(
-    (key: string | number) => {
-      setNotis((curNotis) => {
-        const tgtNoti = curNotis[key];
-        if (!tgtNoti) throw new Error(`Noti with key "${key}" wasn't found`);
-
-        const updatedCopy: NPWDNotification = { ...tgtNoti, isRead: true };
-
-        const copyMap = lodashDeepClone(updatedCopy);
-
-        // In case the notification is currently on screen while marked as read
-        // we want to clear active status if so.
-        if (tgtNoti.isActive) {
-          tgtNoti.isActive = false;
-          closeSnackbar(key);
+          set(storedNotificationsFamily(id), {
+            ...noti,
+            isActive: false,
+          });
         }
 
-        return copyMap;
-      });
-    },
-    // Ignoring the recoil setter as its stable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        reset(activeNotificationsIds);
+      },
+    [],
+  );
+
+  const removeActive = useRecoilCallback(
+    ({ set, snapshot }) =>
+      async (id: string) => {
+        closeSnackbar(id);
+
+        const activeIds = await snapshot.getPromise(activeNotificationsIds);
+        const tgtAtom = storedNotificationsFamily(id);
+        const notiTgt = await snapshot.getPromise(tgtAtom);
+
+        if (!notiTgt) return;
+
+        set(tgtAtom, {
+          ...notiTgt,
+          isActive: false,
+        });
+
+        // Without the target
+        const newActiveIds = activeIds.filter((curId) => curId !== id);
+
+        set(activeNotificationsIds, newActiveIds);
+      },
     [closeSnackbar],
   );
 
+  const markAsRead =
+    // Ignoring the recoil setter as its stable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useRecoilCallback(
+      ({ set, snapshot }) =>
+        async (key: string) => {
+          const tgtState = storedNotificationsFamily(key);
+          const { isActive, isRead, ...restNoti } = await snapshot.getPromise(tgtState);
+
+          set(tgtState, {
+            ...restNoti,
+            isRead: true,
+            isActive: false,
+          });
+
+          // If the targeted notification isn't currently active, we should bail.
+          if (!isActive) return;
+
+          const curActiveNotis = await snapshot.getPromise(activeNotificationsIds);
+
+          const newActiveNotis = curActiveNotis.filter((id) => id !== key);
+          set(activeNotificationsIds, newActiveNotis);
+        },
+      [closeSnackbar],
+    );
+
+  const clearAllNotifications = useRecoilCallback(({ reset, snapshot }) => async () => {
+    const allActiveNotis = await snapshot.getPromise(activeNotificationsIds);
+
+    // In case we still have one open, we want to clear everything prior to reset.
+    for (const id of allActiveNotis) {
+      const tgtAtom = storedNotificationsFamily(id);
+      const noti = await snapshot.getPromise(tgtAtom);
+
+      if (noti.isActive) {
+        closeSnackbar(id);
+      }
+
+      // Reset the notification atom
+      reset(tgtAtom);
+    }
+
+    reset(activeNotificationsIds);
+    reset(allNotificationIds);
+  });
+
   return {
-    queueNotification,
+    clearAllNotifications,
+    createNotification,
     removeAllActive,
     removeActive,
+    activeNotifications,
     markAsRead,
-    allNotis: notis,
-    activeNotis,
   };
 };
