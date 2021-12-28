@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
 import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useDialHistory } from '../../hooks/useDialHistory';
 import { useCall } from '@os/call/hooks/useCall';
+import { useContacts } from '../../../contacts/hooks/state';
 
 const useStyles = makeStyles((theme: Theme) => ({
   callForward: {
@@ -32,12 +33,19 @@ export const DialerHistory: React.FC = () => {
   const { initializeCall } = useCall();
   const calls = useDialHistory();
   const classes = useStyles();
+  const contacts = useContacts();
   const history = useHistory();
   const [t] = useTranslation();
 
   const handleCall = (phoneNumber) => {
     initializeCall(phoneNumber);
   };
+
+  // To display the name, force a re-render when we get contacts | issue #432
+  const getDisplay = useCallback(
+    (number: string) => (contacts.length ? getDisplayByNumber(number) : number),
+    [contacts, getDisplayByNumber],
+  );
 
   if (!calls?.length) {
     return (
@@ -62,7 +70,7 @@ export const DialerHistory: React.FC = () => {
             </ListItemIcon>
 
             <ListItemText
-              primary={getDisplayByNumber(call.receiver)}
+              primary={getDisplay(call.receiver)}
               secondary={
                 // TODO: Locale changes are pending #168 merge
                 dayjs().to(dayjs.unix(parseInt(call.start)))
@@ -76,7 +84,7 @@ export const DialerHistory: React.FC = () => {
               {<PhoneIcon />}
             </IconButton>
 
-            {getDisplayByNumber(call.receiver) === call.receiver && (
+            {getDisplay(call.receiver) === call.receiver && (
               <IconButton
                 onClick={() =>
                   history.push(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)
@@ -94,7 +102,7 @@ export const DialerHistory: React.FC = () => {
             </ListItemIcon>
 
             <ListItemText
-              primary={getDisplayByNumber(call.transmitter)}
+              primary={getDisplay(call.transmitter)}
               secondary={
                 // TODO: Locale changes are pending #168 merge
                 dayjs().to(dayjs.unix(parseInt(call.start)))
@@ -108,7 +116,7 @@ export const DialerHistory: React.FC = () => {
               <PhoneIcon />
             </IconButton>
 
-            {getDisplayByNumber(call.transmitter) === call.transmitter && (
+            {getDisplay(call.transmitter) === call.transmitter && (
               <IconButton
                 onClick={() =>
                   history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
