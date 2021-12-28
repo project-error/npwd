@@ -18,15 +18,10 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { Message, MessageEvents } from '@typings/messages';
 import Modal from '../../../../ui/components/Modal';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessagesState } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
-import { MockConversationServerResp } from '../../utils/constants';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -70,41 +65,23 @@ const useStyles = makeStyles({
 export const MessageModal = () => {
   const [t] = useTranslation();
   const classes = useStyles();
-  const { addAlert } = useSnackbar();
   const history = useHistory();
   const { pathname } = useLocation();
   const { groupId } = useParams<{ groupId: string }>();
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
+  const { fetchMessages } = useMessageAPI();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
-  const { removeConversation } = useMessageActions();
+  const { deleteConversation } = useMessageAPI();
 
   const [isLoaded, setLoaded] = useState(false);
   // Multiselect
   const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
   useEffect(() => {
-    fetchNui<ServerPromiseResp<Message[]>>(
-      MessageEvents.FETCH_MESSAGES,
-      {
-        conversationId: groupId,
-        page: 0,
-      },
-      MockConversationServerResp,
-    ).then((resp) => {
-      if (resp.status !== 'ok') {
-        addAlert({
-          message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
-          type: 'error',
-        });
-
-        return history.push('/messages');
-      }
-
-      setMessages(resp.data);
-    });
-  }, [groupId, history, addAlert, t, setMessages]);
+    fetchMessages(groupId, 0);
+  }, [groupId, fetchMessages]);
 
   useEffect(() => {
     if (activeMessageConversation && messages) {
@@ -163,19 +140,8 @@ export const MessageModal = () => {
   };
 
   const handleDeleteConversation = () => {
-    fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
-      conversationsId: [groupId],
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('MESSAGES.FEEDBACK.DELETE_CONVERSATION_FAILED'),
-          type: 'error',
-        });
-      }
-
-      history.push('/messages');
-      removeConversation([groupId]);
-    });
+    history.push('/messages');
+    deleteConversation([groupId]);
   };
 
   const targetNumber = activeMessageConversation.phoneNumber;

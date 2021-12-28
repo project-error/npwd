@@ -1,13 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMessageActions } from '../../hooks/useMessageActions';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { MessageEvents } from '@typings/messages';
-import { ServerPromiseResp } from '@typings/common';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { ContextMenu } from '@ui/components/ContextMenu';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSelectedMessageValue } from '../../hooks/state';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface MessageBubbleMenuProps {
   open: boolean;
@@ -16,22 +12,12 @@ interface MessageBubbleMenuProps {
 
 const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose }) => {
   const [t] = useTranslation();
-  const { deleteMessage } = useMessageActions();
-  const { addAlert } = useSnackbar();
+  const { deleteMessage } = useMessageAPI();
   const selectedMessage = useSelectedMessageValue();
 
   const handleDeleteMessage = useCallback(() => {
-    fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_MESSAGE, selectedMessage).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('MESSAGES.FEEDBACK.DELETE_MESSAGE_FAILED'),
-          type: 'error',
-        });
-      }
-
-      deleteMessage(selectedMessage.id);
-    });
-  }, [deleteMessage, t, addAlert, selectedMessage]);
+    deleteMessage(selectedMessage);
+  }, [deleteMessage, selectedMessage]);
 
   const menuOptions = useMemo(
     () => [
