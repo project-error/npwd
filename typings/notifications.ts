@@ -5,3 +5,29 @@ export enum NotificationEvents {
   CLEAR_NOTIFICATIONS = 'npwd:clearNoti',
   QUEUE_NOTIFICATION = 'npwd:queueNoti',
 }
+
+export interface NPWDNotification extends QueueNotificationOptsReadonly {
+  isActive: boolean;
+  isRead: boolean;
+  timeReceived: Date;
+}
+
+export type QueueNotificationOptsReadonly = Readonly<QueueNotificationBase>;
+
+export interface QueueNotificationBase {
+  appId: string;
+  duration?: number;
+  message: string;
+  path?: string;
+  persist?: boolean;
+  uniqId: string;
+}
+
+export interface UseNotificationVal {
+  createNotification: (opts: QueueNotificationOptsReadonly) => void;
+  removeAllActive: () => void;
+  activeNotifications: string[];
+  removeActive: (key: string) => void;
+  markAsRead: (key: string) => void;
+  clearAllNotifications: () => void;
+}

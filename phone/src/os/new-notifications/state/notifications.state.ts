@@ -42,5 +42,22 @@ export const unreadNotificationsForApp = selectorFamily<number, string>({
     },
 });
 
+export const notificationsForApp = selectorFamily<NPWDNotification[], string>({
+  key: 'notificationsForApp',
+  get:
+    (param) =>
+    ({ get }) => {
+      const allNotiIds = get(allNotificationIds);
+
+      const notiIds = allNotiIds
+        .map((id) => get(storedNotificationsFamily(id)))
+        .filter((noti) => noti.appId === param);
+
+      return notiIds;
+    },
+});
+
 export const useUnreadNotiForApp = (appId: string) =>
   useRecoilValue(unreadNotificationsForApp(appId));
+
+export const useNotificationsForApp = (appId: string) => useRecoilValue(notificationsForApp(appId));

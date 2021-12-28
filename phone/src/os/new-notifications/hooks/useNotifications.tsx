@@ -161,6 +161,7 @@ export const useNotifications = (): UseNotificationVal => {
           // If the targeted notification isn't currently active, we should bail.
           if (!isActive) return;
 
+          closeSnackbar(key);
           const curActiveNotis = await snapshot.getPromise(activeNotificationsIds);
 
           const newActiveNotis = curActiveNotis.filter((id) => id !== key);
