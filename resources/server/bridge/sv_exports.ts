@@ -22,7 +22,7 @@ exp('generatePhoneNumber', async () => {
 // For multicharacter frameworks, we enable these events for
 // instantiating/deleting a player. The config option must be set to true
 // for these to be available
-if (config.general.enableMultiChar) {
+if (config.general.useResourceIntegration) {
   exp('newPlayer', async (playerDTO: PlayerAddData) => {
     if (typeof playerDTO.source !== 'number') {
       return playerLogger.error('Source must be passed as a number when loading a player');

@@ -20,7 +20,7 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
 // If multicharacter mode is disabled, we instantiate a new
 // NPWD player by ourselves without waiting for an export
 
-if (!config.general.enableMultiChar) {
+if (!config.general.useResourceIntegration) {
   on('playerJoining', async () => {
     const src = getSource();
     await PlayerService.handleNewPlayerJoined(src);
@@ -49,7 +49,7 @@ on('playerDropped', async () => {
 
 // Used for debug purposes, if the resource is restarted and the multicharacter option is false
 // we will handle all the currently online players
-if (!config.general.enableMultiChar) {
+if (!config.general.useResourceIntegration) {
   on('onServerResourceStart', async (resource: string) => {
     if (resource === GetCurrentResourceName()) {
       const onlinePlayers = getPlayers();
