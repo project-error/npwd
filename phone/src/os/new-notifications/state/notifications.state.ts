@@ -1,19 +1,5 @@
-import { atom, atomFamily, selector, selectorFamily, useRecoilValue } from 'recoil';
-import { QueueNotificationOptsReadonly } from '../hooks/useNotifications';
-import lodashIsEmpty from 'lodash/isEmpty';
-
-export interface NPWDNotification extends QueueNotificationOptsReadonly {
-  isActive: boolean;
-  isRead: boolean;
-  timeReceived: Date;
-}
-
-export type NotiMap = Record<string | number, NPWDNotification>;
-
-export const notificationState = atom<NotiMap>({
-  key: 'notiState',
-  default: {},
-});
+import { atom, atomFamily, selectorFamily, useRecoilValue } from 'recoil';
+import { NPWDNotification } from '@typings/notifications';
 
 export const storedNotificationsFamily = atomFamily<NPWDNotification, string>({
   key: 'storedNotifications',
@@ -54,23 +40,6 @@ export const unreadNotificationsForApp = selectorFamily<number, string>({
 
       return unreadNotiIds.length;
     },
-});
-
-export const activeNotifications = selector<NotiMap | null>({
-  key: 'activeNotiState',
-  get: ({ get }) => {
-    const notis = get(notificationState);
-
-    const foundActive = {};
-
-    for (const [key, value] of Object.entries(notis)) {
-      if (value.isActive) {
-        foundActive[key] = { ...value };
-      }
-    }
-
-    return lodashIsEmpty(foundActive) ? null : foundActive;
-  },
 });
 
 export const useUnreadNotiForApp = (appId: string) =>

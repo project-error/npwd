@@ -14,27 +14,7 @@ import useSound from '@os/sound/hooks/useSound';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IApp } from '@os/apps/config/apps';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
-import apps from '../../../../../resources/utils/apps';
-
-export type QueueNotificationOptsReadonly = Readonly<QueueNotificationBase>;
-
-interface QueueNotificationBase {
-  appId: string;
-  duration?: number;
-  message: string;
-  path?: string;
-  persist?: boolean;
-  uniqId: string;
-}
-
-interface UseNotificationVal {
-  createNotification: (opts: QueueNotificationOptsReadonly) => void;
-  removeAllActive: () => void;
-  activeNotifications: string[];
-  removeActive: (key: string) => void;
-  markAsRead: (key: string) => void;
-  clearAllNotifications: () => void;
-}
+import { QueueNotificationOptsReadonly, UseNotificationVal } from '@typings/notifications';
 
 const styles = {
   root: css({
@@ -80,7 +60,7 @@ export const useNotifications = (): UseNotificationVal => {
         const addedDate = new Date();
 
         set(storedNotificationsFamily(uniqId), {
-          appId,
+          appId: app.id,
           message,
           timeReceived: addedDate,
           isActive: true,

@@ -1,8 +1,6 @@
 import { PhoneEvents } from '@typings/phone';
-import { QueueNotificationOptsReadonly } from '@os/new-notifications/hooks/useNotifications';
 import { IAlert } from '@os/snackbar/hooks/useSnackbar';
-import { NotificationEvents } from '@typings/notifications';
-import { PhoneEvents } from '@typings/phone';
+import { NotificationEvents, QueueNotificationOptsReadonly } from '@typings/notifications';
 import { QueueNotificationOpts } from '../new-notifications/hooks/useNotifications';
 import { ActiveCall, CallEvents } from '@typings/call';
 
