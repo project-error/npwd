@@ -5,6 +5,8 @@ import { initializeCallHandler } from './calls/cl_calls.controller';
 import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { AddNoteExportData, NotesEvents } from '../../typings/notes';
 import { hidePhone, showPhone } from './cl_main';
+import { QueueNotificationOptsReadonly } from '../../phone/src/os/new-notifications/hooks/useNotifications';
+import { NotificationEvents } from '../../typings/notifications';
 
 const exps = global.exports;
 
@@ -78,3 +80,25 @@ exps('fillNewNote', (noteData: AddNoteExportData) => {
   verifyExportArgType('fillNewNote', noteData, ['object']);
   sendNotesEvent(NotesEvents.ADD_NOTE_EXPORT, noteData);
 });
+
+const NotificationCtx = {
+  queue: (queueOpts: QueueNotificationOptsReadonly) => {
+    sendMessage('PHONE', NotificationEvents.QUEUE_NOTIFICATION, queueOpts);
+  },
+  setNotificationInactive: (id: string) => {
+    sendMessage('PHONE', NotificationEvents.SET_NOTIFICATION_INACTIVE, id);
+  },
+  setAllNotificationsInactive: () => {
+    sendMessage('PHONE', NotificationEvents.SET_ALL_NOTIFICATIONS_INACTIVE, {});
+  },
+  markNotificationAsRead: (id: string) => {
+    sendMessage('PHONE', NotificationEvents.MARK_NOTIFICATION_AS_READ, id);
+  },
+  clearAllNotifications: () => {
+    sendMessage('PHONE', NotificationEvents.CLEAR_NOTIFICATIONS, {});
+  },
+};
+
+// Classic who doesn't love function refs. I might just make this
+// into regular exports later.
+exps('getNotificationObject', () => NotificationCtx);
