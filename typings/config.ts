@@ -25,7 +25,7 @@ interface Debug {
 
 interface General {
   useDashNumber: boolean;
-  enableMultiChar: boolean;
+  useResourceIntegration: boolean;
 }
 
 interface NotificationConfig {

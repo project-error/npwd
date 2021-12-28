@@ -5,7 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "enableMultiChar": false
+    "useResourceIntegration": false
   },
   "database": {
     "useIdentifierPrefix": false,
