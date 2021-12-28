@@ -67,7 +67,7 @@ export function NotificationsProvider({ children }) {
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
   useEffect(() => {
-    if (isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
+    if (isPhoneOpen && currentAlert && !currentAlert.keepWhenPhoneClosed) {
       currentAlert.resolve();
     }
   }, [isPhoneOpen, currentAlert]);
