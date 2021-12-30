@@ -3,6 +3,7 @@ import {
   activeNotificationsIds,
   allNotificationIds,
   storedNotificationsFamily,
+  unreadNotifications,
 } from '../state/notifications.state';
 import { useApps } from '@os/apps/hooks/useApps';
 import React, { useState } from 'react';
@@ -39,6 +40,7 @@ export const useNotifications = (): UseNotificationVal => {
   });
 
   const activeNotifications = useRecoilValue(activeNotificationsIds);
+  const allUnreadNotifications = useRecoilValue(unreadNotifications);
 
   const setupSoundForNotification = (app: IApp) => {
     const { sound, volume } = getSoundSettings('notiSound', settings, app.id);
@@ -51,8 +53,15 @@ export const useNotifications = (): UseNotificationVal => {
   const { getApp } = useApps();
 
   const createNotification = useRecoilCallback(
-    ({ set }) =>
-      ({ appId, message, persist, uniqId, duration, path }: QueueNotificationOptsReadonly) => {
+    ({ set, snapshot }) =>
+      async ({
+        appId,
+        message,
+        persist,
+        uniqId,
+        duration,
+        path,
+      }: QueueNotificationOptsReadonly) => {
         const app = getApp(appId);
 
         if (!app) throw new Error(`App with appId "${appId}" doesn't exist!`);
@@ -74,6 +83,18 @@ export const useNotifications = (): UseNotificationVal => {
         setupSoundForNotification(app);
         set(allNotificationIds, (curIds) => [...curIds, uniqId]);
         set(activeNotificationsIds, (curIds) => [...curIds, uniqId]);
+
+        set(unreadNotifications, (curUnread) => [
+          ...curUnread,
+          {
+            uniqId,
+            appId: app.id,
+            icon: app.icon,
+            notificationIcon: app.notificationIcon,
+            message,
+            path: path,
+          },
+        ]);
 
         enqueueSnackbar(
           <NotificationBase
@@ -149,6 +170,7 @@ export const useNotifications = (): UseNotificationVal => {
     useRecoilCallback(
       ({ set, snapshot }) =>
         async (key: string) => {
+          console.log(key);
           const tgtState = storedNotificationsFamily(key);
           const { isActive, isRead, ...restNoti } = await snapshot.getPromise(tgtState);
 
@@ -159,13 +181,18 @@ export const useNotifications = (): UseNotificationVal => {
           });
 
           // If the targeted notification isn't currently active, we should bail.
-          if (!isActive) return;
+          if (isActive) {
+            closeSnackbar(key);
+            const curActiveNotis = await snapshot.getPromise(activeNotificationsIds);
 
-          closeSnackbar(key);
-          const curActiveNotis = await snapshot.getPromise(activeNotificationsIds);
+            const newActiveNotis = curActiveNotis.filter((id) => id !== key);
+            set(activeNotificationsIds, newActiveNotis);
+          }
 
-          const newActiveNotis = curActiveNotis.filter((id) => id !== key);
-          set(activeNotificationsIds, newActiveNotis);
+          const curUnreadNotis = await snapshot.getPromise(unreadNotifications);
+
+          const newUnreadNotis = curUnreadNotis.filter((noti) => noti.uniqId !== key);
+          set(unreadNotifications, newUnreadNotis);
         },
       [closeSnackbar],
     );
@@ -197,5 +224,6 @@ export const useNotifications = (): UseNotificationVal => {
     removeActive,
     activeNotifications,
     markAsRead,
+    allUnreadNotifications,
   };
 };

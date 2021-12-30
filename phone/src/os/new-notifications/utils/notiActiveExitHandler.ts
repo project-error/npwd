@@ -16,4 +16,6 @@ export default function notiActiveExitHandler(_: HTMLElement, key: string | numb
     ...tgtNoti,
     isActive: false,
   });
+
+  console.log('noti is now inactive');
 }

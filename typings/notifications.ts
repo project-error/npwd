@@ -23,6 +23,16 @@ export interface QueueNotificationBase {
   uniqId: string;
 }
 
+export interface UnreadNotification {
+  uniqId: string;
+  appId: string;
+  icon: JSX.Element;
+  notificationIcon: JSX.Element;
+  message: string;
+  path: string;
+  onClick?: () => void;
+}
+
 export interface UseNotificationVal {
   createNotification: (opts: QueueNotificationOptsReadonly) => void;
   removeAllActive: () => void;
@@ -30,4 +40,5 @@ export interface UseNotificationVal {
   removeActive: (key: string) => void;
   markAsRead: (key: string) => void;
   clearAllNotifications: () => void;
+  allUnreadNotifications: UnreadNotification[];
 }

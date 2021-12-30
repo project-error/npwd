@@ -5,10 +5,12 @@ import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
 import Battery90Icon from '@mui/icons-material/Battery90';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Default from '../../../config/default.json';
-import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
+import { useNotifications } from '../hooks/useNotifications';
+import { useHistory } from 'react-router-dom';
+import { useNavbarUncollapsed } from '../state/notifications.state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,18 +59,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NotificationBar = () => {
+  const history = useHistory();
   const classes = useStyles();
-
-  const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } =
-    useNotifications();
-
   const time = usePhoneTime();
 
+  const { allUnreadNotifications, markAsRead } = useNotifications();
+  const [barUncollapsed, setBarUncollapsed] = useNavbarUncollapsed();
+
   useEffect(() => {
-    if (notifications.length === 0) {
+    if (allUnreadNotifications.length === 0) {
       setBarUncollapsed(false);
     }
-  }, [notifications, setBarUncollapsed]);
+  }, [allUnreadNotifications, setBarUncollapsed]);
 
   return (
     <>
@@ -83,9 +85,9 @@ export const NotificationBar = () => {
         }}
       >
         <Grid container item wrap="nowrap">
-          {icons.map((notifIcon) => (
-            <Grid item key={notifIcon.key} component={IconButton} className={classes.icon}>
-              {notifIcon.icon}
+          {allUnreadNotifications.map((notification) => (
+            <Grid item key={notification.uniqId} component={IconButton} className={classes.icon}>
+              {notification.notificationIcon}
             </Grid>
           ))}
         </Grid>
@@ -115,27 +117,20 @@ export const NotificationBar = () => {
           <Box py={1}>
             <List>
               <Divider />
-              {notifications.map((notification, idx) => (
+              {allUnreadNotifications.map((notification, idx) => (
                 <NotificationItem
                   key={idx}
                   {...notification}
-                  onClose={(e) => {
-                    e.stopPropagation();
-                    notification.onClose?.(notification);
-                    removeNotification(idx);
-                  }}
-                  onClickClose={() => {
-                    setBarUncollapsed(false);
-                    if (!notification.cantClose) {
-                      removeNotification(idx);
-                    }
+                  onClose={() => {
+                    markAsRead(notification.uniqId);
+                    history.push(notification.path);
                   }}
                 />
               ))}
             </List>
           </Box>
           <Box display="flex" flexDirection="column">
-            {!notifications.length && <NoNotificationText />}
+            {!allUnreadNotifications.length && <NoNotificationText />}
             <IconButton
               className={classes.collapseBtn}
               size="small"
