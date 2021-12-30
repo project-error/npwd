@@ -102,7 +102,13 @@
         "EDIT_PROFILE_SUCCESS": "Profiel succesvol bijgewerkt",
         "EDIT_PROFILE_FAILURE": "Kon profiel niet bijwerken",
         "CREATE_FAILED": "Kon tweet niet verzenden",
-        "RETWEET_EXISTS": "Jij hebt deze tweet al geretweet!"
+        "RETWEET_FAILED": "Kon deze tweet niet retweeten",
+        "RETWEET_EXISTS": "Jij hebt deze tweet al geretweet!",
+        "LIKE_TWEET_FAILED": "Kon tweet niet liken",
+        "REPORT_TWEET_SUCCESS": "Tweet succesvol gerapporteerd",
+        "REPORT_TWEET_FAILED": "Kon tweet niet rapporteren",
+        "FETCH_TWEETS_FAILED": "Kon tweets niet ophalen",
+        "DELETE_TWEET_FAILED": "Kon tweet niet verwijderen"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted iemand!",
@@ -176,6 +182,7 @@
         "CREATE_LISTING_FAILED": "Kon geen nieuwe advertentie plaatsen",
         "CREATE_LISTING_SUCCESS": "Succesvol een nieuwe advertentie geplaatst",
         "DELETE_LISTING_FAILED": "Kon advertentie niet verwijderen",
+        "DUPLICATE_LISTING": "Je kan geen advertentie plaatsen met dezelfde titel",
         "DELETE_LISTING_SUCCESS": "Advertentie succesvol verwijderd",
         "REPORT_LISTING_FAILED": "Deze advertentie is al gerapporteerd",
         "REPORT_LISTING_SUCCESS": "Advertentie succesvol gerapporteerd"
@@ -192,7 +199,7 @@
       },
       "FEEDBACK": {
         "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} is geen geregistreerd nummer",
-        "NEW_MESSAGE_FAILED:": "Kon bericht niet versturen",
+        "NEW_MESSAGE_FAILED": "Kon bericht niet versturen",
         "INVALID_PHONE_NUMBER": "Telefoonnummer ongeldig",
         "MESSAGE_CONVERSATION_DUPLICATE": "Deze conversatie bestaat al!",
         "MESSAGE_GROUP_CREATE_FAILED": "Kon groep niet aanmaken",
@@ -277,6 +284,6 @@
     "GENERIC_TITLE": "Titel",
     "GENERIC_CONTENT": "Content",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopieer {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} is gekopieerd naar het klembord!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} is gekopieerd naar het klembord!"
   }
 }
