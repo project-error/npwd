@@ -29,7 +29,7 @@ export const Match = ({ match }: IProps) => {
   const [showProfile, setShowProfile] = useState(false);
 
   const handleMessage = () => {
-    history.push(`/messages/new/${match.phoneNumber}`);
+    history.push(`/messages/new?phoneNumber=${match.phoneNumber}`);
   };
 
   const handleProfile = () => {

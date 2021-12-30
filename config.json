@@ -9,7 +9,7 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-    "playerTable": "users",
+    "playerTable": "user",
     "identifierColumn": "identifier",
     "identifierType": "license",
     "profileQueries": true,
