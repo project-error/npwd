@@ -8,8 +8,7 @@ import { MarketplaceListing } from '../../../typings/marketplace';
 const IMAGE_DELIMITER = '||!||';
 const discordLogger = mainLogger.child({ module: 'discord' });
 
-const DISCORD_WEBHOOK_ENV_VAR = 'NPWD_DISCORD_TOKEN';
-const DISCORD_WEBHOOK = GetConvar(DISCORD_WEBHOOK_ENV_VAR, '');
+const DISCORD_WEBHOOK = GetConvar('NPWD_DISCORD_TOKEN', '');
 /**
  * https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
  */
@@ -65,30 +64,28 @@ const createDiscordMsgObj = (type: string, message: string, fields: DiscordEmbed
 };
 
 export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profile): Promise<any> {
-  // TODO: Add image report functionality
-  const fields = [
+  const guaranteedFields = [
     {
-      name: 'Reporting User',
-      value: `${tweet.profile_name} (${tweet.profile_id})`,
+      name: 'Reported By:',
+      value: `\`\`\`Profile Name: ${reportingProfile.profile_name}\nProfile ID: ${reportingProfile.id}\nUser Identifier: ${reportingProfile.identifier}\`\`\``,
     },
     {
-      name: 'Reported User',
-      value: `${tweet.profile_name} (${tweet.profile_id})`,
+      name: 'Reported User Data:',
+      value: `\`\`\`Profile Name: ${tweet.profile_name}\nProfile ID: ${tweet.profile_id}\nUser Identifier: ${tweet.identifier}\`\`\``,
     },
     {
-      name: 'Tweet',
-      value: tweet.message,
+      name: 'Tweet Message:',
+      value:  `\`\`\`Message: ${tweet.message}\`\`\``,
     },
   ];
 
-  // If the tweet has images add it to the field array
-  if (tweet.images)
-    fields.concat({
-      name: 'Images',
+  const finalFields = tweet.images ? guaranteedFields.concat(
+    {
+      name: 'Reported Image:',
       value: tweet.images.split(IMAGE_DELIMITER).join('\n'),
-    });
+    }) : guaranteedFields
 
-  const msgObj = createDiscordMsgObj('TWITTER', `Received a report for a tweet`, fields);
+  const msgObj = createDiscordMsgObj('TWITTER', `Received a report for a tweet`, finalFields);
   try {
     await postToWebhook(msgObj);
   } catch (e) {
