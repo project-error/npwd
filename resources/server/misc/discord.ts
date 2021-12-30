@@ -93,33 +93,35 @@ export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profi
   }
 }
 
-export async function reportListingToDiscord(
-  listing: MarketplaceListing,
-  reportingProfile: string,
-): Promise<void> {
-  const embedObj = createDiscordMsgObj('MARKETPLACE', 'Received a report for a listing', [
+export async function reportListingToDiscord(listing: MarketplaceListing, reportingProfile: string): Promise<any> {
+  const guaranteedFields = [
     {
       name: 'Reported By',
-      value: reportingProfile,
-      inline: true,
+      value: `\`\`\`Profile Name: ${reportingProfile}\`\`\``,
     },
     {
-      name: 'Reported User',
-      value: `${listing.name} - (${listing.username})`,
-      inline: true,
+      name: 'Reported User Data',
+      value: `\`\`\`Profile Name: ${listing.username}\nProfile ID: ${listing.id}\nUser Identifier: ${listing.identifier}\`\`\``,
     },
     {
       name: 'Reported Listing Title',
-      value: listing.title,
+      value: `\`\`\`Title: ${listing.name}\`\`\``,
     },
     {
       name: 'Reported Listing Desc.',
-      value: listing.description,
+      value: `\`\`\`Description: ${listing.description}\`\`\``,
     },
-  ]);
-
+  ];
+  
+  const finalFields = listing.url ? guaranteedFields.concat(
+    {
+      name: 'Reported Image:',
+      value: listing.url.split(IMAGE_DELIMITER).join('\n'),
+    }) : guaranteedFields
+  
+  const msgObj = createDiscordMsgObj('MARKETPLACE', `Received a report for a listing`, finalFields);
   try {
-    await postToWebhook(embedObj);
+    await postToWebhook(msgObj);
   } catch (e) {
     discordLogger.error(e.message);
   }
