@@ -41,7 +41,7 @@ const postToWebhook = async (content: DiscordMessage): Promise<AxiosResponse | v
   }
   const resp = await axios.post(DISCORD_WEBHOOK, { ...content });
   // If we get a bad request throw error
-  if (resp.status >= 200 && resp.status < 300)
+  if (resp.status < 200 && resp.status >= 300)
     throw new Error(`Discord Error: ${resp.status} Error - ${resp.statusText}`);
 };
 
@@ -75,15 +75,16 @@ export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profi
     },
     {
       name: 'Tweet Message:',
-      value:  `\`\`\`Message: ${tweet.message}\`\`\``,
+      value: `\`\`\`Message: ${tweet.message}\`\`\``,
     },
   ];
 
-  const finalFields = tweet.images ? guaranteedFields.concat(
-    {
-      name: 'Reported Image:',
-      value: tweet.images.split(IMAGE_DELIMITER).join('\n'),
-    }) : guaranteedFields
+  const finalFields = tweet.images
+    ? guaranteedFields.concat({
+        name: 'Reported Image:',
+        value: tweet.images.split(IMAGE_DELIMITER).join('\n'),
+      })
+    : guaranteedFields;
 
   const msgObj = createDiscordMsgObj('TWITTER', `Received a report for a tweet`, finalFields);
   try {
@@ -93,7 +94,10 @@ export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profi
   }
 }
 
-export async function reportListingToDiscord(listing: MarketplaceListing, reportingProfile: string): Promise<any> {
+export async function reportListingToDiscord(
+  listing: MarketplaceListing,
+  reportingProfile: string,
+): Promise<any> {
   const guaranteedFields = [
     {
       name: 'Reported By',
@@ -112,13 +116,14 @@ export async function reportListingToDiscord(listing: MarketplaceListing, report
       value: `\`\`\`Description: ${listing.description}\`\`\``,
     },
   ];
-  
-  const finalFields = listing.url ? guaranteedFields.concat(
-    {
-      name: 'Reported Image:',
-      value: listing.url.split(IMAGE_DELIMITER).join('\n'),
-    }) : guaranteedFields
-  
+
+  const finalFields = listing.url
+    ? guaranteedFields.concat({
+        name: 'Reported Image:',
+        value: listing.url.split(IMAGE_DELIMITER).join('\n'),
+      })
+    : guaranteedFields;
+
   const msgObj = createDiscordMsgObj('MARKETPLACE', `Received a report for a listing`, finalFields);
   try {
     await postToWebhook(msgObj);
