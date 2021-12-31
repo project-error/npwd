@@ -237,7 +237,8 @@
   ],
   "debug": {
     "printDebugLogs": true,
-    "logLevel": 1
+    "logLevel": 1,
+    "shouldShowAtomDebug": false
   },
   "SentryErrorMetrics": true
 }

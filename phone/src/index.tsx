@@ -15,6 +15,7 @@ import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { createBrowserHistory } from 'history';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
+import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -63,7 +64,9 @@ ReactDOM.render(
   <HashRouter>
     <NuiProvider resource="npwd">
       <RecoilRootManager>
-        <PhoneProviders />
+        <RecoilDebugObserver>
+          <PhoneProviders />
+        </RecoilDebugObserver>
       </RecoilRootManager>
     </NuiProvider>
   </HashRouter>,
