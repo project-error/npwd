@@ -24,12 +24,11 @@ const debugObj = {
       method: NotificationEvents.QUEUE_NOTIFICATION,
       app: 'PHONE',
       data: {
-        persist: false,
-        uniqId: 'YOU-SUCK',
+        uniqId: Date.now().toString(),
         appId: 'TWITTER',
         path: '/twitter',
         message: 'Taso just tweeted: You suck bro!',
-        duration: 10000,
+        duration: 3000,
       },
     });
   },

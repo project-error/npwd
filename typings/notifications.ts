@@ -36,9 +36,7 @@ export interface UnreadNotification {
 export interface UseNotificationVal {
   createNotification: (opts: QueueNotificationOptsReadonly) => void;
   removeAllActive: () => void;
-  activeNotifications: string[];
   removeActive: (key: string) => void;
   markAsRead: (key: string) => void;
   clearAllNotifications: () => void;
-  allUnreadNotifications: UnreadNotification[];
 }

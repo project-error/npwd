@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
-import { Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@mui/material';
+import {
+  Typography,
+  Grid,
+  IconButton,
+  Slide,
+  Paper,
+  Box,
+  List,
+  Divider,
+  GridProps,
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
 import Battery90Icon from '@mui/icons-material/Battery90';
@@ -8,9 +18,15 @@ import Default from '../../../config/default.json';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
-import { useNotifications } from '../hooks/useNotifications';
+import {
+  storedNotificationsFamily,
+  useNavbarUncollapsed,
+  useSetNavbarUncollapsed,
+  useUnreadNotificationIds,
+} from '@os/new-notifications/state/notifications.state';
+import { useRecoilValue } from 'recoil';
+import { useApp } from '@os/apps/hooks/useApps';
 import { useHistory } from 'react-router-dom';
-import { useNavbarUncollapsed } from '../state/notifications.state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,19 +74,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface WrapperGridProps extends GridProps {
+  tgtNotiId?: string;
+}
+
+const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNotiId, children }) => {
+  const notificationItem = useRecoilValue(storedNotificationsFamily(tgtNotiId));
+  const notificationTgtApp = useApp(notificationItem.appId);
+
+  return (
+    <Grid
+      item
+      key={tgtNotiId}
+      component={IconButton}
+      sx={{
+        color: 'text.primary',
+        fontSize: 'small',
+      }}
+    >
+      {notificationTgtApp.notificationIcon}
+    </Grid>
+  );
+};
+
+interface UnreadNotificationListItemProps {
+  tgtNotiId: string;
+  key: string | number;
+}
+
+const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({ tgtNotiId }) => {
+  const notiContents = useRecoilValue(storedNotificationsFamily(tgtNotiId));
+
+  return <NotificationItem key={tgtNotiId} {...notiContents} />;
+};
+
 export const NotificationBar = () => {
-  const history = useHistory();
   const classes = useStyles();
   const time = usePhoneTime();
+  const [barCollapsed, setBarUncollapsed] = useNavbarUncollapsed();
 
-  const { allUnreadNotifications, markAsRead } = useNotifications();
-  const [barUncollapsed, setBarUncollapsed] = useNavbarUncollapsed();
+  const unreadNotificationIds = useUnreadNotificationIds();
 
   useEffect(() => {
-    if (allUnreadNotifications.length === 0) {
+    if (unreadNotificationIds.length === 0) {
       setBarUncollapsed(false);
     }
-  }, [allUnreadNotifications, setBarUncollapsed]);
+  }, [unreadNotificationIds, setBarUncollapsed]);
 
   return (
     <>
@@ -85,10 +134,8 @@ export const NotificationBar = () => {
         }}
       >
         <Grid container item wrap="nowrap">
-          {allUnreadNotifications.map((notification) => (
-            <Grid item key={notification.uniqId} component={IconButton} className={classes.icon}>
-              {notification.notificationIcon}
-            </Grid>
+          {unreadNotificationIds.map((id) => (
+            <IconUnreadGrid tgtNotiId={id} />
           ))}
         </Grid>
         {time && (
@@ -112,25 +159,18 @@ export const NotificationBar = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
+      <Slide direction="down" in={barCollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
           <Box py={1}>
             <List>
               <Divider />
-              {allUnreadNotifications.map((notification, idx) => (
-                <NotificationItem
-                  key={idx}
-                  {...notification}
-                  onClose={() => {
-                    markAsRead(notification.uniqId);
-                    history.push(notification.path);
-                  }}
-                />
+              {unreadNotificationIds.map((notification, idx) => (
+                <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
               ))}
             </List>
           </Box>
           <Box display="flex" flexDirection="column">
-            {!allUnreadNotifications.length && <NoNotificationText />}
+            {!unreadNotificationIds.length && <NoNotificationText />}
             <IconButton
               className={classes.collapseBtn}
               size="small"

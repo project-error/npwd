@@ -1,33 +1,35 @@
 import React from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { IconButton, ListItem, ListItemAvatar, ListItemText, Theme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { INotification } from '../../notifications/providers/NotificationsProvider';
-import { UnreadNotification } from '../../../../../typings/notifications';
+import { ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { useApp } from '@os/apps/hooks/useApps';
+import { useRecoilValue } from 'recoil';
+import { storedNotificationsFamily } from '@os/new-notifications/state/notifications.state';
+import { useNotifications } from '@os/new-notifications/hooks/useNotifications';
+import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  closeNotifBtn: {
-    position: 'absolute',
-    right: '8px',
-    top: '8px',
-  },
-  notificationItem: {
-    paddingRight: '28px',
-    position: 'relative',
-  },
-}));
+interface NotificationItemProps {
+  uniqId: string;
+  key: string | number;
+}
 
-export const NotificationItem = ({
-  onClose,
-  ...notification
-}: UnreadNotification & {
-  onClose: () => void;
-}) => {
-  const { icon, message } = notification;
-  const classes = useStyles();
+export const NotificationItem: React.FC<NotificationItemProps> = ({ uniqId, key }) => {
+  const { appId, message, path } = useRecoilValue(storedNotificationsFamily(uniqId));
+  const { markAsRead } = useNotifications();
+  const { icon } = useApp(appId);
+  const history = useHistory();
+
+  const handleOnClose = () => {
+    markAsRead(uniqId);
+    history.push(path);
+  };
 
   return (
-    <ListItem divider button onClick={onClose} className={classes.notificationItem}>
+    <ListItem
+      divider
+      button
+      onClick={handleOnClose}
+      sx={{ pr: '28px', position: 'relative' }}
+      key={key}
+    >
       {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
       <ListItemText secondary={message} />
     </ListItem>

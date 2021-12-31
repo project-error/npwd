@@ -6,6 +6,9 @@ import { Avatar, Badge, Button, Zoom } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { Tooltip } from './Tooltip';
+import { unreadNotificationsForApp } from '@os/new-notifications/state/notifications.state';
+import { IApp } from '@os/apps/config/apps';
+import { useRecoilValue } from 'recoil';
 
 const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
   root: {
@@ -43,7 +46,7 @@ export interface AppIconProps {
   notification: INotificationIcon;
 }
 
-export const AppIcon: React.FC<AppIconProps> = ({
+export const AppIcon: React.FC<IApp & AppIconProps> = ({
   id,
   nameLocale,
   Icon,
@@ -58,6 +61,8 @@ export const AppIcon: React.FC<AppIconProps> = ({
     color: color || green[400],
   });
 
+  const unreadNotiCount = useRecoilValue(unreadNotificationsForApp(id)).length;
+
   return (
     <Tooltip
       arrow
@@ -68,11 +73,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
       TransitionComponent={Zoom}
     >
       <Button className={classes.root}>
-        <Badge
-          color="error"
-          badgeContent={notification?.badge}
-          invisible={!notification || notification.badge < 2}
-        >
+        <Badge color="error" badgeContent={unreadNotiCount} invisible={!unreadNotiCount}>
           {Icon ? (
             <Icon className={classes.icon} fontSize="large" />
           ) : (

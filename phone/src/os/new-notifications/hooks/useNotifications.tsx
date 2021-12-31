@@ -1,9 +1,9 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback } from 'recoil';
 import {
   activeNotificationsIds,
   allNotificationIds,
   storedNotificationsFamily,
-  unreadNotifications,
+  unreadNotificationIds,
 } from '../state/notifications.state';
 import { useApps } from '@os/apps/hooks/useApps';
 import React, { useCallback, useState } from 'react';
@@ -39,9 +39,6 @@ export const useNotifications = (): UseNotificationVal => {
     volume: soundSettings.volume,
   });
 
-  const activeNotifications = useRecoilValue(activeNotificationsIds);
-  const allUnreadNotifications = useRecoilValue(unreadNotifications);
-
   const setupSoundForNotification = useCallback(
     (app: IApp) => {
       const { sound, volume } = getSoundSettings('notiSound', settings, app.id);
@@ -71,6 +68,13 @@ export const useNotifications = (): UseNotificationVal => {
 
         const addedDate = new Date();
 
+        const curNotifications = await snapshot.getPromise(allNotificationIds);
+
+        if (curNotifications.includes(uniqId)) {
+          console.error(`Notification with uniqId "${uniqId}" already exists!`);
+          return;
+        }
+
         set(storedNotificationsFamily(uniqId), {
           appId: app.id,
           message,
@@ -86,18 +90,7 @@ export const useNotifications = (): UseNotificationVal => {
         setupSoundForNotification(app);
         set(allNotificationIds, (curIds) => [...curIds, uniqId]);
         set(activeNotificationsIds, (curIds) => [...curIds, uniqId]);
-
-        set(unreadNotifications, (curUnread) => [
-          ...curUnread,
-          {
-            uniqId,
-            appId: app.id,
-            icon: app.icon,
-            notificationIcon: app.notificationIcon,
-            message,
-            path: path,
-          },
-        ]);
+        set(unreadNotificationIds, (curIds) => [...curIds, uniqId]);
 
         enqueueSnackbar(
           <NotificationBase
@@ -119,7 +112,7 @@ export const useNotifications = (): UseNotificationVal => {
           },
         );
       },
-    [getApp, setupSoundForNotification],
+    [],
   );
 
   const removeAllActive = useRecoilCallback(
@@ -192,10 +185,10 @@ export const useNotifications = (): UseNotificationVal => {
             set(activeNotificationsIds, newActiveNotis);
           }
 
-          const curUnreadNotis = await snapshot.getPromise(unreadNotifications);
+          const curUnreadNotis = await snapshot.getPromise(unreadNotificationIds);
 
-          const newUnreadNotis = curUnreadNotis.filter((noti) => noti.uniqId !== key);
-          set(unreadNotifications, newUnreadNotis);
+          const newUnreadNotis = curUnreadNotis.filter((id) => id !== key);
+          set(unreadNotificationIds, newUnreadNotis);
         },
       [closeSnackbar],
     );
@@ -225,8 +218,6 @@ export const useNotifications = (): UseNotificationVal => {
     createNotification,
     removeAllActive,
     removeActive,
-    activeNotifications,
     markAsRead,
-    allUnreadNotifications,
   };
 };
