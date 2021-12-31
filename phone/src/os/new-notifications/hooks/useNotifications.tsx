@@ -6,7 +6,7 @@ import {
   unreadNotifications,
 } from '../state/notifications.state';
 import { useApps } from '@os/apps/hooks/useApps';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { NotificationBase } from '../components/NotificationBase';
 import { useSnackbar } from 'notistack';
 import { css } from '@emotion/css';
@@ -42,13 +42,16 @@ export const useNotifications = (): UseNotificationVal => {
   const activeNotifications = useRecoilValue(activeNotificationsIds);
   const allUnreadNotifications = useRecoilValue(unreadNotifications);
 
-  const setupSoundForNotification = (app: IApp) => {
-    const { sound, volume } = getSoundSettings('notiSound', settings, app.id);
-    setSoundSettings({ sound, volume });
-    if (!playing) {
-      play();
-    }
-  };
+  const setupSoundForNotification = useCallback(
+    (app: IApp) => {
+      const { sound, volume } = getSoundSettings('notiSound', settings, app.id);
+      setSoundSettings({ sound, volume });
+      if (!playing) {
+        play();
+      }
+    },
+    [settings, playing, play],
+  );
 
   const { getApp } = useApps();
 
@@ -116,7 +119,7 @@ export const useNotifications = (): UseNotificationVal => {
           },
         );
       },
-    [getApp],
+    [getApp, setupSoundForNotification],
   );
 
   const removeAllActive = useRecoilCallback(
