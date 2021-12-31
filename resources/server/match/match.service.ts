@@ -59,8 +59,11 @@ class _MatchService {
 
     try {
       const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
+
       if (newMatches.length > 0) {
         resp({ status: 'ok', data: true });
+      } else {
+        resp({ status: 'ok', data: false });
       }
     } catch (e) {
       matchLogger.error(`Failed to find new matches, ${e.message}`);
