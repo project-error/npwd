@@ -4,7 +4,7 @@ import { NotificationsProvider } from '@os/notifications/providers/Notifications
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
 import Phone from './Phone';
-import { NuiProvider, useNuiEvent } from 'fivem-nui-react-lib';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { SoundProvider } from '@os/sound/providers/SoundProvider';
 import { RecoilRoot } from 'recoil';
 import { PhoneEvents } from '@typings/phone';
@@ -30,19 +30,17 @@ export const PhoneProviders = () => {
 
   return (
     <RecoilRoot key={curChar}>
-      <NuiProvider resource="npwd">
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={currentTheme}>
-            <SoundProvider>
-              <NotificationsProvider>
-                <SnackbarProvider>
-                  <Phone />
-                </SnackbarProvider>
-              </NotificationsProvider>
-            </SoundProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </NuiProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={currentTheme}>
+          <SoundProvider>
+            <NotificationsProvider>
+              <SnackbarProvider>
+                <Phone />
+              </SnackbarProvider>
+            </NotificationsProvider>
+          </SoundProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </RecoilRoot>
   );
 };

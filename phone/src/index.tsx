@@ -13,6 +13,7 @@ import { Theme as MaterialUITheme } from '@mui/material';
 import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { createBrowserHistory } from 'history';
+import { NuiProvider } from 'fivem-nui-react-lib';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -59,7 +60,9 @@ if (process.env.NODE_ENV === 'development') {
 
 ReactDOM.render(
   <HashRouter>
-    <PhoneProviders />
+    <NuiProvider resource="npwd">
+      <PhoneProviders />
+    </NuiProvider>
   </HashRouter>,
   document.getElementById('root'),
 );
