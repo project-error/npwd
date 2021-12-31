@@ -70,7 +70,7 @@ export enum CallEvents {
   REJECTED = 'npwd:rejectCall',
   WAS_REJECTED = 'npwd:callRejected',
   FETCH_CALLS = 'npwd:fetchCalls',
-  SET_CALLER = 'npwd:setCaller',
+  SET_CALL_INFO = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
   SEND_ALERT = 'npwd:callSetAlert',
 }
