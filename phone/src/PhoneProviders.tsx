@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
-import { ThemeProvider, Theme, StyledEngineProvider, Collapse } from '@mui/material';
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import { NotificationsProvider as OldNotificationProvider } from './os/notifications/providers/NotificationsProvider';
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import { SnackbarProvider as NotistackProvider } from 'notistack';
 import Phone from './Phone';
-import { SoundProvider } from '@os/sound/providers/SoundProvider';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from '@os/sound/providers/SoundProvider';
-import { makeStyles } from '@mui/styles';
 import SnackbarProvider from '@os/snackbar/providers/SnackbarProvider';
+import { NotificationBase } from '@os/new-notifications/components/NotificationBase';
+import Collapse from './lib/transitions/Collapse';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
 
-const useStyles = makeStyles({
-  rootOverride: {
-    '&.SnackbarContainer-top': {
-      top: 'unset !important',
-      maxWidth: '75%',
-    },
-  },
-});
+// export const SLideWrapper = forwardRef<HTMLDivElement, TransitionProps>((props, ref) => {
+//   return (
+//     <Slide
+//       direction={props.direction}
+//       onExited={(node) => props.onExited(node, props.id)}
+//       exit={true}
+//       mountOnEnter={props.mountOnEnter}
+//       timeout={500}
+//       onEnter={(node, isAppearing) => props.onEnter(node, isAppearing, props.id)}
+//       onExit={(node) => props.onExit(node, props.id)}
+//       onEntered={(node, isAppearing) => props.onEntered(node, isAppearing, props.id)}
+//     >
+//       <>{props.children}</>
+//     </Slide>
+//   );
+// });
 
 export const PhoneProviders = () => {
   const currentTheme = usePhoneTheme();
   const [notiEl, setNotiEl] = useState<HTMLElement>();
-  const classes = useStyles();
 
   return (
     <NuiProvider resource="npwd">
@@ -36,12 +43,19 @@ export const PhoneProviders = () => {
           <SoundProvider>
             <OldNotificationProvider>
               <NotistackProvider
-                maxSnack={2}
-                domRoot={notiEl}
-                TransitionComponent={Collapse}
-                classes={{
-                  containerRoot: classes.rootOverride,
+                anchorOrigin={{
+                  horizontal: 'center',
+                  vertical: 'bottom',
                 }}
+                disableWindowBlurListener={true}
+                maxSnack={2}
+                Components={{
+                  npwdNotification: NotificationBase,
+                }}
+                TransitionProps={{}}
+                onExit={(node) => console.log(node)}
+                domRoot={notiEl}
+                autoHideDuration={3000}
               >
                 <SnackbarProvider>
                   <Phone notiRefCB={setNotiEl} />

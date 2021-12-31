@@ -71,6 +71,7 @@ ReactDOM.render(
     <NuiProvider resource="npwd">
       <React.Suspense fallback={null}>
         <RecoilRootManager>
+          <RecoilPortal />
           <RecoilDebugObserver>
             <PhoneProviders />
           </RecoilDebugObserver>

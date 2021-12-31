@@ -19,7 +19,7 @@ function dispatchEvent<T = any>({ method, app, data }: { method: string; app: st
 }
 
 const debugObj = {
-  testNotification: () => {
+  testNotification: (duration = 3000) => {
     dispatchEvent<QueueNotificationOptsReadonly>({
       method: NotificationEvents.QUEUE_NOTIFICATION,
       app: 'PHONE',
@@ -28,7 +28,7 @@ const debugObj = {
         appId: 'TWITTER',
         path: '/twitter',
         message: 'Taso just tweeted: You suck bro!',
-        duration: 3000,
+        duration: duration,
       },
     });
   },

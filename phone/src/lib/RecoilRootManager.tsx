@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RecoilRoot } from 'recoil';
-import { useNuiEvent } from 'fivem-nui-react-lib';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { PhoneEvents } from '@typings/phone';
 
 // Because how both recoil functions and how our store works, we need

@@ -260,7 +260,7 @@
   "debug": {
     "printDebugLogs": true,
     "logLevel": 1,
-    "shouldShowAtomDebug": false
+    "shouldShowAtomDebug": true
   },
   "SentryErrorMetrics": true
 }

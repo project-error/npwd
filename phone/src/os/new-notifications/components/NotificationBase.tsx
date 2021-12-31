@@ -1,14 +1,18 @@
 import React, { forwardRef } from 'react';
-import { Box } from '@mui/material';
-import { SnackbarContent } from 'notistack';
+import { Box, IconButton } from '@mui/material';
+import { CustomContentProps, SnackbarContent } from 'notistack';
 import { IApp } from '../../apps/config/apps';
 import { styled } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
 import { useNotifications } from '@os/new-notifications/hooks/useNotifications';
+import CancelIcon from '@mui/icons-material/Clear';
 
-const StyledMessage = styled('div')({
+const StyledMessage = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    minWidth: '344px !important',
+  },
   color: 'white',
   fontSize: 16,
   textOverflow: 'ellipsis',
@@ -16,18 +20,39 @@ const StyledMessage = styled('div')({
   overflow: 'hidden',
   boxOrient: 'vertical',
   lineClamp: 2,
-});
+}));
 
-interface NotificationBaseProps {
+export interface NotificationBaseProps extends CustomContentProps {
+  key: string;
   app: IApp;
   uniqId: string;
-  message: string | React.ReactNode;
+  message: string;
   timeReceived: Date;
   path?: string;
 }
 
-export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
-  const { message, app, timeReceived, path, uniqId } = props;
+export type NotificationBaseComponent = React.FC<NotificationBaseProps>;
+
+const ExitButton: React.FC = () => {
+  return (
+    <IconButton size="small" sx={{ position: 'absolute' }}>
+      <CancelIcon />
+    </IconButton>
+  );
+};
+
+const StyledSnackbar = styled(SnackbarContent)({
+  padding: '14px 16px',
+  display: 'flex',
+  borderRadius: 15,
+  backgroundColor: '#2e2e2e',
+});
+
+export const NotificationBase: NotificationBaseComponent = forwardRef<
+  HTMLDivElement,
+  NotificationBaseProps
+>((props, ref) => {
+  const { message, app, timeReceived, path, uniqId, key } = props;
   const history = useHistory();
   const [t] = useTranslation();
   const { markAsRead } = useNotifications();
@@ -41,13 +66,16 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
   };
 
   return (
-    <SnackbarContent
-      id="notificationContainer"
-      ref={ref}
-      style={{ minWidth: '340px' }}
-      onClick={handleGoToApp}
-    >
-      <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7} fontSize={14}>
+    <StyledSnackbar key={key} id="notificationContainer" onClick={handleGoToApp} ref={ref}>
+      <Box
+        display="flex"
+        alignItems="center"
+        color="white"
+        width="100%"
+        mb={0.7}
+        fontSize={14}
+        component="div"
+      >
         <Box
           p="5px"
           borderRadius={30}
@@ -64,6 +92,6 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
         <Box color="#bfbfbf">{dayjs(timeReceived).fromNow()}</Box>
       </Box>
       <StyledMessage>{message}</StyledMessage>
-    </SnackbarContent>
+    </StyledSnackbar>
   );
 });

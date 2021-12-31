@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface WrapperGridProps extends GridProps {
   tgtNotiId?: string;
+  key: string | number;
 }
 
 const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNotiId, children }) => {
@@ -134,8 +135,8 @@ export const NotificationBar = () => {
         }}
       >
         <Grid container item wrap="nowrap">
-          {unreadNotificationIds.map((id) => (
-            <IconUnreadGrid tgtNotiId={id} />
+          {unreadNotificationIds.map((id, idx) => (
+            <IconUnreadGrid tgtNotiId={id} key={idx} />
           ))}
         </Grid>
         {time && (

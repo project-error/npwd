@@ -5,9 +5,8 @@ import { storedNotificationsFamily } from '../state/notifications.state';
 // meaning we can store it in Recoil without an issue.
 export default function notiActiveExitHandler(_: HTMLElement, key: string | number) {
   if (typeof key === 'number') return;
-
+  console.log('callled');
   const tgtNoti = getRecoil(storedNotificationsFamily(key));
-
   if (!tgtNoti) {
     console.warn(`Uh oh, notification with key "${key}" was not found in Recoil Map.`);
   }
@@ -16,6 +15,4 @@ export default function notiActiveExitHandler(_: HTMLElement, key: string | numb
     ...tgtNoti,
     isActive: false,
   });
-
-  console.log('noti is now inactive');
 }

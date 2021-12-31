@@ -1,6 +1,6 @@
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useNotifications } from './useNotifications';
 import { NotificationEvents, QueueNotificationOptsReadonly } from '@typings/notifications';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const useNotificationListener = () => {
   const { createNotification, removeActive, removeAllActive, markAsRead, clearAllNotifications } =
@@ -10,7 +10,6 @@ export const useNotificationListener = () => {
     'PHONE',
     NotificationEvents.QUEUE_NOTIFICATION,
     (opts) => {
-      console.log('running');
       createNotification(opts);
     },
   );

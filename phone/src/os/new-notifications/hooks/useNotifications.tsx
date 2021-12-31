@@ -6,10 +6,9 @@ import {
   unreadNotificationIds,
 } from '../state/notifications.state';
 import { useApps } from '@os/apps/hooks/useApps';
-import React, { useCallback, useState } from 'react';
-import { NotificationBase } from '../components/NotificationBase';
+import React, { FC, useCallback, useState } from 'react';
+import { NotificationBaseComponent } from '../components/NotificationBase';
 import { useSnackbar } from 'notistack';
-import { css } from '@emotion/css';
 import notiActiveExitHandler from '../utils/notiActiveExitHandler';
 import useSound from '@os/sound/hooks/useSound';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
@@ -17,17 +16,12 @@ import { IApp } from '@os/apps/config/apps';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import { QueueNotificationOptsReadonly, UseNotificationVal } from '@typings/notifications';
 
-const styles = {
-  root: css({
-    background: 'rgba(38,38,38,0.85) !important',
-    borderRadius: '12px !important',
-    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-    backdropFilter: 'blur(4px)',
-  }),
+type VariantMap = {
+  npwdNotification: NotificationBaseComponent;
 };
 
 export const useNotifications = (): UseNotificationVal => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar<VariantMap>();
   const [soundSettings, setSoundSettings] = useState({
     sound: 'media/notifications/online.ogg',
     volume: 0,
@@ -87,32 +81,42 @@ export const useNotifications = (): UseNotificationVal => {
           path,
         });
 
+        const timeReceived = new Date();
+
         setupSoundForNotification(app);
+
         set(allNotificationIds, (curIds) => [...curIds, uniqId]);
         set(activeNotificationsIds, (curIds) => [...curIds, uniqId]);
         set(unreadNotificationIds, (curIds) => [...curIds, uniqId]);
 
-        enqueueSnackbar(
-          <NotificationBase
-            uniqId={uniqId}
-            app={app}
-            message={message}
-            timeReceived={addedDate}
-            path={path}
-          />,
-          {
-            autoHideDuration: duration,
-            onExit: notiActiveExitHandler,
-            key: uniqId,
-            anchorOrigin: {
-              horizontal: 'center',
-              vertical: 'top',
-            },
-            className: styles.root,
+        set(storedNotificationsFamily(uniqId), {
+          appId,
+          path,
+          uniqId,
+          duration,
+          isActive: true,
+          isRead: false,
+          persist,
+          message,
+          timeReceived,
+        });
+
+        enqueueSnackbar(message, {
+          variant: 'npwdNotification',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
           },
-        );
+          disableWindowBlurListener: true,
+          autoHideDuration: 3000 || duration,
+          onExit: (_, reason) => console.log(reason, _),
+          key: uniqId,
+          timeReceived,
+          uniqId,
+          path,
+          app,
+        });
       },
-    [],
   );
 
   const removeAllActive = useRecoilCallback(
@@ -166,7 +170,6 @@ export const useNotifications = (): UseNotificationVal => {
     useRecoilCallback(
       ({ set, snapshot }) =>
         async (key: string) => {
-          console.log(key);
           const tgtState = storedNotificationsFamily(key);
           const { isActive, isRead, ...restNoti } = await snapshot.getPromise(tgtState);
 
