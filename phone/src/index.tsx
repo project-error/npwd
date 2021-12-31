@@ -14,6 +14,7 @@ import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { createBrowserHistory } from 'history';
 import { NuiProvider } from 'fivem-nui-react-lib';
+import { RecoilRootManager } from './lib/RecoilRootManager';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -61,7 +62,9 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.render(
   <HashRouter>
     <NuiProvider resource="npwd">
-      <PhoneProviders />
+      <RecoilRootManager>
+        <PhoneProviders />
+      </RecoilRootManager>
     </NuiProvider>
   </HashRouter>,
   document.getElementById('root'),
