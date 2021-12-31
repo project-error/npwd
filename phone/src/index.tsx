@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import './main.css';
@@ -60,9 +59,7 @@ if (process.env.NODE_ENV === 'development') {
 
 ReactDOM.render(
   <HashRouter>
-    <RecoilRoot>
-      <PhoneProviders />
-    </RecoilRoot>
+    <PhoneProviders />
   </HashRouter>,
   document.getElementById('root'),
 );

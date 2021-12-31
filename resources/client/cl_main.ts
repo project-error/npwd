@@ -19,6 +19,11 @@ const exps = global.exports;
 
 onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
   global.isPlayerLoaded = state;
+  // Whenever a player is unloaded, we need to communicate this to the NUI layer.
+  // resetting the global state.
+  if (!state) {
+    sendMessage('PHONE', PhoneEvents.UNLOAD_CHARACTER, {});
+  }
 });
 
 RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');

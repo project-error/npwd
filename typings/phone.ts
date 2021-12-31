@@ -4,6 +4,7 @@ export enum PhoneEvents {
   OPEN_APP = 'npwd:openApp',
   OPEN_PHONE = 'npwd:open',
   CLOSE_PHONE = 'npwd:close',
+  UNLOAD_CHARACTER = 'npwd:unloadCharacter',
   SET_VISIBILITY = 'npwd:setVisibility',
   ADD_SNACKBAR_ALERT = 'npwd:setSnackarAlert',
   SET_NUMBER = 'npwd:setNumber',
