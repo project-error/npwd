@@ -53,9 +53,11 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 
   while (inCameraMode) {
     await Delay(0);
+    // Arrow Up Key, Toggle Front/Back Camera
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;
       CellFrontCamActivate(frontCam);
+    // Enter Key, Take Photo
     } else if (IsControlJustPressed(1, 176)) {
       if (SCREENSHOT_BASIC_TOKEN !== 'none') {
         const resp = await handleTakePicture();
