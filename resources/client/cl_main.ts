@@ -26,7 +26,7 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
   }
 });
 
-RegisterKeyMapping('phone', 'Open Phone', 'keyboard', 'f1');
+RegisterKeyMapping('phone', 'Open Phone', 'keyboard', config.general.toggleKey);
 
 const getCurrentGameTime = () => {
   let hour: string | number = GetClockHours();

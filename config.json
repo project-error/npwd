@@ -5,7 +5,8 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": false
+    "useResourceIntegration": false,
+    "toggleKey": "f1"
   },
   "database": {
     "useIdentifierPrefix": false,
