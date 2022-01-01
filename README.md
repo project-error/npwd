@@ -62,7 +62,7 @@ with some frameworks and environments. Please ensure you report these issues as 
   - Default dark theme or light theme with other themes in the works. Want to make your own? Follow our [documentation](https://projecterror.dev/docs/npwd/dev/setup#setting-up-the-theme).
   - Set within the Settings app.
 - [6 Custom Cases/Frames](https://i.imgur.com/opyF0J1.png)
-  - These cases were made by [DayIsKaun](https://github.com/dayiskuan)
+  - These cases were made by [DayIsKuan](https://github.com/dayiskuan)
   - Set within the Settings app.
 - [Icon Sets](https://i.imgur.com/z7pyrmU.png)
   - Change between material UI icons or our custom made icons.
