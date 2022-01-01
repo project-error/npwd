@@ -102,7 +102,7 @@ For further details on this system, please refer to our installation [documentat
 
 *NPWD* uses React + TypeScript to form the NUI front end and uses TypeScript (V8 runtime) for game 
 scripts. You can find more technical information regarding the development of this project on our docs 
-page here.
+page [here](https://projecterror.dev/docs/npwd/dev/dev_bootstrap).
 
 ## Feature Request & Issue Reporting
 Please open an issue/enhancement on our [Github Repo](https://github.com/project-error/npwd/issues/new/choose). This is the best way for us to track what needs to be resolved or improved upon.
