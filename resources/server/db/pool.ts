@@ -1,13 +1,5 @@
 import mysql from 'mysql2/promise';
-import { ConnectionStringParser } from 'connection-string-parser';
-import {
-  CONNECTION_STRING,
-  DEFAULT_PORT,
-  parseSemiColonFormat,
-  getServerHost,
-  getUserId,
-  getPassword,
-} from './db_utils';
+import { CONNECTION_STRING, parseSemiColonFormat } from './db_utils';
 import { mainLogger } from '../sv_logger';
 
 // we require set mysql_connection_string  to be set in the config
@@ -30,39 +22,14 @@ if (mysqlConnectionString === 'none') {
  */
 export function generateConnectionPool() {
   try {
-    if (mysqlConnectionString.includes('database=')) {
-      // This is checking for this format:
-      // set mysql_connection_string "server=127.0.0.1;database=es_extended;userid=user;password=pass"
-      const config = parseSemiColonFormat(mysqlConnectionString);
-      return mysql.createPool({
-        host: getServerHost(config),
-        user: getUserId(config),
-        port: config.port ? parseInt(config.port) : DEFAULT_PORT,
-        password: getPassword(config),
-        database: config.database,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0,
-      });
-    } else {
-      // This is checking for this format:
-      // set mysql_connection_string "mysql://root:pass@127.0.0.1/es_extended?charset=utf8mb4"
-      const connectionStringParser = new ConnectionStringParser({
-        scheme: 'mysql',
-        hosts: [],
-      });
-      const connectionOjbect = connectionStringParser.parse(mysqlConnectionString);
+    const config = mysqlConnectionString.includes('mysql://')
+      ? { uri: mysqlConnectionString }
+      : parseSemiColonFormat(mysqlConnectionString);
 
-      return mysql.createPool({
-        host: connectionOjbect.hosts[0].host,
-        user: connectionOjbect.username,
-        password: connectionOjbect.password,
-        database: connectionOjbect.endpoint,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0,
-      });
-    }
+    return mysql.createPool({
+      connectTimeout: 60000,
+      ...config,
+    });
   } catch (e) {
     mainLogger.error(`SQL Connection Pool Error: ${e.message}`, {
       connection: mysqlConnectionString,
