@@ -98,8 +98,10 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-const checkExportCanOpen = (): boolean => {
-  const exportResp = exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction]();
+const checkExportCanOpen = async (): Promise<boolean> => {
+  const exportResp = await Promise.resolve(
+    exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction](),
+  );
   if (typeof exportResp !== 'number' && typeof exportResp !== 'boolean') {
     throw new Error('You must return either a boolean or number from your export function');
   }
@@ -109,7 +111,7 @@ const checkExportCanOpen = (): boolean => {
 
 async function togglePhone(): Promise<void> {
   if (config.PhoneAsItem.enabled) {
-    const canAccess = checkExportCanOpen();
+    const canAccess = await checkExportCanOpen();
     if (!canAccess) return;
   }
   if (global.isPhoneOpen) return await hidePhone();
