@@ -13,6 +13,7 @@ import hu from './locale/hu.json';
 import cs from './locale/cs.json';
 import pt from './locale/pt.json';
 import nl from './locale/nl.json';
+import fi from './locale/fi.json';
 import it from './locale/it.json';
 
 export const defaultNS = 'ns1';
@@ -31,6 +32,7 @@ export const resources = {
   hu,
   cs,
   nl,
+  fi,
   it,
 } as const;
 

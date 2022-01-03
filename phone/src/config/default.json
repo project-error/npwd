@@ -105,10 +105,6 @@
       "value": "ptbr"
     },
     {
-      "label": "Italiano",
-      "value": "it"
-    },
-    {
       "label": "Bosanski",
       "value": "ba"
     },
@@ -127,6 +123,14 @@
     {
       "label": "Deutsch",
       "value": "de"
+    },
+    {
+      "label": "Finnish",
+      "value": "fi"
+    },
+    {
+      "label": "Italian",
+      "value": "it"
     }
   ],
   "ringtones": [
