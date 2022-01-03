@@ -1152,6 +1152,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@citizenfx/client@^1.0.1688-1":
+  version "1.0.1688-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-1.0.1688-1.tgz#360c5db391cf9662b81129b84eaa35299d604ef5"
+  integrity sha512-RUnWSBalc888c/HheM+aOu6oHCa1QDmCzbgyldyLQfcq2B8uPfrKkogZenC3iR0vBB/bTdb+2NU4q/VhIU4V4Q==
+
 "@citizenfx/client@^1.0.3281-1":
   version "1.0.3281-1"
   resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-1.0.3281-1.tgz#e26d85cb3686f8e0c85fdb86dca159e027358418"
@@ -3566,6 +3571,11 @@ esutils@^2.0.2:
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
+esx.js@^1.1.6:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/esx.js/-/esx.js-1.1.8.tgz#ad9d8532e755a93d5ee5c45c2224a3f9068ea5a2"
+  integrity sha512-7/dwj/w99/ke2RJUFGqJbBA3Qf7Gj7t+GZ6ckCW406EQz/GiaVKvibJZ83GTigIH3JZaBwsj6zgu0AF8wqTd9w==
+
 events@^3.0.0, events@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
@@ -3810,6 +3820,14 @@ findup-sync@^3.0.0:
     is-glob "^4.0.0"
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
+
+fivem-esx-js@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/fivem-esx-js/-/fivem-esx-js-0.1.12.tgz#269bdfef84ed1500f19eb5f2fb7087f5cb5e5353"
+  integrity sha512-gUSt9lll66FVBuNYP5kJVuXwU5jjg2rAaldembGRHJTAHd1WdMRIPF9899omUeJf4m4ToyfekxjcYtbttLrIJg==
+  dependencies:
+    "@citizenfx/client" "^1.0.1688-1"
+    fivem-js "^1.3.1"
 
 fivem-js@^1.3.1:
   version "1.5.2"
