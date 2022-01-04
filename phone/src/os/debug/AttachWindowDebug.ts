@@ -48,6 +48,20 @@ const debugObj = {
       method: PhoneEvents.ADD_SNACKBAR_ALERT,
     });
   },
+  unloadCharacter: () => {
+    dispatchEvent({
+      app: 'PHONE',
+      data: {},
+      method: PhoneEvents.UNLOAD_CHARACTER,
+    });
+  },
+  setPhoneNumber: (phoneNumber: string = '111-1134') => {
+    dispatchEvent({
+      app: 'PHONE',
+      data: phoneNumber,
+      method: PhoneEvents.SET_NUMBER,
+    });
+  },
   setPhoneVisible: (bool: boolean) => {
     dispatchEvent({
       method: PhoneEvents.SET_VISIBILITY,
