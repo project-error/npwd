@@ -1,8 +1,8 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
 import { FormattedTweet, Profile, Tweet, TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { isEnvBrowser } from '../../../utils/misc';
+import { buildRespObj } from '@utils/misc';
 import { MockTweets, MockTwitterProfile } from '../utils/constants';
 import { processTweet } from '../utils/tweets';
 
@@ -15,12 +15,12 @@ export const twitterState = {
         try {
           const resp = await fetchNui<ServerPromiseResp<Profile>>(
             TwitterEvents.GET_OR_CREATE_PROFILE,
+            undefined,
+            buildRespObj(MockTwitterProfile),
           );
           return resp.data;
         } catch (e) {
-          if (isEnvBrowser()) {
-            return MockTwitterProfile;
-          }
+          console.error(e);
           return null;
         }
       },

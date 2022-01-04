@@ -1,20 +1,18 @@
 import { useRecoilValue } from 'recoil';
 import { ResourceConfig } from '@typings/config';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { phoneState } from './state';
 import { PhoneEvents } from '@typings/phone';
+import { fetchNui } from '@utils/fetchNui';
 
 interface IUsePhone {
   ResourceConfig?: ResourceConfig;
   openPhone(): void;
   closePhone(): void;
   isPhoneOpen: boolean;
-  //isPhoneReady: boolean;
 }
 
 export const usePhone = (): IUsePhone => {
-  const Nui = useNuiRequest();
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
   const config = useRecoilValue(phoneState.resourceConfig);
 
@@ -22,10 +20,11 @@ export const usePhone = (): IUsePhone => {
 
   const closePhone = () => {
     removeAlerts();
-    Nui.send(PhoneEvents.CLOSE_PHONE);
+    fetchNui(PhoneEvents.CLOSE_PHONE, undefined, {}).catch();
   };
+
   const openPhone = () => {
-    Nui.send(PhoneEvents.OPEN_PHONE);
+    fetchNui(PhoneEvents.OPEN_PHONE, undefined, {}).catch();
   };
 
   return {

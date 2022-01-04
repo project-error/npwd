@@ -5,10 +5,9 @@ import {
   MessageConversation,
   MessageEvents,
 } from '@typings/messages';
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import LogDebugEvent from '../../../os/debug/LogDebugEvents';
-import { isEnvBrowser } from '../../../utils/misc';
+import { buildRespObj } from '@utils/misc';
 import { MockMessageConversations } from '../utils/constants';
 
 const currentGroupId = atom({ key: 'currentGroupId', default: null });
@@ -22,13 +21,11 @@ export const messageState = {
         try {
           const resp = await fetchNui<ServerPromiseResp<MessageConversation[]>>(
             MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+            undefined,
+            buildRespObj(MockMessageConversations),
           );
-          LogDebugEvent({ action: 'fetchMessageConversation', data: resp.data });
           return resp.data;
         } catch (e) {
-          if (isEnvBrowser()) {
-            return MockMessageConversations;
-          }
           console.error(e);
           return [];
         }
