@@ -7,7 +7,7 @@ export const RecoilDebugObserver: React.FC = ({ children }) => {
 
   useEffect(() => {
     // Enable debugging atom mutation if needed
-    if (!defaultConfig.debug.shouldShowAtomDebug && process.env.NODE_ENV === 'development') return;
+    if (!defaultConfig.debug.shouldShowAtomDebug) return;
 
     console.debug('The following atoms were modified:');
     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
