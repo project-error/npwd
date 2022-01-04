@@ -1,4 +1,6 @@
-export const BrowserContactsState = [
+import { Contact } from '@typings/contact';
+
+export const BrowserContactsState: Contact[] = [
   {
     id: 1,
     display: 'Ruqen',

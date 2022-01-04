@@ -5,6 +5,7 @@
       "@os/*": ["./os/*"],
       "@ui/*": ["./ui/*"],
       "@apps/*": ["./apps"],
+      "@utils/*": ["./utils/*"],
       "@common/*": ["./common/*"],
       "@typings/*": ["../../typings/*"]
     }

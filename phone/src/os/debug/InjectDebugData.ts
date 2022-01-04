@@ -1,4 +1,4 @@
-interface DebugEvent<P = any> {
+export interface DebugEvent<P = any> {
   app: string;
   method: string;
   data: P;

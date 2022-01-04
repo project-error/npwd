@@ -36,14 +36,19 @@ export const twitterState = {
       key: 'defaultTweetsValue',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS, {
-            pageId: 0,
-          });
+          const resp = await fetchNui<ServerPromiseResp<Tweet[]>>(
+            TwitterEvents.FETCH_TWEETS,
+            {
+              pageId: 0,
+            },
+            {
+              status: 'ok',
+              data: MockTweets,
+            },
+          );
+
           return resp.data.map(processTweet);
         } catch (e) {
-          if (isEnvBrowser()) {
-            return MockTweets;
-          }
           return [];
         }
       },
