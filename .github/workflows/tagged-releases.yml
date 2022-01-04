@@ -39,7 +39,7 @@ jobs:
 
           sentry-cli releases new "$VERSION"
           sentry-cli releases set-commits "$VERSION" --auto
-          sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --ext map --url-prefix '~/resources/html/'
+          sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --ext map --url-prefix '~/resources/html'
           sentry-cli releases finalize "$VERSION"
 
           sentry-cli releases deploys "$VERSION" new -e production
