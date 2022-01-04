@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
-import { MockTweets } from '../../utils/constants';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [page, setPage] = useState<number>(1);
