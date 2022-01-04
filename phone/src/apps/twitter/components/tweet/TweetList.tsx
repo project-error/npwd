@@ -4,13 +4,14 @@ import { List } from '@ui/components/List';
 import Tweet from './Tweet';
 import { FormattedTweet, Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { fetchNui } from '../../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { processTweet } from '../../utils/tweets';
 import { useTranslation } from 'react-i18next';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
-import { CircularProgress } from '@mui/material';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { MockTweets } from '../../utils/constants';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [page, setPage] = useState<number>(1);
@@ -21,26 +22,32 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const { updateTweets } = useTwitterActions();
 
   const handleNextTweets = useCallback(() => {
-    fetchNui<ServerPromiseResp<ITweet[]>>(TwitterEvents.FETCH_TWEETS, { pageId: page }).then(
-      (resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            type: 'error',
-            message: t('TWITTER.FEEDBACK.FETCH_TWEETS_FAILED'),
-          });
-        }
-
-        if (resp.data.length === 0) {
-          setHasMore(false);
-          return;
-        }
-
-        setHasMore(true);
-        setPage((curVal) => curVal + 1);
-
-        updateTweets(resp.data.map(processTweet));
+    fetchNui<ServerPromiseResp<ITweet[]>>(
+      TwitterEvents.FETCH_TWEETS,
+      { pageId: page },
+      {
+        status: 'ok',
+        data: [],
+        // data: MockTweets as unknown as ITweet[],
       },
-    );
+    ).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('TWITTER.FEEDBACK.FETCH_TWEETS_FAILED'),
+        });
+      }
+
+      if (resp.data.length === 0) {
+        setHasMore(false);
+        return;
+      }
+
+      setHasMore(true);
+      setPage((curVal) => curVal + 1);
+
+      updateTweets(resp.data.map(processTweet));
+    });
   }, [page, updateTweets, addAlert, t]);
 
   return (
@@ -49,7 +56,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
         next={handleNextTweets}
         hasMore={hasMore}
         height={587}
-        loader={<CircularProgress />}
+        loader={<LoadingSpinner height="auto" my={1} />}
         dataLength={tweets.length}
       >
         {tweets.map((tweet) => (
