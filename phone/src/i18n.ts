@@ -30,6 +30,7 @@ export const resources = {
   tr,
   ptbr,
   pt,
+  pl,
   hu,
   cs,
   nl,
