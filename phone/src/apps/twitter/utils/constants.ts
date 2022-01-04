@@ -1,4 +1,4 @@
-import { FormattedTweet } from '../../../../../typings/twitter';
+import { Tweet } from '@typings/twitter';
 
 export const IMG_DEFAULT_AVATAR = 'https://i.file.glass/QrEvq.png';
 export const IMG_INVALID_AVATAR = 'media/twitter/invalid.png';
@@ -20,7 +20,7 @@ export const MockTwitterProfile = {
   updatedAt: '2021-12-01 00:11',
 };
 
-export const MockTweets: FormattedTweet[] = [
+export const MockTweets: Tweet[] = [
   {
     profile_name: 'chip',
     profile_id: 29,
@@ -40,7 +40,6 @@ export const MockTweets: FormattedTweet[] = [
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: '298347827237rweffffweo8874',
-    images: [],
     retweet: null,
   },
   {
@@ -61,7 +60,6 @@ export const MockTweets: FormattedTweet[] = [
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: 'sdfjsadfafjadfjas',
-    images: [],
     retweet: null,
   },
   {
@@ -82,12 +80,7 @@ export const MockTweets: FormattedTweet[] = [
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: 'sadjfwr23472974',
-    images: [
-      {
-        id: '1',
-        link: 'https://c.tenor.com/ucmhE4FHoFcAAAAC/fight-smash.gif',
-      },
-    ],
+    images: 'https://c.tenor.com/ucmhE4FHoFcAAAAC/fight-smash.gif',
     retweet: null,
   },
 ];

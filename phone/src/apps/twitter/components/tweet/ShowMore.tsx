@@ -5,10 +5,30 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import ReportButton from '../buttons/ReportButton';
 import { TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { styled } from '@mui/styles';
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'left',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    backgroundColor: '#121212',
+    backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12))',
+    '& .MuiMenuItem-root': {
+      fontSize: '0.9rem',
+    },
+  },
+}));
 
 export const ShowMore = ({ id, isReported, isMine }) => {
   const { t } = useTranslation();
@@ -59,22 +79,18 @@ export const ShowMore = ({ id, isReported, isMine }) => {
       >
         <MoreIcon />
       </Button>
-      <Menu
+      <StyledMenu
         id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        transformOrigin={{
-          vertical: -30,
-          horizontal: 'left',
-        }}
       >
         {allowedToDelete && <MenuItem onClick={handleDeleteTweet}>{t('GENERIC.DELETE')}</MenuItem>}
         {allowedToReport && (
           <ReportButton handleClose={handleClose} isReported={isReported} tweetId={id} />
         )}
-      </Menu>
+      </StyledMenu>
     </>
   );
 };
