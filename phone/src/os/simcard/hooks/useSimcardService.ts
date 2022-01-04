@@ -2,8 +2,8 @@ import { useSetRecoilState } from 'recoil';
 import { simcardState } from './state';
 import { useMyPhoneNumber } from './useMyPhoneNumber';
 import InjectDebugData from '../../debug/InjectDebugData';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { PhoneEvents } from '@typings/phone';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 InjectDebugData([
   {

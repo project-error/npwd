@@ -2,9 +2,10 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SetterOrUpdater, useRecoilState } from 'recoil';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { useNuiEvent, useNuiCallback } from 'fivem-nui-react-lib/';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { photoState } from './state';
+import { useNuiCallback } from 'fivem-nui-react-lib';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 interface IUseCamera {
   photos: GalleryPhoto[];
