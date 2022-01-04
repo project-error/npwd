@@ -1,12 +1,12 @@
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import {
   Message,
   MessageConversationResponse,
   MessageEvents,
   PreDBMessage,
-} from '../../../../../typings/messages';
-import { ServerPromiseResp } from '../../../../../typings/common';
-import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+} from '@typings/messages';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';

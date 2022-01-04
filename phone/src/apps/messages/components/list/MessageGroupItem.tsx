@@ -12,7 +12,8 @@ import {
 import { MessageConversation } from '@typings/messages';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useContacts } from '../../../contacts/hooks/state';
-import { Contact } from '../../../../../../typings/contact';
+import { Contact } from '@typings/contact';
+
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
