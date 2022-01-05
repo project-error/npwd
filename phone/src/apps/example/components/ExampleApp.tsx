@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { useApp } from '@os/apps/hooks/useApps';
-import { ExampleThemeProvider } from '../providers/ExampleThemeProvider';
-import { AppTitle } from '@ui/components/AppTitle';
-import PlayIcon from '@mui/icons-material/PlayArrow';
-import StopIcon from '@mui/icons-material/Stop';
-import { Button, IconButton } from '@mui/material';
-import useSound from '../../../os/sound/hooks/useSound';
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Stop, PlayArrow } from '@mui/icons-material';
 import { useExampleStringValue } from '../hooks/state';
+import useSound from '@os/sound/hooks/useSound';
+import { useApp } from '@os/apps/hooks/useApps';
 
-export const ExampleApp = () => {
-  // calling the example hook, and we assign the value to a variable
+export const ExampleApp: React.FC = () => {
   const exampleString = useExampleStringValue();
-  const example = useApp('EXAMPLE');
   const [soundName, setSound] = useState('pixel.ogg');
   const { play, playing, stop } = useSound('media/ringtones/' + soundName);
+  const example = useApp('EXAMPLE');
 
   const toggleSound = () => {
     if (soundName === 'pixel.ogg') {
@@ -27,20 +20,15 @@ export const ExampleApp = () => {
   };
 
   return (
-    <ExampleThemeProvider>
-      <AppWrapper>
-        <AppTitle app={example} />
-        <AppContent>
-          <h1>This is an example</h1>
-          <Button color="primary">{example.id}</Button>
-          {/* Here we are using the value in a h3 tag */}
-          <h3>{exampleString}</h3>
-          <IconButton onClick={() => (playing ? stop() : play())} size="large">
-            {playing ? <StopIcon /> : <PlayIcon />}
-          </IconButton>
-          <Button onClick={toggleSound}>Change sound on the fly</Button>
-        </AppContent>
-      </AppWrapper>
-    </ExampleThemeProvider>
+    <Box height="100%" width="100%" p={2}>
+      <Typography variant="h4">Welcome to NPWD!</Typography>
+      <Button color="primary">{example.id}</Button>
+      {/* Here we are using the value in a h3 tag */}
+      <h3>{exampleString}</h3>
+      <IconButton onClick={() => (playing ? stop() : play())} size="large">
+        {playing ? <Stop /> : <PlayArrow />}
+      </IconButton>
+      <Button onClick={toggleSound}>Change sound on the fly</Button>
+    </Box>
   );
 };
