@@ -27,6 +27,7 @@ interface General {
   useDashNumber: boolean;
   useResourceIntegration: boolean;
   toggleKey: string;
+  toggleCommand: string;
 }
 
 interface NotificationConfig {
