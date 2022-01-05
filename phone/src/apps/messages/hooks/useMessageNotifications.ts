@@ -5,12 +5,8 @@ import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import useMessages from './useMessages';
 import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
-import { fetchNui } from '../../../utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { MessageConversation, MessageConversationResponse, MessageEvents } from '@typings/messages';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useMessageActions } from './useMessageActions';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
+import { MessageConversation } from '@typings/messages';
+import { useMessageAPI } from './useMessageAPI';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -20,10 +16,8 @@ export const useMessageNotifications = () => {
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
   const { getMessageConversationById, goToConversation } = useMessages();
-  const { updateConversations } = useMessageActions();
-  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+  const { addConversation } = useMessageAPI();
   const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
-  const { addAlert } = useSnackbar();
 
   // Remove notifications from groups when opening them
   history.listen((location) => {
@@ -44,29 +38,7 @@ export const useMessageNotifications = () => {
     group = getMessageConversationById(conversationId);
 
     if (!group) {
-      fetchNui<ServerPromiseResp<MessageConversationResponse>>(
-        MessageEvents.CREATE_MESSAGE_CONVERSATION,
-        { targetNumber: conversationName },
-      ).then((resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('MESSAGES.FEEDBACK.MESSAGE_GROUP_CREATE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        const display = getDisplayByNumber(resp.data.phoneNumber);
-        const avatar = getPictureByNumber(resp.data.phoneNumber);
-
-        updateConversations({
-          conversation_id: resp.data.conversation_id,
-          phoneNumber: resp.data.phoneNumber,
-          display: display,
-          avatar: avatar,
-          unread: 0,
-        });
-      });
-
+      addConversation(conversationName);
       group = getMessageConversationById(conversationId);
     }
 

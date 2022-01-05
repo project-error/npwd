@@ -4,10 +4,10 @@ import { Message, MessageConversation } from '@typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
 
 interface MessageActionProps {
-  updateConversations: (conversation: MessageConversation) => void;
-  removeConversation: (conversationId: string[]) => void;
-  updateMessages: (messageDto: Message) => void;
-  deleteMessage: (messageId: number) => void;
+  updateLocalConversations: (conversation: MessageConversation) => void;
+  removeLocalConversation: (conversationId: string[]) => void;
+  updateLocalMessages: (messageDto: Message) => void;
+  deleteLocalMessage: (messageId: number) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -15,18 +15,17 @@ export const useMessageActions = (): MessageActionProps => {
   const { state: conversationLoading, contents: conversations } = useRecoilValueLoadable(
     messageState.messageCoversations,
   );
-
   const setMessageConversation = useSetMessageConversations();
   const setMessages = useSetMessages();
 
-  const updateConversations = useCallback(
+  const updateLocalConversations = useCallback(
     (conversation: MessageConversation) => {
       setMessageConversation((curVal) => [conversation, ...curVal]);
     },
     [setMessageConversation],
   );
 
-  const removeConversation = useCallback(
+  const removeLocalConversation = useCallback(
     (conversationsId: string[]) => {
       if (conversationLoading !== 'hasValue') return;
 
@@ -41,7 +40,7 @@ export const useMessageActions = (): MessageActionProps => {
     [setMessageConversation, conversationLoading, conversations],
   );
 
-  const updateMessages = useCallback(
+  const updateLocalMessages = useCallback(
     (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
 
@@ -58,7 +57,7 @@ export const useMessageActions = (): MessageActionProps => {
     [messageLoading, setMessages],
   );
 
-  const deleteMessage = useCallback(
+  const deleteLocalMessage = useCallback(
     (messageId: number) => {
       setMessages((currVal) => [...currVal].filter((msg) => msg.id !== messageId));
     },
@@ -66,9 +65,9 @@ export const useMessageActions = (): MessageActionProps => {
   );
 
   return {
-    updateConversations,
-    removeConversation,
-    updateMessages,
-    deleteMessage,
+    updateLocalConversations,
+    removeLocalConversation,
+    updateLocalMessages,
+    deleteLocalMessage,
   };
 };
