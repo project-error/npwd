@@ -5,7 +5,7 @@
 
 <div align="center">
 
-![Discord](https://img.shields.io/discord/791854454760013827?label=Our%20Discord)
+[![Discord](https://img.shields.io/discord/791854454760013827?label=Our%20Discord)](https://discord.com/invite/HYwBjTbAY5)
 
 
 [**Watch the NPWD Trailer**](https://www.youtube.com/watch?v=Yh8gT8wuywU)
