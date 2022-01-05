@@ -6,7 +6,7 @@
   },
   "general": {
     "useResourceIntegration": false,
-    "toggleKey": "f1"
+    "toggleKey": "f1",
     "toggleCommand": "phone"
   },
   "database": {
