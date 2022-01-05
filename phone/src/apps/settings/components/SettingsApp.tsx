@@ -79,9 +79,9 @@ export const SettingsApp = () => {
   );
 
   const wallpapers = config.wallpapers.map(
-    MapSettingItem(settings.wallpaper, (val: SettingOption) => {
-      handleSettingChange('wallpaper', val);
-    }),
+    MapSettingItem(settings.wallpaper, (val: SettingOption) =>
+      handleSettingChange('wallpaper', val),
+    ),
   );
   const frames = config.frames.map(
     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
@@ -173,7 +173,6 @@ export const SettingsApp = () => {
         backdrop={isMenuOpen}
         onClickBackdrop={closeMenu}
         display="flex"
-        id="test"
         style={{
           height: 'auto',
         }}
@@ -247,7 +246,7 @@ export const SettingsApp = () => {
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.WALLPAPER')}
-            value={t(settings.wallpaper.label)}
+            value={settings.wallpaper.label}
             options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
@@ -292,7 +291,7 @@ export const SettingsApp = () => {
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.ACTIONS')} />}>
           <SettingItem
             label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
-            value={`${t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}`}
+            value={t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}
             icon={<DeleteForever />}
             onClick={openMenu}
             options={resetSettingsOpts}

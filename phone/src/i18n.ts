@@ -17,8 +17,9 @@ import nl from './locale/nl.json';
 import fi from './locale/fi.json';
 import it from './locale/it.json';
 
-export const defaultNS = 'ns1';
-
+// Should we just programatically call for static files
+// on the scripts side to avoid having to parse all these
+// JSONs for no reason? yes, probably
 export const resources = {
   en,
   es,
@@ -38,8 +39,24 @@ export const resources = {
   it,
 } as const;
 
+const missingKeyHandler = (
+  lng: Readonly<string[]>,
+  s: string,
+  key: string,
+  fallbackValue: string,
+) => {
+  if (process.env.NODE_ENV !== 'development') return;
+  console.error(
+    `!! TRANSLATION KEY NOT FOUND FOR LANGAUGE "${lng}", KEY "${key}". RENDERED ${fallbackValue} INSTEAD"" !!`,
+  );
+};
+
 i18n.use(initReactI18next).init({
   lng: 'en',
+  // initImmediate: true,
+  saveMissing: true,
+  missingKeyHandler,
+  fallbackLng: 'en',
   interpolation: {
     escapeValue: false, // not needed for react as it escapes by default
   },
