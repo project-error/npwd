@@ -10,7 +10,6 @@ import {
   IconButton,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
@@ -18,7 +17,6 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import Modal from '../../../../ui/components/Modal';
 import { useMessagesState } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
@@ -30,16 +28,6 @@ const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
 const useStyles = makeStyles({
-  backgroundModal: {
-    background: 'black',
-    opacity: '0.6',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 5,
-  },
   tooltip: {
     fontSize: 12,
   },
@@ -76,11 +64,8 @@ export const MessageModal = () => {
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
-  const { deleteConversation } = useMessageAPI();
 
   const [isLoaded, setLoaded] = useState(false);
-  // Multiselect
-  const [groupActionsOpen, setGroupActionsOpen] = useState(false);
 
   useEffect(() => {
     fetchMessages(groupId, 0);
@@ -142,22 +127,10 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
-  const handleDeleteConversation = () => {
-    history.push('/messages');
-    deleteConversation([groupId]);
-  };
-
   const targetNumber = activeMessageConversation.phoneNumber;
 
   return (
     <>
-      <Modal visible={groupActionsOpen} handleClose={() => setGroupActionsOpen(false)}>
-        <Box>
-          <Button variant="contained" color="primary" onClick={handleDeleteConversation}>
-            {t('MESSAGES.DELETE_CONVERSATION')}
-          </Button>
-        </Box>
-      </Modal>
       <Slide direction="left" in={!!activeMessageConversation}>
         <Paper
           sx={{
@@ -169,7 +142,6 @@ export const MessageModal = () => {
             flexDirection: 'column',
           }}
         >
-          <div className={groupActionsOpen ? classes.backgroundModal : undefined} />
           <Box display="flex" justifyContent="space-between" component={Paper}>
             <Button onClick={closeModal}>
               <ArrowBackIcon fontSize="large" />
@@ -177,15 +149,6 @@ export const MessageModal = () => {
             <Typography variant="h5" className={headerClass}>
               {header}
             </Typography>
-            <Tooltip
-              classes={{ tooltip: classes.tooltip }}
-              title={t('MESSAGES.ACTIONS_TITLE')}
-              placement="bottom"
-            >
-              <IconButton onClick={() => setGroupActionsOpen(true)}>
-                <MoreVertIcon fontSize="large" />
-              </IconButton>
-            </Tooltip>
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
               title={`${t('DIALER.NAVBAR_DIAL')} ${targetNumber}`}
