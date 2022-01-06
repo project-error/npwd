@@ -36,9 +36,6 @@ export const useTwitterActions = (): TwitterActionProps => {
         ...curVal,
         profile_name: profile.profile_name,
         avatar_url: profile.avatar_url,
-        bio: profile.bio,
-        location: profile.location,
-        job: profile.job,
       }));
     },
     [setTwitterProfile],

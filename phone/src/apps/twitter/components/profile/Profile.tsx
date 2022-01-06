@@ -40,17 +40,11 @@ export function Profile() {
   // amounts of hooks are rendering
   const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url || '');
   const [name, handleNameChange] = useState(profile.profile_name || '');
-  const [bio, handleBioChange] = useState(profile.bio || '');
-  const [location, handleLocationChange] = useState(profile.location || '');
-  const [job, handleJobChange] = useState(profile.job || '');
 
   const handleUpdate = () => {
     const data = {
       avatar_url: avatarUrl,
       profile_name: name,
-      bio,
-      location,
-      job,
     };
 
     fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
@@ -61,7 +55,7 @@ export function Profile() {
         });
       }
 
-      updateLocalProfile({ profile_name: name, bio, location, job, avatar_url: avatarUrl });
+      updateLocalProfile({ profile_name: name, avatar_url: avatarUrl });
 
       addAlert({
         message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
@@ -90,22 +84,6 @@ export function Profile() {
         value={name}
         handleChange={handleNameChange}
         allowChange={allowEditableProfileName}
-      />
-      <ProfileField
-        label={t('TWITTER.EDIT_PROFILE_BIO')}
-        value={bio}
-        handleChange={handleBioChange}
-        multiline
-      />
-      <ProfileField
-        label={t('TWITTER.EDIT_PROFILE_LOCATION')}
-        value={location}
-        handleChange={handleLocationChange}
-      />
-      <ProfileField
-        label={t('TWITTER.EDIT_PROFILE_JOB')}
-        value={job}
-        handleChange={handleJobChange}
       />
       <ProfileUpdateButton handleClick={handleUpdate} />
     </div>

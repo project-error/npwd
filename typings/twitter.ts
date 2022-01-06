@@ -40,9 +40,6 @@ export interface Profile {
   profile_name: string;
   identifier: string;
   avatar_url?: string;
-  bio?: string;
-  location?: string;
-  job?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -50,9 +47,6 @@ export interface Profile {
 export interface UpdateProfileProps {
   avatar_url: string;
   profile_name: string;
-  bio: string;
-  location: string;
-  job: string;
 }
 
 export enum TwitterEvents {

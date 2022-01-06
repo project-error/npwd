@@ -225,17 +225,14 @@ export class _TwitterDB {
   }
 
   async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
-    const { avatar_url, profile_name, bio, location, job } = profile;
+    const { avatar_url, profile_name } = profile;
     const query = `
         UPDATE npwd_twitter_profiles
         SET avatar_url   = ?,
-            profile_name = ?,
-            bio          = ?,
-            location     = ?,
-            job          = ?
-        WHERE identifier = ?
+            profile_name = ?
+            WHERE identifier = ?
 		`;
-    await pool.execute(query, [avatar_url, profile_name, bio, location, job, identifier]);
+    await pool.execute(query, [avatar_url, profile_name, identifier]);
 
     return profile;
   }
