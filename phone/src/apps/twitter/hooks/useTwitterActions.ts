@@ -25,7 +25,7 @@ export const useTwitterActions = (): TwitterActionProps => {
         const tweetsLoading = getIsTweetsLoading(snapshot);
         if (tweetsLoading) return;
 
-        set(twitterState.tweets, (curVal) => [...tweet, ...curVal]);
+        set(twitterState.tweets, (curVal) => [...curVal, ...tweet]);
       },
     [setTweets],
   );

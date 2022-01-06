@@ -44,13 +44,10 @@ export class _TwitterDB {
    */
   async fetchAllTweets(profileId: number, currPage: number): Promise<Tweet[]> {
     currPage = typeof currPage === 'number' ? currPage : 1; // avoid sql injection without prepared query
+    const offset = currPage * TWEETS_PER_PAGE;
     const query = `
         SELECT ${SELECT_FIELDS}
-        FROM (
-          SELECT * FROM npwd_twitter_tweets LIMIT ${TWEETS_PER_PAGE} OFFSET ${
-      TWEETS_PER_PAGE * currPage
-    }
-        ) npwd_twitter_tweets
+        FROM npwd_twitter_tweets
                  LEFT OUTER JOIN npwd_twitter_profiles
                                  ON npwd_twitter_tweets.identifier = npwd_twitter_profiles.identifier
                  LEFT OUTER JOIN npwd_twitter_likes ON npwd_twitter_tweets.id = npwd_twitter_likes.tweet_id AND
@@ -60,9 +57,16 @@ export class _TwitterDB {
                  LEFT OUTER JOIN npwd_twitter_tweets AS retweets ON retweets.id = npwd_twitter_tweets.retweet
                  LEFT OUTER JOIN npwd_twitter_profiles AS retweets_profiles
                                  ON retweets.identifier = retweets_profiles.identifier
-        WHERE npwd_twitter_tweets.visible = 1 ORDER BY id DESC
+        WHERE npwd_twitter_tweets.visible = 1
+        ORDER BY id DESC
+        LIMIT ? OFFSET ?
 		`;
-    const [results] = await DbInterface._rawExec(query, [profileId, profileId]);
+    const [results] = await DbInterface._rawExec(query, [
+      profileId,
+      profileId,
+      TWEETS_PER_PAGE,
+      offset,
+    ]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId));
   }
@@ -89,7 +93,8 @@ export class _TwitterDB {
                                  ON retweets.identifier = retweets_profiles.identifier
         WHERE npwd_twitter_tweets.visible = 1
           AND (npwd_twitter_profiles.profile_name LIKE ? OR npwd_twitter_tweets.message LIKE ?)
-        ORDER BY npwd_twitter_tweets.id DESC LIMIT 25
+        ORDER BY npwd_twitter_tweets.id DESC
+        LIMIT 25
 		`;
     const [results] = await DbInterface._rawExec(query, [
       profileId,
@@ -167,7 +172,8 @@ export class _TwitterDB {
     const query = `
         SELECT *
         FROM npwd_twitter_profiles
-        WHERE identifier = ? LIMIT 1
+        WHERE identifier = ?
+        LIMIT 1
 		`;
     const [results] = await DbInterface._rawExec(query, [identifier]);
     const profiles = <Profile[]>results;
@@ -289,7 +295,8 @@ export class _TwitterDB {
         SELECT *
         FROM npwd_twitter_likes
         WHERE profile_id = ?
-          AND tweet_id = ? LIMIT 1
+          AND tweet_id = ?
+        LIMIT 1
 		`;
     const [results] = await DbInterface._rawExec(query, [profileId, tweetId]);
     const likes = <any[]>results;
@@ -306,7 +313,8 @@ export class _TwitterDB {
         SELECT *
         FROM npwd_twitter_reports
         WHERE tweet_id = ?
-          AND profile_id = ? LIMIT 1
+          AND profile_id = ?
+        LIMIT 1
 		`;
     const [results] = await DbInterface._rawExec(query, [tweetId, profileId]);
     const reports = <any[]>results;
@@ -323,7 +331,8 @@ export class _TwitterDB {
     const query = `
         SELECT COUNT(id) as count
         FROM npwd_twitter_tweets
-        WHERE (id = ? OR retweet = ?) AND identifier = ?
+        WHERE (id = ? OR retweet = ?)
+          AND identifier = ?
 		`;
     const [results] = await DbInterface._rawExec(query, [tweetId, tweetId, identifier]);
     const counts = <any[]>results;
