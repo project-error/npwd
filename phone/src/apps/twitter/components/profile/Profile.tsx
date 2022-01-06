@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../../hooks/useProfile';
@@ -11,6 +11,11 @@ import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useQueryParams } from '../../../../common/hooks/useQueryParams';
+import qs from 'qs';
+import { Box, Button } from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,6 +35,9 @@ export function Profile() {
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
+  const history = useHistory();
+  const query = useQueryParams();
+  const { pathname, search } = useLocation();
 
   const { updateLocalProfile } = useTwitterActions();
 
@@ -40,6 +48,14 @@ export function Profile() {
   // amounts of hooks are rendering
   const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url || '');
   const [name, handleNameChange] = useState(profile.profile_name || '');
+
+  const handleChooseImage = useCallback(() => {
+    history.push(
+      `/camera?${qs.stringify({
+        referal: encodeURIComponent(pathname + search),
+      })}`,
+    );
+  }, [history, pathname, search]);
 
   const handleUpdate = () => {
     const data = {
@@ -64,6 +80,11 @@ export function Profile() {
     });
   };
 
+  useEffect(() => {
+    if (!query?.image) return;
+    handleAvatarChange(query.image);
+  }, [query?.image, history, pathname, search, handleAvatarChange]);
+
   // fetching the config is an asynchronous call so defend against it
   if (!ResourceConfig) return null;
 
@@ -73,6 +94,16 @@ export function Profile() {
     <div className={classes.root}>
       {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
       <div className={classes.spacer} />
+
+      <Box display="flex" alignItems="center">
+        <div>
+          <ImageIcon />
+        </div>
+        <div>
+          <Button onClick={handleChooseImage}>{t('TWITTER.AVATAR_CHOOSE_IMAGE')} xd</Button>
+        </div>
+      </Box>
+
       <ProfileField
         label={t('TWITTER.EDIT_PROFILE_AVATAR')}
         value={avatarUrl}

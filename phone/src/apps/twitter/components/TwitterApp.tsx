@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles';
 import { Tweet as ITweet } from '@typings/twitter';
 import { AppWrapper } from '@ui/components';
@@ -39,6 +39,7 @@ export const TwitterApp = () => {
   const { modalVisible, setModalVisible } = useModal();
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
+  const location = useLocation();
 
   // before any other action can be taken by the user we force
   // them have a profile name.
@@ -46,7 +47,8 @@ export const TwitterApp = () => {
 
   const openModal = () => setModalVisible(true);
   const handlePageChange = (e, page) => setActivePage(page);
-  const showTweetButton = !promptProfileName && activePage === 0;
+  const showTweetButton =
+    !promptProfileName && activePage === 0 && location.pathname === '/twitter';
 
   return (
     <TwitterThemeProvider>
