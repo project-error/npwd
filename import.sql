@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `npwd_calls`
     INDEX `identifier` (`identifier`)
 );
 
-CREATE TABLE IF NOT EXISTS npwd_phone_gallery
+CREATE TABLE IF NOT EXISTS `npwd_phone_gallery`
 (
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
     `identifier` varchar(48) DEFAULT NULL,
