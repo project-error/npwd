@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
@@ -16,6 +16,7 @@ import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { TextField } from '@ui/components/Input';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
+import { useForm } from '../../hooks/state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,12 +50,9 @@ export const ListingForm: React.FC = () => {
   const history = useHistory();
   const { pathname, search } = useLocation();
   const query = useQueryParams();
+  const [formState, setFormState] = useForm();
 
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [description, setDescription] = useState('');
-
-  const areFieldsFilled = title.trim() !== '' && description.trim() !== '';
+  const areFieldsFilled = formState.title.trim() !== '' && formState.description.trim() !== '';
 
   const addListing = () => {
     if (!areFieldsFilled) {
@@ -64,31 +62,34 @@ export const ListingForm: React.FC = () => {
       });
     }
 
-    fetchNui<ServerPromiseResp<ListingTypeResp>>(MarketplaceEvents.ADD_LISTING, {
-      title,
-      description,
-      url,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        if (resp.data === ListingTypeResp.DUPLICATE) {
+    fetchNui<ServerPromiseResp<ListingTypeResp>>(MarketplaceEvents.ADD_LISTING, formState).then(
+      (resp) => {
+        if (resp.status !== 'ok') {
+          if (resp.data === ListingTypeResp.DUPLICATE) {
+            return addAlert({
+              message: t('MARKETPLACE.FEEDBACK.DUPLICATE_LISTING'),
+              type: 'error',
+            });
+          }
+
           return addAlert({
-            message: t('MARKETPLACE.FEEDBACK.DUPLICATE_LISTING'),
+            message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED'),
             type: 'error',
           });
         }
 
-        return addAlert({
-          message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED'),
-          type: 'error',
+        addAlert({
+          message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
+          type: 'success',
         });
-      }
-
-      addAlert({
-        message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
-        type: 'success',
-      });
-      history.push('/marketplace');
-    });
+        history.push('/marketplace');
+        setFormState({
+          title: '',
+          description: '',
+          url: '',
+        });
+      },
+    );
   };
 
   const handleChooseImage = useCallback(() => {
@@ -102,33 +103,46 @@ export const ListingForm: React.FC = () => {
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
     if (inputVal.length === MarketplaceDatabaseLimits.title) return;
-    setTitle(e.currentTarget.value);
+    setFormState({
+      ...formState,
+      title: e.currentTarget.value,
+    });
   };
 
   const handleUrlChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
     if (inputVal.length === MarketplaceDatabaseLimits.url) return;
-    setUrl(e.currentTarget.value);
+    setFormState({
+      ...formState,
+      url: e.currentTarget.value,
+    });
   };
 
   const handleDescriptionChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
     if (inputVal.length === MarketplaceDatabaseLimits.description) return;
-    setDescription(e.currentTarget.value);
+    setFormState({
+      ...formState,
+      description: e.currentTarget.value,
+    });
   };
 
   useEffect(() => {
     if (!query?.image) return;
-    setUrl(query?.image);
+    setFormState({
+      ...formState,
+      url: query.image,
+    });
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [query?.image, history, pathname, search]);
+  }, [query?.image, history, pathname, search, setFormState, formState]);
 
   return (
     <div className={classes.root}>
       <h1>New Listing</h1>
       <TextField
         className={classes.input}
-        error={title.length >= MarketplaceDatabaseLimits.title}
+        value={formState.title}
+        error={formState.title.length >= MarketplaceDatabaseLimits.title}
         onChange={handleTitleChange}
         label={t('GENERIC.REQUIRED')}
         placeholder={t('MARKETPLACE.FORM_TITLE')}
@@ -154,8 +168,8 @@ export const ListingForm: React.FC = () => {
       <TextField
         className={classes.input}
         placeholder={t('MARKETPLACE.FORM_IMAGE')}
-        value={url}
-        error={url.length >= MarketplaceDatabaseLimits.url}
+        value={formState.url}
+        error={formState.url.length >= MarketplaceDatabaseLimits.url}
         onChange={handleUrlChange}
         inputProps={{ className: classes.textFieldInput }}
         style={{ width: '80%' }}
@@ -167,7 +181,8 @@ export const ListingForm: React.FC = () => {
         className={classes.input}
         onChange={handleDescriptionChange}
         label={t('GENERIC.REQUIRED')}
-        error={description.length >= MarketplaceDatabaseLimits.description}
+        value={formState.description}
+        error={formState.description.length >= MarketplaceDatabaseLimits.description}
         placeholder={t('MARKETPLACE.FORM_DESCRIPTION')}
         inputProps={{
           className: classes.multilineFieldInput,
