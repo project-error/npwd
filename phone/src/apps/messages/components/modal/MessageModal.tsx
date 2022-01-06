@@ -22,6 +22,8 @@ import Modal from '../../../../ui/components/Modal';
 import { useMessagesState } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { useCall } from '@os/call/hooks/useCall';
+import { Call } from '@mui/icons-material';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -70,6 +72,7 @@ export const MessageModal = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
   const { fetchMessages } = useMessageAPI();
+  const { initializeCall } = useCall();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
@@ -177,10 +180,19 @@ export const MessageModal = () => {
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
               title={t('MESSAGES.ACTIONS_TITLE')}
-              placement="left"
+              placement="bottom"
             >
               <IconButton onClick={() => setGroupActionsOpen(true)}>
                 <MoreVertIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              classes={{ tooltip: classes.tooltip }}
+              title={`${t('DIALER.NAVBAR_DIAL')} ${targetNumber}`}
+              placement="bottom"
+            >
+              <IconButton onClick={() => initializeCall(targetNumber)}>
+                <Call fontSize="medium" />
               </IconButton>
             </Tooltip>
             {getDisplayByNumber(targetNumber) === targetNumber ? (
