@@ -45,7 +45,7 @@
           "DESCRIPTION": "Masque les images avant qu'elles soient montrées"
         },
         "CUSTOM_WALLPAPER": {
-          "DIALOG_TITLE": "Font d'écran personnalisé",
+          "DIALOG_TITLE": "Fond d'écran personnalisé",
           "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
           "DIALOG_PLACEHOLDER": "Lien de l'image",
           "DIALOG_ERROR": "Image ou lien invalide"
@@ -187,9 +187,13 @@
         "DUPLICATE_LISTING": "Vous ne pouvez pas créer une liste avec le même titre!",
         "REPORT_LISTING_SUCCESS": "Liste signalée avec succès"
       },
+      "NEW_LISTING": "Nouvelle annonce",
+      "CHOOSE_IMAGE": "Choisir une image",
       "FORM_TITLE": "Titre",
+      "POST_LISTING": "Publier",
       "FORM_IMAGE": "Image ou URL",
-      "FORM_DESCRIPTION": "Description"
+      "FORM_DESCRIPTION": "Description",
+      "NO_IMAGE": "Aucune image fournie"
     },
     "MESSAGES": {
       "MESSAGES": {
