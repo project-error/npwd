@@ -1,6 +1,10 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ServerPromiseResp } from '@typings/common';
-import { MarketplaceEvents, MarketplaceListing } from '@typings/marketplace';
+import {
+  MarketplaceEvents,
+  MarketplaceListing,
+  MarketplaceListingBase,
+} from '@typings/marketplace';
 import { fetchNui } from '../../../utils/fetchNui';
 import { isEnvBrowser } from '../../../utils/misc';
 
@@ -47,6 +51,19 @@ export const listingState = atom<MarketplaceListing[]>({
   }),
 });
 
+export const formState = atom<MarketplaceListingBase>({
+  key: 'form',
+  default: {
+    title: '',
+    description: '',
+    url: '',
+  },
+});
+
 export const useListingValue = () => useRecoilValue(listingState);
 export const useSetListings = () => useSetRecoilState(listingState);
 export const useListings = () => useRecoilState(listingState);
+
+export const useFormValue = () => useRecoilValue(formState);
+export const useSetForm = () => useSetRecoilState(formState);
+export const useForm = () => useRecoilState(formState);
