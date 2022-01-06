@@ -6,6 +6,7 @@ import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { MarketplaceListing } from '@typings/marketplace';
 import { ListingActions } from './ListingActions';
 import { PictureReveal } from '@ui/components/PictureReveal';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
   const classes = useStyles();
+  const [t] = useTranslation();
 
   return (
     <ListItem className={classes.root}>
@@ -63,7 +65,7 @@ export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...lis
             </PictureReveal>
           ) : (
             <Typography style={{ margin: 10 }}>
-              No image provided{' '}
+              {t('MARKETPLACE.NO_IMAGE')}
               <span role="img" aria-label="emoji">
                 🙁
               </span>

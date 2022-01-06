@@ -187,9 +187,13 @@
         "REPORT_LISTING_FAILED": "This listing has already been reported",
         "REPORT_LISTING_SUCCESS": "Successfully reported listing"
       },
+      "NEW_LISTING": "New listing",
+      "CHOOSE_IMAGE": "Choose a image",
       "FORM_TITLE": "Title",
+      "POST_LISTING": "Post",
       "FORM_IMAGE": "Image or URL",
-      "FORM_DESCRIPTION": "Description"
+      "FORM_DESCRIPTION": "Description",
+      "NO_IMAGE": "No image provided"
     },
     "MESSAGES": {
       "MESSAGES": {

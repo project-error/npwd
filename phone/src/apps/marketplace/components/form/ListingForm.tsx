@@ -138,7 +138,7 @@ export const ListingForm: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <h1>New Listing</h1>
+      <h1>{t('MARKETPLACE.NEW_LISTING')}</h1>
       <TextField
         className={classes.input}
         value={formState.title}
@@ -162,7 +162,7 @@ export const ListingForm: React.FC = () => {
           <ImageIcon />
         </div>
         <div>
-          <Button onClick={handleChooseImage}>Choose a image</Button>
+          <Button onClick={handleChooseImage}>{t('MARKETPLACE.CHOOSE_IMAGE')}</Button>
         </div>
       </Box>
       <TextField
@@ -198,7 +198,7 @@ export const ListingForm: React.FC = () => {
         variant="outlined"
       />
       <Button onClick={addListing} className={classes.postButton} disabled={!areFieldsFilled}>
-        Post
+        {t('MARKETPLACE.POST_LISTING')}
       </Button>
     </div>
   );
