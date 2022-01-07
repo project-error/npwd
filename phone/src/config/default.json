@@ -164,6 +164,7 @@
       "label": "English",
       "value": "en"
     },
+    "callVolume": 50,
     "iconSet": {
       "label": "Material",
       "value": {

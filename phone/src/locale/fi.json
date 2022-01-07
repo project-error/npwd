@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "Kuvan URL-osoite",
           "DIALOG_ERROR": "Virheellinen kuva tai linkki"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Soittoääni",
         "RINGTONE_VOLUME": "Soittoäänen voimakkuus",
         "NOTIFICATION": "Ilmoitusääni",

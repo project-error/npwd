@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "LINK",
           "DIALOG_ERROR": "ungültiges Bild oder Link"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Klingelton",
         "RINGTONE_VOLUME": "Klingelton Lautstärke",
         "NOTIFICATION": "Mitteilung",
