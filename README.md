@@ -27,6 +27,25 @@ to ease and streamline the phone development process.
 **Important Note:** This release(v1.0) should be considered a beta release and may experience edge case issues
 with some frameworks and environments. Please ensure you report these issues as described below.
 
+## Standalone Information & Installation
+
+We have designed *NPWD* to be generally framework agnostic, meaning that it can easily be 
+integrated with both popular open source frameworks like ESX & QBCore or any arbitary 
+custom framework. 
+
+For further details on this system, please refer to our installation [documentation](https://projecterror.dev/docs/npwd/start/installation).
+
+**As of 1/6/2021, you must use our fork of [screenshot-basic](https://github.com/project-error/screenshot-basic)
+
+## Technical Stack and Development
+
+*NPWD* uses React + TypeScript to form the NUI front end and uses TypeScript (V8 runtime) for game 
+scripts. You can find more technical information regarding the development of this project on our docs 
+page [here](https://projecterror.dev/docs/npwd/dev/dev_bootstrap).
+
+## Feature Request & Issue Reporting
+Please open an issue/enhancement on our [Github Repo](https://github.com/project-error/npwd/issues/new/choose). This is the best way for us to track what needs to be resolved or improved upon.
+
 ## Features
 - [Optimized](https://i.imgur.com/mN5ib42.png)
   - 0.01 ms on idle and 0.05 while in use.
@@ -89,23 +108,6 @@ with some frameworks and environments. Please ensure you report these issues as 
 - Discord Logging
   - Follow our [documentation](https://projecterror.dev/docs/npwd/start/installation#setting-up-discord-log-integration) for intial setup.
   - Never used a webhook before? Follow Discord's [documentation](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) for creating a webhook.
-
-## Standalone Information & Installation
-
-We have designed *NPWD* to be generally framework agnostic, meaning that it can easily be 
-integrated with both popular open source frameworks like ESX & QBCore or any arbitary 
-custom framework. 
-
-For further details on this system, please refer to our installation [documentation](https://projecterror.dev/docs/npwd/start/installation).
-
-## Technical Stack and Development
-
-*NPWD* uses React + TypeScript to form the NUI front end and uses TypeScript (V8 runtime) for game 
-scripts. You can find more technical information regarding the development of this project on our docs 
-page [here](https://projecterror.dev/docs/npwd/dev/dev_bootstrap).
-
-## Feature Request & Issue Reporting
-Please open an issue/enhancement on our [Github Repo](https://github.com/project-error/npwd/issues/new/choose). This is the best way for us to track what needs to be resolved or improved upon.
 
 ## Final words
 A special thanks to all the people who have helped out with the translations! You have all been amazing.
