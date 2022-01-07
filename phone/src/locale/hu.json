@@ -99,8 +99,8 @@
       "FEEDBACK": {
         "CREATE_PROFILE_SUCCESS": "Profil sikeresen létrehozva",
         "CREATE_PROFILE_FAILURE": "Hiba a profil létrehozása közben",
-        "EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
-        "EDIT_PROFILE_FAILURE": "Profil sikeresen frissítve",
+        "EDIT_PROFILE_SUCCESS": "Profil sikeresen frissítve",
+        "EDIT_PROFILE_FAILURE": "Profil frissítése sikeretlen",
         "CREATE_FAILED": "Hiba a tweet megosztásában",
         "RETWEET_FAILED": "Hiba, nem tudod megosztani ezt a tweetet",
         "RETWEET_EXISTS": "Ezt a tweetet már retweetelted!",
@@ -122,6 +122,7 @@
       "IMAGE_PLACEHOLDER": "Egy link a képhez vagy gifhez",
       "EDIT_DEFAULT_PROFILE_NAME": "Válaszd ki a profilneved",
       "EDIT_PROFILE_AVATAR": "Profilkép URL",
+      "AVATAR_CHOOSE_IMAGE": "Válasszon egy képet",
       "EDIT_PROFILE_NAME": "Profil név",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Hely",
@@ -187,9 +188,13 @@
         "REPORT_LISTING_FAILED": "Ezt a terméket már jelentetted",
         "REPORT_LISTING_SUCCESS": "Termék jelentve"
       },
+      "NEW_LISTING": "Új hírdetés",
+      "CHOOSE_IMAGE": "Válasszon egy képet",
       "FORM_TITLE": "Cím",
+      "POST_LISTING": "Közzététel",
       "FORM_IMAGE": "Kép vagy URL",
-      "FORM_DESCRIPTION": "Leírás"
+      "FORM_DESCRIPTION": "Leírás",
+      "NO_IMAGE": "Nincs kép "
     },
     "MESSAGES": {
       "MESSAGES": {
