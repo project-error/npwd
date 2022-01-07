@@ -151,7 +151,7 @@ export const MessageModal = () => {
             </Typography>
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
-              title={`${t('DIALER.NAVBAR_DIAL')} ${targetNumber}`}
+              title={`${t('GENERIC.CALL')} ${targetNumber}`}
               placement="bottom"
             >
               <IconButton onClick={() => initializeCall(targetNumber)}>
