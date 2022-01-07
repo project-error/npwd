@@ -5,7 +5,7 @@ import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { ExampleApp } from '../../../apps/example/components/ExampleApp';
+import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
@@ -181,7 +181,7 @@ if (process.env.NODE_ENV === 'development') {
     color: blue[50],
     path: '/example',
     Route: () => (
-      <AppRoute id="EXAMPLE" path="/example" component={ExampleApp} emitOnOpen={false} />
+      <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
     ),
   });
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   ListItem,
   ListItemText,
@@ -11,6 +11,9 @@ import {
 
 import { MessageConversation } from '@typings/messages';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import { useContacts } from '../../../contacts/hooks/state';
+import { Contact } from '@typings/contact';
+
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
@@ -29,9 +32,16 @@ const MessageGroupItem = ({
   const toggleCheckbox = () => {
     handleToggle(messageConversation.conversation_id);
   };
+
+  const contacts = useContacts();
   const { getContactByNumber } = useContactActions();
 
-  const conversationContact = getContactByNumber(messageConversation.phoneNumber);
+  const contactDisplay = useCallback(
+    (number: string): Contact | null => {
+      return contacts.length ? getContactByNumber(number) : null;
+    },
+    [contacts, getContactByNumber],
+  );
 
   return (
     <ListItem
@@ -51,11 +61,12 @@ const MessageGroupItem = ({
       )}
       <ListItemAvatar>
         <Badge color="error" variant="dot" invisible={messageConversation.unread > 0}>
-          <MuiAvatar src={conversationContact?.avatar} />
+          <MuiAvatar src={contactDisplay(messageConversation.phoneNumber)?.avatar} />
         </Badge>
       </ListItemAvatar>
       <ListItemText sx={{ overflow: 'hidden' }}>
-        {conversationContact?.display || messageConversation.phoneNumber}
+        {contactDisplay(messageConversation.phoneNumber)?.display ||
+          messageConversation.phoneNumber}
       </ListItemText>
     </ListItem>
   );

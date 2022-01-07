@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './Phone.css';
-import './i18n';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';

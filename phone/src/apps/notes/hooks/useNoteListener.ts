@@ -1,8 +1,8 @@
-import { useNuiEvent } from 'fivem-nui-react-lib/';
 import { AddNoteExportData, NotesEvents } from '@typings/notes';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useHistory } from 'react-router';
 import qs from 'qs';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const useNoteListener = () => {
   const { getApp } = useApps();

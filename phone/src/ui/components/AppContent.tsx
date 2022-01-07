@@ -2,6 +2,7 @@ import React from 'react';
 import { Backdrop, Paper, BoxProps } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AppContentTypes } from '../interface/InterfaceUI';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -23,17 +24,14 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
   children,
   paperStyle,
   backdrop,
+  disableSuspenseHandler,
   onClickBackdrop,
   ...props
 }) => {
   const classes = useStyles();
 
-  return (
-    <Paper
-      className={classes.wrapper}
-      square
-      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
-    >
+  const ChildElements = () => (
+    <>
       <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
       <Paper
         sx={{ flexGrow: 1 }}
@@ -44,6 +42,22 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
       >
         {children}
       </Paper>
+    </>
+  );
+
+  return (
+    <Paper
+      className={classes.wrapper}
+      square
+      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
+    >
+      {!disableSuspenseHandler ? (
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <ChildElements />
+        </React.Suspense>
+      ) : (
+        <ChildElements />
+      )}
     </Paper>
   );
 };

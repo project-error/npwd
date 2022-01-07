@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, CircularProgress, MenuItem } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import { TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
@@ -50,7 +50,11 @@ function ReportButton({ handleClose, tweetId, isReported }) {
     );
   }
 
-  return <MenuItem onClick={handleClick}>{t('TWITTER.REPORT')}</MenuItem>;
+  return (
+    <MenuItem dense onClick={handleClick}>
+      {t('TWITTER.REPORT')}
+    </MenuItem>
+  );
 }
 
 export default ReportButton;

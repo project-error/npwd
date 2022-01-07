@@ -122,6 +122,7 @@
       "IMAGE_PLACEHOLDER": "A link to your image or gif",
       "EDIT_DEFAULT_PROFILE_NAME": "Choose Profile Name",
       "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "AVATAR_CHOOSE_IMAGE": "Choose a image",
       "EDIT_PROFILE_NAME": "Profile name",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Location",
@@ -187,9 +188,13 @@
         "REPORT_LISTING_FAILED": "This listing has already been reported",
         "REPORT_LISTING_SUCCESS": "Successfully reported listing"
       },
+      "NEW_LISTING": "New listing",
+      "CHOOSE_IMAGE": "Choose a image",
       "FORM_TITLE": "Title",
+      "POST_LISTING": "Post",
       "FORM_IMAGE": "Image or URL",
-      "FORM_DESCRIPTION": "Description"
+      "FORM_DESCRIPTION": "Description",
+      "NO_IMAGE": "No image provided"
     },
     "MESSAGES": {
       "MESSAGES": {

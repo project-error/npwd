@@ -3,12 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Add, Delete } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 import { useCheckedConversationsValue, useIsEditing } from '../../hooks/state';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { MessageEvents } from '@typings/messages';
-import { useMessageActions } from '../../hooks/useMessageActions';
-import { useTranslation } from 'react-i18next';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,31 +21,18 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
   const classes = useStyles();
   const checkedConversations = useCheckedConversationsValue();
   const [isEditing, setIsEditing] = useIsEditing();
-  const { addAlert } = useSnackbar();
-  const { removeConversation } = useMessageActions();
-  const [t] = useTranslation();
+  const { deleteConversation } = useMessageAPI();
 
-  const deleteConversations = () => {
-    fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
-      conversationsId: checkedConversations,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        return addAlert({
-          message: t('MESSAGES.DELETE_CONVERSATION_FAILED'),
-          type: 'error',
-        });
-      }
-
-      removeConversation(checkedConversations);
-      setIsEditing(false);
-    });
+  const handleDeleteConversations = () => {
+    deleteConversation(checkedConversations);
+    setIsEditing(false);
   };
 
   return (
     <Fab
       className={classes.root}
       color="primary"
-      onClick={!isEditing ? onClick : deleteConversations}
+      onClick={!isEditing ? onClick : handleDeleteConversations}
     >
       {!isEditing ? <Add /> : <Delete />}
     </Fab>

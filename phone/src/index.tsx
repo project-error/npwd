@@ -16,6 +16,7 @@ import { createBrowserHistory } from 'history';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
 import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
+import './i18n';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -24,11 +25,15 @@ const history = createBrowserHistory();
 
 const rootDir = __dirname ?? process.cwd();
 // Enable Sentry when config setting is true and when in prod
-if (PhoneConfig.SentryErrorMetrics && process.env.NODE_ENV !== 'development') {
+if (
+  PhoneConfig.SentryErrorMetrics &&
+  process.env.NODE_ENV !== 'development' &&
+  process.env.REACT_APP_VERSION
+) {
   Sentry.init({
     dsn: 'https://0c8321c22b794dc7a648a571cc8c3c34@sentry.projecterror.dev/2',
     autoSessionTracking: true,
-    release: process.env.REACT_APP_VERSION ?? 'unknown',
+    release: process.env.REACT_APP_VERSION,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
@@ -63,11 +68,13 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.render(
   <HashRouter>
     <NuiProvider resource="npwd">
-      <RecoilRootManager>
-        <RecoilDebugObserver>
-          <PhoneProviders />
-        </RecoilDebugObserver>
-      </RecoilRootManager>
+      <React.Suspense fallback={null}>
+        <RecoilRootManager>
+          <RecoilDebugObserver>
+            <PhoneProviders />
+          </RecoilDebugObserver>
+        </RecoilRootManager>
+      </React.Suspense>
     </NuiProvider>
   </HashRouter>,
   document.getElementById('root'),

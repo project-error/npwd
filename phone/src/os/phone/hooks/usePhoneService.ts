@@ -1,4 +1,3 @@
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useSetRecoilState } from 'recoil';
 import { PhoneEvents } from '@typings/phone';
 import { phoneState } from './state';
@@ -6,6 +5,7 @@ import { useApps } from '@os/apps/hooks/useApps';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const usePhoneService = () => {
   const { getApp } = useApps();

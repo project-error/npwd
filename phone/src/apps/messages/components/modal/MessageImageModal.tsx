@@ -7,11 +7,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '@ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
-import { MessageEvents } from '@typings/messages';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {
   isOpen: boolean;
@@ -26,9 +23,8 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
-  const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
-  const { updateMessages } = useMessageActions();
+  const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {
     setQueryParamImagePreview(null);
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
@@ -36,21 +32,10 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const sendImageMessage = useCallback(
     (m) => {
-      fetchNui(MessageEvents.SEND_MESSAGE, { conversationId: messageGroupId, message: m }).then(
-        (resp) => {
-          if (resp.status !== 'ok') {
-            onClose();
-            return addAlert({
-              message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
-              type: 'error',
-            });
-          }
-          onClose();
-          updateMessages(resp.data);
-        },
-      );
+      sendMessage({ conversationId: messageGroupId, message: m });
+      onClose();
     },
-    [messageGroupId, onClose, updateMessages, addAlert, t],
+    [sendMessage, messageGroupId, onClose],
   );
 
   const sendFromQueryParam = useCallback(

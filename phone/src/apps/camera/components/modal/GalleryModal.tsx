@@ -45,7 +45,7 @@ export const GalleryModal = () => {
 
       deletePhoto(meta.image);
 
-      history.push(referal);
+      history.goBack();
     });
   };
 

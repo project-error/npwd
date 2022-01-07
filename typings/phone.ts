@@ -1,4 +1,9 @@
 export const PHONE_NUMBER_REGEX = /^([0-9]{3}-[0-9]{4})|([0-9]{7})$/;
+export interface ScriptMessage<T = any> {
+  method: string;
+  app: string;
+  data: T;
+}
 
 export enum PhoneEvents {
   OPEN_APP = 'npwd:openApp',

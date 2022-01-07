@@ -36,9 +36,6 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
     `identifier`   varchar(48) NOT NULL,
 #   Default Profile avatar can be set here
     `avatar_url`   varchar(255)         DEFAULT 'https://i.file.glass/QrEvq.png',
-    `bio`          varchar(512)         DEFAULT NULL,
-    `location`     varchar(45)          DEFAULT NULL,
-    `job`          varchar(45)          DEFAULT NULL,
     `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
@@ -172,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `npwd_calls`
     INDEX `identifier` (`identifier`)
 );
 
-CREATE TABLE IF NOT EXISTS npwd_phone_gallery
+CREATE TABLE IF NOT EXISTS `npwd_phone_gallery`
 (
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
     `identifier` varchar(48) DEFAULT NULL,

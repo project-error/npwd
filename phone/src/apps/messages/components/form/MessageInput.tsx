@@ -3,12 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ImageIcon from '@mui/icons-material/Image';
-import { Message, MessageEvents } from '@typings/messages';
 import { TextField } from '@ui/components/Input';
-import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { ServerPromiseResp } from '@typings/common';
-import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {
   onAddImageClick(): void;
@@ -18,28 +14,13 @@ interface IProps {
 
 const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
   const [t] = useTranslation();
-  const { addAlert } = useSnackbar();
   const [message, setMessage] = useState('');
-  const { updateMessages } = useMessageActions();
+  const { sendMessage } = useMessageAPI();
 
   const handleSubmit = async () => {
     if (message.trim()) {
-      fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
-        conversationId: messageConversationId,
-        message,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          setMessage('');
-
-          return addAlert({
-            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        updateMessages(resp.data);
-        setMessage('');
-      });
+      await sendMessage({ conversationId: messageConversationId, message });
+      setMessage('');
     }
   };
 

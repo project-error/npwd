@@ -89,6 +89,14 @@
       "value": "no"
     },
     {
+      "label": "Polski",
+      "value": "pl"
+    },
+    {
+      "label": "Bosanski",
+      "value": "ba"
+    },
+    {
       "label": "Português",
       "value": "pt"
     },
@@ -115,6 +123,10 @@
     {
       "label": "Italian",
       "value": "it"
+    },
+    {
+      "label": "Indonesia",
+      "value": "id"
     }
   ],
   "ringtones": [

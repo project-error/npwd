@@ -66,7 +66,6 @@ export const AddTweetModal = () => {
   const [link, setLink] = useState('');
 
   const [images, setImages] = useState<Image[]>([]);
-  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
   const reset = () => {
     setShowImagePrompt(false);
@@ -87,7 +86,7 @@ export const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   if (!ResourceConfig) return null;
-
+  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
     if (getNewLineCount(message) < newLineLimit) return true;
