@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "Bilde URL",
           "DIALOG_ERROR": "Ugyldig bilde eller link"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Ringetone",
         "RINGTONE_VOLUME": "Ringetone Volum",
         "NOTIFICATION": "Varsling",

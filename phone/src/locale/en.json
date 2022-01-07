@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "Image URL",
           "DIALOG_ERROR": "Invalid image or link"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Ringtone",
         "RINGTONE_VOLUME": "Ringtone Volume",
         "NOTIFICATION": "Notification",

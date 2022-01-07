@@ -12,7 +12,7 @@ import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
-import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSettings';
+import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
@@ -33,6 +33,7 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useCall } from './os/call/hooks/useCall';
+import { isSettingsSchemaValid } from './apps/settings/state/settings.state';
 
 function Phone() {
   const { t, i18n } = useTranslation();
