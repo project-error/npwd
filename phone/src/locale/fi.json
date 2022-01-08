@@ -122,6 +122,7 @@
       "IMAGE_PLACEHOLDER": "Kuvan tai gifin linkki",
       "EDIT_DEFAULT_PROFILE_NAME": "Valitse profiilinimi",
       "EDIT_PROFILE_AVATAR": "Profiilikuvan URL-osoite",
+      "AVATAR_CHOOSE_IMAGE": "Valitse kuva",
       "EDIT_PROFILE_NAME": "Nimi",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Sijainti",
@@ -187,9 +188,13 @@
         "REPORT_LISTING_FAILED": "Tästä on jo ilmoitettu",
         "REPORT_LISTING_SUCCESS": "Ilmoitus lähetetty ylläpidolle"
       },
+      "NEW_LISTING": "Uusi ilmoitus",
+      "CHOOSE_IMAGE": "Valitse kuva",
       "FORM_TITLE": "Otsikko",
+      "POST_LISTING": "Lähetä",
       "FORM_IMAGE": "Kuvan URL-osoite",
-      "FORM_DESCRIPTION": "Kuvaus"
+      "FORM_DESCRIPTION": "Kuvaus",
+      "NO_IMAGE": "Ei kuvaa"
     },
     "MESSAGES": {
       "MESSAGES": {
