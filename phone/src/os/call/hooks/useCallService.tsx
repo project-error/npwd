@@ -8,6 +8,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { callerState } from './state';
 import { useCallNotifications } from './useCallNotifications';
 import { useNuiEvent } from 'fivem-nui-react-lib';
+import { useSetNavigationDisabled } from '@os/navigation-bar/state/navigation.state';
 
 // InjectDebugData<CallProps | boolean>([
 //   {
@@ -32,8 +33,8 @@ export const useCallService = () => {
   const { modal } = useCallModal();
   const history = useHistory();
   const { pathname } = useLocation();
-
-  const { setCall } = useCall();
+  const setNavigationDisabled = useSetNavigationDisabled();
+  const { setCall, call } = useCall();
 
   const { setNotification, clearNotification } = useCallNotifications();
 
@@ -46,6 +47,11 @@ export const useCallService = () => {
   }, [modal]);
 
   useEffect(() => {
+    const shouldDisable = !call;
+    setNavigationDisabled(shouldDisable);
+  }, [setNavigationDisabled, call]);
+
+  useEffect(() => {
     if (!modal && pathname === '/call') {
       history.replace('/');
     }
@@ -54,9 +60,8 @@ export const useCallService = () => {
     }
   }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 
-  useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALLER, (callData) => {
+  useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALL_INFO, (callData) => {
     setCall(callData);
-
     if (!callData) return clearNotification();
     setNotification(callData);
   });
