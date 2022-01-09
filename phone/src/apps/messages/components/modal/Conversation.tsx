@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Box, CircularProgress } from '@mui/material';
-
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import MessageInput from '../form/MessageInput';
-import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
 import fetchNui from '../../../../utils/fetchNui';
@@ -14,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import MessageContextMenu from './MessageContextMenu';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
@@ -23,7 +22,7 @@ interface IProps {
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
 const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
-  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const query = useQueryParams();
   const referalImage = query?.image || null;
   const conversationId = useConversationId();
@@ -66,11 +65,11 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   return (
     <>
       <Box display="flex" zIndex={1} flexGrow={1} flexDirection="column">
-        <MessageImageModal
+        <MessageContextMenu
+          messageGroupId={activeMessageGroup.conversation_id}
+          isOpen={contextMenuOpen}
+          onClose={() => setContextMenuOpen(false)}
           image={referalImage}
-          onClose={() => setImageModalOpen(false)}
-          isOpen={imageModalOpen}
-          messageGroup={activeMessageGroup}
         />
         <Box id={CONVERSATION_ELEMENT_ID} style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
           <Box
