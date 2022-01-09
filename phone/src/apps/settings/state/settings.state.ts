@@ -1,7 +1,7 @@
 import { atom, AtomEffect, DefaultValue } from 'recoil';
 import { IPhoneSettings, SettingEvents } from '@typings/settings';
 import config from '../../../config/default.json';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { Schema, Validator } from 'jsonschema';
 
 const NPWD_STORAGE_KEY = 'npwd_settings';
