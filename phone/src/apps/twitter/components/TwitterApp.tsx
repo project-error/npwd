@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 import { Route, useLocation } from 'react-router-dom';
-import makeStyles from '@mui/styles/makeStyles';
 import { Tweet as ITweet } from '@typings/twitter';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
 import AddTweetModal from './AddTweetModal';
-import { useModal } from '../hooks/useModal';
 import TweetButton from './buttons/TweetButton';
 import TwitterTitle from './TwitterTitle';
 import BottomNavigation from './BottomNavigation';
@@ -20,23 +18,12 @@ import ProfilePrompt from './profile/ProfilePrompt';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
 import { TwitterEvents } from '@typings/twitter';
+import { useSetRecoilState } from 'recoil';
+import { twitterState } from '../hooks/state';
+import ModalBackground from './ModalBackground';
 
-const useStyles = makeStyles(() => ({
-  backgroundModal: {
-    background: 'black',
-    opacity: '0.6',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 5,
-  },
-}));
-
-export const TwitterApp = () => {
-  const classes = useStyles();
-  const { modalVisible, setModalVisible } = useModal();
+const TwitterApp = () => {
+  const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
   const location = useLocation();
@@ -54,7 +41,7 @@ export const TwitterApp = () => {
     <TwitterThemeProvider>
       <AppWrapper id="twitter-app">
         <AddTweetModal />
-        <div className={modalVisible ? classes.backgroundModal : undefined} />
+        <ModalBackground />
         <TwitterTitle />
         <AppContent>
           {promptProfileName ? (
@@ -75,6 +62,7 @@ export const TwitterApp = () => {
     </TwitterThemeProvider>
   );
 };
+export default memo(TwitterApp);
 
 InjectDebugData<ITweet>(
   [
