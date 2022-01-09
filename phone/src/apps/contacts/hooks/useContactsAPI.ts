@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { Contact, ContactEvents, PreDBContact } from '@typings/contact';
 import { useTranslation } from 'react-i18next';

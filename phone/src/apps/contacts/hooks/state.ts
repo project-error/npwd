@@ -1,6 +1,6 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Contact, ContactEvents } from '@typings/contact';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 import { BrowserContactsState } from '../utils/constants';

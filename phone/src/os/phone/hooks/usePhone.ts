@@ -3,7 +3,7 @@ import { ResourceConfig } from '@typings/config';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { phoneState } from './state';
 import { PhoneEvents } from '@typings/phone';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 
 interface IUsePhone {
   ResourceConfig?: ResourceConfig;

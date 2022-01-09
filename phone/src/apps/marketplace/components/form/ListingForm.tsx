@@ -14,7 +14,7 @@ import qs from 'qs';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { TextField } from '@ui/components/Input';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useForm } from '../../hooks/state';
 

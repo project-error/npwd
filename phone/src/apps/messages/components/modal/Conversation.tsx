@@ -6,7 +6,7 @@ import MessageInput from '../form/MessageInput';
 import { MessageImageModal } from './MessageImageModal';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useConversationId, useSetMessages } from '../../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';

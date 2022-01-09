@@ -8,7 +8,7 @@ import { Card } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';

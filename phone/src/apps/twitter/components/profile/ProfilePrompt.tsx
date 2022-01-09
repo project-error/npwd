@@ -9,9 +9,9 @@ import { twitterState, useSetTwitterProfile } from '../../hooks/state';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { Profile, TwitterEvents } from '@typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
-import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import fetchNui from '@utils/fetchNui';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,5 +1,5 @@
 import { FormattedMatch, MatchEvents } from '@typings/match';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';

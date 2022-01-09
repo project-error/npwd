@@ -1,5 +1,5 @@
 import { atom, selector, useRecoilValue } from 'recoil';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 
