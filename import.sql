@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_reports`
 CREATE TABLE IF NOT EXISTS `npwd_messages`
 (
     `id`              int(11)      NOT NULL AUTO_INCREMENT,
-    `message`         varchar(512) NOT NULL,
+    `message`         varchar(512) DEFAULT '',
     `user_identifier` varchar(48)  NOT NULL,
     `conversation_id` varchar(512) NOT NULL,
     `isRead`          tinyint(4)   NOT NULL DEFAULT 0,
@@ -138,6 +138,8 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `updatedAt`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP,
     `visible`         tinyint(4)   NOT NULL DEFAULT 1,
     `author`          varchar(255) NOT NULL,
+    `is_embed`        tinyint(4)   NOT NULL default 0,
+    'embed'           longtext     DEFAULT '',
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );
