@@ -1,7 +1,7 @@
 import { ActiveCall } from '@typings/call';
 import { useCurrentCall } from './state';
 import { CallEvents } from '@typings/call';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { useCallback, useEffect } from 'react';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';

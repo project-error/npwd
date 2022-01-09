@@ -4,7 +4,7 @@ import { List } from '@ui/components/List';
 import Tweet from './Tweet';
 import { FormattedTweet, Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { processTweet } from '../../utils/tweets';
 import { useTranslation } from 'react-i18next';

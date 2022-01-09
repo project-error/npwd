@@ -3,7 +3,7 @@ import { CircularProgress, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Repeat } from '@mui/icons-material';
 import { TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';

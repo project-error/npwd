@@ -14,7 +14,7 @@ import IconButtons from './buttons/IconButtons';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
 import { NewTweet, TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '../../../utils/promiseTimeout';

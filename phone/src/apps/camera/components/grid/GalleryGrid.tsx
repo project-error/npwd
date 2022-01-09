@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
