@@ -7,7 +7,7 @@ import qs from 'qs';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
-import makeStyles from '@mui/styles/makeStyles';
+import Backdrop from '../../../../ui/components/Backdrop';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
@@ -15,19 +15,6 @@ interface MessageCtxMenuProps {
   messageGroupId: string | undefined;
   image?: string;
 }
-
-const useStyles = makeStyles(() => ({
-  backgroundModal: {
-    background: 'black',
-    opacity: '0.6',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 5,
-  },
-}));
 
 const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   isOpen,
@@ -40,7 +27,6 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   const { pathname, search } = useLocation();
   const [imagePreview, setImagePreview] = useState(null);
   const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
-  const classes = useStyles();
 
   const modalsVisible = imagePreview || contactModalOpen;
 
@@ -68,7 +54,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   return (
     <>
       <ContextMenu open={isOpen} onClose={onClose} options={menuOptions} />
-      <div className={modalsVisible ? classes.backgroundModal : undefined} />
+      {modalsVisible ? <Backdrop /> : undefined}
       <MessageImageModal
         image={image}
         imagePreview={imagePreview}

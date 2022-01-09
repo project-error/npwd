@@ -1,8 +1,9 @@
-import { Box, IconButton, Paper } from '@mui/material';
+import { IconButton, Paper } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { Message } from '@typings/messages';
+import StyledMessage from '../ui/StyledMessage';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { PictureReveal } from '@ui/components/PictureReveal';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
@@ -75,7 +76,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         {message.is_embed ? (
           <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
         ) : (
-          <Box className={classes.message}>
+          <StyledMessage>
             {isImage(message.message) ? (
               <PictureReveal>
                 <PictureResponsive src={message.message} alt="message multimedia" />
@@ -88,7 +89,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 <MoreVertIcon />
               </IconButton>
             )}
-          </Box>
+          </StyledMessage>
         )}
       </Paper>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />

@@ -1,24 +1,15 @@
 import React from 'react';
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import { Contact } from '@typings/contact';
-import { makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
+import StyledMessage from './StyledMessage';
 
 interface MessageEmbedProps {
   type: string;
   embed: any;
   isMine: boolean;
 }
-
-const useStyles = makeStyles(() => ({
-  message: {
-    wordBreak: 'break-word',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-}));
 
 type MessageEmbedType = {
   [key: string]: JSX.Element;
@@ -33,7 +24,6 @@ const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine }) => {
 };
 
 const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) => {
-  const classes = useStyles();
   const [t] = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
@@ -46,7 +36,7 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   };
 
   return (
-    <Box className={classes.message}>
+    <StyledMessage>
       <Box>
         <Avatar src={embed?.avatar} />
         <Typography>{embed?.display}</Typography>
@@ -59,7 +49,7 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
           </Button>
         </Box>
       )}
-    </Box>
+    </StyledMessage>
   );
 };
 
