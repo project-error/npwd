@@ -120,6 +120,8 @@ class _MessagesService {
         authorPhoneNumber,
         messageData.conversationId,
         messageData.message,
+        messageData.is_embed,
+        messageData.embed,
       );
 
       await this.messagesDB.setMessageUnread(
@@ -134,6 +136,9 @@ class _MessagesService {
           conversation_id: messageData.conversationId,
           author: authorPhoneNumber,
           id: messageId,
+          message: messageData.message,
+          embed: messageData.embed,
+          is_embed: messageData.is_embed,
         },
       });
 
@@ -151,6 +156,8 @@ class _MessagesService {
               conversationName: player.getPhoneNumber(),
               conversationId: messageData.conversationId,
               message: messageData.message,
+              is_embed: messageData.is_embed,
+              embed: messageData.embed,
             });
           }
         }

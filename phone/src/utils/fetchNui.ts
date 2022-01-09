@@ -8,7 +8,7 @@
 import LogDebugEvent from '../os/debug/LogDebugEvents';
 import { isEnvBrowser } from './misc';
 
-async function fetchNui<T = any>(eventName: string, data?: any, mockResp?: T): Promise<T> {
+async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?: T): Promise<T> {
   const options = {
     method: 'post',
     headers: {

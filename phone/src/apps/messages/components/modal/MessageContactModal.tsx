@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
-import Modal from '../../../../ui/components/Modal';
+import Modal from '@ui/components/Modal';
 import { Autocomplete, Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useContactsValue } from '../../../contacts/hooks/state';
-import { TextField } from '../../../../ui/components/Input';
+import { TextField } from '@ui/components/Input';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface MessageContactModalProps {
   isVisible: boolean;
   onClose: () => void;
+  messageGroupId: string | undefined;
 }
-const MessageContactModal: React.FC<MessageContactModalProps> = ({ isVisible, onClose }) => {
+
+const MessageContactModal: React.FC<MessageContactModalProps> = ({
+  isVisible,
+  onClose,
+  messageGroupId,
+}) => {
   const [t] = useTranslation();
   const contacts = useContactsValue();
   const [selectedContact, setSelectContact] = useState(null);
+  const { sendEmbedMessage } = useMessageAPI();
 
   const handleSendEmbedMessage = () => {
-    console.log(selectedContact);
+    sendEmbedMessage({
+      conversationId: messageGroupId,
+      embed: { type: 'contact', ...selectedContact },
+    });
     onClose();
   };
 
@@ -32,7 +43,13 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({ isVisible, on
           onChange={(e, val) => setSelectContact(val)}
         />
       </Box>
-      <Button fullWidth variant="contained" color="primary" onClick={handleSendEmbedMessage}>
+      <Button
+        disabled={!selectedContact}
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={handleSendEmbedMessage}
+      >
         {t('GENERIC.SHARE')}
       </Button>
     </Modal>

@@ -70,6 +70,8 @@ export const useMessageActions = (): MessageActionProps => {
           conversation_id: messageDto.conversation_id,
           author: messageDto.author,
           id: messageDto.id,
+          is_embed: messageDto.is_embed,
+          embed: messageDto.embed,
         },
       ]);
     },

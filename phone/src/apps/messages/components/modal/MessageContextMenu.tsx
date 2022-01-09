@@ -77,6 +77,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         onClose={onClose}
       />
       <MessageContactModal
+        messageGroupId={messageGroupId}
         isVisible={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
       />

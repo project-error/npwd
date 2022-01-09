@@ -9,8 +9,10 @@ export interface Message {
 
 export interface PreDBMessage {
   conversationId: string;
-  message: string;
   tgtPhoneNumber: string;
+  message?: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface MessageConversation {
@@ -85,10 +87,6 @@ export interface MessageConversationResponse {
   updatedAt: number;
 }
 
-export type MessageEmbedType = {
-  [key: string]: JSX.Element;
-};
-
 export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
@@ -98,6 +96,7 @@ export enum MessageEvents {
   CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
   CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
   SEND_MESSAGE = 'npwd:sendMessage',
+  SEND_EMBED_MESSAGE = 'npwd:sendEmbedMessage',
   SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
   SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
   DELETE_MESSAGE = 'npwd:deleteMessage',

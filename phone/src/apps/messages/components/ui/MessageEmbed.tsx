@@ -1,7 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import { Contact } from '@typings/contact';
-import { MessageEmbedType } from '@typings/messages';
 import { makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -21,6 +20,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+type MessageEmbedType = {
+  [key: string]: JSX.Element;
+};
+
 const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine }) => {
   const embedType: MessageEmbedType = {
     contact: <ContactEmbed embed={embed} isMine={isMine} />,
@@ -35,6 +38,8 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   const history = useHistory();
   const { pathname } = useLocation();
 
+  console.log('the actual parsed json', embed);
+
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
     history.push(`/contacts/-1?addNumber=${embed.number}&name=${embed.display}&referal=${referal}`);
@@ -44,8 +49,8 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
     <Box className={classes.message}>
       <Box>
         <Avatar src={embed?.avatar} />
-        <Typography>{embed.display}</Typography>
-        <Typography>{embed.number}</Typography>
+        <Typography>{embed?.display}</Typography>
+        <Typography>{embed?.number}</Typography>
       </Box>
       {!isMine && (
         <Box>

@@ -66,11 +66,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
   const isMine = message.author === myNumber;
 
+  const parsedEmbed = JSON.parse(message?.embed);
+  console.log('parsed json');
+
   return (
     <>
       <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
         {message.is_embed ? (
-          <MessageEmbed type={message.embed.type} embed={message.embed} isMine={isMine} />
+          <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
         ) : (
           <Box className={classes.message}>
             {isImage(message.message) ? (
