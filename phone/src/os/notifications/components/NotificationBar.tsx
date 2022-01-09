@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     zIndex: 99,
     paddingLeft: '15px',
-    paddingRight: '10px',
+    paddingRight: '15px',
     position: 'relative',
     '&:hover': {
       cursor: 'pointer',
@@ -76,6 +76,7 @@ export const NotificationBar = () => {
         className={classes.root}
         container
         justifyContent="space-between"
+        alignItems="center"
         wrap="nowrap"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
