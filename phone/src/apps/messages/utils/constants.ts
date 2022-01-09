@@ -40,7 +40,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 1,
     author: '215-8139',
-    message: 'Hello',
+    message: '',
     conversation_id: '4444+5555',
   },
   {
@@ -58,8 +58,15 @@ const MockConversationMessages: Message[] = [
   {
     id: 4,
     author: '215-8139',
-    message: 'Hello Rocky',
+    message: '',
     conversation_id: '4444+7777',
+    is_embed: true,
+    embed: {
+      type: 'contact',
+      display: 'Taso',
+      number: '215-8139',
+      avatar: 'http://i.tasoagc.dev/i9Ig',
+    },
   },
   {
     id: 5,

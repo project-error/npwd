@@ -3,6 +3,8 @@ export interface Message {
   message: string;
   conversation_id?: string;
   author: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface PreDBMessage {
@@ -82,6 +84,10 @@ export interface MessageConversationResponse {
   phoneNumber: string;
   updatedAt: number;
 }
+
+export type MessageEmbedType = {
+  [key: string]: JSX.Element;
+};
 
 export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',

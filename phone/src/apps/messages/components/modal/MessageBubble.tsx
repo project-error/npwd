@@ -8,6 +8,7 @@ import { PictureReveal } from '@ui/components/PictureReveal';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
+import MessageEmbed from '../ui/MessageEmbed';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -68,20 +69,24 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   return (
     <>
       <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-        <Box className={classes.message}>
-          {isImage(message.message) ? (
-            <PictureReveal>
-              <PictureResponsive src={message.message} alt="message multimedia" />
-            </PictureReveal>
-          ) : (
-            <>{message.message}</>
-          )}
-          {isMine && (
-            <IconButton onClick={openMenu}>
-              <MoreVertIcon />
-            </IconButton>
-          )}
-        </Box>
+        {message.is_embed ? (
+          <MessageEmbed type={message.embed.type} embed={message.embed} isMine={isMine} />
+        ) : (
+          <Box className={classes.message}>
+            {isImage(message.message) ? (
+              <PictureReveal>
+                <PictureResponsive src={message.message} alt="message multimedia" />
+              </PictureReveal>
+            ) : (
+              <>{message.message}</>
+            )}
+            {isMine && (
+              <IconButton onClick={openMenu}>
+                <MoreVertIcon />
+              </IconButton>
+            )}
+          </Box>
+        )}
       </Paper>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
     </>
