@@ -1,9 +1,10 @@
 import { red, common } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
 
 export const MATCH_APP_PRIMARY_COLOR = '#FE3B73';
 export const MATCH_APP_TEXT_COLOR = common.white;
 
-const theme = {
+const theme: ThemeOptions = {
   palette: {
     primary: {
       main: MATCH_APP_PRIMARY_COLOR,

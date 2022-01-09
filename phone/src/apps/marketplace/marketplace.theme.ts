@@ -1,10 +1,11 @@
 import { common, red } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
 
 export const MARKETPLACE_APP_PRIMARY_COLOR = red[500];
 export const MARKETPLACE_APP_ICON_COLOR = common.white;
 export const MARKETPLACE_APP_TEXT_COLOR = common.black;
 
-const theme = {
+const theme: ThemeOptions = {
   palette: {
     primary: {
       main: MARKETPLACE_APP_PRIMARY_COLOR,
