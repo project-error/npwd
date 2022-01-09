@@ -1,9 +1,10 @@
 import { common, green } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
 
 export const DIALER_APP_PRIMARY_COLOR = green[600];
 export const DIALER_APP_TEXT_COLOR = common.white;
 
-const theme = {
+const theme: ThemeOptions = {
   palette: {
     primary: {
       main: DIALER_APP_PRIMARY_COLOR,

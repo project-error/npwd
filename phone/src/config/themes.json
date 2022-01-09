@@ -4,26 +4,31 @@
       "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
     },
     "palette": {
-      "type": "light"
+      "mode": "light"
     }
   },
   "taso-dark": {
     "typography": {
       "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
     },
-    "common": {},
+    "components": {
+      "MuiDivider": {
+        "styleOverrides": {
+          "root": {
+            "borderColor": "rgba(255, 255, 255, 0.12)"
+          }
+        }
+      }
+    },
     "palette": {
-      "type": "dark",
+      "mode": "dark",
       "primary": {
         "main": "#a6d4fa"
       },
       "text": {
         "secondary": "rgba(255, 255, 255, 0.7)",
-        "disabled": "rgba(255, 255, 255, 0.5)",
-        "hint": "rgba(255, 255, 255, 0.5)",
-        "icon": "rgba(255, 255, 255, 0.5)"
+        "disabled": "rgba(255, 255, 255, 0.5)"
       }
-    },
-    "divider": "rgba(255, 255, 255, 0.12)"
+    }
   }
 }
