@@ -76,6 +76,7 @@ export const NotificationBar = () => {
         className={classes.root}
         container
         justifyContent="space-between"
+        alignItems="center"
         wrap="nowrap"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
