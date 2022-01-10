@@ -7,9 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
 import { MessageConversation } from '@typings/messages';
 import { useMessageAPI } from './useMessageAPI';
-import { useContacts } from '../../contacts/hooks/state';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
-import { useCall } from '../../../os/call/hooks/useCall';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
