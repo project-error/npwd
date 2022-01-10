@@ -28,8 +28,6 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   const history = useHistory();
   const { pathname } = useLocation();
 
-  console.log('the actual parsed json', embed);
-
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
     history.push(`/contacts/-1?addNumber=${embed.number}&name=${embed.display}&referal=${referal}`);
