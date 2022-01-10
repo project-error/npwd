@@ -2,6 +2,11 @@
 # or if it already exists in the users table
 # ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) DEFAULT NULL;
 
+# if you already have the npwd_message table without `is_embed` and `embed`, run this query in your sql console
+# ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) DEFAULT 0;
+# ALTER TABLE npwd_messages ADD COLUMN `embed` longtext DEFAULT '';
+
+
 CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
 (
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
@@ -130,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_reports`
 CREATE TABLE IF NOT EXISTS `npwd_messages`
 (
     `id`              int(11)      NOT NULL AUTO_INCREMENT,
-    `message`         varchar(512) DEFAULT '',
+    `message`         varchar(512) NOT NULL,
     `user_identifier` varchar(48)  NOT NULL,
     `conversation_id` varchar(512) NOT NULL,
     `isRead`          tinyint(4)   NOT NULL DEFAULT 0,

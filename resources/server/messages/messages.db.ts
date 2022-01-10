@@ -30,7 +30,7 @@ export class _MessagesDB {
     const [results] = await DbInterface._rawExec(query, [
       userIdentifier,
       author,
-      message,
+      message || '',
       conversationId,
       isEmbed,
       embed,
