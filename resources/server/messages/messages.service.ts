@@ -90,6 +90,8 @@ class _MessagesService {
         reqObj.data.page,
       );
 
+      await this.handleSetMessageRead(reqObj.source, reqObj.data.conversationId);
+
       messages.sort((a, b) => a.id - b.id);
 
       resp({ status: 'ok', data: messages });
@@ -116,6 +118,8 @@ class _MessagesService {
         messageData.message,
       );
 
+      this.messagesDB.setMessageUnread(messageData.conversationId, player.getPhoneNumber());
+
       resp({
         status: 'ok',
         data: {
@@ -135,7 +139,7 @@ class _MessagesService {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
-            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData);
             emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
               conversationName: player.getPhoneNumber(),
               conversationId: messageData.conversationId,
@@ -154,9 +158,8 @@ class _MessagesService {
 
   async handleSetMessageRead(src: number, groupId: string) {
     try {
-      const identifier = PlayerService.getIdentifier(src);
+      const identifier = PlayerService.getPlayer(src).getPhoneNumber();
       await this.messagesDB.setMessageRead(groupId, identifier);
-      emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, src);
     } catch (e) {
       messagesLogger.error(`Failed to set message as read, ${e.message}`, {
         source: src,

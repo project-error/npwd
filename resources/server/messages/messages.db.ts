@@ -1,8 +1,4 @@
-import {
-  Message,
-  MessageConversation,
-  UnformattedMessageConversation,
-} from '../../../typings/messages';
+import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import { config } from '../server';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
@@ -43,12 +39,14 @@ export class _MessagesDB {
    * @param phoneNumber - phoneNumber of the user to get message conversations for
    */
   async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
-    const query = `SELECT npwd_messages_conversations.unread,
+    const query = `
+                  SELECT npwd_messages_conversations.unreadCount,
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
                           npwd_messages_conversations.participant_identifier,
-                          ${config.database.playerTable}.${config.database.phoneNumberColumn} AS phone_number
-                   FROM (SELECT conversation_id
+                          ${config.database.playerTable}.${config.database.phoneNumberColumn}
+                            AS phone_number
+                  FROM (SELECT conversation_id
                          FROM npwd_messages_conversations
                          WHERE npwd_messages_conversations.participant_identifier = ?) AS t
                             LEFT OUTER JOIN npwd_messages_conversations
@@ -147,18 +145,30 @@ export class _MessagesDB {
     const result = <any>results;
     return result[0].count;
   }
-
+  /**
+   * Adds an unread to the specified group id
+   * @param groupId The unique group ID for the message
+   * @param phoneNumber The phone number of the player to ignore
+   */
+  async setMessageUnread(groupId: string, phoneNumber: string) {
+    console.log(groupId, phoneNumber);
+    const query = `UPDATE npwd_messages_conversations
+      SET unreadCount = unreadCount + 1
+      WHERE conversation_id = ?
+        AND user_identifier != ?`;
+    await DbInterface._rawExec(query, [groupId, phoneNumber]);
+  }
   /**
    * Sets the current message isRead to 0 for said player
    * @param groupId The unique group ID for the message
-   * @param identifier The identifier for the player
+   * @param phoneNumber The phone number for the player
    */
-  async setMessageRead(groupId: string, identifier: string) {
+  async setMessageRead(groupId: string, phoneNumber: string) {
     const query = `UPDATE npwd_messages_conversations
                    SET unreadCount = 0
                    WHERE conversation_id = ?
-                     AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [groupId, identifier]);
+                     AND user_identifier = ?`;
+    await DbInterface._rawExec(query, [groupId, phoneNumber]);
   }
 
   async deleteConversation(conversationId: string, sourcePhoneNumber: string) {
