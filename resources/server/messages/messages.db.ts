@@ -44,6 +44,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_id,
                           npwd_messages_conversations.user_identifier,
                           npwd_messages_conversations.participant_identifier,
+                          npwd_messages_conversations.updatedAt,
                           ${config.database.playerTable}.${config.database.phoneNumberColumn}
                             AS phone_number
                   FROM (SELECT conversation_id
@@ -151,7 +152,6 @@ export class _MessagesDB {
    * @param phoneNumber The phone number of the player to ignore
    */
   async setMessageUnread(groupId: string, phoneNumber: string) {
-    console.log(groupId, phoneNumber);
     const query = `UPDATE npwd_messages_conversations
       SET unreadCount = unreadCount + 1
       WHERE conversation_id = ?

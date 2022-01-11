@@ -72,16 +72,20 @@ const MessagesList = (): any => {
       <Box display="flex" flexDirection="column">
         <Box className={classes.root}>
           <List>
-            {filteredConversations.map((conversation) => (
-              <MessageGroupItem
-                handleToggle={handleToggleConversation}
-                isEditing={isEditing}
-                checked={checkedConversation}
-                key={conversation.conversation_id}
-                messageConversation={conversation}
-                handleClick={handleClick}
-              />
-            ))}
+            {[...filteredConversations]
+              .sort((a, b) => {
+                return b.updatedAt - a.updatedAt;
+              })
+              .map((conversation) => (
+                <MessageGroupItem
+                  handleToggle={handleToggleConversation}
+                  isEditing={isEditing}
+                  checked={checkedConversation}
+                  key={conversation.conversation_id}
+                  messageConversation={conversation}
+                  handleClick={handleClick}
+                />
+              ))}
           </List>
         </Box>
       </Box>
