@@ -13,7 +13,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
 
     if (conversation.participant_identifier != identifier) {
       mapping[groupId] = {
-        unread: conversation.unread,
+        unread: conversation.unreadCount,
         phoneNumber: conversation.phone_number,
         display: conversation.display,
         conversation_id: conversation.conversation_id,
@@ -108,7 +108,7 @@ export async function createMessageGroupsFromPhoneNumber(
       sourcePhoneNumber,
     );
   } else {
-    await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, sourcePhoneNumber);
+    await MessagesDB.createMessageGroup(tgtPhoneNumber, conversationId, sourcePhoneNumber);
     await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, tgtPhoneNumber);
   }
 

@@ -45,7 +45,6 @@ export const matchState = {
           if (isEnvBrowser()) {
             return MockMatchesData;
           }
-          console.log(e);
           return [];
         }
       },

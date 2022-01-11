@@ -97,7 +97,7 @@ export enum MessageEvents {
   FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',
   FETCH_INITIAL_MESSAGES = 'npwd:fetchInitialMessages',
   ACTION_RESULT = 'npwd:setMessagesAlert',
-  CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
+  CREATE_MESSAGE_BROADCAST = 'npwd:createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
 }
