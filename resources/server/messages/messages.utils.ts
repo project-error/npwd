@@ -109,7 +109,7 @@ export async function createMessageGroupsFromPhoneNumber(
       sourcePhoneNumber,
     );
   } else {
-    await MessagesDB.createMessageGroup(tgtPhoneNumber, conversationId, sourcePhoneNumber);
+    await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, sourcePhoneNumber);
     await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, tgtPhoneNumber);
   }
 

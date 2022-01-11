@@ -122,7 +122,10 @@ class _MessagesService {
         messageData.message,
       );
 
-      this.messagesDB.setMessageUnread(messageData.conversationId, player.getPhoneNumber());
+      await this.messagesDB.setMessageUnread(
+        messageData.conversationId,
+        messageData.tgtPhoneNumber,
+      );
 
       resp({
         status: 'ok',

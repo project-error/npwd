@@ -155,7 +155,7 @@ export class _MessagesDB {
     const query = `UPDATE npwd_messages_conversations
       SET unreadCount = unreadCount + 1
       WHERE conversation_id = ?
-        AND user_identifier != ?`;
+        AND participant_identifier = ?`;
     await DbInterface._rawExec(query, [groupId, phoneNumber]);
   }
   /**
@@ -167,7 +167,7 @@ export class _MessagesDB {
     const query = `UPDATE npwd_messages_conversations
                    SET unreadCount = 0
                    WHERE conversation_id = ?
-                     AND user_identifier = ?`;
+                     AND participant_identifier = ?`;
     await DbInterface._rawExec(query, [groupId, phoneNumber]);
   }
 

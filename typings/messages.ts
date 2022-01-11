@@ -8,6 +8,7 @@ export interface Message {
 export interface PreDBMessage {
   conversationId: string;
   message: string;
+  tgtPhoneNumber: string;
 }
 
 export interface MessageConversation {

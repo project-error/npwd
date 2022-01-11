@@ -17,7 +17,7 @@ import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
 
 type UseMessageAPIProps = {
-  sendMessage: ({ conversationId, message }: PreDBMessage) => void;
+  sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (targetNumber: string) => void;
   deleteConversation: (conversationIds: string[]) => void;
@@ -40,10 +40,11 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   const setMessages = useSetMessages();
 
   const sendMessage = useCallback(
-    ({ conversationId, message }: PreDBMessage) => {
+    ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         message,
+        tgtPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
