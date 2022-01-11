@@ -18,6 +18,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
         display: conversation.display,
         conversation_id: conversation.conversation_id,
         user_identifier: identifier,
+        updatedAt: Date.parse(conversation.updatedAt),
       };
     }
 

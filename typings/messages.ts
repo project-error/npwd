@@ -15,6 +15,7 @@ export interface MessageConversation {
   avatar: string;
   display: string;
   phoneNumber: string;
+  updatedAt: number;
   unread: number;
 }
 
@@ -78,6 +79,7 @@ export interface SetMessageRead {
 export interface MessageConversationResponse {
   conversation_id: string;
   phoneNumber: string;
+  updatedAt: number;
 }
 
 export enum MessageEvents {

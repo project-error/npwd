@@ -68,7 +68,11 @@ class _MessagesService {
 
       resp({
         status: 'ok',
-        data: { conversation_id: result.conversationId, phoneNumber: result.phoneNumber },
+        data: {
+          conversation_id: result.conversationId,
+          phoneNumber: result.phoneNumber,
+          updatedAt: Date.now(),
+        },
       });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -139,7 +143,7 @@ class _MessagesService {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
-            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData);
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
             emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
               conversationName: player.getPhoneNumber(),
               conversationId: messageData.conversationId,
