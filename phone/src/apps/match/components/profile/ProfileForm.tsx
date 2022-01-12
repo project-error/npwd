@@ -77,7 +77,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t('MATCH.FEEDBACK.UPDATE_PROFILE_FAILED'),
+          message: t(resp.errorMsg),
           type: 'error',
         });
       }

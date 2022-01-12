@@ -5,10 +5,12 @@ import {
   FormattedProfile,
   Like,
   MatchEvents,
+  MatchResp,
   Profile,
 } from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
+import { checkAndFilterImage } from './../utils/imageFiltering';
 
 class _MatchService {
   private readonly matchDB: _MatchDB;
@@ -28,7 +30,7 @@ class _MatchService {
       resp({ status: 'ok', data: profiles });
     } catch (e) {
       matchLogger.error(`Error in handleGetProfiles, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -42,7 +44,7 @@ class _MatchService {
       resp({ status: 'ok', data: profile });
     } catch (e) {
       matchLogger.error(`Error in handleGetMyProfile, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -54,7 +56,7 @@ class _MatchService {
       await this.matchDB.saveLikes(identifier, reqObj.data);
     } catch (e) {
       matchLogger.error(`Failed to save likes, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
 
     try {
@@ -67,7 +69,7 @@ class _MatchService {
       }
     } catch (e) {
       matchLogger.error(`Failed to find new matches, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -79,7 +81,7 @@ class _MatchService {
       resp({ status: 'ok', data: formattedMatches });
     } catch (e) {
       matchLogger.error(`Failed to retrieve matches, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -104,7 +106,7 @@ class _MatchService {
       resp({ status: 'ok', data: formattedProfile });
     } catch (e) {
       matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -123,13 +125,19 @@ class _MatchService {
         throw new Error('Profile name must not be blank');
       }
 
+      const imageUrl = checkAndFilterImage(reqObj.data.image);
+      if (imageUrl == null) {
+        return resp({ status: 'error', errorMsg: 'GENERIC_INVALID_IMAGE_HOST' });
+      }
+      reqObj.data.image = imageUrl;
+
       const updatedProfile = await this.matchDB.updateProfile(identifier, profile);
       const formattedProfile = formatProfile(updatedProfile);
 
       resp({ status: 'ok', data: formattedProfile });
     } catch (e) {
       matchLogger.error(`Failed to update profile for identifier ${identifier}, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: MatchResp.UPDATE_FAILED });
     }
   }
 

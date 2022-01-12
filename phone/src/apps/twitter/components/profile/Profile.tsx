@@ -66,7 +66,7 @@ export function Profile() {
     fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t(''),
+          message: t(resp.errorMsg),
           type: 'error',
         });
       }

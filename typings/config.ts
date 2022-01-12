@@ -48,6 +48,13 @@ interface DatabaseConfig {
   phoneNumberColumn: string;
 }
 
+interface ImageSafety {
+  filterUnsafeImageUrls: boolean;
+  embedUnsafeImages: boolean;
+  embedUrl: string;
+  safeImageUrls: string[];
+}
+
 interface ImageConfig {
   url: string;
   type: string;
@@ -76,4 +83,5 @@ export interface ResourceConfig {
   general: General;
   debug: Debug;
   images: ImageConfig;
+  imageSafety: ImageSafety;
 }

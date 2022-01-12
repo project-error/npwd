@@ -20,6 +20,12 @@ export interface ContactDeleteDTO {
   id: number;
 }
 
+export enum ContactResp {
+  ADD_FAILED = 'CONTACT.FEEDBACK.ADD_FAILED',
+  UPDATE_FAILED = 'CONTACT.FEEDBACK.UPDATE_FAILED',
+  INVALID_HOST = 'GENERIC_INVALID_IMAGE_HOST',
+}
+
 export enum ContactsDatabaseLimits {
   avatar = 255,
   number = 20,

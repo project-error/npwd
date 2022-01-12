@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
-  ListingTypeResp,
+  MarketplaceResp,
   MarketplaceDatabaseLimits,
   MarketplaceEvents,
 } from '@typings/marketplace';
@@ -62,18 +62,11 @@ export const ListingForm: React.FC = () => {
       });
     }
 
-    fetchNui<ServerPromiseResp<ListingTypeResp>>(MarketplaceEvents.ADD_LISTING, formState).then(
+    fetchNui<ServerPromiseResp<MarketplaceResp>>(MarketplaceEvents.ADD_LISTING, formState).then(
       (resp) => {
         if (resp.status !== 'ok') {
-          if (resp.data === ListingTypeResp.DUPLICATE) {
-            return addAlert({
-              message: t('MARKETPLACE.FEEDBACK.DUPLICATE_LISTING'),
-              type: 'error',
-            });
-          }
-
           return addAlert({
-            message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED'),
+            message: t(resp.errorMsg),
             type: 'error',
           });
         }
