@@ -9,18 +9,22 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '../../../../../../typings/messages';
 
 interface IProps {
-  isOpen: boolean;
   messageGroup: MessageConversation | undefined;
-
+  imagePreview: any;
   onClose(): void;
   image?: string;
   setImagePreview: (preview: string | null) => void;
 }
 
-export const MessageImageModal = ({ isOpen, messageGroup, onClose, image }: IProps) => {
+export const MessageImageModal = ({
+  messageGroup,
+  onClose,
+  image,
+  setImagePreview,
+  imagePreview,
+}: IProps) => {
   const history = useHistory();
   const [t] = useTranslation();
-  const history = useHistory();
   const { pathname, search } = useLocation();
   const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {

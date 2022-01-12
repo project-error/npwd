@@ -8,18 +8,19 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
 import Backdrop from '../../../../ui/components/Backdrop';
+import { MessageConversation } from '../../../../../../typings/messages';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  messageGroupId: string | undefined;
+  messageGroup: MessageConversation | undefined;
   image?: string;
 }
 
 const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   isOpen,
   onClose,
-  messageGroupId,
+  messageGroup,
   image,
 }) => {
   const history = useHistory();
@@ -59,11 +60,11 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         image={image}
         imagePreview={imagePreview}
         setImagePreview={setImagePreview}
-        messageGroupId={messageGroupId}
+        messageGroup={messageGroup}
         onClose={onClose}
       />
       <MessageContactModal
-        messageGroupId={messageGroupId}
+        messageGroup={messageGroup}
         isVisible={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
       />

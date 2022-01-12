@@ -5,17 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { MessageConversation } from '../../../../../../typings/messages';
 
 interface MessageContactModalProps {
   isVisible: boolean;
   onClose: () => void;
-  messageGroupId: string | undefined;
+  messageGroup: MessageConversation | undefined;
 }
 
 const MessageContactModal: React.FC<MessageContactModalProps> = ({
   isVisible,
   onClose,
-  messageGroupId,
+  messageGroup,
 }) => {
   const [t] = useTranslation();
   const contacts = useContactsValue();
@@ -24,8 +25,9 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({
 
   const handleSendEmbedMessage = () => {
     sendEmbedMessage({
-      conversationId: messageGroupId,
+      conversationId: messageGroup.conversation_id,
       embed: { type: 'contact', ...selectedContact },
+      tgtPhoneNumber: messageGroup.phoneNumber,
     });
     onClose();
   };

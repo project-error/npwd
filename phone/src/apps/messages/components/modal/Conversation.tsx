@@ -66,7 +66,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
     <>
       <Box display="flex" zIndex={1} flexGrow={1} flexDirection="column">
         <MessageContextMenu
-          messageGroupId={activeMessageGroup.conversation_id}
+          messageGroup={activeMessageGroup}
           isOpen={contextMenuOpen}
           onClose={() => setContextMenuOpen(false)}
           image={referalImage}
@@ -108,7 +108,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
       <MessageInput
         messageGroupName={conversationContact?.display || activeMessageGroup.phoneNumber}
         messageConversation={activeMessageGroup}
-        onAddImageClick={() => setImageModalOpen(true)}
+        onAddImageClick={() => setContextMenuOpen(true)}
       />
     </>
   );
