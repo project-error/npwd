@@ -8,6 +8,7 @@ interface MessageActionProps {
   removeLocalConversation: (conversationId: string[]) => void;
   updateLocalMessages: (messageDto: Message) => void;
   deleteLocalMessage: (messageId: number) => void;
+  setMessageReadState: (conversationId: string, unreadCount: number) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -21,6 +22,24 @@ export const useMessageActions = (): MessageActionProps => {
   const updateLocalConversations = useCallback(
     (conversation: MessageConversation) => {
       setMessageConversation((curVal) => [conversation, ...curVal]);
+    },
+    [setMessageConversation],
+  );
+
+  const setMessageReadState = useCallback(
+    (conversationId: string, unreadCount: number) => {
+      setMessageConversation((curVal) =>
+        curVal.map((message: MessageConversation) => {
+          if (message.conversation_id === conversationId) {
+            return {
+              ...message,
+              unread: unreadCount,
+            };
+          }
+
+          return message;
+        }),
+      );
     },
     [setMessageConversation],
   );
@@ -69,5 +88,6 @@ export const useMessageActions = (): MessageActionProps => {
     removeLocalConversation,
     updateLocalMessages,
     deleteLocalMessage,
+    setMessageReadState,
   };
 };

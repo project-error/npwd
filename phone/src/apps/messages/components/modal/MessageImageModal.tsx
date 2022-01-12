@@ -9,17 +9,18 @@ import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { MessageConversation } from '../../../../../../typings/messages';
 
 interface IProps {
   isOpen: boolean;
-  messageGroupId: string | undefined;
+  messageGroup: MessageConversation | undefined;
 
   onClose(): void;
 
   image?: string;
 }
 
-export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
+export const MessageImageModal = ({ isOpen, messageGroup, onClose, image }: IProps) => {
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
@@ -32,10 +33,14 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const sendImageMessage = useCallback(
     (m) => {
-      sendMessage({ conversationId: messageGroupId, message: m });
+      sendMessage({
+        conversationId: messageGroup.conversation_id,
+        message: m,
+        tgtPhoneNumber: messageGroup.phoneNumber,
+      });
       onClose();
     },
-    [sendMessage, messageGroupId, onClose],
+    [sendMessage, messageGroup, onClose],
   );
 
   const sendFromQueryParam = useCallback(
