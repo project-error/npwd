@@ -2,6 +2,11 @@
 # or if it already exists in the users table
 # ALTER TABLE `users` ADD COLUMN `phone_number` VARCHAR(20) DEFAULT NULL;
 
+# if you already have the npwd_message table without `is_embed` and `embed`, run this query in your sql console
+# ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) DEFAULT 0;
+# ALTER TABLE npwd_messages ADD COLUMN `embed` longtext DEFAULT '';
+
+
 CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
 (
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
@@ -138,6 +143,8 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `updatedAt`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP,
     `visible`         tinyint(4)   NOT NULL DEFAULT 1,
     `author`          varchar(255) NOT NULL,
+    `is_embed`        tinyint(4)   NOT NULL default 0,
+    'embed'           longtext     DEFAULT '',
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );

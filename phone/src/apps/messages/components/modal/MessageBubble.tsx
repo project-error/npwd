@@ -1,13 +1,15 @@
-import { Box, IconButton, Paper } from '@mui/material';
+import { IconButton, Paper } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { Message } from '@typings/messages';
+import StyledMessage from '../ui/StyledMessage';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { PictureReveal } from '@ui/components/PictureReveal';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
+import MessageEmbed from '../ui/MessageEmbed';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -62,26 +64,31 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     setSelectedMessage(message);
   };
   const myNumber = useMyPhoneNumber();
-
   const isMine = message.author === myNumber;
+
+  const parsedEmbed = JSON.parse(message?.embed);
 
   return (
     <>
       <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-        <Box className={classes.message}>
-          {isImage(message.message) ? (
-            <PictureReveal>
-              <PictureResponsive src={message.message} alt="message multimedia" />
-            </PictureReveal>
-          ) : (
-            <>{message.message}</>
-          )}
-          {isMine && (
-            <IconButton onClick={openMenu}>
-              <MoreVertIcon />
-            </IconButton>
-          )}
-        </Box>
+        {message.is_embed ? (
+          <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
+        ) : (
+          <StyledMessage>
+            {isImage(message.message) ? (
+              <PictureReveal>
+                <PictureResponsive src={message.message} alt="message multimedia" />
+              </PictureReveal>
+            ) : (
+              <>{message.message}</>
+            )}
+            {isMine && (
+              <IconButton onClick={openMenu}>
+                <MoreVertIcon />
+              </IconButton>
+            )}
+          </StyledMessage>
+        )}
       </Paper>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
     </>

@@ -3,12 +3,16 @@ export interface Message {
   message: string;
   conversation_id?: string;
   author: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface PreDBMessage {
   conversationId: string;
-  message: string;
   tgtPhoneNumber: string;
+  message?: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface MessageConversation {
@@ -92,6 +96,7 @@ export enum MessageEvents {
   CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
   CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
   SEND_MESSAGE = 'npwd:sendMessage',
+  SEND_EMBED_MESSAGE = 'npwd:sendEmbedMessage',
   SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
   SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
   DELETE_MESSAGE = 'npwd:deleteMessage',

@@ -9,24 +9,31 @@ const MESSAGES_PER_PAGE = 20;
 export class _MessagesDB {
   /**
    * Create a message in the database
+   * @param userIdentifier - the identifier to the author
    * @param author - the phoneNumber to the player who sent the message
    * @param conversationId - the message conversation ID to attach this message to
    * @param message - content of the message
+   * @param isEmbed
+   * @param embed
    */
   async createMessage(
     userIdentifier: string,
     author: string,
     conversationId: string,
     message: string,
+    isEmbed: boolean,
+    embed: any,
   ): Promise<number> {
-    const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id)
-                   VALUES (?, ?, ?, ?)`;
+    const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id, is_embed, embed)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
 
     const [results] = await DbInterface._rawExec(query, [
       userIdentifier,
       author,
-      message,
+      message || '',
       conversationId,
+      isEmbed,
+      embed,
     ]);
 
     return (<ResultSetHeader>results).insertId;
@@ -66,7 +73,9 @@ export class _MessagesDB {
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,
                           npwd_messages.message,
-                          npwd_messages.author
+                          npwd_messages.author,
+                          npwd_messages.embed,
+                          npwd_messages.is_embed
                    FROM npwd_messages
                    WHERE npwd_messages.conversation_id = ?
                    ORDER BY id DESC

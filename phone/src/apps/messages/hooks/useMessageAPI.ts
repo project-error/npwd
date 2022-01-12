@@ -18,6 +18,7 @@ import { MockConversationServerResp } from '../utils/constants';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
+  sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (targetNumber: string) => void;
   deleteConversation: (conversationIds: string[]) => void;
@@ -57,6 +58,27 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       });
     },
     [updateLocalMessages, t, addAlert],
+  );
+
+  const sendEmbedMessage = useCallback(
+    ({ conversationId, embed, tgtPhoneNumber }: PreDBMessage) => {
+      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
+        conversationId,
+        embed: JSON.stringify(embed),
+        is_embed: true,
+        tgtPhoneNumber,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        updateLocalMessages(resp.data);
+      });
+    },
+    [t, updateLocalMessages, addAlert],
   );
 
   const deleteMessage = useCallback(
@@ -185,5 +207,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteConversation,
     addConversation,
     fetchMessages,
+    sendEmbedMessage,
   };
 };
