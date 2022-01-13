@@ -28,7 +28,8 @@ export const useCall = (): CallHook => {
   const { endDialTone, startDialTone } = useDialingSound();
 
   useEffect(() => {
-    if (call?.isTransmitter && !call.is_accepted) {
+    console.log('call effect stuff');
+    if (call?.isTransmitter && !call?.is_accepted) {
       startDialTone();
     } else {
       endDialTone();

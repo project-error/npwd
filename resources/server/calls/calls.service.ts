@@ -213,6 +213,7 @@ class CallsService {
     const currentCall = this.callMap.get(transmitterNumber);
 
     if (!currentCall) {
+      emitNet(CallEvents.WAS_ENDED, reqObj.source);
       callLogger.error(
         `Call with transmitter number ${transmitterNumber} does not exist in current calls map!`,
       );
