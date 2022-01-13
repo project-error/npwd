@@ -1,5 +1,5 @@
 import {
-  ListingTypeResp,
+  MarketplaceResp,
   MarketplaceEvents,
   MarketplaceListing,
   MarketplaceListingBase,
@@ -19,7 +19,7 @@ onNetPromise<void, MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING, async 
   });
 });
 
-onNetPromise<MarketplaceListingBase, ListingTypeResp>(
+onNetPromise<MarketplaceListingBase, MarketplaceResp>(
   MarketplaceEvents.ADD_LISTING,
   async (reqObj, resp) => {
     MarketplaceService.handleAddListing(reqObj, resp).catch((e) => {

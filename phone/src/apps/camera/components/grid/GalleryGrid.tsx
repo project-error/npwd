@@ -34,8 +34,10 @@ export const GalleryGrid = () => {
     setIsLoading(true);
     fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then((serverResp) => {
       if (serverResp.status !== 'ok') {
+        // We do early returns so we want to unset the loading here
+        setIsLoading(false);
         return addAlert({
-          message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
+          message: t(serverResp.errorMsg),
           type: 'error',
         });
       }

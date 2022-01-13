@@ -22,7 +22,7 @@ export const useContactsAPI = () => {
       }).then((serverResp) => {
         if (serverResp.status !== 'ok') {
           return addAlert({
-            message: t('CONTACTS.FEEDBACK.ADD_FAILED'),
+            message: t(serverResp.errorMsg),
             type: 'error',
           });
         }
@@ -49,7 +49,7 @@ export const useContactsAPI = () => {
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('CONTACTS.FEEDBACK.UPDATE_FAILED'),
+            message: t(resp.errorMsg),
             type: 'error',
           });
         }

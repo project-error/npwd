@@ -295,6 +295,8 @@
     "GENERIC_TITLE": "Title",
     "GENERIC_CONTENT": "Content",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
+    "GENERIC_DB_ERROR": "Create/update request failed.",
+    "GENERIC_INVALID_IMAGE_HOST": "The image host you tried to use is not allowed by this server."
   }
 }

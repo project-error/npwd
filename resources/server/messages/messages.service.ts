@@ -29,7 +29,7 @@ class _MessagesService {
 
       resp({ status: 'ok', data: messageConversations });
     } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages groups, ${e.message}`);
     }
   }
@@ -75,7 +75,7 @@ class _MessagesService {
         },
       });
     } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
 
       messagesLogger.error(`Failed to create message group, ${e.message}`, {
         source: reqObj.source,
@@ -100,7 +100,7 @@ class _MessagesService {
 
       resp({ status: 'ok', data: messages });
     } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
       messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
         source: reqObj.source,
       });
@@ -193,7 +193,7 @@ class _MessagesService {
       }
       resp({ status: 'ok' });
     } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
       messagesLogger.error(`Failed to delete conversation, ${e.message}`, {
         source: reqObj.source,
       });
@@ -205,7 +205,7 @@ class _MessagesService {
       await this.messagesDB.deleteMessage(reqObj.data);
       resp({ status: 'ok' });
     } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
       messagesLogger.error(`Failed to delete message, ${e.message}`, {
         source: reqObj.source,
       });

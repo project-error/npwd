@@ -18,8 +18,10 @@ export enum MarketplaceDatabaseLimits {
   url = 255,
 }
 
-export enum ListingTypeResp {
-  DUPLICATE = 'duplicate',
+export enum MarketplaceResp {
+  CREATE_FAILED = 'MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED',
+  DUPLICATE = 'MARKETPLACE.FEEDBACK.DUPLICATE_LISTING',
+  INVALID_IMAGE_HOST = 'GENERIC_INVALID_IMAGE_HOST',
 }
 
 export enum MarketplaceEvents {

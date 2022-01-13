@@ -5,6 +5,7 @@ import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { getDefaultProfileNames } from '../players/player.utils';
+import { checkAndFilterImage } from './../utils/imageFiltering';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
@@ -64,6 +65,11 @@ class _TwitterService {
   async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<Profile>) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
+      const imageUrl = checkAndFilterImage(reqObj.data.avatar_url);
+      if (imageUrl == null) {
+        return resp({ status: 'error', errorMsg: 'GENERIC_INVALID_IMAGE_HOST' });
+      }
+      reqObj.data.avatar_url = imageUrl;
       const profile = await this.twitterDB.updateProfile(identifier, reqObj.data);
 
       resp({ status: 'ok', data: profile });
@@ -120,6 +126,21 @@ class _TwitterService {
   ): Promise<void> {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
+
+      let newImageString = '';
+
+      const images = reqObj.data.images.split('||!||');
+
+      for (let i = 0; i < images.length; i++) {
+        const img = images[i];
+        const imageUrl = checkAndFilterImage(img);
+        if (imageUrl == null) {
+          return resp({ status: 'error', errorMsg: 'GENERIC_INVALID_IMAGE_HOST' });
+        }
+        newImageString += `${imageUrl}${i != images.length - 1 ? '||!||' : ''}`;
+      }
+      reqObj.data.images = newImageString;
+
       const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
 
       resp({ status: 'ok' });
