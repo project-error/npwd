@@ -1,0 +1,294 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Фатална грешка",
+      "TOP_LEVEL_ERR_ACTION": "Презареждане",
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Няма непрочетени известия"
+    },
+    "DATE_FORMAT": "MM/DD/YYYY",
+    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Звънене",
+        "OUTGOING": "Изходящо повикване",
+        "INCOMING": "Входящо повикване"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "Не можете да се обаждате на собствения си телефонен номер!",
+        "ERROR": "Възникнала е грешка при завършването на това повикване"
+      }
+    },
+    "BROWSER": {
+      "NAME": "Браузър"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Телефонен номер",
+      "CATEGORY": {
+        "APPEARANCE": "Външен вид",
+        "PHONE": "Телефон",
+        "ACTIONS": "Действия"
+      },
+      "OPTIONS": {
+        "ICONSET": "Набор от икони",
+        "THEME": "Тема",
+        "LANGUAGE": "Език",
+        "FRAME": "Рамка",
+        "ZOOM": "Увеличаване",
+        "WALLPAPER": "Тапети",
+        "RESET_SETTINGS": "Нулиране на настройките",
+        "RESET_SETTINGS_DESC": "Това ще изчисти локално съхранените данни.",
+        "STREAMER_MODE": {
+          "TITLE": "Режим на стриймър",
+          "DESCRIPTION": "Скриване на изображенията, преди да бъдат показани"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "Персонализирани тапети",
+          "DIALOG_CONTENT": "Задайте персонализиран тапет, като въведете URL адреса на изображението по-долу!",
+          "DIALOG_PLACEHOLDER": "URL адрес на изображението",
+          "DIALOG_ERROR": "Невалидно изображение или връзка"
+        },
+        "RINGTONE": "Тон за звънене",
+        "RINGTONE_VOLUME": "Обем на мелодията на звънене",
+        "NOTIFICATION": "Известие",
+        "NOTIFICATION_VOLUME": "Звук на известия",
+        "NOTIFICATION_FILTER": "Филтри за известия"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Невалидни съхранени настройки! Моля, възстановете настройките в приложението Настройки.",
+        "SETTINGS_RESET": "Настройките са нулирани!"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION":"Къде искаш да пратиш снимката",
+      "COPY_IMAGE": "Копирай url на снимката тук:",
+      "FAILED_TO_DELETE": "Снимката не  може да бъде изтрита :(",
+      "FAILED_TO_TAKE_PHOTO": "Снимката не може да бъде запазена :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Не успя да добавиш контакта!",
+        "ADD_SUCCESS": "Успешно запази контакта!",
+        "UPDATE_FAILED": "Не успя да актуализираш контакта!",
+        "UPDATE_SUCCESS": "успешно актуализира контакта!",
+        "DELETE_FAILED": "Не успя да изтриеш контакта!",
+        "DELETE_SUCCESS": "Успешно изтри контакта!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Търси контакт...",
+      "FORM_NAME": "Име",
+      "FORM_NUMBER": "Номер",
+      "FORM_AVATAR": "Avatar URL",
+      "MODAL_BUTTON_ADD": "Добави контакт"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "Сегашно телефонно обаждане",
+        "INCOMING_CALL_TITLE": "Телефонът ти звъни",
+        "CURRENT_CALL_WITH": "В разговор с {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} ти звъни!"
+      },
+      "INPUT_PLACEHOLDER": "Въведи номер",
+      "NAVBAR_HISTORY": "История",
+      "NAVBAR_DIAL": "Набери",
+      "NAVBAR_CONTACTS": "Контакти",
+      "NO_HISTORY": "Нямате история на повикванията"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Успешно направи профила",
+        "CREATE_PROFILE_FAILURE": "Не успя да направиш профила",
+        "EDIT_PROFILE_SUCCESS": "Успешно актуализира профила",
+        "EDIT_PROFILE_FAILURE": "Не успя да си актуализираш профила",
+        "CREATE_FAILED": "Не успя да пратиш туит",
+        "RETWEET_FAILED": "Не успяхте да ретуитнете този туит",
+        "RETWEET_EXISTS": "Вече сте препратили този туит!",
+        "LIKE_TWEET_FAILED": "Не успя да харесаш този туит",
+        "REPORT_TWEET_SUCCESS": "Успешно report-на туита",
+        "REPORT_TWEET_FAILED": "Не успя да репортнеш туита",
+        "FETCH_TWEETS_FAILED": "Неуспешно извличане на туитове",
+        "DELETE_TWEET_FAILED": "Не успя да изтриеш туита"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} ретуитвате!",
+        "NEW_BROADCAST": "Нов туит от @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Имате {{ count }} нови туитове в хронологията ви!"
+      },
+      "SUBMIT_IMAGE": "Добавяне на медии",
+      "TWEET": "Туит",
+      "REPORTED": " Докладвано",
+      "REPORT": "Докладвай",
+      "IMAGE_PLACEHOLDER": "link към вашето изображение или gif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Избери име на профила си ",
+      "EDIT_PROFILE_AVATAR": "URl на аватара",
+      "AVATAR_CHOOSE_IMAGE": "Избери си снимка",
+      "EDIT_PROFILE_NAME": "Име на профила",
+      "EDIT_PROFILE_BIO": "Био",
+      "EDIT_PROFILE_LOCATION": "Локация",
+      "EDIT_PROFILE_JOB": "Работа",
+      "RETWEETED": "Изпратено наново",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Съобщението е над ограничението за символи",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Съобщението е над лимита на новия ред",
+      "TWEET_MESSAGE_PLACEHOLDER": "Какво стана?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Търсене по име на профил или съобщение",
+      "SEARCH_TWEETS": "Търси за туитове",
+      "TIME_JUST_NOW": "Сега ",
+      "TIME_MINUTES": "мин.",
+      "TIME_HOURS": "ч.",
+      "TIME_DAYS": "д."
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Съвпадение: {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "Последно активен: {{ lastActive }}",
+        "LIKED": "LIKE",
+        "NOPE": "NOPE"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Не успя да си актуализираш профила",
+        "UPDATE_PROFILE_SUCCEEDED": "Успешно актуализира профила",
+        "MATCHES_ERROR": "Грешка в търсенето на съвпадения",
+        "NO_MATCHES": "Няма намерени съвпадения",
+        "NO_PROFILES": "Не са намерени скорошни профили",
+        "PROFILES_ERROR": "Грешка при зареждане на профили",
+        "SAVE_LIKES_FAILED": "Не успяхте да запазите харесвания",
+        "NEW_LIKE_FOUND": "Ново намерено съвпадение!"
+      },
+      "PROFILE_CONFIGURATION": "App is incorrectly configured - cannot create profile. Please contact an administrator.",
+      "EDIT_PROFILE_IMAGE": " URL на снимката",
+      "EDIT_PROFILE_NAME": "Име на профила",
+      "EDIT_PROFILE_BIO": "Био",
+      "EDIT_PROFILE_LOCATION": "Локация",
+      "EDIT_PROFILE_JOB": "Работа",
+      "EDIT_PROFILE_TAGS": "тагове",
+      "EDIT_PROFILE_PREVIEW": "Покажи предишното",
+      "LIKE": "лайк",
+      "DISLIKE": "ънлайк"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "Нямаш записки",
+        "ADD_FAILED": "Неуспешно запазване на записка.",
+        "ADD_SUCCESS": "Успешно запази записка.",
+        "DELETE_SUCCESS": "Успешно изтри записка.",
+        "DELETE_FAILED": "Неуспешно изтриване на записка.",
+        "UPDATE_FAILED": "Неуспешно актуализиране на записка.",
+        "UPDATE_SUCCESS": "Успешно актуализиране на записка."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "Всички задължителни полета трябва да бъдат попълнени!",
+        "CREATE_LISTING_FAILED": "Неуспешно създаване на нов списък",
+        "CREATE_LISTING_SUCCESS": "Успешно създадена нова обява",
+        "DELETE_LISTING_FAILED": "Неуспешно изтриване на обявата",
+        "DUPLICATE_LISTING": "Не можете да публикувате обява със същото заглавие!",
+        "DELETE_LISTING_SUCCESS": "Успешно изтри обява",
+        "REPORT_LISTING_FAILED": "Тази обява вече е докладвана",
+        "REPORT_LISTING_SUCCESS": "Успешно докладвана обява"
+      },
+      "NEW_LISTING": "Нова обява",
+      "CHOOSE_IMAGE": "Избери снимка",
+      "FORM_TITLE": "заглавие",
+      "POST_LISTING": "качи",
+      "FORM_IMAGE": "изображение или URL адрес",
+      "FORM_DESCRIPTION": "Описание",
+      "NO_IMAGE": "Няма предоставено изображение"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Нито един от телефонните номера не може да бъде намерен!",
+        "UNREAD_MESSAGES": "Имате {{ count }} непрочетени съобщения",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) не са записани номера."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} не е записен номер",
+        "NEW_MESSAGE_FAILED": "Неуспешно изпращане на съобщение",
+        "INVALID_PHONE_NUMBER": "Невалиден телефонен номер",
+        "MESSAGE_CONVERSATION_DUPLICATE": "Този разговор вече съществува!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Неуспешно създаване на разговор за съобщение",
+        "MESSAGE_GROUP_CREATE_MINE": "Не можеш да добавиш себе си!",
+        "FETCHED_MESSAGES_FAILED": "Неуспешно извличане на съобщения",
+        "DELETE_MESSAGE": "Изтриване на съобщението",
+        "DELETE_MESSAGE_FAILED": "Неуспешно изтриване на съобщение",
+        "DELETE_CONVERSATION_FAILED": "Неуспешно изтриване на разговор"
+      },
+      "SEARCH_PLACEHOLDER": "Търсене на съобщения",
+      "DELETE_CONVERSATION": "Изтриване на разговора",
+      "NEW_MESSAGE": "Съобщение...",
+      "NEW_MESSAGE_GROUP": "Телефонни номера...",
+      "GROUP_CHAT_LABEL": "Етикет за групов чат...",
+      "MEDIA_OPTION": "Камера / Галерия",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Прати",
+      "INPUT_NAME_OR_NUMBER": "Търсене на контакти или въведете номер и натиснете Enter",
+      "ACTIONS_TITLE": "действия",
+      "ME": "Аз"
+    },
+    "RELATIVE_TIME": {
+      "future": "in %сек",
+      "past": "%s ago",
+      "s": "преди няколко секунди",
+      "m": "минута",
+      "mm": "%d минути",
+      "h": "час",
+      "hh": "%d часа",
+      "d": "ден",
+      "dd": "%d дни",
+      "M": "месец",
+      "MM": "%d месеца",
+      "y": "a година",
+      "yy": "%d години"
+    },
+    "GENERIC": {
+      "LOADING": "Зарежда...",
+      "WAIT": "Моля изчакай...",
+      "SAVE": "Запази",
+      "EDIT": "редактиране",
+      "UPDATE": "актуализиране",
+      "REQUIRED": "изисква се",
+      "DELETE": "изтрий",
+      "REPORT": "докладвай",
+      "CALL": "Звънни",
+      "MESSAGE": "Съобщение",
+      "CLOSE": "Затвори",
+      "CANCEL": "отмени",
+      "TITLE": "Заглавие",
+      "CONTENT": "Съдържание",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Копирай {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Копирано {{content}} в клипборда!"
+    },
+    "COMING_SOON": "Скоро...",
+    "INITIALIZING": "Иницииране",
+    "APPS_DIALER": "телефон",
+    "APPS_CONTACTS": "Контакти",
+    "APPS_MESSAGES": "Съобщения",
+    "APPS_CALCULATOR": "Калкулатор",
+    "APPS_SETTINGS": "Настройки",
+    "APPS_BANK": "WhoDis Banking",
+    "APPS_NOTES": "записки",
+    "APPS_EXAMPLE": "Пример за приложение",
+    "APPS_TWITTER": "Туитър",
+    "APPS_MARKETPLACE": "пазар",
+    "APPS_CAMERA": "Камера",
+    "APPS_MATCH": "Тиндър",
+    "APPS_CALCULATOR_COPIED": "Резултатът е копиран в клипборда!",
+    "GENERIC_CLICK_TO_REVEAL": "Кликнете, за да разкриете",
+    "GENERIC_LOADING": "Зарежда...",
+    "GENERIC_WAIT": "Моля изчакай...",
+    "GENERIC_SAVE": "Запази",
+    "GENERIC_EDIT": "Редактирай",
+    "GENERIC_UPDATE": "Актуализирай",
+    "GENERIC_REQUIRED": "Необходимо",
+    "GENERIC_DELETE": "Изтрий",
+    "GENERIC_REPORT": "Докладвай",
+    "GENERIC_CALL": "Звънни",
+    "GENERIC_MESSAGE": "Съобщение",
+    "GENERIC_CLOSE": "Затвори",
+    "GENERIC_CANCEL": "Откажи",
+    "GENERIC_TITLE": "Заглавие",
+    "GENERIC_CONTENT": "Съдържание",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Копирай {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Копирано {{content}} в клипборда!"
+  }
+}
