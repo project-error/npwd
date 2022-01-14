@@ -1,4 +1,4 @@
-import { config } from './../server';
+import { config } from '../config';
 
 const imageRegex = new RegExp(config.imageSafety.safeImageUrls.join('|'));
 

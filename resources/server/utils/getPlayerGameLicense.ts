@@ -1,4 +1,4 @@
-import { config } from '../server';
+import { config } from '../config';
 
 export const getPlayerGameLicense = (src: number): null | string => {
   // Parse specifically for license identifier as its

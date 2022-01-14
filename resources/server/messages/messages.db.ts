@@ -1,5 +1,5 @@
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
-import { config } from '../server';
+import { config } from '../config';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 

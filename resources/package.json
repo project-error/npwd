@@ -7,9 +7,13 @@
   "private": false,
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
-    "build": "webpack --mode production",
+    "build:client": "esbuild client/client.ts --bundle --minify --outfile=dist/client.js",
+    "build:server": "esbuild server/server.ts --bundle --platform=node --outfile=dist/server.js",
+    "build": "yarn build:server && yarn build:client",
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
-    "watch": "webpack --mode development --watch",
+    "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
+    "watch:server": "esbuild server/server.ts --bundle --platform=node --watch --outfile=dist/server.js",
+    "watch": "yarn watch:server && yarn watch:client",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
@@ -42,6 +46,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.3",
+    "esbuild": "^0.14.11",
     "eslint": "^7.32.0",
     "jest": "^26.5.3",
     "remove-files-webpack-plugin": "^1.4.3",

@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { config } from './server';
+import { config } from './config';
 import path from 'path';
 
 // Needed to manually apply a color to componenent property of log
