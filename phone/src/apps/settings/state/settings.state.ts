@@ -89,7 +89,7 @@ const localStorageEffect =
   ({ setSelf, onSet }) => {
     const savedVal = localStorage.getItem(key);
 
-    if (!savedVal) return setSelf(new DefaultValue());
+    if (!savedVal) setSelf(new DefaultValue());
 
     try {
       const validString = isSchemaValid(savedVal);
@@ -97,6 +97,7 @@ const localStorageEffect =
 
       if (!validString) {
         console.error('Settings Schema was invalid, applying default settings');
+        localStorage.setItem(key, JSON.stringify(config.defaultSettings));
       }
 
       // Triggered on init
@@ -104,7 +105,6 @@ const localStorageEffect =
       setSelf(settingsObj);
     } catch (e) {
       // If we are unable to parse the json string, we set default settings
-      console.error('Unable to parse JSON');
       setSelf(config.defaultSettings);
     }
 
