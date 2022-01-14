@@ -1,4 +1,4 @@
-import { config } from '../server';
+import { config } from '../config';
 import { twitterLogger } from './twitter.utils';
 import { Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { getSource } from '../utils/miscUtils';

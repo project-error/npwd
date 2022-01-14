@@ -1,9 +1,6 @@
-import { ResourceConfig } from '../../typings/config';
 import { RewriteFrames } from '@sentry/integrations';
-// Setup and export config loaded at runtime
-export const config: ResourceConfig = JSON.parse(
-  LoadResourceFile(GetCurrentResourceName(), 'config.json'),
-);
+import './config';
+import { config } from './config';
 
 // Setup controllers
 import './db/pool';

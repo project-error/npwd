@@ -1,13 +1,6 @@
 import { formatMatches, formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import {
-  FormattedMatch,
-  FormattedProfile,
-  Like,
-  MatchEvents,
-  MatchResp,
-  Profile,
-} from '../../../typings/match';
+import { FormattedMatch, FormattedProfile, Like, MatchResp, Profile } from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
