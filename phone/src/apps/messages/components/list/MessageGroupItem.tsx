@@ -40,7 +40,7 @@ const MessageGroupItem = ({
     (number: string): Contact | null => {
       return contacts.length ? getContactByNumber(number) : null;
     },
-    [contacts, getcontactbynumber],
+    [contacts, getContactByNumber],
   );
 
   return (
