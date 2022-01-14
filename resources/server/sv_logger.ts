@@ -1,12 +1,13 @@
-import winston from 'winston';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 import { config } from './config';
 import path from 'path';
+const { createLogger, transports, format } = require('./logform');
 
 // Needed to manually apply a color to componenent property of log
 const manualColorize = (strToColor: string): string => `[\x1b[35m${strToColor}\x1b[0m]`;
 
 // Format handler passed to winston
-const formatLogs = (log: winston.Logform.TransformableInfo): string => {
+const formatLogs = (log: any): string => {
   if (log.module)
     return `${log.label} ${manualColorize(log.module)} [${log.level}]: ${log.message}`;
 
@@ -16,22 +17,18 @@ const formatLogs = (log: winston.Logform.TransformableInfo): string => {
 const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
 // Initiate the main logger for NPWD
 
-export const mainLogger = winston.createLogger({
+export const mainLogger = createLogger({
   level: config.debug.level,
   transports: [
-    new winston.transports.File({
+    new transports.File({
       filename: findLogPath(),
-      format: winston.format.combine(
-        winston.format.errors({ stack: true }),
-        winston.format.timestamp(),
-        winston.format.json(),
-      ),
+      format: format.combine(format.errors({ stack: true }), format.timestamp(), format.json()),
     }),
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.label({ label: '[NPWD]' }),
-        winston.format.colorize({ all: true }),
-        winston.format.printf(formatLogs),
+    new transports.Console({
+      format: format.combine(
+        format.label({ label: '[NPWD]' }),
+        format.colorize({ all: true }),
+        format.printf(formatLogs),
       ),
     }),
   ],

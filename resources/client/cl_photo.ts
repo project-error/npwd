@@ -2,7 +2,8 @@ import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendCameraEvent, sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { ClUtils, config } from './client';
+import { ClUtils } from './client';
+import { config } from './cl_config';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 

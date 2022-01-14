@@ -12,7 +12,7 @@
     "build": "yarn build:server && yarn build:client",
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
     "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
-    "watch:server": "esbuild server/server.ts --bundle --platform=node --watch --outfile=dist/server.js",
+    "watch:server": "esbuild server/server.ts --bundle --sourcemap --platform=node --watch --outfile=dist/server.js",
     "watch": "yarn watch:server && yarn watch:client",
     "test": "jest",
     "lint": "eslint . --ext .ts"
@@ -23,10 +23,11 @@
     "axios": "^0.21.4",
     "dayjs": "^1.10.7",
     "fivem-js": "^1.3.1",
+    "logform": "^2.3.2",
     "md5": "^2.3.0",
     "mysql2": "^2.3.3",
     "uuid": "^8.3.2",
-    "winston": "^3.3.3"
+    "winston": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
