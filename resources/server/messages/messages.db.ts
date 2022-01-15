@@ -32,8 +32,8 @@ export class _MessagesDB {
       author,
       message || '',
       conversationId,
-      isEmbed,
-      embed,
+      isEmbed || false,
+      embed || '',
     ]);
 
     return (<ResultSetHeader>results).insertId;
