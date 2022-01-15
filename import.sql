@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `visible`         tinyint(4)   NOT NULL DEFAULT 1,
     `author`          varchar(255) NOT NULL,
     `is_embed`        tinyint(4)   NOT NULL default 0,
-    'embed'           longtext     DEFAULT '',
+    `embed`           longtext     DEFAULT '',
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );
