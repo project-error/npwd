@@ -5,6 +5,8 @@ export interface ActiveCall {
   receiver: string;
   channelId?: number;
   isUnavailable?: boolean;
+  start?: string;
+  identifier?: string;
 }
 
 export interface InitializeCallDTO {
@@ -45,8 +47,8 @@ export interface ActiveCallRaw {
 }
 
 export interface CallHistoryItem {
-  id?: number;
-  identifier: string;
+  id?: number | string;
+  identifier?: string;
   transmitter: string;
   transmitterSource?: number;
   receiver: string;
@@ -74,4 +76,5 @@ export enum CallEvents {
   SET_CALL_INFO = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
   SEND_ALERT = 'npwd:callSetAlert',
+  SAVE_CALL = 'npwd:saveCall',
 }

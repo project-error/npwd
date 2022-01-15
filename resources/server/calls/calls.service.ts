@@ -14,6 +14,7 @@ import { callLogger } from './calls.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { emitNetTyped } from '../utils/miscUtils';
 import { mainLogger } from '../sv_logger';
+import { _TwitterDB } from '../twitter/twitter.db';
 
 class CallsService {
   private callMap: Collection<string, ActiveCallRaw>;
@@ -64,6 +65,8 @@ class CallsService {
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
           is_accepted: false,
+          start: startCallTimeUnix.toString(),
+          identifier: callIdentifier,
         },
       });
     }
@@ -89,6 +92,8 @@ class CallsService {
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
+          start: startCallTimeUnix.toString(),
+          identifier: callIdentifier,
         },
       });
     }
@@ -128,6 +133,8 @@ class CallsService {
         transmitter: transmitterNumber,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: true,
+        start: startCallTimeUnix.toString(),
+        identifier: callIdentifier,
       },
     });
 
@@ -227,6 +234,7 @@ class CallsService {
 
     if (reqObj.data.isUnavailable) {
       emitNet(CallEvents.WAS_ENDED, reqObj.source);
+      resp({ status: 'ok' });
       return;
     }
 

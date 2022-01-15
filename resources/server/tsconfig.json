@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "*": ["./types/*"]
     },
     "outDir": "./",
     "noImplicitAny": true,
