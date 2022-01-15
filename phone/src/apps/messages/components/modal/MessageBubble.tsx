@@ -66,7 +66,10 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const myNumber = useMyPhoneNumber();
   const isMine = message.author === myNumber;
 
-  const parsedEmbed = JSON.parse(message?.embed);
+  let parsedEmbed;
+  if (message?.embed) {
+    parsedEmbed = JSON.parse(message?.embed);
+  }
 
   return (
     <>

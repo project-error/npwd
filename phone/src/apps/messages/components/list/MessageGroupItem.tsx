@@ -60,7 +60,11 @@ const MessageGroupItem = ({
         </ListItemIcon>
       )}
       <ListItemAvatar>
-        <Badge color="error" variant="dot" invisible={messageConversation.unread <= 0}>
+        <Badge
+          color="error"
+          badgeContent={messageConversation.unread <= 99 ? messageConversation.unread : '99+'}
+          invisible={messageConversation.unread <= 0}
+        >
           <MuiAvatar src={contactDisplay(messageConversation.phoneNumber)?.avatar} />
         </Badge>
       </ListItemAvatar>
