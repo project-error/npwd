@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
 
 interface useDialingSoundValue {
   startDialTone: () => void;
@@ -11,19 +10,18 @@ const DIAL_TONE_URL = 'media/misc/Outgoing-Dial-Effect.ogg';
 
 export const useDialingSound = (): useDialingSoundValue => {
   const sound = useSoundProvider();
-  const [settings] = useSettings();
 
   useEffect(() => {
     if (!sound.isMounted(DIAL_TONE_URL)) {
-      sound.mount(DIAL_TONE_URL, settings.ringtoneVol / 100, true);
+      sound.mount(DIAL_TONE_URL, 0.1, true);
       return;
     }
-    sound.volume(DIAL_TONE_URL, settings.ringtoneVol / 100);
-  }, [sound, settings]);
+    sound.volume(DIAL_TONE_URL, 0.1);
+  }, [sound]);
 
   const startDialTone = useCallback(() => {
-    sound.play(DIAL_TONE_URL, settings.ringtoneVol / 100, true);
-  }, [sound, settings]);
+    sound.play(DIAL_TONE_URL, 0.1, true);
+  }, [sound]);
 
   const endDialTone = useCallback(() => {
     sound.stop(DIAL_TONE_URL);
