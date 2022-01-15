@@ -13,7 +13,7 @@
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
     "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
     "watch:server": "esbuild server/server.ts --bundle --sourcemap --platform=node --watch --outfile=dist/server.js",
-    "watch": "yarn watch:server && yarn watch:client",
+    "watch": "concurrently \"yarn watch:server\" \"yarn watch:client\"",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
@@ -45,6 +45,7 @@
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.3",
     "esbuild": "^0.14.11",
