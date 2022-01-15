@@ -210,10 +210,14 @@ class CallsService {
     const transmitterNumber = reqObj.data.transmitterNumber;
     const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
 
+    if (reqObj.data.isUnavailable) {
+      emitNet(CallEvents.WAS_ENDED, reqObj.source);
+      return;
+    }
+
     const currentCall = this.callMap.get(transmitterNumber);
 
     if (!currentCall) {
-      emitNet(CallEvents.WAS_ENDED, reqObj.source);
       callLogger.error(
         `Call with transmitter number ${transmitterNumber} does not exist in current calls map!`,
       );

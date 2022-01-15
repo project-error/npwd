@@ -69,6 +69,7 @@ export const useCall = (): CallHook => {
   const endCall = useCallback(() => {
     fetchNui(CallEvents.END_CALL, {
       transmitterNumber: call.transmitter,
+      isUnavailable: call.isUnavailable,
       isTransmitter: call.transmitter === myPhoneNumber,
     });
   }, [call, myPhoneNumber]);

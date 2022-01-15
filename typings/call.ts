@@ -21,6 +21,7 @@ export interface StartCallEventData {
 export interface EndCallDTO {
   transmitterNumber: string;
   isTransmitter: boolean;
+  isUnavailable: boolean;
 }
 
 export interface TransmitterNumDTO {
