@@ -43,9 +43,19 @@ class CallsService {
       true,
     );
 
+    const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
+    const callIdentifier = uuidv4();
+
     // If not online we immediately let the caller know that is an invalid
     // number
     if (!receiverIdentifier) {
+      await this.callsDB.saveCall({
+        identifier: callIdentifier,
+        transmitter: transmitterNumber,
+        receiver: reqObj.data.receiverNumber,
+        is_accepted: false,
+        start: startCallTimeUnix.toString(),
+      });
       return resp({
         status: 'ok',
         data: {
@@ -58,15 +68,19 @@ class CallsService {
       });
     }
 
-    const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
-    const callIdentifier = uuidv4();
-
     // Will be null if the player is offline
     const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
 
     // Now if the player is offline, we send the same resp
     // as before
     if (!receivingPlayer) {
+      await this.callsDB.saveCall({
+        identifier: callIdentifier,
+        transmitter: transmitterNumber,
+        receiver: reqObj.data.receiverNumber,
+        is_accepted: false,
+        start: startCallTimeUnix.toString(),
+      });
       return resp({
         status: 'ok',
         data: {
@@ -82,6 +96,7 @@ class CallsService {
     callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
     callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
 
+    // We call this here, so that w
     const callObj: ActiveCallRaw = {
       identifier: callIdentifier,
       transmitter: transmitterNumber,
