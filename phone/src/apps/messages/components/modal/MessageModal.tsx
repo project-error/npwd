@@ -17,7 +17,7 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { useMessagesState } from '../../hooks/state';
+import { useMessagesState, useMessagesValue } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
@@ -25,7 +25,6 @@ import { Call } from '@mui/icons-material';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
-const MINIMUM_LOAD_TIME = 600;
 
 const useStyles = makeStyles({
   tooltip: {
@@ -63,27 +62,17 @@ export const MessageModal = () => {
   const { initializeCall } = useCall();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
-  const [messages, setMessages] = useMessagesState();
+  const messages = useMessagesValue();
 
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetchMessages(groupId, 0);
+    setLoaded(true);
   }, [groupId, fetchMessages]);
 
-  useEffect(() => {
-    if (activeMessageConversation && messages) {
-      setTimeout(() => {
-        setLoaded(true);
-      }, MINIMUM_LOAD_TIME);
-      return;
-    }
-    setLoaded(false);
-  }, [activeMessageConversation, messages]);
-
   const closeModal = () => {
-    setMessages(null);
-    history.push('/messages');
+    history.goBack();
   };
 
   useEffect(() => {
@@ -131,7 +120,7 @@ export const MessageModal = () => {
 
   return (
     <>
-      <Slide direction="left" in={!!activeMessageConversation}>
+      <Slide direction="left" in={true}>
         <Paper
           sx={{
             height: '100%',
@@ -164,7 +153,7 @@ export const MessageModal = () => {
               </Button>
             ) : null}
           </Box>
-          {isLoaded && activeMessageConversation ? (
+          {activeMessageConversation ? (
             <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
           ) : (
             <MessageSkeletonList />
