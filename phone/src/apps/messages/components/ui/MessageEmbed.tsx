@@ -4,6 +4,7 @@ import { Contact } from '@typings/contact';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import StyledMessage from './StyledMessage';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 
 interface MessageEmbedProps {
   type: string;
@@ -27,6 +28,9 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   const [t] = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
+  const { getContactByNumber } = useContactActions();
+
+  const showAddButton = !isMine && !getContactByNumber(embed?.number);
 
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
@@ -40,7 +44,7 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
         <Typography>{embed?.display}</Typography>
         <Typography>{embed?.number}</Typography>
       </Box>
-      {!isMine && (
+      {showAddButton && (
         <Box>
           <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
             {t('GENERIC.ADD')}
