@@ -17,7 +17,7 @@ import MessageSkeletonList from './MessageSkeletonList';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
-import { useMessagesState, useMessagesValue } from '../../hooks/state';
+import { useMessagesState } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
