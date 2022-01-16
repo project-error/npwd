@@ -7,8 +7,8 @@
   "private": false,
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
-    "build:client": "esbuild client/client.ts --bundle --minify --outfile=dist/client.js",
-    "build:server": "esbuild server/server.ts --bundle --platform=node --outfile=dist/server.js",
+    "build:client": "esbuild client/client.ts --bundle --target=es2016 --minify --outfile=dist/client.js",
+    "build:server": "esbuild server/server.ts --bundle --target=es2015 --platform=node --outfile=dist/server.js",
     "build": "yarn build:server && yarn build:client",
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
     "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
