@@ -25,6 +25,7 @@ import { Call } from '@mui/icons-material';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
+const MINIMUM_LOAD_TIME = 600;
 
 const useStyles = makeStyles({
   tooltip: {
@@ -62,17 +63,27 @@ export const MessageModal = () => {
   const { initializeCall } = useCall();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
-  const messages = useMessagesValue();
+  const [messages, setMessages] = useMessagesState();
 
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetchMessages(groupId, 0);
-    setLoaded(true);
   }, [groupId, fetchMessages]);
 
+  useEffect(() => {
+    if (activeMessageConversation && messages) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, MINIMUM_LOAD_TIME);
+      return;
+    }
+    setLoaded(false);
+  }, [activeMessageConversation, messages]);
+
   const closeModal = () => {
-    history.goBack();
+    setMessages(null);
+    history.push('/messages');
   };
 
   useEffect(() => {
@@ -120,7 +131,7 @@ export const MessageModal = () => {
 
   return (
     <>
-      <Slide direction="left" in={true}>
+      <Slide direction="left" in={!!activeMessageConversation}>
         <Paper
           sx={{
             height: '100%',
@@ -153,7 +164,7 @@ export const MessageModal = () => {
               </Button>
             ) : null}
           </Box>
-          {activeMessageConversation ? (
+          {isLoaded && activeMessageConversation ? (
             <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
           ) : (
             <MessageSkeletonList />
