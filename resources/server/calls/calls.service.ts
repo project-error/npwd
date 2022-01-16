@@ -47,16 +47,19 @@ class CallsService {
     const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
     const callIdentifier = uuidv4();
 
+    // Used when the number is invalid or the player if offline.
+    const tempSaveCallObj = {
+      identifier: callIdentifier,
+      transmitter: transmitterNumber,
+      receiver: reqObj.data.receiverNumber,
+      is_accepted: false,
+      start: startCallTimeUnix.toString(),
+    };
+
     // If not online we immediately let the caller know that is an invalid
     // number
     if (!receiverIdentifier) {
-      await this.callsDB.saveCall({
-        identifier: callIdentifier,
-        transmitter: transmitterNumber,
-        receiver: reqObj.data.receiverNumber,
-        is_accepted: false,
-        start: startCallTimeUnix.toString(),
-      });
+      await this.callsDB.saveCall(tempSaveCallObj);
       return resp({
         status: 'ok',
         data: {
@@ -77,13 +80,7 @@ class CallsService {
     // Now if the player is offline, we send the same resp
     // as before
     if (!receivingPlayer) {
-      await this.callsDB.saveCall({
-        identifier: callIdentifier,
-        transmitter: transmitterNumber,
-        receiver: reqObj.data.receiverNumber,
-        is_accepted: false,
-        start: startCallTimeUnix.toString(),
-      });
+      await this.callsDB.saveCall(tempSaveCallObj);
       return resp({
         status: 'ok',
         data: {
