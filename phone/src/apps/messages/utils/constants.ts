@@ -56,19 +56,6 @@ const MockConversationMessages: Message[] = [
     conversation_id: '4444+5555',
   },
   {
-    id: 4,
-    author: '215-8139',
-    message: '',
-    conversation_id: '4444+7777',
-    is_embed: true,
-    embed: {
-      type: 'contact',
-      display: 'Taso',
-      number: '215-8139',
-      avatar: 'http://i.tasoagc.dev/i9Ig',
-    },
-  },
-  {
     id: 5,
     author: '215-8139',
     message: 'https://i.tasoagc.dev/LtuA.png',

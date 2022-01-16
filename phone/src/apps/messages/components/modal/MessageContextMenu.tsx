@@ -43,11 +43,15 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
             })}`,
           ),
       },
+      // This feature causes a shitshow of re-renders.
+      // It's caused by the 'activeMessageConversation' state in 'MessageModal'. No clue what's going on, and I don't have the brain for it now.
+      /*
       {
         label: t('MESSAGES.CONTACT_OPTION'),
         icon: <ContactPageIcon />,
         onClick: () => setContactModalOpen(true),
       },
+*/
     ],
     [history, pathname, search, t],
   );
@@ -63,11 +67,13 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         messageGroup={messageGroup}
         onClose={onClose}
       />
+      {/*
       <MessageContactModal
         messageGroup={messageGroup}
         isVisible={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
       />
+*/}
     </>
   );
 };
