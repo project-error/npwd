@@ -14,7 +14,7 @@
 
 </div>
 
-# NPWD Release (Current version 1.0)
+# NPWD Release (Current version 1.1)
 
 **New-Phone-Who-Dis** (*NPWD*) is a standalone and open source phone resource created for use in [*FiveM*](https://fivem.net/). It was built from 
 the ground up by some of the previous contributors and maintainers of the Reignited GCPhone project, who found
@@ -24,7 +24,7 @@ the Vue 2 codebase littered with technical debt and legacy code that hindered co
 by the community. Maintainability has been our utmost priority as well. It has been designed to be as developer accessible as possible, with included utilities and tools
 to ease and streamline the phone development process.
 
-**Important Note:** This release(v1.0) should be considered a beta release and may experience edge case issues
+**Important Note:** The release(v1.0) should be considered a beta release and may experience edge case issues
 with some frameworks and environments. Please ensure you report these issues as described below.
 
 ## Standalone Information & Installation
