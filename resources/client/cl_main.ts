@@ -107,7 +107,8 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-const checkExportCanOpen = async (): Promise<boolean> => {
+export const checkHasPhone = async (): Promise<boolean> => {
+  if (!config.PhoneAsItem.enabled) return true;
   const exportResp = await Promise.resolve(
     exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction](),
   );
@@ -119,10 +120,8 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
-  if (config.PhoneAsItem.enabled) {
-    const canAccess = await checkExportCanOpen();
-    if (!canAccess) return;
-  }
+  const canAccess = await checkHasPhone();
+  if (!canAccess) return;
   if (global.isPhoneOpen) return await hidePhone();
   await showPhone();
 }
