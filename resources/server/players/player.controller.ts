@@ -1,6 +1,6 @@
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
-import { config } from '../config';
+import { config } from '../server';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
 

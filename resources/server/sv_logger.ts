@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import { config } from './config';
+import { config } from './server';
 import path from 'path';
 const { createLogger, transports, format } = require('./logform');
 
