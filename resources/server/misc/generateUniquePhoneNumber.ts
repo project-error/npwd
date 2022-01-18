@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../server';
 import DbInterface from '../db/db_wrapper';
 
 const genNumber = (length: number): string => {

@@ -8,7 +8,7 @@ import {
 import MatchService from './match.service';
 import { getSource } from '../utils/miscUtils';
 import { matchLogger } from './match.utils';
-import { config } from '../config';
+import { config } from '../server';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNetPromise<void, FormattedProfile[]>(MatchEvents.GET_PROFILES, (reqObj, resp) => {
