@@ -87,6 +87,24 @@ export interface MessageConversationResponse {
   updatedAt: number;
 }
 
+export interface MessageExportCtx {
+  /**
+   * The incoming message object
+   */
+  messageObject: PreDBMessage;
+
+  /**
+   *
+   * Handles the next npwd handler
+   */
+  next: () => void;
+
+  /**
+   * Exits all NPWD handlers
+   */
+  exit: () => void;
+}
+
 export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
