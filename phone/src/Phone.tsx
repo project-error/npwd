@@ -21,7 +21,6 @@ import { useCallModal } from '@os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
-import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import PhoneWrapper from './PhoneWrapper';
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
@@ -47,7 +46,6 @@ function Phone() {
 
   useConfig();
 
-  useKeyboardService();
   usePhoneService();
   useSimcardService();
   useTwitterService();
@@ -56,7 +54,6 @@ function Phone() {
   useMessagesService();
   useContactsListener();
   useNoteListener();
-  /*usePhotoService();*/
   useCallService();
   useDialService();
   useInvalidSettingsHandler();
