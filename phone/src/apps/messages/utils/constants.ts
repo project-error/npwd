@@ -8,6 +8,7 @@ export const MockMessageConversations: MessageConversation[] = [
     phoneNumber: '215-8139',
     unread: 0,
     display: 'Taso',
+    updatedAt: 5,
   },
   {
     conversation_id: '4444+7777',
@@ -15,6 +16,23 @@ export const MockMessageConversations: MessageConversation[] = [
     phoneNumber: '603-275-8373',
     unread: 3,
     display: 'Chip',
+    updatedAt: 15,
+  },
+  {
+    conversation_id: '3333+5555',
+    avatar: '',
+    phoneNumber: '555-15196',
+    unread: 3,
+    display: 'Rocko',
+    updatedAt: 5,
+  },
+  {
+    conversation_id: '2222+1111',
+    avatar: '',
+    phoneNumber: '444-4444',
+    unread: 3,
+    display: 'Kidz',
+    updatedAt: 7,
   },
 ];
 
@@ -22,7 +40,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 1,
     author: '215-8139',
-    message: 'Hello',
+    message: '',
     conversation_id: '4444+5555',
   },
   {
@@ -36,12 +54,6 @@ const MockConversationMessages: Message[] = [
     author: '215-8139',
     message: 'Hello',
     conversation_id: '4444+5555',
-  },
-  {
-    id: 4,
-    author: '215-8139',
-    message: 'Hello Rocky',
-    conversation_id: '4444+7777',
   },
   {
     id: 5,

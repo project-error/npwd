@@ -5,12 +5,11 @@ import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
 import { CallControls } from './CallControls';
 import { Box } from '@mui/material';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import getBackgroundPath from '../../../apps/settings/utils/getBackgroundPath';
 import CallContactContainer from './CallContactContainer';
 import makeStyles from '@mui/styles/makeStyles';
 import RingingText from './RingingText';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { useWallpaper } from '../../../apps/settings/hooks/useWallpaper';
 
 const useStyles = makeStyles({
   root: {
@@ -23,8 +22,8 @@ const useStyles = makeStyles({
 });
 
 export const CallModal: React.FC = () => {
-  const [settings] = useSettings();
   const { call } = useCall();
+  const wallpaper = useWallpaper();
 
   const classes = useStyles();
 
@@ -34,7 +33,7 @@ export const CallModal: React.FC = () => {
     <AppWrapper>
       <AppContent
         paperStyle={{
-          backgroundImage: `url(${getBackgroundPath(settings.wallpaper.value)})`,
+          backgroundImage: wallpaper,
         }}
       >
         <React.Suspense fallback={<LoadingSpinner />}>

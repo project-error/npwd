@@ -30,8 +30,12 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
 }) => {
   const classes = useStyles();
 
-  const ChildElements = () => (
-    <>
+  return (
+    <Paper
+      className={classes.wrapper}
+      square
+      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
+    >
       <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
       <Paper
         sx={{ flexGrow: 1 }}
@@ -40,24 +44,12 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
         className={`${classes.paper} ${props.className}`}
         style={paperStyle}
       >
-        {children}
+        {!disableSuspenseHandler ? (
+          <React.Suspense fallback={<LoadingSpinner />}>{children}</React.Suspense>
+        ) : (
+          { children }
+        )}
       </Paper>
-    </>
-  );
-
-  return (
-    <Paper
-      className={classes.wrapper}
-      square
-      style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
-    >
-      {!disableSuspenseHandler ? (
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <ChildElements />
-        </React.Suspense>
-      ) : (
-        <ChildElements />
-      )}
     </Paper>
   );
 };

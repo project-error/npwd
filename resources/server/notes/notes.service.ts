@@ -30,7 +30,7 @@ class _NotesService {
     } catch (e) {
       notesLogger.error(`Error in handleAddNote, ${e.message}`);
 
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -41,7 +41,7 @@ class _NotesService {
       resp({ status: 'ok', data: notes });
     } catch (e) {
       notesLogger.error(`Error in handleFetchNote, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -52,7 +52,7 @@ class _NotesService {
       resp({ status: 'ok' });
     } catch (e) {
       notesLogger.error(`Error in handleUpdateNote, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -70,7 +70,7 @@ class _NotesService {
       resp({ status: 'ok', data: reqObj.data });
     } catch (e) {
       notesLogger.error(`Error in handleDeleteNote, ${e.message}`);
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 }

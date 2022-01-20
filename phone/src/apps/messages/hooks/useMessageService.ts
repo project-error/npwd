@@ -8,7 +8,8 @@ import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 export const useMessagesService = () => {
-  const { updateLocalMessages, updateLocalConversations } = useMessageActions();
+  const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
+    useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
   const { visibility } = usePhoneVisibility();
@@ -19,6 +20,8 @@ export const useMessagesService = () => {
       return;
     }
 
+    // Set the current unread count to 1, when they click it will be removed
+    setMessageReadState(conversationId, 1);
     setNotification({ conversationName, conversationId, message });
   };
 
@@ -38,6 +41,7 @@ export const useMessagesService = () => {
       updateLocalConversations({
         phoneNumber: conversation.phoneNumber,
         conversation_id: conversation.conversation_id,
+        updatedAt: conversation.updatedAt,
         avatar,
         unread: 0,
         display,

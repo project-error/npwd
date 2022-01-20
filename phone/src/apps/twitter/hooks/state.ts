@@ -1,6 +1,6 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
 import { FormattedTweet, Profile, Tweet, TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 import { MockTweets, MockTwitterProfile } from '../utils/constants';

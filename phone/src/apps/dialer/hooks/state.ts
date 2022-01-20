@@ -1,6 +1,6 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, useSetRecoilState } from 'recoil';
 import { CallEvents, CallHistoryItem } from '@typings/call';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
@@ -27,3 +27,5 @@ export const dialState = {
     }),
   }),
 };
+
+export const useSetHistory = () => useSetRecoilState(dialState.history);

@@ -2,7 +2,7 @@ import PlayerService from '../players/player.service';
 import { marketplaceLogger } from './marketplace.utils';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import {
-  ListingTypeResp,
+  MarketplaceResp,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
   MarketplaceListing,
@@ -11,6 +11,7 @@ import {
 } from '../../../typings/marketplace';
 import { reportListingToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
+import { checkAndFilterImage } from './../utils/imageFiltering';
 
 class _MarketplaceService {
   private readonly marketplaceDB: _MarketplaceDB;
@@ -22,7 +23,7 @@ class _MarketplaceService {
 
   async handleAddListing(
     reqObj: PromiseRequest<MarketplaceListingBase>,
-    resp: PromiseEventResp<ListingTypeResp>,
+    resp: PromiseEventResp<MarketplaceResp>,
   ): Promise<void> {
     marketplaceLogger.debug('Handling add listing, listing:');
     marketplaceLogger.debug(reqObj.data);
@@ -32,7 +33,12 @@ class _MarketplaceService {
 
     try {
       const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data, identifier);
-      if (doesListingExist) return resp({ status: 'error', data: ListingTypeResp.DUPLICATE });
+      if (doesListingExist) return resp({ status: 'error', errorMsg: MarketplaceResp.DUPLICATE });
+      const imageUrl = checkAndFilterImage(reqObj.data.url);
+      if (imageUrl == null) {
+        return resp({ status: 'error', errorMsg: MarketplaceResp.INVALID_IMAGE_HOST });
+      }
+      reqObj.data.url = imageUrl;
 
       const listingId = await this.marketplaceDB.addListing(
         player.getIdentifier(),
@@ -61,7 +67,7 @@ class _MarketplaceService {
         source: reqObj.source,
       });
 
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: MarketplaceResp.CREATE_FAILED });
     }
   }
 
@@ -77,7 +83,7 @@ class _MarketplaceService {
       marketplaceLogger.error(`Failed to fetch listings, ${e.message}`, {
         source: req.source,
       });
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -97,7 +103,7 @@ class _MarketplaceService {
     } catch (e) {
       marketplaceLogger.error(`Error in handleDeleteListing, ${e.message}`);
 
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -138,7 +144,7 @@ class _MarketplaceService {
       marketplaceLogger.error(`Failed to report listing ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 }

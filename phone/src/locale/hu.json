@@ -45,11 +45,12 @@
           "DESCRIPTION": "Képek autómatikus elrejtése"
         },
         "CUSTOM_WALLPAPER": {
-            "DIALOG_TITLE": "Saját háttér",
-            "DIALOG_CONTENT": "Állíts be saját hátteret a kép URL-jének megadásával",
-            "DIALOG_PLACEHOLDER": "Kép URL",
-            "DIALOG_ERROR": "Hibás kép/fájltípus"
+          "DIALOG_TITLE": "Saját háttér",
+          "DIALOG_CONTENT": "Állíts be saját hátteret a kép URL-jének megadásával",
+          "DIALOG_PLACEHOLDER": "Kép URL",
+          "DIALOG_ERROR": "Hibás kép/fájltípus"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Csengőhang",
         "RINGTONE_VOLUME": "Csengés hangerő",
         "NOTIFICATION": "Értesítés",
@@ -174,7 +175,7 @@
         "DELETE_SUCCESS": "Jegyzet törölve.",
         "DELETE_FAILED": "Hiba a jegyzet törlése közben.",
         "UPDATE_FAILED": "Hiba a jegyzet frissítése közben.",
-        "UPDATE_SUCCESS":"Jegyzet frissítve."
+        "UPDATE_SUCCESS": "Jegyzet frissítve."
       }
     },
     "MARKETPLACE": {
@@ -226,19 +227,19 @@
       "ME": "Én"
     },
     "RELATIVE_TIME": {
-        "future": "%s múlva",
-        "past": "%s ideje",
-        "s": "pár másodperce",
-        "m": "egy perce",
-        "mm": "%d perce",
-        "h": "egy órája",
-        "hh": "%d órája",
-        "d": "egy napja",
-        "dd": "%d napja",
-        "M": "egy hónapja",
-        "MM": "%d hónapja",
-        "y": "egy éve",
-        "yy": "%d éve"
+      "future": "%s múlva",
+      "past": "%s ideje",
+      "s": "pár másodperce",
+      "m": "egy perce",
+      "mm": "%d perce",
+      "h": "egy órája",
+      "hh": "%d órája",
+      "d": "egy napja",
+      "dd": "%d napja",
+      "M": "egy hónapja",
+      "MM": "%d hónapja",
+      "y": "egy éve",
+      "yy": "%d éve"
     },
     "GENERIC": {
       "LOADING": "Töltés...",

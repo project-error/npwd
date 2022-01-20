@@ -7,6 +7,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
+import { useNavigationDisabledValue } from '@os/navigation-bar/state/navigation.state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,12 +16,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Navigation = () => {
+export const Navigation: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const { isExact } = useRouteMatch('/');
   const { closePhone } = usePhone();
   const { setBarUncollapsed } = useNotifications();
+  const isPageNavAvailable = useNavigationDisabledValue();
+
+  const handleGoBackInHistory = () => {
+    if (!isPageNavAvailable) return;
+    history.goBack();
+  };
+
+  const handleGoToMenu = () => {
+    if (!isPageNavAvailable && !isExact) return;
+    history.push('/');
+  };
+
   return (
     <BottomNavigation
       className={classes.root}
@@ -29,7 +42,7 @@ export const Navigation = () => {
         value();
       }}
     >
-      <BottomNavigationAction label="Home" value={() => history.push('/')} icon={<AppsIcon />} />
+      <BottomNavigationAction label="Home" value={handleGoToMenu} icon={<AppsIcon />} />
       <BottomNavigationAction
         label="Close"
         value={closePhone}
@@ -37,7 +50,7 @@ export const Navigation = () => {
       />
       <BottomNavigationAction
         label="Back"
-        value={() => !isExact && history.goBack()}
+        value={handleGoBackInHistory}
         icon={<KeyboardArrowLeftIcon />}
       />
     </BottomNavigation>

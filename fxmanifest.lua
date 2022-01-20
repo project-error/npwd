@@ -4,12 +4,12 @@ description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
 client_scripts {
-    'resources/dist/client/*.client.js',
+    'resources/dist/client.js',
     'resources/client/*.lua'
 }
 
 server_script {
-    'resources/dist/server/*.server.js'
+    'resources/dist/server.js'
 }
 
 ui_page 'resources/html/index.html'
