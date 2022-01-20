@@ -18,7 +18,8 @@ const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName())
 // Initiate the main logger for NPWD
 
 export const mainLogger = createLogger({
-  level: config.debug.level,
+  level: config.debug.level ?? 'info',
+  silent: !config.debug.enabled ?? false,
   transports: [
     new transports.File({
       filename: findLogPath(),
