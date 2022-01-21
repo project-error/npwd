@@ -8,6 +8,7 @@ import {
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
+import { OnMessageExportMap, onMessageNext, onMessageRespond } from './middleware/onMessage';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
@@ -46,6 +47,9 @@ onNetPromise<{ conversationId: string; page: number }, Message[]>(
 );
 
 onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
+  const funcRef = OnMessageExportMap.get(reqObj.data.tgtPhoneNumber);
+  await funcRef({ req: reqObj, next: onMessageNext, respond: onMessageRespond });
+
   MessagesService.handleSendMessage(reqObj, resp).catch((e) => {
     messagesLogger.error(
       `Error occurred while sending message (${reqObj.source}), Error: ${e.message}`,

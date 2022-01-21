@@ -1,3 +1,5 @@
+import { PromiseRequest } from '../resources/server/lib/PromiseNetEvents/promise.types';
+
 export interface Message {
   id: number;
   message: string;
@@ -87,11 +89,11 @@ export interface MessageConversationResponse {
   updatedAt: number;
 }
 
-export interface MessageExportCtx {
+export interface OnMessageExportCtx {
   /**
    * The incoming message object
    */
-  messageObject: PreDBMessage;
+  req: PromiseRequest<PreDBMessage>;
 
   /**
    *
@@ -100,9 +102,10 @@ export interface MessageExportCtx {
   next: () => void;
 
   /**
-   * Exits all NPWD handlers
+   * Reponds with a message to the source
+   * @param message
    */
-  exit: () => void;
+  respond: (ctx: any, message: string) => void;
 }
 
 export enum MessageEvents {

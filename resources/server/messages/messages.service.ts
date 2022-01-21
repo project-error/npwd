@@ -170,6 +170,21 @@ class _MessagesService {
     }
   }
 
+  async handleOnMessageSendResponse(reqObj: PromiseRequest<PreDBMessage>) {
+    const messageData = reqObj.data;
+
+    await this.messagesDB.createMessage(
+      messageData.tgtPhoneNumber,
+      messageData.tgtPhoneNumber,
+      messageData.conversationId,
+      messageData.message,
+      false,
+      '',
+    );
+
+    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData);
+  }
+
   async handleSetMessageRead(src: number, groupId: string) {
     try {
       const identifier = PlayerService.getPlayer(src).getPhoneNumber();
