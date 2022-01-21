@@ -9,11 +9,11 @@
   "scripts": {
     "build:client": "esbuild client/client.ts --bundle --target=es2016 --minify --outfile=dist/client.js",
     "build:server": "esbuild server/server.ts --bundle --target=es2015 --platform=node --outfile=dist/server.js",
-    "build": "yarn build:server && yarn build:client",
+    "build": "webpack --mode production --progress",
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
     "watch:client": "esbuild client/client.ts --bundle --watch --outfile=dist/client.js",
     "watch:server": "esbuild server/server.ts --bundle --sourcemap --platform=node --watch --outfile=dist/server.js",
-    "watch": "concurrently \"yarn watch:server\" \"yarn watch:client\"",
+    "watch": "webpack --mode development --watch --progress",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
