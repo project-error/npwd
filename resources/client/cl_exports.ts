@@ -1,4 +1,4 @@
-import { sendContactsEvent, sendMessage, sendNotesEvent } from '../utils/messages';
+import { sendContactsEvent, sendMessage, sendNotesEvent, sendPhoneEvent } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { verifyExportArgType } from './cl_utils';
 import { initializeCallHandler } from './calls/cl_calls.controller';
@@ -38,6 +38,7 @@ exps('setPhoneDisabled', (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
   const coercedType = !!bool;
   global.isPhoneDisabled = coercedType;
+  sendPhoneEvent(PhoneEvents.IS_PHONE_DISABLED, bool);
 });
 
 exps('isPhoneDisabled', () => global.isPhoneDisabled);
