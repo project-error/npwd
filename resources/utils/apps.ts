@@ -6,4 +6,5 @@ export default {
   MARKETPLACE: 'MARKETPLACE',
   CONTACTS: 'CONTACTS',
   CAMERA: 'CAMERA',
+  PHONE: 'PHONE',
 };

@@ -20,6 +20,7 @@ export enum PhoneEvents {
   FETCH_CREDENTIALS = 'npwd:getCredentials',
   TOGGLE_KEYS = 'npwd:toggleAllControls',
   SET_PLAYER_LOADED = 'npwd:setPlayerLoaded',
+  IS_PHONE_DISABLED = 'npwd:isPhoneDisabled',
 }
 
 // Used to standardize the server response
