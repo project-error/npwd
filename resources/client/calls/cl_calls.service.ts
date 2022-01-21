@@ -1,3 +1,4 @@
+import { checkHasPhone } from '../cl_main';
 import { IAlertProps } from '../../../typings/alerts';
 import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
 
@@ -33,15 +34,19 @@ export class CallService {
     CallService.sendCallAction(CallEvents.SET_CALL_INFO, null);
   }
 
-  handleStartCall(
+  async handleStartCall(
     transmitter: string,
     receiver: string,
     isTransmitter: boolean,
     isUnavailable: boolean,
   ) {
     // If we're already in a call we want to automatically reject
-    if (this.isInCall())
-      return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+    if (this.isInCall() || !(await checkHasPhone()))
+      return emitNet(
+        CallEvents.REJECTED,
+        { transmitterNumber: transmitter },
+        CallRejectReasons.BUSY_LINE,
+      );
 
     this.openCallModal(true);
 
