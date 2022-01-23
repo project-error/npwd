@@ -1,3 +1,4 @@
+import { useActiveMessageConversation } from './state';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { Message, MessageConversationResponse, MessageEvents } from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
@@ -14,9 +15,10 @@ export const useMessagesService = () => {
   const { pathname } = useLocation();
   const { visibility } = usePhoneVisibility();
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+  const activeMessageConversation = useActiveMessageConversation();
 
   const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
-    if (visibility && pathname.includes('/messages/conversations')) {
+    if (visibility && pathname.includes(`/messages/conversations/${conversationId}`)) {
       return;
     }
 
@@ -28,6 +30,8 @@ export const useMessagesService = () => {
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
+      if (activeMessageConversation.conversation_id !== messageDto.conversation_id) return;
+
       updateLocalMessages(messageDto);
     },
     [updateLocalMessages],
