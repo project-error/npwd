@@ -36,7 +36,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
   let errorMessage = null;
 
   const overCharacterLimit = message.trim().length > characterLimit;
-  const characterWarningPrompt = `${t('TWITTER,TWEET_MESSAGE_CHAR_LIMIT')} (${characterLimit})`;
+  const characterWarningPrompt = `${t('TWITTER.TWEET_MESSAGE_CHAR_LIMIT')} (${characterLimit})`;
 
   const overNewLineLimit = getNewLineCount(message) > newLineLimit;
   const newLineWarningPrompt = `${t('TWITTER.TWEET_MESSAGE_NEW_LINE_LIMIT')} (${newLineLimit})`;
