@@ -1,8 +1,9 @@
 import PlayerService from '../players/player.service';
-import { GalleryPhoto } from '../../../typings/photo';
+import { GalleryPhoto, PhotoResp } from '../../../typings/photo';
 import PhotoDB, { _PhotoDB } from './photo.db';
 import { photoLogger } from './photo.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
+import { checkAndFilterImage } from './../utils/imageFiltering';
 
 class _PhotoService {
   private readonly photoDB: _PhotoDB;
@@ -17,17 +18,23 @@ class _PhotoService {
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
     try {
-      if (!reqObj.data) resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      if (!reqObj.data) return resp({ status: 'error', errorMsg: PhotoResp.GENERIC });
+
+      const imageUrl = checkAndFilterImage(reqObj.data);
+
+      if (imageUrl == null) {
+        return resp({ status: 'error', errorMsg: PhotoResp.INVALID_IMAGE_HOST });
+      }
 
       const identifier = PlayerService.getIdentifier(reqObj.source);
-      const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
+      const photo = await this.photoDB.uploadPhoto(identifier, imageUrl);
 
       resp({ status: 'ok', data: photo });
     } catch (e) {
       photoLogger.error(`Failed to upload photo, ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -41,7 +48,7 @@ class _PhotoService {
       photoLogger.error(`Failed to fetch photos, ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 
@@ -58,7 +65,7 @@ class _PhotoService {
       photoLogger.error(`Failed to delete photo, ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
 }

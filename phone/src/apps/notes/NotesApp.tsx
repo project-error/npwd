@@ -29,9 +29,16 @@ export const NotesApp: React.FC = () => {
   const { title, content } = useQueryParams<AddNoteExportData>({ title: '', content: '' });
 
   useEffect(() => {
-    // Only on mount
-    if (title || content) setSelectedNote({ title, content });
-  }, [title, content, setSelectedNote]);
+    // Althought this interface kinda blows for readability,
+    // whenever we have
+    if (title || content) {
+      setModalVisible(true);
+      setSelectedNote({ title, content });
+    } else {
+      setModalVisible(false);
+      setSelectedNote(null);
+    }
+  }, [setModalVisible, title, content, setSelectedNote]);
 
   return (
     <NotesThemeProvider>

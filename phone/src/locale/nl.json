@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "Foto URL",
           "DIALOG_ERROR": "Ongeldige foto of link"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Beltoon",
         "RINGTONE_VOLUME": "Beltoon Volume",
         "NOTIFICATION": "Meldingen",

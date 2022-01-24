@@ -35,6 +35,10 @@ export interface Like {
   liked: boolean;
 }
 
+export enum MatchResp {
+  UPDATE_FAILED = 'MATCH.FEEDBACK.UPDATE_PROFILE_FAILED',
+}
+
 export enum MatchEvents {
   INITIALIZE = 'phone:initializeMatch',
   GET_PROFILES = 'phone:getMatchProfiles',

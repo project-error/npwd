@@ -13,6 +13,7 @@ import {
   useIsEditing,
 } from '../../hooks/state';
 import EditIcon from '@mui/icons-material/Edit';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 const MessagesList = (): any => {
   const [isEditing, setIsEditing] = useIsEditing();
@@ -23,12 +24,15 @@ const MessagesList = (): any => {
 
   const { conversations, goToConversation } = useMessages();
 
+  const { setMessageReadState } = useMessageActions();
+
   const filteredConversations = useFilteredConversationsValue();
   const [searchValue, setSearchValue] = useFilterValueState();
 
   if (!conversations) return <p>No messages</p>;
 
   const handleClick = (conversation: MessageConversation) => () => {
+    setMessageReadState(conversation.conversation_id, 0);
     goToConversation(conversation);
   };
 
@@ -68,16 +72,20 @@ const MessagesList = (): any => {
       <Box display="flex" flexDirection="column">
         <Box className={classes.root}>
           <List>
-            {filteredConversations.map((conversation) => (
-              <MessageGroupItem
-                handleToggle={handleToggleConversation}
-                isEditing={isEditing}
-                checked={checkedConversation}
-                key={conversation.conversation_id}
-                messageConversation={conversation}
-                handleClick={handleClick}
-              />
-            ))}
+            {[...filteredConversations]
+              .sort((a, b) => {
+                return b.updatedAt - a.updatedAt;
+              })
+              .map((conversation) => (
+                <MessageGroupItem
+                  handleToggle={handleToggleConversation}
+                  isEditing={isEditing}
+                  checked={checkedConversation}
+                  key={conversation.conversation_id}
+                  messageConversation={conversation}
+                  handleClick={handleClick}
+                />
+              ))}
           </List>
         </Box>
       </Box>

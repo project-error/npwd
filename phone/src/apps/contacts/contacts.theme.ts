@@ -1,9 +1,10 @@
 import { blue, common } from '@mui/material/colors';
+import { ThemeOptions } from '@mui/material';
 
 export const CONTACTS_APP_PRIMARY_COLOR = blue[500];
 export const CONTACTS_APP_TEXT_COLOR = common.white;
 
-const theme = {
+const theme: ThemeOptions = {
   palette: {
     primary: {
       main: CONTACTS_APP_PRIMARY_COLOR,

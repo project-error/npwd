@@ -1,5 +1,7 @@
 // Some remnants of the migration to Material UI v5
-const themeOverrides = {
+import { ThemeOptions } from '@mui/material';
+
+const themeOverrides: ThemeOptions = {
   components: {
     MuiListItem: {
       styleOverrides: {

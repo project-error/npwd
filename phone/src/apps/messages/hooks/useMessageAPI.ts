@@ -1,4 +1,4 @@
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import {
   Message,
   MessageConversationResponse,
@@ -17,7 +17,8 @@ import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
 
 type UseMessageAPIProps = {
-  sendMessage: ({ conversationId, message }: PreDBMessage) => void;
+  sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
+  sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (targetNumber: string) => void;
   deleteConversation: (conversationIds: string[]) => void;
@@ -40,10 +41,11 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   const setMessages = useSetMessages();
 
   const sendMessage = useCallback(
-    ({ conversationId, message }: PreDBMessage) => {
+    ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         message,
+        tgtPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
@@ -56,6 +58,27 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       });
     },
     [updateLocalMessages, t, addAlert],
+  );
+
+  const sendEmbedMessage = useCallback(
+    ({ conversationId, embed, tgtPhoneNumber }: PreDBMessage) => {
+      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
+        conversationId,
+        embed: JSON.stringify(embed),
+        is_embed: true,
+        tgtPhoneNumber,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        updateLocalMessages(resp.data);
+      });
+    },
+    [t, updateLocalMessages, addAlert],
   );
 
   const deleteMessage = useCallback(
@@ -114,6 +137,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         updateLocalConversations({
           phoneNumber: resp.data.phoneNumber,
           conversation_id: resp.data.conversation_id,
+          updatedAt: resp.data.updatedAt,
           display,
           unread: 0,
           avatar,
@@ -183,5 +207,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteConversation,
     addConversation,
     fetchMessages,
+    sendEmbedMessage,
   };
 };

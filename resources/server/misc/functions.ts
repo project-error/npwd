@@ -1,4 +1,4 @@
-import { config } from '../server';
+import { config } from '../config';
 import DbInterface from '../db/db_wrapper';
 import { generateUniquePhoneNumber } from './generateUniquePhoneNumber';
 import { playerLogger } from '../players/player.utils';

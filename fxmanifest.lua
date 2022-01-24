@@ -4,12 +4,15 @@ description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 
 client_scripts {
-    'resources/dist/client/*.client.js',
+    'resources/dist/client.js',
     'resources/client/*.lua'
 }
 
 server_script {
-    'resources/dist/server/*.server.js'
+    -- This is a file that lives purely in source code and isn't compiled alongside
+    -- rest of the release. It's used to detect whether a user can read or not.
+    'build-detector.js',
+    'resources/dist/server.js'
 }
 
 ui_page 'resources/html/index.html'

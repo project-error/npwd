@@ -1,7 +1,7 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { MockPhotoData } from '../utils/constants';

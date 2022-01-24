@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { fetchNui } from '@utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 
 const Component = ({ children, id, emitOnOpen }) => {
   useEffect(() => {

@@ -45,11 +45,12 @@
           "DESCRIPTION": "Képek autómatikus elrejtése"
         },
         "CUSTOM_WALLPAPER": {
-            "DIALOG_TITLE": "Saját háttér",
-            "DIALOG_CONTENT": "Állíts be saját hátteret a kép URL-jének megadásával",
-            "DIALOG_PLACEHOLDER": "Kép URL",
-            "DIALOG_ERROR": "Hibás kép/fájltípus"
+          "DIALOG_TITLE": "Saját háttér",
+          "DIALOG_CONTENT": "Állíts be saját hátteret a kép URL-jének megadásával",
+          "DIALOG_PLACEHOLDER": "Kép URL",
+          "DIALOG_ERROR": "Hibás kép/fájltípus"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Csengőhang",
         "RINGTONE_VOLUME": "Csengés hangerő",
         "NOTIFICATION": "Értesítés",
@@ -99,8 +100,8 @@
       "FEEDBACK": {
         "CREATE_PROFILE_SUCCESS": "Profil sikeresen létrehozva",
         "CREATE_PROFILE_FAILURE": "Hiba a profil létrehozása közben",
-        "EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
-        "EDIT_PROFILE_FAILURE": "Profil sikeresen frissítve",
+        "EDIT_PROFILE_SUCCESS": "Profil sikeresen frissítve",
+        "EDIT_PROFILE_FAILURE": "Profil frissítése sikeretlen",
         "CREATE_FAILED": "Hiba a tweet megosztásában",
         "RETWEET_FAILED": "Hiba, nem tudod megosztani ezt a tweetet",
         "RETWEET_EXISTS": "Ezt a tweetet már retweetelted!",
@@ -122,6 +123,7 @@
       "IMAGE_PLACEHOLDER": "Egy link a képhez vagy gifhez",
       "EDIT_DEFAULT_PROFILE_NAME": "Válaszd ki a profilneved",
       "EDIT_PROFILE_AVATAR": "Profilkép URL",
+      "AVATAR_CHOOSE_IMAGE": "Válasszon egy képet",
       "EDIT_PROFILE_NAME": "Profil név",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Hely",
@@ -173,7 +175,7 @@
         "DELETE_SUCCESS": "Jegyzet törölve.",
         "DELETE_FAILED": "Hiba a jegyzet törlése közben.",
         "UPDATE_FAILED": "Hiba a jegyzet frissítése közben.",
-        "UPDATE_SUCCESS":"Jegyzet frissítve."
+        "UPDATE_SUCCESS": "Jegyzet frissítve."
       }
     },
     "MARKETPLACE": {
@@ -187,9 +189,13 @@
         "REPORT_LISTING_FAILED": "Ezt a terméket már jelentetted",
         "REPORT_LISTING_SUCCESS": "Termék jelentve"
       },
+      "NEW_LISTING": "Új hírdetés",
+      "CHOOSE_IMAGE": "Válasszon egy képet",
       "FORM_TITLE": "Cím",
+      "POST_LISTING": "Közzététel",
       "FORM_IMAGE": "Kép vagy URL",
-      "FORM_DESCRIPTION": "Leírás"
+      "FORM_DESCRIPTION": "Leírás",
+      "NO_IMAGE": "Nincs kép "
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -221,19 +227,19 @@
       "ME": "Én"
     },
     "RELATIVE_TIME": {
-        "future": "%s múlva",
-        "past": "%s ideje",
-        "s": "pár másodperce",
-        "m": "egy perce",
-        "mm": "%d perce",
-        "h": "egy órája",
-        "hh": "%d órája",
-        "d": "egy napja",
-        "dd": "%d napja",
-        "M": "egy hónapja",
-        "MM": "%d hónapja",
-        "y": "egy éve",
-        "yy": "%d éve"
+      "future": "%s múlva",
+      "past": "%s ideje",
+      "s": "pár másodperce",
+      "m": "egy perce",
+      "mm": "%d perce",
+      "h": "egy órája",
+      "hh": "%d órája",
+      "d": "egy napja",
+      "dd": "%d napja",
+      "M": "egy hónapja",
+      "MM": "%d hónapja",
+      "y": "egy éve",
+      "yy": "%d éve"
     },
     "GENERIC": {
       "LOADING": "Töltés...",

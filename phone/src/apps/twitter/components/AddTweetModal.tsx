@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../../../ui/components/Modal';
@@ -14,7 +14,7 @@ import IconButtons from './buttons/IconButtons';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../utils/message';
 import { NewTweet, TwitterEvents } from '@typings/twitter';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
@@ -54,7 +54,7 @@ interface Image {
   link: string;
 }
 
-export const AddTweetModal = () => {
+const AddTweetModal = () => {
   const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
   const { ResourceConfig } = usePhone();
@@ -194,4 +194,4 @@ export const AddTweetModal = () => {
   );
 };
 
-export default AddTweetModal;
+export default memo(AddTweetModal);

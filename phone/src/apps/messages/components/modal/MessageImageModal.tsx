@@ -1,41 +1,47 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import qs from 'qs';
+import React, { useCallback, useEffect } from 'react';
 import Modal from '../../../../ui/components/Modal';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ContextMenu } from '@ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { MessageConversation } from '../../../../../../typings/messages';
 
 interface IProps {
-  isOpen: boolean;
-  messageGroupId: string | undefined;
-
+  messageGroup: MessageConversation | undefined;
+  imagePreview: any;
   onClose(): void;
-
   image?: string;
+  setImagePreview: (preview: string | null) => void;
 }
 
-export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
+export const MessageImageModal = ({
+  messageGroup,
+  onClose,
+  image,
+  setImagePreview,
+  imagePreview,
+}: IProps) => {
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
-  const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
   const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {
-    setQueryParamImagePreview(null);
+    setImagePreview(null);
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [history, pathname, search]);
+  }, [history, pathname, search, setImagePreview]);
 
   const sendImageMessage = useCallback(
     (m) => {
-      sendMessage({ conversationId: messageGroupId, message: m });
+      sendMessage({
+        conversationId: messageGroup.conversation_id,
+        message: m,
+        tgtPhoneNumber: messageGroup.phoneNumber,
+      });
       onClose();
     },
-    [sendMessage, messageGroupId, onClose],
+    [sendMessage, messageGroup, onClose],
   );
 
   const sendFromQueryParam = useCallback(
@@ -48,39 +54,22 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   useEffect(() => {
     if (!image) return;
-    setQueryParamImagePreview(image);
-  }, [image]);
-
-  const menuOptions = useMemo(
-    () => [
-      {
-        label: t('MESSAGES.MEDIA_OPTION'),
-        icon: <PhotoLibraryIcon />,
-        onClick: () =>
-          history.push(
-            `/camera?${qs.stringify({
-              referal: encodeURIComponent(pathname + search),
-            })}`,
-          ),
-      },
-    ],
-    [history, pathname, search, t],
-  );
+    setImagePreview(image);
+  }, [image, setImagePreview]);
 
   return (
     <>
-      <ContextMenu open={isOpen} options={menuOptions} onClose={onClose} />
-      <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
+      <Modal visible={imagePreview} handleClose={removeQueryParamImage}>
         <Box py={1}>
-          <Typography paragraph>Do you want to share this image?</Typography>
-          <PictureResponsive src={queryParamImagePreview} alt="Share gallery image preview" />
+          <Typography paragraph>{t('MESSAGES.SHARE_IMAGE_TITLE')}</Typography>
+          <PictureResponsive src={imagePreview} alt="Share gallery image preview" />
           <Button
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => sendFromQueryParam(queryParamImagePreview)}
+            onClick={() => sendFromQueryParam(imagePreview)}
           >
-            Share
+            {t('GENERIC.SHARE')}
           </Button>
         </Box>
       </Modal>

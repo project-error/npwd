@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import TweetList from './tweet/TweetList';
 import SearchButton from './buttons/SearchButton';
 import { TextField } from '@ui/components/Input';
-import { fetchNui } from '../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useFilteredTweets } from '../hooks/state';
 import { processTweet } from '../utils/tweets';

@@ -9,7 +9,7 @@ import { useQueryParams } from '@common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
-import { fetchNui } from '../../../../utils/fetchNui';
+import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';

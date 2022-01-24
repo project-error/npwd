@@ -5,6 +5,8 @@ export interface ActiveCall {
   receiver: string;
   channelId?: number;
   isUnavailable?: boolean;
+  start?: string;
+  identifier?: string;
 }
 
 export interface InitializeCallDTO {
@@ -21,6 +23,7 @@ export interface StartCallEventData {
 export interface EndCallDTO {
   transmitterNumber: string;
   isTransmitter: boolean;
+  isUnavailable: boolean;
 }
 
 export interface TransmitterNumDTO {
@@ -44,8 +47,8 @@ export interface ActiveCallRaw {
 }
 
 export interface CallHistoryItem {
-  id?: number;
-  identifier: string;
+  id?: number | string;
+  identifier?: string;
   transmitter: string;
   transmitterSource?: number;
   receiver: string;
@@ -70,7 +73,8 @@ export enum CallEvents {
   REJECTED = 'npwd:rejectCall',
   WAS_REJECTED = 'npwd:callRejected',
   FETCH_CALLS = 'npwd:fetchCalls',
-  SET_CALLER = 'npwd:setCaller',
+  SET_CALL_INFO = 'npwd:setCaller',
   SET_CALL_MODAL = 'npwd:callModal',
   SEND_ALERT = 'npwd:callSetAlert',
+  SAVE_CALL = 'npwd:saveCall',
 }

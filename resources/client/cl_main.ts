@@ -1,6 +1,6 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { config } from './client';
+import { config } from './cl_config';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 

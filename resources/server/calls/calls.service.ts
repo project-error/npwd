@@ -14,6 +14,7 @@ import { callLogger } from './calls.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { emitNetTyped } from '../utils/miscUtils';
 import { mainLogger } from '../sv_logger';
+import { _TwitterDB } from '../twitter/twitter.db';
 
 class CallsService {
   private callMap: Collection<string, ActiveCallRaw>;
@@ -43,9 +44,22 @@ class CallsService {
       true,
     );
 
+    const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
+    const callIdentifier = uuidv4();
+
+    // Used when the number is invalid or the player if offline.
+    const tempSaveCallObj = {
+      identifier: callIdentifier,
+      transmitter: transmitterNumber,
+      receiver: reqObj.data.receiverNumber,
+      is_accepted: false,
+      start: startCallTimeUnix.toString(),
+    };
+
     // If not online we immediately let the caller know that is an invalid
     // number
     if (!receiverIdentifier) {
+      await this.callsDB.saveCall(tempSaveCallObj);
       return resp({
         status: 'ok',
         data: {
@@ -54,12 +68,11 @@ class CallsService {
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
           is_accepted: false,
+          start: startCallTimeUnix.toString(),
+          identifier: callIdentifier,
         },
       });
     }
-
-    const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
-    const callIdentifier = uuidv4();
 
     // Will be null if the player is offline
     const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
@@ -67,6 +80,7 @@ class CallsService {
     // Now if the player is offline, we send the same resp
     // as before
     if (!receivingPlayer) {
+      await this.callsDB.saveCall(tempSaveCallObj);
       return resp({
         status: 'ok',
         data: {
@@ -75,6 +89,8 @@ class CallsService {
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
+          start: startCallTimeUnix.toString(),
+          identifier: callIdentifier,
         },
       });
     }
@@ -82,6 +98,7 @@ class CallsService {
     callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
     callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
 
+    // We call this here, so that w
     const callObj: ActiveCallRaw = {
       identifier: callIdentifier,
       transmitter: transmitterNumber,
@@ -113,6 +130,8 @@ class CallsService {
         transmitter: transmitterNumber,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: true,
+        start: startCallTimeUnix.toString(),
+        identifier: callIdentifier,
       },
     });
 
@@ -209,6 +228,12 @@ class CallsService {
   async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
     const transmitterNumber = reqObj.data.transmitterNumber;
     const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
+
+    if (reqObj.data.isUnavailable) {
+      emitNet(CallEvents.WAS_ENDED, reqObj.source);
+      resp({ status: 'ok' });
+      return;
+    }
 
     const currentCall = this.callMap.get(transmitterNumber);
 

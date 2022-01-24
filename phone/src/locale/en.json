@@ -50,6 +50,7 @@
           "DIALOG_PLACEHOLDER": "Image URL",
           "DIALOG_ERROR": "Invalid image or link"
         },
+        "CALL_VOLUME": "Call Volume",
         "RINGTONE": "Ringtone",
         "RINGTONE_VOLUME": "Ringtone Volume",
         "NOTIFICATION": "Notification",
@@ -218,8 +219,11 @@
       "DELETE_CONVERSATION": "Delete conversation",
       "NEW_MESSAGE": "Message...",
       "NEW_MESSAGE_GROUP": "Phone numbers...",
+      "SHARE_IMAGE_TITLE": "Do you want to share this image?",
+      "SHARE_CONTACT_TITLE": "Do you want to share this contact?",
       "GROUP_CHAT_LABEL": "Group chat label...",
       "MEDIA_OPTION": "Camera / Gallery",
+      "CONTACT_OPTION": "Share contact",
       "NEW_MESSAGE_GROUP_SUBMIT": "Send",
       "INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
       "ACTIONS_TITLE": "Actions",
@@ -255,6 +259,8 @@
       "CANCEL": "Cancel",
       "TITLE": "Title",
       "CONTENT": "Content",
+      "SHARE": "Share",
+      "ADD": "Add",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
     },
@@ -289,6 +295,8 @@
     "GENERIC_TITLE": "Title",
     "GENERIC_CONTENT": "Content",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
+    "GENERIC_DB_ERROR": "Create/update request failed.",
+    "GENERIC_INVALID_IMAGE_HOST": "The image host you tried to use is not allowed by this server."
   }
 }

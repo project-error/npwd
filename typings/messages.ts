@@ -3,11 +3,16 @@ export interface Message {
   message: string;
   conversation_id?: string;
   author: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface PreDBMessage {
   conversationId: string;
-  message: string;
+  tgtPhoneNumber: string;
+  message?: string;
+  is_embed?: boolean;
+  embed?: any;
 }
 
 export interface MessageConversation {
@@ -15,6 +20,7 @@ export interface MessageConversation {
   avatar: string;
   display: string;
   phoneNumber: string;
+  updatedAt: number;
   unread: number;
 }
 
@@ -78,6 +84,7 @@ export interface SetMessageRead {
 export interface MessageConversationResponse {
   conversation_id: string;
   phoneNumber: string;
+  updatedAt: number;
 }
 
 export enum MessageEvents {
@@ -89,6 +96,7 @@ export enum MessageEvents {
   CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
   CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
   SEND_MESSAGE = 'npwd:sendMessage',
+  SEND_EMBED_MESSAGE = 'npwd:sendEmbedMessage',
   SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
   SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
   DELETE_MESSAGE = 'npwd:deleteMessage',
@@ -97,7 +105,7 @@ export enum MessageEvents {
   FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',
   FETCH_INITIAL_MESSAGES = 'npwd:fetchInitialMessages',
   ACTION_RESULT = 'npwd:setMessagesAlert',
-  CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
+  CREATE_MESSAGE_BROADCAST = 'npwd:createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
 }

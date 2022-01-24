@@ -2,7 +2,8 @@ import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
 import { sendCameraEvent, sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { ClUtils, config } from './client';
+import { ClUtils } from './client';
+import { config } from './cl_config';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
@@ -26,9 +27,10 @@ function CellFrontCamActivate(activate: boolean) {
 }
 
 const displayHelperText = () => {
-  BeginTextCommandDisplayHelp('TWOSTRINGS');
+  BeginTextCommandDisplayHelp('THREESTRINGS');
   AddTextComponentString('Exit Camera Mode: ~INPUT_CELLPHONE_CANCEL~');
   AddTextComponentString('Toggle Front/Back: ~INPUT_PHONE~');
+  AddTextComponentString('Take Picture: ~INPUT_CELLPHONE_SELECT~');
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
@@ -57,16 +59,11 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;
       CellFrontCamActivate(frontCam);
-    // Enter Key, Take Photo
+      // Enter Key, Take Photo
     } else if (IsControlJustPressed(1, 176)) {
-      if (SCREENSHOT_BASIC_TOKEN !== 'none') {
-        const resp = await handleTakePicture();
-        cb(resp);
-        break;
-      }
-      console.error(
-        'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
-      );
+      const resp = await handleTakePicture();
+      cb(resp);
+      break;
     } else if (IsControlJustPressed(1, 194)) {
       await handleCameraExit();
       break;
@@ -87,15 +84,20 @@ const handleTakePicture = async () => {
   // Wait a frame so we don't draw the display helper text
   ClearHelp(true);
   await Delay(0);
+  /*
+   * If we don't do this janky work around players get stuck in their camera
+   * until the entire server callback has happened, which doesn't matter for
+   * people with fast internet but a lot of people still have slow internet
+   */
+  setTimeout(() => {
+    DestroyMobilePhone();
+    CellCamActivate(false, false);
+    openPhoneTemp();
+    animationService.openPhone();
+    emit('npwd:disableControlActions', true);
+  }, 200);
   const resp = await takePhoto();
-  DestroyMobilePhone();
-  CellCamActivate(false, false);
-  openPhoneTemp();
-  animationService.openPhone();
-  emit('npwd:disableControlActions', true);
-  await Delay(200);
   inCameraMode = false;
-
   return resp;
 };
 

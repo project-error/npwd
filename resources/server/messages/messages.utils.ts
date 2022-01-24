@@ -13,11 +13,12 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
 
     if (conversation.participant_identifier != identifier) {
       mapping[groupId] = {
-        unread: conversation.unread,
+        unread: conversation.unreadCount,
         phoneNumber: conversation.phone_number,
         display: conversation.display,
         conversation_id: conversation.conversation_id,
         user_identifier: identifier,
+        updatedAt: Date.parse(conversation.updatedAt),
       };
     }
 

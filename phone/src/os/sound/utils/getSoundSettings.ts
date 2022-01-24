@@ -1,5 +1,5 @@
-import { IPhoneSettings } from '../../../apps/settings/hooks/useSettings';
 import { getNotificationPath, getRingtonePath } from '../../../apps/settings/utils/getRingtonePath';
+import { IPhoneSettings } from '@typings/settings';
 
 const getPath = {
   ringtone: getRingtonePath,

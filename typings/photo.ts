@@ -3,6 +3,11 @@ export interface GalleryPhoto {
   id: number;
 }
 
+export enum PhotoResp {
+  GENERIC = 'CAMERA.FAILED_TO_TAKE_PHOTO',
+  INVALID_IMAGE_HOST = 'GENERIC_INVALID_IMAGE_HOST',
+}
+
 export enum PhotoEvents {
   TAKE_PHOTO = 'npwd:TakePhoto',
   CAMERA_EXITED = 'npwd:cameraExited',
