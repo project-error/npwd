@@ -34,7 +34,7 @@ export const useMessagesService = () => {
 
       updateLocalMessages(messageDto);
     },
-    [updateLocalMessages],
+    [updateLocalMessages, activeMessageConversation],
   );
 
   const handleAddConversation = useCallback(
