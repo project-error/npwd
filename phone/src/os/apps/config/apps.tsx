@@ -42,12 +42,14 @@ export interface IAppConfig {
   backgroundColor: string;
   color: string;
   path: string;
+  disable?: boolean;
   Route: React.FC;
 }
 
 export type IApp = IAppConfig & {
   notification: INotificationIcon;
   icon: JSX.Element;
+  isDisabled: boolean;
   notificationIcon: JSX.Element;
   NotificationIcon: React.FC<SvgIconProps>;
   Icon?: React.FC<SvgIconProps>;

@@ -71,7 +71,7 @@ function Phone() {
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
               {apps.map((App) => (
-                <App.Route key={App.id} />
+                <>{!App.isDisabled && <App.Route key={App.id} />}</>
               ))}
             </>
             <NotificationAlert />

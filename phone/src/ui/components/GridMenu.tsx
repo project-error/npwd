@@ -16,13 +16,17 @@ export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, 
       {items &&
         items.length &&
         items.map((item) => (
-          <Grid item xs={xs} key={item.id}>
-            <Box textAlign="center">
-              <Link to={item.path}>
-                <Component {...item} />
-              </Link>
-            </Box>
-          </Grid>
+          <>
+            {!item.isDisabled && (
+              <Grid item xs={xs} key={item.id}>
+                <Box textAlign="center">
+                  <Link to={item.path}>
+                    <Component {...item} />
+                  </Link>
+                </Box>
+              </Grid>
+            )}
+          </>
         ))}
     </Grid>
   );
