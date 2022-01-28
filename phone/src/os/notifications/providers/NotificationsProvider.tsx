@@ -89,10 +89,13 @@ export function NotificationsProvider({ children }) {
     });
   };
 
-  const addNotification = useCallback((value: INotification) => {
-    if (isPhoneDisabled) return;
-    setNotifications((all) => [value, ...all]);
-  }, []);
+  const addNotification = useCallback(
+    (value: INotification) => {
+      if (isPhoneDisabled) return;
+      setNotifications((all) => [value, ...all]);
+    },
+    [isPhoneDisabled],
+  );
 
   /**
    * Checks if a notification exists for current app
