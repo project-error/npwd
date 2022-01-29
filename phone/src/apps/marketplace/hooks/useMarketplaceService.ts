@@ -13,7 +13,7 @@ export const useMarketplaceService = () => {
       addListing(resp.listing);
       setNotification(resp.listing);
     },
-    [addListing],
+    [addListing, setNotification],
   );
 
   const deleteListingHandler = useCallback(
