@@ -27,6 +27,7 @@ export interface IPhoneSettings {
   TWITTER_notiSound: SettingOption;
   TWITTER_notiSoundVol: number;
   TWITTER_notifyNewFeedTweet: boolean;
+  MARKETPLACE_notifyNewListing: boolean;
 }
 
 export enum SettingEvents {

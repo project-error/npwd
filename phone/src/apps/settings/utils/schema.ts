@@ -55,6 +55,7 @@ const settingsSchema: Schema = {
     TWITTER_notiSound: { $ref: '/SettingOption', required: true },
     TWITTER_notiSoundVol: { type: 'number', required: true },
     TWITTER_notifyNewFeedTweet: { type: 'boolean', required: true },
+    MARKETPLACE_notifyNewListing: { type: 'boolean', required: true },
   },
 };
 

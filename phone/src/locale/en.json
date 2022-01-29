@@ -60,6 +60,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Invalid stored settings! Please reset in the Settings App.",
         "SETTINGS_RESET": "Settings have been reset!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notification",
+        "NOTIFY_NEW_LISTING": "Show notification for new listings"
       }
     },
     "CAMERA": {
