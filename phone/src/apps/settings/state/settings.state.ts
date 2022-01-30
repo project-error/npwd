@@ -10,7 +10,7 @@ const localStorageEffect =
   ({ setSelf, onSet }) => {
     const savedVal = localStorage.getItem(key);
 
-    if (!savedVal) return setSelf(new DefaultValue());
+    if (!savedVal) setSelf(new DefaultValue());
 
     try {
       const validString = isSchemaValid(savedVal);
