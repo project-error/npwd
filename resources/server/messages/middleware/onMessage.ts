@@ -11,11 +11,11 @@ exp('onMessage', (phoneNumber: string, cb: (messageCtx: OnMessageExportCtx) => v
 
 export const onMessageRespond = async (ctx: OnMessageExportCtx, message: string) => {
   const responseData = {
-    source: ctx.req.source,
+    source: ctx.source,
     data: {
       message,
-      conversation_id: ctx.req.data.conversationId,
-      author: ctx.req.data.tgtPhoneNumber,
+      conversation_id: ctx.data.conversationId,
+      author: ctx.data.tgtPhoneNumber,
       embed: false,
       is_embed: false,
     },

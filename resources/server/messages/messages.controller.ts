@@ -52,7 +52,7 @@ onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, r
       // A simple solution to listen for messages. Will expand upon this soonTM.
       const funcRef = OnMessageExportMap.get(reqObj.data.tgtPhoneNumber);
       if (funcRef) {
-        await funcRef({ data: reqObj.data });
+        await funcRef({ data: reqObj.data, source: reqObj.source });
       }
     })
     .catch((e) => {

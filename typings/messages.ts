@@ -93,7 +93,9 @@ export interface OnMessageExportCtx {
   /**
    * The incoming message object
    */
-  req: PromiseRequest<PreDBMessage>;
+  data: PreDBMessage;
+
+  source: number;
 
   /**
    * Reponds with a message to the source
