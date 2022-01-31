@@ -8,7 +8,7 @@ import {
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
-import { OnMessageExportMap, onMessageRespond } from './middleware/onMessage';
+import { OnMessageExportMap } from './middleware/onMessage';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
