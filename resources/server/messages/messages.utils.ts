@@ -14,7 +14,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
     if (conversation.participant_identifier != identifier) {
       mapping[groupId] = {
         unread: conversation.unreadCount,
-        phoneNumber: conversation.phone_number,
+        phoneNumber: conversation.phone_number || conversation.conversation_id.split('+')[0],
         display: conversation.display,
         conversation_id: conversation.conversation_id,
         user_identifier: identifier,
@@ -93,7 +93,9 @@ export async function createMessageGroupsFromPhoneNumber(
   const tgtIdentifier = await PlayerService.getIdentifierFromPhoneNumber(tgtPhoneNumber, true);
 
   if (!tgtIdentifier) {
-    throw new Error('tgtIdentifier was null');
+    messagesLogger.debug(
+      "Didn't find a identifier for the phone number, this is probably some service number.",
+    );
   }
 
   const conversationId = createGroupHashID([sourcePhoneNumber, tgtPhoneNumber]);
@@ -123,7 +125,7 @@ export async function createMessageGroupsFromPhoneNumber(
     conversationId,
     identifiers: [sourcePhoneNumber, tgtPhoneNumber],
     phoneNumber: tgtPhoneNumber,
-    participant: tgtIdentifier,
+    participant: tgtIdentifier || tgtPhoneNumber,
   };
 }
 

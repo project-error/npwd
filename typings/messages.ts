@@ -1,5 +1,3 @@
-import { PromiseRequest } from '../resources/server/lib/PromiseNetEvents/promise.types';
-
 export interface Message {
   id: number;
   message: string;
