@@ -8,6 +8,7 @@ import {
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
+import { OnMessageExportMap } from './middleware/onMessage';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
@@ -46,12 +47,20 @@ onNetPromise<{ conversationId: string; page: number }, Message[]>(
 );
 
 onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
-  MessagesService.handleSendMessage(reqObj, resp).catch((e) => {
-    messagesLogger.error(
-      `Error occurred while sending message (${reqObj.source}), Error: ${e.message}`,
-    );
-    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-  });
+  MessagesService.handleSendMessage(reqObj, resp)
+    .then(async () => {
+      // A simple solution to listen for messages. Will expand upon this soonTM.
+      const funcRef = OnMessageExportMap.get(reqObj.data.tgtPhoneNumber);
+      if (funcRef) {
+        await funcRef({ data: reqObj.data, source: reqObj.source });
+      }
+    })
+    .catch((e) => {
+      messagesLogger.error(
+        `Error occurred while sending message (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
 });
 
 onNetPromise<{ conversationsId: string[] }, void>(

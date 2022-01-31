@@ -170,6 +170,25 @@ class _MessagesService {
     }
   }
 
+  // I didn't bother creating a new interface. Will do it soonTM.
+  async handleOnMessageSendResponse(reqObj: any) {
+    const messageData = reqObj.data;
+
+    const messageId = await this.messagesDB.createMessage(
+      messageData.author,
+      messageData.author,
+      messageData.conversation_id,
+      messageData.message,
+    );
+
+    const respData = {
+      ...messageData,
+      id: messageId,
+    };
+
+    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, respData);
+  }
+
   async handleSetMessageRead(src: number, groupId: string) {
     try {
       const identifier = PlayerService.getPlayer(src).getPhoneNumber();
