@@ -96,12 +96,6 @@ export interface OnMessageExportCtx {
   req: PromiseRequest<PreDBMessage>;
 
   /**
-   *
-   * Handles the next npwd handler
-   */
-  next: () => void;
-
-  /**
    * Reponds with a message to the source
    * @param message
    */

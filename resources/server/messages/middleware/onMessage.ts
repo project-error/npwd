@@ -7,14 +7,8 @@ const exp = global.exports;
 export const OnMessageExportMap = new Map();
 
 exp('onMessage', (phoneNumber: string, cb: (messageCtx: OnMessageExportCtx) => void) => {
-  console.log('Registered onMessage with number:', phoneNumber);
-
   OnMessageExportMap.set(phoneNumber, cb);
 });
-
-export const onMessageNext = () => {
-  console.log('Going to the next handler');
-};
 
 export const onMessageRespond = async (ctx: OnMessageExportCtx, message: string) => {
   const responseData: PromiseRequest<PreDBMessage> = {

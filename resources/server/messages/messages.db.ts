@@ -21,8 +21,8 @@ export class _MessagesDB {
     author: string,
     conversationId: string,
     message: string,
-    isEmbed: boolean,
-    embed: any,
+    isEmbed?: boolean,
+    embed?: any,
   ): Promise<number> {
     const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id, is_embed, embed)
                    VALUES (?, ?, ?, ?, ?, ?)`;

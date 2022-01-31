@@ -178,8 +178,6 @@ class _MessagesService {
       messageData.tgtPhoneNumber,
       messageData.conversationId,
       messageData.message,
-      false,
-      '',
     );
 
     emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData);
