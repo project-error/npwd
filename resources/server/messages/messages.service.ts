@@ -170,17 +170,23 @@ class _MessagesService {
     }
   }
 
-  async handleOnMessageSendResponse(reqObj: PromiseRequest<PreDBMessage>) {
+  // I didn't bother creating a new interface. Will do it soonTM.
+  async handleOnMessageSendResponse(reqObj: any) {
     const messageData = reqObj.data;
 
-    await this.messagesDB.createMessage(
-      messageData.tgtPhoneNumber,
-      messageData.tgtPhoneNumber,
-      messageData.conversationId,
+    const messageId = await this.messagesDB.createMessage(
+      messageData.author,
+      messageData.author,
+      messageData.conversation_id,
       messageData.message,
     );
 
-    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, messageData);
+    const respData = {
+      ...messageData,
+      id: messageId,
+    };
+
+    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, respData);
   }
 
   async handleSetMessageRead(src: number, groupId: string) {

@@ -1,5 +1,4 @@
-import { OnMessageExportCtx, PreDBMessage } from '../../../../typings/messages';
-import { PromiseRequest } from '../../lib/PromiseNetEvents/promise.types';
+import { OnMessageExportCtx } from '../../../../typings/messages';
 import MessagesService from '../messages.service';
 
 const exp = global.exports;
@@ -11,12 +10,14 @@ exp('onMessage', (phoneNumber: string, cb: (messageCtx: OnMessageExportCtx) => v
 });
 
 export const onMessageRespond = async (ctx: OnMessageExportCtx, message: string) => {
-  const responseData: PromiseRequest<PreDBMessage> = {
+  const responseData = {
     source: ctx.req.source,
     data: {
       message,
-      conversationId: ctx.req.data.conversationId,
-      tgtPhoneNumber: ctx.req.data.tgtPhoneNumber,
+      conversation_id: ctx.req.data.conversationId,
+      author: ctx.req.data.tgtPhoneNumber,
+      embed: false,
+      is_embed: false,
     },
   };
 
