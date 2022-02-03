@@ -10,9 +10,10 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderColor: theme.palette.primary.main,
     width: '100%',
-    position: 'absolute',
-    bottom: 0,
+    minHeight: '10%',
+    maxHeight: '100%',
     zIndex: 2,
+    overflow: 'auto',
   },
 }));
 
@@ -46,7 +47,13 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
     : options;
 
   return (
-    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+    <Slide
+      direction="up"
+      in={open}
+      style={{ position: 'absolute', bottom: 0 }}
+      mountOnEnter
+      unmountOnExit
+    >
       <Paper square className={classes.root}>
         <List disablePadding>
           {_options.map((option) => (
