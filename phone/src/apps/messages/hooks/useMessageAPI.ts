@@ -61,7 +61,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         updateLocalMessages(resp.data);
       });
     },
-    [updateLocalMessages, t, addAlert],
+    [updateLocalMessages, t, addAlert, myPhoneNumber],
   );
 
   const sendEmbedMessage = useCallback(
@@ -83,7 +83,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         updateLocalMessages(resp.data);
       });
     },
-    [t, updateLocalMessages, addAlert],
+    [t, updateLocalMessages, addAlert, myPhoneNumber],
   );
 
   const deleteMessage = useCallback(
