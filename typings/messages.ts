@@ -10,6 +10,7 @@ export interface Message {
 export interface PreDBMessage {
   conversationId: string;
   tgtPhoneNumber: string;
+  sourcePhoneNumber: string;
   message?: string;
   is_embed?: boolean;
   embed?: any;

@@ -15,6 +15,8 @@ import { messageState, useSetMessages } from './state';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
+import { useSimcardService } from '../../../os/simcard/hooks/useSimcardService';
+import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
@@ -40,12 +42,15 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   const { getPictureByNumber, getDisplayByNumber } = useContactActions();
   const setMessages = useSetMessages();
 
+  const myPhoneNumber = useMyPhoneNumber();
+
   const sendMessage = useCallback(
     ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         message,
         tgtPhoneNumber,
+        sourcePhoneNumber: myPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
@@ -67,6 +72,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         embed: JSON.stringify(embed),
         is_embed: true,
         tgtPhoneNumber,
+        sourcePhoneNumber: myPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
