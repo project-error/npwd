@@ -15,7 +15,6 @@ import { messageState, useSetMessages } from './state';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
-import { useSimcardService } from '../../../os/simcard/hooks/useSimcardService';
 import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
