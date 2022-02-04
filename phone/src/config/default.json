@@ -127,6 +127,10 @@
     {
       "label": "Indonesia",
       "value": "id"
+    },
+    {
+      "label": "繁體中文",
+      "value": "zhtw"
     }
   ],
   "ringtones": [
