@@ -9,9 +9,9 @@ body:
     value: |
       Please fill out this short template to the best of your ability.
 - type: dropdown
-  id: developement-issue
+  id: development-issue
   attributes:
-    label: Developement Issue
+    label: Development Issue
     description: Is this issue related to the phone still being in development?
     options:
       - "Yes"
