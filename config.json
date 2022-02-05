@@ -58,7 +58,7 @@
     "allowEditableProfileName": true
   },
   "debug": {
-    "level": "silly",
+    "level": "error",
     "enabled": true,
     "sentryEnabled": true
   }
