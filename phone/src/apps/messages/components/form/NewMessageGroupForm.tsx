@@ -36,7 +36,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   };
 
   const handleCancel = () => {
-    history.push('/messages');
+    history.goBack();
   };
 
   const renderAutocompleteInput = (params) => (
