@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
-import { ListItemAvatar, Avatar as MuiAvatar, ListItem, Typography } from '@mui/material';
+import { ListItemAvatar, Avatar as MuiAvatar } from '@mui/material';
 
 import { FormattedTweet } from '@typings/twitter';
 import { secondsToHumanReadable } from '../../utils/time';
