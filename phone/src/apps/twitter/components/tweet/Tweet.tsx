@@ -14,54 +14,16 @@ import { RetweetButton } from '../buttons/RetweetButton';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import Retweet from './Retweet';
 import ShowMore from './ShowMore';
-
-const useStyles = makeStyles({
-  root: {
-    overflowX: 'hidden',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    width: '100%',
-    marginTop: '6px',
-  },
-  container: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    alignItems: 'flex-start',
-    width: '100%',
-  },
-  content: {
-    display: 'flex',
-    marginTop: '-10px', // easier to do this here than override the MUI styles
-    flexFlow: 'column nowrap',
-    width: '100%',
-  },
-  primary: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    width: '100%',
-    alignItems: 'flex-end',
-  },
-  profile: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-  },
-  date: {
-    marginLeft: '10px',
-    fontSize: '14px',
-  },
-  message: {
-    fontSize: '18px',
-    wordBreak: 'break-all',
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginLeft: '-20px', // easier to do this here than override the MUI styles
-    marginTop: '3px',
-  },
-});
+import {
+  TweetButtonContainer,
+  TweetContent,
+  TweetContentPrimary,
+  TweetDate,
+  TweetItem,
+  TweetItemContainer,
+  TweetMessage,
+  TweetProfile,
+} from './Tweet.styles';
 
 export const Tweet = (tweet: FormattedTweet) => {
   const {
@@ -79,7 +41,6 @@ export const Tweet = (tweet: FormattedTweet) => {
     isReported,
     isRetweet,
   } = tweet;
-  const classes = useStyles();
   const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
 
@@ -104,9 +65,9 @@ export const Tweet = (tweet: FormattedTweet) => {
   const avatarUrl = isRetweet ? retweetAvatarUrl : avatar_url;
 
   return (
-    <ListItem className={classes.root} divider>
+    <TweetItem divider>
       {isRetweet && <Retweet profileName={profile_name} />}
-      <div className={classes.container}>
+      <TweetItemContainer>
         {enableAvatars && (
           <ListItemAvatar>
             <MuiAvatar>
@@ -114,34 +75,28 @@ export const Tweet = (tweet: FormattedTweet) => {
             </MuiAvatar>
           </ListItemAvatar>
         )}
-        <div className={classes.content}>
-          <div className={classes.primary}>
-            <div className={classes.profile}>{formattedProfileName}</div>
-            <Typography
-              className={classes.date}
-              component="div"
-              variant="body2"
-              color="textSecondary"
-            >
+        <TweetContent>
+          <TweetContentPrimary>
+            <TweetProfile>{formattedProfileName}</TweetProfile>
+            <TweetDate variant="body2" color="textSecondary">
               {secondsToHumanReadable(t, seconds_since_tweet)}
-            </Typography>
-          </div>
-          <div
-            className={classes.message}
+            </TweetDate>
+          </TweetContentPrimary>
+          <TweetMessage
             dangerouslySetInnerHTML={{
               __html: sanitizedMessage,
             }}
           />
           {enableImages && <ImageDisplay visible images={images} small />}
-          <div className={classes.buttonContainer}>
+          <TweetButtonContainer>
             <ReplyButton profile_name={profile_name} />
             <LikeButton tweetId={id} isLiked={isLiked} />
             {!isMine && <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />}
             <ShowMore isMine={isMine} isReported={isReported} id={id} />
-          </div>
-        </div>
-      </div>
-    </ListItem>
+          </TweetButtonContainer>
+        </TweetContent>
+      </TweetItemContainer>
+    </TweetItem>
   );
 };
 

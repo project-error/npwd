@@ -1,46 +1,39 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, IconButton, styled } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { PictureReveal } from '@ui/components/PictureReveal';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    margin: '2px 15px',
-  },
-  imageContainer: {
-    // catch the close button here so it doesn't go all the way up to the modal
-    position: 'relative',
-    display: 'inline-block',
-  },
-  imgButton: {
-    position: 'absolute', // show the close button in the top right of the image
-    top: '2px',
-    right: '5px',
+const ImageContainer = styled(Box)({
+  position: 'relative',
+  display: 'inline-block',
+});
+
+const ImageButton = styled(IconButton)({
+  position: 'absolute', // show the close button in the top right of the image
+  top: '2px',
+  right: '5px',
+  backgroundColor: '#000',
+  opacity: 0.7,
+  '&:hover': {
+    // fixes a bug where when the user closes one image material-ui puts
+    // the hover status on the previous image
     backgroundColor: '#000',
-    opacity: 0.7,
-    '&:hover': {
-      // fixes a bug where when the user closes one image material-ui puts
-      // the hover status on the previous image
-      backgroundColor: '#000',
-    },
   },
-}));
+});
 
 export const Image = ({ link, handleClick }) => {
-  const classes = useStyles();
   return (
-    <div className={classes.imageContainer}>
+    <ImageContainer>
       {handleClick && (
-        <IconButton className={classes.imgButton} onClick={handleClick} size="small">
+        <ImageButton onClick={handleClick} size="small">
           <CloseIcon />
-        </IconButton>
+        </ImageButton>
       )}
       <PictureReveal>
         <PictureResponsive alt="small avatar" src={link} />
       </PictureReveal>
-    </div>
+    </ImageContainer>
   );
 };
 

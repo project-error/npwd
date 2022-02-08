@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
 import TweetList from './tweet/TweetList';
 import SearchButton from './buttons/SearchButton';
 import { TextField } from '@ui/components/Input';
@@ -10,21 +9,21 @@ import { useFilteredTweets } from '../hooks/state';
 import { processTweet } from '../utils/tweets';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { Box, styled } from '@mui/material';
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  searchContainer: {
-    padding: '15px',
-  },
-  search: {
-    width: '100%',
-  },
+const SearchRoot = styled(Box)({
+  width: '100%',
+});
+
+const SearchContainer = styled(Box)({
+  padding: '15px',
+});
+
+const SearchField = styled(TextField)({
+  width: '100%',
 });
 
 function TwitterSearch() {
-  const classes = useStyles();
   const [t] = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const { addAlert } = useSnackbar();
@@ -56,10 +55,9 @@ function TwitterSearch() {
 
   return (
     <>
-      <div className={classes.root}>
-        <div className={classes.searchContainer}>
-          <TextField
-            className={classes.search}
+      <SearchRoot>
+        <SearchContainer>
+          <SearchField
             placeholder={t('TWITTER.SEARCH_TWEETS_PLACEHOLDER')}
             label={t('TWITTER.SEARCH_TWEETS')}
             value={searchValue}
@@ -67,9 +65,9 @@ function TwitterSearch() {
             size="medium"
             inputRef={(input) => input && input.focus()}
           />
-        </div>
+        </SearchContainer>
         {filteredTweets.length > 0 && <TweetList tweets={tweets} />}
-      </div>
+      </SearchRoot>
       <SearchButton handleClick={handleSubmit} />
     </>
   );

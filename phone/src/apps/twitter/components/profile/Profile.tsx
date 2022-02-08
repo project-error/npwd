@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../../hooks/useProfile';
 import Avatar from '../Avatar';
@@ -14,23 +13,17 @@ import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import qs from 'qs';
-import { Box, Button } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    padding: '15px',
-  },
-  spacer: {
-    height: '8px',
-  },
-}));
+const ProfileRoot = styled(Box)({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  padding: '15px',
+});
 
 export function Profile() {
-  const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
@@ -91,9 +84,9 @@ export function Profile() {
   const { enableAvatars, allowEditableProfileName } = ResourceConfig.twitter;
 
   return (
-    <div className={classes.root}>
+    <ProfileRoot>
       {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
-      <div className={classes.spacer} />
+      <Box height={8} />
 
       <Box display="flex" alignItems="center">
         <div>
@@ -117,7 +110,7 @@ export function Profile() {
         allowChange={allowEditableProfileName}
       />
       <ProfileUpdateButton handleClick={handleUpdate} />
-    </div>
+    </ProfileRoot>
   );
 }
 
