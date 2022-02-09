@@ -46,10 +46,7 @@ export const messageState = {
 
       const regExp = new RegExp(searchValue, 'gi');
 
-      return messageConversations.filter(
-        (conversation) =>
-          conversation?.display?.match(regExp) || conversation.phoneNumber.match(regExp),
-      );
+      return messageConversations.filter((conversation) => conversation.participant.match(regExp));
     },
   }),
   messages: atom<Message[]>({
@@ -80,7 +77,7 @@ export const messageState = {
     key: 'selectedMessage',
     default: null,
   }),
-  checkedConversations: atom<string[]>({
+  checkedConversations: atom<number[]>({
     key: 'checkedConversation',
     default: [],
   }),

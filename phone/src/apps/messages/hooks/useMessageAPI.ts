@@ -22,7 +22,7 @@ type UseMessageAPIProps = {
   sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (targetNumber: string) => void;
-  deleteConversation: (conversationIds: string[]) => void;
+  deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
 };
 
@@ -136,16 +136,14 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           });
         }
 
-        const display = getDisplayByNumber(resp.data.phoneNumber);
-        const avatar = getPictureByNumber(resp.data.phoneNumber);
-
+        // FIXME: Fix this
         updateLocalConversations({
-          phoneNumber: resp.data.phoneNumber,
-          conversation_id: resp.data.conversation_id,
+          participant: resp.data.phoneNumber,
+          id: resp.data.conversation_id,
           updatedAt: resp.data.updatedAt,
-          display,
+          conversationList: resp.data.conversationList,
+          label: resp.data.conversationList,
           unread: 0,
-          avatar,
         });
 
         history.push(`/messages/conversations/${resp.data.conversation_id}`);
@@ -164,7 +162,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const deleteConversation = useCallback(
-    (conversationIds: string[]) => {
+    (conversationIds: number[]) => {
       fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
         conversationsId: conversationIds,
       }).then((resp) => {

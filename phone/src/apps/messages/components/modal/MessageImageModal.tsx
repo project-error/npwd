@@ -35,9 +35,9 @@ export const MessageImageModal = ({
   const sendImageMessage = useCallback(
     (m) => {
       sendMessage({
-        conversationId: messageGroup.conversation_id,
+        conversationId: messageGroup.id,
         message: m,
-        tgtPhoneNumber: messageGroup.phoneNumber,
+        tgtPhoneNumber: messageGroup.participant,
       });
       onClose();
     },

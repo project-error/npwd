@@ -21,9 +21,9 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const handleSubmit = async () => {
     if (message.trim()) {
       await sendMessage({
-        conversationId: messageConversation.conversation_id,
+        conversationId: messageConversation.id,
         message,
-        tgtPhoneNumber: messageConversation.phoneNumber,
+        tgtPhoneNumber: messageConversation.participant,
       });
       setMessage('');
     }
@@ -35,7 +35,7 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
     }
   };
 
-  if (!messageConversation.conversation_id) return null;
+  if (!messageConversation.id) return null;
 
   return (
     <Paper variant="outlined" sx={{ display: 'flex', alignItems: 'center' }}>
