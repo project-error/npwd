@@ -34,7 +34,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [hasMore, setHasMore] = useState(!!messages.length);
   const { getContactByNumber } = useContactActions();
 
-  const conversationContact = getContactByNumber(activeMessageGroup.phoneNumber);
+  const conversationContact = getContactByNumber(activeMessageGroup.participant);
 
   const handleNextPage = useCallback(() => {
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
@@ -106,7 +106,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
         </Box>
       </Box>
       <MessageInput
-        messageGroupName={conversationContact?.display || activeMessageGroup.phoneNumber}
+        messageGroupName={activeMessageGroup.participant}
         messageConversation={activeMessageGroup}
         onAddImageClick={() => setContextMenuOpen(true)}
       />

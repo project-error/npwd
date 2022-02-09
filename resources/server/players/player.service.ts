@@ -215,6 +215,10 @@ class _PlayerService {
     }
   }
 
+  async getPhoneNumberFromIdentifier(identifier: string) {
+    return await this.playerDB.fetchPhoneNumberFromIdentifier(identifier);
+  }
+
   /**
    * Clear all data from the database we don't want to stored after the player as disconnected.
    */

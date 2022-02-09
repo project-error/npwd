@@ -1,5 +1,6 @@
 import { getSource } from '../utils/miscUtils';
 import {
+  DeleteConversationRequest,
   Message,
   MessageConversation,
   MessageEvents,
@@ -9,6 +10,7 @@ import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { OnMessageExportMap } from './middleware/onMessage';
+import { Contact } from '../../../typings/contact';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
@@ -22,7 +24,7 @@ onNetPromise<void, MessageConversation[]>(
   },
 );
 
-onNetPromise<{ targetNumber: string }, MessageConversation>(
+onNetPromise<string[], MessageConversation>(
   MessageEvents.CREATE_MESSAGE_CONVERSATION,
   async (reqObj, resp) => {
     MessagesService.handleCreateMessageConversation(reqObj, resp).catch((e) => {
@@ -69,7 +71,7 @@ onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, r
     });
 });
 
-onNetPromise<{ conversationsId: string[] }, void>(
+onNetPromise<DeleteConversationRequest, void>(
   MessageEvents.DELETE_CONVERSATION,
   async (reqObj, resp) => {
     MessagesService.handleDeleteConversation(reqObj, resp).catch((e) => {
@@ -90,9 +92,9 @@ onNetPromise<Message, void>(MessageEvents.DELETE_MESSAGE, async (reqObj, resp) =
   });
 });
 
-onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
+onNet(MessageEvents.SET_MESSAGE_READ, async (conversationId: number) => {
   const src = getSource();
-  MessagesService.handleSetMessageRead(src, groupId).catch((e) =>
+  MessagesService.handleSetMessageRead(src, conversationId).catch((e) =>
     messagesLogger.error(`Error occurred in set message read event (${src}), Error: ${e.message}`),
   );
 });

@@ -10,7 +10,7 @@ interface IUseMessages {
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
 
-  goToConversation(g: Pick<MessageConversation, 'conversation_id'>): void;
+  goToConversation(g: Pick<MessageConversation, 'id'>): void;
 }
 
 const useMessages = (): IUseMessages => {

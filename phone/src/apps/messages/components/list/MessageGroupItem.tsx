@@ -18,8 +18,8 @@ interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
   isEditing: boolean;
-  checked: string[];
-  handleToggle: (id: string) => void;
+  checked: number[];
+  handleToggle: (id: number) => void;
 }
 
 const MessageGroupItem = ({
@@ -30,7 +30,7 @@ const MessageGroupItem = ({
   handleToggle,
 }: IProps): any => {
   const toggleCheckbox = () => {
-    handleToggle(messageConversation.conversation_id);
+    handleToggle(messageConversation.id);
   };
 
   const contacts = useContacts();
@@ -45,18 +45,14 @@ const MessageGroupItem = ({
 
   return (
     <ListItem
-      key={messageConversation.conversation_id}
+      key={messageConversation.id}
       onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
       divider
       button
     >
       {isEditing && (
         <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={checked.indexOf(messageConversation.conversation_id) !== -1}
-            disableRipple
-          />
+          <Checkbox edge="start" disableRipple />
         </ListItemIcon>
       )}
       <ListItemAvatar>
@@ -65,12 +61,12 @@ const MessageGroupItem = ({
           badgeContent={messageConversation.unread <= 99 ? messageConversation.unread : '99+'}
           invisible={messageConversation.unread <= 0}
         >
-          <MuiAvatar src={contactDisplay(messageConversation.phoneNumber)?.avatar} />
+          <MuiAvatar src={contactDisplay(messageConversation.participant)?.avatar} />
         </Badge>
       </ListItemAvatar>
       <ListItemText sx={{ overflow: 'hidden' }}>
-        {contactDisplay(messageConversation.phoneNumber)?.display ||
-          messageConversation.phoneNumber}
+        {contactDisplay(messageConversation.participant)?.display ||
+          messageConversation.participant}
       </ListItemText>
     </ListItem>
   );

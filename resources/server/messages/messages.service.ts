@@ -1,18 +1,19 @@
-import PlayerService from '../players/player.service';
-import {
-  Message,
-  MessageConversationResponse,
-  MessageEvents,
-  PreDBMessage,
-} from '../../../typings/messages';
 import MessagesDB, { _MessagesDB } from './messages.db';
 import {
-  createMessageGroupsFromPhoneNumber,
-  getFormattedMessageConversations,
+  createGroupHashID,
   getIdentifiersFromParticipants,
   messagesLogger,
 } from './messages.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
+import {
+  DeleteConversationRequest,
+  Message,
+  MessageConversation,
+  MessageEvents,
+  MessagesRequest,
+  PreDBMessage,
+} from '../../../typings/messages';
+import PlayerService from '../players/player.service';
 
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
@@ -22,88 +23,61 @@ class _MessagesService {
     messagesLogger.debug('Messages service started');
   }
 
-  async handleFetchMessageConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
-    try {
-      const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
-      const messageConversations = await getFormattedMessageConversations(phoneNumber);
-
-      resp({ status: 'ok', data: messageConversations });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      messagesLogger.error(`Failed to fetch messages groups, ${e.message}`);
-    }
-  }
-
-  async handleCreateMessageConversation(
-    reqObj: PromiseRequest<{ targetNumber: string }>,
-    resp: PromiseEventResp<MessageConversationResponse>,
+  async handleFetchMessageConversations(
+    reqObj: PromiseRequest<void>,
+    resp: PromiseEventResp<MessageConversation[]>,
   ) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+
     try {
-      const sourcePlayer = PlayerService.getPlayer(reqObj.source);
+      const conversations = await MessagesDB.getConversations(phoneNumber);
 
-      const result = await createMessageGroupsFromPhoneNumber(
-        sourcePlayer.getPhoneNumber(),
-        reqObj.data.targetNumber,
-      );
-
-      if (result.error) {
-        return resp({ status: 'error' });
-      }
-
-      if (!result.doesExist) {
-        try {
-          const participant = PlayerService.getPlayerFromIdentifier(result.participant);
-
-          if (participant) {
-            emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
-              conversation_id: result.conversationId,
-              phoneNumber: sourcePlayer.getPhoneNumber(),
-            });
-          }
-        } catch (e) {
-          resp({ status: 'error', errorMsg: e.message });
-          messagesLogger.error(e.message);
-        }
-      }
-
-      resp({
-        status: 'ok',
-        data: {
-          conversation_id: result.conversationId,
-          phoneNumber: result.phoneNumber,
-          updatedAt: Date.now(),
-        },
-      });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-
-      messagesLogger.error(`Failed to create message group, ${e.message}`, {
-        source: reqObj.source,
-        e,
-      });
+      resp({ status: 'ok', data: conversations });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
     }
   }
 
   async handleFetchMessages(
-    reqObj: PromiseRequest<{ conversationId: string; page: number }>,
+    reqObj: PromiseRequest<MessagesRequest>,
     resp: PromiseEventResp<Message[]>,
   ) {
     try {
-      const messages = await this.messagesDB.getMessages(
-        reqObj.data.conversationId,
-        reqObj.data.page,
-      );
-
-      await this.handleSetMessageRead(reqObj.source, reqObj.data.conversationId);
-
-      messages.sort((a, b) => a.id - b.id);
+      const messages = await MessagesDB.getMessages(reqObj.data);
 
       resp({ status: 'ok', data: messages });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
-        source: reqObj.source,
-      });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleCreateMessageConversation(
+    reqObj: PromiseRequest<string[]>,
+    resp: PromiseEventResp<any>,
+  ) {
+    const sourcePhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+
+    const participants = reqObj.data;
+    const conversationList = createGroupHashID(participants);
+
+    try {
+      await MessagesDB.createConversation([...participants, sourcePhoneNumber], conversationList);
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleDeleteConversation(
+    reqObj: PromiseRequest<DeleteConversationRequest>,
+    resp: PromiseEventResp<void>,
+  ) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const conversationId = reqObj.data.conversationId;
+
+    await this.messagesDB.deleteConversation(conversationId, phoneNumber);
+    try {
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
     }
   }
 
@@ -112,22 +86,17 @@ class _MessagesService {
       const player = PlayerService.getPlayer(reqObj.source);
       const authorPhoneNumber = player.getPhoneNumber();
       const messageData = reqObj.data;
-      const participants = getIdentifiersFromParticipants(messageData.conversationId);
+      const participants = getIdentifiersFromParticipants(messageData.conversationList);
       const userIdentifier = player.getIdentifier();
 
-      const messageId = await this.messagesDB.createMessage(
+      const messageId = await this.messagesDB.createMessage({
         userIdentifier,
         authorPhoneNumber,
-        messageData.conversationId,
-        messageData.message,
-        messageData.is_embed,
-        messageData.embed,
-      );
-
-      await this.messagesDB.setMessageUnread(
-        messageData.conversationId,
-        messageData.tgtPhoneNumber,
-      );
+        conversationId: messageData.conversationId,
+        message: messageData.message,
+        is_embed: messageData.is_embed,
+        embed: messageData.embed,
+      });
 
       resp({
         status: 'ok',
@@ -148,7 +117,14 @@ class _MessagesService {
           const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
             participantId,
           );
+
+          const participantNumber = await PlayerService.getPhoneNumberFromIdentifier(
+            participantIdentifier,
+          );
+
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+
+          await this.messagesDB.setMessageUnread(messageData.conversationId, participantNumber);
 
           if (participantPlayer) {
             emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
@@ -162,72 +138,28 @@ class _MessagesService {
           }
         }
       }
-    } catch (e) {
-      resp({ status: 'error', errorMsg: e.message });
-      messagesLogger.error(`Failed to send message, ${e.message}`, {
-        source: reqObj.source,
-      });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
     }
   }
 
-  // I didn't bother creating a new interface. Will do it soonTM.
-  async handleOnMessageSendResponse(reqObj: any) {
-    const messageData = reqObj.data;
+  async handleSetMessageRead(src: number, conversationId: number) {
+    const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
 
-    const messageId = await this.messagesDB.createMessage(
-      messageData.author,
-      messageData.author,
-      messageData.conversation_id,
-      messageData.message,
-    );
-
-    const respData = {
-      ...messageData,
-      id: messageId,
-    };
-
-    emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, respData);
-  }
-
-  async handleSetMessageRead(src: number, groupId: string) {
     try {
-      const identifier = PlayerService.getPlayer(src).getPhoneNumber();
-      await this.messagesDB.setMessageRead(groupId, identifier);
-    } catch (e) {
-      messagesLogger.error(`Failed to set message as read, ${e.message}`, {
-        source: src,
-      });
-    }
-  }
-
-  async handleDeleteConversation(
-    reqObj: PromiseRequest<{ conversationsId: string[] }>,
-    resp: PromiseEventResp<void>,
-  ) {
-    try {
-      const sourcePhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
-
-      for (const id of reqObj.data.conversationsId) {
-        await this.messagesDB.deleteConversation(id, sourcePhoneNumber);
-      }
-      resp({ status: 'ok' });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      messagesLogger.error(`Failed to delete conversation, ${e.message}`, {
-        source: reqObj.source,
-      });
+      await this.messagesDB.setMessageRead(conversationId, phoneNumber);
+    } catch (err) {
+      messagesLogger.error(`Failed to read message. Error: ${err.message}`);
     }
   }
 
   async handleDeleteMessage(reqObj: PromiseRequest<Message>, resp: PromiseEventResp<void>) {
     try {
       await this.messagesDB.deleteMessage(reqObj.data);
+
       resp({ status: 'ok' });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      messagesLogger.error(`Failed to delete message, ${e.message}`, {
-        source: reqObj.source,
-      });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
     }
   }
 }

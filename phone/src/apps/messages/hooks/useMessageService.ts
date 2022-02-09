@@ -30,7 +30,7 @@ export const useMessagesService = () => {
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
-      if (activeMessageConversation.conversation_id !== messageDto.conversation_id) return;
+      if (activeMessageConversation.id !== messageDto.conversation_id) return;
 
       updateLocalMessages(messageDto);
     },
@@ -39,16 +39,13 @@ export const useMessagesService = () => {
 
   const handleAddConversation = useCallback(
     (conversation: MessageConversationResponse) => {
-      const display = getDisplayByNumber(conversation.phoneNumber);
-      const avatar = getPictureByNumber(conversation.phoneNumber);
-
       updateLocalConversations({
-        phoneNumber: conversation.phoneNumber,
-        conversation_id: conversation.conversation_id,
+        participant: conversation.phoneNumber,
+        id: conversation.conversation_id,
+        conversationList: conversation.conversationList,
+        label: conversation.label,
         updatedAt: conversation.updatedAt,
-        avatar,
         unread: 0,
-        display,
       });
     },
     [updateLocalConversations, getDisplayByNumber, getPictureByNumber],

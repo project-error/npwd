@@ -1,213 +1,115 @@
-import { Message, UnformattedMessageConversation } from '../../../typings/messages';
-import { config } from '../server';
-import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
+import {
+  CreateMessageDTO,
+  Message,
+  MessageConversation,
+  MessagesRequest,
+} from '../../../typings/messages';
+import { ResultSetHeader } from 'mysql2';
 
 const MESSAGES_PER_PAGE = 20;
 
-// not sure whats going on here.
 export class _MessagesDB {
-  /**
-   * Create a message in the database
-   * @param userIdentifier - the identifier to the author
-   * @param author - the phoneNumber to the player who sent the message
-   * @param conversationId - the message conversation ID to attach this message to
-   * @param message - content of the message
-   * @param isEmbed
-   * @param embed
-   */
-  async createMessage(
-    userIdentifier: string,
-    author: string,
-    conversationId: string,
-    message: string,
-    isEmbed?: boolean,
-    embed?: any,
-  ): Promise<number> {
-    const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id, is_embed, embed)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
-
-    const [results] = await DbInterface._rawExec(query, [
-      userIdentifier,
-      author,
-      message || '',
-      conversationId,
-      isEmbed || false,
-      embed || '',
-    ]);
-
-    return (<ResultSetHeader>results).insertId;
-  }
-
-  // Not sure if we're going to query this exactly as its done here.
-  /**
-   * Retrieve all message conversations associated with a user. This will
-   * populate the list of message conversations on the UI
-   * @param phoneNumber - phoneNumber of the user to get message conversations for
-   */
-  async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
-    const query = `
-                  SELECT npwd_messages_conversations.unreadCount,
-                          npwd_messages_conversations.conversation_id,
-                          npwd_messages_conversations.user_identifier,
-                          npwd_messages_conversations.participant_identifier,
-                          npwd_messages_conversations.updatedAt,
-                          ${config.database.playerTable}.${config.database.phoneNumberColumn}
-                            AS phone_number
-                  FROM (SELECT conversation_id
-                         FROM npwd_messages_conversations
-                         WHERE npwd_messages_conversations.participant_identifier = ?) AS t
-                            LEFT OUTER JOIN npwd_messages_conversations
-                                            ON npwd_messages_conversations.conversation_id = t.conversation_id
-                            LEFT OUTER JOIN ${config.database.playerTable}
-                                            ON ${config.database.playerTable}.${config.database.phoneNumberColumn} = npwd_messages_conversations.participant_identifier
-		`;
+  async getConversations(phoneNumber: string): Promise<MessageConversation[]> {
+    const query = `SELECT npwd_messages_conversations.id,
+                          npwd_messages_conversations.conversation_list as conversationList,
+                          npwd_messages_conversations.label,
+                          message_participants.participant,
+                          message_participants.unread_count             as unreadCount
+                   FROM npwd_messages_conversations
+                            INNER JOIN message_participants
+                                       on npwd_messages_conversations.id = message_participants.converation_id
+                   WHERE message_participants.participant = ?`;
 
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
-    return <UnformattedMessageConversation[]>results;
+
+    return <MessageConversation[]>results;
   }
 
-  async getMessages(conversationId: string, page: number): Promise<Message[]> {
-    const offset = page * MESSAGES_PER_PAGE;
+  async getMessages(dto: MessagesRequest): Promise<Message[]> {
+    const offset = MESSAGES_PER_PAGE * dto.page;
 
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,
-                          npwd_messages.message,
                           npwd_messages.author,
-                          npwd_messages.embed,
-                          npwd_messages.is_embed
+                          npwd_messages.message,
+                          npwd_messages.is_embed,
+                          npwd_messages.embed
                    FROM npwd_messages
-                   WHERE npwd_messages.conversation_id = ?
+                   WHERE conversation_id = ?
                    ORDER BY id DESC
                    LIMIT ? OFFSET ?`;
 
     const [results] = await DbInterface._rawExec(query, [
-      conversationId,
+      dto.conversationId,
       MESSAGES_PER_PAGE,
       offset,
     ]);
-
     return <Message[]>results;
   }
 
-  /**
-   * Create a message group
-   * @param userIdentifier - the user creating the message group
-   * @param conversationId - the unique group ID this corresponds to
-   * @param participantIdentifier - the participant user identifier. This identifier is what attaches
-   * other players to the message group
-   */
-  async createMessageGroup(
-    userIdentifier: string,
-    conversationId: string,
-    participantIdentifier: string,
-  ): Promise<void> {
-    const query = `
-        INSERT
-        INTO npwd_messages_conversations
-            (user_identifier, conversation_id, participant_identifier)
-        VALUES (?, ?, ?)
-		`;
-    await DbInterface._rawExec(query, [userIdentifier, conversationId, participantIdentifier]);
+  async createConversation(participants: string[], conversationList: string) {
+    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label)
+                               VALUES (?, ?)`;
+    const participantQuery = `INSERT INTO message_participants (converation_id, participant)
+                              VALUES (?, ?)`;
+
+    const [results] = await DbInterface._rawExec(conversationQuery, [
+      conversationList,
+      'static label for now',
+    ]);
+    const result = <ResultSetHeader>results;
+
+    let conversationId = result.insertId;
+
+    for (const participant of participants) {
+      await DbInterface._rawExec(participantQuery, [conversationId, participant]);
+    }
   }
 
-  /**
-   * Find a players identifier from their phone number
-   * @param phoneNumber - the phone number to search for
-   */
-  async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
-    const query = `
-        SELECT ${config.database.identifierColumn}
-        FROM ${config.database.playerTable}
-        WHERE ${config.database.phoneNumberColumn} = ?
-        LIMIT 1
-		`;
-    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
-    const result = <any>results;
-    return result[0].identifier;
+  async createMessage(dto: CreateMessageDTO) {
+    const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
+
+    const [results] = await DbInterface._rawExec(query, [
+      dto.message,
+      dto.userIdentifier,
+      dto.conversationId,
+      dto.authorPhoneNumber,
+      dto.is_embed,
+      dto.embed,
+    ]);
+
+    const result = <ResultSetHeader>results;
+
+    return result.insertId;
   }
 
-  /**
-   * This method checks if the input groupId already exists in
-   * the database. As long as the groupId is derived from the input
-   * identifiers this means that the user is trying to create a
-   * duplicate!
-   * @param groupId - group Id to check that it exists
-   */
-  async checkIfMessageGroupExists(groupId: string): Promise<boolean> {
-    const query = `
-        SELECT COUNT(*) as count
-        FROM npwd_messages_conversations
-        WHERE conversation_id = ?;
-		`;
-    const [results] = await DbInterface._rawExec(query, [groupId]);
-    const result = <any>results;
-    const count = result[0].count;
-    return count > 0;
+  async setMessageUnread(conversationId: number, tgtPhoneNumber: string) {
+    const query = `UPDATE message_participants
+                   SET unread_count = unread_count + 1
+                   WHERE converation_id = ?
+                     AND participant = ?`;
+
+    await DbInterface._rawExec(query, [conversationId, tgtPhoneNumber]);
   }
 
-  async getMessageCountByGroup(groupId: string): Promise<number> {
-    const query = `
-        SELECT COUNT(*) as count
-        FROM npwd_messages
-        WHERE conversation_id = ?`;
-    const [results] = await DbInterface._rawExec(query, [groupId]);
-    const result = <any>results;
-    return result[0].count;
-  }
-  /**
-   * Adds an unread to the specified group id
-   * @param groupId The unique group ID for the message
-   * @param phoneNumber The phone number of the player to ignore
-   */
-  async setMessageUnread(groupId: string, phoneNumber: string) {
-    const query = `UPDATE npwd_messages_conversations
-      SET unreadCount = unreadCount + 1
-      WHERE conversation_id = ?
-        AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [groupId, phoneNumber]);
-  }
-  /**
-   * Sets the current message isRead to 0 for said player
-   * @param groupId The unique group ID for the message
-   * @param phoneNumber The phone number for the player
-   */
-  async setMessageRead(groupId: string, phoneNumber: string) {
-    const query = `UPDATE npwd_messages_conversations
-                   SET unreadCount = 0
-                   WHERE conversation_id = ?
-                     AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [groupId, phoneNumber]);
-  }
+  async setMessageRead(conversationId: number, participantNumber: string) {
+    const query = `UPDATE message_participants SET unread_count = 0 WHERE converation_id = ? AND participant = ?`;
 
-  async deleteConversation(conversationId: string, sourcePhoneNumber: string) {
-    const query = `DELETE
-                   FROM npwd_messages_conversations
-                   WHERE conversation_id = ?
-                     AND participant_identifier = ?`;
-    await DbInterface._rawExec(query, [conversationId, sourcePhoneNumber]);
+    await DbInterface._rawExec(query, [conversationId, participantNumber]);
   }
 
   async deleteMessage(message: Message) {
-    const query = `DELETE
-                   FROM npwd_messages
-                   WHERE id = ?
-                     AND conversation_id = ?`;
+    const query = `DELETE FROM npwd_messages WHERE id = ?`;
 
-    await DbInterface._rawExec(query, [message.id, message.conversation_id]);
+    await DbInterface._rawExec(query, [message.id]);
   }
 
-  async doesConversationExist(
-    conversationId: string,
-    identifier: string,
-  ): Promise<UnformattedMessageConversation | null> {
-    const query = `SELECT *
-                   FROM npwd_messages_conversations
-                   WHERE conversation_id = ?
-                     AND participant_identifier = ?`;
-    const [results] = await DbInterface._rawExec(query, [conversationId, identifier]);
-    const conversations = <UnformattedMessageConversation[]>results;
-    return conversations[0] || null;
+  async deleteConversation(conversationId: number, phoneNumber: string) {
+    const query = `DELETE FROM message_participants WHERE converation_id = ? AND participant = ?`;
+
+    await DbInterface._rawExec(query, [conversationId, phoneNumber]);
   }
 }
 

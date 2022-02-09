@@ -109,9 +109,7 @@ export const MessageModal = () => {
     );
 
   // don't allow too many characters, it takes too much room
-  let header =
-    getDisplayByNumber(activeMessageConversation.phoneNumber) ||
-    activeMessageConversation.phoneNumber;
+  let header = activeMessageConversation.label;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
@@ -127,7 +125,7 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
-  const targetNumber = activeMessageConversation.phoneNumber;
+  const targetNumber = activeMessageConversation.participant;
 
   return (
     <>

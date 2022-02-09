@@ -11,28 +11,13 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
   const [t] = useTranslation();
-  const [participant, setParticipant] = useState<any>('');
-  const [participantValue, setParticipantValue] = useState('');
+  const [participants, setParticipants] = useState<any>([]);
   const { getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
   const { addConversation } = useMessageAPI();
 
-  useEffect(() => {
-    if (phoneNumber) {
-      const find = getContactByNumber(phoneNumber);
-      if (find) {
-        setParticipant(find);
-      } else {
-        setParticipantValue(phoneNumber);
-      }
-    }
-  }, [phoneNumber, getContactByNumber]);
-
   const handleSubmit = () => {
-    if (participantValue || participant) {
-      const targetNumber = participant.number ?? participantValue;
-      addConversation(targetNumber);
-    }
+    console.log(participants);
   };
 
   const handleCancel = () => {
@@ -40,39 +25,28 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   };
 
   const renderAutocompleteInput = (params) => (
-    <TextField
-      {...params}
-      fullWidth
-      label={t('MESSAGES.INPUT_NAME_OR_NUMBER')}
-      onChange={(e) => setParticipant(e.currentTarget.value)}
-    />
+    <TextField {...params} fullWidth label={t('MESSAGES.INPUT_NAME_OR_NUMBER')} />
   );
-
-  const submitDisabled = !participantValue && !participant;
 
   return (
     <Box>
       <Box px={2} py={3}>
         <Autocomplete
-          value={participant}
-          inputValue={participantValue}
           freeSolo
           disablePortal
           PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
+          multiple
           autoHighlight
           options={contacts}
-          // I am so sorry
           ListboxProps={{ style: { marginLeft: 10 } }}
-          getOptionLabel={(contact) => contact.display || contact.number || participant}
-          onChange={(e, value: any) => setParticipant(value)}
-          onInputChange={(e, value: any) => setParticipantValue(value)}
+          getOptionLabel={(contact) => contact.display || contact.number}
+          onChange={(e, value: any) => setParticipants(value)}
           renderInput={renderAutocompleteInput}
         />
       </Box>
       <Box px={2} py={3}>
         <Button
-          onClick={() => handleSubmit()}
-          disabled={submitDisabled}
+          onClick={handleSubmit}
           variant="contained"
           fullWidth
           sx={{ mb: 1 }}
