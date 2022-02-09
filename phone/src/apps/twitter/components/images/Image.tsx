@@ -15,6 +15,7 @@ const ImageButton = styled(IconButton)({
   right: '5px',
   backgroundColor: '#000',
   opacity: 0.7,
+  zIndex: 1,
   '&:hover': {
     // fixes a bug where when the user closes one image material-ui puts
     // the hover status on the previous image
