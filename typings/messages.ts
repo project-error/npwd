@@ -35,6 +35,11 @@ export interface MessageConversation {
   updatedAt: number;
 }
 
+export interface PreDBConversation {
+  participants: string[];
+  conversationLabel: string;
+}
+
 export interface MessagesRequest {
   conversationId: string;
   page: number;

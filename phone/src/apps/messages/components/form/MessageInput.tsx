@@ -5,7 +5,8 @@ import SendIcon from '@mui/icons-material/Send';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
+import useMessages from '../../hooks/useMessages';
 
 interface IProps {
   onAddImageClick(): void;
@@ -17,11 +18,14 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const [t] = useTranslation();
   const [message, setMessage] = useState('');
   const { sendMessage } = useMessageAPI();
+  const { activeMessageConversation } = useMessages();
 
   const handleSubmit = async () => {
+    console.log(activeMessageConversation);
     if (message.trim()) {
       await sendMessage({
         conversationId: messageConversation.id,
+        conversationList: activeMessageConversation.conversationList,
         message,
         tgtPhoneNumber: messageConversation.participant,
       });

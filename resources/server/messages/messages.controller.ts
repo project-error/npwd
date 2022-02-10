@@ -4,13 +4,13 @@ import {
   Message,
   MessageConversation,
   MessageEvents,
+  PreDBConversation,
   PreDBMessage,
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { OnMessageExportMap } from './middleware/onMessage';
-import { Contact } from '../../../typings/contact';
 
 onNetPromise<void, MessageConversation[]>(
   MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
@@ -24,7 +24,7 @@ onNetPromise<void, MessageConversation[]>(
   },
 );
 
-onNetPromise<string[], MessageConversation>(
+onNetPromise<PreDBConversation, MessageConversation>(
   MessageEvents.CREATE_MESSAGE_CONVERSATION,
   async (reqObj, resp) => {
     MessagesService.handleCreateMessageConversation(reqObj, resp).catch((e) => {
