@@ -11,6 +11,7 @@ import {
   MessageConversation,
   MessageEvents,
   MessagesRequest,
+  PreDBConversation,
   PreDBMessage,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
@@ -52,16 +53,20 @@ class _MessagesService {
   }
 
   async handleCreateMessageConversation(
-    reqObj: PromiseRequest<string[]>,
-    resp: PromiseEventResp<any>,
+    reqObj: PromiseRequest<PreDBConversation>,
+    resp: PromiseEventResp<MessageConversation>,
   ) {
-    const sourcePhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const conversation = reqObj.data;
+    const participants = conversation.participants;
 
-    const participants = reqObj.data;
     const conversationList = createGroupHashID(participants);
 
     try {
-      await MessagesDB.createConversation([...participants, sourcePhoneNumber], conversationList);
+      await MessagesDB.createConversation(
+        participants,
+        conversationList,
+        conversation.conversationLabel,
+      );
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }

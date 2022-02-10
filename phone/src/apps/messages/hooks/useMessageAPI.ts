@@ -3,6 +3,7 @@ import {
   Message,
   MessageConversationResponse,
   MessageEvents,
+  PreDBConversation,
   PreDBMessage,
 } from '@typings/messages';
 import { ServerPromiseResp } from '@typings/common';
@@ -21,7 +22,7 @@ type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
   sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
-  addConversation: (targetNumber: string) => void;
+  addConversation: (conversation: PreDBConversation) => void;
   deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
 };
@@ -65,12 +66,13 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const sendEmbedMessage = useCallback(
-    ({ conversationId, embed, tgtPhoneNumber }: PreDBMessage) => {
+    ({ conversationId, embed, tgtPhoneNumber, conversationList }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         embed: JSON.stringify(embed),
         is_embed: true,
         tgtPhoneNumber,
+        conversationList,
         sourcePhoneNumber: myPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
@@ -103,22 +105,23 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const addConversation = useCallback(
-    (targetNumber: string) => {
+    (conversation: PreDBConversation) => {
       if (messageConversationsState !== 'hasValue') {
         return;
       }
 
-      fetchNui<ServerPromiseResp<MessageConversationResponse>>(
+      fetchNui<ServerPromiseResp<MessageConversationResponse>, PreDBConversation>(
         MessageEvents.CREATE_MESSAGE_CONVERSATION,
         {
-          targetNumber,
+          conversationLabel: conversation.conversationLabel,
+          participants: conversation.participants,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
           history.push('/messages');
           return addAlert({
             message: t('MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED"', {
-              number: targetNumber,
+              number: conversation.conversationLabel,
             }),
             type: 'error',
           });

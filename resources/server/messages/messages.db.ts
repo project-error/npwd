@@ -48,7 +48,11 @@ export class _MessagesDB {
     return <Message[]>results;
   }
 
-  async createConversation(participants: string[], conversationList: string) {
+  async createConversation(
+    participants: string[],
+    conversationList: string,
+    conversationLabel: string,
+  ) {
     const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label)
                                VALUES (?, ?)`;
     const participantQuery = `INSERT INTO message_participants (converation_id, participant)
@@ -56,7 +60,7 @@ export class _MessagesDB {
 
     const [results] = await DbInterface._rawExec(conversationQuery, [
       conversationList,
-      'static label for now',
+      conversationLabel,
     ]);
     const result = <ResultSetHeader>results;
 
@@ -95,19 +99,27 @@ export class _MessagesDB {
   }
 
   async setMessageRead(conversationId: number, participantNumber: string) {
-    const query = `UPDATE message_participants SET unread_count = 0 WHERE converation_id = ? AND participant = ?`;
+    const query = `UPDATE message_participants
+                   SET unread_count = 0
+                   WHERE converation_id = ?
+                     AND participant = ?`;
 
     await DbInterface._rawExec(query, [conversationId, participantNumber]);
   }
 
   async deleteMessage(message: Message) {
-    const query = `DELETE FROM npwd_messages WHERE id = ?`;
+    const query = `DELETE
+                   FROM npwd_messages
+                   WHERE id = ?`;
 
     await DbInterface._rawExec(query, [message.id]);
   }
 
   async deleteConversation(conversationId: number, phoneNumber: string) {
-    const query = `DELETE FROM message_participants WHERE converation_id = ? AND participant = ?`;
+    const query = `DELETE
+                   FROM message_participants
+                   WHERE converation_id = ?
+                     AND participant = ?`;
 
     await DbInterface._rawExec(query, [conversationId, phoneNumber]);
   }
