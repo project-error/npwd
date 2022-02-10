@@ -51,6 +51,7 @@ export const NotificationsContext = createContext<{
 
 export function NotificationsProvider({ children }) {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
+  const isPhoneDisabled = useRecoilValue(phoneState.isPhoneDisabled);
 
   const [settings] = useSettings();
 
@@ -88,9 +89,13 @@ export function NotificationsProvider({ children }) {
     });
   };
 
-  const addNotification = useCallback((value: INotification) => {
-    setNotifications((all) => [value, ...all]);
-  }, []);
+  const addNotification = useCallback(
+    (value: INotification) => {
+      if (isPhoneDisabled) return;
+      setNotifications((all) => [value, ...all]);
+    },
+    [isPhoneDisabled],
+  );
 
   /**
    * Checks if a notification exists for current app
@@ -153,6 +158,7 @@ export function NotificationsProvider({ children }) {
   );
 
   const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {
+    if (isPhoneDisabled) return;
     if (n.sound) {
       const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
       mount(sound, volume, false).then(({ url }) => setAlerts((curr) => [...curr, [n, cb, url]]));

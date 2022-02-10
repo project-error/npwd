@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const SettingsApp = () => {
+export const SettingsApp: React.FC = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = usePhoneConfig();
   const myNumber = useMyPhoneNumber();
@@ -287,6 +287,15 @@ export const SettingsApp = () => {
             value={settings.TWITTER_notiSoundVol}
             onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
             icon={<VolumeUp />}
+          />
+        </SettingsCategory>
+        <SettingsCategory title={t('APPS_MARKETPLACE')}>
+          <SettingSwitch
+            label={t('SETTINGS.MARKETPLACE.NOTIFICATION')}
+            secondary={t('SETTINGS.MARKETPLACE.NOTIFY_NEW_LISTING')}
+            value={settings.MARKETPLACE_notifyNewListing}
+            icon={<FilterList />}
+            onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
           />
         </SettingsCategory>
         <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>

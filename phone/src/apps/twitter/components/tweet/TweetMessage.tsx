@@ -1,27 +1,20 @@
 import React, { memo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
 import { TextField } from '@ui/components/Input';
+import { styled } from '@mui/material';
 
-const useStyles = makeStyles({
-  textField: {
-    flex: '1 1 100%',
-    padding: '10px 15px',
-    marginTop: '15px',
-    overflowY: 'auto',
-    maxHeight: '300px',
-  },
-  textFieldInput: {
-    fontSize: '22px',
-    paddingTop: '8px',
-  },
+const MessageInput = styled(TextField)({
+  flex: '1 1 100%',
+  padding: '10px 15px',
+  marginTop: '15px',
+  overflowY: 'auto',
+  maxHeight: '300px',
 });
 
 export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
   const textFieldInputRef = useRef(null);
-  const classes = useStyles();
   const { ResourceConfig } = usePhone();
   const [t] = useTranslation();
 
@@ -55,10 +48,14 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     }
   };
   return (
-    <TextField
+    <MessageInput
       value={message}
-      inputProps={{ className: classes.textFieldInput }}
-      className={classes.textField}
+      inputProps={{
+        style: {
+          fontSize: '22px',
+          paddingTop: '8px',
+        },
+      }}
       onChange={(e) => handleChange(e.currentTarget.value)}
       onKeyPress={handleOnEnter}
       multiline

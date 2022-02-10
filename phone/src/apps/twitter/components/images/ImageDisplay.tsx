@@ -3,7 +3,7 @@ import React from 'react';
 
 import Image from './Image';
 
-export const ImageDisplay = ({ visible, images, removeImage, small }) => {
+export const ImageDisplay = ({ visible, images, removeImage }) => {
   if (!visible || !images || images.length === 0) return null;
 
   return (

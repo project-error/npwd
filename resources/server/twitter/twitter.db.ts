@@ -1,7 +1,7 @@
 import { NewTweet, Profile, Tweet } from '../../../typings/twitter';
 import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
-import { config } from '../config';
+import { config } from '../server';
 import { generateProfileName } from '../utils/generateProfileName';
 import { twitterLogger } from './twitter.utils';
 import DbInterface from '../db/db_wrapper';

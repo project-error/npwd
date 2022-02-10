@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
-import { MenuItem, SelectChangeEvent } from '@mui/material';
+import { Box, MenuItem, SelectChangeEvent, styled } from '@mui/material';
 
 interface DefaultProfilePromptProps {
   handleUpdate: () => void;
@@ -16,16 +16,17 @@ interface DefaultProfilePromptProps {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    padding: '15px',
-  },
   formControl: {
     width: '100%',
   },
 }));
+
+const Root = styled(Box)({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  padding: '15px',
+});
 
 export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   profileName,
@@ -42,7 +43,7 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   };
 
   return (
-    <div className={classes.root}>
+    <Root>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="profile-name">{t('TWITTER.EDIT_DEFAULT_PROFILE_NAME')}</InputLabel>
         <Select
@@ -61,7 +62,7 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
         </Select>
       </FormControl>
       <ProfileUpdateButton handleClick={handleUpdate} />
-    </div>
+    </Root>
   );
 };
 

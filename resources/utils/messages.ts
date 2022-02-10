@@ -37,3 +37,7 @@ export function sendCameraEvent(method: string, data: any = {}): void {
 export function sendMatchEvent(method: string, data: any = {}): void {
   return sendMessage(apps.MATCH, method, data);
 }
+
+export function sendPhoneEvent(method: string, data: any = {}): void {
+  return sendMessage(apps.PHONE, method, data);
+}

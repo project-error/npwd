@@ -2,13 +2,16 @@ import React, { forwardRef } from 'react';
 import MUITextField, { TextFieldProps } from '@mui/material/TextField';
 import MUIInputBase, { InputBaseProps } from '@mui/material/InputBase';
 import { PhoneEvents } from '@typings/phone';
-import { isEnvBrowser } from '@utils/misc';
 import fetchNui from '@utils/fetchNui';
 
 export const toggleKeys = (keepGameFocus: boolean) =>
-  fetchNui(PhoneEvents.TOGGLE_KEYS, {
-    keepGameFocus,
-  }).catch((e) => (isEnvBrowser() ? () => {} : console.error(e)));
+  fetchNui(
+    PhoneEvents.TOGGLE_KEYS,
+    {
+      keepGameFocus,
+    },
+    {},
+  );
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => (
   <MUITextField

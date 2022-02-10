@@ -93,7 +93,9 @@ export async function createMessageGroupsFromPhoneNumber(
   const tgtIdentifier = await PlayerService.getIdentifierFromPhoneNumber(tgtPhoneNumber, true);
 
   if (!tgtIdentifier) {
-    throw new Error('tgtIdentifier was null');
+    messagesLogger.error(
+      "Didn't find a identifier for the phone number, this is probably some service number.",
+    );
   }
 
   const conversationId = createGroupHashID([sourcePhoneNumber, tgtPhoneNumber]);
@@ -123,7 +125,7 @@ export async function createMessageGroupsFromPhoneNumber(
     conversationId,
     identifiers: [sourcePhoneNumber, tgtPhoneNumber],
     phoneNumber: tgtPhoneNumber,
-    participant: tgtIdentifier,
+    participant: tgtIdentifier || tgtPhoneNumber,
   };
 }
 

@@ -1,6 +1,6 @@
 import { RewriteFrames } from '@sentry/integrations';
-import './config';
-import { config } from './config';
+import { config as resourceConfig } from './config';
+export const config = resourceConfig;
 
 // Setup controllers
 import './db/pool';

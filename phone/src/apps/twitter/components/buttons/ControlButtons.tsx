@@ -1,24 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
-import { Button } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import { StatusButton } from '@ui/components/StatusButton';
 
-const useStyles = makeStyles((theme) => ({
-  buttons: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'flex-end',
-    alignItems: 'justify-content',
-    marginRight: '15px',
-  },
-  close: {
-    marginLeft: '8px',
-  },
-}));
+const ButtonsContainer = styled(Box)({
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'flex-end',
+  alignItems: 'justify-content',
+  marginRight: '15px',
+});
 
 export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPrimaryClick }) => {
-  const classes = useStyles();
   const [t] = useTranslation();
 
   const imagePromptVisible = showImagePrompt && !showEmoji;
@@ -26,13 +19,13 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
   const showCloseButton = showImagePrompt || showEmoji;
 
   return (
-    <div className={classes.buttons}>
+    <ButtonsContainer>
       <Button variant="contained" color="primary" onClick={onPrimaryClick}>
         {primaryButtonText}
       </Button>
       {showCloseButton && (
         <StatusButton
-          className={classes.close}
+          style={{ marginLeft: '8px' }}
           variant="contained"
           color="error"
           onClick={onCloseClick}
@@ -40,7 +33,7 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
           {t('GENERIC.CLOSE')}
         </StatusButton>
       )}
-    </div>
+    </ButtonsContainer>
   );
 };
 

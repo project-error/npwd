@@ -10,6 +10,7 @@ export interface Message {
 export interface PreDBMessage {
   conversationId: string;
   tgtPhoneNumber: string;
+  sourcePhoneNumber?: string;
   message?: string;
   is_embed?: boolean;
   embed?: any;
@@ -85,6 +86,21 @@ export interface MessageConversationResponse {
   conversation_id: string;
   phoneNumber: string;
   updatedAt: number;
+}
+
+export interface OnMessageExportCtx {
+  /**
+   * The incoming message object
+   */
+  data: PreDBMessage;
+
+  source: number;
+
+  /**
+   * Reponds with a message to the source
+   * @param message
+   */
+  respond: (ctx: any, message: string) => void;
 }
 
 export enum MessageEvents {

@@ -1,30 +1,28 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
-import makeStyles from '@mui/styles/makeStyles';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { styled } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '60px',
-    width: '100%',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    background: '#424242',
-  },
-  icon: {
-    color: '#00acee',
-    fontSize: 30,
-  },
-}));
+const TwitterHeader = styled(Paper)({
+  height: '50px',
+  width: '100%',
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: '#424242',
+});
+
+const Icon = styled(TwitterIcon)({
+  color: '#00acee',
+  fontSize: 30,
+});
 
 export function TwitterTitle() {
-  const classes = useStyles();
   return (
-    <Paper variant="outlined" square className={classes.root}>
-      <TwitterIcon className={classes.icon} />
-    </Paper>
+    <TwitterHeader variant="outlined" square>
+      <Icon />
+    </TwitterHeader>
   );
 }
 

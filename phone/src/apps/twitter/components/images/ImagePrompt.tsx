@@ -1,23 +1,17 @@
 import React, { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
 import { TextField } from '@ui/components/Input';
+import { styled } from '@mui/material';
 
-const useStyles = makeStyles({
-  textField: {
-    flex: '1 1 100%',
-    padding: '10px 15px',
-    marginTop: '15px',
-  },
-  textFieldInput: {
-    fontSize: '22px',
-  },
+const ImageInput = styled(TextField)({
+  flex: '1 1 100%',
+  padding: '10px 15px',
+  marginTop: '15px',
 });
 
 export const ImagePrompt = ({ visible, value, handleChange }) => {
   const textFieldRef = useRef(null);
   const [t] = useTranslation();
-  const classes = useStyles();
 
   useEffect(() => {
     textFieldRef.current && textFieldRef.current.focus();
@@ -27,10 +21,13 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
 
   if (!visible) return null;
   return (
-    <TextField
+    <ImageInput
       value={value}
-      inputProps={{ className: classes.textFieldInput }}
-      className={classes.textField}
+      inputProps={{
+        style: {
+          fontSize: '22px',
+        },
+      }}
       onChange={handleImageChange}
       multiline
       size="small"

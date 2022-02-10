@@ -1,7 +1,7 @@
 import { pool } from './pool';
 import { mainLogger } from '../sv_logger';
 import { ResultSetHeader } from 'mysql2';
-import { config } from '../config';
+import { config } from '../server';
 import { withProfile } from '../utils/withProfile';
 
 const RESOURCE_NAME = GetCurrentResourceName();

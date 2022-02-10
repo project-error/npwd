@@ -38,6 +38,7 @@ export const useApps = () => {
             <NotificationIcon htmlColor={theme.palette.text.primary} fontSize="small" />
           ),
           icon: <Icon />,
+          isDisabled: app.disable,
         };
       }
 
@@ -47,6 +48,7 @@ export const useApps = () => {
         NotificationIcon,
         notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
         icon: <Icon />,
+        isDisabled: app.disable,
       };
     });
   }, [icons, curIconSet, theme]);
