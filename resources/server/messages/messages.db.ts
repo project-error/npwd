@@ -13,13 +13,14 @@ export class _MessagesDB {
   async getConversations(phoneNumber: string): Promise<MessageConversation[]> {
     const query = `SELECT npwd_messages_conversations.id,
                           npwd_messages_conversations.conversation_list as conversationList,
+                          npwd_messages_participants.unread_count       as unreadCount,
+                          npwd_messages_conversations.is_group_chat     as isGroupChat,
                           npwd_messages_conversations.label,
-                          message_participants.participant,
-                          message_participants.unread_count             as unreadCount
+                          npwd_messages_participants.participant
                    FROM npwd_messages_conversations
-                            INNER JOIN message_participants
-                                       on npwd_messages_conversations.id = message_participants.converation_id
-                   WHERE message_participants.participant = ?`;
+                            INNER JOIN npwd_messages_participants
+                                       on npwd_messages_conversations.id = npwd_messages_participants.converation_id
+                   WHERE npwd_messages_participants.participant = ?`;
 
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
 
@@ -52,15 +53,17 @@ export class _MessagesDB {
     participants: string[],
     conversationList: string,
     conversationLabel: string,
+    isGroupChat: boolean,
   ) {
-    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label)
-                               VALUES (?, ?)`;
-    const participantQuery = `INSERT INTO message_participants (converation_id, participant)
+    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label, is_group_chat)
+                               VALUES (?, ?, ?)`;
+    const participantQuery = `INSERT INTO npwd_messages_participants (converation_id, participant)
                               VALUES (?, ?)`;
 
     const [results] = await DbInterface._rawExec(conversationQuery, [
       conversationList,
-      conversationLabel,
+      isGroupChat ? conversationLabel : '',
+      isGroupChat,
     ]);
     const result = <ResultSetHeader>results;
 
@@ -69,6 +72,8 @@ export class _MessagesDB {
     for (const participant of participants) {
       await DbInterface._rawExec(participantQuery, [conversationId, participant]);
     }
+
+    return conversationId;
   }
 
   async createMessage(dto: CreateMessageDTO) {
@@ -90,7 +95,7 @@ export class _MessagesDB {
   }
 
   async setMessageUnread(conversationId: number, tgtPhoneNumber: string) {
-    const query = `UPDATE message_participants
+    const query = `UPDATE npwd_messages_participants
                    SET unread_count = unread_count + 1
                    WHERE converation_id = ?
                      AND participant = ?`;
@@ -99,7 +104,7 @@ export class _MessagesDB {
   }
 
   async setMessageRead(conversationId: number, participantNumber: string) {
-    const query = `UPDATE message_participants
+    const query = `UPDATE npwd_messages_participants
                    SET unread_count = 0
                    WHERE converation_id = ?
                      AND participant = ?`;
@@ -117,7 +122,7 @@ export class _MessagesDB {
 
   async deleteConversation(conversationId: number, phoneNumber: string) {
     const query = `DELETE
-                   FROM message_participants
+                   FROM npwd_messages_participants
                    WHERE converation_id = ?
                      AND participant = ?`;
 

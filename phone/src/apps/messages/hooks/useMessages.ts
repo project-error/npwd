@@ -10,7 +10,7 @@ interface IUseMessages {
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
 
-  goToConversation(g: Pick<MessageConversation, 'id'>): void;
+  goToConversation(g: Pick<MessageConversation, 'conversationList'>): void;
 }
 
 const useMessages = (): IUseMessages => {
@@ -47,11 +47,11 @@ const useMessages = (): IUseMessages => {
   );
 
   const goToConversation = useCallback(
-    (messageGroup) => {
-      if (!messageGroup?.conversation_id || !history) return;
-      setCurrentConversationId(messageGroup.conversation_id);
+    (messageGroup: MessageConversation) => {
+      if (!messageGroup?.id || !history) return;
+      setCurrentConversationId(messageGroup.id);
 
-      history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+      history.push(`/messages/conversations/${messageGroup.id}`);
     },
     [setCurrentConversationId, history],
   );

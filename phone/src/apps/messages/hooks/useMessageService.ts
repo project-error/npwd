@@ -1,6 +1,11 @@
 import { useActiveMessageConversation } from './state';
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { Message, MessageConversationResponse, MessageEvents } from '@typings/messages';
+import {
+  Message,
+  MessageConversation,
+  MessageConversationResponse,
+  MessageEvents,
+} from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
@@ -38,13 +43,13 @@ export const useMessagesService = () => {
   );
 
   const handleAddConversation = useCallback(
-    (conversation: MessageConversationResponse) => {
+    (conversation: MessageConversation) => {
       updateLocalConversations({
-        participant: conversation.phoneNumber,
-        id: conversation.conversation_id,
+        participant: conversation.participant,
+        isGroupChat: conversation.isGroupChat,
+        id: conversation.id,
         conversationList: conversation.conversationList,
         label: conversation.label,
-        updatedAt: conversation.updatedAt,
         unread: 0,
       });
     },

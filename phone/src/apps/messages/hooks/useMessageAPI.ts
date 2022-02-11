@@ -1,6 +1,7 @@
 import fetchNui from '@utils/fetchNui';
 import {
   Message,
+  MessageConversation,
   MessageConversationResponse,
   MessageEvents,
   PreDBConversation,
@@ -110,11 +111,12 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         return;
       }
 
-      fetchNui<ServerPromiseResp<MessageConversationResponse>, PreDBConversation>(
+      fetchNui<ServerPromiseResp<MessageConversation>, PreDBConversation>(
         MessageEvents.CREATE_MESSAGE_CONVERSATION,
         {
           conversationLabel: conversation.conversationLabel,
           participants: conversation.participants,
+          isGroupChat: conversation.isGroupChat,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
@@ -127,8 +129,10 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           });
         }
 
+        // FIXME: This won't work properly has the conversationList will differ each time someone creates a convo.
+        // FIXME: Just like this for now.
         const doesConversationExist = messageConversationsContents.find(
-          (c) => c.conversation_id === resp.data.conversation_id,
+          (c) => c.conversationList === resp.data.conversationList,
         );
 
         if (doesConversationExist) {
@@ -139,17 +143,17 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           });
         }
 
-        // FIXME: Fix this
         updateLocalConversations({
-          participant: resp.data.phoneNumber,
-          id: resp.data.conversation_id,
-          updatedAt: resp.data.updatedAt,
+          participant: resp.data.participant,
+          id: resp.data.id,
           conversationList: resp.data.conversationList,
-          label: resp.data.conversationList,
+          label: resp.data.label,
+          isGroupChat: resp.data.isGroupChat,
           unread: 0,
+          unreadCount: 0,
         });
 
-        history.push(`/messages/conversations/${resp.data.conversation_id}`);
+        history.push(`/messages`);
       });
     },
     [

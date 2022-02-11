@@ -56,17 +56,46 @@ class _MessagesService {
     reqObj: PromiseRequest<PreDBConversation>,
     resp: PromiseEventResp<MessageConversation>,
   ) {
+    const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+
     const conversation = reqObj.data;
+
+    console.log('crazy times', reqObj.data);
+
     const participants = conversation.participants;
 
     const conversationList = createGroupHashID(participants);
 
     try {
-      await MessagesDB.createConversation(
+      const conversationId = await MessagesDB.createConversation(
         participants,
         conversationList,
         conversation.conversationLabel,
+        conversation.isGroupChat,
       );
+
+      const respData = {
+        id: conversationId,
+        label: conversation.conversationLabel,
+        conversationList,
+        isGroupChat: conversation.isGroupChat,
+      };
+
+      resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
+
+      for (const participant of participants) {
+        if (participant !== playerPhoneNumber) {
+          const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+
+          if (participantPlayer) {
+            emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
+              ...respData,
+              participant: participantPlayer.getPhoneNumber(),
+            });
+          }
+        }
+      }
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }

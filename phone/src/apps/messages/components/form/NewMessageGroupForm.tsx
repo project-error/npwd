@@ -8,6 +8,7 @@ import { TextField } from '@ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { PreDBConversation } from '@typings/messages';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
@@ -25,10 +26,13 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const handleSubmit = () => {
     const selectedParticipants = participants.map((participant) => participant.number);
 
-    const dto = {
-      conversationLabel: conversationLabel || participants[0],
-      selectedParticipants: [myPhoneNumber, ...selectedParticipants],
+    const dto: PreDBConversation = {
+      conversationLabel: isGroupChat ? conversationLabel : '',
+      participants: [myPhoneNumber, ...selectedParticipants],
+      isGroupChat,
     };
+
+    addConversation(dto);
   };
 
   useEffect(() => {
@@ -73,7 +77,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     />
   );
 
-  const disableSubmit = !participants.length || (isGroupChat && !conversationLabel);
+  const disableSubmit = !participants?.length || (isGroupChat && !conversationLabel);
 
   return (
     <Box>
