@@ -15,6 +15,7 @@ import {
   PreDBMessage,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
+import { emitNetTyped } from '../utils/miscUtils';
 
 class _MessagesService {
   private readonly messagesDB: _MessagesDB;
@@ -57,14 +58,19 @@ class _MessagesService {
     resp: PromiseEventResp<MessageConversation>,
   ) {
     const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
-
     const conversation = reqObj.data;
-
-    console.log('crazy times', reqObj.data);
-
     const participants = conversation.participants;
 
     const conversationList = createGroupHashID(participants);
+
+    const doesExist = await this.messagesDB.doesConversationExist(conversationList);
+
+    if (doesExist) {
+      return resp({
+        status: 'error',
+        errorMsg: 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE',
+      });
+    }
 
     try {
       const conversationId = await MessagesDB.createConversation(
@@ -74,6 +80,7 @@ class _MessagesService {
         conversation.isGroupChat,
       );
 
+      // Return data
       const respData = {
         id: conversationId,
         label: conversation.conversationLabel,
@@ -89,10 +96,14 @@ class _MessagesService {
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
-            emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
-              ...respData,
-              participant: participantPlayer.getPhoneNumber(),
-            });
+            emitNetTyped<MessageConversation>(
+              MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
+              {
+                ...respData,
+                participant: participantPlayer.getPhoneNumber(),
+              },
+              participantPlayer.source,
+            );
           }
         }
       }

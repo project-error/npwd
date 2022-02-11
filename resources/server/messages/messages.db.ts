@@ -128,6 +128,18 @@ export class _MessagesDB {
 
     await DbInterface._rawExec(query, [conversationId, phoneNumber]);
   }
+
+  async doesConversationExist(conversationList: string): Promise<boolean> {
+    const query = `SELECT COUNT(*) as count
+                   FROM npwd_messages_conversations
+                   WHERE conversation_list = ?`;
+
+    const [results] = await DbInterface._rawExec(query, conversationList);
+    const result = <any>results;
+    const count = result[0].count;
+
+    return count > 0;
+  }
 }
 
 const MessagesDB = new _MessagesDB();
