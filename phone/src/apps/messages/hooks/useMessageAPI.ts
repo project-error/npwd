@@ -121,6 +121,14 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       ).then((resp) => {
         if (resp.status !== 'ok') {
           history.push('/messages');
+
+          if (resp.errorMsg === 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE') {
+            return addAlert({
+              message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
+              type: 'error',
+            });
+          }
+
           return addAlert({
             message: t('MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED"', {
               number: conversation.conversationLabel,
