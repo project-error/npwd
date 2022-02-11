@@ -109,12 +109,12 @@ export const MessageModal = () => {
     );
 
   // don't allow too many characters, it takes too much room
-  let header = activeMessageConversation.label;
+  /*let header = activeMessageConversation.label;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
   const headerClass =
-    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
+    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;*/
 
   const handleAddContact = (number) => {
     const exists = getContactByNumber(number);
@@ -144,9 +144,9 @@ export const MessageModal = () => {
             <Button onClick={closeModal}>
               <ArrowBackIcon fontSize="large" />
             </Button>
-            <Typography variant="h5" className={headerClass}>
+            {/*<Typography variant="h5" className={headerClass}>
               {header}
-            </Typography>
+            </Typography>*/}
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
               title={`${t('GENERIC.CALL')} ${targetNumber}`}

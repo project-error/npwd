@@ -43,6 +43,23 @@ const MessageGroupItem = ({
     [contacts, getContactByNumber],
   );
 
+  const getLabelOrContact = useCallback(() => {
+    const conversationLabel = messageConversation.label;
+    // This is the source
+    const participant = messageConversation.participant;
+    const conversationList = messageConversation.conversationList.split('+');
+
+    // Label is required if the conversation is a group chat
+    if (messageConversation.isGroupChat) return conversationLabel;
+
+    for (const p of conversationList) {
+      if (p !== participant) {
+        const contact = contactDisplay(p);
+        return contact ? contact.display : p;
+      }
+    }
+  }, [messageConversation, contactDisplay]);
+
   return (
     <ListItem
       key={messageConversation.id}
@@ -58,16 +75,15 @@ const MessageGroupItem = ({
       <ListItemAvatar>
         <Badge
           color="error"
-          badgeContent={messageConversation.unread <= 99 ? messageConversation.unread : '99+'}
-          invisible={messageConversation.unread <= 0}
+          badgeContent={
+            messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'
+          }
+          invisible={messageConversation.unreadCount <= 0}
         >
-          <MuiAvatar src={contactDisplay(messageConversation.participant)?.avatar} />
+          <MuiAvatar />
         </Badge>
       </ListItemAvatar>
-      <ListItemText sx={{ overflow: 'hidden' }}>
-        {contactDisplay(messageConversation.participant)?.display ||
-          messageConversation.participant}
-      </ListItemText>
+      <ListItemText sx={{ overflow: 'hidden' }}>{getLabelOrContact()}</ListItemText>
     </ListItem>
   );
 };

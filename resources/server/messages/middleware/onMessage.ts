@@ -20,6 +20,4 @@ export const onMessageRespond = async (ctx: OnMessageExportCtx, message: string)
       is_embed: false,
     },
   };
-
-  await MessagesService.handleOnMessageSendResponse(responseData);
 };

@@ -9,6 +9,7 @@ export const MockMessageConversations: MessageConversation[] = [
     unread: 0,
     label: 'Cool thihngs',
     updatedAt: 5,
+    isGroupChat: false,
   },
 ];
 

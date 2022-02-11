@@ -30,14 +30,17 @@ export interface MessageConversation {
   id: number;
   conversationList: string;
   label: string;
-  participant: string;
-  unread: number;
-  updatedAt: number;
+  participant?: string;
+  isGroupChat: boolean;
+  unread?: number;
+  unreadCount?: number;
+  updatedAt?: number;
 }
 
 export interface PreDBConversation {
   participants: string[];
   conversationLabel: string;
+  isGroupChat: boolean;
 }
 
 export interface MessagesRequest {
