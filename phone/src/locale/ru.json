@@ -8,8 +8,8 @@
     "NOTIFICATIONS": {
       "NO_UNREAD": "Нет непрочитанных уведомлений"
     },
-    "DATE_FORMAT": "ММ/ДД/ГГГГ",
-    "DATE_TIME_FORMAT": "ММ/ДД/ГГГГ чч:мм А",
+    "DATE_FORMAT": "DD/MM/YYYY",
+    "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm A",
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Идет звонок",
