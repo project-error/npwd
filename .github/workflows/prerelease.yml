@@ -48,7 +48,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           title: Pre-Release Build (${{ steps.get_vars.outputs.SHORT_SHA }}) | ${{ steps.get_vars.outputs.DATE }}
           prerelease: true
-          automatic_release_tag: "unstable-{{ steps.get_vars.outputs.SHORT_SHA }}"
+          automatic_release_tag: "unstable"
           files: ./temp/npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip
 
         env:
