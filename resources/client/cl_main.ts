@@ -164,6 +164,26 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   },
 );
 
+/* * * * * * * * * * * * *
+ *
+ *  PhoneAsItem Export Checker
+ *
+ * * * * * * * * * * * * */
+if (config.PhoneAsItem.enabled) {
+  setTimeout(() => {
+    let doesExportExist = false;
+
+    const { exportResource, exportFunction } = config.PhoneAsItem;
+    emit(`__cfx_export_${exportResource}_${exportFunction}`, () => {
+      doesExportExist = true;
+    });
+
+    if (!doesExportExist) {
+      console.log('\n^1Incorrect PhoneAsItem configuration detected. Export does not exist.^0\n');
+    }
+  }, 100);
+}
+
 // setTick(async () => {
 //   while (config.SwimDestroy) {
 //     await Delay(config.RunRate * 1000);
