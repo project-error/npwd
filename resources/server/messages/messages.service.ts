@@ -157,7 +157,7 @@ class _MessagesService {
       });
 
       // participantId is the participants phone number
-      /*for (const participantId of participants) {
+      for (const participantId of participants) {
         if (participantId !== player.getPhoneNumber()) {
           const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
             participantId,
@@ -182,7 +182,7 @@ class _MessagesService {
             });
           }
         }
-      }*/
+      }
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }
