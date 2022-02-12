@@ -230,7 +230,7 @@ export class _TwitterDB {
         UPDATE npwd_twitter_profiles
         SET avatar_url   = ?,
             profile_name = ?
-            WHERE identifier = ?
+        WHERE identifier = ?
 		`;
     await pool.execute(query, [avatar_url, profile_name, identifier]);
 

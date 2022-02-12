@@ -131,6 +131,10 @@
     {
       "label": "繁體中文",
       "value": "zhtw"
+    },
+    {
+      "label": "Русский",
+      "value": "ru"
     }
   ],
   "ringtones": [

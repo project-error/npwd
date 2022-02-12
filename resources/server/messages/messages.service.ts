@@ -147,7 +147,9 @@ class _MessagesService {
         if (participantId !== player.getPhoneNumber()) {
           const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
             participantId,
+            true,
           );
+
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
           if (participantPlayer) {
