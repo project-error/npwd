@@ -82,8 +82,6 @@ export const useMessageActions = (): MessageActionProps => {
 
   const updateLocalMessages = useCallback(
     (messageDto: Message) => {
-      console.log('broadcast messageDTo', messageDto);
-
       if (messageLoading !== 'hasValue') return;
 
       setMessages((currVal) => [
