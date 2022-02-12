@@ -176,6 +176,7 @@ class _MessagesService {
             emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
               ...messageData,
               conversation_id: messageData.conversationId,
+              author: authorPhoneNumber,
             });
             emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
               conversationName: player.getPhoneNumber(),
