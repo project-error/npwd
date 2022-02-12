@@ -119,8 +119,8 @@ class _MessagesService {
     const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
     const conversationId = reqObj.data.conversationId;
 
-    await this.messagesDB.deleteConversation(conversationId, phoneNumber);
     try {
+      await this.messagesDB.deleteConversation(conversationId, phoneNumber);
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }
@@ -172,10 +172,13 @@ class _MessagesService {
           await this.messagesDB.setMessageUnread(messageData.conversationId, participantNumber);
 
           if (participantPlayer) {
-            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
+              ...messageData,
+              conversation_id: messageData.conversationId,
+            });
             emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
               conversationName: player.getPhoneNumber(),
-              conversationId: messageData.conversationId,
+              conversation_id: messageData.conversationId,
               message: messageData.message,
               is_embed: messageData.is_embed,
               embed: messageData.embed,
