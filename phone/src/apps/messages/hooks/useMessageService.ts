@@ -34,9 +34,7 @@ export const useMessagesService = () => {
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
       if (activeMessageConversation.id != messageDto.conversation_id) return;
-
-      console.log('updateLocalMessages - updating messages');
-
+      
       updateLocalMessages(messageDto);
     },
     [updateLocalMessages, activeMessageConversation],
