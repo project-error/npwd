@@ -8,8 +8,8 @@
     "NOTIFICATIONS": {
       "NO_UNREAD": "Нет непрочитанных уведомлений"
     },
-    "DATE_FORMAT": "ММ/ДД/ГГГГ",
-    "DATE_TIME_FORMAT": "ММ/ДД/ГГГГ чч:мм А",
+    "DATE_FORMAT": "DD/MM/YYYY",
+    "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm A",
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Идет звонок",
@@ -32,7 +32,7 @@
         "ACTIONS": "Действия"
       },
       "OPTIONS": {
-        "ICONSET": "набор иконок",
+        "ICONSET": "Набор иконок",
         "THEME": "Тема",
         "LANGUAGE": "Язык",
         "FRAME": "Корпус",
@@ -196,7 +196,7 @@
       "NEW_LISTING": "Новое объявление",
       "CHOOSE_IMAGE": "Выберите изображение",
       "FORM_TITLE": "Название",
-      "POST_LISTING": "Сообщение",
+      "POST_LISTING": "Опубликовать",
       "FORM_IMAGE": "Изображение или URL",
       "FORM_DESCRIPTION": "Описание",
       "NO_IMAGE": "Нет изображения"
@@ -219,7 +219,7 @@
         "DELETE_MESSAGE_FAILED": "Не удалось удалить сообщение",
         "DELETE_CONVERSATION_FAILED": "Не удалось удалить чат"
       },
-      "SEARCH_PLACEHOLDER": "Искать сообщения...",
+      "SEARCH_PLACEHOLDER": "Поиск сообщений...",
       "DELETE_CONVERSATION": "Удалить чат",
       "NEW_MESSAGE": "Сообщение...",
       "NEW_MESSAGE_GROUP": "Телефонные номера...",
