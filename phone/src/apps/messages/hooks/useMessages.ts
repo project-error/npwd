@@ -10,7 +10,7 @@ interface IUseMessages {
   setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
 
-  goToConversation(g: Pick<MessageConversation, 'conversationList'>): void;
+  goToConversation(g: Pick<MessageConversation, 'id'>): void;
 }
 
 const useMessages = (): IUseMessages => {
@@ -32,7 +32,10 @@ const useMessages = (): IUseMessages => {
 
       if (!contents.length) return;
 
-      return contents && contents.find((c) => c.conversation_id === id);
+      console.log('contents from getting convo', contents);
+
+      // FIXME: Make sure we have contents as a number as well..
+      return contents && contents.find((c) => c.id == id);
     },
     [contents, conversationLoading],
   );
@@ -47,11 +50,11 @@ const useMessages = (): IUseMessages => {
   );
 
   const goToConversation = useCallback(
-    (messageGroup: MessageConversation) => {
-      if (!messageGroup?.id || !history) return;
-      setCurrentConversationId(messageGroup.id);
+    (messageConversation: MessageConversation) => {
+      if (!messageConversation?.id || !history) return;
+      setCurrentConversationId(messageConversation.id);
 
-      history.push(`/messages/conversations/${messageGroup.id}`);
+      history.push(`/messages/conversations/${messageConversation.id.toString()}`);
     },
     [setCurrentConversationId, history],
   );

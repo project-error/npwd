@@ -46,9 +46,10 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   const myPhoneNumber = useMyPhoneNumber();
 
   const sendMessage = useCallback(
-    ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => {
+    ({ conversationId, message, tgtPhoneNumber, conversationList }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId,
+        conversationList,
         message,
         tgtPhoneNumber,
         sourcePhoneNumber: myPhoneNumber,
