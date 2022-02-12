@@ -33,15 +33,10 @@ export const useMessageNotifications = () => {
     }
   });
 
-  const setNotification = ({ conversationName, conversationId, message }) => {
+  const setNotification = ({ conversationId, message }) => {
     let group: MessageConversation = null;
 
     group = getMessageConversationById(conversationId);
-
-    if (!group) {
-      addConversation(conversationName);
-      group = getMessageConversationById(conversationId);
-    }
 
     const id = `${NOTIFICATION_ID}:${conversationId}`;
 
@@ -49,7 +44,7 @@ export const useMessageNotifications = () => {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: group.participant || conversationName,
+      title: group.participant || conversationId.toString(),
       onClick: () => goToConversation(group),
       content: message,
       icon,

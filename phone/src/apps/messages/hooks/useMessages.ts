@@ -32,8 +32,6 @@ const useMessages = (): IUseMessages => {
 
       if (!contents.length) return;
 
-      console.log('contents from getting convo', contents);
-
       // FIXME: Make sure we have contents as a number as well..
       return contents && contents.find((c) => c.id == id);
     },

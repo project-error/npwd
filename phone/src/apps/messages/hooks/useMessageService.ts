@@ -18,24 +18,24 @@ export const useMessagesService = () => {
     useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
-  const { visibility } = usePhoneVisibility();
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
   const activeMessageConversation = useActiveMessageConversation();
 
-  const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
-    if (visibility && pathname.includes(`/messages/conversations/${conversationId}`)) {
+  const handleMessageBroadcast = ({ conversation_id, message }) => {
+    if (pathname.includes(`/messages/conversations/${conversation_id}`)) {
       return;
     }
-
     // Set the current unread count to 1, when they click it will be removed
-    setMessageReadState(conversationId, 1);
-    setNotification({ conversationName, conversationId, message });
+    setMessageReadState(conversation_id, 1);
+    setNotification({ conversationId: conversation_id, message });
   };
 
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
-      if (activeMessageConversation.id !== messageDto.conversation_id) return;
+      if (activeMessageConversation.id != messageDto.conversation_id) return;
+
+      console.log('updateLocalMessages - updating messages');
 
       updateLocalMessages(messageDto);
     },
@@ -53,7 +53,7 @@ export const useMessagesService = () => {
         unread: 0,
       });
     },
-    [updateLocalConversations, getDisplayByNumber, getPictureByNumber],
+    [updateLocalConversations],
   );
 
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);

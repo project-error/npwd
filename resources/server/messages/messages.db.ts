@@ -38,7 +38,7 @@ export class _MessagesDB {
                           npwd_messages.embed
                    FROM npwd_messages
                    WHERE conversation_id = ?
-                   ORDER BY id DESC
+                   ORDER BY id
                    LIMIT ? OFFSET ?`;
 
     const [results] = await DbInterface._rawExec(query, [
@@ -67,7 +67,7 @@ export class _MessagesDB {
     ]);
     const result = <ResultSetHeader>results;
 
-    let conversationId = result.insertId;
+    const conversationId = result.insertId;
 
     for (const participant of participants) {
       await DbInterface._rawExec(participantQuery, [conversationId, participant]);

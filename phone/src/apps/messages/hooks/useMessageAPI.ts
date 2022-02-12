@@ -2,7 +2,6 @@ import fetchNui from '@utils/fetchNui';
 import {
   Message,
   MessageConversation,
-  MessageConversationResponse,
   MessageEvents,
   PreDBConversation,
   PreDBMessage,
@@ -17,7 +16,7 @@ import { messageState, useSetMessages } from './state';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
-import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
