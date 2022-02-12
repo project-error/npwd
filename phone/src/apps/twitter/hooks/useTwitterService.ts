@@ -47,7 +47,7 @@ export const useTwitterService = () => {
 
       addTweet(processedTweet);
     },
-    [addTweet, setNotification, profileContent, profileLoading],
+    [addTweet, setNotification, profileContent, profileLoading, setTweets, tweets.length],
   );
 
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);

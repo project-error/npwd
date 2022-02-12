@@ -1,8 +1,8 @@
-import React, { useCallback, useState, memo } from 'react';
+import React, { memo } from 'react';
 
 import { List } from '@ui/components/List';
 import Tweet from './Tweet';
-import { FormattedTweet, Tweet as ITweet, TwitterEvents } from '../../../../../../typings/twitter';
+import { FormattedTweet } from '@typings/twitter';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   /*const [page, setPage] = useState<number>(1);
