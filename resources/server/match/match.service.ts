@@ -1,6 +1,6 @@
 import { formatMatches, formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import { FormattedMatch, FormattedProfile, Like, MatchResp, Profile } from '../../../typings/match';
+import { FormattedMatch, FormattedProfile, Like, MatchEvents, MatchResp, Profile } from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
@@ -34,6 +34,7 @@ class _MatchService {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
       const profile = await this.dispatchPlayerProfile(identifier);
+      emitNet(MatchEvents.CREATE_MATCH_ACCOUNT_BROADCAST, -1, profile);
       resp({ status: 'ok', data: profile });
     } catch (e) {
       matchLogger.error(`Error in handleGetMyProfile, ${e.message}`);
@@ -42,21 +43,29 @@ class _MatchService {
   }
 
   async handleSaveLikes(reqObj: PromiseRequest<Like[]>, resp: PromiseEventResp<boolean>) {
-    const identifier = PlayerService.getIdentifier(reqObj.source);
-    matchLogger.debug(`Saving likes for identifier ${identifier}`);
+    const player = PlayerService.getPlayer(reqObj.source);
+    matchLogger.debug(`Saving likes for identifier ${player.getIdentifier()}`);
 
     try {
-      await this.matchDB.saveLikes(identifier, reqObj.data);
+      await this.matchDB.saveLikes(player.getIdentifier(), reqObj.data);
     } catch (e) {
       matchLogger.error(`Failed to save likes, ${e.message}`);
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
 
     try {
-      const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
+      const newMatches = await this.matchDB.findNewMatches(player.getIdentifier(), reqObj.data);
 
       if (newMatches.length > 0) {
         resp({ status: 'ok', data: true });
+
+        const matchedPlayer = PlayerService.getPlayerFromIdentifier(newMatches[0].identifier);
+        
+        if (matchedPlayer){
+          emitNet(MatchEvents.SAVE_LIKES_BROADCAST, matchedPlayer.source, {
+            name: player.getName(),
+          });
+        }
       } else {
         resp({ status: 'ok', data: false });
       }
