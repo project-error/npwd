@@ -2,6 +2,7 @@ import { messageState, useSetMessageConversations, useSetMessages } from './stat
 import { useCallback } from 'react';
 import { Message, MessageConversation } from '@typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
+import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 interface MessageActionProps {
   updateLocalConversations: (conversation: MessageConversation) => void;
@@ -9,6 +10,7 @@ interface MessageActionProps {
   updateLocalMessages: (messageDto: Message) => void;
   deleteLocalMessage: (messageId: number) => void;
   setMessageReadState: (conversationId: number, unreadCount: number) => void;
+  getLabelOrContact: (messageConversation: MessageConversation) => string;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -18,6 +20,7 @@ export const useMessageActions = (): MessageActionProps => {
   );
   const setMessageConversation = useSetMessageConversations();
   const setMessages = useSetMessages();
+  const { getContactByNumber } = useContactActions();
 
   const updateLocalConversations = useCallback(
     (conversation: MessageConversation) => {
@@ -42,6 +45,26 @@ export const useMessageActions = (): MessageActionProps => {
       );
     },
     [setMessageConversation],
+  );
+
+  const getLabelOrContact = useCallback(
+    (messageConversation: MessageConversation): string => {
+      const conversationLabel = messageConversation.label;
+      // This is the source
+      const participant = messageConversation.participant;
+      const conversationList = messageConversation.conversationList.split('+');
+
+      // Label is required if the conversation is a group chat
+      if (messageConversation.isGroupChat) return conversationLabel;
+
+      for (const p of conversationList) {
+        if (p !== participant) {
+          const contact = getContactByNumber(p);
+          return contact ? contact.display : p;
+        }
+      }
+    },
+    [getContactByNumber],
   );
 
   const removeLocalConversation = useCallback(
@@ -89,5 +112,6 @@ export const useMessageActions = (): MessageActionProps => {
     updateLocalMessages,
     deleteLocalMessage,
     setMessageReadState,
+    getLabelOrContact,
   };
 };

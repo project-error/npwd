@@ -22,6 +22,7 @@ import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
 import { Call } from '@mui/icons-material';
+import { useMessageActions } from '../../hooks/useMessageActions';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -60,6 +61,7 @@ export const MessageModal = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
   const { fetchMessages } = useMessageAPI();
+  const { getLabelOrContact } = useMessageActions();
   const { initializeCall } = useCall();
 
   const { getContactByNumber, getDisplayByNumber } = useContactActions();
@@ -101,22 +103,24 @@ export const MessageModal = () => {
   }, [isLoaded]);
 
   // We need to wait for the active conversation to be set.
-  if (!activeMessageConversation)
+  if (!activeMessageConversation) {
     return (
       <div>
         <CircularProgress />
       </div>
     );
+  }
 
+  let header = getLabelOrContact(activeMessageConversation);
   // don't allow too many characters, it takes too much room
-  /*let header = activeMessageConversation.label;
   const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
   const headerClass =
-    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;*/
+    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
 
-  const handleAddContact = (number) => {
+  // FIXME: Not sure what this is again...
+  const handleAddContact = (number: any) => {
     const exists = getContactByNumber(number);
     const referal = encodeURIComponent(pathname);
     if (exists) {
@@ -144,9 +148,9 @@ export const MessageModal = () => {
             <Button onClick={closeModal}>
               <ArrowBackIcon fontSize="large" />
             </Button>
-            {/*<Typography variant="h5" className={headerClass}>
+            <Typography variant="h5" className={headerClass}>
               {header}
-            </Typography>*/}
+            </Typography>
             <Tooltip
               classes={{ tooltip: classes.tooltip }}
               title={`${t('GENERIC.CALL')} ${targetNumber}`}
