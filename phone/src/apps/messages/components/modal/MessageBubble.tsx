@@ -1,4 +1,4 @@
-import { IconButton, Paper } from '@mui/material';
+import { IconButton, Paper, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
@@ -10,6 +10,7 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -57,6 +58,7 @@ interface MessageBubbleProps {
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { getDisplayByNumber } = useContactActions();
 
   const setSelectedMessage = useSetSelectedMessage();
   const openMenu = () => {
@@ -70,6 +72,10 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   if (message?.embed) {
     parsedEmbed = JSON.parse(message?.embed);
   }
+
+  const getAuthorDisplay = () => {
+    return getDisplayByNumber(message.author) || message.author;
+  };
 
   return (
     <>
@@ -91,6 +97,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               </IconButton>
             )}
           </StyledMessage>
+        )}
+        {!isMine && (
+          <Typography fontWeight="bold" fontSize={14} color="#232323">
+            {getAuthorDisplay()}
+          </Typography>
         )}
       </Paper>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
