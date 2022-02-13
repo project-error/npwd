@@ -100,7 +100,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 <>{message.message}</>
               )}
               {isMine && (
-                <IconButton onClick={openMenu}>
+                <IconButton color="primary" onClick={openMenu}>
                   <MoreVertIcon />
                 </IconButton>
               )}
