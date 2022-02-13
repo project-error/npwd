@@ -160,21 +160,6 @@ CREATE TABLE `npwd_messages_participants`
     CONSTRAINT `message_participants_npwd_messages_conversations_id_fk` FOREIGN KEY (`conversation_id`) REFERENCES `npwd_messages_conversations` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS `npwd_messages_conversations`
-(
-    `id`                     int(11)      NOT NULL AUTO_INCREMENT,
-    `user_identifier`        varchar(48)  NOT NULL,
-    `createdAt`              timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    `updatedAt`              timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP,
-    `conversation_id`        varchar(512) NOT NULL,
-    `participant_identifier` varchar(48)  NOT NULL,
-    `label`                  varchar(60)           DEFAULT '',
-    `unreadCount`            int(11)      NOT NULL DEFAULT 0,
-    `unread`                 int(11)               DEFAULT NULL,
-    PRIMARY KEY (id),
-    INDEX `user_identifier` (`user_identifier`)
-);
-
 CREATE TABLE `npwd_messages_conversations`
 (
     `id`                INT(11)      NOT NULL AUTO_INCREMENT,
