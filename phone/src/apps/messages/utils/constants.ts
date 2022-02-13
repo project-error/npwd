@@ -15,22 +15,19 @@ export const MockMessageConversations: MessageConversation[] = [
 
 const MockConversationMessages: Message[] = [
   {
-    id: 1,
+    id: 2,
     author: '215-8139',
-    message: '',
-    conversation_id: 1,
+    message: 'Dude, when is this rewrite done?????',
   },
   {
     id: 2,
-    author: '215-8139',
-    message:
-      'Hi asljdf klasdfjkasjdf sdfjf asdf djkjas k kksdfjjsl ks kldfs d fd asd asdfjasdjfjasdkljjfklasjldfjlj asdf sadfdsdkafjkljsdklfjklfjdf',
+    author: '111-1134',
+    message: 'Bro, finish notifications api?????',
   },
   {
     id: 3,
-    author: '215-8139',
-    message: 'Hello',
-    conversation_id: 1,
+    author: '444-4444',
+    message: "Couldn't be me!",
   },
 ];
 

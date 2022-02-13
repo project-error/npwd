@@ -163,7 +163,12 @@ export const MessageModal = () => {
           addContact={handleAddContact}
         />
         {isGroupModalOpen && <Backdrop />}
-        <Box display="flex" justifyContent="space-between" component={Paper}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          component={Paper}
+          sx={{ borderRadius: 0 }}
+        >
           <Button onClick={closeModal}>
             <ArrowBackIcon fontSize="large" />
           </Button>
