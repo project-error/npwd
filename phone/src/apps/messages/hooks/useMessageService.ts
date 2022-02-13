@@ -1,24 +1,16 @@
 import { useActiveMessageConversation } from './state';
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import {
-  Message,
-  MessageConversation,
-  MessageConversationResponse,
-  MessageEvents,
-} from '@typings/messages';
+import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useLocation } from 'react-router';
-import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 export const useMessagesService = () => {
   const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
     useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
-  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
   const activeMessageConversation = useActiveMessageConversation();
 
   const handleMessageBroadcast = ({ conversation_id, message }) => {
@@ -34,7 +26,7 @@ export const useMessagesService = () => {
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
       if (activeMessageConversation.id != messageDto.conversation_id) return;
-      
+
       updateLocalMessages(messageDto);
     },
     [updateLocalMessages, activeMessageConversation],

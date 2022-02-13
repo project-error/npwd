@@ -4,12 +4,12 @@ import { ServerPromiseResp } from '@typings/common';
 export const MockMessageConversations: MessageConversation[] = [
   {
     id: 1,
-    conversationList: '123+321',
-    participant: '123',
+    conversationList: '111-1134+321+215-8139',
+    participant: '111-1134',
     unread: 0,
     label: 'Cool thihngs',
     updatedAt: 5,
-    isGroupChat: false,
+    isGroupChat: true,
   },
 ];
 
