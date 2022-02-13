@@ -77,10 +77,7 @@ export class _MessagesDB {
   }
 
   async addParticipantToConversation(conversationList: string, phoneNumber: string) {
-    console.log('trying to get conversationId from list', conversationList);
     const conversationId = await this.getConversationId(conversationList);
-
-    console.log('got convo id', conversationId);
 
     const participantQuery = `INSERT INTO npwd_messages_participants (conversation_id, participant)
                               VALUES (?, ?)`;

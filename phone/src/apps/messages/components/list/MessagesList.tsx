@@ -41,7 +41,7 @@ const MessagesList = (): any => {
   };
 
   const handleToggleConversation = (conversationId: number) => {
-    const currentIndex = checkedConversation.find((c) => c === conversationId);
+    const currentIndex = checkedConversation.indexOf(conversationId);
     const newChecked = [...checkedConversation];
 
     if (currentIndex === -1) {

@@ -53,26 +53,21 @@ class _MessagesService {
     const doesExist = await this.messagesDB.doesConversationExist(conversationList);
 
     if (doesExist) {
-      console.log('conversation exists');
       const playerHasConversation = await this.messagesDB.doesConversationExistForPlayer(
         conversationList,
         playerPhoneNumber,
       );
 
       if (playerHasConversation) {
-        console.log('playerHasConversation', playerHasConversation);
         return resp({
           status: 'error',
           errorMsg: 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE',
         });
       } else {
-        console.log('trying to add participant');
         const conversationId = await this.messagesDB.addParticipantToConversation(
           conversationList,
           playerPhoneNumber,
         );
-
-        console.log('creating resp data', conversationId);
 
         const respData = {
           id: conversationId,
@@ -230,10 +225,10 @@ class _MessagesService {
     resp: PromiseEventResp<void>,
   ) {
     const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
-    const conversationId = reqObj.data.conversationId;
+    const conversationsId = reqObj.data.conversationsId;
 
     try {
-      for (const id of conversationId) {
+      for (const id of conversationsId) {
         await this.messagesDB.deleteConversation(id, phoneNumber);
       }
       resp({ status: 'ok' });
