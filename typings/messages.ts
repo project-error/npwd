@@ -49,7 +49,7 @@ export interface MessagesRequest {
 }
 
 export interface DeleteConversationRequest {
-  conversationId: number[];
+  conversationsId: number[];
 }
 
 /**

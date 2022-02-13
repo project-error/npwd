@@ -11,6 +11,15 @@ export const MockMessageConversations: MessageConversation[] = [
     updatedAt: 5,
     isGroupChat: true,
   },
+  {
+    id: 2,
+    conversationList: '111-1134+321+215-8139',
+    participant: '111-1134',
+    unread: 0,
+    label: 'Secret Project Error chat',
+    updatedAt: 5,
+    isGroupChat: true,
+  },
 ];
 
 const MockConversationMessages: Message[] = [
