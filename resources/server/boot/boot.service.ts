@@ -6,8 +6,8 @@ const { identifierColumn, phoneNumberColumn } = config.database;
 const requiredDbColumns = [identifierColumn, phoneNumberColumn];
 
 const frameworkDependencies = {
-  es_extended: ['esx-npwd'],
-  'qb-core': ['qb-npwd'],
+  ['es_extended']: ['esx-npwd'],
+  ['qb-core']: ['qb-npwd'],
 };
 
 export class _BootService {
