@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     `createdAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `reported`    tinyint      NOT NULL DEFAULT 0,
-        PRIMARY KEY (id),
+    PRIMARY KEY (id),
     INDEX `identifier` (`identifier`)
 );
 
@@ -149,6 +149,17 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     INDEX `user_identifier` (`user_identifier`)
 );
 
+CREATE TABLE `npwd_messages_participants`
+(
+    `id`              INT(11)      NOT NULL AUTO_INCREMENT,
+    `conversation_id` INT(11)      NOT NULL,
+    `participant`     VARCHAR(225) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `unread_count`    INT(11)      NULL DEFAULT '0',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `message_participants_npwd_messages_conversations_id_fk` (`conversation_id`) USING BTREE,
+    CONSTRAINT `message_participants_npwd_messages_conversations_id_fk` FOREIGN KEY (`conversation_id`) REFERENCES `npwd_messages_conversations` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
 CREATE TABLE IF NOT EXISTS `npwd_messages_conversations`
 (
     `id`                     int(11)      NOT NULL AUTO_INCREMENT,
@@ -163,6 +174,18 @@ CREATE TABLE IF NOT EXISTS `npwd_messages_conversations`
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );
+
+CREATE TABLE `npwd_messages_conversations`
+(
+    `id`                INT(11)      NOT NULL AUTO_INCREMENT,
+    `conversation_list` VARCHAR(225) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `label`             VARCHAR(60)  NULL     DEFAULT '' COLLATE 'utf8mb4_general_ci',
+    `createdAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
+    `last_message_id`   INT(11)      NULL     DEFAULT NULL,
+    `is_group_chat`     TINYINT(4)   NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`) USING BTREE
+);
+
 CREATE TABLE IF NOT EXISTS `npwd_calls`
 (
     `id`          int(11)      NOT NULL AUTO_INCREMENT,
