@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import GroupIcon from '@mui/icons-material/Group';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
@@ -23,6 +24,8 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
 import { Call } from '@mui/icons-material';
 import { useMessageActions } from '../../hooks/useMessageActions';
+import GroupDetailsModal from './GroupDetailsModal';
+import Backdrop from '@ui/components/Backdrop';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -64,10 +67,11 @@ export const MessageModal = () => {
   const { getLabelOrContact } = useMessageActions();
   const { initializeCall } = useCall();
 
-  const { getContactByNumber, getDisplayByNumber } = useContactActions();
+  const { getContactByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
 
   const [isLoaded, setLoaded] = useState(false);
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
 
   useEffect(() => {
     fetchMessages(groupId, 0);
@@ -86,6 +90,14 @@ export const MessageModal = () => {
   const closeModal = () => {
     setMessages(null);
     history.push('/messages');
+  };
+
+  const openGroupModal = () => {
+    setIsGroupModalOpen(true);
+  };
+
+  const closeGroupModal = () => {
+    setIsGroupModalOpen(false);
   };
 
   useEffect(() => {
@@ -129,50 +141,60 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
+  // FIXME: This is wrong :O
   const targetNumber = activeMessageConversation.participant;
 
   return (
-    <>
-      <Slide direction="left" in={!!activeMessageConversation}>
-        <Paper
-          sx={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexGrow: 1,
-            overflowY: 'hidden',
-            flexDirection: 'column',
-          }}
-        >
-          <Box display="flex" justifyContent="space-between" component={Paper}>
-            <Button onClick={closeModal}>
-              <ArrowBackIcon fontSize="large" />
+    <Slide direction="left" in={!!activeMessageConversation}>
+      <Paper
+        sx={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexGrow: 1,
+          overflowY: 'hidden',
+          flexDirection: 'column',
+        }}
+      >
+        <GroupDetailsModal
+          open={isGroupModalOpen}
+          onClose={closeGroupModal}
+          conversationList={activeMessageConversation.conversationList}
+          addContact={handleAddContact}
+        />
+        {isGroupModalOpen && <Backdrop />}
+        <Box display="flex" justifyContent="space-between" component={Paper}>
+          <Button onClick={closeModal}>
+            <ArrowBackIcon fontSize="large" />
+          </Button>
+          <Typography variant="h5" className={headerClass}>
+            {header}
+          </Typography>
+          <Tooltip
+            classes={{ tooltip: classes.tooltip }}
+            title={`${t('GENERIC.CALL')} ${targetNumber}`}
+            placement="bottom"
+          >
+            <IconButton onClick={() => initializeCall(targetNumber)}>
+              <Call fontSize="medium" />
+            </IconButton>
+          </Tooltip>
+          {activeMessageConversation.isGroupChat ? (
+            <Button>
+              <GroupIcon onClick={openGroupModal} fontSize="large" />
             </Button>
-            <Typography variant="h5" className={headerClass}>
-              {header}
-            </Typography>
-            <Tooltip
-              classes={{ tooltip: classes.tooltip }}
-              title={`${t('GENERIC.CALL')} ${targetNumber}`}
-              placement="bottom"
-            >
-              <IconButton onClick={() => initializeCall(targetNumber)}>
-                <Call fontSize="medium" />
-              </IconButton>
-            </Tooltip>
-            {getDisplayByNumber(targetNumber) === targetNumber ? (
-              <Button>
-                <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
-              </Button>
-            ) : null}
-          </Box>
-          {isLoaded && activeMessageConversation ? (
-            <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
           ) : (
-            <MessageSkeletonList />
+            <Button>
+              <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
+            </Button>
           )}
-        </Paper>
-      </Slide>
-    </>
+        </Box>
+        {isLoaded && activeMessageConversation ? (
+          <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
+        ) : (
+          <MessageSkeletonList />
+        )}
+      </Paper>
+    </Slide>
   );
 };

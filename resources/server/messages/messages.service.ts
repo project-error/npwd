@@ -40,19 +40,6 @@ class _MessagesService {
     }
   }
 
-  async handleFetchMessages(
-    reqObj: PromiseRequest<MessagesRequest>,
-    resp: PromiseEventResp<Message[]>,
-  ) {
-    try {
-      const messages = await MessagesDB.getMessages(reqObj.data);
-
-      resp({ status: 'ok', data: messages });
-    } catch (err) {
-      resp({ status: 'error', errorMsg: err.message });
-    }
-  }
-
   async handleCreateMessageConversation(
     reqObj: PromiseRequest<PreDBConversation>,
     resp: PromiseEventResp<MessageConversation>,
@@ -112,15 +99,14 @@ class _MessagesService {
     }
   }
 
-  async handleDeleteConversation(
-    reqObj: PromiseRequest<DeleteConversationRequest>,
-    resp: PromiseEventResp<void>,
+  async handleFetchMessages(
+    reqObj: PromiseRequest<MessagesRequest>,
+    resp: PromiseEventResp<Message[]>,
   ) {
-    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
-    const conversationId = reqObj.data.conversationId;
-
     try {
-      await this.messagesDB.deleteConversation(conversationId, phoneNumber);
+      const messages = await MessagesDB.getMessages(reqObj.data);
+
+      resp({ status: 'ok', data: messages });
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }
@@ -207,6 +193,20 @@ class _MessagesService {
       await this.messagesDB.deleteMessage(reqObj.data);
 
       resp({ status: 'ok' });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleDeleteConversation(
+    reqObj: PromiseRequest<DeleteConversationRequest>,
+    resp: PromiseEventResp<void>,
+  ) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const conversationId = reqObj.data.conversationId;
+
+    try {
+      await this.messagesDB.deleteConversation(conversationId, phoneNumber);
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }
