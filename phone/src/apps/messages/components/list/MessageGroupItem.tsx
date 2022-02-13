@@ -69,7 +69,11 @@ const MessageGroupItem = ({
     >
       {isEditing && (
         <ListItemIcon>
-          <Checkbox edge="start" disableRipple />
+          <Checkbox
+            checked={checked.indexOf(messageConversation.id) !== -1}
+            edge="start"
+            disableRipple
+          />
         </ListItemIcon>
       )}
       <ListItemAvatar>
