@@ -20,7 +20,7 @@ export const BrowserContactsState: Contact[] = [
   },
   {
     id: 4,
-    display: 'Kidz',
+    display: 'Avarian',
     number: '444-4444',
   },
 ];

@@ -6,7 +6,7 @@ import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 
 interface IProps {
@@ -44,7 +44,7 @@ export const MessageImageModal = ({
       });
       onClose();
     },
-    [sendMessage, messageGroup, onClose],
+    [sendMessage, messageGroup, onClose, activeMessageConversation],
   );
 
   const sendFromQueryParam = useCallback(
