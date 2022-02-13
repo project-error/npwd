@@ -53,10 +53,36 @@ class _MessagesService {
     const doesExist = await this.messagesDB.doesConversationExist(conversationList);
 
     if (doesExist) {
-      return resp({
-        status: 'error',
-        errorMsg: 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE',
-      });
+      console.log('conversation exists');
+      const playerHasConversation = await this.messagesDB.doesConversationExistForPlayer(
+        conversationList,
+        playerPhoneNumber,
+      );
+
+      if (playerHasConversation) {
+        console.log('playerHasConversation', playerHasConversation);
+        return resp({
+          status: 'error',
+          errorMsg: 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE',
+        });
+      } else {
+        console.log('trying to add participant');
+        const conversationId = await this.messagesDB.addParticipantToConversation(
+          conversationList,
+          playerPhoneNumber,
+        );
+
+        console.log('creating resp data', conversationId);
+
+        const respData = {
+          id: conversationId,
+          label: conversation.conversationLabel,
+          conversationList,
+          isGroupChat: conversation.isGroupChat,
+        };
+
+        return resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
+      }
     }
 
     try {
@@ -207,7 +233,10 @@ class _MessagesService {
     const conversationId = reqObj.data.conversationId;
 
     try {
-      await this.messagesDB.deleteConversation(conversationId, phoneNumber);
+      for (const id of conversationId) {
+        await this.messagesDB.deleteConversation(id, phoneNumber);
+      }
+      resp({ status: 'ok' });
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }

@@ -13,7 +13,6 @@ import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { messageState, useSetMessages } from './state';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
@@ -39,7 +38,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   const history = useHistory();
   const { state: messageConversationsState, contents: messageConversationsContents } =
     useRecoilValueLoadable(messageState.messageCoversations);
-  const { getPictureByNumber, getDisplayByNumber } = useContactActions();
   const setMessages = useSetMessages();
 
   const myPhoneNumber = useMyPhoneNumber();
@@ -169,8 +167,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       updateLocalConversations,
       addAlert,
       t,
-      getDisplayByNumber,
-      getPictureByNumber,
       messageConversationsContents,
       messageConversationsState,
     ],

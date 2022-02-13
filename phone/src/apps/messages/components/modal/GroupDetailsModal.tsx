@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Modal from '@ui/components/Modal';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
