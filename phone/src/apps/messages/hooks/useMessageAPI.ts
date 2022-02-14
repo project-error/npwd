@@ -24,6 +24,7 @@ type UseMessageAPIProps = {
   addConversation: (conversation: PreDBConversation) => void;
   deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
+  setMessageRead: (conversationId: number) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -34,6 +35,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteLocalMessage,
     updateLocalConversations,
     removeLocalConversation,
+    setMessageReadState,
   } = useMessageActions();
   const history = useHistory();
   const { state: messageConversationsState, contents: messageConversationsContents } =
@@ -85,6 +87,24 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       });
     },
     [t, updateLocalMessages, addAlert, myPhoneNumber],
+  );
+
+  const setMessageRead = useCallback(
+    (conversationId: number) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_MESSAGE_READ, conversationId).then(
+        (resp) => {
+          if (resp.status !== 'ok') {
+            return addAlert({
+              message: 'Failed to read message',
+              type: 'error',
+            });
+          }
+
+          setMessageReadState(conversationId, 0);
+        },
+      );
+    },
+    [addAlert, setMessageReadState],
   );
 
   const deleteMessage = useCallback(
@@ -222,5 +242,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     addConversation,
     fetchMessages,
     sendEmbedMessage,
+    setMessageRead,
   };
 };

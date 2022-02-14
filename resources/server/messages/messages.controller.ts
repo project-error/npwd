@@ -92,9 +92,9 @@ onNetPromise<Message, void>(MessageEvents.DELETE_MESSAGE, async (reqObj, resp) =
   });
 });
 
-onNet(MessageEvents.SET_MESSAGE_READ, async (conversationId: number) => {
+onNetPromise<number, void>(MessageEvents.SET_MESSAGE_READ, async (reqObj, resp) => {
   const src = getSource();
-  MessagesService.handleSetMessageRead(src, conversationId).catch((e) =>
+  MessagesService.handleSetMessageRead(reqObj, resp).catch((e) =>
     messagesLogger.error(`Error occurred in set message read event (${src}), Error: ${e.message}`),
   );
 });

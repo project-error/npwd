@@ -14,6 +14,7 @@ import {
 } from '../../hooks/state';
 import EditIcon from '@mui/icons-material/Edit';
 import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const MessagesList = (): any => {
   const [isEditing, setIsEditing] = useIsEditing();
@@ -24,7 +25,7 @@ const MessagesList = (): any => {
 
   const { conversations, goToConversation } = useMessages();
 
-  const { setMessageReadState } = useMessageActions();
+  const { setMessageRead } = useMessageAPI();
 
   const filteredConversations = useFilteredConversationsValue();
   const [searchValue, setSearchValue] = useFilterValueState();
@@ -32,7 +33,7 @@ const MessagesList = (): any => {
   if (!conversations) return <p>No messages</p>;
 
   const handleClick = (conversation: MessageConversation) => () => {
-    setMessageReadState(conversation.id, 0);
+    setMessageRead(conversation.id);
     goToConversation(conversation);
   };
 

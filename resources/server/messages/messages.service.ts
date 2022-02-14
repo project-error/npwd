@@ -183,7 +183,7 @@ class _MessagesService {
           if (participantPlayer) {
             emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
               ...messageData,
-              conversation_id: messageData.conversationId.toString(),
+              conversation_id: messageData.conversationId,
               author: authorPhoneNumber,
             });
             emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
@@ -201,13 +201,16 @@ class _MessagesService {
     }
   }
 
-  async handleSetMessageRead(src: number, conversationId: number) {
-    const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
+  async handleSetMessageRead(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
 
     try {
-      await this.messagesDB.setMessageRead(conversationId, phoneNumber);
+      await this.messagesDB.setMessageRead(reqObj.data, phoneNumber);
+
+      resp({ status: 'ok' });
     } catch (err) {
       messagesLogger.error(`Failed to read message. Error: ${err.message}`);
+      resp({ status: 'error' });
     }
   }
 
@@ -239,7 +242,6 @@ class _MessagesService {
   }
 
   // Exports
-
   async handleEmitMessage(dto: EmitMessageExportCtx) {
     const { senderNumber, targetNumber, message } = dto;
 
