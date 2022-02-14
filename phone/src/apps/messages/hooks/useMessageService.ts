@@ -13,13 +13,13 @@ export const useMessagesService = () => {
   const { pathname } = useLocation();
   const activeMessageConversation = useActiveMessageConversation();
 
-  const handleMessageBroadcast = ({ conversation_id, message }) => {
+  const handleMessageBroadcast = ({ conversationName, conversation_id, message }) => {
     if (pathname.includes(`/messages/conversations/${conversation_id}`)) {
       return;
     }
     // Set the current unread count to 1, when they click it will be removed
     setMessageReadState(conversation_id, 1);
-    setNotification({ conversationId: conversation_id, message });
+    setNotification({ conversationName, conversationId: conversation_id, message });
   };
 
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.

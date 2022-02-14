@@ -6,8 +6,6 @@ import useMessages from './useMessages';
 import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
 import { MessageConversation } from '@typings/messages';
-import { useMessageAPI } from './useMessageAPI';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -17,7 +15,6 @@ export const useMessageNotifications = () => {
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
   const { getMessageConversationById, goToConversation } = useMessages();
-  const { addConversation } = useMessageAPI();
   const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
   // Remove notifications from groups when opening them
@@ -33,7 +30,7 @@ export const useMessageNotifications = () => {
     }
   });
 
-  const setNotification = ({ conversationId, message }) => {
+  const setNotification = ({ conversationName, conversationId, message }) => {
     let group: MessageConversation = null;
 
     group = getMessageConversationById(conversationId);
@@ -44,7 +41,7 @@ export const useMessageNotifications = () => {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: group.participant || conversationId.toString(),
+      title: conversationName,
       onClick: () => goToConversation(group),
       content: message,
       icon,
