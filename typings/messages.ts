@@ -127,6 +127,12 @@ export interface OnMessageExportCtx {
   respond: (ctx: any, message: string) => void;
 }
 
+export interface EmitMessageExportCtx {
+  senderNumber: string;
+  targetNumber: string;
+  message: string;
+}
+
 export enum MessageEvents {
   FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
   FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',

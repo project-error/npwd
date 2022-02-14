@@ -102,7 +102,7 @@ export const MessageModal = () => {
 
   useEffect(() => {
     if (!groupId) return;
-    setActiveMessageConversation(groupId);
+    setActiveMessageConversation(parseInt(groupId, 10));
   }, [groupId, setActiveMessageConversation]);
 
   useEffect(() => {

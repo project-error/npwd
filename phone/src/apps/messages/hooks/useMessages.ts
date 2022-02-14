@@ -6,8 +6,8 @@ import { useHistory } from 'react-router';
 
 interface IUseMessages {
   conversations?: MessageConversation[];
-  getMessageConversationById: (id: string) => MessageConversation | null;
-  setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
+  getMessageConversationById: (id: number) => MessageConversation | null;
+  setActiveMessageConversation: (conversation_id: number) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
 
   goToConversation(g: Pick<MessageConversation, 'id'>): void;
@@ -27,19 +27,19 @@ const useMessages = (): IUseMessages => {
   const _setActiveMessageConversation = useSetRecoilState(messageState.activeMessageConversation);
 
   const getMessageConversationById = useCallback(
-    (id: string): MessageConversation | null => {
+    (id: number): MessageConversation | null => {
       if (conversationLoading !== 'hasValue') return;
 
       if (!contents.length) return;
 
       // FIXME: Make sure we have contents as a number as well..
-      return contents && contents.find((c) => c.id == id);
+      return contents && contents.find((c) => c.id === id);
     },
     [contents, conversationLoading],
   );
 
   const setActiveMessageConversation = useCallback(
-    (groupId: string) => {
+    (groupId: number) => {
       const group = getMessageConversationById(groupId);
       _setActiveMessageConversation(group);
       return group;
