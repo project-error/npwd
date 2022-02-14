@@ -1,8 +1,9 @@
 import fetchNui from '@utils/fetchNui';
 import {
   Message,
-  MessageConversationResponse,
+  MessageConversation,
   MessageEvents,
+  PreDBConversation,
   PreDBMessage,
 } from '@typings/messages';
 import { ServerPromiseResp } from '@typings/common';
@@ -12,18 +13,18 @@ import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { messageState, useSetMessages } from './state';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
-import { useMyPhoneNumber } from '../../../os/simcard/hooks/useMyPhoneNumber';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
   sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
-  addConversation: (targetNumber: string) => void;
-  deleteConversation: (conversationIds: string[]) => void;
+  addConversation: (conversation: PreDBConversation) => void;
+  deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
+  setMessageRead: (conversationId: number) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -34,19 +35,20 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteLocalMessage,
     updateLocalConversations,
     removeLocalConversation,
+    setMessageReadState,
   } = useMessageActions();
   const history = useHistory();
   const { state: messageConversationsState, contents: messageConversationsContents } =
     useRecoilValueLoadable(messageState.messageCoversations);
-  const { getPictureByNumber, getDisplayByNumber } = useContactActions();
   const setMessages = useSetMessages();
 
   const myPhoneNumber = useMyPhoneNumber();
 
   const sendMessage = useCallback(
-    ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => {
+    ({ conversationId, message, tgtPhoneNumber, conversationList }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
         conversationId,
+        conversationList,
         message,
         tgtPhoneNumber,
         sourcePhoneNumber: myPhoneNumber,
@@ -65,12 +67,13 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const sendEmbedMessage = useCallback(
-    ({ conversationId, embed, tgtPhoneNumber }: PreDBMessage) => {
+    ({ conversationId, embed, tgtPhoneNumber, conversationList }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         embed: JSON.stringify(embed),
         is_embed: true,
         tgtPhoneNumber,
+        conversationList,
         sourcePhoneNumber: myPhoneNumber,
       }).then((resp) => {
         if (resp.status !== 'ok') {
@@ -84,6 +87,24 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       });
     },
     [t, updateLocalMessages, addAlert, myPhoneNumber],
+  );
+
+  const setMessageRead = useCallback(
+    (conversationId: number) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_MESSAGE_READ, conversationId).then(
+        (resp) => {
+          if (resp.status !== 'ok') {
+            return addAlert({
+              message: 'Failed to read message',
+              type: 'error',
+            });
+          }
+
+          setMessageReadState(conversationId, 0);
+        },
+      );
+    },
+    [addAlert, setMessageReadState],
   );
 
   const deleteMessage = useCallback(
@@ -103,29 +124,41 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const addConversation = useCallback(
-    (targetNumber: string) => {
+    (conversation: PreDBConversation) => {
       if (messageConversationsState !== 'hasValue') {
         return;
       }
 
-      fetchNui<ServerPromiseResp<MessageConversationResponse>>(
+      fetchNui<ServerPromiseResp<MessageConversation>, PreDBConversation>(
         MessageEvents.CREATE_MESSAGE_CONVERSATION,
         {
-          targetNumber,
+          conversationLabel: conversation.conversationLabel,
+          participants: conversation.participants,
+          isGroupChat: conversation.isGroupChat,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
           history.push('/messages');
+
+          if (resp.errorMsg === 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE') {
+            return addAlert({
+              message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
+              type: 'error',
+            });
+          }
+
           return addAlert({
             message: t('MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED"', {
-              number: targetNumber,
+              number: conversation.conversationLabel,
             }),
             type: 'error',
           });
         }
 
+        // FIXME: This won't work properly has the conversationList will differ each time someone creates a convo.
+        // FIXME: Just like this for now.
         const doesConversationExist = messageConversationsContents.find(
-          (c) => c.conversation_id === resp.data.conversation_id,
+          (c) => c.conversationList === resp.data.conversationList,
         );
 
         if (doesConversationExist) {
@@ -136,19 +169,17 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           });
         }
 
-        const display = getDisplayByNumber(resp.data.phoneNumber);
-        const avatar = getPictureByNumber(resp.data.phoneNumber);
-
         updateLocalConversations({
-          phoneNumber: resp.data.phoneNumber,
-          conversation_id: resp.data.conversation_id,
-          updatedAt: resp.data.updatedAt,
-          display,
+          participant: resp.data.participant,
+          id: resp.data.id,
+          conversationList: resp.data.conversationList,
+          label: resp.data.label,
+          isGroupChat: resp.data.isGroupChat,
           unread: 0,
-          avatar,
+          unreadCount: 0,
         });
 
-        history.push(`/messages/conversations/${resp.data.conversation_id}`);
+        history.push(`/messages`);
       });
     },
     [
@@ -156,15 +187,13 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       updateLocalConversations,
       addAlert,
       t,
-      getDisplayByNumber,
-      getPictureByNumber,
       messageConversationsContents,
       messageConversationsState,
     ],
   );
 
   const deleteConversation = useCallback(
-    (conversationIds: string[]) => {
+    (conversationIds: number[]) => {
       fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
         conversationsId: conversationIds,
       }).then((resp) => {
@@ -213,5 +242,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     addConversation,
     fetchMessages,
     sendEmbedMessage,
+    setMessageRead,
   };
 };

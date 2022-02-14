@@ -7,36 +7,56 @@ import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { TextField } from '@ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { PreDBConversation } from '@typings/messages';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
   const [t] = useTranslation();
-  const [participant, setParticipant] = useState<any>('');
-  const [participantValue, setParticipantValue] = useState('');
+  const [participants, setParticipants] = useState<any[]>([]);
+  const [conversationLabel, setConversationLabel] = useState<string>('');
   const { getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
   const { addConversation } = useMessageAPI();
 
+  const myPhoneNumber = useMyPhoneNumber();
+
+  const isGroupChat = participants.length > 1;
+
+  const handleSubmit = () => {
+    const selectedParticipants = participants.map((participant) => participant.number);
+
+    const dto: PreDBConversation = {
+      conversationLabel: isGroupChat ? conversationLabel : '',
+      participants: [myPhoneNumber, ...selectedParticipants],
+      isGroupChat,
+    };
+
+    addConversation(dto);
+  };
+
   useEffect(() => {
     if (phoneNumber) {
-      const find = getContactByNumber(phoneNumber);
-      if (find) {
-        setParticipant(find);
-      } else {
-        setParticipantValue(phoneNumber);
-      }
+      const contact = getContactByNumber(phoneNumber) || { number: phoneNumber };
+      setParticipants((curVal) => [...curVal, contact]);
     }
   }, [phoneNumber, getContactByNumber]);
 
-  const handleSubmit = () => {
-    if (participantValue || participant) {
-      const targetNumber = participant.number ?? participantValue;
-      addConversation(targetNumber);
-    }
-  };
-
   const handleCancel = () => {
     history.goBack();
+  };
+
+  const onAutocompleteChange = (_e, value: any) => {
+    const lastIdx = value.length - 1;
+
+    // If we have a string, it means that we don't have the number as a contact.
+    if (typeof value[lastIdx] === 'string') {
+      value.splice(lastIdx, 1, { number: value[lastIdx] });
+      setParticipants(value);
+      return;
+    }
+    // If we have the contact
+    setParticipants(value as any[]);
   };
 
   const renderAutocompleteInput = (params) => (
@@ -44,35 +64,52 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       {...params}
       fullWidth
       label={t('MESSAGES.INPUT_NAME_OR_NUMBER')}
-      onChange={(e) => setParticipant(e.currentTarget.value)}
+      inputProps={{
+        ...params.inputProps,
+        onKeyPress: (e) => {
+          if (e.key === 'Enter' && e.currentTarget.value) {
+            e.preventDefault();
+            onAutocompleteChange(e, [...participants, e.currentTarget.value]);
+          }
+        },
+        autoFocus: true,
+      }}
     />
   );
 
-  const submitDisabled = !participantValue && !participant;
+  const disableSubmit = !participants?.length || (isGroupChat && !conversationLabel);
 
   return (
     <Box>
       <Box px={2} py={3}>
         <Autocomplete
-          value={participant}
-          inputValue={participantValue}
+          value={participants}
           freeSolo
           disablePortal
           PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
+          multiple
           autoHighlight
-          options={contacts}
-          // I am so sorry
+          options={contacts || []}
           ListboxProps={{ style: { marginLeft: 10 } }}
-          getOptionLabel={(contact) => contact.display || contact.number || participant}
-          onChange={(e, value: any) => setParticipant(value)}
-          onInputChange={(e, value: any) => setParticipantValue(value)}
+          getOptionLabel={(contact) => contact.display || contact.number}
+          onChange={onAutocompleteChange}
           renderInput={renderAutocompleteInput}
         />
       </Box>
+      {isGroupChat && (
+        <Box px={2} py={1}>
+          <TextField
+            fullWidth
+            placeholder="Conversation label"
+            value={conversationLabel}
+            onChange={(e) => setConversationLabel(e.currentTarget.value)}
+          />
+        </Box>
+      )}
       <Box px={2} py={3}>
         <Button
-          onClick={() => handleSubmit()}
-          disabled={submitDisabled}
+          onClick={handleSubmit}
+          disabled={disableSubmit}
           variant="contained"
           fullWidth
           sx={{ mb: 1 }}

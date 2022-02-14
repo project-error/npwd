@@ -2,13 +2,13 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
-import { ContextMenu, IContextMenuOption } from '../../../../ui/components/ContextMenu';
+import { ContextMenu, IContextMenuOption } from '@ui/components/ContextMenu';
 import qs from 'qs';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
-import Backdrop from '../../../../ui/components/Backdrop';
-import { MessageConversation } from '../../../../../../typings/messages';
+import Backdrop from '@ui/components/Backdrop';
+import { MessageConversation } from '@typings/messages';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
