@@ -11,7 +11,6 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import MessageContextMenu from './MessageContextMenu';
 
 interface IProps {
@@ -32,9 +31,6 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [t] = useTranslation();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(!!messages.length);
-  const { getContactByNumber } = useContactActions();
-
-  const conversationContact = getContactByNumber(activeMessageGroup.phoneNumber);
 
   const handleNextPage = useCallback(() => {
     fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
@@ -106,7 +102,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
         </Box>
       </Box>
       <MessageInput
-        messageGroupName={conversationContact?.display || activeMessageGroup.phoneNumber}
+        messageGroupName={activeMessageGroup.participant}
         messageConversation={activeMessageGroup}
         onAddImageClick={() => setContextMenuOpen(true)}
       />

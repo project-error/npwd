@@ -1,14 +1,15 @@
 export interface Message {
   id: number;
   message: string;
-  conversation_id?: string;
+  conversation_id?: number;
   author: string;
   is_embed?: boolean;
   embed?: any;
 }
 
 export interface PreDBMessage {
-  conversationId: string;
+  conversationId: number;
+  conversationList: string;
   tgtPhoneNumber: string;
   sourcePhoneNumber?: string;
   message?: string;
@@ -16,18 +17,39 @@ export interface PreDBMessage {
   embed?: any;
 }
 
-export interface MessageConversation {
-  conversation_id: string;
-  avatar: string;
-  display: string;
-  phoneNumber: string;
-  updatedAt: number;
-  unread: number;
+export interface CreateMessageDTO {
+  userIdentifier: string;
+  authorPhoneNumber: string;
+  conversationId: number;
+  message: string;
+  is_embed: boolean;
+  embed: any;
 }
 
-export interface FormattedMessageConversation {
-  conversation_id: string;
-  phoneNumber: string;
+export interface MessageConversation {
+  id: number;
+  conversationList: string;
+  label: string;
+  participant?: string;
+  isGroupChat: boolean;
+  unread?: number;
+  unreadCount?: number;
+  updatedAt?: number;
+}
+
+export interface PreDBConversation {
+  participants: string[];
+  conversationLabel: string;
+  isGroupChat: boolean;
+}
+
+export interface MessagesRequest {
+  conversationId: string;
+  page: number;
+}
+
+export interface DeleteConversationRequest {
+  conversationsId: number[];
 }
 
 /**
@@ -83,9 +105,11 @@ export interface SetMessageRead {
 }
 
 export interface MessageConversationResponse {
-  conversation_id: string;
+  conversation_id: number;
   phoneNumber: string;
   updatedAt: number;
+  conversationList: string;
+  label: string;
 }
 
 export interface OnMessageExportCtx {
@@ -101,6 +125,12 @@ export interface OnMessageExportCtx {
    * @param message
    */
   respond: (ctx: any, message: string) => void;
+}
+
+export interface EmitMessageExportCtx {
+  senderNumber: string;
+  targetNumber: string;
+  message: string;
 }
 
 export enum MessageEvents {

@@ -17,6 +17,7 @@ import './match/match.controller';
 
 // setup exports
 import './bridge/sv_exports';
+import './messages/middleware/emitMessage';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
