@@ -18,8 +18,8 @@ interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
   isEditing: boolean;
-  checked: string[];
-  handleToggle: (id: string) => void;
+  checked: number[];
+  handleToggle: (id: number) => void;
 }
 
 const MessageGroupItem = ({
@@ -30,7 +30,7 @@ const MessageGroupItem = ({
   handleToggle,
 }: IProps): any => {
   const toggleCheckbox = () => {
-    handleToggle(messageConversation.conversation_id);
+    handleToggle(messageConversation.id);
   };
 
   const contacts = useContacts();
@@ -43,9 +43,26 @@ const MessageGroupItem = ({
     [contacts, getContactByNumber],
   );
 
+  const getLabelOrContact = useCallback(() => {
+    const conversationLabel = messageConversation.label;
+    // This is the source
+    const participant = messageConversation.participant;
+    const conversationList = messageConversation.conversationList.split('+');
+
+    // Label is required if the conversation is a group chat
+    if (messageConversation.isGroupChat) return conversationLabel;
+
+    for (const p of conversationList) {
+      if (p !== participant) {
+        const contact = contactDisplay(p);
+        return contact ? contact.display : p;
+      }
+    }
+  }, [messageConversation, contactDisplay]);
+
   return (
     <ListItem
-      key={messageConversation.conversation_id}
+      key={messageConversation.id}
       onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
       divider
       button
@@ -53,8 +70,8 @@ const MessageGroupItem = ({
       {isEditing && (
         <ListItemIcon>
           <Checkbox
+            checked={checked.indexOf(messageConversation.id) !== -1}
             edge="start"
-            checked={checked.indexOf(messageConversation.conversation_id) !== -1}
             disableRipple
           />
         </ListItemIcon>
@@ -62,16 +79,15 @@ const MessageGroupItem = ({
       <ListItemAvatar>
         <Badge
           color="error"
-          badgeContent={messageConversation.unread <= 99 ? messageConversation.unread : '99+'}
-          invisible={messageConversation.unread <= 0}
+          badgeContent={
+            messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'
+          }
+          invisible={messageConversation.unreadCount <= 0}
         >
-          <MuiAvatar src={contactDisplay(messageConversation.phoneNumber)?.avatar} />
+          <MuiAvatar />
         </Badge>
       </ListItemAvatar>
-      <ListItemText sx={{ overflow: 'hidden' }}>
-        {contactDisplay(messageConversation.phoneNumber)?.display ||
-          messageConversation.phoneNumber}
-      </ListItemText>
+      <ListItemText sx={{ overflow: 'hidden' }}>{getLabelOrContact()}</ListItemText>
     </ListItem>
   );
 };

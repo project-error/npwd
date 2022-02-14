@@ -6,11 +6,11 @@ import { useHistory } from 'react-router';
 
 interface IUseMessages {
   conversations?: MessageConversation[];
-  getMessageConversationById: (id: string) => MessageConversation | null;
-  setActiveMessageConversation: (conversation_id: string) => MessageConversation | null;
+  getMessageConversationById: (id: number) => MessageConversation | null;
+  setActiveMessageConversation: (conversation_id: number) => MessageConversation | null;
   activeMessageConversation: MessageConversation | null;
 
-  goToConversation(g: Pick<MessageConversation, 'conversation_id'>): void;
+  goToConversation(g: Pick<MessageConversation, 'id'>): void;
 }
 
 const useMessages = (): IUseMessages => {
@@ -27,18 +27,19 @@ const useMessages = (): IUseMessages => {
   const _setActiveMessageConversation = useSetRecoilState(messageState.activeMessageConversation);
 
   const getMessageConversationById = useCallback(
-    (id: string): MessageConversation | null => {
+    (id: number): MessageConversation | null => {
       if (conversationLoading !== 'hasValue') return;
 
       if (!contents.length) return;
 
-      return contents && contents.find((c) => c.conversation_id === id);
+      // FIXME: Make sure we have contents as a number as well..
+      return contents && contents.find((c) => c.id === id);
     },
     [contents, conversationLoading],
   );
 
   const setActiveMessageConversation = useCallback(
-    (groupId: string) => {
+    (groupId: number) => {
       const group = getMessageConversationById(groupId);
       _setActiveMessageConversation(group);
       return group;
@@ -47,11 +48,11 @@ const useMessages = (): IUseMessages => {
   );
 
   const goToConversation = useCallback(
-    (messageGroup) => {
-      if (!messageGroup?.conversation_id || !history) return;
-      setCurrentConversationId(messageGroup.conversation_id);
+    (messageConversation: MessageConversation) => {
+      if (!messageConversation?.id || !history) return;
+      setCurrentConversationId(messageConversation.id);
 
-      history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+      history.push(`/messages/conversations/${messageConversation.id.toString()}`);
     },
     [setCurrentConversationId, history],
   );

@@ -1,4 +1,4 @@
-import { IconButton, Paper } from '@mui/material';
+import { Avatar, Box, IconButton, Paper, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
@@ -10,6 +10,7 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -18,23 +19,23 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 16px',
     height: 'auto',
     width: 'auto',
-    minWidth: '60%',
-    maxWidth: '85%',
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    minWidth: '50%',
+    maxWidth: '80%',
+    background: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
     borderRadius: '20px',
     textOverflow: 'ellipsis',
   },
   sms: {
     float: 'left',
-    margin: theme.spacing(1),
     padding: '6px 12px',
     width: 'auto',
-    minWidth: '60%',
-    maxWidth: '85%',
+    marginLeft: 5,
+    minWidth: '50%',
+    maxWidth: '80%',
     height: 'auto',
-    background: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
@@ -57,6 +58,7 @@ interface MessageBubbleProps {
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { getContactByNumber } = useContactActions();
 
   const setSelectedMessage = useSetSelectedMessage();
   const openMenu = () => {
@@ -71,28 +73,46 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     parsedEmbed = JSON.parse(message?.embed);
   }
 
+  const getContact = () => {
+    return getContactByNumber(message.author);
+  };
+
   return (
     <>
-      <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-        {message.is_embed ? (
-          <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
-        ) : (
-          <StyledMessage>
-            {isImage(message.message) ? (
-              <PictureReveal>
-                <PictureResponsive src={message.message} alt="message multimedia" />
-              </PictureReveal>
-            ) : (
-              <>{message.message}</>
-            )}
-            {isMine && (
-              <IconButton onClick={openMenu}>
-                <MoreVertIcon />
-              </IconButton>
-            )}
-          </StyledMessage>
-        )}
-      </Paper>
+      <Box
+        display="flex"
+        ml={1}
+        alignItems="stretch"
+        justifyContent={isMine ? 'flex-end' : 'flex-start'}
+        mt={1}
+      >
+        {!isMine ? <Avatar src={getContact().avatar} /> : null}
+        <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
+          {message.is_embed ? (
+            <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
+          ) : (
+            <StyledMessage>
+              {isImage(message.message) ? (
+                <PictureReveal>
+                  <PictureResponsive src={message.message} alt="message multimedia" />
+                </PictureReveal>
+              ) : (
+                <>{message.message}</>
+              )}
+              {isMine && (
+                <IconButton color="primary" onClick={openMenu}>
+                  <MoreVertIcon />
+                </IconButton>
+              )}
+            </StyledMessage>
+          )}
+          {!isMine && (
+            <Typography fontWeight="bold" fontSize={14} color="#ddd">
+              {getContact().display ?? message.author}
+            </Typography>
+          )}
+        </Paper>
+      </Box>
       <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
     </>
   );
