@@ -6,6 +6,7 @@ import { useContactsValue } from '../../../contacts/hooks/state';
 import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '../../../../../../typings/messages';
+import useMessages from '../../hooks/useMessages';
 
 interface MessageContactModalProps {
   isVisible: boolean;
@@ -22,12 +23,14 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({
   const contacts = useContactsValue();
   const [selectedContact, setSelectContact] = useState(null);
   const { sendEmbedMessage } = useMessageAPI();
+  const { activeMessageConversation } = useMessages();
 
   const handleSendEmbedMessage = () => {
     sendEmbedMessage({
-      conversationId: messageGroup.conversation_id,
+      conversationId: messageGroup.id,
+      conversationList: activeMessageConversation.conversationList,
       embed: { type: 'contact', ...selectedContact },
-      tgtPhoneNumber: messageGroup.phoneNumber,
+      tgtPhoneNumber: messageGroup.participant,
     });
     onClose();
   };

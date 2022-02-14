@@ -6,8 +6,6 @@ import useMessages from './useMessages';
 import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
 import { MessageConversation } from '@typings/messages';
-import { useMessageAPI } from './useMessageAPI';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -17,20 +15,18 @@ export const useMessageNotifications = () => {
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
   const { getMessageConversationById, goToConversation } = useMessages();
-  const { addConversation } = useMessageAPI();
   const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
-  const { getDisplayByNumber } = useContactActions();
 
   // Remove notifications from groups when opening them
   history.listen((location) => {
     if (
-      activeMessageConversation?.conversation_id &&
+      activeMessageConversation?.id &&
       matchPath(location.pathname, {
-        path: `/messages/conversations/${activeMessageConversation.conversation_id}`,
+        path: `/messages/conversations/${activeMessageConversation.id}`,
         exact: true,
       })
     ) {
-      removeId(`${NOTIFICATION_ID}:${activeMessageConversation.conversation_id}`);
+      removeId(`${NOTIFICATION_ID}:${activeMessageConversation.id}`);
     }
   });
 
@@ -39,19 +35,13 @@ export const useMessageNotifications = () => {
 
     group = getMessageConversationById(conversationId);
 
-    if (!group) {
-      addConversation(conversationName);
-      group = getMessageConversationById(conversationId);
-    }
-
     const id = `${NOTIFICATION_ID}:${conversationId}`;
-    const contactDisplay = getDisplayByNumber(conversationName);
 
     const notification = {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: contactDisplay || group.phoneNumber || conversationName,
+      title: conversationName,
       onClick: () => goToConversation(group),
       content: message,
       icon,
@@ -63,7 +53,7 @@ export const useMessageNotifications = () => {
       if (group.unread > 1) {
         addNotification({
           ...n,
-          title: group.phoneNumber || group?.display,
+          title: group.participant,
           content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
             count: group.unread,
           }),
