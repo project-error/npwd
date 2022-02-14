@@ -2,22 +2,33 @@ import { pool } from './pool';
 import { mainLogger } from '../sv_logger';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '../server';
-import { withProfile } from '../utils/withProfile';
 
 const RESOURCE_NAME = GetCurrentResourceName();
 
-// Replicates ghmattimysql API
 class _DbInterface {
   private readonly logger = mainLogger.child({ module: 'DBInterface' });
 
-  private async _internalQuery(query: string, values?: unknown) {
+  private async _internalQuery(query: string, values?: any[]) {
     try {
-      if (config.database.profileQueries) return await withProfile(pool.execute, query, values);
+      if (!values) values = [];
+
+      if (config.database.profileQueries) {
+        const startTime = process.hrtime();
+        ScheduleResourceTick(RESOURCE_NAME);
+
+        const res = await pool.execute(query, values);
+        const timeMs = process.hrtime(startTime)[1] / 1e6;
+
+        this.logger.info(`Executed query (${query} ${JSON.stringify(values)}) in ${timeMs}ms'`);
+        return res;
+      }
 
       ScheduleResourceTick(RESOURCE_NAME);
-      return await pool.query(query, values);
+      return await pool.execute(query, values);
     } catch (e) {
-      this.logger.error(`Error executing ${query} with error message ${e.message}`);
+      this.logger.error(
+        `Error executing (${query} ${JSON.stringify(values)}) with error message ${e.message}`,
+      );
     }
   }
 
@@ -27,9 +38,8 @@ class _DbInterface {
    * @todo This was a fast way of easily porting all our existing queries but should be moved away from
    * @deprecated
    */
-  public _rawExec(query: string, values?: unknown) {
-    ScheduleResourceTick(RESOURCE_NAME);
-    return pool.query(query, values);
+  public async _rawExec(query: string, values?: any[]) {
+    return await this._internalQuery(query, values);
   }
 
   /**
@@ -37,7 +47,7 @@ class _DbInterface {
    * @param query Query template
    * @param values Variable definition
    **/
-  public async exec(query: string, values?: unknown) {
+  public async exec(query: string, values?: any[]) {
     const [res] = await this._internalQuery(query, values);
     return (<ResultSetHeader>res).affectedRows;
   }
@@ -47,7 +57,7 @@ class _DbInterface {
    * @param query Query template
    * @param values Variable definition
    **/
-  public async insert(query: string, values?: unknown) {
+  public async insert(query: string, values?: any[]) {
     const [res] = await this._internalQuery(query, values);
     return (<ResultSetHeader>res).insertId;
   }
@@ -56,7 +66,7 @@ class _DbInterface {
    * Will exec and return results
    * @todo Type safety can be improved
    */
-  public async fetch<T = unknown>(query: string, values?: unknown): Promise<T> {
+  public async fetch<T = unknown>(query: string, values?: any[]): Promise<T> {
     const [res] = await this._internalQuery(query, values);
     const castRes = <unknown>res;
     return <T>castRes;
