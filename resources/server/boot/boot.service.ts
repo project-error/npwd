@@ -56,23 +56,21 @@ export class _BootService {
    * Check if various framework wrappers are started if applicable.
    */
   checkFrameworkDependencies(): void {
-    let startedResources: string[] = [];
+    const startedResources = new Set<string>();
 
     const numOfResources = GetNumResources();
     for (let i = 0; i < numOfResources; i++) {
       const resourceName = GetResourceByFindIndex(i);
 
       if (GetResourceState(resourceName) === 'started') {
-        startedResources = [resourceName, ...startedResources];
+        startedResources.add(resourceName);
       }
     }
 
     for (const [resourceName, depList] of Object.entries(frameworkDependencies)) {
-      if (startedResources.includes(resourceName)) {
-        if (!depList.every((elem) => startedResources.includes(elem))) {
-          const missingDependencies = depList.filter(
-            (depName) => !startedResources.includes(depName),
-          );
+      if (startedResources.has(resourceName)) {
+        if (!depList.every((elem) => startedResources.has(elem))) {
+          const missingDependencies = depList.filter((depName) => !startedResources.has(depName));
 
           console.log(`Missing ${resourceName} dependencies detected: ${missingDependencies}`);
         }
