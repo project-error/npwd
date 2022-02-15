@@ -93,7 +93,7 @@ export function Profile() {
           <ImageIcon />
         </div>
         <div>
-          <Button onClick={handleChooseImage}>{t('TWITTER.AVATAR_CHOOSE_IMAGE')} xd</Button>
+          <Button onClick={handleChooseImage}>{t('TWITTER.AVATAR_CHOOSE_IMAGE')}</Button>
         </div>
       </Box>
 
