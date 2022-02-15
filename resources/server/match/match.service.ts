@@ -44,17 +44,18 @@ class _MatchService {
 
   async handleSaveLikes(reqObj: PromiseRequest<Like[]>, resp: PromiseEventResp<boolean>) {
     const player = PlayerService.getPlayer(reqObj.source);
-    matchLogger.debug(`Saving likes for identifier ${player.getIdentifier()}`);
+    const identifier = player.getIdentifier();
+    matchLogger.debug(`Saving likes for identifier ${identifier}`);
 
     try {
-      await this.matchDB.saveLikes(player.getIdentifier(), reqObj.data);
+      await this.matchDB.saveLikes(identifier, reqObj.data);
     } catch (e) {
       matchLogger.error(`Failed to save likes, ${e.message}`);
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
 
     try {
-      const newMatches = await this.matchDB.findNewMatches(player.getIdentifier(), reqObj.data);
+      const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
 
       if (newMatches.length > 0) {
         resp({ status: 'ok', data: true });
