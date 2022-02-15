@@ -21,7 +21,7 @@ export class _BootService {
   /**
    * onResourceStart event handler.
    */
-  async handleResourceStarting() {
+  async handleResourceStarting(): Promise<void> {
     await this.validateDatabaseSchema();
     this.performConfigChecks();
   }
@@ -29,7 +29,7 @@ export class _BootService {
   /**
    * Validates that the player table and required columns exist.
    */
-  async validateDatabaseSchema() {
+  async validateDatabaseSchema(): Promise<void> {
     const doesPlayerTableExist = await this.bootDb.doesPlayerTableExist();
 
     if (!doesPlayerTableExist) {
@@ -46,7 +46,7 @@ export class _BootService {
   /**
    * Performs various checks related to the config.json file.
    */
-  performConfigChecks() {
+  performConfigChecks(): void {
     if (config.general.useResourceIntegration) {
       this.checkFrameworkDependencies();
     }
@@ -55,7 +55,7 @@ export class _BootService {
   /**
    * Check if various framework wrappers are started if applicable.
    */
-  checkFrameworkDependencies() {
+  checkFrameworkDependencies(): void {
     let startedResources: string[] = [];
 
     const numOfResources = GetNumResources();
