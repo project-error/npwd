@@ -4,10 +4,31 @@ on:
     tags:
       - "*"
 jobs:
+  bump-manifest-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: Bump manifest version
+        run: node .github/actions/bump-manifest-version.js
+        env:
+          TGT_RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+      - name: Push manifest change
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: fxmanifest.lua
+          push: true
+          author_name: Manifest Bumper
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore(bump-manifest): Bump manifest version to ${{ env.RELEASE_VERSION }}"
   create-tagged-release:
     name: Build and Create Tagged Release
     runs-on: ubuntu-latest
-
+    needs: bump-manifest-version
     steps:
       - name: Get tag
         run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
