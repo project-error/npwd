@@ -135,6 +135,14 @@
     {
       "label": "Русский",
       "value": "ru"
+    },
+    {
+      "label": "Svenska",
+      "value": "sv"
+    },
+    {
+      "label": "Türkçe",
+      "value": "tr"
     }
   ],
   "ringtones": [

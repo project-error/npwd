@@ -43,7 +43,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   }, [phoneNumber, getContactByNumber]);
 
   const handleCancel = () => {
-    history.push('/messages');
+    history.goBack();
   };
 
   const onAutocompleteChange = (_e, value: any) => {
