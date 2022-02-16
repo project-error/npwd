@@ -1,7 +1,7 @@
 import { RewriteFrames } from '@sentry/integrations';
 import { config as resourceConfig } from './config';
 export const config = resourceConfig;
-
+import { registerCommands } from './commands/registerCommands';
 // Setup controllers
 import './db/pool';
 import './players/player.controller';
@@ -19,6 +19,9 @@ import './bridge/sv_exports';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
+
+// register commands
+registerCommands();
 
 // Setup sentry tracing
 if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
