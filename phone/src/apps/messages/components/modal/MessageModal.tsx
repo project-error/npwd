@@ -64,7 +64,7 @@ export const MessageModal = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
   const { fetchMessages } = useMessageAPI();
-  const { getLabelOrContact } = useMessageActions();
+  const { getLabelOrContact, getConversationParticipant } = useMessageActions();
   const { initializeCall } = useCall();
 
   const { getContactByNumber } = useContactActions();
@@ -144,6 +144,7 @@ export const MessageModal = () => {
   // FIXME: This is wrong :O
   const targetNumber = activeMessageConversation.participant;
 
+  const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (
     <Slide direction="left" in={!!activeMessageConversation}>
       <Paper
@@ -188,11 +189,11 @@ export const MessageModal = () => {
             <Button>
               <GroupIcon onClick={openGroupModal} fontSize="large" />
             </Button>
-          ) : (
+          ) : !activeMessageConversation.isGroupChat && !doesContactExist ? (
             <Button>
               <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
             </Button>
-          )}
+          ) : !activeMessageConversation.isGroupChat && doesContactExist ? null : null}
         </Box>
         {isLoaded && activeMessageConversation ? (
           <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />

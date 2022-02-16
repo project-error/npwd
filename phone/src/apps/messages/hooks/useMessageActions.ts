@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import { Message, MessageConversation } from '@typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { Contact } from '@typings/contact';
 
 interface MessageActionProps {
   updateLocalConversations: (conversation: MessageConversation) => void;
@@ -11,6 +13,7 @@ interface MessageActionProps {
   deleteLocalMessage: (messageId: number) => void;
   setMessageReadState: (conversationId: number, unreadCount: number) => void;
   getLabelOrContact: (messageConversation: MessageConversation) => string;
+  getConversationParticipant: (conversationList: string) => Contact | null;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -21,6 +24,7 @@ export const useMessageActions = (): MessageActionProps => {
   const setMessageConversation = useSetMessageConversations();
   const setMessages = useSetMessages();
   const { getContactByNumber } = useContactActions();
+  const myPhoneNumber = useMyPhoneNumber();
 
   const updateLocalConversations = useCallback(
     (conversation: MessageConversation) => {
@@ -31,9 +35,11 @@ export const useMessageActions = (): MessageActionProps => {
 
   const setMessageReadState = useCallback(
     (conversationId: number, unreadCount: number) => {
+      console.log(conversationId);
       setMessageConversation((curVal) =>
         curVal.map((message: MessageConversation) => {
           if (message.id === conversationId) {
+            console.log('hello');
             return {
               ...message,
               unread: unreadCount,
@@ -106,6 +112,15 @@ export const useMessageActions = (): MessageActionProps => {
     [setMessages],
   );
 
+  const getConversationParticipant = useCallback(
+    (conversationList: string) => {
+      const participant = conversationList.split('+').filter((p) => p !== myPhoneNumber);
+
+      return getContactByNumber(participant[0]);
+    },
+    [getContactByNumber, myPhoneNumber],
+  );
+
   return {
     updateLocalConversations,
     removeLocalConversation,
@@ -113,5 +128,6 @@ export const useMessageActions = (): MessageActionProps => {
     deleteLocalMessage,
     setMessageReadState,
     getLabelOrContact,
+    getConversationParticipant,
   };
 };
