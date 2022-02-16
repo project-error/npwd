@@ -5,6 +5,8 @@ import { useCallback } from 'react';
 import { useMatchActions } from './useMatchActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { matchState } from './state';
+import { useLocation } from 'react-router-dom';
+import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -17,6 +19,8 @@ import { matchState } from './state';
 // TODO: Bring back notifications
 
 export const useMatchService = () => {
+  const { pathname } = useLocation();
+  const { visibility } = usePhoneVisibility();
   const { setNotification } = useMatchNotifications();
   const { addMatchAccount, addMatchedAccount } = useMatchActions();
 
@@ -25,16 +29,20 @@ export const useMatchService = () => {
   );
 
   const handleMatchBroadcast = ({ name }) => {
+    if (visibility && pathname.includes('/match/')) {
+      return;
+    }
+
     setNotification({ name });
-    addMatchedAccount()
+    addMatchedAccount();
   };
-  
+
   const handleAccountBroadcast = useCallback(
     (profile: FormattedProfile) => {
       if (profileLoading !== 'hasValue') return;
       if (!profileContent) return;
 
-      addMatchAccount(profile, profileContent)
+      addMatchAccount(profile, profileContent);
     },
     [addMatchAccount, profileContent, profileLoading],
   );
