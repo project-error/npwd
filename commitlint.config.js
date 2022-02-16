@@ -21,5 +21,6 @@ module.exports = {
         'tweak',
       ],
     ],
+    'body-max-line-length': [0, 'always', 100],
   },
 };
