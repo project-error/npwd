@@ -88,6 +88,8 @@ export class _MessagesDB {
   }
 
   async createMessage(dto: CreateMessageDTO) {
+    console.log('createMessageDTO', dto);
+
     const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed)
                    VALUES (?, ?, ?, ?, ?, ?)`;
 
@@ -96,8 +98,8 @@ export class _MessagesDB {
       dto.userIdentifier,
       dto.conversationId,
       dto.authorPhoneNumber,
-      dto.is_embed,
-      dto.embed,
+      dto.is_embed || false,
+      dto.embed || '',
     ]);
 
     const result = <ResultSetHeader>results;
