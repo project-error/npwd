@@ -13,7 +13,7 @@ export const useMatchNotifications = () => {
   const { icon, notificationIcon } = useApp('MATCH');
 
   useEffect(() => {
-    const listenHistory = listen((location) => {
+    return listen((location) => {
       if (
         matchPath(location.pathname, {
           path: `/match/matches`,
@@ -23,8 +23,7 @@ export const useMatchNotifications = () => {
         removeId(NOTIFICATION_ID);
       }
     });
-    return listenHistory
-  }, [listen])
+  }, [listen, removeId]);
 
   const setNotification = useCallback(({ name }) => {
     const notification = {
@@ -38,8 +37,9 @@ export const useMatchNotifications = () => {
       notificationIcon,
     };
 
-    addNotificationAlert(notification)
+    addNotificationAlert(notification);
     addNotification(notification);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { setNotification };
