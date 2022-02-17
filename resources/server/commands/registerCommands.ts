@@ -1,17 +1,17 @@
 import { mainLogger } from '../sv_logger';
 import { config } from '../config';
 import DbInterface from '../db/db_wrapper';
+import { CONNECTION_STRING, parseSemiColonFormat } from '../db';
+import { parseUri } from '../db/parseUri';
 
-interface ColumnInfo {
-  COLUMN_NAME: string;
-  DATA_TYPE: string;
-  CHARACTER_MAXIMUM_LENGTH: number;
-  IS_NULLABLE: string;
-}
+const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 
-const npwdDebugDumpCommand = async ([src]: [number]): Promise<void> => {
+const npwdDebugDumpCommand = async (src: number): Promise<void> => {
   // We require this be called from the server console.
   if (src !== 0) return;
+
+  const tableSchema = parseUri(mysqlConnectionString).database;
+  console.log('tableSchema', tableSchema);
 
   mainLogger.info('NPWD DEBUG DUMP STARTED, THIS WILL WRITE TO THE SV_NPWD.LOG FILE');
   mainLogger.info('Resource Config >');
@@ -27,10 +27,12 @@ const npwdDebugDumpCommand = async ([src]: [number]): Promise<void> => {
   mainLogger.info(`Connected Player Count > ${activePlayerCount}`);
 
   try {
-    const playerTableResults = await DbInterface.fetch<ColumnInfo[]>(
+    const playerTableResults = await DbInterface._rawExec(
       `SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
-       FROM INFORMATION_SCHEMA.COLUMNS
-       WHERE TABLE_NAME = '${config.database.playerTable}'`,
+       FROM information_schema.COLUMNS
+       WHERE TABLE_NAME = ?
+         AND TABLE_SCHEMA = ?`,
+      [config.database.playerTable, tableSchema],
     );
 
     const tableExists = playerTableResults.length > 0;
