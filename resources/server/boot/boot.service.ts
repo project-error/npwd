@@ -1,14 +1,7 @@
 import BootDb, { _BootDb } from './boot.db';
-import { bootLogger } from './boot.utils';
+import { bootLogger, fatalDbError } from './boot.utils';
 import { config } from '../server';
-
-const { identifierColumn, phoneNumberColumn } = config.database;
-const requiredDbColumns = [identifierColumn, phoneNumberColumn];
-
-const frameworkDependencies = {
-  ['es_extended']: ['esx-npwd'],
-  ['qb-core']: ['qb-npwd'],
-};
+import { frameworkDependencies, requiredDbColumns } from './boot.utils';
 
 export class _BootService {
   private readonly bootDb: _BootDb;
@@ -30,17 +23,25 @@ export class _BootService {
    * Validates that the player table and required columns exist.
    */
   async validateDatabaseSchema(): Promise<void> {
+    bootLogger.debug('Beginning database schema validation');
+
     const doesPlayerTableExist = await this.bootDb.doesPlayerTableExist();
 
     if (!doesPlayerTableExist) {
-      throw new Error('Player table does not exist in configured database.');
+      fatalDbError(
+        `Player table "${config.database.playerTable}" does not exist in the configured database.`,
+      );
     }
 
     const columnData = await this.bootDb.getPlayerTableColumns();
 
     if (!requiredDbColumns.every((elem) => columnData.includes(elem))) {
-      throw new Error('Configured player table is missing required columns.');
+      const missingColumns = requiredDbColumns.filter((elem) => !columnData.includes(elem));
+
+      fatalDbError(`Player table is missing required columns: [${missingColumns.join(', ')}]`);
     }
+
+    bootLogger.debug('Database schema successfully validated');
   }
 
   /**
@@ -56,7 +57,10 @@ export class _BootService {
    * Check if various framework wrappers are started if applicable.
    */
   checkFrameworkDependencies(): void {
+    bootLogger.debug('Checking for missing framework dependencies');
+
     const startedResources = new Set<string>();
+    const errorsDetected = new Set<string>();
 
     const numOfResources = GetNumResources();
     for (let i = 0; i < numOfResources; i++) {
@@ -72,9 +76,17 @@ export class _BootService {
         if (!depList.every((elem) => startedResources.has(elem))) {
           const missingDependencies = depList.filter((depName) => !startedResources.has(depName));
 
-          console.log(`Missing ${resourceName} dependencies detected: ${missingDependencies}`);
+          errorsDetected.add(
+            `Missing ${resourceName} dependencies detected: ${missingDependencies.join(', ')}`,
+          );
         }
       }
+    }
+
+    if (errorsDetected.size) {
+      errorsDetected.forEach((errorString) => bootLogger.error(errorString));
+    } else {
+      bootLogger.debug('No missing dependencies were detected');
     }
   }
 }
