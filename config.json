@@ -51,7 +51,8 @@
     "enableAvatars": true,
     "enableEmojis": true,
     "enableImages": true,
-    "maxImages": 3
+    "maxImages": 3,
+    "badWords": ["sus", "amogus"]
   },
   "match": {
     "generateProfileNameFromUsers": true,

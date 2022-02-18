@@ -10,6 +10,7 @@ interface TwitterConfig {
   enableEmojis: boolean;
   enableImages: boolean;
   maxImages: number;
+  badWords: string[];
 }
 
 interface MatchConfig {
