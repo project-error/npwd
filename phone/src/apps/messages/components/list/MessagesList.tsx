@@ -13,7 +13,6 @@ import {
   useIsEditing,
 } from '../../hooks/state';
 import EditIcon from '@mui/icons-material/Edit';
-import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const MessagesList = (): any => {
