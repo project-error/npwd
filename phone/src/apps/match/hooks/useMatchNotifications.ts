@@ -25,22 +25,24 @@ export const useMatchNotifications = () => {
     });
   }, [listen, removeId]);
 
-  const setNotification = useCallback(({ name }) => {
-    const notification = {
-      app: 'MATCH',
-      id: NOTIFICATION_ID,
-      sound: true,
-      title: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
-      onClick: () => push(`/match/matches`),
-      content: name,
-      icon,
-      notificationIcon,
-    };
+  const setNotification = useCallback(
+    ({ name }) => {
+      const notification = {
+        app: 'MATCH',
+        id: NOTIFICATION_ID,
+        sound: true,
+        title: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
+        onClick: () => push(`/match/matches`),
+        content: name,
+        icon,
+        notificationIcon,
+      };
 
-    addNotificationAlert(notification);
-    addNotification(notification);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      addNotificationAlert(notification);
+      addNotification(notification);
+    },
+    [addNotification, addNotificationAlert, icon, notificationIcon, push, t],
+  );
 
   return { setNotification };
 };
