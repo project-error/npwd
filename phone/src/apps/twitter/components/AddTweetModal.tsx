@@ -65,7 +65,11 @@ const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   if (!ResourceConfig) return null;
-  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
+  const { characterLimit, newLineLimit, badWords } = ResourceConfig.twitter;
+  const badWordsFilter = new RegExp(badWords.join('|'), 'ig');
+
+  const isMessageNaughty = (message) => badWordsFilter.test(message);
+
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
     if (getNewLineCount(message) < newLineLimit) return true;
@@ -76,6 +80,7 @@ const AddTweetModal = () => {
     const cleanedMessage = message.trim();
     if (cleanedMessage.length === 0) return;
     if (!isValidMessage(cleanedMessage)) return;
+    if (isMessageNaughty(cleanedMessage)) return;
 
     const data: NewTweet = {
       message,
