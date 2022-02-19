@@ -7,6 +7,7 @@ import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
+import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
 
 interface IProps {
   onAddImageClick(): void;
@@ -19,6 +20,7 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useMessageAPI();
   const { activeMessageConversation } = useMessages();
+  const { clean } = useWordFilter();
 
   const handleSubmit = async () => {
     console.log(activeMessageConversation);
@@ -26,7 +28,7 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
       await sendMessage({
         conversationId: messageConversation.id,
         conversationList: activeMessageConversation.conversationList,
-        message,
+        message: clean(message),
         tgtPhoneNumber: messageConversation.participant,
       });
       setMessage('');
