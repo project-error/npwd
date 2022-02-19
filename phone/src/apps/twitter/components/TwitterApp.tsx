@@ -21,6 +21,7 @@ import { TwitterEvents } from '@typings/twitter';
 import { useSetRecoilState } from 'recoil';
 import { twitterState } from '../hooks/state';
 import ModalBackground from './ModalBackground';
+import { WordFilterProvider } from '../../../os/wordfilter/providers/WordFilterProvider';
 
 const TwitterApp = () => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
@@ -40,7 +41,9 @@ const TwitterApp = () => {
   return (
     <TwitterThemeProvider>
       <AppWrapper id="twitter-app">
-        <AddTweetModal />
+        <WordFilterProvider>
+          <AddTweetModal />
+        </WordFilterProvider>
         <ModalBackground />
         <TwitterTitle />
         <AppContent>

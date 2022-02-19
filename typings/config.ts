@@ -10,7 +10,6 @@ interface TwitterConfig {
   enableEmojis: boolean;
   enableImages: boolean;
   maxImages: number;
-  badWords: string[];
 }
 
 interface MatchConfig {
@@ -72,6 +71,11 @@ interface PhoneAsItemConfig {
   exportFunction: string;
 }
 
+interface ProfanityFilter {
+  enabled: boolean;
+  badWords: string[];
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -85,4 +89,5 @@ export interface ResourceConfig {
   debug: Debug;
   images: ImageConfig;
   imageSafety: ImageSafety;
+  profanityFilter: ProfanityFilter;
 }

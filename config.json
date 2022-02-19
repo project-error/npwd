@@ -40,6 +40,10 @@
       "wikipedia.org"
     ]
   },
+  "profanityFilter": {
+    "enabled": true,
+    "badWords": ["sus", "amogus"]
+  },
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,
@@ -51,8 +55,7 @@
     "enableAvatars": true,
     "enableEmojis": true,
     "enableImages": true,
-    "maxImages": 3,
-    "badWords": ["sus", "amogus"]
+    "maxImages": 3
   },
   "match": {
     "generateProfileNameFromUsers": true,
