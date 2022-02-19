@@ -6,7 +6,7 @@ export const RecoilDebugObserver: React.FC = ({ children }) => {
 
   useEffect(() => {
     // Enable debugging atom mutation if needed
-    if (!defaultConfig.debug.shouldShowAtomDebug) return;
+    //if (!defaultConfig.debug.shouldShowAtomDebug) return;
 
     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
       console.debug(node.key, snapshot.getLoadable(node));

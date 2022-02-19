@@ -6,7 +6,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { NPWDNotification } from '@typings/notifications';
+import { NPWDNotification, UnreadNotificationBarProps } from '@typings/notifications';
 
 export const storedNotificationsFamily = atomFamily<NPWDNotification, string>({
   key: 'storedNotifications',
@@ -35,6 +35,11 @@ export const allNotificationIds = atom<string[]>({
 });
 
 export const unreadNotificationIds = atom<string[]>({
+  key: 'unreadNotificationsIds',
+  default: [],
+});
+
+export const unreadNotifications = atom<UnreadNotificationBarProps[]>({
   key: 'unreadNotifications',
   default: [],
 });
@@ -84,3 +89,4 @@ export const useUnreadNotificationsForApp = (appId: string) =>
   useRecoilValue(unreadNotificationsForApp(appId));
 
 export const useUnreadNotificationIds = () => useRecoilValue(unreadNotificationIds);
+export const useUnreadNotifications = () => useRecoilValue(unreadNotifications);

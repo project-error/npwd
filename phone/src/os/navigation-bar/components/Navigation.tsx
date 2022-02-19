@@ -6,7 +6,6 @@ import AppsIcon from '@mui/icons-material/Apps';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
-import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useNavigationDisabledValue } from '@os/navigation-bar/state/navigation.state';
 import { useSetNavbarUncollapsed } from '../../new-notifications/state/notifications.state';
 

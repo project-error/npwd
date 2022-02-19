@@ -2,7 +2,10 @@ import React from 'react';
 import { ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useRecoilValue } from 'recoil';
-import { storedNotificationsFamily } from '@os/new-notifications/state/notifications.state';
+import {
+  storedNotificationsFamily,
+  useSetNavbarUncollapsed,
+} from '@os/new-notifications/state/notifications.state';
 import { useNotifications } from '@os/new-notifications/hooks/useNotifications';
 import { useHistory } from 'react-router-dom';
 
@@ -16,9 +19,11 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ uniqId, key 
   const { markAsRead } = useNotifications();
   const { icon } = useApp(appId);
   const history = useHistory();
+  const closeBar = useSetNavbarUncollapsed();
 
   const handleOnClose = () => {
     markAsRead(uniqId);
+    closeBar(false);
     history.push(path);
   };
 

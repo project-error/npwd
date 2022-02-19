@@ -27,12 +27,8 @@ import { useConfig } from '@os/phone/hooks/useConfig';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useNotificationListener } from '@os/new-notifications/hooks/useNotificationListener';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useCall } from '@os/call/hooks/useCall';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { NotificationBar } from '@os/new-notifications/components/NotificationBar';
-import { useNotificationListener } from './os/new-notifications/hooks/useNotificationListener';
-import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 
@@ -41,7 +37,7 @@ interface PhoneProps {
 }
 
 export const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const { apps } = useApps();
 
@@ -64,7 +60,6 @@ export const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   useContactsListener();
   useNoteListener();
   useNotificationListener();
-  /*usePhotoService();*/
   useCallService();
   useDialService();
   useInvalidSettingsHandler();

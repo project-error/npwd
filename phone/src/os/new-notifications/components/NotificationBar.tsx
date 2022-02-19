@@ -21,12 +21,12 @@ import { NoNotificationText } from './NoNotificationText';
 import {
   storedNotificationsFamily,
   useNavbarUncollapsed,
-  useSetNavbarUncollapsed,
   useUnreadNotificationIds,
+  useUnreadNotifications,
 } from '@os/new-notifications/state/notifications.state';
 import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
-import { useHistory } from 'react-router-dom';
+import { UnreadNotificationBarProps } from '@typings/notifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     backgroundColor: theme.palette.background.default,
+    //backgroundColor: 'rgba(0, 0, 0, 0.7)',
     width: '100%',
     position: 'absolute',
     top: '30px',
@@ -75,18 +76,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface WrapperGridProps extends GridProps {
-  tgtNotiId?: string;
+  tgtNoti?: UnreadNotificationBarProps;
   key: string | number;
 }
 
-const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNotiId, children }) => {
-  const notificationItem = useRecoilValue(storedNotificationsFamily(tgtNotiId));
-  const notificationTgtApp = useApp(notificationItem.appId);
+const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNoti, children }) => {
+  const notificationTgtApp = useApp(tgtNoti.appId);
 
   return (
     <Grid
       item
-      key={tgtNotiId}
+      key={tgtNoti.id}
       component={IconButton}
       sx={{
         color: 'text.primary',
@@ -116,6 +116,8 @@ export const NotificationBar = () => {
 
   const unreadNotificationIds = useUnreadNotificationIds();
 
+  const unreadNotifications = useUnreadNotifications();
+
   useEffect(() => {
     if (unreadNotificationIds.length === 0) {
       setBarUncollapsed(false);
@@ -135,9 +137,11 @@ export const NotificationBar = () => {
         }}
       >
         <Grid container item wrap="nowrap">
-          {unreadNotificationIds.map((id, idx) => (
-            <IconUnreadGrid tgtNotiId={id} key={idx} />
-          ))}
+          {unreadNotifications
+            .filter((val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId))
+            .map((notification, idx) => {
+              return <IconUnreadGrid tgtNoti={notification} key={idx} />;
+            })}
         </Grid>
         {time && (
           <Grid item className={classes.item}>

@@ -8,7 +8,6 @@ import { NuiProvider } from 'fivem-nui-react-lib';
 import { SoundProvider } from '@os/sound/providers/SoundProvider';
 import SnackbarProvider from '@os/snackbar/providers/SnackbarProvider';
 import { NotificationBase } from '@os/new-notifications/components/NotificationBase';
-import Collapse from './lib/transitions/Collapse';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

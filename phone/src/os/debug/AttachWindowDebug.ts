@@ -1,7 +1,6 @@
 import { PhoneEvents } from '@typings/phone';
 import { IAlert } from '@os/snackbar/hooks/useSnackbar';
 import { NotificationEvents, QueueNotificationOptsReadonly } from '@typings/notifications';
-import { QueueNotificationOpts } from '../new-notifications/hooks/useNotifications';
 import { ActiveCall, CallEvents } from '@typings/call';
 
 function dispatchEvent<T = any>({ method, app, data }: { method: string; app: string; data: T }) {

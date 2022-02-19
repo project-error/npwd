@@ -4,12 +4,12 @@ import {
   allNotificationIds,
   storedNotificationsFamily,
   unreadNotificationIds,
+  unreadNotifications,
 } from '../state/notifications.state';
 import { useApps } from '@os/apps/hooks/useApps';
-import React, { FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { NotificationBaseComponent } from '../components/NotificationBase';
 import { useSnackbar } from 'notistack';
-import notiActiveExitHandler from '../utils/notiActiveExitHandler';
 import useSound from '@os/sound/hooks/useSound';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IApp } from '@os/apps/config/apps';
@@ -88,6 +88,14 @@ export const useNotifications = (): UseNotificationVal => {
         set(allNotificationIds, (curIds) => [...curIds, uniqId]);
         set(activeNotificationsIds, (curIds) => [...curIds, uniqId]);
         set(unreadNotificationIds, (curIds) => [...curIds, uniqId]);
+
+        set(unreadNotifications, (curNotis) => [
+          ...curNotis,
+          {
+            id: uniqId,
+            appId,
+          },
+        ]);
 
         set(storedNotificationsFamily(uniqId), {
           appId,
@@ -188,10 +196,15 @@ export const useNotifications = (): UseNotificationVal => {
             set(activeNotificationsIds, newActiveNotis);
           }
 
-          const curUnreadNotis = await snapshot.getPromise(unreadNotificationIds);
+          const curUnreadNotisIds = await snapshot.getPromise(unreadNotificationIds);
 
-          const newUnreadNotis = curUnreadNotis.filter((id) => id !== key);
-          set(unreadNotificationIds, newUnreadNotis);
+          const newUnreadNotisIds = curUnreadNotisIds.filter((id) => id !== key);
+          set(unreadNotificationIds, newUnreadNotisIds);
+
+          const curUnreadNotis = await snapshot.getPromise(unreadNotifications);
+
+          const newUnreadNotis = curUnreadNotis.filter((noti) => noti.id !== key);
+          set(unreadNotifications, newUnreadNotis);
         },
       [closeSnackbar],
     );

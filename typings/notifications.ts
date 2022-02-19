@@ -33,6 +33,11 @@ export interface UnreadNotification {
   onClick?: () => void;
 }
 
+export interface UnreadNotificationBarProps {
+  id: string;
+  appId: string;
+}
+
 export interface UseNotificationVal {
   createNotification: (opts: QueueNotificationOptsReadonly) => void;
   removeAllActive: () => void;
