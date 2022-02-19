@@ -49,7 +49,7 @@ export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...lis
   return (
     <ListItem className={classes.root}>
       <div className={classes.content}>
-        <Paper elevation={2} variant="outlined" className={classes.paper}>
+        <Paper variant="outlined" className={classes.paper}>
           <div style={{ margin: 10 }}>
             <Typography style={{ margin: 5 }} variant="h5">
               {listing.name}
