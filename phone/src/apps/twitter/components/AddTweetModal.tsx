@@ -20,6 +20,7 @@ import { promiseTimeout } from '../../../utils/promiseTimeout';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { toggleKeys } from '../../../ui/components/Input';
 import { Box, styled } from '@mui/material';
+import { useWordFilter } from '../../../os/wordfilter/hooks/useWordFilter';
 
 const ButtonsContainer = styled(Box)({
   paddingBottom: '8px',
@@ -39,6 +40,7 @@ const AddTweetModal = () => {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const { t } = useTranslation();
+  const { clean } = useWordFilter();
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
@@ -65,10 +67,7 @@ const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   if (!ResourceConfig) return null;
-  const { characterLimit, newLineLimit, badWords } = ResourceConfig.twitter;
-  const badWordsFilter = new RegExp(badWords.join('|'), 'ig');
-
-  const isMessageNaughty = (message) => badWordsFilter.test(message);
+  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
@@ -77,13 +76,12 @@ const AddTweetModal = () => {
 
   const submitTweet = async () => {
     await promiseTimeout(200);
-    const cleanedMessage = message.trim();
+    const cleanedMessage = clean(message.trim());
     if (cleanedMessage.length === 0) return;
     if (!isValidMessage(cleanedMessage)) return;
-    if (isMessageNaughty(cleanedMessage)) return;
 
     const data: NewTweet = {
-      message,
+      message: cleanedMessage,
       retweet: null,
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
