@@ -41,8 +41,8 @@
     ]
   },
   "profanityFilter": {
-    "enabled": true,
-    "badWords": ["sus", "amogus"]
+    "enabled": false,
+    "badWords": []
   },
   "twitter": {
     "showNotifications": true,
