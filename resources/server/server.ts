@@ -4,6 +4,7 @@ export const config = resourceConfig;
 
 // Setup controllers
 import './db/pool';
+import './boot/boot.controller';
 import './players/player.controller';
 import './calls/calls.controller';
 import './notes/notes.controller';
@@ -35,6 +36,6 @@ if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
 
 on('onServerResourceStart', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
-    mainLogger.info('Sucessfully started');
+    mainLogger.info('Successfully started');
   }
 });
