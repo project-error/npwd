@@ -51,17 +51,21 @@ export const useMatchActions = () => {
     [setProfiles, addAlert, t, setMatches],
   );
 
-  const addMatchAccount = useRecoilCallback(({ snapshot, set }) => async (profile: FormattedProfile, myProfile: FormattedProfile) => {
-    if (profile.identifier === myProfile.identifier) return;
+  const addMatchAccount = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (profile: FormattedProfile, myProfile: FormattedProfile) => {
+        if (profile.identifier === myProfile.identifier) return;
 
-    const matchesLoading = getIsMatchesLoading(snapshot);
-    if (matchesLoading) return;
+        const matchesLoading = getIsMatchesLoading(snapshot);
+        if (matchesLoading) return;
 
-    set(matchState.profiles, (curVal) => [profile, ...curVal]);
-  });
+        set(matchState.profiles, (curVal) => [profile, ...curVal]);
+      },
+  );
 
   const addMatchedAccount = async () => {
     fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
+      if (resp.status !== 'ok') return;
       setMatches(resp.data);
     });
   };
@@ -69,6 +73,6 @@ export const useMatchActions = () => {
   return {
     setViewed,
     addMatchAccount,
-    addMatchedAccount
+    addMatchedAccount,
   };
 };
