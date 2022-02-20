@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
-import { APPS, IApp } from '../config/apps';
+import { AppId, APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
@@ -57,7 +57,7 @@ export const useApps = () => {
   return { apps, getApp };
 };
 
-export const useApp = (id: string): IApp => {
+export const useApp = (id: AppId): IApp => {
   const { getApp } = useApps();
   return getApp(id);
 };

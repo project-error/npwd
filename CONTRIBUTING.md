@@ -8,11 +8,11 @@ We love your input! We want to make contributing to this project as easy and tra
 - Proposing new features
 - Becoming a maintainer
 
-## We Develop with Github
+## We develop with Github
 
 We use github to host code, to track issues and feature requests, as well as accept pull requests.
 
-## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
+## We use [Github flow](https://guides.github.com/introduction/flow/index.html), so all code changes happen through pull requests
 
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
@@ -51,12 +51,35 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 
 People _love_ thorough bug reports. I'm not even kidding.
 
-## Use a Consistent Coding Style
+## Use a consistent coding style
 
 These guidelines have also been adapted from [Facebook's Guidelines](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)
 
 - 2 spaces for indentation rather than tabs
 - Run `yarn format` for unification of styling across the project.
+
+## Development & in-game verification
+
+The updates should be verified ingame by the author. It's _easy_ to develop ingame.
+
+Follow these steps to run the NPWD inside FiveM.
+
+1. Set `debug.level` to `silly` in config.json. (Optional)
+
+1. Enter the `phone` folder & run `yarn watch`.
+
+   _This will make sure the UI is updated._
+
+1. Enter the `resources` folder & run `yarn watch`.
+
+   _This will make sure the resources folder is updated._
+
+1. After you have made code changes. Restart the resource with `ensure npwd` in-game
+
+**NOTES**:
+
+- Step 2 & 3 are required. Even when only updating NUI.
+- Sometimes you need to run `ensure npwd` twice (to update player data).
 
 ## License
 

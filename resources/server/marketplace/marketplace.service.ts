@@ -59,6 +59,7 @@ class _MarketplaceService {
         username: player.username,
         description: reqObj.data.description,
         title: reqObj.data.title,
+        price: reqObj.data.price,
       };
       // Broadcast to everyone we are adding a listing
       emitNet(MarketplaceEvents.BROADCAST_ADD, -1, { type: 'ADD', listing: returnObj });
@@ -68,6 +69,40 @@ class _MarketplaceService {
       });
 
       resp({ status: 'error', errorMsg: MarketplaceResp.CREATE_FAILED });
+    }
+  }
+
+  async handleUpdateListing(
+    request: PromiseRequest<Partial<MarketplaceListing>>,
+    response: PromiseEventResp<MarketplaceResp>,
+  ): Promise<void> {
+    marketplaceLogger.debug('Handling edit listing, listing:');
+    marketplaceLogger.debug(request.data);
+
+    const listing = request.data;
+
+    try {
+      const existingListing = await this.marketplaceDB.getListing(request.data.id);
+      if (!existingListing) throw new Error('No existing listing');
+
+      const imageUrl = checkAndFilterImage(listing.url);
+      if (imageUrl == null) {
+        return response({ status: 'error', errorMsg: MarketplaceResp.INVALID_IMAGE_HOST });
+      }
+
+      listing.url = imageUrl;
+
+      const updatedListing: MarketplaceListing = { ...existingListing, ...listing };
+      await this.marketplaceDB.updateListing(updatedListing);
+
+      emitNet(MarketplaceEvents.BROADCAST_EDIT, -1, { type: 'EDIT', listing: updatedListing });
+      response({ status: 'ok' });
+    } catch (e) {
+      marketplaceLogger.error(`Failed to edit listing ${e.message}`, {
+        source: request.source,
+      });
+
+      response({ status: 'error', errorMsg: MarketplaceResp.CREATE_FAILED });
     }
   }
 

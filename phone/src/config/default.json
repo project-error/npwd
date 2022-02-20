@@ -258,7 +258,7 @@
     }
   ],
   "debug": {
-    "printDebugLogs": true,
+    "printDebugLogs": false,
     "logLevel": 1,
     "shouldShowAtomDebug": false
   },

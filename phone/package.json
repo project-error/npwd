@@ -24,6 +24,7 @@
     "qs": "^6.9.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.27.1",
     "react-i18next": "^11.14.3",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^5.3.0",
@@ -36,9 +37,11 @@
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
     "@sentry/webpack-plugin": "^1.18.3",
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/howler": "^2.2.4",
     "@types/jest": "^27.4.0",
     "@types/node": "^14.17.34",
@@ -59,12 +62,15 @@
     "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
     "build:release": "cross-env SENTRY_RELEASE=true craco build",
     "build": "craco build",
-    "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"
+    "test": "craco test --watchAll=false "
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "jest": {
+    "testMatch": [
+      "**/src/**/*.test.{ts,js,tsx}"
+    ],
     "moduleNameMapper": {
       "^@apps(.*)$": "<rootDir>/src/apps$1",
       "^@os(.*)$": "<rootDir>/src/os$1",

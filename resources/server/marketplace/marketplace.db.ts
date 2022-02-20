@@ -16,7 +16,7 @@ export class _MarketplaceDB {
     listing: MarketplaceListingBase,
   ): Promise<number> {
     const query =
-      'INSERT INTO npwd_marketplace_listings (identifier, username, name, number, title, url, description) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      'INSERT INTO npwd_marketplace_listings (identifier, username, name, number, title, url, description, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
     const [result] = await DbInterface._rawExec(query, [
       identifier,
@@ -26,11 +26,28 @@ export class _MarketplaceDB {
       listing.title,
       listing.url,
       listing.description,
+      listing.price,
     ]);
 
     const resultCast = result as ResultSetHeader;
 
     return resultCast.insertId;
+  }
+
+  async updateListing(listing: MarketplaceListing) {
+    const query = `UPDATE npwd_marketplace_listings SET identifier = ?, username = ?, name = ?, number = ?, title = ?, url = ?, description = ?, price = ? WHERE id = ?`;
+
+    return await DbInterface._rawExec(query, [
+      listing.identifier,
+      listing.username,
+      listing.name,
+      listing.number,
+      listing.title,
+      listing.url,
+      listing.description,
+      listing.price,
+      listing.id,
+    ]);
   }
 
   async fetchListings(): Promise<MarketplaceListing[]> {

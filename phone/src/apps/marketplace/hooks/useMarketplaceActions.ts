@@ -5,6 +5,7 @@ import { useRecoilCallback } from 'recoil';
 interface MarketplaceActionValues {
   deleteListing: (ids: number[]) => void;
   addListing: (listing: MarketplaceListing) => void;
+  updateListing: (listing: MarketplaceListing) => void;
 }
 
 export const useMarketplaceActions = (): MarketplaceActionValues => {
@@ -39,5 +40,19 @@ export const useMarketplaceActions = (): MarketplaceActionValues => {
     [setListings],
   );
 
-  return { deleteListing, addListing };
+  const updateListing = useRecoilCallback(
+    ({ snapshot }) =>
+      (listing: MarketplaceListing) => {
+        const { state } = snapshot.getLoadable(listingState);
+        if (state !== 'hasValue') return;
+
+        setListings((curListings) => {
+          const filteredListings = curListings.filter((curListing) => listing.id !== curListing.id);
+          return [...filteredListings, listing];
+        });
+      },
+    [setListings],
+  );
+
+  return { deleteListing, addListing, updateListing };
 };

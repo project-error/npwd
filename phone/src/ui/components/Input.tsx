@@ -16,6 +16,7 @@ export const toggleKeys = (keepGameFocus: boolean) =>
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => (
   <MUITextField
     ref={ref}
+    aria-label={props.name}
     {...props}
     variant={props.variant ?? 'standard'}
     onFocus={(e) => {
@@ -36,6 +37,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
 export const InputBase: React.FC<InputBaseProps> = forwardRef((props, ref) => (
   <MUIInputBase
     ref={ref}
+    aria-label={props.name}
     {...props}
     onFocus={(e) => {
       toggleKeys(false);

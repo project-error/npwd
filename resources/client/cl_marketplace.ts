@@ -1,5 +1,6 @@
 import {
   MarketplaceBroadcastAddDTO,
+  MarketplaceBroadcastEditDTO,
   MarketplaceDeleteDTO,
   MarketplaceEvents,
 } from '../../typings/marketplace';
@@ -8,12 +9,17 @@ import { sendMarketplaceEvent } from '../utils/messages';
 
 RegisterNuiProxy(MarketplaceEvents.FETCH_LISTING);
 RegisterNuiProxy(MarketplaceEvents.ADD_LISTING);
+RegisterNuiProxy(MarketplaceEvents.EDIT_LISTING);
 
 RegisterNuiProxy(MarketplaceEvents.DELETE_LISTING);
 RegisterNuiProxy(MarketplaceEvents.REPORT_LISTING);
 
 onNet(MarketplaceEvents.BROADCAST_ADD, (broadcastEvent: MarketplaceBroadcastAddDTO) => {
   sendMarketplaceEvent(MarketplaceEvents.BROADCAST_ADD, broadcastEvent);
+});
+
+onNet(MarketplaceEvents.BROADCAST_EDIT, (broadcastEvent: MarketplaceBroadcastEditDTO) => {
+  sendMarketplaceEvent(MarketplaceEvents.BROADCAST_EDIT, broadcastEvent);
 });
 
 onNet(MarketplaceEvents.BROADCAST_DELETE, (broadcastEvent: MarketplaceDeleteDTO) => {

@@ -1,32 +1,65 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ServerPromiseResp } from '@typings/common';
-import {
-  MarketplaceEvents,
-  MarketplaceListing,
-  MarketplaceListingBase,
-} from '@typings/marketplace';
+import { MarketplaceEvents, MarketplaceListing } from '@typings/marketplace';
 import fetchNui from '@utils/fetchNui';
 import { isEnvBrowser } from '@utils/misc';
+import { IListingFormValues } from '../components/MarketplaceForm';
 
 const defaultData: MarketplaceListing[] = [
   {
     id: 1,
-    name: 'Some guy',
+    name: 'Charles Carlsberg',
     number: '111-1134',
     username: 'Taso',
     title: 'eeeeeeeeeeeeeeeeeeeeeeeee',
     description:
       'skldfsdEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
     url: 'https://i.file.glass/706Y3.jpeg',
+    price: 1020,
   },
   {
     id: 2,
-    name: 'Some other dude',
+    name: 'John Doe',
     number: '666-6666',
     username: 'Taso',
     title: 'Material',
-    description: 'Selling my wife',
+    price: 200,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius',
     url: '',
+  },
+  {
+    id: 3,
+    name: 'Sven Larsson',
+    number: '666-6666',
+    username: 'Poor',
+    title: 'Material',
+    price: 1200000,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius',
+    url: 'https://i.file.glass/706Y3.jpeg',
+  },
+  {
+    id: 4,
+    name: 'Charles Carlsberg',
+    number: '666-6666',
+    username: 'Poor',
+    title: 'No price',
+    price: 0,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius',
+    url: 'https://i.file.glass/706Y3.jpeg',
+  },
+  {
+    id: 5,
+    name: '',
+    number: '666-6666',
+    username: 'Poor',
+    title: 'No seller',
+    price: 900,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at nunc a dolor sagittis fermentum id quis magna. Sed volutpat purus id lacus lobortis varius',
+    url: 'https://i.file.glass/706Y3.jpeg',
   },
 ];
 
@@ -36,12 +69,12 @@ export const listingState = atom<MarketplaceListing[]>({
     key: 'defaultListings',
     get: async () => {
       try {
+        if (isEnvBrowser()) return defaultData;
         const resp = await fetchNui<ServerPromiseResp<MarketplaceListing[]>>(
           MarketplaceEvents.FETCH_LISTING,
         );
         return resp.data;
       } catch (e) {
-        if (isEnvBrowser()) return defaultData;
         console.error(e);
         return [];
       }
@@ -49,14 +82,20 @@ export const listingState = atom<MarketplaceListing[]>({
   }),
 });
 
-export const formState = atom<MarketplaceListingBase>({
+export const formState = atom<IListingFormValues>({
   key: 'form',
   default: {
     title: '',
     description: '',
     url: '',
+    price: '',
   },
 });
+
+export const useListing = (id: number) => {
+  const [listings] = useRecoilState(listingState);
+  return listings.find((listing) => listing.id === id);
+};
 
 export const useListingValue = () => useRecoilValue(listingState);
 export const useSetListings = () => useSetRecoilState(listingState);

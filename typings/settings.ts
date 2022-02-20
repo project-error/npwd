@@ -5,25 +5,25 @@ export interface IconSetObject {
   name: string;
 }
 
-export interface SettingOption<T = any> {
+export interface SettingOption<T = string | number> {
   label: string;
-  value: T | string | number;
+  value: T;
 }
 
 export interface IPhoneSettings {
-  language: SettingOption;
+  language: SettingOption<string>;
   iconSet: SettingOption<IconSetObject>;
-  wallpaper: SettingOption;
+  wallpaper: SettingOption<string>;
   frame: SettingOption;
-  theme: SettingOption;
-  zoom: SettingOption;
+  theme: SettingOption<string>;
+  zoom: SettingOption<number>;
   streamerMode: boolean;
   ringtone: SettingOption;
   ringtoneVol: number;
   callVolume: number;
   notiSound: SettingOption;
   notiSoundVol: number;
-  TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
+  TWITTER_notiFilter: SettingOption<string>;
   TWITTER_notiSound: SettingOption;
   TWITTER_notiSoundVol: number;
   TWITTER_notifyNewFeedTweet: boolean;

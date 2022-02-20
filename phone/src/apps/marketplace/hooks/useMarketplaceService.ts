@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useMarketplaceNotifications } from './useMarketplaceNotifications';
 
 export const useMarketplaceService = () => {
-  const { addListing, deleteListing } = useMarketplaceActions();
+  const { addListing, deleteListing, updateListing } = useMarketplaceActions();
   const { setNotification } = useMarketplaceNotifications();
 
   const addListingHandler = useCallback(
@@ -23,10 +23,23 @@ export const useMarketplaceService = () => {
     [deleteListing],
   );
 
+  const updateListingHandler = useCallback(
+    (resp: MarketplaceBroadcastAddDTO) => {
+      updateListing(resp.listing);
+    },
+    [updateListing],
+  );
+
   useNuiEvent<MarketplaceBroadcastAddDTO>(
     'MARKETPLACE',
     MarketplaceEvents.BROADCAST_ADD,
     addListingHandler,
+  );
+
+  useNuiEvent<MarketplaceBroadcastAddDTO>(
+    'MARKETPLACE',
+    MarketplaceEvents.BROADCAST_EDIT,
+    updateListingHandler,
   );
 
   useNuiEvent<number[]>('MARKETPLACE', MarketplaceEvents.BROADCAST_DELETE, deleteListingHandler);

@@ -1,29 +1,28 @@
-import React from 'react';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
-import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListContainer';
-import { NavigationBar } from './navigation/NavigationBar';
-import { Switch, Route } from 'react-router-dom';
-import { ListingFormContainer } from './form/ListingFormContainer';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
-import { AppTitle } from '@ui/components/AppTitle';
-import { useApp } from '@os/apps/hooks/useApps';
+import MarketplaceHome from './Home/MarketplaceHome';
+import MarketplaceListing from './Listing/MarketplaceListing';
+import MarketPlaceCreate from './MarketplaceCreate';
+import MarketPlaceEdit from './MarketplaceEdit';
 
-export const MarketplaceApp: React.FC = () => {
-  const marketplaceApp = useApp('MARKETPLACE');
-
+const MarketplaceApp: React.FC = () => {
   return (
     <MarketplaceThemeProvider>
       <AppWrapper id="marketplace-app">
-        <AppTitle app={marketplaceApp} />
         <AppContent>
           <Switch>
-            <Route path="/marketplace" exact component={MarketplaceListContainer} />
-            <Route path="/marketplace/new" component={ListingFormContainer} />
+            <Route path="/marketplace" exact component={MarketplaceHome} />
+            <Route path="/marketplace/new" exact component={MarketPlaceCreate} />
+            <Route path="/marketplace/:id/edit" component={MarketPlaceEdit} />
+            <Route path="/marketplace/:id" component={MarketplaceListing} />
           </Switch>
         </AppContent>
-        <NavigationBar />
       </AppWrapper>
     </MarketplaceThemeProvider>
   );
 };
+
+export default MarketplaceApp;

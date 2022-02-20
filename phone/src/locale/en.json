@@ -191,15 +191,23 @@
         "DUPLICATE_LISTING": "You cannot publish a listing with the same title!",
         "DELETE_LISTING_SUCCESS": "Successfully delete listing",
         "REPORT_LISTING_FAILED": "This listing has already been reported",
-        "REPORT_LISTING_SUCCESS": "Successfully reported listing"
+        "REPORT_LISTING_SUCCESS": "Successfully reported listing",
+        "EDIT_LISTING_FAILED": "Failed to edit listing",
+        "EDIT_LISTING_SUCCESS": "Successfully edited listing"
       },
+      "SORT": "Sort",
+      "SELLER": "Seller",
       "NEW_LISTING": "New listing",
+      "EDIT_LISTING": "Edit listing",
       "CHOOSE_IMAGE": "Choose a image",
       "FORM_TITLE": "Title",
       "POST_LISTING": "Post",
       "FORM_IMAGE": "Image or URL",
+      "FORM_PRICE": "Price",
       "FORM_DESCRIPTION": "Description",
-      "NO_IMAGE": "No image provided"
+      "NO_IMAGE": "No image provided",
+      "NO_LISTINGS_YET": "There are no listings yet.",
+      "NO_LISTINGS_FOUND": "No listings found when searching."
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -253,6 +261,7 @@
       "WAIT": "Please wait...",
       "SAVE": "Save",
       "EDIT": "Edit",
+      "SEARCH": "Search",
       "UPDATE": "Update",
       "REQUIRED": "Required",
       "DELETE": "Delete",
@@ -267,6 +276,10 @@
       "ADD": "Add",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    },
+    "ERRORS": {
+      "FIELD_IS_REQUIRED": "The field is required.",
+      "FIELD_IS_TOO_LONG": "The input is too long."
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",

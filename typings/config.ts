@@ -25,10 +25,12 @@ interface Debug {
 }
 
 interface General {
-  useDashNumber: boolean;
   useResourceIntegration: boolean;
   toggleKey: string;
   toggleCommand: string;
+  defaultLanguage: string;
+  currency: string;
+  currencyLanguage: string;
 }
 
 interface NotificationConfig {

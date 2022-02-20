@@ -186,15 +186,23 @@
         "DUPLICATE_LISTING": "Du kan inte publicera en annons med samma titel!",
         "DELETE_LISTING_SUCCESS": "Du tog bort en annons",
         "REPORT_LISTING_FAILED": "Den här annonsen har redan blivit rapporterad",
-        "REPORT_LISTING_SUCCESS": "Du har rapporterat en annons"
+        "REPORT_LISTING_SUCCESS": "Du har rapporterat en annons",
+        "EDIT_LISTING_FAILED": "Failed to edit listing",
+        "EDIT_LISTING_SUCCESS": "Successfully edited listing"
       },
+      "SORT": "Sortera",
+      "SELLER": "Säljare",
       "NEW_LISTING": "Ny annons",
+      "EDIT_LISTING": "Redigera annons",
       "CHOOSE_IMAGE": "Välj en bild",
       "FORM_TITLE": "Titel",
       "POST_LISTING": "Skapa Annons",
       "FORM_IMAGE": "Bild eller URL",
+      "FORM_PRICE": "Pris",
       "FORM_DESCRIPTION": "Beskrivning",
-      "NO_IMAGE": "Annonsen har ingen bild"
+      "NO_IMAGE": "Annonsen har ingen bild",
+      "NO_LISTINGS_YET": "Det finns inga annonser ännu, skapa en!",
+      "NO_LISTINGS_FOUND": "Hittade inga annonser."
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -258,6 +266,10 @@
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
     },
+    "ERRORS": {
+      "FIELD_IS_REQUIRED": "Fältet kan inte vara tomt.",
+      "FIELD_IS_TOO_LONG": "Angivet värde är för långt."
+    },
     "COMING_SOON": "Kommer snart...",
     "INITIALIZING": "Initierar",
     "APPS_DIALER": "Telefon",
@@ -289,6 +301,8 @@
     "GENERIC_TITLE": "Titel",
     "GENERIC_CONTENT": "Innehåll",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!",
+    "GENERIC_DB_ERROR": "Skapa/uppdatera förfrågan misslyckades.",
+    "GENERIC_INVALID_IMAGE_HOST": "Bildhanteringstjänsten du försökte använda stödjs inte av denna server."
   }
 }

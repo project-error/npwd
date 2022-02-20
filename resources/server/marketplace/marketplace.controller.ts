@@ -31,6 +31,18 @@ onNetPromise<MarketplaceListingBase, MarketplaceResp>(
   },
 );
 
+onNetPromise<Partial<MarketplaceListing>, MarketplaceResp>(
+  MarketplaceEvents.EDIT_LISTING,
+  async (reqObj, resp) => {
+    MarketplaceService.handleUpdateListing(reqObj, resp).catch((e) => {
+      marketplaceLogger.error(
+        `Error occurred in add listing event (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
+
 onNetPromise<MarketplaceDeleteDTO>(MarketplaceEvents.DELETE_LISTING, async (reqObj, resp) => {
   MarketplaceService.handleDeleteListing(reqObj, resp).catch((e) => {
     marketplaceLogger.error(

@@ -8,7 +8,9 @@
     "useResourceIntegration": false,
     "toggleKey": "f1",
     "toggleCommand": "phone",
-    "defaultLanguage": "en"
+    "defaultLanguage": "en",
+    "currency": "USD",
+    "currencyLanguage": "en-US"
   },
   "database": {
     "useIdentifierPrefix": false,

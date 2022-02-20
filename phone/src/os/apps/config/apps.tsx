@@ -6,7 +6,6 @@ import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
-import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
@@ -35,9 +34,24 @@ import { INotificationIcon } from '@os/notifications/providers/NotificationsProv
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
+import MarketplaceApp from '@apps/marketplace/components/MarketplaceApp';
+
+export type AppId =
+  | 'DIALER'
+  | 'BROWSER'
+  | 'MESSAGES'
+  | 'CONTACTS'
+  | 'CALCULATOR'
+  | 'SETTINGS'
+  | 'MARKETPLACE'
+  | 'TWITTER'
+  | 'NOTES'
+  | 'CAMERA'
+  | 'EXAMPLE'
+  | 'MATCH';
 
 export interface IAppConfig {
-  id: string;
+  id: AppId;
   nameLocale: string;
   backgroundColor: string;
   color: string;
@@ -62,7 +76,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
-    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
+    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} />,
   },
   {
     id: 'BROWSER',
@@ -70,9 +84,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: blue['300'],
     path: '/browser',
     color: common.white,
-    Route: () => (
-      <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="BROWSER" path="/browser" component={BrowserApp} />,
   },
   {
     id: 'MESSAGES',
@@ -80,9 +92,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
-    Route: () => (
-      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} />,
   },
   {
     id: 'CONTACTS',
@@ -90,9 +100,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
-    Route: () => (
-      <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} />,
   },
   {
     id: 'CALCULATOR',
@@ -100,9 +108,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: purple[500],
     color: grey[50],
     path: '/calculator',
-    Route: () => (
-      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} />,
   },
   {
     id: 'SETTINGS',
@@ -110,9 +116,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: '#383838',
     color: grey[50],
     path: '/settings',
-    Route: () => (
-      <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} />,
   },
   /* Hiding the bank app while the bank resource gets done */
   /*{
@@ -137,9 +141,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => (
-      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} />,
   },
   {
     id: 'MARKETPLACE',
@@ -147,14 +149,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
     color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
-    Route: () => (
-      <AppRoute
-        id="MARKETPLACE"
-        path="/marketplace"
-        component={MarketplaceApp}
-        emitOnOpen={false}
-      />
-    ),
+    Route: () => <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} />,
   },
   {
     id: 'NOTES',
@@ -182,8 +177,6 @@ if (process.env.NODE_ENV === 'development') {
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
-    Route: () => (
-      <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
-    ),
+    Route: () => <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} />,
   });
 }

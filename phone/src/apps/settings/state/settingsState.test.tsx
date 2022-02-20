@@ -10,7 +10,7 @@ describe('settingsStateManipulation', () => {
 
   test('settings set with invalid schema should be handled', () => {
     const invalidSettingSchema = '{"invalid": "schema"}';
-    window.localStorage.setItem(NPWD_STORAGE_KEY, invalidSettingSchema);
+    localStorage.setItem(NPWD_STORAGE_KEY, invalidSettingSchema);
 
     jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -32,13 +32,13 @@ describe('settingsStateManipulation', () => {
       ringtoneVol: 12,
     };
 
-    window.localStorage.setItem(NPWD_STORAGE_KEY, JSON.stringify(changedSetting));
+    localStorage.setItem(NPWD_STORAGE_KEY, JSON.stringify(changedSetting));
 
     const { result } = renderHook(() => useSettingsValue(), { wrapper });
 
     expect(result.current).toEqual(changedSetting);
 
-    const storedSettingVal = JSON.parse(window.localStorage.getItem(NPWD_STORAGE_KEY));
+    const storedSettingVal = JSON.parse(localStorage.getItem(NPWD_STORAGE_KEY));
 
     expect(storedSettingVal).toEqual(changedSetting);
   });
