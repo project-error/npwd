@@ -40,6 +40,10 @@
       "wikipedia.org"
     ]
   },
+  "profanityFilter": {
+    "enabled": false,
+    "badWords": []
+  },
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,

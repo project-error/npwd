@@ -10,6 +10,7 @@ import { MessageModal } from './modal/MessageModal';
 import NewMessageGroupButton from './form/NewMessageGroupButton';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -18,27 +19,29 @@ export const MessagesApp = () => {
   return (
     <MessagesThemeProvider>
       <AppWrapper id="messages-app">
-        <AppTitle app={messages} />
-        <AppContent>
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <Switch>
-              <Route path="/messages/conversations/:groupId">
-                <MessageModal />
-              </Route>
-              <Route exact path="/messages">
-                <MessagesList />
-              </Route>
-            </Switch>
-            <Switch>
-              <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
-                <MessageGroupModal />
-              </Route>
-            </Switch>
-          </React.Suspense>
-        </AppContent>
-        <Route exact path="/messages">
-          <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
-        </Route>
+        <WordFilterProvider>
+          <AppTitle app={messages} />
+          <AppContent>
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <Switch>
+                <Route path="/messages/conversations/:groupId">
+                  <MessageModal />
+                </Route>
+                <Route exact path="/messages">
+                  <MessagesList />
+                </Route>
+              </Switch>
+              <Switch>
+                <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
+                  <MessageGroupModal />
+                </Route>
+              </Switch>
+            </React.Suspense>
+          </AppContent>
+          <Route exact path="/messages">
+            <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+          </Route>
+        </WordFilterProvider>
       </AppWrapper>
     </MessagesThemeProvider>
   );
