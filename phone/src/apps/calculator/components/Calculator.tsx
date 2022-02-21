@@ -7,14 +7,20 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { CalculatorButton } from './CalculatorButton';
 
+const getFontSize = (length: number) => {
+  const currentSize = 5 - length * 0.2;
+  return currentSize <= 1.5 ? '1.5rem' : `${currentSize}rem`;
+};
+
 const StyledFab = styled(Fab)({
   position: 'absolute',
   top: '16px',
   left: '16px',
 });
 
-const StyledResultWrapper = styled(Box)(({ theme }) => ({
-  fontSize: theme.typography.h2.fontSize,
+const StyledResultWrapper = styled(Box)<{ length: number }>(({ theme, length }) => ({
+  minHeight: '7rem',
+  fontSize: length < 9 ? theme.typography.h2.fontSize : getFontSize(length),
   textAlign: 'right',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -74,7 +80,7 @@ export const Calculator: React.FC = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <StyledResultWrapper flexGrow={1} component={Paper} p={2}>
+      <StyledResultWrapper flexGrow={1} component={Paper} p={2} length={resultStr.length}>
         <StyledFab size="small" onClick={handleCopyClipboard}>
           <FileCopyIcon />
         </StyledFab>
