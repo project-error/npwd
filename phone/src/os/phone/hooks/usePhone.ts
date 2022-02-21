@@ -28,7 +28,7 @@ export const usePhone = (): IUsePhone => {
   };
 
   return {
-    ResourceConfig: config as ResourceConfig,
+    ResourceConfig: config,
     closePhone,
     openPhone,
     isPhoneOpen,

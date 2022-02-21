@@ -4,6 +4,11 @@ import config from '../../../config/default.json';
 import fetchNui from '@utils/fetchNui';
 import { isSchemaValid } from '../utils/schema';
 import { NPWD_STORAGE_KEY } from '../utils/constants';
+import { getDefaultLanguage } from '@utils/language';
+
+const getDefaultConfig = () => {
+  return { ...config.defaultSettings, language: getDefaultLanguage() };
+};
 
 const localStorageEffect =
   (key): AtomEffect<IPhoneSettings> =>
@@ -14,7 +19,7 @@ const localStorageEffect =
 
     try {
       const validString = isSchemaValid(savedVal);
-      const settingsObj = !validString ? config.defaultSettings : JSON.parse(savedVal);
+      const settingsObj = !validString ? getDefaultConfig() : JSON.parse(savedVal);
 
       if (!validString) {
         console.error('Settings Schema was invalid, applying default settings');
@@ -26,7 +31,7 @@ const localStorageEffect =
     } catch (e) {
       // If we are unable to parse the json string, we set default settings
       console.error('Unable to parse JSON');
-      setSelf(config.defaultSettings);
+      setSelf(getDefaultConfig());
     }
 
     onSet((newValue) => {
@@ -42,6 +47,6 @@ const localStorageEffect =
 
 export const settingsState = atom<IPhoneSettings>({
   key: 'settings',
-  default: config.defaultSettings,
+  default: getDefaultConfig(),
   effects_UNSTABLE: [localStorageEffect(NPWD_STORAGE_KEY)],
 });

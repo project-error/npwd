@@ -7,7 +7,8 @@
   "general": {
     "useResourceIntegration": false,
     "toggleKey": "f1",
-    "toggleCommand": "phone"
+    "toggleCommand": "phone",
+    "defaultLanguage": "en"
   },
   "database": {
     "useIdentifierPrefix": false,
