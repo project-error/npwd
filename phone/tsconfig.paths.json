@@ -5,7 +5,7 @@
       "*": ["@types/*"],
       "@os/*": ["./os/*"],
       "@ui/*": ["./ui/*"],
-      "@apps/*": ["./apps"],
+      "@apps/*": ["./apps/*"],
       "@utils/*": ["./utils/*"],
       "@common/*": ["./common/*"],
       "@shared/*": ["../../shared/*"],
