@@ -1,35 +1,37 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-console.log('the path', path.join(__dirname, '../src/'));
+const webpack = require('webpack');
 
 module.exports = {
-  entry: path.join(__dirname, '../src/index.tsx'),
+  entry: './src/index.tsx',
   output: {
-    path: path.join(__dirname, '../public/'),
-    filename: 'index.js',
+    publicPath: 'auto',
+    filename: '[name].js',
+    clean: true,
   },
   devServer: {
     port: 3000,
     hot: true,
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-      {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'ts-loader',
           options: {
             transpileOnly: true,
           },
+        },
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        include: path.join(__dirname, '../typings/'),
+        use: {
+          loader: 'babel-loader',
         },
       },
       {
@@ -42,6 +44,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       inject: true,
+    }),
+    new webpack.DefinePlugin({
+      process: { env: {} },
     }),
   ],
   resolve: {
