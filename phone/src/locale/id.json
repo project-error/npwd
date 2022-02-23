@@ -59,6 +59,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Pengaturan penyimpanan tidak valid! Silakan reset di Pengaturan Aplikasi.",
         "SETTINGS_RESET": "Pengaturan telah direset!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notifikasi",
+        "NOTIFY_NEW_LISTING": "Tampilkan notifikasi untuk list baru"
       }
     },
     "CAMERA": {
@@ -187,9 +191,13 @@
         "REPORT_LISTING_FAILED": "List ini telah dilaporkan",
         "REPORT_LISTING_SUCCESS": "Berhasil melaporkan list"
       },
+      "NEW_LISTING": "List baru",
+      "CHOOSE_IMAGE": "Pilih gambar",
       "FORM_TITLE": "Judul",
+      "POST_LISTING": "Post",
       "FORM_IMAGE": "Gambar atau URL",
-      "FORM_DESCRIPTION": "Deskripsi"
+      "FORM_DESCRIPTION": "Deskripsi",
+      "NO_IMAGE": "Tida ada gambar"
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -213,8 +221,11 @@
       "DELETE_CONVERSATION": "Hapus obrolan",
       "NEW_MESSAGE": "Pesan...",
       "NEW_MESSAGE_GROUP": "Nomor telepon...",
+      "SHARE_IMAGE_TITLE": "Apakah kamu ingin membagikan gambar ini?",
+      "SHARE_CONTACT_TITLE": "Apakah kamu ingin membagikan kontak ini?",
       "GROUP_CHAT_LABEL": "Label obrolan grup...",
       "MEDIA_OPTION": "Kamera / Galeri",
+      "CONTACT_OPTION": "Bagikan kontak",
       "NEW_MESSAGE_GROUP_SUBMIT": "Kirim",
       "INPUT_NAME_OR_NUMBER": "Cari kontak atau ketik nomor dan tekan enter",
       "ACTIONS_TITLE": "Aksi",
@@ -250,6 +261,8 @@
       "CANCEL": "Batal",
       "TITLE": "Judul",
       "CONTENT": "Konten",
+      "SHARE": "Bagikan",
+      "ADD": "Tambah",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Salin {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Menyalin {{content}} ke clipboard!"
     },
@@ -284,6 +297,8 @@
     "GENERIC_TITLE": "Judul",
     "GENERIC_CONTENT": "Konten",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Salin {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Menyalin {{content}} ke clipboard!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Menyalin {{content}} ke clipboard!",
+    "GENERIC_DB_ERROR": "Gagal menyimpan request (DB Error)",
+    "GENERIC_INVALID_IMAGE_HOST": "Host gambar yang Anda coba gunakan tidak diizinkan oleh server ini. (Server Error)"
   }
 }
