@@ -131,6 +131,18 @@
     {
       "label": "繁體中文",
       "value": "zhtw"
+    },
+    {
+      "label": "Русский",
+      "value": "ru"
+    },
+    {
+      "label": "Svenska",
+      "value": "sv"
+    },
+    {
+      "label": "Türkçe",
+      "value": "tr"
     }
   ],
   "ringtones": [

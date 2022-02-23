@@ -56,7 +56,7 @@ onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, r
           await funcRef({ data: reqObj.data, source: reqObj.source });
         } catch (e) {
           messagesLogger.error(
-            `Failed to find a callback reference for onMessage. Probably because the resource using the export was stopped or restarted. Please restart NPWD, then said resource(s). Error: ${e.message}`,
+            `Failed to find a callback reference for onMessage. Probably because the resource(s) using the export was stopped or restarted. Please restart said resource(s). Error: ${e.message}`,
           );
         }
       }

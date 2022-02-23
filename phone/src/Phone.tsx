@@ -30,6 +30,7 @@ import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
+import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 
 function Phone() {
   const { i18n } = useTranslation();
@@ -45,7 +46,7 @@ function Phone() {
   }, [i18n, settings.language]);
 
   useConfig();
-
+  useKeyboardService();
   usePhoneService();
   useSimcardService();
   useTwitterService();
