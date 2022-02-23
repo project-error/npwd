@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const deps = require('../package.json').dependencies;
 
 module.exports = {
   entry: './src/index.tsx',
@@ -29,7 +31,6 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        include: path.join(__dirname, '../typings/'),
         use: {
           loader: 'babel-loader',
         },
@@ -41,9 +42,27 @@ module.exports = {
     ],
   },
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'npwd',
+      filename: 'remoteEntry.js',
+      remotes: {
+        pingapp: 'pingapp@http://localhost:3003/remoteEntry.js',
+      },
+      exposes: {},
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom'],
+        },
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      inject: true,
     }),
     new webpack.DefinePlugin({
       process: { env: {} },
