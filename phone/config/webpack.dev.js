@@ -5,7 +5,7 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('../package.json').dependencies;
 
 // Toggle on DEV vs Prod
-const baseUrl = 'http://localhost:3002/remoteEntry.js';
+const baseUrl = 'http://localhost:3003/remoteEntry.js';
 const communityApps = require('../../communityApps');
 const remotes = Object.keys(communityApps).reduce((prev, key) => {
   return {

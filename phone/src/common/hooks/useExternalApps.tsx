@@ -1,10 +1,10 @@
-import { IAppConfig } from '@os/apps/config/apps';
+import { IApp } from '@os/apps/config/apps';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 const communityApps = require('../../../../communityApps');
 
-const generateAppConfig = async (importStatement): Promise<IAppConfig> => {
+const generateAppConfig = async (importStatement): Promise<IApp> => {
   const rawConfig = (await importStatement()).default;
   const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
 
@@ -29,7 +29,7 @@ const getConfigs = async (communityApps) => {
 };
 
 export const useExternalApps = () => {
-  const [apps, setApps] = useState<IAppConfig[]>([]);
+  const [apps, setApps] = useState<IApp[]>([]);
 
   useEffect(() => {
     getConfigs(communityApps).then(setApps);
