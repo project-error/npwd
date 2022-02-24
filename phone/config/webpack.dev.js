@@ -5,7 +5,7 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('../package.json').dependencies;
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/bootstrap.ts',
   output: {
     publicPath: 'auto',
     filename: '[name].js',
