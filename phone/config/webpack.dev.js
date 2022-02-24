@@ -4,6 +4,16 @@ const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('../package.json').dependencies;
 
+// Toggle on DEV vs Prod
+const baseUrl = 'http://localhost:3002/remoteEntry.js';
+const communityApps = require('../../communityApps');
+const remotes = Object.keys(communityApps).reduce((prev, key) => {
+  return {
+    ...prev,
+    [key]: `${key}@${baseUrl}`,
+  };
+}, {});
+
 module.exports = {
   entry: './src/bootstrap.ts',
   output: {
@@ -43,12 +53,8 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'npwd',
-      filename: 'remoteEntry.js',
-      remotes: {
-        pingapp: 'pingapp@http://localhost:3003/remoteEntry.js',
-      },
-      exposes: {},
+      name: 'layout',
+      remotes,
       shared: {
         ...deps,
         react: {
