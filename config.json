@@ -46,6 +46,7 @@
     "allowEditableProfileName": true,
     "allowDeleteTweets": true,
     "allowReportTweets": true,
+    "allowRetweet": true,
     "characterLimit": 160,
     "newLineLimit": 10,
     "enableAvatars": true,
