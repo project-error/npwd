@@ -4,6 +4,7 @@ interface TwitterConfig {
   allowEditableProfileName: boolean;
   allowDeleteTweets: boolean;
   allowReportTweets: boolean;
+  allowRetweet: boolean;
   characterLimit: number;
   newLineLimit: number;
   enableAvatars: boolean;

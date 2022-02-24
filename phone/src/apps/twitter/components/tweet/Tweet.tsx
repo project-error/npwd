@@ -90,7 +90,9 @@ export const Tweet = (tweet: FormattedTweet) => {
           <TweetButtonContainer>
             <ReplyButton profile_name={profile_name} />
             <LikeButton tweetId={id} isLiked={isLiked} />
-            {!isMine && <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />}
+            {ResourceConfig.twitter.allowRetweet && !isMine && (
+              <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />
+            )}
             <ShowMore isMine={isMine} isReported={isReported} id={id} />
           </TweetButtonContainer>
         </TweetContent>
