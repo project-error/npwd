@@ -49,17 +49,17 @@ export const ShowMore = ({ id, isReported, isMine }) => {
   };
 
   const handleDeleteTweet = () => {
-    fetchNui<ServerPromiseResp<void>>(TwitterEvents.DELETE_TWEET, { tweetId: id }).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.DELETE_TWEET, { tweetId: id })
+      .then(() => {
+        deleteTweet(id);
+        handleClose();
+      })
+      .catch(() => {
         return addAlert({
           message: t('TWITTER.FEEDBACK.DELETE_TWEET_FAILED'),
           type: 'error',
         });
-      }
-
-      deleteTweet(id);
-      handleClose();
-    });
+      });
   };
 
   const allowedToDelete = ResourceConfig.twitter.allowDeleteTweets && isMine;

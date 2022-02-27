@@ -16,7 +16,7 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose
   const selectedMessage = useSelectedMessageValue();
 
   const handleDeleteMessage = useCallback(() => {
-    deleteMessage(selectedMessage);
+    selectedMessage && deleteMessage(selectedMessage);
   }, [deleteMessage, selectedMessage]);
 
   const menuOptions = useMemo(

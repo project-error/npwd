@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 export const GalleryModal = () => {
-  const [shareOpen, setShareOpen] = useState(null);
+  const [shareOpen, setShareOpen] = useState<GalleryPhoto | null>(null);
 
   const classes = useStyles();
   const history = useHistory();
@@ -38,15 +38,14 @@ export const GalleryModal = () => {
   const handleDeletePhoto = () => {
     fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.DELETE_PHOTO, {
       image: meta.image,
-    }).then((serverResp) => {
-      if (serverResp.status !== 'ok') {
+    })
+      .then(() => {
+        deletePhoto(meta.image);
+        history.goBack();
+      })
+      .catch(() => {
         return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
-      }
-
-      deletePhoto(meta.image);
-
-      history.goBack();
-    });
+      });
   };
 
   const handleSharePhoto = useCallback(() => {
@@ -57,9 +56,11 @@ export const GalleryModal = () => {
 
   return (
     <>
-      <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
+      {shareOpen && (
+        <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
+      )}
       <Paper className={classes.modal}>
-        <div className={shareOpen ? classes.backgroundModal : null} />
+        <div className={shareOpen ? classes.backgroundModal : ''} />
         <Button onClick={_handleClose}>
           <ArrowBackIcon />
         </Button>

@@ -1,4 +1,4 @@
-import { FormattedTweet, UpdateProfileProps } from '@typings/twitter';
+import { FormattedTweet, Profile, UpdateProfileProps } from '@typings/twitter';
 import { twitterState, useSetFilteredTweets, useSetTweets, useSetTwitterProfile } from './state';
 import { useCallback } from 'react';
 import { Snapshot, useRecoilCallback } from 'recoil';
@@ -32,8 +32,8 @@ export const useTwitterActions = (): TwitterActionProps => {
 
   const updateLocalProfile = useCallback(
     (profile: UpdateProfileProps) => {
-      setTwitterProfile((curVal) => ({
-        ...curVal,
+      setTwitterProfile((currentValue = {} as Profile) => ({
+        ...currentValue,
         profile_name: profile.profile_name,
         avatar_url: profile.avatar_url,
       }));

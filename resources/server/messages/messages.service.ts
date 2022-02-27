@@ -210,7 +210,7 @@ class _MessagesService {
       resp({ status: 'ok' });
     } catch (err) {
       messagesLogger.error(`Failed to read message. Error: ${err.message}`);
-      resp({ status: 'error' });
+      resp({ status: 'error', errorMsg: err.message });
     }
   }
 

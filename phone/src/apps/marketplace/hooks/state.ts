@@ -1,5 +1,4 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ServerPromiseResp } from '@typings/common';
 import {
   MarketplaceEvents,
   MarketplaceListing,
@@ -36,10 +35,8 @@ export const listingState = atom<MarketplaceListing[]>({
     key: 'defaultListings',
     get: async () => {
       try {
-        const resp = await fetchNui<ServerPromiseResp<MarketplaceListing[]>>(
-          MarketplaceEvents.FETCH_LISTING,
-        );
-        return resp.data;
+        const resp = await fetchNui<MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING);
+        return resp ?? [];
       } catch (e) {
         if (isEnvBrowser()) return defaultData;
         console.error(e);

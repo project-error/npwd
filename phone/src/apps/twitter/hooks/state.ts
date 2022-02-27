@@ -1,34 +1,33 @@
 import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
 import { FormattedTweet, Profile, Tweet, TwitterEvents } from '@typings/twitter';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
 import { MockTweets, MockTwitterProfile } from '../utils/constants';
 import { processTweet } from '../utils/tweets';
 
 export const twitterState = {
-  profile: atom({
+  profile: atom<Profile | undefined>({
     key: 'profile',
-    default: selector<Profile>({
+    default: selector({
       key: 'defaultProfileValue',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<Profile>>(
+          const profile = await fetchNui<Profile>(
             TwitterEvents.GET_OR_CREATE_PROFILE,
             undefined,
-            buildRespObj(MockTwitterProfile),
+            MockTwitterProfile,
           );
-          return resp.data;
+
+          return profile;
         } catch (e) {
           console.error(e);
-          return null;
+          return undefined;
         }
       },
     }),
   }),
   defaultProfileNames: atom({
     key: 'defaultProfileNames',
-    default: null,
+    default: [] as string[],
   }),
   tweets: atom<FormattedTweet[]>({
     key: 'tweets',
@@ -36,18 +35,15 @@ export const twitterState = {
       key: 'defaultTweetsValue',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<Tweet[]>>(
+          const resp = await fetchNui<Tweet[]>(
             TwitterEvents.FETCH_TWEETS,
             {
               pageId: 0,
             },
-            {
-              status: 'ok',
-              data: MockTweets,
-            },
+            MockTweets,
           );
 
-          return resp.data.map(processTweet);
+          return resp?.map(processTweet) ?? [];
         } catch (e) {
           return [];
         }
@@ -56,7 +52,7 @@ export const twitterState = {
   }),
   filteredTweets: atom({
     key: 'filteredTweets',
-    default: [],
+    default: [] as FormattedTweet[],
   }),
   showCreateTweetModal: atom({
     key: 'showCreateTweetModal',

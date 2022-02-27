@@ -40,7 +40,7 @@ export const MockTweets: Tweet[] = [
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: '298347827237rweffffweo8874',
-    retweet: null,
+    retweet: undefined,
   },
   {
     profile_name: 'taso',
@@ -60,7 +60,7 @@ export const MockTweets: Tweet[] = [
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: 'sdfjsadfafjadfjas',
-    retweet: null,
+    retweet: undefined,
   },
   {
     profile_name: 'Rocky',
@@ -81,6 +81,6 @@ export const MockTweets: Tweet[] = [
     updatedAt: '2021-12-01 00:42:03',
     identifier: 'sadjfwr23472974',
     images: 'https://c.tenor.com/ucmhE4FHoFcAAAAC/fight-smash.gif',
-    retweet: null,
+    retweet: undefined,
   },
 ];

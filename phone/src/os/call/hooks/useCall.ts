@@ -6,13 +6,12 @@ import { useCallback, useEffect } from 'react';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { ServerPromiseResp } from '@typings/common';
 import { useDialingSound } from '@os/call/hooks/useDialingSound';
 import { useDialActions } from '../../../apps/dialer/hooks/useDialActions';
 
 interface CallHook {
-  call: ActiveCall;
-  setCall: (call: ActiveCall) => void;
+  call: ActiveCall | null;
+  setCall: (call: ActiveCall | null) => void;
   acceptCall(): void;
   rejectCall(): void;
   endCall(): void;
@@ -44,47 +43,52 @@ export const useCall = (): CallHook => {
         return addAlert({ message: t('CALLS.FEEDBACK.ERROR_MYSELF'), type: 'error' });
       }
 
-      fetchNui<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, {
+      fetchNui<ActiveCall>(CallEvents.INITIALIZE_CALL, {
         receiverNumber: number,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
+      })
+        .then((resp) => {
+          if (!resp) {
+            console.error('Cannot initialize call without data.');
+            return;
+          }
+
+          console.log('call resp', resp);
+
+          // if ok, we save the call to the dialer history
+          saveLocalCall({
+            start: resp.start ?? '',
+            is_accepted: resp.is_accepted,
+            receiver: resp.receiver,
+            transmitter: resp.transmitter,
+            id: resp.identifier,
+          });
+        })
+        .catch((error) => {
           addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-          console.error(resp.errorMsg);
+          console.error(error);
           return;
-        }
-
-        console.log('call resp', resp);
-
-        // if ok, we save the call to the dialer history
-        saveLocalCall({
-          start: resp.data.start,
-          is_accepted: resp.data.is_accepted,
-          receiver: resp.data.receiver,
-          transmitter: resp.data.transmitter,
-          id: resp.data.identifier,
         });
-      });
     },
     [addAlert, myPhoneNumber, t, saveLocalCall],
   );
 
   const acceptCall = useCallback(() => {
     fetchNui(CallEvents.ACCEPT_CALL, {
-      transmitterNumber: call.transmitter,
+      transmitterNumber: call?.transmitter,
     });
   }, [call]);
 
   const rejectCall = useCallback(() => {
     fetchNui(CallEvents.REJECTED, {
-      transmitterNumber: call.transmitter,
+      transmitterNumber: call?.transmitter,
     });
   }, [call]);
 
   const endCall = useCallback(() => {
     fetchNui(CallEvents.END_CALL, {
-      transmitterNumber: call.transmitter,
-      isUnavailable: call.isUnavailable,
-      isTransmitter: call.transmitter === myPhoneNumber,
+      transmitterNumber: call?.transmitter,
+      isUnavailable: call?.isUnavailable,
+      isTransmitter: call?.transmitter === myPhoneNumber,
     });
   }, [call, myPhoneNumber]);
 

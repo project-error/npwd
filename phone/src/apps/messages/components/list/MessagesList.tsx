@@ -74,7 +74,7 @@ const MessagesList = (): any => {
           <List>
             {[...filteredConversations]
               .sort((a, b) => {
-                return b.updatedAt - a.updatedAt;
+                return (b.updatedAt ?? 0) - (a.updatedAt ?? 0);
               })
               .map((conversation) => (
                 <MessageGroupItem

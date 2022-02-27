@@ -5,10 +5,15 @@
  *
  * @return returnData - A promise for the data sent back by the NuiCallbacks CB argument
  */
+import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../os/debug/LogDebugEvents';
 import { isEnvBrowser } from './misc';
 
-async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?: T): Promise<T> {
+async function fetchNui<T = any, D = any>(
+  eventName: string,
+  data?: D,
+  mockResp?: T,
+): Promise<T | undefined> {
   const options = {
     method: 'post',
     headers: {
@@ -34,7 +39,7 @@ async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?
 
   const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 
-  const responseObj = await resp.json();
+  const responseObj: ServerPromiseResp<T> = await resp.json();
 
   LogDebugEvent({
     data: {
@@ -44,7 +49,11 @@ async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?
     action: `fetchNui (${eventName})`,
   });
 
-  return responseObj;
+  if (responseObj.status !== 'ok') {
+    throw new Error(responseObj.errorMsg);
+  }
+
+  return responseObj.data;
 }
 
 export default fetchNui;

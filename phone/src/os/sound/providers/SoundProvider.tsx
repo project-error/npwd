@@ -6,17 +6,27 @@ interface IMountResponse {
   url: string;
 }
 
+type Sound = {
+  howl: Howl;
+  volume: number;
+};
+
 interface ISoundContext {
-  mount(url: string, volume?: number, loop?: boolean, autoplay?: boolean): Promise<IMountResponse>;
+  mount(
+    url: string,
+    volume?: number | Howl,
+    loop?: boolean,
+    autoplay?: boolean,
+  ): Promise<IMountResponse | null>;
   play(url?: string, volume?: number, loop?: boolean): void;
   stop(url: string): void;
   remove(url: string): boolean;
-  volume(url: string, volume?: number): number;
+  volume(url: string, volume?: number): number | Howl;
   loop(url: string, loop?: boolean): boolean;
   playing(url: string): boolean;
   isMounted(url: string): boolean;
 }
-export const soundContext = createContext<ISoundContext>(null);
+export const soundContext = createContext<ISoundContext>({} as ISoundContext);
 
 export const SoundProvider: React.FC = ({ children }) => {
   const soundRefs = useRef<Map<string, { howl: Howl; volume: number }>>();
@@ -27,7 +37,7 @@ export const SoundProvider: React.FC = ({ children }) => {
 
   const mount = useCallback(
     (url: string, volume: number = 1, loop: boolean = false, autoplay: boolean = false) => {
-      return new Promise<IMountResponse>((res) => {
+      return new Promise<IMountResponse | null>((res) => {
         if (!soundRefs.current) {
           soundRefs.current = new Map();
         }
@@ -56,9 +66,9 @@ export const SoundProvider: React.FC = ({ children }) => {
           res({ howl: instance, url });
         });
 
-        const onError = (_id, e) => {
+        const onError = (event: number, e: unknown) => {
           res(null);
-          console.error('Howler Error \n', e, '\nid: ', _id, '\nsrc: ', url);
+          console.error('Howler Error \n', e, '\nid: ', event, '\nsrc: ', url);
         };
 
         instance.once('loaderror', onError);
@@ -71,10 +81,10 @@ export const SoundProvider: React.FC = ({ children }) => {
 
   const play = useCallback(
     (url: string, volume: number, loop: boolean) => {
-      const sound = soundRefs.current.get(url);
-      let fadedSounds = [];
+      const sound = soundRefs?.current?.get(url);
+      const fadedSounds: Sound[] = [];
       if (sound) {
-        soundRefs.current.forEach((ref, key) => {
+        soundRefs?.current?.forEach((ref, key) => {
           const isCurrent = key === url;
           const isPlaying = ref.howl.playing();
           const isLoop = ref.howl.loop();
@@ -94,10 +104,10 @@ export const SoundProvider: React.FC = ({ children }) => {
         sound.howl.play();
 
         sound.howl.once('end', () => {
-          fadedSounds.forEach((s) => {
-            s.howl.fade(s.howl.volume(), s.volume, 50);
+          fadedSounds.forEach((sound) => {
+            sound?.howl.fade(sound?.howl?.volume(), sound?.volume, 50);
           });
-          fadedSounds = undefined;
+          fadedSounds.length = 0;
         });
         return;
       }
@@ -106,15 +116,15 @@ export const SoundProvider: React.FC = ({ children }) => {
     [mount],
   );
 
-  const volume = useCallback((url: string, volume: number = undefined): number => {
-    const sound = soundRefs.current.get(url);
-    return sound?.howl.volume(volume) as number;
+  const volume = useCallback((url: string, volume = 100): number | Howl => {
+    const sound = soundRefs?.current?.get(url);
+    return sound?.howl?.volume(volume) ?? 100;
   }, []);
 
-  const loop = useCallback((url: string, loop: boolean = undefined): boolean => {
-    const sound = soundRefs.current.get(url);
-    sound.howl.loop(loop);
-    return sound.howl.loop();
+  const loop = useCallback((url: string, loop: boolean = false): boolean => {
+    const sound = soundRefs?.current?.get(url);
+    sound?.howl.loop(loop);
+    return sound?.howl.loop() ?? false;
   }, []);
 
   const stop = useCallback((url: string) => {
@@ -127,8 +137,9 @@ export const SoundProvider: React.FC = ({ children }) => {
 
   const remove = useCallback((url: string): boolean => {
     if (!soundRefs.current) {
-      return;
+      return false;
     }
+
     const sound = soundRefs.current.get(url);
     if (sound) {
       sound.howl.stop();

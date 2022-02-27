@@ -37,7 +37,7 @@ const useStyles = makeStyles(
 
 export const StatusButton: React.FC<
   Omit<ButtonProps, 'color'> & { color: StatusButtonStyleColor }
-> = ({ color = 'info', variant, className, ...props }) => {
+> = ({ color = 'info', variant = 'text', className, ...props }) => {
   const classes = useStyles({ color });
   return (
     <Button

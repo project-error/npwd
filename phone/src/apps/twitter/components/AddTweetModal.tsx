@@ -82,19 +82,19 @@ const AddTweetModal = () => {
 
     const data: NewTweet = {
       message: cleanedMessage,
-      retweet: null,
+      retweet: undefined,
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
     };
 
-    fetchNui<ServerPromiseResp<void>>(TwitterEvents.CREATE_TWEET, data).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.CREATE_TWEET, data)
+      .then(() => {})
+      .catch(() => {
         return addAlert({
           type: 'error',
           message: t('TWITTER.FEEDBACK.CREATE_PROFILE_FAILURE'),
         });
-      }
-    });
+      });
 
     _handleClose();
   };

@@ -8,7 +8,7 @@ export const MockHistoryData: CallHistoryItem[] = [
     receiver: '704-1549',
     is_accepted: true,
     start: '1615939174',
-    end: null,
+    end: undefined,
   },
   {
     id: 2,
@@ -17,6 +17,6 @@ export const MockHistoryData: CallHistoryItem[] = [
     receiver: '704-1549',
     is_accepted: false,
     start: '1615939850',
-    end: null,
+    end: undefined,
   },
 ];

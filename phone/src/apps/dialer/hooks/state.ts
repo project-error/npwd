@@ -1,7 +1,6 @@
 import { atom, selector, useSetRecoilState } from 'recoil';
 import { CallEvents, CallHistoryItem } from '@typings/call';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { MockHistoryData } from '../utils/constants';
@@ -13,13 +12,14 @@ export const dialState = {
       key: 'dialHistoryDefault',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<CallHistoryItem[]>>(CallEvents.FETCH_CALLS);
-          LogDebugEvent({ action: CallEvents.FETCH_CALLS, data: resp.data });
-          return resp.data;
+          const resp = await fetchNui<CallHistoryItem[]>(CallEvents.FETCH_CALLS);
+          LogDebugEvent({ action: CallEvents.FETCH_CALLS, data: resp });
+          return resp ?? [];
         } catch (e) {
           if (isEnvBrowser()) {
             return MockHistoryData;
           }
+
           console.error(e);
           return [];
         }

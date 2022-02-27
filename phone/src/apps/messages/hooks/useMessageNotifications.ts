@@ -31,7 +31,7 @@ export const useMessageNotifications = () => {
   });
 
   const setNotification = ({ conversationName, conversationId, message }) => {
-    let group: MessageConversation = null;
+    let group: MessageConversation | null;
 
     group = getMessageConversationById(conversationId);
 
@@ -42,7 +42,7 @@ export const useMessageNotifications = () => {
       id,
       sound: true,
       title: conversationName,
-      onClick: () => goToConversation(group),
+      onClick: () => group && goToConversation(group),
       content: message,
       icon,
       notificationIcon,
@@ -50,12 +50,12 @@ export const useMessageNotifications = () => {
 
     addNotificationAlert(notification, (n) => {
       removeId(id);
-      if (group.unread > 1) {
+      if (group?.unread ?? 0 > 1) {
         addNotification({
           ...n,
-          title: group.participant,
+          title: group?.participant ?? 'Unknown',
           content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
-            count: group.unread,
+            count: group?.unread,
           }),
         });
         return;

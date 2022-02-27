@@ -1,6 +1,5 @@
 import { FormattedMatch, MatchEvents } from '@typings/match';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import { useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useCallback } from 'react';
@@ -21,28 +20,29 @@ export const useMatchActions = () => {
         }),
       );
 
-      fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, [{ id, liked }]).then((resp) => {
-        if (resp.status !== 'ok') {
+      fetchNui<boolean>(MatchEvents.SAVE_LIKES, [{ id, liked }])
+        .then((resp) => {
+          // Instead of just fetching the matches again, we might want to first format the profile to a 'Match',then to a 'FormattedMatch'
+          // and then just mutate the already existing state of matches?
+          // I guess that's for another time :P
+
+          if (resp) {
+            addAlert({
+              message: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
+              type: 'info',
+            });
+
+            fetchNui<FormattedMatch[]>(MatchEvents.GET_MATCHES).then((resp) => {
+              resp && setMatches(resp);
+            });
+          }
+        })
+        .catch(() => {
           return addAlert({
             message: t('MATCH.FEEDBACK.SAVE_LIKES_FAILED'),
             type: 'error',
           });
-        }
-
-        // Instead of just fetching the matches again, we might want to first format the profile to a 'Match',then to a 'FormattedMatch'
-        // and then just mutate the already existing state of matches?
-        // I guess that's for another time :P
-
-        if (resp.data) {
-          addAlert({
-            message: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
-            type: 'info',
-          });
-          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
-            setMatches(resp.data);
-          });
-        }
-      });
+        });
     },
     [setProfiles, addAlert, t, setMatches],
   );

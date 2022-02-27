@@ -11,7 +11,7 @@ import { useMemo } from 'react';
  *
  *     const { id, title } = useQueryParams<{ id: string, title: string }>();
  */
-export function useQueryParams<T = Record<string, string>>(defaultValues: T = null) {
+export function useQueryParams<T = Record<string, string>>(defaultValues?: T) {
   const { search } = useLocation();
 
   return useMemo(() => {

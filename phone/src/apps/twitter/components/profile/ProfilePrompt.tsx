@@ -8,7 +8,6 @@ import { twitterState, useSetTwitterProfile } from '../../hooks/state';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { Profile, TwitterEvents } from '@typings/twitter';
 import DefaultProfilePrompt from './DefaultProfilePrompt';
-import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import fetchNui from '@utils/fetchNui';
 import { Box, styled } from '@mui/material';
@@ -29,21 +28,21 @@ export function ProfilePrompt() {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
 
-  const showDefaultProfileNames = !ResourceConfig.twitter.allowEditableProfileName;
+  const showDefaultProfileNames = !ResourceConfig?.twitter.allowEditableProfileName;
 
   const handleCreate = async () => {
-    fetchNui<ServerPromiseResp<Profile>>(TwitterEvents.CREATE_PROFILE, {
+    fetchNui<Profile>(TwitterEvents.CREATE_PROFILE, {
       profile_name: profileName,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then((resp) => {
+        resp && setTwitterProfile(resp);
+      })
+      .catch(() => {
         return addAlert({
           message: 'Failed to update profile',
           type: 'error',
         });
-      }
-
-      setTwitterProfile(resp.data);
-    });
+      });
   };
 
   // case where profile doesn't exist, couldn't be created automatically

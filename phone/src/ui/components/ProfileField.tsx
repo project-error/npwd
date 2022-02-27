@@ -24,7 +24,7 @@ interface ProfileFieldProps {
 const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
   ({ label, value, handleChange, allowChange, multiline, maxLength }, ref) => {
     const classes = useStyles();
-    const _handleChange = (e) => handleChange(e.target.value);
+    const _handleChange = (e) => handleChange?.(e.target.value);
 
     return (
       <div className={classes.formContainer}>

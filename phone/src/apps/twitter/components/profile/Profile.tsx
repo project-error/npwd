@@ -39,8 +39,8 @@ export function Profile() {
   // Annoyingling adding conditionals above this line to not render
   // when profile === null results in a react error that different
   // amounts of hooks are rendering
-  const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url || '');
-  const [name, handleNameChange] = useState(profile.profile_name || '');
+  const [avatarUrl, handleAvatarChange] = useState(profile?.avatar_url ?? '');
+  const [name, handleNameChange] = useState(profile?.profile_name ?? '');
 
   const handleChooseImage = useCallback(() => {
     history.push(
@@ -56,21 +56,20 @@ export function Profile() {
       profile_name: name,
     };
 
-    fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data)
+      .then(() => {
+        updateLocalProfile({ profile_name: name, avatar_url: avatarUrl });
+        addAlert({
+          message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
+          type: 'success',
+        });
+      })
+      .catch(() => {
         return addAlert({
-          message: t(resp.errorMsg),
+          message: t('TWITTER.FEEDBACK.EDIT_PROFILE_FAILURE'),
           type: 'error',
         });
-      }
-
-      updateLocalProfile({ profile_name: name, avatar_url: avatarUrl });
-
-      addAlert({
-        message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
-        type: 'success',
       });
-    });
   };
 
   useEffect(() => {

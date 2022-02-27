@@ -1,3 +1,4 @@
+import { IBankCredentials } from '@typings/bank';
 import { atom } from 'recoil';
 
 export const bankState = {
@@ -9,7 +10,7 @@ export const bankState = {
     key: 'modalVisibility',
     default: false,
   }),
-  bankCredentials: atom({
+  bankCredentials: atom<IBankCredentials | null>({
     key: 'bankCredentails',
     default: null,
   }),

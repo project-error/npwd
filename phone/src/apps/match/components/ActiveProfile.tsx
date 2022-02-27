@@ -68,7 +68,7 @@ const useStyles = makeStyles({
 
 interface IProps {
   profile: FormattedProfile;
-  onSwipe: (id: number, liked: boolean) => void;
+  onSwipe: (id: number, liked: boolean | null) => void;
 }
 
 // this represents how far from the original mouse
@@ -79,9 +79,9 @@ const DECISION_THRESHOLD_X_px = 150;
 const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   const c = useStyles();
   const [t] = useTranslation();
-  const [status, setStatus] = useState(null);
-  const statusRef = useRef(null);
-  const idRef = useRef(null);
+  const [status, setStatus] = useState<boolean | null>(null);
+  const statusRef = useRef<boolean | null>(null);
+  const idRef = useRef<number>(0);
 
   // we are reading mutated state from the Draggable element so we
   // keep track of it using a ref. Without this ref it will appear
@@ -134,7 +134,7 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
         </Card>
       </Draggable>
       <Box className={c.buttons} display="flex" justifyContent="center">
-        <Tooltip title={t('MATCH.DISLIKE')} aria-label="dislike">
+        <Tooltip title={t('MATCH.DISLIKE') as string} aria-label="dislike">
           <Fab
             size="large"
             color="secondary"
@@ -145,7 +145,9 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
             <CancelIcon />
           </Fab>
         </Tooltip>
-        <Tooltip title={t('MATCH.LIKE')} aria-label="like">
+
+        {/* TODO: Check this. I dont like to have to say this is a string. */}
+        <Tooltip title={t('MATCH.LIKE') as string} aria-label="like">
           <Fab
             size="large"
             color="primary"

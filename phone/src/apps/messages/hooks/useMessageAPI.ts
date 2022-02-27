@@ -14,7 +14,7 @@ import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { messageState, useSetMessages } from './state';
 import { useRecoilValueLoadable } from 'recoil';
-import { MockConversationServerResp } from '../utils/constants';
+import { mockedConversationMessages } from '../utils/constants';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
@@ -46,79 +46,73 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
   const sendMessage = useCallback(
     ({ conversationId, message, tgtPhoneNumber, conversationList }: PreDBMessage) => {
-      fetchNui<ServerPromiseResp<Message>>(MessageEvents.SEND_MESSAGE, {
+      fetchNui<Message>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         conversationList,
         message,
         tgtPhoneNumber,
         sourcePhoneNumber: myPhoneNumber,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
+      })
+        .then((resp) => {
+          resp && updateLocalMessages(resp);
+        })
+        .catch(() => {
           return addAlert({
             message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
             type: 'error',
           });
-        }
-
-        updateLocalMessages(resp.data);
-      });
+        });
     },
     [updateLocalMessages, t, addAlert, myPhoneNumber],
   );
 
   const sendEmbedMessage = useCallback(
     ({ conversationId, embed, tgtPhoneNumber, conversationList }: PreDBMessage) => {
-      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
+      fetchNui<Message, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         embed: JSON.stringify(embed),
         is_embed: true,
         tgtPhoneNumber,
         conversationList,
-        sourcePhoneNumber: myPhoneNumber,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        updateLocalMessages(resp.data);
+        sourcePhoneNumber: myPhoneNumber ?? 'unknown',
+      }).catch(() => {
+        return addAlert({
+          message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+          type: 'error',
+        });
       });
     },
-    [t, updateLocalMessages, addAlert, myPhoneNumber],
+    [t, addAlert, myPhoneNumber],
   );
 
   const setMessageRead = useCallback(
     (conversationId: number) => {
-      fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_MESSAGE_READ, conversationId).then(
-        (resp) => {
-          if (resp.status !== 'ok') {
-            return addAlert({
-              message: 'Failed to read message',
-              type: 'error',
-            });
-          }
-
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_MESSAGE_READ, conversationId)
+        .then((resp) => {
           setMessageReadState(conversationId, 0);
-        },
-      );
+        })
+        .catch(() => {
+          return addAlert({
+            message: 'Failed to read message',
+            type: 'error',
+          });
+        });
     },
     [addAlert, setMessageReadState],
   );
 
   const deleteMessage = useCallback(
     (message: Message) => {
-      fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_MESSAGE, message).then((resp) => {
-        if (resp.status !== 'ok') {
+      fetchNui<boolean>(MessageEvents.DELETE_MESSAGE, message)
+        .then(() => {
+          deleteLocalMessage(message.id);
+        })
+        .catch(() => {
           return addAlert({
             message: t('MESSAGES.FEEDBACK.DELETE_MESSAGE_FAILED'),
             type: 'error',
           });
-        }
-
-        deleteLocalMessage(message.id);
-      });
+        });
     },
     [deleteLocalMessage, addAlert, t],
   );
@@ -129,18 +123,48 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         return;
       }
 
-      fetchNui<ServerPromiseResp<MessageConversation>, PreDBConversation>(
-        MessageEvents.CREATE_MESSAGE_CONVERSATION,
-        {
-          conversationLabel: conversation.conversationLabel,
-          participants: conversation.participants,
-          isGroupChat: conversation.isGroupChat,
-        },
-      ).then((resp) => {
-        if (resp.status !== 'ok') {
+      fetchNui<MessageConversation, PreDBConversation>(MessageEvents.CREATE_MESSAGE_CONVERSATION, {
+        conversationLabel: conversation.conversationLabel,
+        participants: conversation.participants,
+        isGroupChat: conversation.isGroupChat,
+      })
+        .then((resp) => {
+          // FIXME: This won't work properly has the conversationList will differ each time someone creates a convo.
+          // FIXME: Just like this for now.
+
+          if (!resp) {
+            history.push(`/messages`);
+            return;
+          }
+
+          const doesConversationExist = messageConversationsContents.find(
+            (c) => c.conversationList === resp.conversationList,
+          );
+
+          if (doesConversationExist) {
+            history.push('/messages');
+            return addAlert({
+              message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
+              type: 'error',
+            });
+          }
+
+          updateLocalConversations({
+            participant: resp.participant,
+            id: resp.id,
+            conversationList: resp.conversationList,
+            label: resp.label,
+            isGroupChat: resp.isGroupChat,
+            unread: 0,
+            unreadCount: 0,
+          });
+
+          history.push(`/messages`);
+        })
+        .catch((err) => {
           history.push('/messages');
 
-          if (resp.errorMsg === 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE') {
+          if (err === 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE') {
             return addAlert({
               message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
               type: 'error',
@@ -153,34 +177,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
             }),
             type: 'error',
           });
-        }
-
-        // FIXME: This won't work properly has the conversationList will differ each time someone creates a convo.
-        // FIXME: Just like this for now.
-        const doesConversationExist = messageConversationsContents.find(
-          (c) => c.conversationList === resp.data.conversationList,
-        );
-
-        if (doesConversationExist) {
-          history.push('/messages');
-          return addAlert({
-            message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
-            type: 'error',
-          });
-        }
-
-        updateLocalConversations({
-          participant: resp.data.participant,
-          id: resp.data.id,
-          conversationList: resp.data.conversationList,
-          label: resp.data.label,
-          isGroupChat: resp.data.isGroupChat,
-          unread: 0,
-          unreadCount: 0,
         });
-
-        history.push(`/messages`);
-      });
     },
     [
       history,
@@ -196,41 +193,40 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     (conversationIds: number[]) => {
       fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_CONVERSATION, {
         conversationsId: conversationIds,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
+      })
+        .then(() => {
+          removeLocalConversation(conversationIds);
+        })
+        .catch(() => {
           return addAlert({
             message: t('MESSAGES.DELETE_CONVERSATION_FAILED'),
             type: 'error',
           });
-        }
-
-        removeLocalConversation(conversationIds);
-      });
+        });
     },
     [addAlert, t, removeLocalConversation],
   );
 
   const fetchMessages = useCallback(
     (conversationId: string, page: number) => {
-      fetchNui<ServerPromiseResp<Message[]>>(
+      fetchNui<Message[]>(
         MessageEvents.FETCH_MESSAGES,
         {
           conversationId,
           page,
         },
-        MockConversationServerResp,
-      ).then((resp) => {
-        if (resp.status !== 'ok') {
+        mockedConversationMessages,
+      )
+        .then((resp) => {
+          setMessages(resp ?? []);
+        })
+        .catch(() => {
           addAlert({
             message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
             type: 'error',
           });
-
           return history.push('/messages');
-        }
-
-        setMessages(resp.data);
-      });
+        });
     },
     [setMessages, addAlert, t, history],
   );

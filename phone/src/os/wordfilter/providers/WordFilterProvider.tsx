@@ -1,17 +1,18 @@
 import React, { createContext, useMemo } from 'react';
 import { usePhone } from '@os/phone/hooks/usePhone';
 
-export const FilterCtx = createContext<{
+type FilterContext = {
   filter: RegExp | null;
   clean: (message: string) => string;
-}>(null);
+};
+export const FilterCtx = createContext<FilterContext>({} as FilterContext);
 
 export function WordFilterProvider({ children }) {
   const { ResourceConfig } = usePhone();
-  const { enabled, badWords } = ResourceConfig.profanityFilter;
+  const { enabled, badWords = [] } = ResourceConfig?.profanityFilter ?? {};
 
   const filter = useMemo(() => {
-    return badWords.length > 1 ? new RegExp(badWords.join('|'), 'ig') : null;
+    return new RegExp(badWords.join('|'), 'ig');
   }, [badWords]);
 
   const clean = (message: string) => {

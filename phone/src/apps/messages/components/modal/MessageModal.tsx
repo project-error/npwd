@@ -88,7 +88,7 @@ export const MessageModal = () => {
   }, [activeMessageConversation, messages]);
 
   const closeModal = () => {
-    setMessages(null);
+    setMessages([]);
     history.push('/messages');
   };
 
@@ -142,7 +142,7 @@ export const MessageModal = () => {
   };
 
   // FIXME: This is wrong :O
-  const targetNumber = activeMessageConversation.participant;
+  const targetNumber = activeMessageConversation.participant ?? 'TODO - FIX THIS @chip';
 
   const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (

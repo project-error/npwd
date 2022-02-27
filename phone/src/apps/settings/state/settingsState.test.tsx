@@ -38,7 +38,7 @@ describe('settingsStateManipulation', () => {
 
     expect(result.current).toEqual(changedSetting);
 
-    const storedSettingVal = JSON.parse(window.localStorage.getItem(NPWD_STORAGE_KEY));
+    const storedSettingVal = JSON.parse(window.localStorage.getItem(NPWD_STORAGE_KEY) ?? '');
 
     expect(storedSettingVal).toEqual(changedSetting);
   });

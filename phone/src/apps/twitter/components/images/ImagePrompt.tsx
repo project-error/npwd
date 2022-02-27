@@ -10,11 +10,11 @@ const ImageInput = styled(TextField)({
 });
 
 export const ImagePrompt = ({ visible, value, handleChange }) => {
-  const textFieldRef = useRef(null);
+  const textFieldRef = useRef<HTMLInputElement>();
   const [t] = useTranslation();
 
   useEffect(() => {
-    textFieldRef.current && textFieldRef.current.focus();
+    textFieldRef?.current?.focus();
   }, [visible]);
 
   const handleImageChange = useCallback((e) => handleChange(e.target.value), [handleChange]);

@@ -33,37 +33,37 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   const handleDeleteListing = () => {
     fetchNui<ServerPromiseResp>(MarketplaceEvents.DELETE_LISTING, {
       id: listing.id,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then(() => {
+        addAlert({
+          message: t('MARKETPLACE.FEEDBACK.DELETE_LISTING_SUCCESS'),
+          type: 'success',
+        });
+      })
+      .catch(() => {
         return addAlert({
           message: t('MARKETPLACE.FEEDBACK.DELETE_LISTING_FAILED'),
           type: 'error',
         });
-      }
-
-      addAlert({
-        message: t('MARKETPLACE.FEEDBACK.DELETE_LISTING_SUCCESS'),
-        type: 'success',
       });
-    });
   };
 
   const handleReportListing = () => {
     fetchNui<ServerPromiseResp>(MarketplaceEvents.REPORT_LISTING, {
       id: listing.id,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then(() => {
+        addAlert({
+          message: t('MARKETPLACE.FEEDBACK.REPORT_LISTING_SUCCESS'),
+          type: 'success',
+        });
+      })
+      .catch(() => {
         return addAlert({
           message: t('MARKETPLACE.FEEDBACK.REPORT_LISTING_FAILED'),
           type: 'error',
         });
-      }
-
-      addAlert({
-        message: t('MARKETPLACE.FEEDBACK.REPORT_LISTING_SUCCESS'),
-        type: 'success',
       });
-    });
   };
 
   const handleCall = () => {
@@ -79,7 +79,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
       <div style={{ float: 'left' }}>
         {listing.number !== myNumber && (
           <>
-            <Tooltip title={t('GENERIC.MESSAGE')}>
+            <Tooltip title={t('GENERIC.MESSAGE') as string}>
               <Button onClick={handleMessage}>
                 <ChatIcon className={classes.icon} />
               </Button>
@@ -95,13 +95,13 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
 
       <div style={{ float: 'right' }}>
         {listing.number === myNumber ? (
-          <Tooltip title={t('GENERIC.DELETE')}>
+          <Tooltip title={t('GENERIC.DELETE') as string}>
             <Button onClick={handleDeleteListing}>
               <DeleteIcon />
             </Button>
           </Tooltip>
         ) : (
-          <Tooltip title={t('GENERIC.REPORT')}>
+          <Tooltip title={t('GENERIC.REPORT') as string}>
             <Button onClick={handleReportListing}>
               <ReportIcon />
             </Button>

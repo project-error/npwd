@@ -69,6 +69,7 @@ export const useMessageActions = (): MessageActionProps => {
           return contact ? contact.display : p;
         }
       }
+      return 'TODO';
     },
     [getContactByNumber],
   );

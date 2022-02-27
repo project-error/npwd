@@ -28,15 +28,15 @@ type INotificationAlert = INotification & {
 
 export interface INotificationIcon {
   key: string;
-  icon: JSX.Element;
   badge: number;
+  icon?: JSX.Element;
 }
 
-export const NotificationsContext = createContext<{
+export interface INotificationContext {
   barUncollapsed: boolean;
   setBarUncollapsed: (v: boolean | ((c: boolean) => boolean)) => void;
   notifications: INotification[];
-  currentAlert: INotificationAlert;
+  currentAlert?: INotificationAlert;
   icons: INotificationIcon[];
   count: number;
   removeAlerts(): void;
@@ -47,7 +47,9 @@ export const NotificationsContext = createContext<{
   hasNotification(id: string): INotification | null;
   hasAppNotification(app: string): number;
   addNotificationAlert(n: INotification, cb?: (n: INotification) => void);
-}>(null);
+}
+
+export const NotificationsContext = createContext<INotificationContext>({} as INotificationContext);
 
 export function NotificationsProvider({ children }) {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
@@ -128,7 +130,7 @@ export function NotificationsProvider({ children }) {
 
         const onExit = (cb) => () => {
           cb?.(n);
-          clearTimeout(alertTimeout.current);
+          clearTimeout(alertTimeout?.current as unknown as number);
           resolve();
         };
 
@@ -161,7 +163,9 @@ export function NotificationsProvider({ children }) {
     if (isPhoneDisabled) return;
     if (n.sound) {
       const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
-      mount(sound, volume, false).then(({ url }) => setAlerts((curr) => [...curr, [n, cb, url]]));
+      mount(sound, volume, false).then((response) =>
+        setAlerts((curr) => [...curr, [n, cb, response?.url]]),
+      );
       return;
     }
     setAlerts((curr) => [...curr, [n, cb, undefined]]);
@@ -180,14 +184,21 @@ export function NotificationsProvider({ children }) {
   };
 
   useEffect(() => {
+    const [firstAlert] = alerts;
+    if (!firstAlert) {
+      return;
+    }
+
+    const [notification, cb, notice = ''] = firstAlert;
+
     if (!currentAlert && alerts.length) {
-      _showAlert(...alerts[0]).then(() => {
+      _showAlert(notification, cb, notice).then(() => {
         setAlerts((curr) => {
           const newQueue = curr;
           curr.shift();
           return newQueue;
         });
-        setCurrentAlert(null);
+        setCurrentAlert(undefined);
       });
     }
   }, [_showAlert, alerts, currentAlert]);
@@ -202,13 +213,13 @@ export function NotificationsProvider({ children }) {
         }
         icons.unshift({ key: curr.app, icon: curr.notificationIcon, badge: 1 });
         return icons;
-      }, []),
+      }, [] as INotificationIcon[]),
     [notifications],
   );
 
   const removeAlerts = () => {
     setAlerts([]);
-    setCurrentAlert(null);
+    setCurrentAlert(undefined);
   };
 
   return (

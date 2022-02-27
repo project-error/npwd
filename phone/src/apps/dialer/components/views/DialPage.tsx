@@ -26,7 +26,7 @@ const DialPage: React.FC = () => {
       <DialInputCtx.Provider
         value={{
           inputVal,
-          add: (val: string) => setInputVal(inputVal + val),
+          add: (val: string | number) => setInputVal(inputVal + val),
           removeOne: () => setInputVal(inputVal.slice(0, -1)),
           clear: () => setInputVal(''),
           set: (val: string) => setInputVal(val),

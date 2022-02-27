@@ -20,12 +20,16 @@ export const BankAccount = () => {
   const classes = useStyles();
   const credentials = useCredentials();
   const [t] = useTranslation();
+
   return (
     <div className={classes.root}>
       <div>
         <h1 className={classes.title}>{t('APPS_BANK_ACCOUNT_TITLE')}</h1>
       </div>
-      <BankCard name={credentials.name} account="Checking" balance={credentials.balance} />
+
+      {credentials && (
+        <BankCard name={credentials.name} account="Checking" balance={credentials.balance} />
+      )}
       <AccountTransactions />
     </div>
   );

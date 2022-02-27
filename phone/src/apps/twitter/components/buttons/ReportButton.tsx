@@ -15,22 +15,22 @@ function ReportButton({ handleClose, tweetId, isReported }) {
   const handleClick = () => {
     setLoading(true);
 
-    fetchNui<ServerPromiseResp<void>>(TwitterEvents.REPORT, { tweetId }).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.REPORT, { tweetId })
+      .then(() => {
+        setLoading(false);
+        handleClose();
+
+        addAlert({
+          message: t('TWITTER.FEEDBACK.REPORT_TWEET_SUCCESS'),
+          type: 'success',
+        });
+      })
+      .catch(() => {
         return addAlert({
           message: t('TWITTER.FEEDBACK.REPORT_TWEET_FAILED'),
           type: 'error',
         });
-      }
-
-      setLoading(false);
-      handleClose();
-
-      addAlert({
-        message: t('TWITTER.FEEDBACK.REPORT_TWEET_SUCCESS'),
-        type: 'success',
       });
-    });
   };
 
   if (isReported) {

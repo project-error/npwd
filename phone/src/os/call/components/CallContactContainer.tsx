@@ -11,13 +11,19 @@ const CallContactContainer = () => {
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
   const getDisplayOrNumber = () =>
-    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    call?.isTransmitter
+      ? getDisplayByNumber(call?.receiver)
+      : getDisplayByNumber(call?.transmitter ?? '');
+
+  const picture = call?.isTransmitter
+    ? getPictureByNumber(call?.receiver)
+    : getPictureByNumber(call?.transmitter ?? '');
 
   return (
     <Box display="flex" alignItems="center">
       <Box flexGrow={1} overflow="hidden" textOverflow="ellipsis">
         <Typography variant="body1">
-          {call.isTransmitter
+          {call?.isTransmitter
             ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
             : t('CALLS.MESSAGES.INCOMING').toUpperCase()}
         </Typography>
@@ -26,11 +32,7 @@ const CallContactContainer = () => {
       <Avatar
         sx={{ ml: 1, height: 80, width: 80 }}
         alt={getDisplayOrNumber()}
-        src={
-          call.isTransmitter
-            ? getPictureByNumber(call.receiver)
-            : getPictureByNumber(call?.transmitter)
-        }
+        src={picture ?? 'unknown'}
       />
     </Box>
   );

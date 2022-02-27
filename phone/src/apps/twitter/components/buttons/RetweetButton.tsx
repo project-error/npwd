@@ -40,21 +40,19 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     // then we want to retweet the original post (if we haven't already)
     const idToRetweet = isRetweet ? retweetId : tweetId;
 
-    fetchNui<ServerPromiseResp<void>>(TwitterEvents.RETWEET, { tweetId: idToRetweet }).then(
-      (resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('TWITTER.FEEDBACK.RETWEET_FAILED'),
-            type: 'error',
-          });
-        }
-
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.RETWEET, { tweetId: idToRetweet })
+      .then(() => {
         window.setTimeout(() => {
           setRetweeted(true);
           setLoading(false);
         }, LOADING_TIME);
-      },
-    );
+      })
+      .catch(() => {
+        return addAlert({
+          message: t('TWITTER.FEEDBACK.RETWEET_FAILED'),
+          type: 'error',
+        });
+      });
   };
 
   if (loading) {

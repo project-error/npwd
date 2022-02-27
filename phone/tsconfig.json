@@ -17,7 +17,7 @@
     "noImplicitAny": false,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",

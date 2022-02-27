@@ -2,10 +2,17 @@ import React, { useCallback, useMemo } from 'react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
-import { SvgIconComponent } from '@mui/icons-material';
+import { QuestionMark, SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
+import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
+
+const defaultIcon: INotificationIcon = {
+  badge: 1,
+  key: 'default',
+  icon: <QuestionMark />,
+};
 
 export const useApps = () => {
   const { icons } = useNotifications();
@@ -27,37 +34,39 @@ export const useApps = () => {
 
       const NotificationIcon = createLazyAppIcon(SvgIcon);
       const Icon = createLazyAppIcon(AppIcon);
+      const notification = icons.find((i) => i.key === app.id) ?? defaultIcon;
+      const isDisabled = app.disable ?? false;
 
       if (curIconSet.custom) {
         return {
           ...app,
-          notification: icons.find((i) => i.key === app.id),
+          notification,
           NotificationIcon,
           Icon,
           notificationIcon: (
             <NotificationIcon htmlColor={theme.palette.text.primary} fontSize="small" />
           ),
           icon: <Icon />,
-          isDisabled: app.disable,
+          isDisabled,
         };
       }
 
       return {
         ...app,
-        notification: icons.find((i) => i.key === app.id),
+        notification,
         NotificationIcon,
         notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
         icon: <Icon />,
-        isDisabled: app.disable,
+        isDisabled,
       };
     });
   }, [icons, curIconSet, theme]);
 
-  const getApp = useCallback((id: string): IApp => apps.find((a) => a.id === id) || null, [apps]);
+  const getApp = useCallback((id: string) => apps.find((a) => a.id === id) || null, [apps]);
   return { apps, getApp };
 };
 
 export const useApp = (id: string): IApp => {
-  const { getApp } = useApps();
-  return getApp(id);
+  const { getApp, apps } = useApps();
+  return getApp(id) ?? apps[0];
 };

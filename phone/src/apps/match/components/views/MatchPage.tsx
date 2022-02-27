@@ -34,7 +34,7 @@ const MatchPage = () => {
     }, MINIMUM_LOAD_TIME);
   }, []);
 
-  const handleSwipe = (id: number, liked: boolean) => {
+  const handleSwipe = (id: number, liked: boolean | null) => {
     // the user didn't choose (didn't swipe far enough)
     if (liked === null) return;
 

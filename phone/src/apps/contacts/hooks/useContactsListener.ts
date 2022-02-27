@@ -3,18 +3,17 @@ import { AddContactExportData, ContactEvents, ContactsDatabaseLimits } from '@ty
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import qs from 'qs';
-import { useApps } from '@os/apps/hooks/useApps';
+import { useApp } from '@os/apps/hooks/useApps';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const useContactsListener = () => {
+  const { path } = useApp('CONTACTS');
   const { getContactByNumber } = useContactActions();
   const history = useHistory();
-  const { getApp } = useApps();
 
   const addContactExportHandler = useCallback(
     (contactData: AddContactExportData) => {
       const contact = getContactByNumber(contactData.number);
-      const { path } = getApp('CONTACTS');
 
       const queryData = qs.stringify({
         addNumber: contactData.number.slice(0, ContactsDatabaseLimits.number),
@@ -34,7 +33,7 @@ export const useContactsListener = () => {
         search: `?${queryData}`,
       });
     },
-    [getApp, getContactByNumber, history],
+    [getContactByNumber, history, path],
   );
 
   useNuiEvent<AddContactExportData>(

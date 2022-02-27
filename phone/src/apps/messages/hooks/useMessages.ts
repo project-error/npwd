@@ -28,12 +28,12 @@ const useMessages = (): IUseMessages => {
 
   const getMessageConversationById = useCallback(
     (id: number): MessageConversation | null => {
-      if (conversationLoading !== 'hasValue') return;
+      if (conversationLoading !== 'hasValue') return null;
 
-      if (!contents.length) return;
+      if (!contents.length) return null;
 
       // FIXME: Make sure we have contents as a number as well..
-      return contents && contents.find((c) => c.id === id);
+      return (contents && contents.find((c) => c.id === id)) ?? null;
     },
     [contents, conversationLoading],
   );
@@ -41,8 +41,8 @@ const useMessages = (): IUseMessages => {
   const setActiveMessageConversation = useCallback(
     (groupId: number) => {
       const group = getMessageConversationById(groupId);
-      _setActiveMessageConversation(group);
-      return group;
+      group && _setActiveMessageConversation(group);
+      return group ?? null;
     },
     [_setActiveMessageConversation, getMessageConversationById],
   );

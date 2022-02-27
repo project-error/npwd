@@ -6,11 +6,9 @@ import {
   MessageEvents,
 } from '@typings/messages';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
 import { MockMessageConversations } from '../utils/constants';
 
-const currentGroupId = atom({ key: 'currentGroupId', default: null });
+const currentGroupId = atom<number | null>({ key: 'currentGroupId', default: null });
 
 export const messageState = {
   messageCoversations: atom<MessageConversation[]>({
@@ -19,12 +17,13 @@ export const messageState = {
       key: 'defaultMessageConversation',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<MessageConversation[]>>(
+          const resp = await fetchNui<MessageConversation[]>(
             MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
             undefined,
-            buildRespObj(MockMessageConversations),
+            MockMessageConversations,
           );
-          return resp.data;
+
+          return resp ?? [];
         } catch (e) {
           console.error(e);
           return [];
@@ -46,7 +45,7 @@ export const messageState = {
 
       const regExp = new RegExp(searchValue, 'gi');
 
-      return messageConversations.filter((conversation) => conversation.participant.match(regExp));
+      return messageConversations.filter((conversation) => conversation.participant?.match(regExp));
     },
   }),
   messages: atom<Message[]>({
@@ -61,7 +60,7 @@ export const messageState = {
     key: 'showNewMessageGroup',
     default: false,
   }),
-  createMessageGroupResult: atom<CreateMessageGroupResult>({
+  createMessageGroupResult: atom<CreateMessageGroupResult | null>({
     key: 'createMessageGroupResult',
     default: null,
   }),
@@ -73,7 +72,7 @@ export const messageState = {
     key: 'unreadMessagesCount',
     default: 0,
   }),
-  selectedMessage: atom<Message>({
+  selectedMessage: atom<Message | null>({
     key: 'selectedMessage',
     default: null,
   }),

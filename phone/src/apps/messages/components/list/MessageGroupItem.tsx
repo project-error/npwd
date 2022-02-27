@@ -80,9 +80,9 @@ const MessageGroupItem = ({
         <Badge
           color="error"
           badgeContent={
-            messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'
+            messageConversation.unreadCount ?? 0 <= 99 ? messageConversation?.unreadCount : '99+'
           }
-          invisible={messageConversation.unreadCount <= 0}
+          invisible={(messageConversation.unreadCount ?? 0) <= 0}
         >
           <MuiAvatar />
         </Badge>

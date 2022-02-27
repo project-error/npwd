@@ -1,7 +1,5 @@
 import { atom, selector, useRecoilValue } from 'recoil';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
 
 // NPWD ocassionally can have a complex dependency graph in regards to async calls to the server
 // In this example, we have an atom with name "example", with a async selector as the default value.
@@ -16,7 +14,7 @@ import { buildRespObj } from '@utils/misc';
 
 // tldr; THE SELECTOR WILL ONLY EVALUATE ONCE YOU FIRST REQUEST IT THROUGH a useRecoilState derived hook
 export const exampleState = {
-  example: atom<string | null>({
+  example: atom<string | undefined>({
     key: 'exampleState',
     default: selector({
       key: 'exampleStateValue',
@@ -26,7 +24,7 @@ export const exampleState = {
         // Through an event of the same name, (keep in mind that this is specifically a **PromiseEvent** and should
         // be handled using the onNetPromise function.
         try {
-          const result = await fetchNui<ServerPromiseResp<string>>(
+          const resp = await fetchNui<string>(
             // Target event name
             'MyExampleTargetEvent',
             // Data you wish to pass to client scripts or to proxy to the server
@@ -34,16 +32,12 @@ export const exampleState = {
             // The third argument to fetchNui is the optional mockData argument. If the resource is currently
             // running in a browser, not within NUI, and is development mode. The mockdata argument will be resolved
             // instead of having to actually make a failing HTTP request.
-            buildRespObj('myMockDataResponse'),
+            'myMockDataResponse',
           );
-          // The server responded with an error event, so we should handle.
-          if (result.status !== 'ok') {
-            console.error({ result });
-          }
 
-          //
-          return result.data;
+          return resp;
         } catch (e) {
+          // The server responded with an error event, so we should handle.
           console.error(e);
           return '';
         }

@@ -83,7 +83,7 @@ export class DraggableElement {
     this.element.style.top = this.element.offsetTop - this.updatedY + 'px';
     this.element.style.left = this.element.offsetLeft - this.updatedX + 'px';
 
-    if (this.useRotation) {
+    if (this.useRotation && this.maxRotationDeg) {
       const { deltaX } = this.deltas(this.mouseDownX, this.mouseDownY);
       const pctWidth = deltaX / this.width;
       const rotationDeg = -1 * this.maxRotationDeg * pctWidth;

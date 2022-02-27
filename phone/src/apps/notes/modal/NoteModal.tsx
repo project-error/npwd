@@ -1,5 +1,5 @@
 import { Button, Slide, Paper, Typography, Container, Box } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useStyles from './modal.styles';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { StatusButton } from '@ui/components/StatusButton';
 import { TextField } from '@ui/components/Input';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useHistory, useLocation } from 'react-router';
-import { useApps } from '@os/apps/hooks/useApps';
+import { useApp } from '@os/apps/hooks/useApps';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
 export const NoteModal: React.FC = () => {
@@ -20,21 +20,23 @@ export const NoteModal: React.FC = () => {
   const [noteContent, setNoteContent] = useState('');
 
   const history = useHistory();
-  const { getApp } = useApps();
+  const notesApp = useApp('NOTES');
   const location = useLocation();
-
-  const notesApp = useMemo(() => getApp('NOTES'), [getApp]);
 
   const isNewNote = !Boolean(selectedNote?.id);
 
   useEffect(() => {
-    if (selectedNote !== null) {
+    if (selectedNote) {
       setNoteContent(selectedNote.content);
       setNoteTitle(selectedNote.title);
     }
   }, [selectedNote]);
 
   const handleDeleteNote = () => {
+    if (!selectedNote?.id) {
+      return;
+    }
+
     deleteNote({ id: selectedNote.id })
       .then(() => {
         setModalVisible(false);
@@ -43,6 +45,10 @@ export const NoteModal: React.FC = () => {
   };
 
   const handleUpdateNote = () => {
+    if (!selectedNote?.id) {
+      return;
+    }
+
     updateNote({ id: selectedNote.id, title: noteTitle, content: noteContent })
       .then(() => {
         setModalVisible(false);

@@ -16,17 +16,17 @@ function LikeButton({ tweetId, isLiked }) {
 
   const handleClick = () => {
     setLoading(true);
-    fetchNui<ServerPromiseResp<void>>(TwitterEvents.TOGGLE_LIKE, { tweetId }).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.TOGGLE_LIKE, { tweetId })
+      .then(() => {
+        setLoading(false);
+        setLiked(!liked);
+      })
+      .catch(() => {
         return addAlert({
           message: t('TWITTER.FEEDBACK.LIKE_TWEET_FAILED'),
           type: 'error',
         });
-      }
-
-      setLoading(false);
-      setLiked(!liked);
-    });
+      });
   };
 
   if (loading) {

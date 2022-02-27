@@ -14,7 +14,7 @@ export const useProfiles = (): UseProfilesProps => {
   const error = useRecoilValue(matchState.errorLoadingProfiles);
 
   const filteredProfiles = profiles ? profiles.filter((profile) => !profile.viewed) : null;
-  const activeProfile = profiles ? filteredProfiles[0] : null;
+  const activeProfile = filteredProfiles ? filteredProfiles[0] : null;
 
   return { profiles, activeProfile, error };
 };

@@ -19,7 +19,7 @@ export interface BeforeDBNote {
 }
 
 export interface NoteItem extends BeforeDBNote {
-  id: number;
+  id?: number;
   title: string;
   content: string;
 }

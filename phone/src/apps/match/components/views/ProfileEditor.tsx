@@ -26,7 +26,9 @@ function ProfileEditor() {
     setShowPreview((preview) => !preview);
   };
 
-  if (!profile && !noProfileExists) return <Loader />;
+  if (!profile && !noProfileExists) {
+    return <Loader />;
+  }
 
   return (
     <Box className={classes.root}>
@@ -36,7 +38,9 @@ function ProfileEditor() {
           label={t<string>('MATCH.EDIT_PROFILE_PREVIEW')}
         />
       </Box>
-      <ProfileForm showPreview={showPreview} profile={profile} />
+
+      {/* Check if this is useful. */}
+      {profile && <ProfileForm showPreview={showPreview} profile={profile} />}
     </Box>
   );
 }

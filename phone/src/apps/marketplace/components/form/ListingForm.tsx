@@ -68,25 +68,26 @@ export const ListingForm: React.FC = () => {
       ...formState,
       title: clean(formState.title),
       description: clean(formState.description),
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then(() => {
+        addAlert({
+          message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
+          type: 'success',
+        });
+
+        history.push('/marketplace');
+        setFormState({
+          title: '',
+          description: '',
+          url: '',
+        });
+      })
+      .catch(() => {
         return addAlert({
-          message: t(resp.errorMsg),
+          message: t('CREATE_LISTING_FAILED'),
           type: 'error',
         });
-      }
-
-      addAlert({
-        message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
-        type: 'success',
       });
-      history.push('/marketplace');
-      setFormState({
-        title: '',
-        description: '',
-        url: '',
-      });
-    });
   };
 
   const handleChooseImage = useCallback(() => {

@@ -2,7 +2,7 @@ import { useMyProfile, useProfileExists } from './state';
 import { FormattedProfile } from '@typings/match';
 
 interface UseProfileProps {
-  profile: FormattedProfile;
+  profile?: FormattedProfile;
   setProfile: (profile: FormattedProfile) => void;
   noProfileExists: boolean;
   setNoProfileExists: (exists: boolean) => void;

@@ -26,7 +26,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
   const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
 
   const modalsVisible = imagePreview || contactModalOpen;

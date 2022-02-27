@@ -9,11 +9,11 @@ export interface IAlert {
 
 export type AlertType = 'success' | 'error' | 'info' | 'warning';
 
-interface ISnackBar {
-  addAlert: ({ message, type }: IAlert) => void;
-  alert: IAlert | null;
+export interface ISnackBar {
   isOpen: boolean;
+  alert?: IAlert;
   handleClose: () => void;
+  addAlert: (alert: IAlert) => void;
 }
 
-export const useSnackbar = (): ISnackBar => useContext(SnackbarContext);
+export const useSnackbar = () => useContext(SnackbarContext);

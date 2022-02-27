@@ -1,5 +1,4 @@
 import { Message, MessageConversation } from '@typings/messages';
-import { ServerPromiseResp } from '@typings/common';
 
 export const MockMessageConversations: MessageConversation[] = [
   {
@@ -22,7 +21,7 @@ export const MockMessageConversations: MessageConversation[] = [
   },
 ];
 
-const MockConversationMessages: Message[] = [
+export const mockedConversationMessages: Message[] = [
   {
     id: 2,
     author: '215-8139',
@@ -39,8 +38,3 @@ const MockConversationMessages: Message[] = [
     message: "Couldn't be me!",
   },
 ];
-
-export const MockConversationServerResp: ServerPromiseResp<Message[]> = {
-  data: MockConversationMessages,
-  status: 'ok',
-};

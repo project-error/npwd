@@ -7,7 +7,6 @@ import fetchNui from '@utils/fetchNui';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useFilteredTweets } from '../hooks/state';
 import { processTweet } from '../utils/tweets';
-import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { Box, styled } from '@mui/material';
 
@@ -37,18 +36,18 @@ function TwitterSearch() {
     const cleanedSearchValue = searchValue.trim();
     if (!cleanedSearchValue) return;
 
-    fetchNui<ServerPromiseResp<Tweet[]>>(TwitterEvents.FETCH_TWEETS_FILTERED, {
+    fetchNui<Tweet[]>(TwitterEvents.FETCH_TWEETS_FILTERED, {
       searchValue: cleanedSearchValue,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then((resp) => {
+        setFilteredTweets(resp?.map(processTweet) ?? []);
+      })
+      .catch(() => {
         return addAlert({
           message: t(''),
           type: 'error',
         });
-      }
-
-      setFilteredTweets(resp.data.map(processTweet));
-    });
+      });
   };
 
   const filteredTweets = tweets || [];

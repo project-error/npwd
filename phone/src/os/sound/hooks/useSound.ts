@@ -20,25 +20,31 @@ const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
   const { volume: vol, loop: isLoop, interrupt } = options;
 
   const [isPlaying, setPlaying] = useState<boolean>(false);
+  const previousInterrupt = usePreviousState<boolean>(interrupt);
+  const previousUrl = usePreviousState<string>(url);
 
   const { mount, play, stop, playing, volume, loop, remove, isMounted } = useSoundProvider();
-
-  const previousInterrupt = usePreviousState(interrupt);
-  const previousUrl = usePreviousState(url);
 
   useEffect(() => {
     const changed = previousUrl !== url;
     if (changed) {
-      stop(previousUrl);
-      remove(previousUrl);
+      if (previousUrl) {
+        stop(previousUrl);
+        remove(previousUrl);
+      } else {
+        console.error('No previous url.');
+      }
     }
+
     if (!isMounted(url)) {
       mount(url, vol, isLoop, changed && isPlaying);
       return;
     }
+
     if (changed && isPlaying) {
       play(url);
     }
+
     volume(url, vol);
     loop(url, isLoop);
   }, [

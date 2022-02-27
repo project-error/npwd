@@ -14,19 +14,19 @@ const MessageInput = styled(TextField)({
 });
 
 export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
-  const textFieldInputRef = useRef(null);
+  const textFieldInputRef = useRef<HTMLInputElement>(null);
   const { ResourceConfig } = usePhone();
   const [t] = useTranslation();
 
-  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
+  const { characterLimit = 255, newLineLimit = 255 } = ResourceConfig?.twitter ?? {};
 
   useEffect(() => {
-    textFieldInputRef.current && textFieldInputRef.current.focus();
+    textFieldInputRef?.current?.focus();
   }, [modalVisible]);
 
   if (!ResourceConfig) return null;
 
-  let errorMessage = null;
+  let errorMessage = '';
 
   const overCharacterLimit = message.trim().length > characterLimit;
   const characterWarningPrompt = `${t('TWITTER.TWEET_MESSAGE_CHAR_LIMIT')} (${characterLimit})`;

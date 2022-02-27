@@ -14,27 +14,28 @@ export const useContactsAPI = () => {
   const history = useHistory();
 
   const addNewContact = useCallback(
-    ({ display, number, avatar }: PreDBContact, referral: string) => {
-      fetchNui<ServerPromiseResp<Contact>>(ContactEvents.ADD_CONTACT, {
+    ({ display, number, avatar }: PreDBContact, referral?: string) => {
+      fetchNui<Contact>(ContactEvents.ADD_CONTACT, {
         display,
         number,
         avatar,
-      }).then((serverResp) => {
-        if (serverResp.status !== 'ok') {
+      })
+        .then((resp) => {
+          // Sanity checks maybe?
+          resp && addLocalContact(resp);
+          addAlert({
+            message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
+            type: 'success',
+          });
+
+          referral && history.replace(referral);
+        })
+        .catch(() => {
           return addAlert({
-            message: t(serverResp.errorMsg),
+            message: t('ADD_FAILED'),
             type: 'error',
           });
-        }
-
-        // Sanity checks maybe?
-        addLocalContact(serverResp.data);
-        addAlert({
-          message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
-          type: 'success',
         });
-        history.replace(referral);
-      });
     },
     [addAlert, addLocalContact, history, t],
   );
@@ -46,50 +47,51 @@ export const useContactsAPI = () => {
         display,
         number,
         avatar,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
+      })
+        .then(() => {
+          updateLocalContact({
+            id,
+            display,
+            number,
+            avatar,
+          });
+
+          addAlert({
+            message: t('CONTACTS.FEEDBACK.UPDATE_SUCCESS'),
+            type: 'success',
+          });
+
+          history.goBack();
+        })
+        .catch(() => {
           return addAlert({
-            message: t(resp.errorMsg),
+            message: t('UPDATE_FAILED'),
             type: 'error',
           });
-        }
-
-        updateLocalContact({
-          id,
-          display,
-          number,
-          avatar,
         });
-
-        addAlert({
-          message: t('CONTACTS.FEEDBACK.UPDATE_SUCCESS'),
-          type: 'success',
-        });
-
-        history.goBack();
-      });
     },
     [addAlert, history, t, updateLocalContact],
   );
 
   const deleteContact = useCallback(
     ({ id }) => {
-      fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id }).then((resp) => {
-        if (resp.status !== 'ok') {
+      fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id })
+        .then(() => {
+          history.goBack();
+
+          deleteLocalContact(id);
+
+          addAlert({
+            message: t('CONTACTS.FEEDBACK.DELETE_SUCCESS'),
+            type: 'success',
+          });
+        })
+        .catch(() => {
           return addAlert({
             message: t('CONTACTS.FEEDBACK.DELETE_FAILED'),
             type: 'error',
           });
-        }
-        history.goBack();
-
-        deleteLocalContact(id);
-
-        addAlert({
-          message: t('CONTACTS.FEEDBACK.DELETE_SUCCESS'),
-          type: 'success',
         });
-      });
     },
     [addAlert, deleteLocalContact, history, t],
   );

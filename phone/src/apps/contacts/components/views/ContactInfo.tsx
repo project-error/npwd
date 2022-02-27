@@ -94,15 +94,15 @@ const ContactsInfoPage: React.FC = () => {
   };
 
   const handleContactAdd = () => {
-    addNewContact({ display: name, number, avatar }, referral);
+    contact && addNewContact({ display: name, number, avatar }, referral);
   };
 
   const handleContactDelete = () => {
-    deleteContact({ id: contact.id });
+    contact && deleteContact({ id: contact.id });
   };
 
   const handleContactUpdate = () => {
-    updateContact({ id: contact.id, number, avatar, display: name });
+    contact && updateContact({ id: contact.id, number, avatar, display: name });
   };
 
   useEffect(() => {

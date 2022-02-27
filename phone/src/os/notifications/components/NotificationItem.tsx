@@ -24,7 +24,7 @@ export const NotificationItem = ({
   onClose: (e: any) => void;
   onClickClose: (e: any) => void;
 }) => {
-  const { title, icon, content, cantClose, onClick } = notification;
+  const { title, icon, content, cantClose = false, onClick } = notification;
   const classes = useStyles({ cantClose });
 
   return (

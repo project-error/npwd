@@ -7,6 +7,7 @@ import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '../../../../../../typings/messages';
 import useMessages from '../../hooks/useMessages';
+import { Contact } from '@typings/contact';
 
 interface MessageContactModalProps {
   isVisible: boolean;
@@ -21,11 +22,15 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({
 }) => {
   const [t] = useTranslation();
   const contacts = useContactsValue();
-  const [selectedContact, setSelectContact] = useState(null);
+  const [selectedContact, setSelectContact] = useState<Contact | null>(null);
   const { sendEmbedMessage } = useMessageAPI();
   const { activeMessageConversation } = useMessages();
 
   const handleSendEmbedMessage = () => {
+    if (!messageGroup || !activeMessageConversation || !messageGroup.participant) {
+      return;
+    }
+
     sendEmbedMessage({
       conversationId: messageGroup.id,
       conversationList: activeMessageConversation.conversationList,

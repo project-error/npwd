@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export const Navigation: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { isExact } = useRouteMatch('/');
+  const { isExact } = useRouteMatch('/') ?? {};
   const { closePhone } = usePhone();
   const { setBarUncollapsed } = useNotifications();
   const isPageNavAvailable = useNavigationDisabledValue();

@@ -5,7 +5,7 @@ import Backdrop from '@ui/components/Backdrop';
 const ModalBackground = () => {
   const { modalVisible } = useModal();
 
-  return modalVisible && <Backdrop />;
+  return modalVisible ? <Backdrop /> : null;
 };
 
 export default memo(ModalBackground);

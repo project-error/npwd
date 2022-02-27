@@ -1,8 +1,6 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Contact, ContactEvents } from '@typings/contact';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
 import { BrowserContactsState } from '../utils/constants';
 
 export const contactsState = {
@@ -12,12 +10,13 @@ export const contactsState = {
       key: 'contactsListDefault',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<Contact[]>>(
+          const resp = await fetchNui<Contact[]>(
             ContactEvents.GET_CONTACTS,
             undefined,
-            buildRespObj(BrowserContactsState),
+            BrowserContactsState,
           );
-          return resp.data;
+
+          return resp ?? [];
         } catch (e) {
           console.error(e);
           return [];

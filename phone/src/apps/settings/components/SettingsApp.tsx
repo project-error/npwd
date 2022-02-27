@@ -137,7 +137,7 @@ export const SettingsApp: React.FC = () => {
   };
 
   const handleCopyPhoneNumber = () => {
-    setClipboard(myNumber);
+    myNumber && setClipboard(myNumber);
     addAlert({
       message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
         content: 'number',
@@ -175,7 +175,7 @@ export const SettingsApp: React.FC = () => {
         <SettingsCategory title={t('SETTINGS.CATEGORY.PHONE')}>
           <SettingItemIconAction
             label={t('SETTINGS.PHONE_NUMBER')}
-            labelSecondary={myNumber}
+            labelSecondary={myNumber ?? ''}
             actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
               content: 'number',
             })}

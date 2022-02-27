@@ -23,7 +23,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   const myPhoneNumber = useMyPhoneNumber();
   const { getContactByNumber } = useContactActions();
 
-  const participants = findParticipants(conversationList, myPhoneNumber);
+  const participants = findParticipants(conversationList, myPhoneNumber ?? '');
 
   const findContact = (phoneNumber: string) => {
     return getContactByNumber(phoneNumber);

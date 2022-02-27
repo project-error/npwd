@@ -7,7 +7,7 @@ import { useApps } from '@os/apps/hooks/useApps';
 const state = {
   recentlyUsed: atom({
     key: 'recentlyUsed',
-    default: [],
+    default: [] as IAppConfig[],
   }),
 };
 
@@ -26,10 +26,13 @@ export const useQuickAccess = () => {
   const history = useHistory();
   const { apps, getApp } = useApps();
   const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(state.recentlyUsed);
+  const app = getApp('SETTINGS');
 
   useEffect(() => {
-    setRecentlyUsed([getApp('SETTINGS')]);
-  }, [getApp, setRecentlyUsed]);
+    if (app) {
+      setRecentlyUsed([app]);
+    }
+  }, [setRecentlyUsed, app]);
 
   const listener = useCallback(
     (location) => {

@@ -90,7 +90,7 @@ InjectDebugData<ITweet>(
         createdAt: '2021-12-01 00:42:03',
         updatedAt: '2021-12-01 00:42:03',
         identifier: '',
-        retweet: null,
+        retweet: undefined,
       },
     },
     {
@@ -115,7 +115,7 @@ InjectDebugData<ITweet>(
         createdAt: '2021-12-01 00:42:03',
         updatedAt: '2021-12-01 00:42:03',
         identifier: '',
-        retweet: null,
+        retweet: undefined,
       },
     },
   ],

@@ -1,5 +1,4 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import fetchNui from '@utils/fetchNui';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
@@ -13,9 +12,9 @@ export const photoState = {
       key: 'defaultGalleryPhotos',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<GalleryPhoto[]>>(PhotoEvents.FETCH_PHOTOS);
-          LogDebugEvent({ action: 'PhotosFetched', data: resp.data });
-          return resp.data;
+          const resp = await fetchNui<GalleryPhoto[]>(PhotoEvents.FETCH_PHOTOS);
+          LogDebugEvent({ action: 'PhotosFetched', data: resp });
+          return resp ?? [];
         } catch (e) {
           if (isEnvBrowser()) {
             return MockPhotoData;

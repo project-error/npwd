@@ -8,4 +8,4 @@ export interface IDialInputCtx {
   set: (val) => void;
 }
 
-export const DialInputCtx = createContext(null);
+export const DialInputCtx = createContext({} as IDialInputCtx);

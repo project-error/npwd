@@ -1,21 +1,20 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import { NoteItem, NotesEvents } from '@typings/notes';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { BrowserNotesData } from '../utils/constants';
 
 export const noteStates = {
-  noteItems: atom({
+  noteItems: atom<NoteItem[]>({
     key: 'noteItem',
-    default: selector<NoteItem[]>({
+    default: selector({
       key: 'defaultNoteItems',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<NoteItem[]>>(NotesEvents.FETCH_ALL_NOTES);
-          LogDebugEvent({ action: 'FetchNotes', data: resp.data });
-          return resp.data;
+          const resp = await fetchNui<NoteItem[]>(NotesEvents.FETCH_ALL_NOTES);
+          LogDebugEvent({ action: 'FetchNotes', data: resp });
+          return resp ?? [];
         } catch (e) {
           if (isEnvBrowser()) {
             return BrowserNotesData;
@@ -26,7 +25,7 @@ export const noteStates = {
       },
     }),
   }),
-  selectedNote: atom<Partial<NoteItem> | null>({
+  selectedNote: atom<NoteItem | null>({
     key: 'selectedNote',
     default: null,
   }),

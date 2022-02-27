@@ -5,7 +5,6 @@ import MessageInput from '../form/MessageInput';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { MessageBubble } from './MessageBubble';
 import fetchNui from '../../../../utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import { useConversationId, useSetMessages } from '../../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useHistory } from 'react-router-dom';
@@ -23,7 +22,7 @@ export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const query = useQueryParams();
-  const referalImage = query?.image || null;
+  const referalImage = query?.image || '';
   const conversationId = useConversationId();
   const { addAlert } = useSnackbar();
   const history = useHistory();
@@ -33,29 +32,29 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [hasMore, setHasMore] = useState(!!messages.length);
 
   const handleNextPage = useCallback(() => {
-    fetchNui<ServerPromiseResp<Message[]>>(MessageEvents.FETCH_MESSAGES, {
+    fetchNui<Message[]>(MessageEvents.FETCH_MESSAGES, {
       conversationId: conversationId,
       page,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
+    })
+      .then((resp) => {
+        if (!resp || resp?.length === 0) {
+          setHasMore(false);
+          return;
+        }
+
+        setHasMore(true);
+        setPage((curVal) => curVal + 1);
+
+        setMessages((currVal) => [...resp, ...currVal]);
+      })
+      .catch(() => {
         addAlert({
           message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
           type: 'error',
         });
 
         return history.push('/messages');
-      }
-
-      if (resp.data.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      setHasMore(true);
-      setPage((curVal) => curVal + 1);
-
-      setMessages((currVal) => [...resp.data, ...currVal]);
-    });
+      });
   }, [addAlert, conversationId, setMessages, history, t, page, setPage]);
 
   return (

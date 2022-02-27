@@ -52,7 +52,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
   icon,
   notification,
 }) => {
-  const [t] = useTranslation();
+  const { t } = useTranslation<string>();
   const classes = useStyles({
     backgroundColor: backgroundColor || green[50],
     color: color || green[400],
@@ -62,7 +62,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
     <Tooltip
       arrow
       key={id}
-      title={t(nameLocale)}
+      title={t(nameLocale) as string}
       placement="top"
       classes={{ tooltip: classes.tooltip }}
       TransitionComponent={Zoom}

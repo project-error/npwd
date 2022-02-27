@@ -8,11 +8,11 @@ export const phoneState = {
   }),
   resourceConfig: atom<ResourceConfig>({
     key: 'resourceConfig',
-    default: null,
+    default: {} as ResourceConfig,
   }),
   phoneTime: atom<string>({
     key: 'phoneTime',
-    default: null,
+    default: '',
   }),
   isPhoneDisabled: atom<boolean>({
     key: 'isPhoneDisabled',

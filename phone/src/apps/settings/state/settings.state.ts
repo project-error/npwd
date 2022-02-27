@@ -18,8 +18,8 @@ const localStorageEffect =
     if (!savedVal) setSelf(new DefaultValue());
 
     try {
-      const validString = isSchemaValid(savedVal);
-      const settingsObj = !validString ? getDefaultConfig() : JSON.parse(savedVal);
+      const validString = isSchemaValid(savedVal ?? '');
+      const settingsObj = !validString ? getDefaultConfig() : JSON.parse(savedVal ?? '');
 
       if (!validString) {
         console.error('Settings Schema was invalid, applying default settings');

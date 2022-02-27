@@ -26,7 +26,10 @@ export const NotesApp: React.FC = () => {
     setModalVisible(true);
   };
 
-  const { title, content } = useQueryParams<AddNoteExportData>({ title: '', content: '' });
+  const { title = '', content = '' } = useQueryParams<AddNoteExportData>({
+    title: '',
+    content: '',
+  });
 
   useEffect(() => {
     // Althought this interface kinda blows for readability,

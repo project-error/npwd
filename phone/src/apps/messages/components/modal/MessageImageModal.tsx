@@ -14,7 +14,7 @@ interface IProps {
   imagePreview: any;
   onClose(): void;
   image?: string;
-  setImagePreview: (preview: string | null) => void;
+  setImagePreview: (preview: string) => void;
 }
 
 export const MessageImageModal = ({
@@ -29,13 +29,17 @@ export const MessageImageModal = ({
   const { pathname, search } = useLocation();
   const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {
-    setImagePreview(null);
+    setImagePreview('');
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
   }, [history, pathname, search, setImagePreview]);
   const { activeMessageConversation } = useMessages();
 
   const sendImageMessage = useCallback(
     (m) => {
+      if (!messageGroup || !activeMessageConversation || !messageGroup.participant) {
+        return;
+      }
+
       sendMessage({
         conversationId: messageGroup.id,
         conversationList: activeMessageConversation.conversationList,

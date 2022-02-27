@@ -9,7 +9,6 @@ import Profile from './Profile';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
 import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';
 
@@ -44,17 +43,12 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const { addAlert } = useSnackbar();
   const setMyProfile = useSetMyProfile();
 
-  // note that this assumes we are defensively checking
-  // that profile is not null in a parent above this component.
-  // Annoyingling adding conditionals above this line to not render
-  // when profile === null results in a react error that different
-  // amounts of hooks are rendering
-  const [image, setImage] = useState(profile?.image || '');
-  const [name, setName] = useState(profile?.name || '');
-  const [bio, setBio] = useState(profile?.bio || '');
-  const [job, setJob] = useState(profile?.job || '');
-  const [location, setLocation] = useState(profile?.location || '');
-  const [tags, setTags] = useState(profile?.tags || '');
+  const [image, setImage] = useState(profile.image ?? '');
+  const [name, setName] = useState(profile.name ?? '');
+  const [bio, setBio] = useState(profile.bio ?? '');
+  const [job, setJob] = useState(profile.job ?? '');
+  const [location, setLocation] = useState(profile.location ?? '');
+  const [tags, setTags] = useState(profile.tags ?? '');
 
   const update: FormattedProfile = {
     ...profile,
@@ -74,24 +68,24 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       tags: update.tagList.join(','),
     };
     const event = profile ? MatchEvents.UPDATE_MY_PROFILE : MatchEvents.CREATE_MY_PROFILE;
-    fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
-      if (resp.status !== 'ok') {
+    fetchNui<FormattedProfile>(event, updatedProfile)
+      .then((resp) => {
+        resp && setMyProfile(resp);
+
+        addAlert({
+          message: t('MATCH.FEEDBACK.UPDATE_PROFILE_SUCCEEDED'),
+          type: 'success',
+        });
+      })
+      .catch(() => {
         return addAlert({
-          message: t(resp.errorMsg),
+          message: t('UPDATE_PROFILE_FAILED'),
           type: 'error',
         });
-      }
-
-      setMyProfile(resp.data);
-
-      addAlert({
-        message: t('MATCH.FEEDBACK.UPDATE_PROFILE_SUCCEEDED'),
-        type: 'success',
       });
-    });
   };
 
-  if (!profile && !ResourceConfig.match.allowEditableProfileName) {
+  if (!profile && !ResourceConfig?.match.allowEditableProfileName) {
     return <PageText text={t('MATCH.PROFILE_CONFIGURATION')} />;
   }
 
@@ -107,7 +101,7 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     <div className={classes.root}>
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_IMAGE')}
-        value={update.image}
+        value={image}
         handleChange={setImage}
         allowChange
       />
@@ -115,23 +109,23 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         label={t('MATCH.EDIT_PROFILE_NAME')}
         value={name}
         handleChange={setName}
-        allowChange={ResourceConfig.match.allowEditableProfileName}
+        allowChange={ResourceConfig?.match.allowEditableProfileName}
       />
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_BIO')}
-        value={update.bio}
+        value={bio}
         handleChange={setBio}
         multiline
         maxLength={250}
       />
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_LOCATION')}
-        value={update.location}
+        value={location}
         handleChange={setLocation}
       />
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_JOB')}
-        value={update.job}
+        value={job}
         handleChange={setJob}
         maxLength={50}
       />

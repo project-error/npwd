@@ -19,19 +19,17 @@ export const useNotesAPI = (): NotesAPIValue => {
 
   const addNewNote = useCallback(
     async ({ title, content }: BeforeDBNote) => {
-      const resp = await fetchNui<ServerPromiseResp<NoteItem>>(NotesEvents.ADD_NOTE, {
+      const resp = await fetchNui<NoteItem>(NotesEvents.ADD_NOTE, {
         title,
         content,
-      });
-
-      if (resp.status !== 'ok') {
+      }).catch(() => {
         return addAlert({
           message: t('NOTES.FEEDBACK.ADD_FAILED'),
           type: 'error',
         });
-      }
+      });
 
-      addLocalNote(resp.data);
+      resp && addLocalNote(resp);
 
       addAlert({
         message: t('NOTES.FEEDBACK.ADD_SUCCESS'),
@@ -43,16 +41,14 @@ export const useNotesAPI = (): NotesAPIValue => {
 
   const deleteNote = useCallback(
     async (note: DeleteNoteDTO) => {
-      const resp = await fetchNui<ServerPromiseResp<DeleteNoteDTO>>(NotesEvents.DELETE_NOTE, note);
-
-      if (resp.status !== 'ok') {
+      const resp = await fetchNui<DeleteNoteDTO>(NotesEvents.DELETE_NOTE, note).catch(() => {
         return addAlert({
           message: t('NOTES.FEEDBACK.DELETE_FAILED'),
           type: 'error',
         });
-      }
+      });
 
-      deleteLocalNote(resp.data.id);
+      resp?.id && deleteLocalNote(resp.id);
 
       addAlert({
         message: t('NOTES.FEEDBACK.DELETE_SUCCESS'),
@@ -64,17 +60,16 @@ export const useNotesAPI = (): NotesAPIValue => {
 
   const updateNote = useCallback(
     async ({ id, content, title }: NoteItem) => {
-      const resp = await fetchNui<ServerPromiseResp>(NotesEvents.UPDATE_NOTE, {
+      await fetchNui<ServerPromiseResp>(NotesEvents.UPDATE_NOTE, {
         id,
         content,
         title,
-      });
-      if (resp.status !== 'ok') {
+      }).catch(() => {
         return addAlert({
           message: t('NOTES.FEEDBACK.UPDATE_FAILED'),
           type: 'error',
         });
-      }
+      });
 
       updateLocalNote({ id, title, content });
 
