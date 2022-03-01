@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { createTheme, ThemeProvider, StyledEngineProvider, ThemeOptions } from '@mui/material';
-import { deepMergeObjects } from './deepMergeObjects';
+import { deepMergeObjects } from '@shared/deepMergeObjects';
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 
 export function createAppThemeProvider(theme: ThemeOptions = {}) {

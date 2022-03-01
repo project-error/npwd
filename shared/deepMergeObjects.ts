@@ -1,19 +1,8 @@
-/**
- * @credits https://stackoverflow.com/questions/27936772/how-to-deep-merge-instead-of-shallow-merge
- * Simple object check.
- * @param item
- * @returns {boolean}
- */
-export function isObject(item) {
+export function isObject(item: any): boolean {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
 
-/**
- * Deep merge two objects.
- * @param target
- * @param ...sources
- */
-export function deepMergeObjects(target, ...sources) {
+export function deepMergeObjects<T>(target: any, ...sources: any): T {
   if (!sources.length) return target;
   const source = sources.shift();
 

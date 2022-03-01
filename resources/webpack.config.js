@@ -5,6 +5,11 @@ const SentryCliPlugin = require('@sentry/webpack-plugin');
 const { RewriteFrames } = require('@sentry/integrations');
 const buildPath = path.resolve(__dirname, 'dist');
 
+const alias = {
+  '@shared': path.resolve(__dirname, '../shared'),
+  '@typings': path.resolve(__dirname, '../typings'),
+};
+
 const server = () => {
   const plugins = [
     new RemovePlugin({
@@ -63,6 +68,7 @@ const server = () => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias,
     },
     output: {
       filename: '[contenthash].server.js',
@@ -99,6 +105,7 @@ const client = () => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias,
     },
     output: {
       filename: '[contenthash].client.js',
