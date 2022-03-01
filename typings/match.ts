@@ -35,6 +35,10 @@ export interface Like {
   liked: boolean;
 }
 
+export interface CreateMatchBroadcast {
+  name: string;
+}
+
 export enum MatchResp {
   UPDATE_FAILED = 'MATCH.FEEDBACK.UPDATE_PROFILE_FAILED',
 }
@@ -47,4 +51,6 @@ export enum MatchEvents {
   UPDATE_MY_PROFILE = 'phone:updateMyProfile',
   GET_MATCHES = 'phone:getMatches',
   SAVE_LIKES = 'phone:saveLikes',
+  SAVE_LIKES_BROADCAST = 'phone:saveLikesBroadcast',
+  CREATE_MATCH_ACCOUNT_BROADCAST = 'phone:matchAccountBroadcast'
 }

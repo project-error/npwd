@@ -15,6 +15,7 @@ import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
+import { useMatchService } from './apps/match/hooks/useMatchService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
 import { useCallModal } from '@os/call/hooks/useCallModal';
@@ -48,6 +49,7 @@ function Phone() {
   usePhoneService();
   useSimcardService();
   useTwitterService();
+  useMatchService();
   useMarketplaceService();
   useBankService();
   useMessagesService();
