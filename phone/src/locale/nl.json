@@ -3,7 +3,7 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Fatale Fout",
       "TOP_LEVEL_ERR_ACTION": "Herladen",
-      "TOP_LEVEL_ERR_MSG": "NPWD heeft een fout aangetroffen die hij niet kon herstellen. Je moet de NUI window opnieuw herladen. De error kan hieronder weergegeven worden ter referentie voor development."
+      "TOP_LEVEL_ERR_MSG": "NPWD heeft een fout aangetroffen die niet kon worden hersteld. Je moet de NUI window opnieuw herladen. De error kan hieronder weergegeven worden ter referentie voor development."
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Geen ongelezen meldingen"
@@ -50,16 +50,20 @@
           "DIALOG_PLACEHOLDER": "Foto URL",
           "DIALOG_ERROR": "Ongeldige foto of link"
         },
-        "CALL_VOLUME": "Call Volume",
+        "CALL_VOLUME": "Gesprek Volume",
         "RINGTONE": "Beltoon",
         "RINGTONE_VOLUME": "Beltoon Volume",
-        "NOTIFICATION": "Meldingen",
+        "NOTIFICATION": "Meldingen beltoon",
         "NOTIFICATION_VOLUME": "Meldingen Volume",
         "NOTIFICATION_FILTER": "Meldingen Filters"
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Ongeldige opgeslagen instellingen! Gelieve de instellingen app te resetten.",
         "SETTINGS_RESET": "Instellingen zijn gereset!"
+      },
+	  "MARKETPLACE": {
+        "NOTIFICATION": "Notificatie",
+        "NOTIFY_NEW_LISTING": "Notificaties weergeven voor advertenties"
       }
     },
     "CAMERA": {
@@ -88,7 +92,7 @@
         "CURRENT_CALL_TITLE": "Huidige Oproep",
         "INCOMING_CALL_TITLE": "Inkomende Oproep",
         "CURRENT_CALL_WITH": "In gesprek met {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} belt jouw!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} belt jou!"
       },
       "INPUT_PLACEHOLDER": "Vul een nummer in",
       "NAVBAR_HISTORY": "Geschiedenis",
@@ -123,6 +127,7 @@
       "IMAGE_PLACEHOLDER": "Een link naar een foto of gif",
       "EDIT_DEFAULT_PROFILE_NAME": "Profiel naam kiezen",
       "EDIT_PROFILE_AVATAR": "Avatar URL",
+	  "AVATAR_CHOOSE_IMAGE": "Kies een afbeelding",
       "EDIT_PROFILE_NAME": "Profiel naam",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Locatie",
@@ -188,9 +193,13 @@
         "REPORT_LISTING_FAILED": "Deze advertentie is al gerapporteerd",
         "REPORT_LISTING_SUCCESS": "Advertentie succesvol gerapporteerd"
       },
+	  "NEW_LISTING": "Nieuwe advertentie",
+      "CHOOSE_IMAGE": "Kies een afbeelding",
       "FORM_TITLE": "Titel",
-      "FORM_IMAGE": "Foto of URL",
-      "FORM_DESCRIPTION": "Beschrijving"
+      "POST_LISTING": "Plaatsen",
+      "FORM_IMAGE": "Afbeelding of url",
+      "FORM_DESCRIPTION": "Omschrijving",
+      "NO_IMAGE": "Geen afbeelding toegevoegd"
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -214,8 +223,11 @@
       "DELETE_CONVERSATION": "Verwijder conversatie",
       "NEW_MESSAGE": "Bericht...",
       "NEW_MESSAGE_GROUP": "Telefoonnummers...",
+      "SHARE_IMAGE_TITLE": "Wil je deze afbeelding delen?",
+      "SHARE_CONTACT_TITLE": "Wil je dit contact delen?",
       "GROUP_CHAT_LABEL": "Groepchat label...",
       "MEDIA_OPTION": "Camera / Gallerij",
+	  "CONTACT_OPTION": "Deel contact",
       "NEW_MESSAGE_GROUP_SUBMIT": "Verzend",
       "INPUT_NAME_OR_NUMBER": "Zoek contacten of typ een nummer en klik bevestig",
       "ACTIONS_TITLE": "Acties",
@@ -248,24 +260,26 @@
       "CALL": "Bel",
       "MESSAGE": "Bericht",
       "CLOSE": "Sluit",
-      "CANCEL": "Terug",
-      "TITLE": "Titel",
+	  "CANCEL": "Annuleren",
+	  "TITLE": "Titel",
       "CONTENT": "Content",
+      "SHARE": "Delen",
+      "ADD": "Toevoegen",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopieer {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} is gekopieerd naar het klembord!"
     },
-    "COMING_SOON": "Coming soon...",
+    "COMING_SOON": "Binnenkort...",
     "INITIALIZING": "Initialiseren",
     "APPS_DIALER": "Telefoon",
     "APPS_CONTACTS": "Contacten",
     "APPS_MESSAGES": "Berichten",
     "APPS_CALCULATOR": "Rekenmachine",
     "APPS_SETTINGS": "Instellingen",
-    "APPS_BANK": "WhoDis Banking",
+    "APPS_BANK": "Bankieren app",
     "APPS_NOTES": "Notities",
     "APPS_EXAMPLE": "Voorbeeld app",
     "APPS_TWITTER": "Twitter",
-    "APPS_MARKETPLACE": "Marketplace",
+    "APPS_MARKETPLACE": "Marktplaats",
     "APPS_CAMERA": "Camera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Resultaten gekopieerd naar het klembord!",
@@ -285,6 +299,8 @@
     "GENERIC_TITLE": "Titel",
     "GENERIC_CONTENT": "Content",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopieer {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} is gekopieerd naar het klembord!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} is gekopieerd naar het klembord!",
+	"GENERIC_DB_ERROR": "Aanmaken/updaten aanvraag mislukt.",
+    "GENERIC_INVALID_IMAGE_HOST": "De afbeeldingshost die je probeert te gebruiken, is niet toegestaan door de server."
   }
 }
