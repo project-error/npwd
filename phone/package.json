@@ -59,12 +59,16 @@
     "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
     "build:release": "cross-env SENTRY_RELEASE=true craco build",
     "build": "craco build",
-    "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"
+    "test": "craco test --watchAll=false --silent",
+    "test:watch": "craco test --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "jest": {
+    "testMatch": [
+      "**/src/**/*.test.{ts,js,tsx}"
+    ],
     "moduleNameMapper": {
       "^@apps(.*)$": "<rootDir>/src/apps$1",
       "^@os(.*)$": "<rootDir>/src/os$1",

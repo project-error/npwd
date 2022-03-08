@@ -18,47 +18,6 @@
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
-  "images": {
-    "url": "https://api.imgur.com/3/image",
-    "type": "imgur",
-    "imageEncoding": "jpg",
-    "contentType": "multipart/form-data",
-    "authorizationPrefix": "Client-ID",
-    "useAuthorization": true,
-    "returnedDataIndexes": ["data", "link"]
-  },
-  "imageSafety": {
-    "filterUnsafeImageUrls": true,
-    "embedUnsafeImages": false,
-    "embedUrl": "https://i.example.com/embed",
-    "safeImageUrls": [
-      "imgur.com",
-      "file.glass",
-      "dropbox.com",
-      "tenor.com",
-      "discord.com",
-      "discordapp.com",
-      "wikipedia.org"
-    ]
-  },
-  "twitter": {
-    "showNotifications": true,
-    "generateProfileNameFromUsers": true,
-    "allowEditableProfileName": true,
-    "allowDeleteTweets": true,
-    "allowReportTweets": true,
-    "allowRetweet": true,
-    "characterLimit": 160,
-    "newLineLimit": 10,
-    "enableAvatars": true,
-    "enableEmojis": true,
-    "enableImages": true,
-    "maxImages": 3
-  },
-  "match": {
-    "generateProfileNameFromUsers": true,
-    "allowEditableProfileName": true
-  },
   "debug": {
     "level": "error",
     "enabled": true,

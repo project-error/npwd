@@ -29,6 +29,7 @@ interface General {
   useResourceIntegration: boolean;
   toggleKey: string;
   toggleCommand: string;
+  defaultLanguage: string;
 }
 
 interface NotificationConfig {

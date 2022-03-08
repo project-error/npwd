@@ -2,12 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "*": ["@types/**/*"],
+      "*": ["@types/*"],
       "@os/*": ["./os/*"],
       "@ui/*": ["./ui/*"],
       "@apps/*": ["./apps"],
       "@utils/*": ["./utils/*"],
       "@common/*": ["./common/*"],
+      "@shared/*": ["../../shared/*"],
       "@typings/*": ["../../typings/*"]
     }
   }
