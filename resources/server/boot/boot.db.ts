@@ -8,7 +8,7 @@ export class _BootDb {
    * @returns Boolean - If the player table exists.
    **/
   async doesPlayerTableExist(): Promise<boolean> {
-    const query = 'SHOW TABLES LIKE ?';
+    const query = 'SHOW TABLES WHERE `Tables_in_npwd-server` LIKE ?';
     const [results] = await DbInterface._rawExec(query, [config.database.playerTable]);
 
     const tableDetails = <{ [key: string]: string }[]>results;
