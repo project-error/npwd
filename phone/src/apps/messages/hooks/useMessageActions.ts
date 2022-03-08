@@ -39,7 +39,6 @@ export const useMessageActions = (): MessageActionProps => {
       setMessageConversation((curVal) =>
         curVal.map((message: MessageConversation) => {
           if (message.id === conversationId) {
-            console.log('hello');
             return {
               ...message,
               unread: unreadCount,
