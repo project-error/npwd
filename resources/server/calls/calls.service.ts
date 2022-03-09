@@ -14,7 +14,6 @@ import { callLogger } from './calls.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { emitNetTyped } from '../utils/miscUtils';
 import { mainLogger } from '../sv_logger';
-import { _TwitterDB } from '../twitter/twitter.db';
 
 class CallsService {
   private callMap: Collection<string, ActiveCallRaw>;

@@ -41,7 +41,7 @@
         "RESET_SETTINGS": "Beállítások visszaállítása",
         "RESET_SETTINGS_DESC": "Ez törli a helyileg mentett adataid",
         "STREAMER_MODE": {
-          "TITLE": "Streamer mode",
+          "TITLE": "Streamer mód",
           "DESCRIPTION": "Képek autómatikus elrejtése"
         },
         "CUSTOM_WALLPAPER": {
@@ -60,6 +60,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Hibás beállítások, állítsd vissza őket a Beállításokban!",
         "SETTINGS_RESET": "Beállítások visszaállítva!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Értesítés",
+        "NOTIFY_NEW_LISTING": "Értesítés új hírdetés esetén"
       }
     },
     "CAMERA": {
@@ -108,7 +112,7 @@
         "LIKE_TWEET_FAILED": "Hiba, nem tudod likeolni ezt a tweetet",
         "REPORT_TWEET_SUCCESS": "Sikeresen jelentettet a tweetet",
         "REPORT_TWEET_FAILED": "Hiba, nem tudod jelenteni ezt a tweetet",
-        "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
+        "FETCH_TWEETS_FAILED": "Sikertelen Tweet betöltése",
         "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet"
       },
       "MESSAGES": {
@@ -219,8 +223,11 @@
       "DELETE_CONVERSATION": "Üzenet törlése",
       "NEW_MESSAGE": "Üzenet...",
       "NEW_MESSAGE_GROUP": "Telefonszámok...",
+      "SHARE_IMAGE_TITLE": "Biztos megakarod osztani ezt a képet?",
+      "SHARE_CONTACT_TITLE": "Biztos megakarod osztani ezt a kontaktot?",
       "GROUP_CHAT_LABEL": "Csoportos beszélgetés címe...",
       "MEDIA_OPTION": "Kamera / Galéria",
+      "CONTACT_OPTION": "Kontakt megosztása",
       "NEW_MESSAGE_GROUP_SUBMIT": "Küldés",
       "INPUT_NAME_OR_NUMBER": "Kontakot keresése, vagy írj be egy telefonszámot",
       "ACTIONS_TITLE": "Cselekvések",
@@ -256,6 +263,8 @@
       "CANCEL": "Mégse",
       "TITLE": "Cím",
       "CONTENT": "Tartalom",
+      "SHARE": "Megosztás",
+      "ADD": "Hozzáad",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!"
     },
@@ -290,6 +299,8 @@
     "GENERIC_TITLE": "Cím",
     "GENERIC_CONTENT": "Tartalom",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!",
+    "GENERIC_DB_ERROR": "Create/update request failed.",
+    "GENERIC_INVALID_IMAGE_HOST": "Ez a képmegosztó amit használni szeretnél, nincs engedélyezve a szerver által."
   }
 }

@@ -5,8 +5,6 @@ export const playerLogger = mainLogger.child({
   module: 'player',
 });
 
-const clean = (input: string) => (input ? input.replace(/[^0-9a-z]/gi, '') : input);
-
 export async function getDefaultProfileNames(source: number): Promise<string[]> {
   const defaultProfileNames: string[] = [];
   const player = PlayerService.getPlayer(source);

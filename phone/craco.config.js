@@ -13,10 +13,14 @@ module.exports = {
 
       const { isFound, match } = getLoader(webpackConfig, loaderByName('babel-loader'));
       if (isFound) {
-        const include = Array.isArray(match.loader.include)
+        const baseInclude = Array.isArray(match.loader.include)
           ? match.loader.include
           : [match.loader.include];
-        match.loader.include = include.concat([path.join(__dirname, '../typings')]);
+
+        baseInclude.push(path.join(__dirname, '../shared'));
+        baseInclude.push(path.join(__dirname, '../typings'));
+
+        match.loader.include = baseInclude;
       }
 
       paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html');

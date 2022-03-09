@@ -8,7 +8,9 @@ import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
 
 jest.useFakeTimers();
 
-it('renders Phone', () => {
+test('renders Phone', () => {
+  jest.mock('@utils/fetchNui');
+
   render(
     <MemoryRouter>
       <NuiProvider resource="npwd">

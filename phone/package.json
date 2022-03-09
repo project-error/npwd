@@ -62,7 +62,8 @@
     "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
     "build:release": "cross-env SENTRY_RELEASE=true craco build",
     "build": "craco build",
-    "test": "craco test --watchAll=false "
+    "test": "craco test --watchAll=false --silent",
+    "test:watch": "craco test --watch"
   },
   "eslintConfig": {
     "extends": "react-app"

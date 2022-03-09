@@ -1,7 +1,7 @@
-import React from 'react';
-import { createTheme, ThemeProvider, ThemeOptions } from '@mui/material';
+import React, { useMemo } from 'react';
+import { createTheme, ThemeProvider, StyledEngineProvider, ThemeOptions } from '@mui/material';
+import { deepMergeObjects } from '@shared/deepMergeObjects';
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
-import { deepMergeObjects } from './deepMergeObjects';
 
 export interface ICreateAppTheme extends ThemeOptions {
   dark?: ThemeOptions;

@@ -1,10 +1,11 @@
-import mainConfig from '../../../config.json';
-import config from '../config/default.json';
+import phoneConfig from '../config/default.json';
+import { fetchConfig } from './config';
 
-export const getDefaultLanguage = () => {
-  const defaultLanguage = config?.languages?.find(
-    (language) => language.value === mainConfig?.general?.defaultLanguage,
+export const getDefaultLanguage = async () => {
+  const mainConfig = await fetchConfig();
+  const defaultLanguage = phoneConfig?.languages?.find(
+    (language) => language.value === mainConfig?.general.defaultLanguage,
   );
 
-  return defaultLanguage ?? config.defaultSettings.language;
+  return defaultLanguage ?? phoneConfig.defaultSettings.language;
 };
