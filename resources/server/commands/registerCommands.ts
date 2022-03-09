@@ -1,7 +1,7 @@
 import { mainLogger } from '../sv_logger';
 import { config } from '../config';
 import DbInterface from '../db/db_wrapper';
-import { CONNECTION_STRING, parseSemiColonFormat } from '../db';
+import { CONNECTION_STRING } from '../db';
 import { parseUri } from '../db/parseUri';
 
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
@@ -12,6 +12,10 @@ const npwdDebugDumpCommand = async (src: number): Promise<void> => {
 
   const tableSchema = parseUri(mysqlConnectionString).database;
   console.log('tableSchema', tableSchema);
+
+  if (config.debug.level === 'error') {
+    console.log('SET DEBUG LEVEL TO INFO/SILLY TO SEE LOGS');
+  }
 
   mainLogger.info('NPWD DEBUG DUMP STARTED, THIS WILL WRITE TO THE SV_NPWD.LOG FILE');
   mainLogger.info('Resource Config >');
@@ -39,7 +43,7 @@ const npwdDebugDumpCommand = async (src: number): Promise<void> => {
 
     if (tableExists) {
       mainLogger.info('Player Table Info >');
-      mainLogger.info(playerTableResults);
+      mainLogger.info(playerTableResults[0]);
     } else {
       mainLogger.error(
         `Unable to locate schema metadata for specified player table of ${config.database.playerTable}. Maybe it doesn't exist?`,
