@@ -176,15 +176,17 @@ export const MessageModal = () => {
           <Typography variant="h5" className={headerClass}>
             {header}
           </Typography>
-          <Tooltip
-            classes={{ tooltip: classes.tooltip }}
-            title={`${t('GENERIC.CALL')} ${targetNumber}`}
-            placement="bottom"
-          >
-            <IconButton onClick={() => initializeCall(targetNumber)}>
-              <Call fontSize="medium" />
-            </IconButton>
-          </Tooltip>
+          {!activeMessageConversation.isGroupChat && (
+            <Tooltip
+              classes={{ tooltip: classes.tooltip }}
+              title={`${t('GENERIC.CALL')} ${targetNumber}`}
+              placement="bottom"
+            >
+              <IconButton onClick={() => initializeCall(targetNumber)}>
+                <Call fontSize="medium" />
+              </IconButton>
+            </Tooltip>
+          )}
           {activeMessageConversation.isGroupChat ? (
             <Button>
               <GroupIcon onClick={openGroupModal} fontSize="large" />

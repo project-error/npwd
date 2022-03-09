@@ -43,7 +43,20 @@ const MessageGroupItem = ({
     [contacts, getContactByNumber],
   );
 
-  const getLabelOrContact = useCallback(() => {
+  const getContact = useCallback((): Contact => {
+    // This is the source
+    const participant = messageConversation.participant;
+    const conversationList = messageConversation.conversationList.split('+');
+
+    for (const p of conversationList) {
+      if (p !== participant) {
+        const contact = contactDisplay(p);
+        return contact;
+      }
+    }
+  }, [contactDisplay, messageConversation]);
+
+  const getLabelOrContact = useCallback((): Contact | string => {
     const conversationLabel = messageConversation.label;
     // This is the source
     const participant = messageConversation.participant;
@@ -52,13 +65,8 @@ const MessageGroupItem = ({
     // Label is required if the conversation is a group chat
     if (messageConversation.isGroupChat) return conversationLabel;
 
-    for (const p of conversationList) {
-      if (p !== participant) {
-        const contact = contactDisplay(p);
-        return contact ? contact.display : p;
-      }
-    }
-  }, [messageConversation, contactDisplay]);
+    return getContact().display || conversationList.filter((p) => p !== participant)[0];
+  }, [messageConversation, getContact]);
 
   return (
     <ListItem
@@ -84,7 +92,11 @@ const MessageGroupItem = ({
           }
           invisible={messageConversation.unreadCount <= 0}
         >
-          <MuiAvatar />
+          {messageConversation.isGroupChat ? (
+            <MuiAvatar alt={messageConversation.label} />
+          ) : (
+            <MuiAvatar alt={getContact().display} src={getContact()?.avatar} />
+          )}
         </Badge>
       </ListItemAvatar>
       <ListItemText sx={{ overflow: 'hidden' }}>{getLabelOrContact()}</ListItemText>
