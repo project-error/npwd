@@ -10,6 +10,10 @@
     "toggleCommand": "phone",
     "defaultLanguage": "en"
   },
+  "profanityFilter": {
+    "enabled": false,
+    "badWords": ["esx"]
+  },
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
