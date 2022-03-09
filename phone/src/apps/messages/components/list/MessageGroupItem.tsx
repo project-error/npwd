@@ -43,7 +43,7 @@ const MessageGroupItem = ({
     [contacts, getContactByNumber],
   );
 
-  const getContact = useCallback((): Contact => {
+  const getContact = useCallback((): Contact | null => {
     // This is the source
     const participant = messageConversation.participant;
     const conversationList = messageConversation.conversationList.split('+');
@@ -51,7 +51,7 @@ const MessageGroupItem = ({
     for (const p of conversationList) {
       if (p !== participant) {
         const contact = contactDisplay(p);
-        return contact;
+        return contact || null;
       }
     }
   }, [contactDisplay, messageConversation]);
@@ -95,7 +95,7 @@ const MessageGroupItem = ({
           {messageConversation.isGroupChat ? (
             <MuiAvatar alt={messageConversation.label} />
           ) : (
-            <MuiAvatar alt={getContact().display} src={getContact()?.avatar} />
+            <MuiAvatar alt={getContact()?.display} src={getContact()?.avatar} />
           )}
         </Badge>
       </ListItemAvatar>
