@@ -77,7 +77,7 @@ class _MessagesService {
           isGroupChat: conversation.isGroupChat,
         };
 
-        return resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
+        resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
       }
     }
 
