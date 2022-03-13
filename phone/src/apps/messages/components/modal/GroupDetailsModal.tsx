@@ -45,7 +45,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
         const contact = findContact(participant);
 
         return (
-          <Box mt={2}>
+          <Box mt={2} key={participant}>
             <Box display="flex" alignItems="center" justifyContent="space-between">
               <Stack direction="row" spacing={2}>
                 <PersonIcon fontSize="medium" />

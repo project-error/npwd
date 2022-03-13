@@ -86,7 +86,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         justifyContent={isMine ? 'flex-end' : 'flex-start'}
         mt={1}
       >
-        {!isMine ? <Avatar src={getContact().avatar} /> : null}
+        {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
         <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
           {message.is_embed ? (
             <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
@@ -108,7 +108,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           )}
           {!isMine && (
             <Typography fontWeight="bold" fontSize={14} color="#ddd">
-              {getContact().display ?? message.author}
+              {getContact()?.display ?? message.author}
             </Typography>
           )}
         </Paper>
