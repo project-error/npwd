@@ -15,8 +15,9 @@ export const useMessagesService = () => {
     if (pathname.includes(`/messages/conversations/${conversation_id}`)) {
       return;
     }
-    // Set the current unread count to 1, when they click it will be removed
+
     setMessageReadState(conversation_id, 1);
+    // Set the current unread count to 1, when they click it will be removed
     setNotification({ conversationName, conversationId: conversation_id, message });
   };
 

@@ -95,7 +95,7 @@ const MessageGroupItem = ({
           {messageConversation.isGroupChat ? (
             <MuiAvatar alt={messageConversation.label} />
           ) : (
-            <MuiAvatar alt={getContact()?.display} src={getContact()?.avatar} />
+            <MuiAvatar alt={getContact()?.display ?? ''} src={getContact()?.avatar} />
           )}
         </Badge>
       </ListItemAvatar>

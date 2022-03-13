@@ -29,12 +29,12 @@ const MockConversationMessages: Message[] = [
     message: 'Dude, when is this rewrite done?????',
   },
   {
-    id: 2,
+    id: 3,
     author: '111-1134',
     message: 'Bro, finish notifications api?????',
   },
   {
-    id: 3,
+    id: 4,
     author: '444-4444',
     message: "Couldn't be me!",
   },
