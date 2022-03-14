@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 import { config } from './server';
 import path from 'path';
-const { createLogger, transports, format } = require('./logform');
+import { createLogger, transports, format } from 'winston';
 
 // Needed to manually apply a color to componenent property of log
 const manualColorize = (strToColor: string): string => `[\x1b[35m${strToColor}\x1b[0m]`;
