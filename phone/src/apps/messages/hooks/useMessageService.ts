@@ -4,12 +4,14 @@ import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
 import { useLocation } from 'react-router';
+import { useActiveMessageConversation } from './state';
 
 export const useMessagesService = () => {
   const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
     useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
+  const activeConversation = useActiveMessageConversation();
 
   const handleMessageBroadcast = ({ conversationName, conversation_id, message }) => {
     if (pathname.includes(`/messages/conversations/${conversation_id}`)) {
@@ -24,9 +26,11 @@ export const useMessagesService = () => {
   // This is only called for the receiver of the message. We'll be using the standardized pattern for the transmitter.
   const handleUpdateMessages = useCallback(
     (messageDto: Message) => {
+      if (messageDto.conversation_id !== activeConversation.id) return;
+
       updateLocalMessages(messageDto);
     },
-    [updateLocalMessages],
+    [updateLocalMessages, activeConversation],
   );
 
   const handleAddConversation = useCallback(
