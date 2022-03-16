@@ -77,7 +77,8 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     />
   );
 
-  const disableSubmit = !participants?.length || (isGroupChat && !conversationLabel);
+  const isYourself = participants.find((p) => p.number === myPhoneNumber);
+  const disableSubmit = !participants?.length || (isGroupChat && !conversationLabel) || isYourself;
 
   return (
     <Box>
