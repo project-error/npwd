@@ -8,7 +8,10 @@ export const FilterCtx = createContext<{
 
 export function WordFilterProvider({ children }) {
   const { ResourceConfig } = usePhone();
-  const { enabled, badWords } = ResourceConfig.profanityFilter;
+  const { enabled, badWords } = ResourceConfig?.profanityFilter ?? {
+    enabled: false,
+    badWords: [],
+  };
 
   const filter = useMemo(() => {
     return badWords.length > 1 ? new RegExp(badWords.join('|'), 'ig') : null;
