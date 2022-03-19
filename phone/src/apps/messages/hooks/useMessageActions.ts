@@ -1,4 +1,9 @@
-import { messageState, useSetMessageConversations, useSetMessages } from './state';
+import {
+  messageState,
+  useConversationId,
+  useSetMessageConversations,
+  useSetMessages,
+} from './state';
 import { useCallback } from 'react';
 import { Message, MessageConversation } from '@typings/messages';
 import { useRecoilValueLoadable } from 'recoil';
@@ -25,6 +30,7 @@ export const useMessageActions = (): MessageActionProps => {
   const setMessages = useSetMessages();
   const { getContactByNumber } = useContactActions();
   const myPhoneNumber = useMyPhoneNumber();
+  const conversationId = useConversationId();
 
   const updateLocalConversations = useCallback(
     (conversation: MessageConversation) => {
@@ -35,13 +41,12 @@ export const useMessageActions = (): MessageActionProps => {
 
   const setMessageReadState = useCallback(
     (conversationId: number, unreadCount: number) => {
-      console.log(conversationId);
       setMessageConversation((curVal) =>
         curVal.map((message: MessageConversation) => {
           if (message.id === conversationId) {
             return {
               ...message,
-              unread: unreadCount,
+              unreadCount: unreadCount,
             };
           }
 
@@ -89,6 +94,8 @@ export const useMessageActions = (): MessageActionProps => {
     (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
 
+      if (conversationId !== messageDto.conversation_id) return;
+
       setMessages((currVal) => [
         ...currVal,
         {
@@ -101,7 +108,7 @@ export const useMessageActions = (): MessageActionProps => {
         },
       ]);
     },
-    [messageLoading, setMessages],
+    [messageLoading, setMessages, conversationId],
   );
 
   const deleteLocalMessage = useCallback(
