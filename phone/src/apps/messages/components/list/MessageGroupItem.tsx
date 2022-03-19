@@ -65,7 +65,7 @@ const MessageGroupItem = ({
     // Label is required if the conversation is a group chat
     if (messageConversation.isGroupChat) return conversationLabel;
 
-    return getContact().display || conversationList.filter((p) => p !== participant)[0];
+    return getContact()?.display || conversationList.filter((p) => p !== participant)[0];
   }, [messageConversation, getContact]);
 
   return (
