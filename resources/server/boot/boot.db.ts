@@ -1,5 +1,9 @@
+import { CONNECTION_STRING } from '../db';
 import DbInterface from '../db/db_wrapper';
+import { parseUri } from '../db/parseUri';
 import { config } from '../server';
+
+const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 
 export class _BootDb {
   /**
@@ -8,7 +12,12 @@ export class _BootDb {
    * @returns Boolean - If the player table exists.
    **/
   async doesPlayerTableExist(): Promise<boolean> {
-    const query = 'SHOW TABLES WHERE `Tables_in_npwd-server` LIKE ?';
+    const tableSchema = parseUri(mysqlConnectionString).database;
+    console.log(tableSchema);
+
+    const tblsh = `Tables_in_${tableSchema}`;
+    const query = 'SHOW TABLES WHERE ' + `\`${tblsh}\`` + 'LIKE ?';
+
     const [results] = await DbInterface._rawExec(query, [config.database.playerTable]);
 
     const tableDetails = <{ [key: string]: string }[]>results;
