@@ -24,5 +24,6 @@ files {
 }
 
 dependency {
-	'screenshot-basic'
+	'screenshot-basic',
+  'pma-voice'
 }
