@@ -35,13 +35,12 @@ export const useMessageActions = (): MessageActionProps => {
 
   const setMessageReadState = useCallback(
     (conversationId: number, unreadCount: number) => {
-      console.log(conversationId);
       setMessageConversation((curVal) =>
         curVal.map((message: MessageConversation) => {
           if (message.id === conversationId) {
             return {
               ...message,
-              unread: unreadCount,
+              unreadCount: unreadCount,
             };
           }
 
