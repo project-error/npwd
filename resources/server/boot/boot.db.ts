@@ -13,7 +13,6 @@ export class _BootDb {
    **/
   async doesPlayerTableExist(): Promise<boolean> {
     const tableSchema = parseUri(mysqlConnectionString).database;
-    console.log(tableSchema);
 
     const tblsh = `Tables_in_${tableSchema}`;
     const query = 'SHOW TABLES WHERE ' + `\`${tblsh}\`` + 'LIKE ?';
