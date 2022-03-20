@@ -155,6 +155,7 @@ CREATE TABLE `npwd_messages_conversations`
     `conversation_list` VARCHAR(225) NOT NULL COLLATE 'utf8mb4_general_ci',
     `label`             VARCHAR(60)  NULL     DEFAULT '' COLLATE 'utf8mb4_general_ci',
     `createdAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
+    `updatedAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `last_message_id`   INT(11)      NULL     DEFAULT NULL,
     `is_group_chat`     TINYINT(4)   NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`) USING BTREE

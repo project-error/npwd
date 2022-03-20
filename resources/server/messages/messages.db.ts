@@ -16,6 +16,7 @@ export class _MessagesDB {
                           npwd_messages_participants.unread_count       as unreadCount,
                           npwd_messages_conversations.is_group_chat     as isGroupChat,
                           npwd_messages_conversations.label,
+                          npwd_messages_conversations.updatedAt,
                           npwd_messages_participants.participant
                    FROM npwd_messages_conversations
                             INNER JOIN npwd_messages_participants
@@ -101,6 +102,11 @@ export class _MessagesDB {
     ]);
 
     const result = <ResultSetHeader>results;
+
+    const updateConversation = `UPDATE npwd_messages_conversations SET updatedAt = current_timestamp() WHERE id = ?`;
+
+    // We don't await as this isn't important to the return data
+    DbInterface._rawExec(updateConversation, [dto.conversationId]);
 
     return result.insertId;
   }
