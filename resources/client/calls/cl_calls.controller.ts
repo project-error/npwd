@@ -1,5 +1,6 @@
 import {
   ActiveCall,
+  ActiveCallRaw,
   CallEvents,
   EndCallDTO,
   InitializeCallDTO,
@@ -57,6 +58,7 @@ RegisterNuiCB<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, (data, cb) => {
 
 onNetTyped<ActiveCall>(CallEvents.WAS_ACCEPTED, (callData) => {
   callService.handleCallAccepted(callData);
+  CallService.sendDialerAction(CallEvents.WAS_ACCEPTED, callData);
 });
 
 // Rejected call
@@ -65,9 +67,10 @@ RegisterNuiCB<TransmitterNumDTO>(CallEvents.REJECTED, (data, cb) => {
   cb({});
 });
 
-onNet(CallEvents.WAS_REJECTED, async () => {
-  callService.handleRejectCall();
+onNet(CallEvents.WAS_REJECTED, async (currentCall: ActiveCallRaw) => {
+  callService.handleRejectCall(currentCall.receiver);
   animationService.endPhoneCall();
+  CallService.sendDialerAction(CallEvents.WAS_REJECTED, currentCall);
 });
 
 RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
@@ -86,9 +89,13 @@ RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
   animationService.endPhoneCall();
 });
 
-onNet(CallEvents.WAS_ENDED, () => {
+onNet(CallEvents.WAS_ENDED, (callStarter: number, currentCall?: ActiveCallRaw) => {
+  if (callService.isInCall() && !callService.isCurrentCall(callStarter)) return;
   callService.handleEndCall();
   animationService.endPhoneCall();
+  if (currentCall) {
+    CallService.sendDialerAction(CallEvents.WAS_REJECTED, currentCall);
+  }
 });
 
 // Simple fetch so lets just proxy it
