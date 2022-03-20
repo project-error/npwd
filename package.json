@@ -7,7 +7,7 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "@octokit/core": "^3.5.1",
+    "@octokit/core": "^3.6.0",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "prettier": "^2.6.0",
