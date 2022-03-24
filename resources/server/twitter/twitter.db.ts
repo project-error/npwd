@@ -64,8 +64,8 @@ export class _TwitterDB {
     const [results] = await DbInterface._rawExec(query, [
       profileId,
       profileId,
-      TWEETS_PER_PAGE,
-      offset,
+      TWEETS_PER_PAGE.toString(),
+      offset.toString(),
     ]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId));
