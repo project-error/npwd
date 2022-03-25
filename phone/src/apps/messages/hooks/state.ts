@@ -41,18 +41,20 @@ export const messageState = {
   filteredMessageConversations: selector<MessageConversation[]>({
     key: 'defaultFilteredMessageConversations',
     get: ({ get }) => {
-      const searchValue: string = get(messageState.filterValue);
+      const filterValue: string = get(messageState.filterValue);
       const messageConversations: MessageConversation[] = get(messageState.messageCoversations);      
-      if (!searchValue) return messageConversations; // added this
+      if (!filterValue) return messageConversations;
+
+      const searchRegex = new RegExp(filterValue, "i");
 
       const contacts: Contact[] = get(contactsState.contacts)
 
       return messageConversations.filter((messageConversation) => {
         for (const contact of contacts) {
-          if (contact.display?.includes(searchValue) && messageConversation.conversationList.includes(contact.number)) return true
+          if (searchRegex.test(contact.display) && messageConversation.conversationList.includes(contact.number)) return true
         }
         
-        return messageConversation.label?.includes(searchValue)
+        return searchRegex.test(messageConversation.label);
       });
     },
   }),
