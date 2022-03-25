@@ -26,6 +26,7 @@ import { Call } from '@mui/icons-material';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import GroupDetailsModal from './GroupDetailsModal';
 import Backdrop from '@ui/components/Backdrop';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -72,6 +73,8 @@ export const MessageModal = () => {
 
   const [isLoaded, setLoaded] = useState(false);
   const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+
+  const myPhoneNumber = useMyPhoneNumber();
 
   useEffect(() => {
     fetchMessages(groupId, 0);
@@ -131,8 +134,7 @@ export const MessageModal = () => {
   const headerClass =
     header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
 
-  // FIXME: Not sure what this is again...
-  const handleAddContact = (number: any) => {
+  const handleAddContact = (number: string) => {
     const exists = getContactByNumber(number);
     const referal = encodeURIComponent(pathname);
     if (exists) {
@@ -141,8 +143,13 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
-  // FIXME: This is wrong :O
-  const targetNumber = activeMessageConversation.participant;
+  // This only gets used for 1 on 1 conversations
+  let conversationList = activeMessageConversation.conversationList.split('+');
+  conversationList = conversationList.filter((targetNumber) => targetNumber !== myPhoneNumber);
+  // Add optionals here out of abundancy of caution for phone number being null
+  // Participant is not participant ots the local phone number
+  let targetNumber: string =
+    conversationList.length > 0 ? conversationList[0] : activeMessageConversation.participant;
 
   const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (

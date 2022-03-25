@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, IconButton, List } from '@mui/material';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
@@ -9,9 +9,10 @@ import { useTranslation } from 'react-i18next';
 import {
   useCheckedConversations,
   useFilteredConversationsValue,
-  useFilterValueState,
   useIsEditing,
+  useSetFilterValue,
 } from '../../hooks/state';
+import { useDebounce } from '@os/phone/hooks/useDebounce';
 import EditIcon from '@mui/icons-material/Edit';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
@@ -27,7 +28,15 @@ const MessagesList = (): any => {
   const { setMessageRead } = useMessageAPI();
 
   const filteredConversations = useFilteredConversationsValue();
-  const [searchValue, setSearchValue] = useFilterValueState();
+  const setFilterVal = useSetFilterValue();
+
+  const [inputVal, setInputVal] = useState('');
+
+  const debouncedVal = useDebounce<string>(inputVal, 200);
+
+  useEffect(() => {
+    setFilterVal(debouncedVal);
+  }, [debouncedVal, setFilterVal]);
 
   if (!conversations) return <p>No messages</p>;
 
@@ -64,8 +73,8 @@ const MessagesList = (): any => {
       )}
       <Box>
         <SearchField
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={inputVal}
+          onChange={(e) => setInputVal(e.target.value)}
           placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
         />
       </Box>

@@ -6,6 +6,7 @@ import {
   MessagesRequest,
 } from '../../../typings/messages';
 import { ResultSetHeader } from 'mysql2';
+import { messagesLogger } from './messages.utils';
 
 const MESSAGES_PER_PAGE = 20;
 
@@ -16,6 +17,7 @@ export class _MessagesDB {
                           npwd_messages_participants.unread_count       as unreadCount,
                           npwd_messages_conversations.is_group_chat     as isGroupChat,
                           npwd_messages_conversations.label,
+                          UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt,
                           npwd_messages_participants.participant
                    FROM npwd_messages_conversations
                             INNER JOIN npwd_messages_participants
@@ -101,6 +103,17 @@ export class _MessagesDB {
     ]);
 
     const result = <ResultSetHeader>results;
+
+    const updateConversation = `UPDATE npwd_messages_conversations SET updatedAt = current_timestamp() WHERE id = ?`;
+
+
+    // We await here so we're not blocking the return call
+    setImmediate(async () => {
+      await DbInterface._rawExec(updateConversation, [dto.conversationId])
+        .catch((err) => 
+          messagesLogger.error(`Error occurred in message update Error: ${err.message}`)
+        );
+    })
 
     return result.insertId;
   }
