@@ -9,11 +9,12 @@ import { useContactsValue } from '../../../contacts/hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { PreDBConversation } from '@typings/messages';
+import { PreDBContact } from '@typings/contact';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const history = useHistory();
   const [t] = useTranslation();
-  const [participants, setParticipants] = useState<any[]>([]);
+  const [participants, setParticipants] = useState<PreDBContact[]>([]);
   const [conversationLabel, setConversationLabel] = useState<string>('');
   const { getContactByNumber } = useContactActions();
   const contacts = useContactsValue();
@@ -37,7 +38,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
 
   useEffect(() => {
     if (phoneNumber) {
-      const contact = getContactByNumber(phoneNumber) || { number: phoneNumber };
+      const contact = getContactByNumber(phoneNumber) || {
+        display: '',
+        number: phoneNumber,
+      };
       setParticipants((curVal) => [...curVal, contact]);
     }
   }, [phoneNumber, getContactByNumber]);
@@ -78,7 +82,8 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   );
 
   const isYourself = participants.find((p) => p.number === myPhoneNumber);
-  const disableSubmit = !participants?.length || (isGroupChat && !conversationLabel) || isYourself;
+  const disableSubmit =
+    !participants?.length || (isGroupChat && !conversationLabel) || !!isYourself;
 
   return (
     <Box>
