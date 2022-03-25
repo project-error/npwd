@@ -49,7 +49,7 @@ export const messageState = {
 
       return messageConversations.filter((messageConversation) => {
         for (const contact of contacts) {
-          if (contact.display.includes(searchValue) && messageConversation.conversationList.includes(contact.number)) return true
+          if (contact.display?.includes(searchValue) && messageConversation.conversationList.includes(contact.number)) return true
         }
         
         return messageConversation.label?.includes(searchValue)
