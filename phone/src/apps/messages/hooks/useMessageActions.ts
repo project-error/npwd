@@ -47,6 +47,7 @@ export const useMessageActions = (): MessageActionProps => {
             return {
               ...message,
               unreadCount: unreadCount,
+              updatedAt: Date.now(),
             };
           }
 

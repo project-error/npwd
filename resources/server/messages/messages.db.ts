@@ -17,7 +17,7 @@ export class _MessagesDB {
                           npwd_messages_participants.unread_count       as unreadCount,
                           npwd_messages_conversations.is_group_chat     as isGroupChat,
                           npwd_messages_conversations.label,
-                          npwd_messages_conversations.updatedAt,
+                          UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt,
                           npwd_messages_participants.participant
                    FROM npwd_messages_conversations
                             INNER JOIN npwd_messages_participants
