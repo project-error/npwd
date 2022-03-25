@@ -6,6 +6,7 @@ import {
   MessagesRequest,
 } from '../../../typings/messages';
 import { ResultSetHeader } from 'mysql2';
+import { messagesLogger } from './messages.utils';
 
 const MESSAGES_PER_PAGE = 20;
 
@@ -105,8 +106,14 @@ export class _MessagesDB {
 
     const updateConversation = `UPDATE npwd_messages_conversations SET updatedAt = current_timestamp() WHERE id = ?`;
 
-    // We don't await as this isn't important to the return data
-    DbInterface._rawExec(updateConversation, [dto.conversationId]);
+
+    // We await here so we're not blocking the return call
+    setImmediate(async () => {
+      await DbInterface._rawExec(updateConversation, [dto.conversationId])
+        .catch((err) => 
+          messagesLogger.error(`Error occurred in message update Error: ${err.message}`)
+        );
+    })
 
     return result.insertId;
   }
