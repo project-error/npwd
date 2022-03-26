@@ -43,8 +43,8 @@ export class _MessagesDB {
 
     const [results] = await DbInterface._rawExec(query, [
       dto.conversationId,
-      MESSAGES_PER_PAGE,
-      offset,
+      MESSAGES_PER_PAGE.toString(),
+      offset.toString(),
     ]);
     return <Message[]>results;
   }
