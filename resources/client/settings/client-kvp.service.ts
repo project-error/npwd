@@ -1,5 +1,3 @@
-const globalAny: any = global;
-
 export class _KvpService {
   setKvp(key: string, value: string): void {
     SetResourceKvp(key, value);
@@ -24,13 +22,6 @@ export class _KvpService {
   getKvpFloat(key: string): number {
     return GetResourceKvpFloat(key);
   }
-
-  static get instance(): _KvpService {
-    if (!globalAny.kvpService) {
-      globalAny.kvpService = new _KvpService();
-    }
-    return globalAny.kvpService;
-  }
 }
-const KvpService = globalAny.kvpService as _KvpService;
+const KvpService = new _KvpService();
 export default KvpService;

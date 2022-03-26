@@ -10,6 +10,11 @@ export interface SettingOption<T = any> {
   value: T | string | number;
 }
 
+export enum KvpItems {
+  NPWD_RINGTONE = 'npwd-ringtone',
+  NPWD_NOTIFICATION = 'npwd-notification',
+}
+
 export interface IPhoneSettings {
   language: SettingOption;
   iconSet: SettingOption<IconSetObject>;

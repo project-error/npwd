@@ -14,6 +14,9 @@ export class CallService {
   private hangUpSoundName = 'Hang_Up';
   private soundSet = 'Phone_SoundSet_Default';
 
+  // Using the Micheal set for hang up, since the default is awful.
+  private hangUpSoundSet = 'Phone_SoundSet_Michael';
+
   constructor() {
     this.currentCall = 0;
   }
@@ -62,7 +65,7 @@ export class CallService {
     this.currentPendingCall = null;
     CallService.sendCallAction(CallEvents.SET_CALL_INFO, null);
 
-    const hangUpSound = new Sound(this.hangUpSoundName, this.soundSet);
+    const hangUpSound = new Sound(this.hangUpSoundName, this.hangUpSoundSet);
     hangUpSound.play();
   }
 
@@ -115,7 +118,7 @@ export class CallService {
 
     CallService.sendCallAction<null>(CallEvents.SET_CALL_INFO, null);
 
-    const hangUpSound = new Sound(this.hangUpSoundName, this.soundSet);
+    const hangUpSound = new Sound(this.hangUpSoundName, this.hangUpSoundSet);
     hangUpSound.play();
   }
 
