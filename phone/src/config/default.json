@@ -158,11 +158,19 @@
   "notiSounds": [
     {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
     {
-      "label": "99kr",
-      "value": "99kr"
+      "label": "Bahbahbahbah!",
+      "value": "Phone_SoundSet_Trevor"
+    },
+    {
+      "label": "Yee-yee ass",
+      "value": "Phone_SoundSet_Franklin"
+    },
+    {
+      "label": "You're a dead man, Michael.",
+      "value": "Phone_SoundSet_Michael"
     }
   ],
   "notiFilters": [
