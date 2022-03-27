@@ -25,7 +25,7 @@ export const useMatchActions = () => {
         }),
       );
 
-      fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, [{ id, liked }]).then((resp) => {
+      fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, { id, liked }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
             message: t('MATCH.FEEDBACK.SAVE_LIKES_FAILED'),

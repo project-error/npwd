@@ -42,7 +42,7 @@ class _MatchService {
     }
   }
 
-  async handleSaveLikes(reqObj: PromiseRequest<Like[]>, resp: PromiseEventResp<boolean>) {
+  async handleSaveLikes(reqObj: PromiseRequest<Like>, resp: PromiseEventResp<boolean>) {
     const player = PlayerService.getPlayer(reqObj.source);
     const identifier = player.getIdentifier();
     matchLogger.debug(`Saving likes for identifier ${identifier}`);
@@ -55,12 +55,12 @@ class _MatchService {
     }
 
     try {
-      const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
+      const newMatches = await this.matchDB.checkIfMatched(identifier, reqObj.data);
 
-      if (newMatches.length > 0) {
+      if (newMatches) {
         resp({ status: 'ok', data: true });
 
-        const matchedPlayer = PlayerService.getPlayerFromIdentifier(newMatches[0].identifier);
+        const matchedPlayer = PlayerService.getPlayerFromIdentifier(newMatches.identifier);
         
         if (matchedPlayer){
           emitNet(MatchEvents.SAVE_LIKES_BROADCAST, matchedPlayer.source, {
