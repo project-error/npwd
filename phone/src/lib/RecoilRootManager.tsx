@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { RecoilRoot } from 'recoil';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { PhoneEvents } from '@typings/phone';
+import RecoilCacheReset from './RecoilCacheReset';
 
 // Because how both recoil functions and how our store works, we need
 // to use *somewhat* of a hack for resetting the global state. In this case,
@@ -16,5 +17,10 @@ export const RecoilRootManager: React.FC = ({ children }) => {
     setCharState((charState) => charState + 1);
   });
 
-  return <RecoilRoot key={charState}>{children}</RecoilRoot>;
+  return (
+    <RecoilRoot key={charState}>
+      <RecoilCacheReset />
+      {children}
+    </RecoilRoot>
+  )
 };

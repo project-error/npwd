@@ -44,12 +44,11 @@ export class _MatchDB {
    * @param likes - likes to be saved to the database
    * @returns ResultSet
    */
-  async saveLikes(identifier: string, likes: Like[]): Promise<ResultSetHeader[]> {
+  async saveLikes(identifier: string, like: Like): Promise<ResultSetHeader[]> {
     const query = `INSERT INTO npwd_match_views (identifier, profile, liked)
-                   VALUES ?`;
-    const formattedLikes = likes.map((like) => [identifier, like.id, like.liked]);
+                   VALUES (?, ?, ?)`;
 
-    const results = await DbInterface._rawExec(query, [formattedLikes]);
+    const results = await DbInterface._rawExec(query, [identifier, like.id, like.liked]);
     return <ResultSetHeader[]>results;
   }
 
@@ -189,16 +188,12 @@ export class _MatchDB {
    * liked us which indicates a match has occurred.
    * @param identifier - player's identifier
    * @param likes - list of new Likes
-   * @returns Profile[] - list of profiles we matched with
+   * @returns Profile - list of profiles we matched with
    */
-  async findNewMatches(identifier: string, likes: Like[]): Promise<Profile[]> {
-    let matches: Profile[] = [];
-    for (const like of likes) {
-      if (!like.liked) continue;
-      const matchedProfiles = await this.checkForMatchById(identifier, like.id);
-      matches = matches.concat(matchedProfiles);
-    }
-    return matches;
+  async checkIfMatched(identifier: string, like: Like): Promise<Profile|null> {
+    const matchedProfiles = await this.checkForMatchById(identifier, like.id);
+
+    return matchedProfiles[0];
   }
 
   /**
