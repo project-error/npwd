@@ -203,16 +203,16 @@ class _TwitterService {
       // alert the player that they have already retweeted
       // this post (or that they are the original poster)
       if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
-        resp({
+        return resp({
           status: 'error',
-          errorMsg: 'FEEDBACK.RETWEET_EXISTS',
+          errorMsg: 'TWITTER.FEEDBACK.RETWEET_EXISTS',
         });
       }
 
       // our message for this row is blank because when we
       // query for this tweet it will join off of the retweet
       // column and fetch the message from the related tweet
-      const retweet: NewTweet = { message: '', retweet: reqObj.data.tweetId };
+      const retweet: NewTweet = { message: '', images: '', retweet: reqObj.data.tweetId };
       const createdTweet = await this.twitterDB.createTweet(identifier, retweet);
 
       const profile = await this.twitterDB.getProfile(identifier);
