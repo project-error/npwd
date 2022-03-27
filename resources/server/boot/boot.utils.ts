@@ -1,5 +1,5 @@
 import { mainLogger } from '../sv_logger';
-import { config } from '../server';
+import { config } from '../config';
 
 export const bootLogger = mainLogger.child({
   module: 'boot',

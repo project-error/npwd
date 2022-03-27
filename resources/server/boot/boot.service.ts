@@ -1,6 +1,6 @@
 import BootDb, { _BootDb } from './boot.db';
 import { bootLogger, fatalDbError } from './boot.utils';
-import { config } from '../server';
+import { config } from '../config';
 import { frameworkDependencies, requiredDbColumns } from './boot.utils';
 
 export class _BootService {

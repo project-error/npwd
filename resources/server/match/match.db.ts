@@ -1,7 +1,7 @@
 import { Like, Match, NewProfile, Profile } from '../../../typings/match';
 import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
-import { config } from '../server';
+import { config } from '../config';
 import { generateProfileName } from '../utils/generateProfileName';
 import { matchLogger } from './match.utils';
 import DbInterface from '../db/db_wrapper';
