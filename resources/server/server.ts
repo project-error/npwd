@@ -1,7 +1,10 @@
+import './config';
+
 import { RewriteFrames } from '@sentry/integrations';
 import { config as resourceConfig } from './config';
 export const config = resourceConfig;
 import { registerCommands } from './commands/registerCommands';
+
 // Setup controllers
 import './db/pool';
 import './boot/boot.controller';

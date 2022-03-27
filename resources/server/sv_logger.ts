@@ -1,4 +1,4 @@
-import { config } from './server';
+import { config } from './config';
 import path from 'path';
 import { createLogger, transports, format } from 'winston';
 

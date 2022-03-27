@@ -1,7 +1,7 @@
 import { CONNECTION_STRING } from '../db';
 import DbInterface from '../db/db_wrapper';
 import { parseUri } from '../db/parseUri';
-import { config } from '../server';
+import { config } from '../config';
 
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 
