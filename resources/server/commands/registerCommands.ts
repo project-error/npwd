@@ -11,7 +11,6 @@ const npwdDebugDumpCommand = async (src: number): Promise<void> => {
   if (src !== 0) return;
 
   const tableSchema = parseUri(mysqlConnectionString).database;
-  console.log('tableSchema', tableSchema);
 
   if (config.debug.level === 'error') {
     console.log('SET DEBUG LEVEL TO INFO/SILLY TO SEE LOGS');

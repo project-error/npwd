@@ -23,7 +23,6 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const { clean } = useWordFilter();
 
   const handleSubmit = async () => {
-    console.log(activeMessageConversation);
     if (message.trim()) {
       await sendMessage({
         conversationId: messageConversation.id,
