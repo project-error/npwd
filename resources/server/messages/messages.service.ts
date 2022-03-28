@@ -142,6 +142,8 @@ class _MessagesService {
       const participants = getIdentifiersFromParticipants(messageData.conversationList);
       const userIdentifier = player.getIdentifier();
 
+      const conversationDetails = await this.messagesDB.getConversation(messageData.conversationId);
+
       const messageId = await this.messagesDB.createMessage({
         userIdentifier,
         authorPhoneNumber,
@@ -164,10 +166,30 @@ class _MessagesService {
         },
       });
 
+      const conversationData = {
+        id: messageData.conversationId,
+        label: conversationDetails.label,
+        conversationList: conversationDetails.conversationList,
+        isGroupChat: conversationDetails.isGroupChat,
+      };
+
       // participantId is the participants phone number
       for (const participantId of participants) {
-        if (participantId !== player.getPhoneNumber()) {
+        if (participantId !== authorPhoneNumber) {
           try {
+            const playerHasConversation = await this.messagesDB.doesConversationExistForPlayer(
+              messageData.conversationList,
+              participantId,
+            );
+
+            // We need to create a conversation for the participant before broadcasting
+            if (!playerHasConversation) {
+              const conversationId = await this.messagesDB.addParticipantToConversation(
+                conversationDetails.conversationList,
+                participantId,
+              );
+            }
+
             const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
               participantId,
               true,
@@ -182,13 +204,24 @@ class _MessagesService {
             await this.messagesDB.setMessageUnread(messageData.conversationId, participantNumber);
 
             if (participantPlayer) {
+              if (!playerHasConversation) {
+                emitNetTyped<MessageConversation>(
+                  MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
+                  {
+                    ...conversationData,
+                    participant: authorPhoneNumber,
+                  },
+                  participantPlayer.source,
+                );
+              }
+
               emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
                 ...messageData,
                 conversation_id: messageData.conversationId,
                 author: authorPhoneNumber,
               });
               emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
-                conversationName: player.getPhoneNumber(),
+                conversationName: authorPhoneNumber,
                 conversation_id: messageData.conversationId,
                 message: messageData.message,
                 is_embed: messageData.is_embed,

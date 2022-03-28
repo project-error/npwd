@@ -29,6 +29,22 @@ export class _MessagesDB {
     return <MessageConversation[]>results;
   }
 
+  async getConversation(conversationId: number): Promise<MessageConversation> {
+    const query = `SELECT npwd_messages_conversations.id,
+                          npwd_messages_conversations.conversation_list         as conversationList,
+                          npwd_messages_conversations.is_group_chat             as isGroupChat,
+                          npwd_messages_conversations.label,
+                          UNIX_TIMESTAMP(npwd_messages_conversations.createdAt) as createdAt,
+                          UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt
+                   FROM npwd_messages_conversations
+                   WHERE id = ?
+                   LIMIT 1`;
+    const [results] = await DbInterface._rawExec(query, [conversationId]);
+
+    const result = <MessageConversation[]>results;
+    return result[0];
+  }
+
   async getMessages(dto: MessagesRequest): Promise<Message[]> {
     const offset = MESSAGES_PER_PAGE * dto.page;
 
