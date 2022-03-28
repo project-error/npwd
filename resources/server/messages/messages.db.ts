@@ -13,9 +13,9 @@ const MESSAGES_PER_PAGE = 20;
 export class _MessagesDB {
   async getConversations(phoneNumber: string): Promise<MessageConversation[]> {
     const query = `SELECT npwd_messages_conversations.id,
-                          npwd_messages_conversations.conversation_list as conversationList,
-                          npwd_messages_participants.unread_count       as unreadCount,
-                          npwd_messages_conversations.is_group_chat     as isGroupChat,
+                          npwd_messages_conversations.conversation_list         as conversationList,
+                          npwd_messages_participants.unread_count               as unreadCount,
+                          npwd_messages_conversations.is_group_chat             as isGroupChat,
                           npwd_messages_conversations.label,
                           UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt,
                           npwd_messages_participants.participant
@@ -40,7 +40,7 @@ export class _MessagesDB {
                           npwd_messages.embed
                    FROM npwd_messages
                    WHERE conversation_id = ?
-                   ORDER BY id
+                   ORDER BY createdAt
                    LIMIT ? OFFSET ?`;
 
     const [results] = await DbInterface._rawExec(query, [
@@ -104,16 +104,16 @@ export class _MessagesDB {
 
     const result = <ResultSetHeader>results;
 
-    const updateConversation = `UPDATE npwd_messages_conversations SET updatedAt = current_timestamp() WHERE id = ?`;
-
+    const updateConversation = `UPDATE npwd_messages_conversations
+                                SET updatedAt = current_timestamp()
+                                WHERE id = ?`;
 
     // We await here so we're not blocking the return call
     setImmediate(async () => {
-      await DbInterface._rawExec(updateConversation, [dto.conversationId])
-        .catch((err) => 
-          messagesLogger.error(`Error occurred in message update Error: ${err.message}`)
-        );
-    })
+      await DbInterface._rawExec(updateConversation, [dto.conversationId]).catch((err) =>
+        messagesLogger.error(`Error occurred in message update Error: ${err.message}`),
+      );
+    });
 
     return result.insertId;
   }
