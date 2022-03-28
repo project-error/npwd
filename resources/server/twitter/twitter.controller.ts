@@ -4,6 +4,7 @@ import { Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
 import { getSource } from '../utils/miscUtils';
 import TwitterService from './twitter.service';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
+import { RateLimiter } from '../lib/RateLimiter';
 
 onNetPromise<void, Profile | string[]>(
   TwitterEvents.GET_OR_CREATE_PROFILE,
@@ -31,6 +32,8 @@ onNetPromise<Profile, Profile>(TwitterEvents.UPDATE_PROFILE, async (reqObj, resp
   );
 });
 
+const filteredTweetsRatelimiter = new RateLimiter(5000);
+
 onNetPromise<{ searchValue: string }, Tweet[]>(
   TwitterEvents.FETCH_TWEETS_FILTERED,
   async (reqObj, resp) => {
@@ -41,6 +44,7 @@ onNetPromise<{ searchValue: string }, Tweet[]>(
       ),
     );
   },
+  filteredTweetsRatelimiter
 );
 
 onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {
