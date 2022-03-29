@@ -116,7 +116,7 @@ class _TwitterService {
       twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: e.message });
+      resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.FILTERED_FETCH_FAILED' });
     }
   }
 
