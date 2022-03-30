@@ -41,7 +41,7 @@ onNetPromise<{ searchValue: string }, Tweet[]>(
       ),
     );
   },
-  { rateLimit: 5000 }
+  { rateLimit: 5000 },
 );
 
 onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {

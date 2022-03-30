@@ -8,7 +8,11 @@ const netEventLogger = mainLogger.child({ module: 'events' });
 
 const globalRateLimiter = new GlobalRateLimiter(250);
 
-export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignature<T, P>, options: LimiterOptions = null): void {
+export function onNetPromise<T = any, P = any>(
+  eventName: string,
+  cb: CBSignature<T, P>,
+  options: LimiterOptions = null,
+): void {
   globalRateLimiter.registerNewEvent(eventName, options);
   onNet(eventName, async (respEventName: string, data: T) => {
     const startTime = process.hrtime.bigint();
@@ -35,8 +39,6 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
       netEventLogger.silly(`Response Promise Event ${respEventName} (${totalTime}ms), Data >>`);
       netEventLogger.silly(data);
     };
-
-    
 
     if (globalRateLimiter.isPlayerRateLimited(eventName, src)) {
       return promiseResp({ status: 'error', errorMsg: 'ERROR_RATE_LIMITED' });
