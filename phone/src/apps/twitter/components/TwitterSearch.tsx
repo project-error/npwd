@@ -42,7 +42,7 @@ function TwitterSearch() {
     }).then((resp) => {
       if (resp.status !== 'ok') {
         return addAlert({
-          message: t(''),
+          message: t(resp.errorMsg || ''),
           type: 'error',
         });
       }

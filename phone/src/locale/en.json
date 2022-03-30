@@ -113,7 +113,8 @@
         "REPORT_TWEET_SUCCESS": "Successfully reported tweet",
         "REPORT_TWEET_FAILED": "Failed to report tweet",
         "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
-        "DELETE_TWEET_FAILED": "Failed to delete tweet"
+        "DELETE_TWEET_FAILED": "Failed to delete tweet",
+        "FILTER_FETCH_FAILED": "Failed to get filtered tweets"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
@@ -301,6 +302,7 @@
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
     "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
     "GENERIC_DB_ERROR": "Create/update request failed.",
-    "GENERIC_INVALID_IMAGE_HOST": "The image host you tried to use is not allowed by this server."
+    "GENERIC_INVALID_IMAGE_HOST": "The image host you tried to use is not allowed by this server.",
+    "ERROR_RATE_LIMITED": "You have to wait before doing that again."
   }
 }
