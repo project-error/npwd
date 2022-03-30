@@ -18,19 +18,21 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
     INDEX `identifier` (`identifier`)
 );
 
-CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
+CREATE TABLE `npwd_twitter_tweets`
 (
-    `id`         int           NOT NULL AUTO_INCREMENT,
-    `message`    varchar(1000) NOT NULL,
-    `createdAt`  timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`  timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `likes`      int           NOT NULL DEFAULT '0',
-    `identifier` varchar(48)   NOT NULL,
-    `visible`    tinyint       NOT NULL DEFAULT '1',
-    `images`     varchar(1000)          DEFAULT '',
-    `retweet`    int                    DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `identifier` (`identifier`)
+    `id`         INT(11)       NOT NULL AUTO_INCREMENT,
+    `message`    VARCHAR(1000) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `createdAt`  TIMESTAMP     NOT NULL DEFAULT current_timestamp(),
+    `updatedAt`  TIMESTAMP     NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    `likes`      INT(11)       NOT NULL DEFAULT '0',
+    `identifier` VARCHAR(48)   NOT NULL COLLATE 'utf8mb4_general_ci',
+    `visible`    TINYINT(4)    NOT NULL DEFAULT '1',
+    `images`     VARCHAR(1000) NULL     DEFAULT '' COLLATE 'utf8mb4_general_ci',
+    `retweet`    INT(11)       NULL     DEFAULT NULL,
+    `profile_id` INT(11)       NOT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` (`profile_id`) USING BTREE,
+    CONSTRAINT `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` FOREIGN KEY (`profile_id`) REFERENCES `npwd-server`.`npwd_twitter_profiles` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
 
