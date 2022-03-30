@@ -32,7 +32,7 @@ CREATE TABLE `npwd_twitter_tweets`
     `profile_id` INT(11)       NOT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` (`profile_id`) USING BTREE,
-    CONSTRAINT `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` FOREIGN KEY (`profile_id`) REFERENCES `npwd-server`.`npwd_twitter_profiles` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+    CONSTRAINT `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
 
