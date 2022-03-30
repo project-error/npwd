@@ -128,7 +128,10 @@ class _MessagesService {
     try {
       const messages = await MessagesDB.getMessages(reqObj.data);
 
-      resp({ status: 'ok', data: messages });
+      // its just 20 elements, won't do that much harm
+      const sortedMessages = messages.sort((a, b) => a.id - b.id);
+
+      resp({ status: 'ok', data: sortedMessages });
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }

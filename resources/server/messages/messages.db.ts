@@ -46,7 +46,10 @@ export class _MessagesDB {
   }
 
   async getMessages(dto: MessagesRequest): Promise<Message[]> {
+    console.log('Message data object', dto);
+    console.log('MESSAGES_PER_PAGE', MESSAGES_PER_PAGE);
     const offset = MESSAGES_PER_PAGE * dto.page;
+    console.log('offset', offset);
 
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,
@@ -56,7 +59,7 @@ export class _MessagesDB {
                           npwd_messages.embed
                    FROM npwd_messages
                    WHERE conversation_id = ?
-                   ORDER BY createdAt
+                   ORDER BY createdAt DESC
                    LIMIT ? OFFSET ?`;
 
     const [results] = await DbInterface._rawExec(query, [
