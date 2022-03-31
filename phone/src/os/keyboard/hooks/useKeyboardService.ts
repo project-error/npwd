@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 import { usePhone } from '@os/phone/hooks/usePhone';
+import { useCall } from '@os/call/hooks/useCall';
 
 const keyboardState = {
   ArrowRight: atom({
@@ -49,6 +50,7 @@ const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 export const useKeyboardService = () => {
   const history = useHistory();
   const { closePhone } = usePhone();
+  const { call } = useCall();
 
   const ArrowRight = useRecoilValue(keyboardState.ArrowRight);
   const ArrowLeft = useRecoilValue(keyboardState.ArrowLeft);
@@ -90,13 +92,13 @@ export const useKeyboardService = () => {
 
   const backspaceHandler = useCallback(
     (event) => {
-      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
-        // Dont anything if we are typing something :)
+      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase()) || call) {
+        // Dont anything if we are typing something, or if we're in a call :)
         return;
       }
       history.goBack();
     },
-    [history],
+    [history, call],
   );
 
   useEffect(
