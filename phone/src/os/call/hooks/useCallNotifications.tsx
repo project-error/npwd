@@ -14,7 +14,7 @@ const NOTIFICATION_ID = 'call:current';
 export const useCallNotifications = () => {
   const [t] = useTranslation();
   const history = useHistory();
-  const { addNotificationAlert, removeId, addNotification } = useNotifications();
+  const { addNotificationAlert, removeId } = useNotifications();
   const { getDisplayByNumber } = useContactActions();
   const contacts = useContacts();
 
@@ -32,7 +32,7 @@ export const useCallNotifications = () => {
   const callNotificationBase = {
     app: 'CALL',
     id: NOTIFICATION_ID,
-    cantClose: true,
+    cantClose: false,
     icon,
     onClick: () => history.push('/call'),
     notificationIcon,
@@ -50,40 +50,23 @@ export const useCallNotifications = () => {
       return;
     }
 
-    if (call?.is_accepted) {
+    if (!call.isTransmitter && !call.is_accepted) {
+      play();
       removeId(NOTIFICATION_ID);
-      addNotification({
+      addNotificationAlert({
         ...callNotificationBase,
+        title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
+          transmitter: contactDisplay(call.transmitter) || call.transmitter,
+        }),
+        keepWhenPhoneClosed: true,
         content: (
           <CallNotification>
-            {t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
+            {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
               transmitter: contactDisplay(call.transmitter) || call.transmitter,
             })}
           </CallNotification>
         ),
-        title: t('DIALER.MESSAGES.CURRENT_CALL_TITLE'),
       });
-    }
-    if (!call?.isTransmitter && !call?.is_accepted) {
-      play();
-      removeId(NOTIFICATION_ID);
-      addNotificationAlert(
-        {
-          ...callNotificationBase,
-          title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
-            transmitter: contactDisplay(call.transmitter) || call.transmitter,
-          }),
-          keepWhenPhoneClosed: false,
-          content: (
-            <CallNotification>
-              {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
-                transmitter: contactDisplay(call.transmitter) || call.transmitter,
-              })}
-            </CallNotification>
-          ),
-        },
-        (n) => addNotification(n),
-      );
     }
   };
 

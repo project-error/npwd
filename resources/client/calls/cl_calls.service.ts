@@ -1,8 +1,7 @@
 import { checkHasPhone } from '../cl_main';
-import { IAlertProps } from '../../../typings/alerts';
-import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
+import { IAlertProps } from '@typings/alerts';
+import { ActiveCall, CallEvents, CallRejectReasons } from '@typings/call';
 import { Sound } from '../sounds/client-sound.class';
-import KvpService from '../settings/client-kvp.service';
 
 const exp = global.exports;
 
@@ -61,8 +60,8 @@ export class CallService {
     // we don't want to reset our UI if we're in a call already or if we're currently starting a call that hasn't been canceled
     if (this.isInCall() || !this.isCurrentPendingCall(receiver)) return;
     if (this.callSound) this.callSound.stop();
-    this.openCallModal(false);
     this.currentPendingCall = null;
+    this.openCallModal(false);
     CallService.sendCallAction(CallEvents.SET_CALL_INFO, null);
 
     const hangUpSound = new Sound(this.hangUpSoundName, this.hangUpSoundSet);
@@ -104,7 +103,7 @@ export class CallService {
 
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
-    if (this.callSound) this.callSound.stop(); // incase we're the one who accepts, we won't have the a callSound for now....plz help, I need sound name aaaaaaaa
+    if (this.callSound) this.callSound.stop();
     exp['pma-voice'].setCallChannel(callData.channelId);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALL_INFO, callData);
   }
@@ -113,9 +112,9 @@ export class CallService {
     if (this.callSound) this.callSound.stop();
     this.currentCall = 0;
     exp['pma-voice'].setCallChannel(0);
-    this.openCallModal(false);
     this.currentPendingCall = null;
 
+    this.openCallModal(false);
     CallService.sendCallAction<null>(CallEvents.SET_CALL_INFO, null);
 
     const hangUpSound = new Sound(this.hangUpSoundName, this.hangUpSoundSet);
