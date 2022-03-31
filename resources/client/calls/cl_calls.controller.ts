@@ -58,7 +58,6 @@ RegisterNuiCB<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, (data, cb) => {
 
 onNetTyped<ActiveCall>(CallEvents.WAS_ACCEPTED, (callData) => {
   callService.handleCallAccepted(callData);
-  CallService.sendDialerAction(CallEvents.WAS_ACCEPTED, callData);
 });
 
 // Rejected call

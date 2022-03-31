@@ -232,6 +232,7 @@ class CallsService {
       // TODO: Need to get receiever number so we can return this as WAS_REJECTED so it gets added to the call history
       emitNet(CallEvents.WAS_ENDED, reqObj.source);
       resp({ status: 'ok' });
+      return;
     }
 
     const currentCall = this.callMap.get(transmitterNumber);
@@ -240,7 +241,7 @@ class CallsService {
       callLogger.error(
         `Call with transmitter number ${transmitterNumber} does not exist in current calls map!`,
       );
-      resp({ status: 'error', errorMsg: 'DOES_NOT_EXIST' });
+      return resp({ status: 'error', errorMsg: 'DOES_NOT_EXIST' });
     }
 
     // Just in case currentCall for some reason at this point is falsy
