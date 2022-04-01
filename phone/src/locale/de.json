@@ -60,6 +60,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Fehlerhafte Einstellungen! Bitte setze deine Einstellungen zurück.",
         "SETTINGS_RESET": "Die Standard Einstellungen wurden wiederhergestellt!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Benachrichtigung",
+        "NOTIFY_NEW_LISTING": "Benachrichtigung für neue Anzeigen"
       }
     },
     "CAMERA": {
@@ -103,7 +107,14 @@
         "EDIT_PROFILE_SUCCESS": "Ihr Profil wurde bearbeitet",
         "EDIT_PROFILE_FAILURE": "Ihr Profil konnte nicht bearbeitet werden",
         "CREATE_FAILED": "Ihr Tweet konnte nicht gesendet werden!",
-        "RETWEET_EXISTS": "Sie haben diesen Tweet bereits retweetet!"
+        "RETWEET_FAILED": "Retweeten des Tweets fehlgeschlagen!",
+        "RETWEET_EXISTS": "Sie haben diesen Tweet bereits retweetet!",
+        "LIKE_TWEET_FAILED": "Liken des Tweets fehlgeschlagen!",
+        "REPORT_TWEET_SUCCESS": "Tweet erfolgreich gemeldet.",
+        "REPORT_TWEET_FAILED": "Melden des Tweets fehlgeschlagen!",
+        "FETCH_TWEETS_FAILED": "Laden von Tweets fehlgeschlagen!",
+        "DELETE_TWEET_FAILED": "Löschen des Tweets fehlgeschlagen!",
+        "FILTER_FETCH_FAILED": "Filtern der Tweets fehlgeschlagen!"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} hat jemanden retweetet!",
@@ -117,6 +128,7 @@
       "IMAGE_PLACEHOLDER": "Ein Link zu Ihrem Bild oder GIF",
       "EDIT_DEFAULT_PROFILE_NAME": "Geben Sie Ihren Namen ein",
       "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "AVATAR_CHOOSE_IMAGE": "Bild auswählen",
       "EDIT_PROFILE_NAME": "Profil Name",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Standort",
@@ -182,9 +194,13 @@
         "REPORT_LISTING_FAILED": "Diese Anzeige wurde bereits gemeldet",
         "REPORT_LISTING_SUCCESS": "Sie haben diese Anzeige gemeldet"
       },
+      "NEW_LISTING": "Neue Anzeige",
+      "CHOOSE_IMAGE": "Bild auswählen",
       "FORM_TITLE": "Titel",
+      "POST_LISTING": "Veröffentlichen",
       "FORM_IMAGE": "Bild oder URL",
-      "FORM_DESCRIPTION": "Beschreibung"
+      "FORM_DESCRIPTION": "Beschreibung",
+      "NO_IMAGE": "Kein Bild vorhanden"
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -208,8 +224,11 @@
       "DELETE_CONVERSATION": "Löschen Sie einen Chat",
       "NEW_MESSAGE": "Nachricht...",
       "NEW_MESSAGE_GROUP": "Telefonnummer...",
+      "SHARE_IMAGE_TITLE": "Wollen Sie dieses Bild teilen?",
+      "SHARE_CONTACT_TITLE": "Wollen Sie diesen Kontakt teilen?",
       "GROUP_CHAT_LABEL": "Gruppenname...",
       "MEDIA_OPTION": "Kamera / Fotos",
+      "CONTACT_OPTION": "Kontakt teilen",
       "NEW_MESSAGE_GROUP_SUBMIT": "Senden",
       "INPUT_NAME_OR_NUMBER": "Suchen Sie nach einem Kontakt oder einer Nummer.",
       "ACTIONS_TITLE": "Aktionen",
@@ -245,6 +264,8 @@
       "CANCEL": "Abbrechen",
       "TITLE": "Titel",
       "CONTENT": "Inhalt",
+      "SHARE": "Teilen",
+      "ADD": "Hinzufügen",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
     },
@@ -279,6 +300,9 @@
     "GENERIC_TITLE": "Titel",
     "GENERIC_CONTENT": "Inhalt",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!",
+    "GENERIC_DB_ERROR": "Anfrage zum Erstellen/Aktualisieren fehlgeschlagen.",
+    "GENERIC_INVALID_IMAGE_HOST": "Der Herausgeber des Bildes ist auf dem Server verboten.",
+    "ERROR_RATE_LIMITED": "Sie müssen warten, bis Sie diese Aktion erneut ausführen."
   }
 }
