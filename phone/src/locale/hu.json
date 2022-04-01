@@ -113,8 +113,8 @@
         "REPORT_TWEET_SUCCESS": "Sikeresen jelentettet a tweetet",
         "REPORT_TWEET_FAILED": "Hiba, nem tudod jelenteni ezt a tweetet",
         "FETCH_TWEETS_FAILED": "Sikertelen Tweet betöltése",
-        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet"
-		"FILTER_FETCH_FAILED": "Failed to get filtered tweets"											  
+        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet",
+        "FILTER_FETCH_FAILED": "Failed to get filtered tweets"											  
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetelt valamit!",
