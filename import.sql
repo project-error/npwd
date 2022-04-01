@@ -6,6 +6,19 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `embed` varchar(512) NOT NULL DEFAULT '';
 
+CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
+(
+    `id`           int         NOT NULL AUTO_INCREMENT,
+    `profile_name` varchar(90) NOT NULL,
+    `identifier`   varchar(48) NOT NULL,
+#   Default Profile avatar can be set here
+    `avatar_url`   varchar(255)         DEFAULT 'https://i.file.glass/QrEvq.png',
+    `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
+    INDEX `identifier` (`identifier`)
+);
 
 CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
 (
@@ -33,21 +46,6 @@ CREATE TABLE `npwd_twitter_tweets`
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` (`profile_id`) USING BTREE,
     CONSTRAINT `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
-);
-
-
-CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
-(
-    `id`           int         NOT NULL AUTO_INCREMENT,
-    `profile_name` varchar(90) NOT NULL,
-    `identifier`   varchar(48) NOT NULL,
-#   Default Profile avatar can be set here
-    `avatar_url`   varchar(255)         DEFAULT 'https://i.file.glass/QrEvq.png',
-    `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
-    INDEX `identifier` (`identifier`)
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
