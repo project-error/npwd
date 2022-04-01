@@ -113,7 +113,8 @@
         "REPORT_TWEET_SUCCESS": "Sikeresen jelentettet a tweetet",
         "REPORT_TWEET_FAILED": "Hiba, nem tudod jelenteni ezt a tweetet",
         "FETCH_TWEETS_FAILED": "Sikertelen Tweet betöltése",
-        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet"
+        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet",
+        "FILTER_FETCH_FAILED": "Failed to get filtered tweets"											  
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetelt valamit!",
@@ -158,7 +159,7 @@
         "NO_PROFILES": "Nincs profil a közeledben",
         "PROFILES_ERROR": "Hiba a profilok betöltése közben",
         "SAVE_LIKES_FAILED": "Hiba a likeok mentése közben",
-        "NEW_LIKE_FOUND": "Nem található pár!"
+        "NEW_LIKE_FOUND": "Valakivel párba áltál!"
       },
       "PROFILE_CONFIGURATION": "Hibásan van beállítva az app, kérlek szólj egy adminnak.",
       "EDIT_PROFILE_IMAGE": "Kép URL",
@@ -301,6 +302,7 @@
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
     "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!",
     "GENERIC_DB_ERROR": "Create/update request failed.",
-    "GENERIC_INVALID_IMAGE_HOST": "Ez a képmegosztó amit használni szeretnél, nincs engedélyezve a szerver által."
+    "GENERIC_INVALID_IMAGE_HOST": "Ez a képmegosztó amit használni szeretnél, nincs engedélyezve a szerver által.",
+    "ERROR_RATE_LIMITED": "Várnod kell mielőtt újra próbálnád."
   }
 }
