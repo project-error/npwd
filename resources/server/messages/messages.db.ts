@@ -46,10 +46,7 @@ export class _MessagesDB {
   }
 
   async getMessages(dto: MessagesRequest): Promise<Message[]> {
-    console.log('Message data object', dto);
-    console.log('MESSAGES_PER_PAGE', MESSAGES_PER_PAGE);
     const offset = MESSAGES_PER_PAGE * dto.page;
-    console.log('offset', offset);
 
     const query = `SELECT npwd_messages.id,
                           npwd_messages.conversation_id,

@@ -86,10 +86,12 @@ class _TwitterService {
       const identifier = PlayerService.getIdentifier(src);
       const profile = await this.twitterDB.getProfile(identifier);
 
-      if (!profile)
-        return twitterLogger.warn(
+      if (!profile) {
+        twitterLogger.warn(
           `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
         );
+        return resp({ status: 'error' });
+      }
 
       const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
 
