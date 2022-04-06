@@ -2,13 +2,18 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PinDrop from '@mui/icons-material/PinDrop';
 import { ContextMenu, IContextMenuOption } from '@ui/components/ContextMenu';
 import qs from 'qs';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
 import Backdrop from '@ui/components/Backdrop';
-import { MessageConversation } from '@typings/messages';
+import { MessageConversation, MessageEvents } from '@typings/messages';
+import fetchNui from '../../../../utils/fetchNui';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
+import useMessages from '../../hooks/useMessages';
+import { Location } from '@typings/messages';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
@@ -28,6 +33,8 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   const { pathname, search } = useLocation();
   const [imagePreview, setImagePreview] = useState(null);
   const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
+  const { sendEmbedMessage } = useMessageAPI();
+  const { activeMessageConversation } = useMessages();
 
   const modalsVisible = imagePreview || contactModalOpen;
 
@@ -48,8 +55,22 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         icon: <ContactPageIcon />,
         onClick: () => setContactModalOpen(true),
       },
+      {
+        label: t('MESSAGES.LOCATION_OPTION'),
+        icon: <PinDrop />,
+        onClick: () => {
+          fetchNui<{ data: Location }>(MessageEvents.GET_MESSAGE_LOCATION).then(({ data }) => {
+            sendEmbedMessage({
+              conversationId: messageGroup.id,
+              conversationList: activeMessageConversation.conversationList,
+              embed: { type: 'location', ...data },
+              tgtPhoneNumber: messageGroup.participant,
+            });
+          });
+        },
+      },
     ],
-    [history, pathname, search, t],
+    [history, pathname, search, t, sendEmbedMessage, activeMessageConversation],
   );
 
   return (
