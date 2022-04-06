@@ -335,13 +335,13 @@ class _MessagesService {
   }
 
   async handleGetLocation(reqObj: PromiseRequest, resp: PromiseEventResp<Location>) {
-    const displayName = PlayerService.getPlayer(reqObj.source).getName();
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
     const playerPed = GetPlayerPed(reqObj.source.toString());
 
     resp({
       status: 'ok',
       data: {
-        display: displayName ?? 'Unknown',
+        phoneNumber,
         coords: GetEntityCoords(playerPed),
       },
     });
