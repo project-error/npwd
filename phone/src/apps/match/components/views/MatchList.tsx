@@ -37,7 +37,7 @@ function MatchList() {
 
   useEffect(() => {
     newMatchesPage(matchPage - 1);
-  }, [matchPage]);
+  }, [matchPage, newMatchesPage]);
 
   if (error) return <PageText text={t('MATCH.FEEDBACK.MATCHES_ERROR')} />;
   if (!matches) return <Loader />;
