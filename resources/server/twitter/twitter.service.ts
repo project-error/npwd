@@ -90,7 +90,7 @@ class _TwitterService {
         twitterLogger.warn(
           `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
         );
-        return resp({ status: 'error' });
+        return resp({ status: 'ok', data: [] });
       }
 
       const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
