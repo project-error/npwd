@@ -23,7 +23,7 @@ type MessageEmbedType = {
 const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine }) => {
   const embedType: MessageEmbedType = {
     contact: <ContactEmbed embed={embed} isMine={isMine} />,
-    location: <LocationEmbed embed={embed} />,
+    location: <LocationEmbed embed={embed} isMine={isMine} />,
   };
 
   return <>{embedType[type]}</>;
@@ -60,18 +60,26 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   );
 };
 
-const LocationEmbed = ({ embed }: { embed: Location }) => {
+const LocationEmbed = ({ embed, isMine }: { embed: Location; isMine: boolean }) => {
   const [t] = useTranslation();
+  const { getContactByNumber } = useContactActions();
+
   const handleSetWaypoint = () => {
     fetchNui(MessageEvents.MESSAGES_SET_WAYPOINT, {
       coords: embed.coords,
     });
   };
 
+  const display = !isMine
+    ? t('MESSAGES.LOCATION_MESSAGE', {
+        display: getContactByNumber(embed.phoneNumber)?.display ?? embed.phoneNumber,
+      })
+    : t('MESSAGES.LOCATION_MESSAGE_SELF');
+
   return (
     <StyledMessage>
       <Box>
-        <Typography>{t('MESSAGES.LOCATION_MESSAGE', { display: embed.display })}</Typography>
+        <Typography>{display}</Typography>
       </Box>
       <Box>
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>

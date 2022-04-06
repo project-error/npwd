@@ -159,6 +159,6 @@ export enum MessageEvents {
 }
 
 export interface Location {
-  display: string;
+  phoneNumber: string;
   coords: number[];
 }
