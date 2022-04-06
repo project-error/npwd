@@ -70,7 +70,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         },
       },
     ],
-    [history, pathname, search, t, sendEmbedMessage, activeMessageConversation],
+    [history, pathname, search, t, sendEmbedMessage, activeMessageConversation, messageGroup],
   );
 
   return (
