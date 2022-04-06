@@ -38,7 +38,10 @@ export const matchState = {
       key: 'defaultMatches',
       get: async () => {
         try {
-          const resp = await fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES);
+          const resp = await fetchNui<ServerPromiseResp<FormattedMatch[]>>(
+            MatchEvents.GET_MATCHES,
+            { page: 0 },
+          );
           LogDebugEvent({ action: 'fetchMatches', data: resp.data });
           return resp.data;
         } catch (e) {

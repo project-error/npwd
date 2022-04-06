@@ -1,6 +1,13 @@
 import { formatMatches, formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import { FormattedMatch, FormattedProfile, Like, MatchEvents, MatchResp, Profile } from '../../../typings/match';
+import {
+  FormattedMatch,
+  FormattedProfile,
+  Like,
+  MatchEvents,
+  MatchResp,
+  Profile,
+} from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
@@ -61,8 +68,8 @@ class _MatchService {
         resp({ status: 'ok', data: true });
 
         const matchedPlayer = PlayerService.getPlayerFromIdentifier(newMatches.identifier);
-        
-        if (matchedPlayer){
+
+        if (matchedPlayer) {
           emitNet(MatchEvents.SAVE_LIKES_BROADCAST, matchedPlayer.source, {
             name: player.getName(),
           });
@@ -76,10 +83,13 @@ class _MatchService {
     }
   }
 
-  async handleGetMatches(reqObj: PromiseRequest<void>, resp: PromiseEventResp<FormattedMatch[]>) {
+  async handleGetMatches(
+    reqObj: PromiseRequest<{ page: number }>,
+    resp: PromiseEventResp<FormattedMatch[]>,
+  ) {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      const matchedProfiles = await this.matchDB.findAllMatches(identifier);
+      const matchedProfiles = await this.matchDB.findAllMatches(identifier, reqObj.data.page);
       const formattedMatches = matchedProfiles.map(formatMatches);
       resp({ status: 'ok', data: formattedMatches });
     } catch (e) {

@@ -29,7 +29,7 @@ onNetPromise<void, FormattedProfile>(MatchEvents.GET_MY_PROFILE, (reqObj, resp) 
   });
 });
 
-onNetPromise<void, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => {
+onNetPromise<{ page: number }, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => {
   MatchService.handleGetMatches(reqObj, resp).catch((e) => {
     matchLogger.error(
       `Error occurred in fetch matches event (${reqObj.source}), Error: ${e.message}`,

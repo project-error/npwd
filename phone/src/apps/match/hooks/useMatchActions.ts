@@ -70,9 +70,20 @@ export const useMatchActions = () => {
     });
   };
 
+  const newMatchesPage = (page: number) => {
+    fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page }).then(
+      (resp) => {
+        if (resp.status !== 'ok') return;
+
+        setMatches(resp.data);
+      },
+    );
+  };
+
   return {
     setViewed,
     addMatchAccount,
     addMatchedAccount,
+    newMatchesPage,
   };
 };

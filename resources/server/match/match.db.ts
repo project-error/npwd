@@ -7,6 +7,7 @@ import { matchLogger } from './match.utils';
 import DbInterface from '../db/db_wrapper';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+const MATCHES_PER_PAGE = 20;
 
 export class _MatchDB {
   /**
@@ -79,14 +80,17 @@ export class _MatchDB {
    * Return all matches associated with a player regardless of date/time. A
    * match is a case where two profiles have liked each other.
    * @param identifier - player's identifier
+   * @param page
    * @returns Match[] - all matches associated with the current player
    */
-  async findAllMatches(identifier: string): Promise<Match[]> {
+  async findAllMatches(identifier: string, page: number): Promise<Match[]> {
+    const offset = MATCHES_PER_PAGE * page;
+
     const query = `
         SELECT targetProfile.*,
                UNIX_TIMESTAMP(targetProfile.updatedAt)                                     AS lastActive,
                UNIX_TIMESTAMP(GREATEST(npwd_match_views.createdAt, targetViews.createdAt)) AS matchedAt,
-               targetUser.${config.database.phoneNumberColumn}                                                     AS phoneNumber
+               targetUser.${config.database.phoneNumberColumn}                             AS phoneNumber
         FROM npwd_match_views
                  LEFT OUTER JOIN npwd_match_profiles AS targetProfile ON npwd_match_views.profile = targetProfile.id
                  LEFT OUTER JOIN npwd_match_profiles AS myProfile ON npwd_match_views.identifier = myProfile.identifier
@@ -98,8 +102,13 @@ export class _MatchDB {
           AND npwd_match_views.liked = 1
           AND targetViews.liked = 1
         ORDER BY matchedAt DESC
+        LIMIT ? OFFSET ?
 		`;
-    const [results] = await DbInterface._rawExec(query, [identifier]);
+    const [results] = await DbInterface._rawExec(query, [
+      identifier,
+      MATCHES_PER_PAGE.toString(),
+      offset.toString(),
+    ]);
     return <Match[]>results;
   }
 
@@ -130,9 +139,9 @@ export class _MatchDB {
   async createProfile(identifier: string, profile: NewProfile): Promise<Profile> {
     const { name, image, bio, location, job, tags } = profile;
     const query = `
-    INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
+        INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+		`;
 
     await pool.execute(query, [identifier, name, image, bio, location, job, tags]);
     return await this.getPlayerProfile(identifier);
@@ -146,10 +155,15 @@ export class _MatchDB {
   async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
     const { image, name, bio, location, job, tags } = profile;
     const query = `
-      UPDATE npwd_match_profiles
-      SET image = ?, name = ?, bio = ?, location = ?, job = ?, tags = ?
-      WHERE identifier = ?
-      `;
+        UPDATE npwd_match_profiles
+        SET image    = ?,
+            name     = ?,
+            bio      = ?,
+            location = ?,
+            job      = ?,
+            tags     = ?
+        WHERE identifier = ?
+		`;
     await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
     return await this.getPlayerProfile(identifier);
   }
@@ -190,7 +204,7 @@ export class _MatchDB {
    * @param likes - list of new Likes
    * @returns Profile - list of profiles we matched with
    */
-  async checkIfMatched(identifier: string, like: Like): Promise<Profile|null> {
+  async checkIfMatched(identifier: string, like: Like): Promise<Profile | null> {
     const matchedProfiles = await this.checkForMatchById(identifier, like.id);
 
     return matchedProfiles[0];
@@ -214,10 +228,10 @@ export class _MatchDB {
    */
   async updateLastActive(identifier: string): Promise<void> {
     const query = `
-    UPDATE npwd_match_profiles
-    SET updatedAt = CURRENT_TIMESTAMP()
-    WHERE identifier = ?
-  `;
+        UPDATE npwd_match_profiles
+        SET updatedAt = CURRENT_TIMESTAMP()
+        WHERE identifier = ?
+		`;
     await pool.execute(query, [identifier]);
   }
 }
