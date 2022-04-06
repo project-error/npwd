@@ -14,6 +14,7 @@ import {
   MessagesRequest,
   PreDBConversation,
   PreDBMessage,
+  Location,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
 import { emitNetTyped } from '../utils/miscUtils';
@@ -331,6 +332,19 @@ class _MessagesService {
     } catch (err) {
       console.log(`Failed to emit message. Error: ${err.message}`);
     }
+  }
+
+  async handleGetLocation(reqObj: PromiseRequest, resp: PromiseEventResp<Location>) {
+    const displayName = PlayerService.getPlayer(reqObj.source).getName();
+    const playerPed = GetPlayerPed(reqObj.source.toString());
+
+    resp({
+      status: 'ok',
+      data: {
+        display: displayName ?? 'Unknown',
+        coords: GetEntityCoords(playerPed),
+      },
+    });
   }
 }
 
