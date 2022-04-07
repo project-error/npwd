@@ -229,6 +229,7 @@
       "GROUP_CHAT_LABEL": "Group chat label...",
       "MEDIA_OPTION": "Camera / Gallery",
       "CONTACT_OPTION": "Share contact",
+      "CONTACT_SHARED": "Contact Shared",
       "LOCATION_OPTION": "Share location",
       "LOCATION_MESSAGE": "Location shared",
       "LOCATION_TOOLTIP": "Set waypoint",

@@ -31,6 +31,7 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({
       conversationList: activeMessageConversation.conversationList,
       embed: { type: 'contact', ...selectedContact },
       tgtPhoneNumber: messageGroup.participant,
+      message: t('MESSAGES.CONTACT_SHARED'),
     });
     onClose();
   };
