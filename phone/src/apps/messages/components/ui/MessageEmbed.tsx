@@ -60,9 +60,8 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   );
 };
 
-const LocationEmbed = ({ embed, isMine }: { embed: Location; isMine: boolean }) => {
+const LocationEmbed = ({ embed }: { embed: Location; isMine: boolean }) => {
   const [t] = useTranslation();
-  const { getContactByNumber } = useContactActions();
 
   const handleSetWaypoint = () => {
     fetchNui(MessageEvents.MESSAGES_SET_WAYPOINT, {
@@ -70,16 +69,10 @@ const LocationEmbed = ({ embed, isMine }: { embed: Location; isMine: boolean }) 
     });
   };
 
-  const display = !isMine
-    ? t('MESSAGES.LOCATION_MESSAGE', {
-        display: getContactByNumber(embed.phoneNumber)?.display ?? embed.phoneNumber,
-      })
-    : t('MESSAGES.LOCATION_MESSAGE_SELF');
-
   return (
     <StyledMessage>
       <Box>
-        <Typography>{display}</Typography>
+        <Typography>{t('MESSAGES.LOCATION_MESSAGE')}</Typography>
       </Box>
       <Box>
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>

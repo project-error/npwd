@@ -65,6 +65,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
               conversationList: activeMessageConversation.conversationList,
               embed: { type: 'location', ...data },
               tgtPhoneNumber: messageGroup.participant,
+              message: t('MESSAGES.LOCATION_MESSAGE'),
             });
           });
         },
