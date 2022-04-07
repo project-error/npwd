@@ -98,3 +98,10 @@ onNetPromise<number, void>(MessageEvents.SET_MESSAGE_READ, async (reqObj, resp) 
     messagesLogger.error(`Error occurred in set message read event (${src}), Error: ${e.message}`),
   );
 });
+
+onNetPromise(MessageEvents.GET_MESSAGE_LOCATION, async (reqObj, resp) => {
+  const src = getSource();
+  MessagesService.handleGetLocation(reqObj, resp).catch((e) => {
+    messagesLogger.error(`Error occurred in get location event (${src}), Error: ${e.message}`);
+  });
+});

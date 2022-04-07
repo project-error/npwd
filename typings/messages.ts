@@ -154,4 +154,11 @@ export enum MessageEvents {
   CREATE_MESSAGE_BROADCAST = 'npwd:createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
+  GET_MESSAGE_LOCATION = 'npwd:getMessageLocation',
+  MESSAGES_SET_WAYPOINT = 'npwd:setWaypoint',
+}
+
+export interface Location {
+  phoneNumber: string;
+  coords: number[];
 }
