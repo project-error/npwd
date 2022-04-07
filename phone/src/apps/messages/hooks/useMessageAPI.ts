@@ -67,7 +67,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
   );
 
   const sendEmbedMessage = useCallback(
-    ({ conversationId, embed, tgtPhoneNumber, conversationList }: PreDBMessage) => {
+    ({ conversationId, embed, tgtPhoneNumber, conversationList, message = '' }: PreDBMessage) => {
       fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId,
         embed: JSON.stringify(embed),
@@ -75,6 +75,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         tgtPhoneNumber,
         conversationList,
         sourcePhoneNumber: myPhoneNumber,
+        message,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
