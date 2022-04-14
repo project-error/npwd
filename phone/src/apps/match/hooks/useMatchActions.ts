@@ -42,9 +42,11 @@ export const useMatchActions = () => {
             message: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
             type: 'info',
           });
-          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
-            setMatches(resp.data);
-          });
+          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page: 0 }).then(
+            (resp) => {
+              setMatches(resp.data);
+            },
+          );
         }
       });
     },
@@ -64,10 +66,12 @@ export const useMatchActions = () => {
   );
 
   const addMatchedAccount = async () => {
-    fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
-      if (resp.status !== 'ok') return;
-      setMatches(resp.data);
-    });
+    fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page: 0 }).then(
+      (resp) => {
+        if (resp.status !== 'ok') return;
+        setMatches(resp.data);
+      },
+    );
   };
 
   const newMatchesPage = (page: number) => {
