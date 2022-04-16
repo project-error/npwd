@@ -119,12 +119,6 @@ export interface OnMessageExportCtx {
   data: PreDBMessage;
 
   source: number;
-
-  /**
-   * Reponds with a message to the source
-   * @param message
-   */
-  respond: (ctx: any, message: string) => void;
 }
 
 export interface EmitMessageExportCtx {

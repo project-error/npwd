@@ -3,7 +3,7 @@ import MessagesService from '../messages.service';
 
 const exp = global.exports;
 
-// I am so tired when I am writing this
+// FIXME: Fix this, oh wait, no one contributes anymore
 exp('emitMessage', async ({ senderNumber, targetNumber, message }: EmitMessageExportCtx) => {
   await MessagesService.handleEmitMessage({ senderNumber, targetNumber, message });
 });

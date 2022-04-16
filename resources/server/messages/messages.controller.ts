@@ -51,7 +51,7 @@ onNetPromise<{ conversationId: string; page: number }, Message[]>(
 onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
   MessagesService.handleSendMessage(reqObj, resp)
     .then(async () => {
-      // A simple solution to listen for messages. Will expand upon this soonTM.
+      // A simple solution to listen for messages. Will expand upon this soonTM. No, I won't.
       const funcRef = OnMessageExportMap.get(reqObj.data.tgtPhoneNumber);
       if (funcRef) {
         try {
