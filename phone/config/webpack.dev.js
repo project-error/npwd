@@ -4,13 +4,12 @@ const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('../package.json').dependencies;
 
-// Toggle on DEV vs Prod
-const baseUrl = 'http://localhost:3003/remoteEntry.js';
+//const baseUrl = 'http://localhost:3003/remoteEntry.js';
 const communityApps = require('../../communityApps');
 const remotes = Object.keys(communityApps).reduce((prev, key) => {
   return {
     ...prev,
-    [key]: `${key}@${baseUrl}`,
+    [key]: `${key}@https://cfx-nui-${key}_app/remoteEntry.js'`,
   };
 }, {});
 

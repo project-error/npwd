@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';

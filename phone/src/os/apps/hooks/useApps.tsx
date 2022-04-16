@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
