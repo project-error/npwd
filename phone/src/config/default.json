@@ -151,12 +151,16 @@
   ],
   "ringtones": [
     {
-      "label": "Marimba",
-      "value": "marimba"
+      "label": "Ringtone 1",
+      "value": "PHONE_GENERIC_RING_01"
     },
     {
-      "label": "Pixel",
-      "value": "pixel"
+      "label": "Ringtone 2",
+      "value": "PHONE_GENERIC_RING_02"
+    },
+    {
+      "label": "Ringtone 3",
+      "value": "PHONE_GENERIC_RING_03"
     }
   ],
   "notiSounds": [
