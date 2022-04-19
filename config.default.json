@@ -63,6 +63,9 @@
     "generateProfileNameFromUsers": true,
     "allowEditableProfileName": true
   },
+  "marketplace": {
+    "persistListings": false
+  },
   "debug": {
     "level": "error",
     "enabled": true,

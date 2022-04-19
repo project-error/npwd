@@ -8,6 +8,7 @@ import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
 import { Delay } from '../../utils/fivem';
+import { config } from '../config';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
@@ -41,6 +42,7 @@ class _PlayerService {
     this.playersByIdentifier.delete(identifier);
     this.playersBySource.delete(source);
   }
+
   /**
    * Returns the player instance for a given source
    * Will return null if no player is found online with that source
@@ -224,10 +226,12 @@ class _PlayerService {
    */
   async clearPlayerData(src: number) {
     const identifier = this.getIdentifier(src);
-    try {
-      await MarketplaceService.handleDeleteListingsOnDrop(identifier);
-    } catch (e) {
-      playerLogger.error(`Failed to clear player data when dropped, Error: ${e.message}`);
+    if (!config.marketplace.persistListings) {
+      try {
+        await MarketplaceService.handleDeleteListingsOnDrop(identifier);
+      } catch (e) {
+        playerLogger.error(`Failed to clear player data when dropped, Error: ${e.message}`);
+      }
     }
   }
 

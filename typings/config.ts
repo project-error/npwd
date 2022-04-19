@@ -18,6 +18,10 @@ interface MatchConfig {
   allowEditableProfileName: boolean;
 }
 
+interface MarketplaceConfig {
+  persistListings: boolean;
+}
+
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
@@ -85,6 +89,7 @@ export interface ResourceConfig {
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;
+  marketplace: MarketplaceConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;

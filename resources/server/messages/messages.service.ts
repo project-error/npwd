@@ -233,7 +233,7 @@ class _MessagesService {
               });
             }
           } catch (err) {
-            messagesLogger.error(`Failed to broadcast message, Error: ${err.message}`);
+            messagesLogger.warn(`Failed to broadcast message. Player is not online.`);
           }
         }
       }
