@@ -8,7 +8,7 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
   const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
 
-  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber);
+  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, src);
 });
 
 /**

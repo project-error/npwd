@@ -9,6 +9,8 @@ import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
+import { usePlayer } from '@os/phone/hooks/usePlayer';
+import { usePhone } from '@os/phone/hooks/usePhone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,12 +65,17 @@ export const NotificationBar = () => {
     useNotifications();
 
   const time = usePhoneTime();
+  const source = usePlayer();
+  const { ResourceConfig } = usePhone();
 
   useEffect(() => {
     if (notifications.length === 0) {
       setBarUncollapsed(false);
     }
   }, [notifications, setBarUncollapsed]);
+
+  if (!ResourceConfig) return null;
+  const { showId } = ResourceConfig.general;
 
   return (
     <>
@@ -97,6 +104,13 @@ export const NotificationBar = () => {
           </Grid>
         )}
         <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
+          {showId && (
+            <Grid sx={{ marginRight: 1 }} item>
+              <Typography className={classes.text} variant="button">
+                ID: {source}
+              </Typography>
+            </Grid>
+          )}
           <Grid item>
             <SignalIcon fontSize="small" />
           </Grid>
