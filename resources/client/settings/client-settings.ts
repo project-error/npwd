@@ -8,6 +8,5 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
   global.exports['pma-voice'].setCallVolume(cfg.callVolume);
 
   KvpService.setKvp(KvpItems.NPWD_RINGTONE, cfg.ringtone.value);
-  KvpService.setKvp(KvpItems.NPWD_NOTIFICATION, cfg.notiSound.value);
   cb({});
 });

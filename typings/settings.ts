@@ -12,7 +12,6 @@ export interface SettingOption<T = any> {
 
 export enum KvpItems {
   NPWD_RINGTONE = 'npwd-ringtone',
-  NPWD_NOTIFICATION = 'npwd-notification',
 }
 
 export interface IPhoneSettings {
