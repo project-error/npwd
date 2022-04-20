@@ -230,8 +230,6 @@
       "label": "Online",
       "value": "online"
     },
-    "ringtoneVol": 50,
-    "notiSoundVol": 50,
     "TWITTER_notiFilter": {
       "label": "All Tweets",
       "value": "all"

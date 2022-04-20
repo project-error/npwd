@@ -190,24 +190,12 @@ export const SettingsApp: React.FC = () => {
             onClick={openMenu}
             icon={<LibraryMusic />}
           />
-          <SettingItemSlider
-            label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
-            icon={<VolumeUp />}
-            value={settings.ringtoneVol}
-            onCommit={(e, val) => handleSettingChange('ringtoneVol', val)}
-          />
           <SettingItem
             label={t('SETTINGS.OPTIONS.NOTIFICATION')}
             value={settings.notiSound.label}
             options={notifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
-          />
-          <SettingItemSlider
-            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
-            icon={<VolumeUp />}
-            value={settings.notiSoundVol}
-            onCommit={(e, val) => handleSettingChange('notiSoundVol', val)}
           />
           <SettingSwitch
             label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}

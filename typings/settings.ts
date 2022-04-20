@@ -24,10 +24,8 @@ export interface IPhoneSettings {
   zoom: SettingOption;
   streamerMode: boolean;
   ringtone: SettingOption;
-  ringtoneVol: number;
   callVolume: number;
   notiSound: SettingOption;
-  notiSoundVol: number;
   TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
   TWITTER_notiSound: SettingOption;
   TWITTER_notiSoundVol: number;

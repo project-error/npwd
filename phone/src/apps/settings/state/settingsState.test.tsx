@@ -38,7 +38,6 @@ describe('settingsStateManipulation', () => {
         value: 'sv',
       },
       callVolume: 58,
-      ringtoneVol: 12,
     };
 
     window.localStorage.setItem(NPWD_STORAGE_KEY, JSON.stringify(changedSetting));
