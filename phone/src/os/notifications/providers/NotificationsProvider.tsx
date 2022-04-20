@@ -1,10 +1,9 @@
 import React, { createContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { phoneState } from '@os/phone/hooks/state';
-import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
-import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
+import { AlertEvents } from '@typings/alerts';
+import fetchNui from '../../../utils/fetchNui';
 
 export interface INotification {
   app: string;
@@ -53,18 +52,12 @@ export function NotificationsProvider({ children }) {
   const isPhoneOpen = useRecoilValue(phoneState.visibility);
   const isPhoneDisabled = useRecoilValue(phoneState.isPhoneDisabled);
 
-  const [settings] = useSettings();
-
   const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
-  const { mount, play } = useSoundProvider();
-
   const alertTimeout = useRef<NodeJS.Timeout>();
-  const [alerts, setAlerts] = useState<
-    Array<[INotification, (n: INotification) => void, string | undefined]>
-  >([]);
+  const [alerts, setAlerts] = useState<Array<[INotification, (n: INotification) => void]>>([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
 
   useEffect(() => {
@@ -118,53 +111,45 @@ export function NotificationsProvider({ children }) {
     [notifications],
   );
 
-  const _showAlert = useCallback(
-    (n: INotification, cb: (n: INotification) => void, soundUrl: string) => {
-      return new Promise<void>((res) => {
-        const resolve = () => {
-          cb?.(n);
-          res();
-        };
+  const _showAlert = useCallback((n: INotification, cb: (n: INotification) => void) => {
+    return new Promise<void>((res) => {
+      const resolve = () => {
+        cb?.(n);
+        res();
+      };
 
-        const onExit = (cb) => () => {
-          cb?.(n);
-          clearTimeout(alertTimeout.current);
-          resolve();
-        };
+      const onExit = (cb) => () => {
+        cb?.(n);
+        clearTimeout(alertTimeout.current);
+        resolve();
+      };
 
-        setCurrentAlert({
-          ...n,
-          resolve,
-          onClickAlert: onExit(n.onClick),
-          onCloseAlert: onExit(n.onClose),
-        });
-
-        if (n.sound && soundUrl) {
-          play(soundUrl);
-        }
-
-        if (n.keepWhenPhoneClosed) {
-          return;
-        }
-
-        alertTimeout.current = setTimeout(() => {
-          resolve();
-          // If you change or remove the 300 i'll kill your pet - Kidz /s
-          // Really, this makes it work nicely with usePhoneVisibility :)
-        }, DEFAULT_ALERT_HIDE_TIME + 300);
+      setCurrentAlert({
+        ...n,
+        resolve,
+        onClickAlert: onExit(n.onClick),
+        onCloseAlert: onExit(n.onClose),
       });
-    },
-    [play],
-  );
+
+      if (n.sound) {
+        fetchNui(AlertEvents.PLAY_ALERT);
+      }
+
+      if (n.keepWhenPhoneClosed) {
+        return;
+      }
+
+      alertTimeout.current = setTimeout(() => {
+        resolve();
+        // If you change or remove the 300 i'll kill your pet - Kidz /s
+        // Really, this makes it work nicely with usePhoneVisibility :)
+      }, DEFAULT_ALERT_HIDE_TIME + 300);
+    });
+  }, []);
 
   const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {
     if (isPhoneDisabled) return;
-    if (n.sound) {
-      const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
-      mount(sound, volume, false).then(({ url }) => setAlerts((curr) => [...curr, [n, cb, url]]));
-      return;
-    }
-    setAlerts((curr) => [...curr, [n, cb, undefined]]);
+    setAlerts((curr) => [...curr, [n, cb]]);
   };
 
   const removeId = (id: string) => {

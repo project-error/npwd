@@ -166,11 +166,19 @@
   "notiSounds": [
     {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
     {
-      "label": "99kr",
-      "value": "99kr"
+      "label": "Michael",
+      "value": "Phone_SoundSet_Michael"
+    },
+    {
+      "label": "Trevor",
+      "value": "Phone_SoundSet_Trevor"
+    },
+    {
+      "label": "Franklin",
+      "value": "Phone_SoundSet_Franklin"
     }
   ],
   "notiFilters": [
