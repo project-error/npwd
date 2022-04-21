@@ -1,11 +1,4 @@
-import {
-  atom,
-  useSetRecoilState,
-  selector,
-  useRecoilValue,
-  useRecoilState,
-  waitForAll,
-} from 'recoil';
+import { atom, useSetRecoilState, selector, useRecoilValue, useRecoilState } from 'recoil';
 import { FormattedTweet, Profile, Tweet, TwitterEvents } from '@typings/twitter';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
@@ -58,7 +51,6 @@ export const twitterState = {
             return resp.data?.map(processTweet);
           }
 
-          // your mom is fat
           return [];
         } catch (e) {
           return [];
