@@ -24,10 +24,8 @@ export interface IPhoneSettings {
   zoom: SettingOption;
   streamerMode: boolean;
   ringtone: SettingOption;
-  ringtoneVol: number;
   callVolume: number;
   notiSound: SettingOption;
-  notiSoundVol: number;
   TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
   TWITTER_notiSound: SettingOption;
   TWITTER_notiSoundVol: number;
@@ -37,4 +35,6 @@ export interface IPhoneSettings {
 
 export enum SettingEvents {
   NUI_SETTINGS_UPDATED = 'npwd:nuiSettingsUpdated',
+  PREVIEW_ALERT = 'npwd:previewAlert',
+  PREVIEW_RINGTONE = 'npwd:previewRingtone',
 }

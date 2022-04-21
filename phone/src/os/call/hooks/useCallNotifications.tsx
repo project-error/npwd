@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { ActiveCall } from '@typings/call';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { useRingtoneSound } from '@os/sound/hooks/useRingtoneSound';
 import { CallNotification } from '../components/CallNotification';
 import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
 import { useContacts } from '../../../apps/contacts/hooks/state';
@@ -17,8 +16,6 @@ export const useCallNotifications = () => {
   const { addNotificationAlert, removeId } = useNotifications();
   const { getDisplayByNumber } = useContactActions();
   const contacts = useContacts();
-
-  const { play, stop } = useRingtoneSound();
 
   const { icon, notificationIcon } = useApp('DIALER');
 
@@ -40,18 +37,15 @@ export const useCallNotifications = () => {
 
   const clearNotification = (): void => {
     removeId(NOTIFICATION_ID);
-    stop();
   };
 
   const setNotification = (call: ActiveCall) => {
-    stop();
     if (!call) {
       removeId(NOTIFICATION_ID);
       return;
     }
 
     if (!call.isTransmitter && !call.is_accepted) {
-      play();
       removeId(NOTIFICATION_ID);
       addNotificationAlert({
         ...callNotificationBase,

@@ -4,7 +4,6 @@ import { NotificationsProvider } from '@os/notifications/providers/Notifications
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
 import Phone from './Phone';
-import { SoundProvider } from '@os/sound/providers/SoundProvider';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -17,13 +16,11 @@ export const PhoneProviders = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={currentTheme}>
-        <SoundProvider>
-          <NotificationsProvider>
-            <SnackbarProvider>
-              <Phone />
-            </SnackbarProvider>
-          </NotificationsProvider>
-        </SoundProvider>
+        <NotificationsProvider>
+          <SnackbarProvider>
+            <Phone />
+          </SnackbarProvider>
+        </NotificationsProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );
