@@ -26,6 +26,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Phone Number",
+      "PREVIEW_SOUND": "Preview Sound",
       "CATEGORY": {
         "APPEARANCE": "Appearance",
         "PHONE": "Phone",

@@ -35,4 +35,6 @@ export interface IPhoneSettings {
 
 export enum SettingEvents {
   NUI_SETTINGS_UPDATED = 'npwd:nuiSettingsUpdated',
+  PREVIEW_ALERT = 'npwd:previewAlert',
+  PREVIEW_RINGTONE = 'npwd:previewRingtone',
 }

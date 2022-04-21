@@ -10,6 +10,7 @@ import {
   SettingItemIconAction,
   SettingItemSlider,
   SettingSwitch,
+  SoundItem,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -37,6 +38,8 @@ import { SettingsCategory } from './SettingsCategory';
 import { IconSetObject } from '@typings/settings';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useCustomWallpaperModal } from '../state/customWallpaper.state';
+import fetchNui from '@utils/fetchNui';
+import { SettingEvents } from '@typings/settings';
 
 const useStyles = makeStyles({
   backgroundModal: {
@@ -183,19 +186,27 @@ export const SettingsApp: React.FC = () => {
             actionIcon={<FileCopy />}
             handleAction={handleCopyPhoneNumber}
           />
-          <SettingItem
+          <SoundItem
             label={t('SETTINGS.OPTIONS.RINGTONE')}
             value={settings.ringtone.label}
             options={ringtones}
             onClick={openMenu}
             icon={<LibraryMusic />}
+            tooltip={t('SETTINGS.PREVIEW_SOUND')}
+            onPreviewClicked={() => {
+              fetchNui(SettingEvents.PREVIEW_RINGTONE);
+            }}
           />
-          <SettingItem
+          <SoundItem
             label={t('SETTINGS.OPTIONS.NOTIFICATION')}
             value={settings.notiSound.label}
             options={notifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
+            tooltip={t('SETTINGS.PREVIEW_SOUND')}
+            onPreviewClicked={() => {
+              fetchNui(SettingEvents.PREVIEW_ALERT);
+            }}
           />
           <SettingSwitch
             label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
