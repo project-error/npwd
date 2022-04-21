@@ -223,12 +223,12 @@
     },
     "streamerMode": false,
     "ringtone": {
-      "label": "Pixel",
-      "value": "pixel"
+      "label": "iFruit",
+      "value": "PHONE_GENERIC_RING_01"
     },
     "notiSound": {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
     "TWITTER_notiFilter": {
       "label": "All Tweets",
