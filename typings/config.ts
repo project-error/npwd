@@ -34,6 +34,7 @@ interface General {
   toggleKey: string;
   toggleCommand: string;
   defaultLanguage: string;
+  showId: boolean;
 }
 
 interface NotificationConfig {

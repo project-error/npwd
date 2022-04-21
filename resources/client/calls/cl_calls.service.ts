@@ -2,6 +2,9 @@ import { checkHasPhone } from '../cl_main';
 import { IAlertProps } from '@typings/alerts';
 import { ActiveCall, CallEvents, CallRejectReasons } from '@typings/call';
 import { Sound } from '../sounds/client-sound.class';
+import { Ringtone } from '../sounds/client-ringtone.class';
+import { KvpItems } from '@typings/settings';
+import KvpService from '../settings/client-kvp.service';
 
 const exp = global.exports;
 
@@ -9,6 +12,7 @@ export class CallService {
   private currentCall: number;
   private currentPendingCall: string | null;
   private callSound: Sound;
+  private ringtone: Ringtone;
   private callSoundName = 'Remote_Ring';
   private hangUpSoundName = 'Hang_Up';
   private soundSet = 'Phone_SoundSet_Default';
@@ -60,6 +64,7 @@ export class CallService {
     // we don't want to reset our UI if we're in a call already or if we're currently starting a call that hasn't been canceled
     if (this.isInCall() || !this.isCurrentPendingCall(receiver)) return;
     if (this.callSound) this.callSound.stop();
+    if (Ringtone.isPlaying()) this.ringtone.stop();
     this.currentPendingCall = null;
     this.openCallModal(false);
     CallService.sendCallAction(CallEvents.SET_CALL_INFO, null);
@@ -91,6 +96,12 @@ export class CallService {
       this.callSound.play();
     }
 
+    if (!isTransmitter) {
+      const ringtone = KvpService.getKvpString(KvpItems.NPWD_RINGTONE);
+      this.ringtone = new Ringtone(ringtone);
+      this.ringtone.play();
+    }
+
     CallService.sendCallAction(CallEvents.SET_CALL_INFO, {
       active: true,
       transmitter: transmitter,
@@ -104,6 +115,7 @@ export class CallService {
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
     if (this.callSound) this.callSound.stop();
+    if (Ringtone.isPlaying()) this.ringtone.stop();
     exp['pma-voice'].setCallChannel(callData.channelId);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALL_INFO, callData);
   }

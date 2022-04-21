@@ -151,22 +151,34 @@
   ],
   "ringtones": [
     {
-      "label": "Marimba",
-      "value": "marimba"
+      "label": "iFruit",
+      "value": "PHONE_GENERIC_RING_01"
     },
     {
-      "label": "Pixel",
-      "value": "pixel"
+      "label": "Desk Phone",
+      "value": "PHONE_GENERIC_RING_02"
+    },
+    {
+      "label": "Rotary Phone",
+      "value": "PHONE_GENERIC_RING_03"
     }
   ],
   "notiSounds": [
     {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
     {
-      "label": "99kr",
-      "value": "99kr"
+      "label": "Michael",
+      "value": "Phone_SoundSet_Michael"
+    },
+    {
+      "label": "Trevor",
+      "value": "Phone_SoundSet_Trevor"
+    },
+    {
+      "label": "Franklin",
+      "value": "Phone_SoundSet_Franklin"
     }
   ],
   "notiFilters": [
@@ -218,8 +230,6 @@
       "label": "Online",
       "value": "online"
     },
-    "ringtoneVol": 50,
-    "notiSoundVol": 50,
     "TWITTER_notiFilter": {
       "label": "All Tweets",
       "value": "all"

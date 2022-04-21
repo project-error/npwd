@@ -18,4 +18,8 @@ export const phoneState = {
     key: 'isPhoneDisabled',
     default: false,
   }),
+  playerSource: atom<number>({
+    key: 'playerSource',
+    default: 0,
+  }),
 };

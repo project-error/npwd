@@ -3,6 +3,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ListItemButton,
   ListItemSecondaryAction,
   Box,
   Slider,
@@ -11,6 +12,7 @@ import {
   Switch,
 } from '@mui/material';
 import { Tooltip } from '@ui/components/Tooltip';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 interface SettingItemProps {
   options?: any;
@@ -30,6 +32,44 @@ export const SettingItem: React.FC<SettingItemProps> = ({
   <ListItem divider onClick={() => onClick?.(options)} button>
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={label} secondary={value ? value : undefined} />
+  </ListItem>
+);
+
+interface SoundItemProps {
+  options?: any;
+  label: string;
+  value?: string | object | number | null;
+  onClick?: any;
+  icon: JSX.Element;
+  tooltip: string;
+  onPreviewClicked: any;
+}
+
+export const SoundItem: React.FC<SoundItemProps> = ({
+  options,
+  label,
+  value,
+  onClick,
+  icon,
+  tooltip,
+  onPreviewClicked,
+}) => (
+  <ListItem
+    divider
+    button
+    secondaryAction={
+      <Tooltip title={tooltip}>
+        <IconButton onClick={() => onPreviewClicked()}>
+          <PlayCircleIcon />
+        </IconButton>
+      </Tooltip>
+    }
+    disablePadding
+  >
+    <ListItemButton onClick={() => onClick?.(options)}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} secondary={value ? value : undefined} />
+    </ListItemButton>
   </ListItem>
 );
 
