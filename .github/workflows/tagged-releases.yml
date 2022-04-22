@@ -94,3 +94,5 @@ jobs:
           author_name: Manifest Bumper
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'chore(bump-manifest): Bump manifest version to ${{ env.RELEASE_VERSION }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_SECRET }}
