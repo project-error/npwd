@@ -118,6 +118,9 @@ class _MessagesService {
         }
       }
     } catch (err) {
+      messagesLogger.error(
+        `Error occurred on creating message conversation (${reqObj.source}), Error: ${err.message}`,
+      );
       resp({ status: 'error', errorMsg: err.message });
     }
   }

@@ -29,7 +29,7 @@ onNetPromise<PreDBConversation, MessageConversation>(
   async (reqObj, resp) => {
     MessagesService.handleCreateMessageConversation(reqObj, resp).catch((e) => {
       messagesLogger.error(
-        `Error occurred on creating messsage converations (${reqObj.source}), Error: ${e.message}`,
+        `Error occurred on creating message conversation (${reqObj.source}), Error: ${e.message}`,
       );
       resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
