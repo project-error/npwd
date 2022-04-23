@@ -10,6 +10,7 @@ import { Tooltip } from './Tooltip';
 const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
   root: {
     padding: 0,
+    background: 'transparent',
     marginTop: theme.spacing(3),
   },
   avatar: {
@@ -67,7 +68,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
       classes={{ tooltip: classes.tooltip }}
       TransitionComponent={Zoom}
     >
-      <Button className={classes.root}>
+      <Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
         <Badge
           color="error"
           badgeContent={notification?.badge}
