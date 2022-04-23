@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `npwd_match_profiles`
     `createdAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `name_UNIQUE` (`name`),
     UNIQUE KEY `identifier_UNIQUE` (`identifier`)
 );
 
