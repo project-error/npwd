@@ -1,10 +1,6 @@
 export const MockPhotoData = [
   {
     id: 1,
-    image: 'https://beta.iodine.gg/noDcb.jpeg',
-  },
-  {
-    id: 2,
-    image: 'https://beta.iodine.gg/teUcY.jpeg',
+    image: 'https://i.imgur.com/7juREyw.png',
   },
 ];
