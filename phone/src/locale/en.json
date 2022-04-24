@@ -245,6 +245,12 @@
       "ACTIONS_TITLE": "Actions",
       "ME": "Me"
     },
+    "DARKCHAT": {
+      "NEW_CHANNEL_TITLE": "Join channel on ID",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
+      "JOIN_BUTTON": "Join channel",
+      "MESSAGE_PLACEHOLDER": "Send a message"
+    },
     "RELATIVE_TIME": {
       "future": "in %s",
       "past": "%s ago",
@@ -295,6 +301,7 @@
     "APPS_CAMERA": "Camera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
