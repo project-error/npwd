@@ -290,9 +290,10 @@ class _MessagesService {
     const { senderNumber, targetNumber, message } = dto;
 
     try {
-      const senderPlayer = await PlayerService.getIdentifierByPhoneNumber(senderNumber, true);
+      // this will post an error message if the number doesn't exist but emitMessage will so go through from roleplay number
+      const senderPlayer = await PlayerService.getIdentifierFromPhoneNumber(senderNumber, true);
 
-      const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(targetNumber);
+      const participantIdentifier = await PlayerService.getIdentifierFromPhoneNumber(targetNumber);
       const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
       // Create our groupId hash
