@@ -303,6 +303,7 @@ class _MessagesService {
       let conversationId: number;
 
       // Generate conversation id or assign from existing conversation
+      // If we generate the conversation we add the player and update their front-end if they're online
       if (!doesConversationExist) {
         conversationId = await this.messagesDB.createConversation(
           [senderNumber, targetNumber],
@@ -310,17 +311,7 @@ class _MessagesService {
           '',
           false,
         );
-      } else {
-        conversationId = await this.messagesDB.getConversationId(conversationList);
-      }
 
-      const targetHasConversation = await this.messagesDB.doesConversationExistForPlayer(
-        conversationList,
-        targetNumber,
-      );
-
-      // If the target player does not have this conversation will will add them and update the frontend
-      if (!targetHasConversation) {
         await this.messagesDB.addParticipantToConversation(conversationList, targetNumber);
 
         if (participantPlayer) {
@@ -336,6 +327,8 @@ class _MessagesService {
             participantPlayer.source,
           );
         }
+      } else {
+        conversationId = await this.messagesDB.getConversationId(conversationList);
       }
 
       const messageId = await this.messagesDB.createMessage({
