@@ -298,8 +298,45 @@ class _MessagesService {
 
       // Create our groupId hash
       const conversationList = createGroupHashID([senderNumber, targetNumber]);
-      // Get our conversationId
-      const conversationId = await this.messagesDB.getConversationId(conversationList);
+
+      const doesConversationExist = await this.messagesDB.doesConversationExist(conversationList);
+      let conversationId: number;
+
+      // Generate conversation id or assign from existing conversation
+      if (!doesConversationExist) {
+        conversationId = await this.messagesDB.createConversation(
+          [senderNumber, targetNumber],
+          conversationList,
+          '',
+          false,
+        );
+      } else {
+        conversationId = await this.messagesDB.getConversationId(conversationList);
+      }
+
+      const targetHasConversation = await this.messagesDB.doesConversationExistForPlayer(
+        conversationList,
+        targetNumber,
+      );
+
+      // If the target player does not have this conversation will will add them and update the frontend
+      if (!targetHasConversation) {
+        await this.messagesDB.addParticipantToConversation(conversationList, targetNumber);
+
+        if (participantPlayer) {
+          emitNetTyped<MessageConversation>(
+            MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
+            {
+              id: conversationId,
+              conversationList,
+              label: '',
+              isGroupChat: false,
+              participant: targetNumber,
+            },
+            participantPlayer.source,
+          );
+        }
+      }
 
       const messageId = await this.messagesDB.createMessage({
         message,
