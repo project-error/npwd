@@ -312,8 +312,6 @@ class _MessagesService {
           false,
         );
 
-        await this.messagesDB.addParticipantToConversation(conversationList, targetNumber);
-
         if (participantPlayer) {
           emitNetTyped<MessageConversation>(
             MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
