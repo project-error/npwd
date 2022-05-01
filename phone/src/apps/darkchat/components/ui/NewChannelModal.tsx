@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@ui/components/Input';
 import { Button } from '@ui/components/Button';
+import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 
 interface NewChannelModalProps {
   open: boolean;
@@ -13,6 +14,11 @@ interface NewChannelModalProps {
 export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeModal }) => {
   const [channelValue, setChannelValue] = useState<string>('');
   const [t] = useTranslation();
+  const { addChannel } = useDarkchatAPI();
+
+  const handleJoinChannel = () => {
+    addChannel({ channelIdentifier: channelValue });
+  };
 
   return (
     <Modal visible={open} handleClose={closeModal}>
@@ -26,7 +32,9 @@ export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeMod
         />
       </Box>
 
-      <Button variant="contained">{t('DARKCHAT.JOIN_BUTTON')}</Button>
+      <Button variant="contained" onClick={handleJoinChannel}>
+        {t('DARKCHAT.JOIN_BUTTON')}
+      </Button>
     </Modal>
   );
 };

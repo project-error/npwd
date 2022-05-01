@@ -29,6 +29,8 @@ const StyledMessage = styled(Box)({
 });
 
 const ChannelMessageBubble: React.FC<ChannelMessageProps> = (item) => {
+  console.log('message', item);
+
   return (
     <Box
       display="flex"
@@ -42,7 +44,7 @@ const ChannelMessageBubble: React.FC<ChannelMessageProps> = (item) => {
           <Typography fontSize={16}>{item.message}</Typography>
         </StyledMessage>
         <Typography color="#eee" mt={1}>
-          {dayjs(item.createdAt).fromNow()}
+          {dayjs.unix(item.createdAt).fromNow()}
         </Typography>
       </StyledMessageContainer>
     </Box>

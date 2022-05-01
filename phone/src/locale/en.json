@@ -246,6 +246,11 @@
       "ME": "Me"
     },
     "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Failed to fetch messages",
+        "JOIN_CHANNEL_FAILED": "Failed to join channel",
+        "SEND_MESSAGE_FAILED": "Failed to send message"
+      },
       "NEW_CHANNEL_TITLE": "Join channel on ID",
       "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
       "JOIN_BUTTON": "Join channel",

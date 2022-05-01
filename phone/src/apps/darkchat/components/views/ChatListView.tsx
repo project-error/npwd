@@ -6,6 +6,7 @@ import { List } from '@ui/components/List';
 import AddIcon from '@mui/icons-material/Add';
 import { NewChannelModal } from '../ui/NewChannelModal';
 import Backdrop from '@ui/components/Backdrop';
+import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 
 const ChatList: React.FC = () => {
   const channels = useChannelsValue();

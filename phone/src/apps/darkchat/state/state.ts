@@ -1,5 +1,5 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ChannelItemProps } from '@typings/darkchat';
+import { ChannelItemProps, ChannelMessageProps, DarkchatEvents } from '@typings/darkchat';
 import fetchNui from '@utils/fetchNui';
 import { MockChannels } from '../utils/constants';
 import { ServerPromiseResp } from '@typings/common';
@@ -14,7 +14,7 @@ export const darkChatState = {
         try {
           // TODO: Enum for this
           const res = await fetchNui<ServerPromiseResp<ChannelItemProps[]>>(
-            'safsdfa',
+            DarkchatEvents.FETCH_CHANNELS,
             undefined,
             buildRespObj(MockChannels),
           );
@@ -27,7 +27,7 @@ export const darkChatState = {
       },
     }),
   }),
-  darkChatMessages: atom({
+  darkChatMessages: atom<ChannelMessageProps[]>({
     key: 'darkChatMessages',
     default: [],
   }),

@@ -19,7 +19,7 @@ export const ChannelItem: React.FC<ChannelItemProps> = (item) => {
       <ListItemAvatar>
         <Avatar alt="dark dark chat" />
       </ListItemAvatar>
-      <ListItemText primary={item.label} />
+      <ListItemText primary={item.label ?? item.identifier} />
     </ListItem>
   );
 };

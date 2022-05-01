@@ -1,28 +1,42 @@
 import { useDarkchatActions } from './useDarkchatActions';
 import fetchNui from '@utils/fetchNui';
-import { ChannelItemProps, ChannelMessageProps } from '@typings/darkchat';
+import {
+  ChannelItemProps,
+  ChannelMessageProps,
+  DarkchatEvents,
+  JoinChannelDTO,
+  MessageDTO,
+} from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
 import { MockChannelMessagesResp } from '../utils/constants';
 import { useHistory } from 'react-router-dom';
 import { useSetDarkchatMessagesState } from '../state/state';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 interface DarkchatAPIProps {
-  addChannel: (channel: ChannelItemProps) => void;
+  addChannel: (channelDto: JoinChannelDTO) => void;
   fetchMessages: (conversationId: number) => void;
+  sendMessage: (dto: MessageDTO) => void;
 }
 
 export const useDarkchatAPI = (): DarkchatAPIProps => {
-  const { addLocalChannel } = useDarkchatActions();
+  const { addLocalChannel, addLocalMessage } = useDarkchatActions();
   const history = useHistory();
   const setMessages = useSetDarkchatMessagesState();
+  const { addAlert } = useSnackbar();
+  const [t] = useTranslation();
 
-  // FIXME: Fix this
-  const addChannel = (channel: ChannelItemProps) => {
-    // TODO: Create some types for this, idk what
-    fetchNui<ServerPromiseResp<any>>('addsomechanneleventorsmth', { channel }).then((res) => {
+  const addChannel = (channelDto: JoinChannelDTO) => {
+    fetchNui<ServerPromiseResp<ChannelItemProps>, JoinChannelDTO>(DarkchatEvents.ADD_CHANNEL, {
+      channelIdentifier: channelDto.channelIdentifier,
+      label: channelDto.label,
+    }).then((res) => {
       if (res.status !== 'ok') {
-        // TODO: ALEEEERT!!!!!
-        return;
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.JOIN_CHANNEL_FAILED'),
+        });
       }
 
       addLocalChannel(res.data);
@@ -30,24 +44,38 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
   };
 
   const fetchMessages = (conversationId: number) => {
-    // FIXME: proper events
     fetchNui<ServerPromiseResp<ChannelMessageProps[]>>(
-      'getsomemessages',
-      { conversationId },
+      DarkchatEvents.FETCH_MESSAGES,
+      { channelId: conversationId },
       MockChannelMessagesResp,
     ).then((res) => {
       if (res.status !== 'ok') {
-        // TODO: ALEEEERT!!!!!
-        history.push('/darkchat');
-
-        return;
+        addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.FETCH_MESSAGES_FAILED'),
+        });
+        return history.push('/darkchat');
       }
-
-      console.log('resp data', res.data);
 
       setMessages(res.data);
     });
   };
 
-  return { addChannel, fetchMessages };
+  const sendMessage = (dto: MessageDTO) => {
+    fetchNui<ServerPromiseResp<ChannelMessageProps>, MessageDTO>(
+      DarkchatEvents.SEND_MESSAGE,
+      dto,
+    ).then((res) => {
+      if (res.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.SEND_MESSAGE_FAILED'),
+        });
+      }
+
+      addLocalMessage(res.data);
+    });
+  };
+
+  return { addChannel, fetchMessages, sendMessage };
 };
