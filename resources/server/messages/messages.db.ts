@@ -53,6 +53,7 @@ export class _MessagesDB {
                           npwd_messages.author,
                           npwd_messages.message,
                           npwd_messages.is_embed,
+                          UNIX_TIMESTAMP(npwd_messages.createdAt) as createdAt,
                           npwd_messages.embed
                    FROM npwd_messages
                    WHERE conversation_id = ?
@@ -105,7 +106,7 @@ export class _MessagesDB {
     return conversationId;
   }
 
-  async createMessage(dto: CreateMessageDTO) {
+  async createMessage(dto: CreateMessageDTO): Promise<Message> {
     const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed)
                    VALUES (?, ?, ?, ?, ?, ?)`;
 
@@ -131,7 +132,7 @@ export class _MessagesDB {
       );
     });
 
-    return result.insertId;
+    return await this.getMessageFromId(result.insertId);
   }
 
   async setMessageUnread(conversationId: number, tgtPhoneNumber: string) {
@@ -206,11 +207,27 @@ export class _MessagesDB {
     const query = `SELECT id
                    FROM npwd_messages_conversations
                    WHERE conversation_list = ?`;
-
+    ``;
     const [results] = await DbInterface._rawExec(query, [conversationList]);
     const result = <any>results;
 
     return result[0].id;
+  }
+
+  async getMessageFromId(messageId: number): Promise<Message> {
+    const query = `SELECT npwd_messages.id,
+                          npwd_messages.conversation_id,
+                          npwd_messages.author,
+                          npwd_messages.message,
+                          UNIX_TIMESTAMP(npwd_messages.createdAt) as createdAt,
+                          npwd_messages.is_embed,
+                          npwd_messages.embed
+                   FROM npwd_messages
+                   WHERE id = ?`;
+
+    const [results] = await DbInterface._rawExec(query, [messageId]);
+    const result = <Message[]>results;
+    return result[0];
   }
 }
 

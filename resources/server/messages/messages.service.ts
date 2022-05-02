@@ -151,7 +151,7 @@ class _MessagesService {
 
       const conversationDetails = await this.messagesDB.getConversation(messageData.conversationId);
 
-      const messageId = await this.messagesDB.createMessage({
+      const message = await this.messagesDB.createMessage({
         userIdentifier,
         authorPhoneNumber,
         conversationId: messageData.conversationId,
@@ -163,12 +163,10 @@ class _MessagesService {
       resp({
         status: 'ok',
         data: {
-          ...messageData,
+          ...message,
+          message: message.message,
           conversation_id: messageData.conversationId,
           author: authorPhoneNumber,
-          id: messageId,
-          message: messageData.message,
-          embed: messageData.embed,
           is_embed: messageData.is_embed,
         },
       });
@@ -223,8 +221,7 @@ class _MessagesService {
               }
 
               emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
-                ...messageData,
-                conversation_id: messageData.conversationId,
+                ...message,
                 author: authorPhoneNumber,
               });
               emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
