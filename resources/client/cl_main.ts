@@ -34,7 +34,7 @@ RegisterKeyMapping(
 );
 
 setTimeout(() => {
-  emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
+  emit('chat:addSuggestion', `/${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
 }, 1000);
 
 const getCurrentGameTime = () => {
