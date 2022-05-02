@@ -104,6 +104,7 @@ export const useMessageActions = (): MessageActionProps => {
           conversation_id: messageDto.conversation_id,
           author: messageDto.author,
           id: messageDto.id,
+          createdAt: messageDto.createdAt,
           is_embed: messageDto.is_embed,
           embed: messageDto.embed,
         },

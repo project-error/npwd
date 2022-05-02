@@ -5,6 +5,7 @@ export interface Message {
   author: string;
   is_embed?: boolean;
   embed?: any;
+  createdAt: number;
 }
 
 export interface PreDBMessage {
