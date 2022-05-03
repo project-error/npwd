@@ -1,8 +1,8 @@
 name: Tagged Release Publisher
 on:
   push:
-    branches:
-      - disable
+    tags:
+      - "*"
 jobs:
   create-tagged-release:
     name: Build and Create Tagged Release
