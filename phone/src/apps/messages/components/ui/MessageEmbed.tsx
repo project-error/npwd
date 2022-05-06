@@ -14,28 +14,38 @@ interface MessageEmbedProps {
   type: string;
   embed: any;
   isMine: boolean;
+  message: string;
 }
 
 type MessageEmbedType = {
   [key: string]: JSX.Element;
 };
 
-const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine }) => {
+const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, message }) => {
   const embedType: MessageEmbedType = {
-    contact: <ContactEmbed embed={embed} isMine={isMine} />,
-    location: <LocationEmbed embed={embed} isMine={isMine} />,
+    contact: <ContactEmbed embed={embed} isMine={isMine} message={message} />,
+    location: <LocationEmbed embed={embed} isMine={isMine} message={message} />,
   };
 
   return <>{embedType[type]}</>;
 };
 
-const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) => {
+const ContactEmbed = ({
+  isMine,
+  embed,
+  message,
+}: {
+  isMine: boolean;
+  embed: Contact;
+  message: string;
+}) => {
   const [t] = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
   const { getContactByNumber } = useContactActions();
 
   const showAddButton = !isMine && !getContactByNumber(embed?.number);
+  const showMessage = message !== t('MESSAGES.CONTACT_SHARED');
 
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
@@ -43,24 +53,34 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   };
 
   return (
-    <StyledMessage>
-      <Box>
-        <Avatar src={embed?.avatar} />
-        <Typography>{embed?.display}</Typography>
-        <Typography>{embed?.number}</Typography>
-      </Box>
-      {showAddButton && (
+    <StyledMessage flexDirection="column">
+      {showMessage && <Box sx={{ width: '100%' }}>{message}</Box>}
+      <Box display="flex" alignItems="center" sx={{ width: '100%' }}>
         <Box>
-          <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
-            {t('GENERIC.ADD')}
-          </Button>
+          <Avatar src={embed?.avatar} />
+          <Typography>{embed?.display}</Typography>
+          <Typography>{embed?.number}</Typography>
         </Box>
-      )}
+        {showAddButton && (
+          <Box pl={'12px'}>
+            <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
+              {t('GENERIC.ADD')}
+            </Button>
+          </Box>
+        )}
+      </Box>
     </StyledMessage>
   );
 };
 
-const LocationEmbed = ({ embed }: { embed: Location; isMine: boolean }) => {
+const LocationEmbed = ({
+  embed,
+  message,
+}: {
+  embed: Location;
+  isMine: boolean;
+  message: string;
+}) => {
   const [t] = useTranslation();
 
   const handleSetWaypoint = () => {
@@ -69,10 +89,16 @@ const LocationEmbed = ({ embed }: { embed: Location; isMine: boolean }) => {
     });
   };
 
+  const showMessageAsTypo = message === t('MESSAGES.LOCATION_MESSAGE');
+
   return (
     <StyledMessage>
       <Box>
-        <Typography>{t('MESSAGES.LOCATION_MESSAGE')}</Typography>
+        {showMessageAsTypo ? (
+          <Typography>{message ?? t('MESSAGES.LOCATION_MESSAGE')}</Typography>
+        ) : (
+          <>{message}</>
+        )}
       </Box>
       <Box>
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>
