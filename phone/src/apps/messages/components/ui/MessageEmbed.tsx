@@ -89,16 +89,10 @@ const LocationEmbed = ({
     });
   };
 
-  const showMessageAsTypo = message === t('MESSAGES.LOCATION_MESSAGE');
-
   return (
     <StyledMessage>
       <Box>
-        {showMessageAsTypo ? (
-          <Typography>{message ?? t('MESSAGES.LOCATION_MESSAGE')}</Typography>
-        ) : (
-          <>{message}</>
-        )}
+        <Typography>{message ?? t('MESSAGES.LOCATION_MESSAGE')}</Typography>
       </Box>
       <Box>
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>
