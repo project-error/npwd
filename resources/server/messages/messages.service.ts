@@ -284,7 +284,7 @@ class _MessagesService {
 
   // Exports
   async handleEmitMessage(dto: EmitMessageExportCtx) {
-    const { senderNumber, targetNumber, message } = dto;
+    const { senderNumber, targetNumber, message, embed } = dto;
 
     try {
       // this will post an error message if the number doesn't exist but emitMessage will so go through from roleplay number
@@ -328,8 +328,8 @@ class _MessagesService {
 
       const messageId = await this.messagesDB.createMessage({
         message,
-        embed: '',
-        is_embed: false,
+        embed: embed,
+        is_embed: !!embed,
         conversationId,
         userIdentifier: senderPlayer || senderNumber,
         authorPhoneNumber: senderNumber,
@@ -339,6 +339,8 @@ class _MessagesService {
       const messageData = {
         id: messageId,
         message,
+        embed: embed || '',
+        is_embed: !!embed,
         conversationList,
         conversation_id: conversationId,
         author: senderNumber,
@@ -354,6 +356,8 @@ class _MessagesService {
           conversationName: senderNumber,
           conversation_id: conversationId,
           message: messageData.message,
+          is_embed: messageData.is_embed,
+          embed: messageData.embed,
         });
       }
 

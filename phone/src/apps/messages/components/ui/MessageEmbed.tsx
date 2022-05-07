@@ -14,16 +14,17 @@ interface MessageEmbedProps {
   type: string;
   embed: any;
   isMine: boolean;
+  message: string;
 }
 
 type MessageEmbedType = {
   [key: string]: JSX.Element;
 };
 
-const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine }) => {
+const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, message }) => {
   const embedType: MessageEmbedType = {
     contact: <ContactEmbed embed={embed} isMine={isMine} />,
-    location: <LocationEmbed embed={embed} isMine={isMine} />,
+    location: <LocationEmbed embed={embed} isMine={isMine} message={message} />,
   };
 
   return <>{embedType[type]}</>;
@@ -50,7 +51,7 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
         <Typography>{embed?.number}</Typography>
       </Box>
       {showAddButton && (
-        <Box>
+        <Box pl={1}>
           <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
             {t('GENERIC.ADD')}
           </Button>
@@ -60,7 +61,14 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
   );
 };
 
-const LocationEmbed = ({ embed }: { embed: Location; isMine: boolean }) => {
+const LocationEmbed = ({
+  embed,
+  message,
+}: {
+  embed: Location;
+  isMine: boolean;
+  message: string;
+}) => {
   const [t] = useTranslation();
 
   const handleSetWaypoint = () => {
@@ -72,7 +80,7 @@ const LocationEmbed = ({ embed }: { embed: Location; isMine: boolean }) => {
   return (
     <StyledMessage>
       <Box>
-        <Typography>{t('MESSAGES.LOCATION_MESSAGE')}</Typography>
+        <Typography>{message ?? t('MESSAGES.LOCATION_MESSAGE')}</Typography>
       </Box>
       <Box>
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>
