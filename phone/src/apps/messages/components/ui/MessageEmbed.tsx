@@ -23,29 +23,20 @@ type MessageEmbedType = {
 
 const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, message }) => {
   const embedType: MessageEmbedType = {
-    contact: <ContactEmbed embed={embed} isMine={isMine} message={message} />,
+    contact: <ContactEmbed embed={embed} isMine={isMine} />,
     location: <LocationEmbed embed={embed} isMine={isMine} message={message} />,
   };
 
   return <>{embedType[type]}</>;
 };
 
-const ContactEmbed = ({
-  isMine,
-  embed,
-  message,
-}: {
-  isMine: boolean;
-  embed: Contact;
-  message: string;
-}) => {
+const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) => {
   const [t] = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
   const { getContactByNumber } = useContactActions();
 
   const showAddButton = !isMine && !getContactByNumber(embed?.number);
-  const showMessage = message !== t('MESSAGES.CONTACT_SHARED');
 
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
@@ -53,22 +44,19 @@ const ContactEmbed = ({
   };
 
   return (
-    <StyledMessage flexDirection="column">
-      {showMessage && <Box sx={{ width: '100%' }}>{message}</Box>}
-      <Box display="flex" alignItems="center" sx={{ width: '100%' }}>
-        <Box>
-          <Avatar src={embed?.avatar} />
-          <Typography>{embed?.display}</Typography>
-          <Typography>{embed?.number}</Typography>
-        </Box>
-        {showAddButton && (
-          <Box pl={'12px'}>
-            <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
-              {t('GENERIC.ADD')}
-            </Button>
-          </Box>
-        )}
+    <StyledMessage>
+      <Box>
+        <Avatar src={embed?.avatar} />
+        <Typography>{embed?.display}</Typography>
+        <Typography>{embed?.number}</Typography>
       </Box>
+      {showAddButton && (
+        <Box pl={1}>
+          <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
+            {t('GENERIC.ADD')}
+          </Button>
+        </Box>
+      )}
     </StyledMessage>
   );
 };
