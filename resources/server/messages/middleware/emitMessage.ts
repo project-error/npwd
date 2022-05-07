@@ -9,6 +9,6 @@ exp('emitMessage', async ({ senderNumber, targetNumber, message, embed }: EmitMe
     senderNumber,
     targetNumber,
     message,
-    embed: embed ?? JSON.stringify(embed),
+    embed: embed && JSON.stringify(embed),
   });
 });
