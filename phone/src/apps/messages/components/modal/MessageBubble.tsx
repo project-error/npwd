@@ -90,7 +90,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
         <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
           {message.is_embed ? (
-            <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
+            <MessageEmbed
+              type={parsedEmbed.type}
+              embed={parsedEmbed}
+              isMine={isMine}
+              message={message.message}
+            />
           ) : (
             <StyledMessage>
               {isImage(message.message) ? (

@@ -126,6 +126,7 @@ export interface EmitMessageExportCtx {
   senderNumber: string;
   targetNumber: string;
   message: string;
+  embed?: any;
 }
 
 export enum MessageEvents {
