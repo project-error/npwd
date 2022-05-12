@@ -53,7 +53,12 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'layout',
+      filename: 'remoteEntry.js',
       remotes,
+      exposes: {
+        './settings': './src/apps/settings/hooks/useSettings',
+        './phone': './src/os/hooks',
+      },
       shared: {
         ...deps,
         react: {
