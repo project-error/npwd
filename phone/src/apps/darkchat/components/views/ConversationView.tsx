@@ -9,18 +9,14 @@ import ChannelInput from '../ui/ChannelInput';
 
 export const ConversationView: React.FC = () => {
   const activeConversation = useActiveDarkchatValue();
-  const { id: conversationId } = useParams<{ id: string }>();
   const { fetchMessages } = useDarkchatAPI();
   const messages = useDarkchatMessagesValue();
 
   useEffect(() => {
-    // conversationId
-    console.log(activeConversation);
-    console.log('id', conversationId);
-    fetchMessages(parseInt(conversationId, 10));
-  }, [conversationId]);
+    fetchMessages(activeConversation.id);
+  }, [activeConversation]);
 
-  if (!messages) return <LoadingSpinner />;
+  if (!activeConversation && !messages) return <LoadingSpinner />;
 
   return (
     <Box display="flex" flexDirection="column" flex={1} flexGrow={1}>

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, IconButton, Paper, Typography, Button } from '@mui/material';
 import { useApp } from '@os/apps/hooks/useApps';
-import { useTranslation } from 'react-i18next';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 import styled from '@emotion/styled';
 import { useHistory } from 'react-router-dom';
 import { useActiveDarkchatValue } from '../../state/state';
+import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { TextField } from '@ui/components/Input';
 
 interface HeaderProps {
   background: string;
@@ -27,9 +31,29 @@ const LeaveButton = styled(Button)(({ theme }) => ({
 const DarkChatHeader: React.FC = () => {
   const { backgroundColor } = useApp('DARKCHAT');
   const activeConversation = useActiveDarkchatValue();
-  const [t] = useTranslation();
-
+  const { leaveChannel, updateChannelLabel } = useDarkchatAPI();
   const { goBack } = useHistory();
+  const myPhoneNumber = useMyPhoneNumber();
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [label, setLabel] = useState<string>(activeConversation.label);
+
+  const handleLeaveChannel = () => {
+    leaveChannel(activeConversation.id);
+  };
+
+  const handleUpdateLabel = () => {
+    setIsEditing(false);
+    if (label === activeConversation.label) return setLabel(activeConversation.label);
+    if (!label.trim()) return setLabel(activeConversation.label);
+
+    updateChannelLabel({
+      channelId: activeConversation.id,
+      label,
+    });
+  };
+
+  const isOwner = myPhoneNumber === activeConversation.owner;
 
   return (
     <Header background={backgroundColor}>
@@ -37,12 +61,37 @@ const DarkChatHeader: React.FC = () => {
         <IconButton onClick={goBack}>
           <ArrowBackIcon />
         </IconButton>
-        <Box>
-          <Typography fontSize={26}>{activeConversation.label}</Typography>
+        <Box display="flex" gap={2} alignItems="center">
+          {isEditing ? (
+            <TextField
+              inputProps={{ style: { fontSize: 23 } }}
+              value={label}
+              onChange={(e) => setLabel(e.currentTarget.value)}
+            />
+          ) : (
+            <Typography fontSize={26}>{label}</Typography>
+          )}
+          {isOwner && (
+            <Box>
+              {isEditing ? (
+                <IconButton disableFocusRipple disableTouchRipple onClick={handleUpdateLabel}>
+                  <CheckIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  disableFocusRipple
+                  disableTouchRipple
+                  onClick={() => setIsEditing(true)}
+                >
+                  <EditIcon />
+                </IconButton>
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
       <Box pr={2}>
-        <LeaveButton>Leave</LeaveButton>
+        <LeaveButton onClick={handleLeaveChannel}>Leave</LeaveButton>
       </Box>
     </Header>
   );

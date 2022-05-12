@@ -5,6 +5,7 @@ import {
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  UpdateLabelDto,
 } from '../../../typings/darkchat';
 import DarkchatService from './darkchat.service';
 import { darkchatLogger } from './darkchat.utils';
@@ -41,6 +42,22 @@ onNetPromise<MessageDTO, ChannelMessageProps>(DarkchatEvents.SEND_MESSAGE, async
   DarkchatService.handleCreateMessage(reqObj, resp).catch((err) => {
     darkchatLogger.error(
       `Error occurred in send message event (${reqObj.source}). Error: ${err.message}`,
+    );
+  });
+});
+
+onNetPromise<{ channelId: number }, void>(DarkchatEvents.LEAVE_CHANNEL, async (reqObj, resp) => {
+  DarkchatService.handleLeaveChannel(reqObj, resp).catch((err) => {
+    darkchatLogger.error(
+      `Error occurred in leave channel event (${reqObj.source}). Error: ${err.message}`,
+    );
+  });
+});
+
+onNetPromise<UpdateLabelDto, void>(DarkchatEvents.UPDATE_CHANNEL_LABEL, async (reqObj, resp) => {
+  DarkchatService.handleUpdateChannelLabel(reqObj, resp).catch((err) => {
+    darkchatLogger.error(
+      `Error occurred in update channel label event (${reqObj.source}). Error: ${err.message}`,
     );
   });
 });

@@ -6,6 +6,7 @@ import {
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  UpdateLabelDto,
 } from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
 import { MockChannelMessagesResp } from '../utils/constants';
@@ -16,12 +17,15 @@ import { useTranslation } from 'react-i18next';
 
 interface DarkchatAPIProps {
   addChannel: (channelDto: JoinChannelDTO) => void;
+  leaveChannel: (id: number) => void;
   fetchMessages: (conversationId: number) => void;
   sendMessage: (dto: MessageDTO) => void;
+  updateChannelLabel: (dto: UpdateLabelDto) => void;
 }
 
 export const useDarkchatAPI = (): DarkchatAPIProps => {
-  const { addLocalChannel, addLocalMessage } = useDarkchatActions();
+  const { addLocalChannel, addLocalMessage, leaveLocalChannel, updateLocalChannelLabel } =
+    useDarkchatActions();
   const history = useHistory();
   const setMessages = useSetDarkchatMessagesState();
   const { addAlert } = useSnackbar();
@@ -40,6 +44,22 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
       }
 
       addLocalChannel(res.data);
+    });
+  };
+
+  const leaveChannel = (id: number) => {
+    fetchNui<ServerPromiseResp<{ channelId: number }>>(DarkchatEvents.LEAVE_CHANNEL, {
+      channelId: id,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.LEAVE_CHANNEL_FAILED'),
+        });
+      }
+
+      leaveLocalChannel(id);
+      history.goBack();
     });
   };
 
@@ -77,5 +97,20 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     });
   };
 
-  return { addChannel, fetchMessages, sendMessage };
+  const updateChannelLabel = (dto: UpdateLabelDto) => {
+    fetchNui<ServerPromiseResp<UpdateLabelDto>>(DarkchatEvents.UPDATE_CHANNEL_LABEL, dto).then(
+      (resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            type: 'error',
+            message: t('DARKCHAT.FEEDBACK.UPDATE_LABEL_FAILED'),
+          });
+        }
+
+        updateLocalChannelLabel(dto);
+      },
+    );
+  };
+
+  return { addChannel, fetchMessages, sendMessage, leaveChannel, updateChannelLabel };
 };

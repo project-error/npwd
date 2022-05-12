@@ -249,7 +249,9 @@
       "FEEDBACK": {
         "FETCH_MESSAGES_FAILED": "Failed to fetch messages",
         "JOIN_CHANNEL_FAILED": "Failed to join channel",
-        "SEND_MESSAGE_FAILED": "Failed to send message"
+        "LEAVE_CHANNEL_FAILED": "Failed to leave channel",
+        "SEND_MESSAGE_FAILED": "Failed to send message",
+        "UPDATE_LABEL_FAILED": "Failed to update channel name"
       },
       "NEW_CHANNEL_TITLE": "Join channel on ID",
       "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",

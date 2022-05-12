@@ -7,18 +7,21 @@ export const MockChannels: ChannelItemProps[] = [
     label: 'wow',
     identifier: '123',
     lastMessage: 'uh oh',
+    owner: '1234567',
   },
   {
     id: 2,
     label: 'acab',
     identifier: '123',
     lastMessage: 'uh oh',
+    owner: '111-1134',
   },
   {
     id: 3,
     label: 'wow2',
     identifier: '123',
     lastMessage: 'uh oh',
+    owner: '111-1134',
   },
 ];
 

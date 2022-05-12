@@ -9,7 +9,7 @@ interface MessageType {
 }
 
 const StyledMessageContainer = styled(Paper)<MessageType>(({ theme, isMine }) => ({
-  color: '#20C20E',
+  color: '#fff',
   float: isMine ? 'right' : 'left',
   margin: theme.spacing(1),
   padding: '6px 16px',
@@ -29,8 +29,6 @@ const StyledMessage = styled(Box)({
 });
 
 const ChannelMessageBubble: React.FC<ChannelMessageProps> = (item) => {
-  console.log('message', item);
-
   return (
     <Box
       display="flex"
@@ -43,7 +41,7 @@ const ChannelMessageBubble: React.FC<ChannelMessageProps> = (item) => {
         <StyledMessage>
           <Typography fontSize={16}>{item.message}</Typography>
         </StyledMessage>
-        <Typography color="#eee" mt={1}>
+        <Typography color="#ccc" fontWeight={500} mt={1}>
           {dayjs.unix(item.createdAt).fromNow()}
         </Typography>
       </StyledMessageContainer>

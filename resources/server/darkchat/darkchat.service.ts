@@ -5,6 +5,7 @@ import {
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  UpdateLabelDto,
 } from '../../../typings/darkchat';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
@@ -28,6 +29,7 @@ class _DarkchatService {
 
       resp({ status: 'ok', data: channels });
     } catch (err) {
+      darkchatLogger.error(`Failed to fetch channels. Error: ${err.message}`);
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
@@ -57,6 +59,8 @@ class _DarkchatService {
     }
   }
 
+  // TODO: When we join channel, we'll have to check if exists, and if there are a current owner of the channel.
+  // TODO: If not, we'll set ourselves as the owner
   async handleJoinChannel(
     reqObj: PromiseRequest<JoinChannelDTO>,
     resp: PromiseEventResp<ChannelItemProps>,
@@ -64,19 +68,35 @@ class _DarkchatService {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
       const channelExists = await this.darkchatDB.doesChannelExist(reqObj.data.channelIdentifier);
-      console.log('does exist', channelExists);
-      if (!channelExists)
-        await this.darkchatDB.createChannel(reqObj.data.channelIdentifier, reqObj.data.label);
+      let isPlayerOwner = false;
+
+      if (!channelExists) {
+        await this.darkchatDB.createChannel(reqObj.data.channelIdentifier);
+        isPlayerOwner = true;
+      }
+
+      const { id, label } = await this.darkchatDB.getChannelIdAndLabel(
+        reqObj.data.channelIdentifier,
+      );
+      const members = await this.darkchatDB.getChannelMembers(id);
+
+      const hasOwner = members.find((member) => member.isOwner);
+      if (!hasOwner) isPlayerOwner = true;
 
       const channelId = await this.darkchatDB.joinChannel(
         reqObj.data.channelIdentifier,
         identifier,
+        isPlayerOwner,
       );
+
+      const channelOwner = await this.darkchatDB.getChannelOwner(id);
+      const ownerPhoneNumber = await PlayerService.getPhoneNumberFromIdentifier(channelOwner);
 
       const resData: ChannelItemProps = {
         id: channelId,
         identifier: reqObj.data.channelIdentifier,
-        label: reqObj.data.label,
+        label: label ?? reqObj.data.channelIdentifier,
+        owner: ownerPhoneNumber,
       };
 
       resp({ status: 'ok', data: resData });
@@ -129,6 +149,52 @@ class _DarkchatService {
       }
     } catch (err) {
       darkchatLogger.error(`Failed to create message. Error: ${err.message}`);
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleLeaveChannel(
+    reqObj: PromiseRequest<{ channelId: number }>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const userIdentifier = PlayerService.getIdentifier(reqObj.source);
+
+    try {
+      await this.darkchatDB.leaveChannel(reqObj.data.channelId, userIdentifier);
+
+      resp({ status: 'ok' });
+    } catch (err) {
+      darkchatLogger.error(`Failed to leave channel. Error: ${err.message}`);
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleUpdateChannelLabel(
+    reqObj: PromiseRequest<UpdateLabelDto>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const userIdentifier = PlayerService.getIdentifier(reqObj.source);
+    try {
+      const channelData = reqObj.data;
+      await this.darkchatDB.updateChannelLabel(reqObj.data);
+
+      resp({ status: 'ok' });
+
+      const members = await this.darkchatDB.getChannelMembers(reqObj.data.channelId);
+      for (const member of members) {
+        if (member.identifier !== userIdentifier) {
+          const participant = PlayerService.getPlayerFromIdentifier(member.identifier);
+          if (participant) {
+            emitNetTyped<UpdateLabelDto>(
+              DarkchatEvents.BROADCAST_MESSAGE,
+              channelData,
+              participant.source,
+            );
+          }
+        }
+      }
+    } catch (err) {
+      darkchatLogger.error(`Failed to update channel label. Error: ${err.message}`);
       resp({ status: 'error', errorMsg: err.message });
     }
   }

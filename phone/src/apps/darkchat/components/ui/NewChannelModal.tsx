@@ -25,6 +25,7 @@ export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeMod
       <Typography>{t('DARKCHAT.NEW_CHANNEL_TITLE')}</Typography>
       <Box mt={3} mb={2}>
         <TextField
+          type="password"
           fullWidth
           placeholder={t('DARKCHAT.NEW_CHANNEL_INPUT_PLACEHOLDER')}
           value={channelValue}
