@@ -57,7 +57,7 @@ module.exports = {
       remotes,
       exposes: {
         './settings': './src/apps/settings/hooks/useSettings',
-        './phone': './src/os/hooks',
+        './phone': './src/os/phone/hooks',
       },
       shared: {
         ...deps,
@@ -79,7 +79,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       '@os': path.resolve(__dirname, '../src/os/'),
       '@ui': path.resolve(__dirname, '../src/ui/'),
@@ -87,6 +87,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, '../src/utils/'),
       '@apps': path.resolve(__dirname, '../src/apps/'),
       '@typings': path.resolve(__dirname, '../../typings/'),
+      '@shared': path.resolve(__dirname, '../../shared'),
     },
   },
 };
