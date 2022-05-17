@@ -30,6 +30,7 @@ const StyledResultWrapper = styled(Box)<{ length: number }>(({ theme, length }) 
 const StyledCalcBtn = styled(CalculatorButton)(({ theme }) => ({
   fontSize: theme.typography.h5.fontSize,
   padding: theme.spacing(2),
+  color: theme.palette.text.primary,
 }));
 
 export const Calculator: React.FC = () => {
