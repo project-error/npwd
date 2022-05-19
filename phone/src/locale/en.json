@@ -256,7 +256,10 @@
       "NEW_CHANNEL_TITLE": "Join channel on ID",
       "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
       "JOIN_BUTTON": "Join channel",
-      "MESSAGE_PLACEHOLDER": "Send a message"
+      "MESSAGE_PLACEHOLDER": "Send a message",
+      "MEDIA_PLACEHOLDER": "Image URL",
+      "MEDIA_UPLOAD": "Upload Image",
+      "MEDIA_GALLERY": "CHOOSE IMAGE"
     },
     "RELATIVE_TIME": {
       "future": "in %s",
@@ -290,6 +293,7 @@
       "CONTENT": "Content",
       "SHARE": "Share",
       "ADD": "Add",
+      "SEND": "Send",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
     },

@@ -57,12 +57,12 @@ const ChannelInput: React.FC = () => {
       </Box>
       <Box>
         <Button color="secondary" onClick={() => setModalVisible(true)}>
-          <Tooltip title="Upload Image">
+          <Tooltip title={t('DARKCHAT.MEDIA_UPLOAD')}>
             <IosShareIcon />
           </Tooltip>
         </Button>
         <Button onClick={handleSendMessage} color="secondary">
-          <Tooltip title="Send">
+          <Tooltip title={t('GENERIC.SEND')}>
             <SendIcon />
           </Tooltip>
         </Button>

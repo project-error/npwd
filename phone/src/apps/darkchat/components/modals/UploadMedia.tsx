@@ -10,6 +10,7 @@ import { isImageValid } from '../../../../common/utils/isImageValid';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 import { useActiveDarkchatValue } from '../../state/state';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
+import { useTranslation } from 'react-i18next';
 
 const ButtonsContainer = styled(Box)({
   padding: '8px',
@@ -26,6 +27,7 @@ export const UploadMediaModal = () => {
   const { sendMessage } = useDarkchatAPI();
   const { id: channelId } = useActiveDarkchatValue();
   const phoneNumber = useMyPhoneNumber();
+  const [t] = useTranslation();
 
   const handleImageGallery = () => {
     history.push(
@@ -55,7 +57,7 @@ export const UploadMediaModal = () => {
   return (
     <Modal visible={modalVisible} handleClose={() => setModalVisible(false)}>
       <TextField
-        placeholder="Media URL"
+        placeholder={t('DARKCHAT.MEDIA_PLACEHOLDER')}
         variant="standard"
         value={modalMedia}
         onChange={(e) => setModalMedia(e.target.value)}
@@ -67,7 +69,7 @@ export const UploadMediaModal = () => {
           startIcon={<CollectionsIcon />}
           onClick={handleImageGallery}
         >
-          CHOOSE IMAGE
+          {t('DARKCHAT.MEDIA_GALLERY')}
         </Button>
         <Button
           variant="contained"
@@ -75,7 +77,7 @@ export const UploadMediaModal = () => {
           startIcon={<SendIcon />}
           onClick={handleSendImage}
         >
-          SEND
+          {t('GENERIC.SEND')}
         </Button>
       </ButtonsContainer>
     </Modal>
