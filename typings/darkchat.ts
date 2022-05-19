@@ -21,6 +21,7 @@ export interface ChannelMessageProps {
   createdAt: number;
   isMine: boolean;
   channelId?: number;
+  type: 'text' | 'image';
 }
 
 export type JoinChannelDTO = {
@@ -32,6 +33,7 @@ export type MessageDTO = {
   channelId: number;
   phoneNumber: string;
   message: string;
+  type: 'text' | 'image';
 };
 
 export type ChannelMember = {

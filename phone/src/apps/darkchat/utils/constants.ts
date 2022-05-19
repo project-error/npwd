@@ -32,6 +32,7 @@ export const MockChannelMessages: ChannelMessageProps[] = [
     isMine: false,
     identifier: '234',
     createdAt: 1651357807,
+    type: 'text',
   },
   {
     id: 2,
@@ -40,6 +41,7 @@ export const MockChannelMessages: ChannelMessageProps[] = [
     isMine: true,
     createdAt: 1651357807,
     identifier: '234',
+    type: 'text',
   },
   {
     id: 3,
@@ -47,6 +49,7 @@ export const MockChannelMessages: ChannelMessageProps[] = [
     isMine: true,
     identifier: '234',
     createdAt: 1651357807,
+    type: 'text',
   },
   {
     id: 4,
@@ -54,6 +57,15 @@ export const MockChannelMessages: ChannelMessageProps[] = [
     identifier: '234',
     isMine: false,
     createdAt: 1651357807,
+    type: 'text',
+  },
+  {
+    id: 5,
+    message: 'https://i.redd.it/9suiibeiye091.jpg',
+    identifier: '69',
+    isMine: true,
+    createdAt: 1651357807,
+    type: 'image',
   },
 ];
 

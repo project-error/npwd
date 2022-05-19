@@ -35,6 +35,14 @@ export const darkChatState = {
     key: 'darkChatActiveConversation',
     default: null,
   }),
+  showUploadMediaModal: atom<boolean>({
+    key: 'darkChatShowUploadModal',
+    default: false,
+  }),
+  modalMedia: atom<string>({
+    key: 'darkChatModalMedia',
+    default: '',
+  }),
 };
 
 export const useChannelsValue = () => useRecoilValue(darkChatState.channels);
