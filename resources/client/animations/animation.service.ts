@@ -49,7 +49,7 @@ export class AnimationService {
 
   private handleCallAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
-      this.handleOnCallInVehicle(playerPed);
+      this.handleOnCallInVehicle(playerPed, GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
     } else {
       this.handleOnCallNormal(playerPed);
     }
@@ -57,7 +57,7 @@ export class AnimationService {
 
   private handleOpenAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
-      this.handleOpenVehicleAnim(playerPed);
+      this.handleOpenVehicleAnim(playerPed, GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
     } else {
       this.handleOpenNormalAnim(playerPed);
     }
@@ -65,7 +65,7 @@ export class AnimationService {
 
   private handleCallEndAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
-      this.handleCallEndVehicleAnim(playerPed);
+      this.handleCallEndVehicleAnim(playerPed), GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
     } else {
       this.handleCallEndNormalAnim(playerPed);
     }
@@ -73,7 +73,7 @@ export class AnimationService {
 
   private handleCloseAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
-      this.handleCloseVehicleAnim(playerPed);
+      this.handleCloseVehicleAnim(playerPed, GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
     } else {
       this.handleCloseNormalAnim(playerPed);
     }
@@ -121,9 +121,13 @@ export class AnimationService {
     }
   }
 
-  private async handleOpenVehicleAnim(playerPed: number): Promise<void> {
-    const dict = 'cellphone@';
-    const anim = 'cellphone_text_read_base';
+  private async handleOpenVehicleAnim(playerPed: number, vehicleClass: number): Promise<void> {
+    var dict = 'anim@cellphone@in_car@ps';
+    var anim = 'cellphone_text_in';
+    if (vehicleClass == 8){
+      dict = 'cellphone@';
+      anim = 'cellphone_text_read_base';
+    }
     await this.loadAnimDict(dict);
 
     if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
@@ -144,10 +148,10 @@ export class AnimationService {
     }
   }
 
-  private async handleCloseVehicleAnim(playerPed: number): Promise<void> {
-    const DICT = 'anim@cellphone@in_car@ps';
-    StopAnimTask(playerPed, DICT, 'cellphone_text_read_base', 1.0); // Do both incase they were on the phone.
-    StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
+  private async handleCloseVehicleAnim(playerPed: number, vehicleClass: number): Promise<void> {
+    StopAnimTask(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in', 1.0);
+    StopAnimTask(playerPed, 'cellphone@', 'cellphone_text_read_base', 1.0); // Do both incase they were on the phone.
+    StopAnimTask(playerPed, 'cellphone@', 'cellphone_call_to_text', 1.0);
     removePhoneProp();
   }
 
@@ -163,9 +167,13 @@ export class AnimationService {
     removePhoneProp();
   }
 
-  private async handleOnCallInVehicle(playerPed: number): Promise<void> {
-    const DICT = 'cellphone@';
-    const ANIM = 'cellphone_call_listen_base';
+  private async handleOnCallInVehicle(playerPed: number, vehicleClass: number): Promise<void> {
+    var DICT = 'anim@cellphone@in_car@ps';
+    var ANIM = 'cellphone_call_listen_base';
+		if (vehicleClass == 8){
+      DICT = 'cellphone@';
+      ANIM = 'cellphone_call_listen_base';
+    }
 
     if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
       await this.loadAnimDict(DICT);
@@ -182,10 +190,15 @@ export class AnimationService {
     }
   }
 
-  private async handleCallEndVehicleAnim(playerPed: number): Promise<void> {
-    const DICT = 'cellphone@';
-    const ANIM = 'cellphone_text_read_base';
-    StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
+  private async handleCallEndVehicleAnim(playerPed: number, vehicleClass: number): Promise<void> {
+    var DICT = 'anim@cellphone@in_car@ps';
+    var ANIM = 'cellphone_call_listen_base';
+		if (vehicleClass == 8){
+      DICT = 'cellphone@';
+      ANIM = 'cellphone_call_listen_base';
+    }
+    StopAnimTask(playerPed, "anim@cellphone@in_car@ps", "cellphone_call_listen_base", 1);
+    StopAnimTask(playerPed, "cellphone@", 'cellphone_call_listen_base', 1.0);
     await this.loadAnimDict(DICT);
     TaskPlayAnim(playerPed, DICT, ANIM, 1.3, 5.0, -1, 50, 0, false, false, false);
   }
