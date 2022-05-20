@@ -122,8 +122,8 @@ export class AnimationService {
   }
 
   private async handleOpenVehicleAnim(playerPed: number, vehicleClass: number): Promise<void> {
-    var dict = 'anim@cellphone@in_car@ps';
-    var anim = 'cellphone_text_in';
+    let dict = 'anim@cellphone@in_car@ps';
+    let anim = 'cellphone_text_in';
     if (vehicleClass == 8){
       dict = 'cellphone@';
       anim = 'cellphone_text_read_base';
@@ -168,9 +168,9 @@ export class AnimationService {
   }
 
   private async handleOnCallInVehicle(playerPed: number, vehicleClass: number): Promise<void> {
-    var DICT = 'anim@cellphone@in_car@ps';
-    var ANIM = 'cellphone_call_listen_base';
-		if (vehicleClass == 8){
+    let DICT = 'anim@cellphone@in_car@ps';
+    let ANIM = 'cellphone_call_listen_base';
+    if (vehicleClass == 8){
       DICT = 'cellphone@';
       ANIM = 'cellphone_call_listen_base';
     }
@@ -191,9 +191,9 @@ export class AnimationService {
   }
 
   private async handleCallEndVehicleAnim(playerPed: number, vehicleClass: number): Promise<void> {
-    var DICT = 'anim@cellphone@in_car@ps';
-    var ANIM = 'cellphone_call_listen_base';
-		if (vehicleClass == 8){
+    let DICT = 'anim@cellphone@in_car@ps';
+    let ANIM = 'cellphone_call_listen_base';
+    if (vehicleClass == 8){
       DICT = 'cellphone@';
       ANIM = 'cellphone_call_listen_base';
     }
