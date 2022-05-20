@@ -65,7 +65,7 @@ export class AnimationService {
 
   private handleCallEndAnimation(playerPed: number) {
     if (IsPedInAnyVehicle(playerPed, true)) {
-      this.handleCallEndVehicleAnim(playerPed), GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
+      this.handleCallEndVehicleAnim(playerPed, GetVehicleClass(GetVehiclePedIsIn(playerPed,false)));
     } else {
       this.handleCallEndNormalAnim(playerPed);
     }
