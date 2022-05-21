@@ -46,6 +46,7 @@ class _DarkchatService {
           return {
             ...msg,
             isMine: true,
+            type: (msg.type && 'image') || 'text',
           };
         }
 
@@ -118,12 +119,14 @@ class _DarkchatService {
         messageData.channelId,
         userIdentifier,
         messageData.message,
+        messageData.type === 'image',
       );
 
       const resObj: ChannelMessageProps = {
         ...message,
         channelId: messageData.channelId,
         isMine: messageData.phoneNumber === phoneNumber,
+        type: messageData.type,
       };
 
       resp({ status: 'ok', data: resObj });
@@ -137,6 +140,7 @@ class _DarkchatService {
               ...message,
               channelId: messageData.channelId,
               isMine: messageData.phoneNumber === participant.getPhoneNumber(),
+              type: messageData.type,
             };
 
             emitNetTyped<ChannelMessageProps>(

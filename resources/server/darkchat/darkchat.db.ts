@@ -58,7 +58,8 @@ export class _DarkchatDB {
     const query = `SELECT id,
                           message,
                           user_identifier           AS identifier,
-                          UNIX_TIMESTAMP(createdAt) as createdAt
+                          UNIX_TIMESTAMP(createdAt) AS createdAt,
+       										is_image                  AS type 
                    FROM darkchat_messages
                    WHERE darkchat_messages.channel_id = ?`;
 
@@ -116,7 +117,8 @@ export class _DarkchatDB {
     const query = `SELECT id,
                           message,
                           user_identifier           AS identifier,
-                          UNIX_TIMESTAMP(createdAt) as createdAt
+                          UNIX_TIMESTAMP(createdAt) AS createdAt,
+       										is_image									AS type
                    FROM darkchat_messages
                    WHERE channel_id = ?
                      AND id = ?`;
@@ -130,11 +132,17 @@ export class _DarkchatDB {
     channelId: number,
     userIdentifier: string,
     message: string,
+    is_image: boolean,
   ): Promise<ChannelMessageProps> {
-    const query = `INSERT INTO darkchat_messages (channel_id, message, user_identifier)
-                   VALUES (?, ?, ?)`;
+    const query = `INSERT INTO darkchat_messages (channel_id, message, user_identifier, is_image)
+                   VALUES (?, ?, ?, ?)`;
 
-    const [results] = await DbInterface._rawExec(query, [channelId, message, userIdentifier]);
+    const [results] = await DbInterface._rawExec(query, [
+      channelId,
+      message,
+      userIdentifier,
+      is_image,
+    ]);
     const result = <ResultSetHeader>results;
 
     return await this.getMessage(channelId, result.insertId);
