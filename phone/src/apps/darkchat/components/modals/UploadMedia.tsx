@@ -50,6 +50,8 @@ export const UploadMediaModal = () => {
           channelId,
           phoneNumber,
         });
+        setModalVisible(false);
+        setModalMedia('');
       })
       .catch(console.error);
   };
