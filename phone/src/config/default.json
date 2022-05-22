@@ -59,6 +59,10 @@
   ],
   "zoomOptions": [
     {
+      "label": "150%",
+      "value": 1.5
+    },
+    {
       "label": "100%",
       "value": 1
     },
