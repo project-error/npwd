@@ -1,4 +1,3 @@
-export * from './state';
 export * from './useClipboard';
 export * from './useConfig';
 export * from './usePlayer';
