@@ -32,11 +32,13 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
-import { useExternalApps } from "@common/hooks/useExternalApps";
+import { useExternalApps } from '@common/hooks/useExternalApps';
 
 function Phone() {
   const { i18n } = useTranslation();
   const externalApps = useExternalApps();
+
+  console.log('externalApps', externalApps);
 
   const { apps } = useApps();
 
@@ -79,9 +81,9 @@ function Phone() {
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
               ))}
 
-              {externalApps.map((App) => (
-                <Fragment key={App.id}>{App.Route}</Fragment>
-              ))}
+              {/* @ts-ignore */}
+              {externalApps.length > 0 &&
+                externalApps.map((App) => <Fragment key={App.id}>{App.Route}</Fragment>)}
             </>
             <NotificationAlert />
             <PhoneSnackbar />

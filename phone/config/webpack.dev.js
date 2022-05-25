@@ -4,13 +4,11 @@ const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('../package.json').dependencies;
 
-//const baseUrl = 'http://localhost:3003/remoteEntry.js';
-// [key]: `${key}@https://cfx-nui-${key}_app/remoteEntry.js'`,
 const communityApps = require('../../communityApps');
 const remotes = Object.keys(communityApps).reduce((prev, key) => {
   return {
     ...prev,
-    weather: `weather@http://localhost:3002/remoteEntry.js`,
+    [key]: `${key}@https://cfx-nui-${key}_app/release/remoteEntry.js`,
   };
 }, {});
 
@@ -57,9 +55,7 @@ module.exports = {
       filename: 'remoteEntry.js',
       remotes,
       exposes: {
-        './settings': './src/apps/settings/hooks/useSettings',
-        './phone': './src/os/phone/hooks',
-        './contacts': './src/apps/contacts/hooks/state',
+        './ui': './src/ui/components',
       },
       shared: {
         ...deps,

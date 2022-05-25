@@ -16,12 +16,12 @@ server_script {
     'resources/dist/server/server.js'
 }
 
-ui_page 'resources/html/index.html'
+ui_page 'phone/dist/index.html'
 
 files {
     'config.json',
-    'resources/html/index.html',
-    'resources/html/**/*',
+    'phone/dist/index.html',
+    'phone/dist/*.js',
 }
 
 dependency {
