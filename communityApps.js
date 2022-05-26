@@ -1,5 +1,5 @@
 module.exports = {
-  weather: () => {
-    return import('weather/config');
+  bank: () => {
+    return import('bank/config');
   },
 };

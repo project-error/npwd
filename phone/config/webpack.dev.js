@@ -8,7 +8,7 @@ const communityApps = require('../../communityApps');
 const remotes = Object.keys(communityApps).reduce((prev, key) => {
   return {
     ...prev,
-    [key]: `${key}@https://cfx-nui-${key}_app/release/remoteEntry.js`,
+    [key]: `${key}@http://localhost:3007/remoteEntry.js`,
   };
 }, {});
 
