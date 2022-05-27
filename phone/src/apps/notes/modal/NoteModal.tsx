@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { StatusButton } from '@ui/components/StatusButton';
 import { TextField } from '@ui/components/Input';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
