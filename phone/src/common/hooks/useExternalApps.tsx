@@ -2,15 +2,18 @@ import { IApp } from '@os/apps/config/apps';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
-const communityApps = require('../../../../communityApps');
+const externalApps = require('../../../../config.apps');
 
 const generateAppConfig = async (importStatement): Promise<IApp> => {
   const rawConfig = (await importStatement()).default;
   const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
 
-  config.Component = React.createElement(config.app, {
+  const Component = React.createElement(config.app, {
     settings: { language: 'en', isDarkMode: true },
   });
+
+  config.Component = Component;
+  config.icon = React.createElement(config.icon);
 
   config.Route = <Route path={config.path}>{config.Component}</Route>;
 
@@ -28,11 +31,30 @@ const getConfigs = async (communityApps) => {
   return configs;
 };
 
+interface ReloadEvent {
+  type: 'RELOAD';
+  payload: 'string';
+}
+
 export const useExternalApps = () => {
   const [apps, setApps] = useState<IApp[]>([]);
 
+  const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
+    const { data } = message;
+    if (data.type === 'RELOAD') {
+      getConfigs(externalApps).then(setApps);
+    }
+  };
+
   useEffect(() => {
-    getConfigs(communityApps).then(setApps);
+    window.addEventListener('message', handleReloadApp);
+    return () => {
+      window.removeEventListener('message', handleReloadApp);
+    };
+  }, []);
+
+  useEffect(() => {
+    getConfigs(externalApps).then(setApps);
   }, []);
 
   return apps;

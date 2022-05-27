@@ -4,8 +4,8 @@ const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('../package.json').dependencies;
 
-const communityApps = require('../../communityApps');
-const remotes = Object.keys(communityApps).reduce((prev, key) => {
+const externalApps = require('../../config.apps');
+const remotes = Object.keys(externalApps).reduce((prev, key) => {
   return {
     ...prev,
     [key]: `${key}@http://localhost:3007/remoteEntry.js`,
@@ -52,11 +52,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'layout',
-      filename: 'remoteEntry.js',
       remotes,
-      exposes: {
-        './ui': './src/ui/components',
-      },
       shared: {
         ...deps,
         react: {
