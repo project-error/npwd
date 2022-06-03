@@ -6,6 +6,7 @@ const StyledMessage = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  whiteSpace: 'pre-line',
 });
 
 export default StyledMessage;

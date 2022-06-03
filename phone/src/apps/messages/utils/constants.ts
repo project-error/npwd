@@ -32,7 +32,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 3,
     author: '111-1134',
-    message: 'Bro, finish notifications api?????',
+    message: 'Bro, finish\nnotifications\napi?????',
     createdAt: 16234242422,
   },
   {
