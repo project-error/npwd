@@ -1,0 +1,37 @@
+.ltr {
+  text-align: left;
+}
+
+.rtl {
+  text-align: right;
+}
+
+.editor-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 55px;
+  left: 35px;
+  font-size: 20px;
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.editor-input {
+  resize: none;
+  border-bottom: 2px solid #00acee;
+  font-size: 20px;
+  caret-color: rgb(5, 5, 5);
+  padding-left: 10px;
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  caret-color: #444;
+}

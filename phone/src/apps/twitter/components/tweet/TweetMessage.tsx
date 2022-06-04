@@ -4,6 +4,7 @@ import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
 import { TextField } from '@ui/components/Input';
 import { styled } from '@mui/material';
+import { TweetEditor } from './TweetEditor';
 
 const MessageInput = styled(TextField)({
   flex: '1 1 100%',
@@ -48,7 +49,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     }
   };
   return (
-    <MessageInput
+    /*<MessageInput
       value={message}
       inputProps={{
         style: {
@@ -63,7 +64,8 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-    />
+    />*/
+    <TweetEditor />
   );
 };
 
