@@ -36,6 +36,28 @@ export class EmojiNode extends TextNode {
     super.updateDOM(prevNode, dom, config);
     return false;
   }
+
+  static importJSON(serializedNode: any): EmojiNode {
+    const node = $createEmojiNode(serializedNode.className, serializedNode.text);
+    node.setFormat(serializedNode.format);
+    node.setDetail(serializedNode.detail);
+    node.setMode(serializedNode.mode);
+    node.setStyle(serializedNode.style);
+    return node;
+  }
+
+  exportJSON(): any {
+    return {
+      ...super.exportJSON(),
+      className: this.getClassName(),
+      type: 'emoji',
+    };
+  }
+
+  getClassName(): string {
+    const self = this.getLatest();
+    return self.__className;
+  }
 }
 
 export function $isEmojiNode(node) {
