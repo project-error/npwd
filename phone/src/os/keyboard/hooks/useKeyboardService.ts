@@ -92,7 +92,7 @@ export const useKeyboardService = () => {
 
   const backspaceHandler = useCallback(
     (event) => {
-      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase()) || call) {
+      if (['input', 'textarea', 'div'].includes(event.target.nodeName.toLowerCase()) || call) {
         // Dont anything if we are typing something, or if we're in a call :)
         return;
       }

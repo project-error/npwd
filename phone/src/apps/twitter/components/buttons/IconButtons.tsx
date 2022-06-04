@@ -29,11 +29,6 @@ export const IconButtons = ({ onImageClick, onEmojiClick }) => {
           <InsertPhotoIcon color="action" />
         </ButtonWrapper>
       )}
-      {enableEmojis && (
-        <ButtonWrapper onClick={onEmojiClick}>
-          <EmojiIcon color="action" />
-        </ButtonWrapper>
-      )}
     </ButtonContainer>
   );
 };
