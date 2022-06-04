@@ -8,6 +8,7 @@ import { RegisterNuiCB } from './cl_utils';
 global.isPhoneOpen = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
+global.clientPhoneNumber = null;
 
 const exps = global.exports;
 
@@ -34,7 +35,11 @@ RegisterKeyMapping(
 );
 
 setTimeout(() => {
-  emit('chat:addSuggestion', `/${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
+  emit(
+    'chat:addSuggestion',
+    `/${config.general.toggleCommand}`,
+    'Toggle displaying your cellphone',
+  );
 }, 1000);
 
 const getCurrentGameTime = () => {
@@ -127,6 +132,7 @@ async function togglePhone(): Promise<void> {
 }
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, playerSource: number) => {
+  global.clientPhoneNumber = number;
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
   sendMessage('PHONE', PhoneEvents.SEND_PLAYER_SOURCE, playerSource);
 });
