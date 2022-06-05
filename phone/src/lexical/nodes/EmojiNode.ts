@@ -1,4 +1,13 @@
-import { EditorConfig, TextNode } from 'lexical';
+import { EditorConfig, SerializedTextNode, TextNode } from 'lexical';
+import { Spread } from '@typings/common';
+
+export type SerializedEmojiNode = Spread<
+  {
+    className: string;
+    type: 'emoji';
+  },
+  SerializedTextNode
+>;
 
 export class EmojiNode extends TextNode {
   private readonly __className: string;
@@ -37,7 +46,7 @@ export class EmojiNode extends TextNode {
     return false;
   }
 
-  static importJSON(serializedNode: any): EmojiNode {
+  static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
     const node = $createEmojiNode(serializedNode.className, serializedNode.text);
     node.setFormat(serializedNode.format);
     node.setDetail(serializedNode.detail);
@@ -46,7 +55,7 @@ export class EmojiNode extends TextNode {
     return node;
   }
 
-  exportJSON(): any {
+  exportJSON(): SerializedEmojiNode {
     return {
       ...super.exportJSON(),
       className: this.getClassName(),

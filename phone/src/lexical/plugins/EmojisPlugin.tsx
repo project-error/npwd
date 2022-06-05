@@ -9,6 +9,7 @@ const emojis: Map<string, [string, string]> = new Map([
   [':(', ['emoji unhappysmile', '🙁']],
   ['<3', ['emoji heart', '❤']],
   [':*', ['emoji kiss', '😘']],
+  [':O', ['emoji omg', '😲']],
 ]);
 
 function findAndTransformEmoji(node: TextNode): null | TextNode {

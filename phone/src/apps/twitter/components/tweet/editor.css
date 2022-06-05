@@ -35,3 +35,7 @@
   outline: 0;
   caret-color: #444;
 }
+
+#mention-thing {
+  z-index: 2;
+}
