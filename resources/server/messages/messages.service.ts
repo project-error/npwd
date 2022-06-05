@@ -181,6 +181,7 @@ class _MessagesService {
         label: conversationDetails.label,
         conversationList: conversationDetails.conversationList,
         isGroupChat: conversationDetails.isGroupChat,
+        createdBy: conversationDetails.createdBy,
       };
 
       // participantId is the participants phone number
@@ -313,6 +314,7 @@ class _MessagesService {
           conversationList,
           '',
           false,
+          senderNumber,
         );
 
         await this.messagesDB.addParticipantToConversation(conversationList, targetNumber);
@@ -326,6 +328,7 @@ class _MessagesService {
               label: '',
               isGroupChat: false,
               participant: targetNumber,
+              createdBy: senderNumber,
             },
             participantPlayer.source,
           );
