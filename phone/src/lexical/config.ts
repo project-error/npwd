@@ -1,5 +1,6 @@
 import { EmojiNode } from './nodes/EmojiNode';
 import { ImageNode } from './nodes/ImageNode';
+import { MentionNode } from './nodes/MentionNode';
 
 const editorTheme = {
   ltr: 'ltr',
@@ -12,5 +13,5 @@ export const config = {
   onError(error) {
     throw error;
   },
-  nodes: [EmojiNode, ImageNode],
+  nodes: [EmojiNode, ImageNode, MentionNode],
 };

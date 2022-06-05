@@ -9,6 +9,7 @@ import './editor.css';
 import { EmojisPlugin } from '../../../../lexical/plugins/EmojisPlugin';
 import { config } from '../../../../lexical/config';
 import { ImagesPlugin } from '../../../../lexical/plugins/ImagePlugin';
+import MentionsPlugin from '../../../../lexical/plugins/MentionsPlugin';
 
 export const TweetEditor: React.FC = () => {
   const onChange = (editorState: EditorState) => {
@@ -38,10 +39,12 @@ export const TweetEditor: React.FC = () => {
           placeholder={<div className="editor-placeholder">What's happening?</div>}
         />
         <OnChangePlugin onChange={onChange} />
+        <MentionsPlugin />
         <ImagesPlugin />
         <EmojisPlugin />
         <AutoFocusPlugin />
       </div>
+      <div id="mention-thing" />
     </LexicalComposer>
   );
 };
