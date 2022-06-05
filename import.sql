@@ -156,6 +156,7 @@ CREATE TABLE `npwd_messages_conversations`
     `createdAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `updatedAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `last_message_id`   INT(11)      NULL     DEFAULT NULL,
+    `createdBy`         varchar(48)  NOT NULL DEFAULT ''
     `is_group_chat`     TINYINT(4)   NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`) USING BTREE
 );

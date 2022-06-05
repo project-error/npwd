@@ -72,9 +72,10 @@ export class _MessagesDB {
     conversationList: string,
     conversationLabel: string,
     isGroupChat: boolean,
+    createdBy: string,
   ) {
-    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label, is_group_chat)
-                               VALUES (?, ?, ?)`;
+    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label, is_group_chat, createdBy)
+                               VALUES (?, ?, ?, ?)`;
     const participantQuery = `INSERT INTO npwd_messages_participants (conversation_id, participant)
                               VALUES (?, ?)`;
 
@@ -82,6 +83,7 @@ export class _MessagesDB {
       conversationList,
       isGroupChat ? conversationLabel : '',
       isGroupChat,
+      createdBy,
     ]);
     const result = <ResultSetHeader>results;
 

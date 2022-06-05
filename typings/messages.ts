@@ -35,12 +35,14 @@ export interface MessageConversation {
   unread?: number;
   unreadCount?: number;
   updatedAt?: number;
+  createdBy: string;
 }
 
 export interface PreDBConversation {
   participants: string[];
   conversationLabel: string;
   isGroupChat: boolean;
+  createdBy: string;
 }
 
 export interface MessagesRequest {

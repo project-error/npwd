@@ -136,6 +136,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           conversationLabel: conversation.conversationLabel,
           participants: conversation.participants,
           isGroupChat: conversation.isGroupChat,
+          createdBy: conversation.createdBy,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
@@ -178,6 +179,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           isGroupChat: resp.data.isGroupChat,
           unread: 0,
           unreadCount: 0,
+          createdBy: resp.data.createdBy,
         });
 
         history.push(`/messages`);

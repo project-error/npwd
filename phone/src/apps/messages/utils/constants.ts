@@ -10,6 +10,7 @@ export const MockMessageConversations: MessageConversation[] = [
     label: '',
     updatedAt: 5,
     isGroupChat: false,
+    createdBy: '111-1134',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ export const MockMessageConversations: MessageConversation[] = [
     label: 'Secret Project Error chat',
     updatedAt: 5,
     isGroupChat: true,
+    createdBy: '111-1134',
   },
 ];
 

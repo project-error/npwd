@@ -42,6 +42,7 @@ export const useMessagesService = () => {
         conversationList: conversation.conversationList,
         label: conversation.label,
         unread: 0,
+        createdBy: conversation.createdBy,
       });
     },
     [updateLocalConversations],
