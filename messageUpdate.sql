@@ -1,1 +1,0 @@
-ALTER TABLE npwd_messages_conversations ADD COLUMN `createdBy` varchar(48) NOT NULL DEFAULT ''
