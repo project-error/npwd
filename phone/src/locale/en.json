@@ -220,7 +220,8 @@
         "DELETE_MESSAGE": "Delete message",
         "DELETE_MESSAGE_FAILED": "Failed to delete message",
         "DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
-        "REMOVE_GROUP_MEMBER_FAILED": "Failed to remove member"
+        "REMOVE_GROUP_MEMBER_FAILED": "Failed to remove member",
+        "LEAVE_GROUP_FAILED": "Failed to leave group"
       },
       "SEARCH_PLACEHOLDER": "Search messages...",
       "DELETE_CONVERSATION": "Delete conversation",

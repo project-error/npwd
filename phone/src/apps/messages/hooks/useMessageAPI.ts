@@ -16,6 +16,7 @@ import { messageState, useSetMessages } from './state';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import Conversation from '../components/modal/Conversation';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
@@ -30,6 +31,7 @@ type UseMessageAPIProps = {
     conversationId: number,
     phoneNumber: string,
   ) => void;
+  leaveGroup: (conversationList: string, conversationId: number, phoneNumber: string) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -250,6 +252,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         conversationList,
         conversationId,
         phoneNumber,
+        leaveGroup: false,
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
@@ -263,6 +266,27 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     [addAlert, removeLocalGroupMember, t],
   );
 
+  const leaveGroup = useCallback(
+    (conversationList: string, conversationId: number, phoneNumber: string) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.REMOVE_GROUP_MEMBER, {
+        conversationList,
+        conversationId,
+        phoneNumber,
+        leaveGroup: true,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.LEAVE_GROUP_FAILED'),
+            type: 'error',
+          });
+        }
+        removeLocalConversation([conversationId]);
+        return history.push('/messages');
+      });
+    },
+    [addAlert, history, removeLocalConversation, t],
+  );
+
   return {
     sendMessage,
     deleteMessage,
@@ -272,5 +296,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     sendEmbedMessage,
     setMessageRead,
     removeGroupMember,
+    leaveGroup,
   };
 };

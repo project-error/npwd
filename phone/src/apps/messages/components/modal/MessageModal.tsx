@@ -67,7 +67,7 @@ export const MessageModal = () => {
   const { fetchMessages } = useMessageAPI();
   const { getLabelOrContact, getConversationParticipant } = useMessageActions();
   const { initializeCall } = useCall();
-  const { removeGroupMember } = useMessageAPI();
+  const { removeGroupMember, leaveGroup } = useMessageAPI();
 
   const { getContactByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
@@ -152,6 +152,14 @@ export const MessageModal = () => {
     );
   };
 
+  const handleLeaveGroup = () => {
+    leaveGroup(
+      activeMessageConversation.conversationList,
+      activeMessageConversation.id,
+      myPhoneNumber,
+    );
+  };
+
   // This only gets used for 1 on 1 conversations
   let conversationList = activeMessageConversation.conversationList.split('+');
   conversationList = conversationList.filter((targetNumber) => targetNumber !== myPhoneNumber);
@@ -180,6 +188,7 @@ export const MessageModal = () => {
           createdBy={activeMessageConversation.createdBy}
           addContact={handleAddContact}
           removeMember={handleGroupRemove}
+          leaveGroup={handleLeaveGroup}
         />
         {isGroupModalOpen && <Backdrop />}
         <Box

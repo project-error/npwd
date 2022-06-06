@@ -15,6 +15,7 @@ interface GroupDetailsModalProps {
   createdBy: string;
   addContact: (number: any) => void;
   removeMember: (number: any) => void;
+  leaveGroup: () => void;
 }
 
 const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
@@ -24,6 +25,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   createdBy,
   addContact,
   removeMember,
+  leaveGroup,
 }) => {
   const myPhoneNumber = useMyPhoneNumber();
   const { getContactByNumber } = useContactActions();
@@ -45,10 +47,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   return (
     <Modal visible={open} handleClose={onClose}>
       <Box>
-        <Stack direction="row" spacing={4}>
-          <Typography fontSize={20}>Details</Typography>
-          {/*<Button size="small">Add participant</Button>*/}
-        </Stack>
+        <Typography fontSize={20}>Details</Typography>
       </Box>
       {participants.map((participant) => {
         const contact = findContact(participant);
@@ -76,6 +75,20 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
           </Box>
         );
       })}
+      <Box
+        sx={{
+          mt: 2,
+          display: 'flex',
+          justifyContent: 'space-evenly',
+        }}
+      >
+        <Button size="medium" onClick={leaveGroup}>
+          Leave Group
+        </Button>
+        {/* {myPhoneNumber === createdBy && (
+            <Button size="medium">Add participant</Button>
+          )} */}
+      </Box>
     </Modal>
   );
 };

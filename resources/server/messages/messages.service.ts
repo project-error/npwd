@@ -305,11 +305,11 @@ class _MessagesService {
       const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
       const participants = reqObj.data.conversationList.split('+');
       for (const participant of participants) {
-        if (participant !== playerPhoneNumber) {
+        if (reqObj.data.leaveGroup || participant !== playerPhoneNumber) {
           const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
           if (participantPlayer) {
-            if (participant == reqObj.data.phoneNumber) {
+            if (!reqObj.data.leaveGroup && participant == reqObj.data.phoneNumber) {
               //if the player is the one being removed
               emitNetTyped(
                 MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION,

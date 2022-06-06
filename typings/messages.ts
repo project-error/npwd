@@ -57,6 +57,7 @@ export interface RemoveGroupMemberRequest {
   conversationList: string;
   conversationId: number;
   phoneNumber: string;
+  leaveGroup: boolean;
 }
 
 /**
