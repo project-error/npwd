@@ -6,6 +6,7 @@ import {
   MessageEvents,
   PreDBConversation,
   PreDBMessage,
+  RemoveGroupMemberRequest,
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
@@ -113,3 +114,15 @@ onNetPromise(MessageEvents.GET_MESSAGE_LOCATION, async (reqObj, resp) => {
     messagesLogger.error(`Error occurred in get location event (${src}), Error: ${e.message}`);
   });
 });
+
+onNetPromise<RemoveGroupMemberRequest, void>(
+  MessageEvents.REMOVE_GROUP_MEMBER,
+  async (reqObj, resp) => {
+    MessagesService.handleRemoveGroupMember(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred while removing a group member (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);

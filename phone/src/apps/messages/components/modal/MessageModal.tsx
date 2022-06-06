@@ -67,6 +67,7 @@ export const MessageModal = () => {
   const { fetchMessages } = useMessageAPI();
   const { getLabelOrContact, getConversationParticipant } = useMessageActions();
   const { initializeCall } = useCall();
+  const { removeGroupMember } = useMessageAPI();
 
   const { getContactByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
@@ -143,6 +144,14 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
+  const handleGroupRemove = (number: string) => {
+    removeGroupMember(
+      activeMessageConversation.conversationList,
+      activeMessageConversation.id,
+      number,
+    );
+  };
+
   // This only gets used for 1 on 1 conversations
   let conversationList = activeMessageConversation.conversationList.split('+');
   conversationList = conversationList.filter((targetNumber) => targetNumber !== myPhoneNumber);
@@ -168,7 +177,9 @@ export const MessageModal = () => {
           open={isGroupModalOpen}
           onClose={closeGroupModal}
           conversationList={activeMessageConversation.conversationList}
+          createdBy={activeMessageConversation.createdBy}
           addContact={handleAddContact}
+          removeMember={handleGroupRemove}
         />
         {isGroupModalOpen && <Backdrop />}
         <Box

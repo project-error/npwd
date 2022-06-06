@@ -3,6 +3,7 @@ import {
   useConversationId,
   useSetMessageConversations,
   useSetMessages,
+  useMessageConversationsValue,
 } from './state';
 import { useCallback } from 'react';
 import { Message, MessageConversation } from '@typings/messages';
@@ -19,6 +20,7 @@ interface MessageActionProps {
   setMessageReadState: (conversationId: number, unreadCount: number) => void;
   getLabelOrContact: (messageConversation: MessageConversation) => string;
   getConversationParticipant: (conversationList: string) => Contact | null;
+  removeLocalGroupMember: (conversationId: number, phoneNumber: string) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -91,6 +93,27 @@ export const useMessageActions = (): MessageActionProps => {
     [setMessageConversation, conversationLoading, conversations],
   );
 
+  const removeLocalGroupMember = useCallback(
+    (conversationsId: number, phoneNumber: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationsId) {
+            const conversationListRemove = conversation.conversationList
+              .split('+')
+              .filter((number) => number !== phoneNumber)
+              .join('+');
+            return {
+              ...conversation,
+              conversationList: conversationListRemove,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
+  );
+
   const updateLocalMessages = useCallback(
     (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
@@ -136,5 +159,6 @@ export const useMessageActions = (): MessageActionProps => {
     setMessageReadState,
     getLabelOrContact,
     getConversationParticipant,
+    removeLocalGroupMember,
   };
 };

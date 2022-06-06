@@ -34,6 +34,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_list         as conversationList,
                           npwd_messages_conversations.is_group_chat             as isGroupChat,
                           npwd_messages_conversations.label,
+                          npwd_messages_conversations.createdBy,
                           UNIX_TIMESTAMP(npwd_messages_conversations.createdAt) as createdAt,
                           UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt
                    FROM npwd_messages_conversations
@@ -169,6 +170,17 @@ export class _MessagesDB {
                      AND participant = ?`;
 
     await DbInterface._rawExec(query, [conversationId, phoneNumber]);
+  }
+
+  async removeGroupMember(conversationList: string, conversationId: number, phoneNumber: string) {
+    const updatedConversationList = conversationList
+      .split('+')
+      .filter((number) => number != phoneNumber)
+      .join('+');
+    const conversationQuery = `UPDATE npwd_messages_conversations SET conversation_list = ? WHERE id = ?`;
+    const participantQuery = `DELETE FROM npwd_messages_participants WHERE conversation_id = ? AND participant = ?`;
+    await DbInterface._rawExec(conversationQuery, [updatedConversationList, conversationId]);
+    await DbInterface._rawExec(participantQuery, [conversationId, phoneNumber]);
   }
 
   async doesConversationExist(conversationList: string): Promise<boolean> {

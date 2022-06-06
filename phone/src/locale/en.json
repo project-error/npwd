@@ -219,7 +219,8 @@
         "FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
         "DELETE_MESSAGE": "Delete message",
         "DELETE_MESSAGE_FAILED": "Failed to delete message",
-        "DELETE_CONVERSATION_FAILED": "Failed to delete conversation"
+        "DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
+        "REMOVE_GROUP_MEMBER_FAILED": "Failed to remove member"
       },
       "SEARCH_PLACEHOLDER": "Search messages...",
       "DELETE_CONVERSATION": "Delete conversation",

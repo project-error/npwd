@@ -3,6 +3,7 @@ import Modal from '@ui/components/Modal';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { findParticipants } from '../../utils/helpers';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
@@ -11,14 +12,18 @@ interface GroupDetailsModalProps {
   open: boolean;
   onClose: () => void;
   conversationList: string;
+  createdBy: string;
   addContact: (number: any) => void;
+  removeMember: (number: any) => void;
 }
 
 const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   open,
   onClose,
   conversationList,
+  createdBy,
   addContact,
+  removeMember,
 }) => {
   const myPhoneNumber = useMyPhoneNumber();
   const { getContactByNumber } = useContactActions();
@@ -31,6 +36,10 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
 
   const handleAddContact = (participant: string) => {
     addContact(participant);
+  };
+
+  const handleGroupRemove = (participant: string) => {
+    removeMember(participant);
   };
 
   return (
@@ -51,11 +60,18 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
                 <PersonIcon fontSize="medium" />
                 <Typography fontSize={18}>{contact?.display ?? participant}</Typography>
               </Stack>
-              {!contact && (
-                <Button onClick={() => handleAddContact(participant)}>
-                  <PersonAddIcon fontSize="medium" />
-                </Button>
-              )}
+              <Box>
+                {!contact && (
+                  <Button onClick={() => handleAddContact(participant)}>
+                    <PersonAddIcon fontSize="medium" />
+                  </Button>
+                )}
+                {myPhoneNumber === createdBy && (
+                  <Button onClick={() => handleGroupRemove(participant)}>
+                    <PersonRemoveIcon fontSize="medium" />
+                  </Button>
+                )}
+              </Box>
             </Box>
           </Box>
         );

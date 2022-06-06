@@ -15,6 +15,8 @@ import {
   PreDBConversation,
   PreDBMessage,
   Location,
+  RemoveGroupMemberRequest,
+  RemoveGroupMemberResponse,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
 import { emitNetTyped } from '../utils/miscUtils';
@@ -284,6 +286,52 @@ class _MessagesService {
         await this.messagesDB.deleteConversation(id, phoneNumber);
       }
       resp({ status: 'ok' });
+    } catch (err) {
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async handleRemoveGroupMember(
+    reqObj: PromiseRequest<RemoveGroupMemberRequest>,
+    resp: PromiseEventResp<void>,
+  ) {
+    try {
+      await this.messagesDB.removeGroupMember(
+        reqObj.data.conversationList,
+        reqObj.data.conversationId,
+        reqObj.data.phoneNumber,
+      );
+      resp({ status: 'ok' });
+      const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+      const participants = reqObj.data.conversationList.split('+');
+      for (const participant of participants) {
+        if (participant !== playerPhoneNumber) {
+          const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
+          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+          if (participantPlayer) {
+            if (participant == reqObj.data.phoneNumber) {
+              //if the player is the one being removed
+              emitNetTyped(
+                MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION,
+                {
+                  conversationID: [reqObj.data.conversationId],
+                },
+                participantPlayer.source,
+              );
+            } else {
+              //if the player is not the one being removed
+              emitNetTyped<RemoveGroupMemberResponse>(
+                MessageEvents.REMOVE_GROUP_MEMBER_LIST,
+                {
+                  conversationId: reqObj.data.conversationId,
+                  phoneNumber: reqObj.data.phoneNumber,
+                },
+                participantPlayer.source,
+              );
+            }
+          }
+        }
+      }
     } catch (err) {
       resp({ status: 'error', errorMsg: err.message });
     }

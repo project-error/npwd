@@ -1,5 +1,10 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { Message, MessageConversation, MessageEvents } from '@typings/messages';
+import {
+  Message,
+  MessageConversation,
+  MessageEvents,
+  RemoveGroupMemberResponse,
+} from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
@@ -7,8 +12,13 @@ import { useLocation } from 'react-router';
 import { useActiveMessageConversation } from './state';
 
 export const useMessagesService = () => {
-  const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
-    useMessageActions();
+  const {
+    updateLocalMessages,
+    updateLocalConversations,
+    setMessageReadState,
+    removeLocalConversation,
+    removeLocalGroupMember,
+  } = useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
   const activeConversation = useActiveMessageConversation();
@@ -48,7 +58,23 @@ export const useMessagesService = () => {
     [updateLocalConversations],
   );
 
+  const handleDeleteConversation = useCallback(
+    (conversationId: number[]) => {
+      removeLocalConversation(conversationId);
+    },
+    [removeLocalConversation],
+  );
+
+  const handleRemoveGroupMember = useCallback(
+    (conversation: RemoveGroupMemberResponse) => {
+      removeLocalGroupMember(conversation.conversationId, conversation.phoneNumber);
+    },
+    [removeLocalGroupMember],
+  );
+
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
   useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
+  useNuiEvent('MESSAGES', MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
+  useNuiEvent('MESSAGES', MessageEvents.REMOVE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
 };

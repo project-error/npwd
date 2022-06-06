@@ -25,6 +25,11 @@ type UseMessageAPIProps = {
   deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
   setMessageRead: (conversationId: number) => void;
+  removeGroupMember: (
+    conversationList: string,
+    conversationId: number,
+    phoneNumber: string,
+  ) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -35,6 +40,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteLocalMessage,
     updateLocalConversations,
     removeLocalConversation,
+    removeLocalGroupMember,
     setMessageReadState,
   } = useMessageActions();
   const history = useHistory();
@@ -238,6 +244,25 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     [setMessages, addAlert, t, history],
   );
 
+  const removeGroupMember = useCallback(
+    (conversationList: string, conversationId: number, phoneNumber: string) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.REMOVE_GROUP_MEMBER, {
+        conversationList,
+        conversationId,
+        phoneNumber,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.REMOVE_GROUP_MEMBER_FAILED'),
+            type: 'error',
+          });
+        }
+        removeLocalGroupMember(conversationId, phoneNumber);
+      });
+    },
+    [addAlert, removeLocalGroupMember, t],
+  );
+
   return {
     sendMessage,
     deleteMessage,
@@ -246,5 +271,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     fetchMessages,
     sendEmbedMessage,
     setMessageRead,
+    removeGroupMember,
   };
 };

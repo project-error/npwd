@@ -53,6 +53,11 @@ export interface MessagesRequest {
 export interface DeleteConversationRequest {
   conversationsId: number[];
 }
+export interface RemoveGroupMemberRequest {
+  conversationList: string;
+  conversationId: number;
+  phoneNumber: string;
+}
 
 /**
  * Used for the raw npwd_messages_groups row responses
@@ -114,6 +119,11 @@ export interface MessageConversationResponse {
   label: string;
 }
 
+export interface RemoveGroupMemberResponse {
+  conversationId: number;
+  phoneNumber: string;
+}
+
 export interface OnMessageExportCtx {
   /**
    * The incoming message object
@@ -152,6 +162,9 @@ export enum MessageEvents {
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
   GET_MESSAGE_LOCATION = 'npwd:getMessageLocation',
   MESSAGES_SET_WAYPOINT = 'npwd:setWaypoint',
+  REMOVE_GROUP_MEMBER = 'nwpd:removeGroupMember',
+  REMOVE_GROUP_MEMBER_CONVERSATION = 'nwpd:removeGroupMemberChat',
+  REMOVE_GROUP_MEMBER_LIST = 'nwpd:removeGroupMemberList',
 }
 
 export interface Location {
