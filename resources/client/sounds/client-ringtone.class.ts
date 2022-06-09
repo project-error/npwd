@@ -2,10 +2,9 @@ export class Ringtone {
   constructor(private readonly ringtoneName: string) {}
 
   play(): void {
-    print(this.ringtoneName);
     TriggerServerEvent(
       'ambiant_sounds:playEntity',
-      'iphone.mp3',
+      this.ringtoneName,
       10.0,
       1.0,
       NetworkGetNetworkIdFromEntity(PlayerPedId()),

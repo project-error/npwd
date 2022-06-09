@@ -25,7 +25,7 @@ import {
   VolumeUp,
   FileCopy,
   Book,
-  DeleteForever,
+  // DeleteForever,
   Apps,
 } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -297,7 +297,7 @@ export const SettingsApp: React.FC = () => {
             onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
           />
         </SettingsCategory>
-        <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
+        {/* <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
           <SettingItem
             label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
             value={t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}
@@ -305,7 +305,7 @@ export const SettingsApp: React.FC = () => {
             onClick={openMenu}
             options={resetSettingsOpts}
           />
-        </SettingsCategory>
+        </SettingsCategory> */}
       </AppContent>
       <ContextMenu />
     </AppWrapper>

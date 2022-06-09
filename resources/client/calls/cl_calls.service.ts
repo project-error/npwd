@@ -96,7 +96,7 @@ export class CallService {
       this.callSound.play();
     }
 
-    if (!isTransmitter) {
+    if (!isTransmitter && !global.isPhoneDisabled) {
       const ringtone = KvpService.getKvpString(KvpItems.NPWD_RINGTONE);
       this.ringtone = new Ringtone(ringtone);
       this.ringtone.play();
