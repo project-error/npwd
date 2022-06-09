@@ -12,20 +12,17 @@ const genNumber = (length: number): string => {
   localMax = Math.pow(10, length + addAmount);
   const min = localMax / 10;
   const number = Math.floor(Math.random() * (localMax - min + 1)) + min;
-
-  const strNumber = '' + number;
-
-  return strNumber.substr(addAmount);
+  const strNumber = String(number);
+  return strNumber.substring(addAmount);
 };
 
 const generateUsNumber = (): string => {
-  const rawNumber = genNumber(10);
-  return rawNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  return '555' + genNumber(6);
 };
 
 /**/
 export async function generateUniquePhoneNumber(): Promise<string> {
-  const query = `SELECT EXISTS(SELECT * FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?)`;
+  const query = `SELECT EXISTS(SELECT * FROM npwd_sim WHERE phone_number = ?)`;
   const dashNumber = generateUsNumber();
 
   const [results] = await DbInterface._rawExec(query, [dashNumber]);
