@@ -14,6 +14,7 @@ import {
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VibrationIcon from '@mui/icons-material/Vibration';
 import {
   FilterList,
   Brush,
@@ -221,15 +222,30 @@ export const SettingsApp: React.FC = () => {
             value={settings.callVolume}
             onCommit={(_, val) => handleSettingChange('callVolume', val)}
           />
+          <SettingItemSlider
+            label={'Volume sonnerie et notifications'}
+            icon={<VolumeUp />}
+            value={settings.allNotifVolume}
+            onCommit={(_, val) => handleSettingChange('allNotifVolume', val)}
+          />
+          <SettingSwitch
+            label={'Mode vibreur'}
+            secondary={
+              'Désactive tous les sons des notifications et fais vibrer votre téléphone à la place'
+            }
+            icon={<VibrationIcon />}
+            value={settings.vibrorMode}
+            onClick={(curr) => handleSettingChange('vibrorMode', !curr)}
+          />
         </SettingsCategory>
         <SettingsCategory title={t('SETTINGS.CATEGORY.APPEARANCE')}>
-          <SettingItem
+          {/* <SettingItem
             label={t('SETTINGS.OPTIONS.LANGUAGE')}
             value={settings.language.label}
             options={languages}
             onClick={openMenu}
             icon={<Book />}
-          />
+          /> */}
           <SettingItem
             label={t('SETTINGS.OPTIONS.THEME')}
             value={settings.theme.label}

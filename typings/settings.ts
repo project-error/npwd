@@ -13,6 +13,8 @@ export interface SettingOption<T = any> {
 export enum KvpItems {
   NPWD_RINGTONE = 'npwd-ringtone',
   NPWD_NOTIFICATION = 'npwd-notification',
+  NPWD_VOLUME = 'npwd-volume',
+  NPWD_VIBROR = 'npwd-vibror',
 }
 
 export interface IPhoneSettings {
@@ -25,6 +27,8 @@ export interface IPhoneSettings {
   streamerMode: boolean;
   ringtone: SettingOption;
   callVolume: number;
+  allNotifVolume: number;
+  vibrorMode: boolean;
   notiSound: SettingOption;
   TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
   TWITTER_notiSound: SettingOption;

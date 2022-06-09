@@ -48,7 +48,7 @@
   },
   "twitter": {
     "showNotifications": true,
-    "generateProfileNameFromUsers": true,
+    "generateProfileNameFromUsers": false,
     "allowEditableProfileName": true,
     "allowDeleteTweets": true,
     "allowReportTweets": true,
@@ -61,11 +61,11 @@
     "maxImages": 3
   },
   "match": {
-    "generateProfileNameFromUsers": true,
+    "generateProfileNameFromUsers": false,
     "allowEditableProfileName": true
   },
   "marketplace": {
-    "persistListings": false
+    "persistListings": true
   },
   "debug": {
     "level": "error",

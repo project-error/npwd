@@ -40,6 +40,7 @@ const settingsSchema: Schema = {
   type: 'object',
   properties: {
     callVolume: { type: 'number', required: true },
+    allNotifVolume: { type: 'number', required: true },
     iconSet: { $ref: '/SettingOptionIconSet', required: true },
     language: { $ref: '/SettingOption', required: true },
     wallpaper: { $ref: '/SettingOption', required: true },
@@ -47,6 +48,7 @@ const settingsSchema: Schema = {
     theme: { $ref: '/SettingOption', required: true },
     zoom: { $ref: '/SettingOption', required: true },
     streamerMode: { type: 'boolean', required: true },
+    vibrorMode: { type: 'boolean', required: true },
     ringtone: { $ref: '/SettingOption', required: true },
     notiSound: { $ref: '/SettingOption', required: true },
     TWITTER_notiFilter: { $ref: '/SettingOption', required: true },
