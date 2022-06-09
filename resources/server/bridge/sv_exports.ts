@@ -5,6 +5,7 @@ import { PlayerAddData } from '../players/player.interfaces';
 import { playerLogger } from '../players/player.utils';
 import PlayerService from '../players/player.service';
 import { PhoneEvents } from '../../../typings/phone';
+import { ChangePhoneNumber } from '../misc/functions';
 
 const exp = global.exports;
 
@@ -18,6 +19,27 @@ exp('generatePhoneNumber', async () => {
   logExport('generatePhoneNumber', num);
   return num;
 });
+
+exp(
+  'ChangePhoneNumber',
+  async (src: string, phonenumber: string, playerDTO: PlayerAddData, src2: number) => {
+    const player = PlayerService.getPlayerFromIdentifier(src);
+    player.setPhoneNumber(phonenumber);
+    ChangePhoneNumber(src, phonenumber);
+
+    if (typeof src2 !== 'number') {
+      return playerLogger.error('Source must be passed as a number when unloading a player');
+    }
+    playerLogger.debug(`Received unloadPlayer event for ${src2}`);
+    await PlayerService.handleUnloadPlayerEvent(src2);
+
+    if (typeof playerDTO.source !== 'number') {
+      return playerLogger.error('Source must be passed as a number when loading a player');
+    }
+    await PlayerService.handleNewPlayerEvent(playerDTO);
+    emitNet('npwd:setPlayerLoaded' /* SET_PLAYER_LOADED */, playerDTO.source, true);
+  },
+);
 
 // For multicharacter frameworks, we enable these events for
 // instantiating/deleting a player. The config option must be set to true

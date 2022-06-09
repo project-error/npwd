@@ -18,13 +18,14 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const number = await PlayerService.getPhoneNumberFromIdentifier(identifier);
     try {
       const imageUrl = checkAndFilterImage(reqObj.data.avatar);
       if (imageUrl == null) {
         return resp({ status: 'error', errorMsg: 'GENERIC_INVALID_IMAGE_HOST' });
       }
       reqObj.data.avatar = imageUrl;
-      await this.contactsDB.updateContact(reqObj.data, identifier);
+      await this.contactsDB.updateContact(reqObj.data, number);
       resp({ status: 'ok' });
     } catch (e) {
       contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);
@@ -36,12 +37,13 @@ class _ContactService {
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const number = await PlayerService.getPhoneNumberFromIdentifier(identifier);
     try {
-      await this.contactsDB.deleteContact(reqObj.data.id, identifier);
+      await this.contactsDB.deleteContact(reqObj.data.id, number);
       resp({ status: 'ok' });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.message}`);
+      contactsLogger.error(`Error in handleDeleteContact (${number}), ${e.message}`);
     }
   }
   async handleAddContact(
@@ -49,13 +51,14 @@ class _ContactService {
     resp: PromiseEventResp<Contact>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const number = await PlayerService.getPhoneNumberFromIdentifier(identifier);
     try {
       const imageUrl = checkAndFilterImage(reqObj.data.avatar);
       if (imageUrl == null) {
         return resp({ status: 'error', errorMsg: 'GENERIC_INVALID_IMAGE_HOST' });
       }
       reqObj.data.avatar = imageUrl;
-      const contact = await this.contactsDB.addContact(identifier, reqObj.data);
+      const contact = await this.contactsDB.addContact(number, reqObj.data);
 
       resp({ status: 'ok', data: contact });
     } catch (e) {
@@ -68,12 +71,13 @@ class _ContactService {
     resp: PromiseEventResp<Contact[]>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
+    const number = await PlayerService.getPhoneNumberFromIdentifier(identifier);
     try {
-      const contacts = await this.contactsDB.fetchAllContacts(identifier);
+      const contacts = await this.contactsDB.fetchAllContacts(number);
       resp({ status: 'ok', data: contacts });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
-      contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.message}`);
+      contactsLogger.error(`Error in handleFetchContact (${number}), ${e.message}`);
     }
   }
 }

@@ -36,3 +36,14 @@ export async function findOrGeneratePhoneNumber(identifier: string): Promise<str
 
   return gennedNumber;
 }
+
+export async function ChangePhoneNumber(identifier: string, phonenumber: string) {
+  const updateQuery = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
+  const result = await DbInterface._rawExec(updateQuery, [phonenumber, identifier]);
+  if (!result || !result[0] || !result[0].affectedRows) {
+    playerLogger.error(`Failed to store phone number in database`);
+    playerLogger.error(
+      `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ${phonenumber} WHERE ${config.database.identifierColumn} = ${identifier}`,
+    );
+  }
+}
