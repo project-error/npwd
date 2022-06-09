@@ -6,6 +6,8 @@ import { Ringtone } from './sounds/client-ringtone.class';
 
 RegisterNuiCB(AlertEvents.PLAY_ALERT, () => {
   const notifSoundset = KvpService.getKvpString(KvpItems.NPWD_NOTIFICATION);
-  const sound = new Ringtone(notifSoundset);
+  const volume = KvpService.getKvpInt(KvpItems.NPWD_VOLUME);
+  const vibror = KvpService.getKvpInt(KvpItems.NPWD_VIBROR);
+  const sound = new Ringtone(notifSoundset, volume, vibror, false);
   sound.play();
 });

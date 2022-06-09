@@ -11,6 +11,8 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
 
   KvpService.setKvp(KvpItems.NPWD_RINGTONE, cfg.ringtone.value);
   KvpService.setKvp(KvpItems.NPWD_NOTIFICATION, cfg.notiSound.value);
+  KvpService.setKvpInt(KvpItems.NPWD_VOLUME, cfg.allNotifVolume);
+  KvpService.setKvpInt(KvpItems.NPWD_VIBROR, cfg.vibrorMode ? 1 : 0);
   cb({});
 });
 
@@ -19,7 +21,8 @@ RegisterNuiCB(SettingEvents.PREVIEW_ALERT, () => {
   if (Ringtone.isPlaying()) return;
 
   const notifSoundset = KvpService.getKvpString(KvpItems.NPWD_NOTIFICATION);
-  const sound = new Ringtone(notifSoundset);
+  const volume = KvpService.getKvpInt(KvpItems.NPWD_VOLUME);
+  const sound = new Ringtone(notifSoundset, volume, 0, false);
   sound.play();
 });
 
@@ -28,7 +31,8 @@ RegisterNuiCB(SettingEvents.PREVIEW_RINGTONE, () => {
   if (Ringtone.isPlaying()) return;
 
   const ringtoneSound = KvpService.getKvpString(KvpItems.NPWD_RINGTONE);
-  const ringtone = new Ringtone(ringtoneSound);
+  const volume = KvpService.getKvpInt(KvpItems.NPWD_VOLUME);
+  const ringtone = new Ringtone(ringtoneSound, volume, 0, false);
   ringtone.play();
   setTimeout(ringtone.stop, 3000);
 });

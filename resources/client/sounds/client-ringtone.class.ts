@@ -1,13 +1,25 @@
 export class Ringtone {
-  constructor(private readonly ringtoneName: string) {}
+  constructor(
+    private ringtoneName: string,
+    private volume: number,
+    private readonly vibror: number,
+    private readonly looped: boolean,
+  ) {}
 
   play(): void {
+    let distance = 10.0;
+    if (this.vibror) {
+      this.ringtoneName = 'phone/vibror.mp3';
+      this.volume = 20;
+      distance = 25.0;
+    }
     TriggerServerEvent(
       'ambiant_sounds:playEntity',
       this.ringtoneName,
-      10.0,
-      1.0,
+      distance,
+      this.volume / 100,
       NetworkGetNetworkIdFromEntity(PlayerPedId()),
+      this.looped,
     );
   }
 

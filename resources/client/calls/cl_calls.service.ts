@@ -98,7 +98,10 @@ export class CallService {
 
     if (!isTransmitter && !global.isPhoneDisabled) {
       const ringtone = KvpService.getKvpString(KvpItems.NPWD_RINGTONE);
-      this.ringtone = new Ringtone(ringtone);
+      const volume = KvpService.getKvpInt(KvpItems.NPWD_VOLUME);
+      const vibror = KvpService.getKvpInt(KvpItems.NPWD_VIBROR);
+
+      this.ringtone = new Ringtone(ringtone, volume, vibror, true);
       this.ringtone.play();
     }
 

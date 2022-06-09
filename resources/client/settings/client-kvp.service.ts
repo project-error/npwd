@@ -1,5 +1,5 @@
 export class _KvpService {
-  setKvp(key: string, value: string): void {
+  setKvp(key: string, value: any): void {
     SetResourceKvp(key, value);
   }
 
