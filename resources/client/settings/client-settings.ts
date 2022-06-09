@@ -16,8 +16,10 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
 
 // Play an alert when previewing notification sound
 RegisterNuiCB(SettingEvents.PREVIEW_ALERT, () => {
+  if (Ringtone.isPlaying()) return;
+
   const notifSoundset = KvpService.getKvpString(KvpItems.NPWD_NOTIFICATION);
-  const sound = new Sound('Text_Arrive_Tone', notifSoundset);
+  const sound = new Ringtone(notifSoundset);
   sound.play();
 });
 

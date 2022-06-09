@@ -12,9 +12,11 @@ export class Sound {
 
   play() {
     PlaySoundFrontend(this._soundId, this._soundName, this._soundSetName, false);
+    // TriggerServerEvent("ambiant_sounds:playEntity", "iphone.mp3", 10.0, 1.0, NetworkGetNetworkIdFromEntity(PlayerPedId()))
   }
 
   stop() {
     StopSound(this._soundId);
+    // TriggerServerEvent("ambiant_sounds:stopEntity", NetworkGetNetworkIdFromEntity(PlayerPedId()))
   }
 }
