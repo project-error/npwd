@@ -115,7 +115,7 @@ export const NotificationBar = () => {
             <SignalIcon fontSize="small" />
           </Grid>
           <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
+            <Typography className={classes.text} variant="button" sx={{ textTransform: 'none' }}>
               {Default.cellProvider}
             </Typography>
           </Grid>
