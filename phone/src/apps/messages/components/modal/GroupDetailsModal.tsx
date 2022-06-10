@@ -85,9 +85,6 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
         <Button size="medium" onClick={leaveGroup}>
           Leave Group
         </Button>
-        {/* {myPhoneNumber === createdBy && (
-            <Button size="medium">Add participant</Button>
-          )} */}
       </Box>
     </Modal>
   );
