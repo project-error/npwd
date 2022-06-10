@@ -305,35 +305,45 @@ class _MessagesService {
       const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
       const participants = reqObj.data.conversationList.split('+');
       for (const participant of participants) {
-        if (reqObj.data.leaveGroup || participant !== playerPhoneNumber) {
-          const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
-          const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
-          if (participantPlayer) {
-            if (!reqObj.data.leaveGroup && participant === reqObj.data.phoneNumber) {
-              //if the player is the one being removed
-              emitNetTyped(
-                MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION,
-                {
-                  conversationID: [reqObj.data.conversationId],
-                },
-                participantPlayer.source,
-              );
-            } else {
-              //if the player is not the one being removed
-              emitNetTyped<RemoveGroupMemberResponse>(
-                MessageEvents.DELETE_GROUP_MEMBER_LIST,
-                {
-                  conversationId: reqObj.data.conversationId,
-                  phoneNumber: reqObj.data.phoneNumber,
-                },
-                participantPlayer.source,
-              );
-            }
-          }
+        if (!reqObj.data.leaveGroup || participant === playerPhoneNumber) {
+          //if not leave group (kick) and the participant is the person kicking then move to next player as he already has updated data
+          continue;
+        }
+
+        const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
+        const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+
+        if (!participantPlayer) {
+          //if not online, move to next player
+          continue;
+        }
+
+        if (!reqObj.data.leaveGroup && participant === reqObj.data.phoneNumber) {
+          //if not leave group/leave themself and participant is equal to nubmer remove then remove the chat from their list
+          emitNetTyped(
+            MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION,
+            {
+              conversationID: [reqObj.data.conversationId],
+            },
+            participantPlayer.source,
+          );
+        }
+
+        if (participant !== reqObj.data.phoneNumber) {
+          //if they are not the one being removed then tell them who left
+          emitNetTyped<RemoveGroupMemberResponse>(
+            MessageEvents.DELETE_GROUP_MEMBER_LIST,
+            {
+              conversationId: reqObj.data.conversationId,
+              phoneNumber: reqObj.data.phoneNumber,
+            },
+            participantPlayer.source,
+          );
         }
       }
     } catch (err) {
-      resp({ status: 'error', errorMsg: err.message });
+      messagesLogger.error(`Failed to read message. Error: ${err.message}`);
+      resp({ status: 'error' });
     }
   }
 
