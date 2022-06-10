@@ -16,7 +16,6 @@ import { messageState, useSetMessages } from './state';
 import { useRecoilValueLoadable } from 'recoil';
 import { MockConversationServerResp } from '../utils/constants';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import Conversation from '../components/modal/Conversation';
 
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;

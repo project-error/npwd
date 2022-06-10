@@ -309,7 +309,7 @@ class _MessagesService {
           const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
           const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
           if (participantPlayer) {
-            if (!reqObj.data.leaveGroup && participant == reqObj.data.phoneNumber) {
+            if (!reqObj.data.leaveGroup && participant === reqObj.data.phoneNumber) {
               //if the player is the one being removed
               emitNetTyped(
                 MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION,

@@ -163,9 +163,9 @@ export enum MessageEvents {
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
   GET_MESSAGE_LOCATION = 'npwd:getMessageLocation',
   MESSAGES_SET_WAYPOINT = 'npwd:setWaypoint',
-  REMOVE_GROUP_MEMBER = 'nwpd:removeGroupMember',
-  REMOVE_GROUP_MEMBER_CONVERSATION = 'nwpd:removeGroupMemberChat',
-  REMOVE_GROUP_MEMBER_LIST = 'nwpd:removeGroupMemberList',
+  DELETE_GROUP_MEMBER = 'nwpd:deleteGroupMember',
+  DELETE_GROUP_MEMBER_CONVERSATION = 'nwpd:deleteGroupMemberChat',
+  DELETE_GROUP_MEMBER_LIST = 'nwpd:deleteGroupMemberList',
 }
 
 export interface Location {
