@@ -49,7 +49,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     }
   };
   return (
-    /*<MessageInput
+    <MessageInput
       value={message}
       inputProps={{
         style: {
@@ -64,8 +64,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-    />*/
-    <TweetEditor />
+    />
   );
 };
 
