@@ -75,17 +75,15 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
           </Box>
         );
       })}
-      <Box
+      <Button
+        size="medium"
         sx={{
           mt: 2,
-          display: 'flex',
-          justifyContent: 'space-evenly',
         }}
+        onClick={leaveGroup}
       >
-        <Button size="medium" onClick={leaveGroup}>
-          Leave Group
-        </Button>
-      </Box>
+        Leave Group
+      </Button>
     </Modal>
   );
 };
