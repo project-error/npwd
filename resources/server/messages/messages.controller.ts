@@ -116,7 +116,7 @@ onNetPromise(MessageEvents.GET_MESSAGE_LOCATION, async (reqObj, resp) => {
 });
 
 onNetPromise<RemoveGroupMemberRequest, void>(
-  MessageEvents.REMOVE_GROUP_MEMBER,
+  MessageEvents.DELETE_GROUP_MEMBER,
   async (reqObj, resp) => {
     MessagesService.handleRemoveGroupMember(reqObj, resp).catch((e) => {
       messagesLogger.error(

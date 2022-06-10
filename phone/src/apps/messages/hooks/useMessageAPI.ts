@@ -247,7 +247,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
   const removeGroupMember = useCallback(
     (conversationList: string, conversationId: number, phoneNumber: string) => {
-      fetchNui<ServerPromiseResp<void>>(MessageEvents.REMOVE_GROUP_MEMBER, {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_GROUP_MEMBER, {
         conversationList,
         conversationId,
         phoneNumber,
@@ -255,7 +255,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
       }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('MESSAGES.FEEDBACK.REMOVE_GROUP_MEMBER_FAILED'),
+            message: t('MESSAGES.FEEDBACK.DELETE_GROUP_MEMBER_FAILED'),
             type: 'error',
           });
         }
@@ -267,7 +267,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
   const leaveGroup = useCallback(
     (conversationList: string, conversationId: number, phoneNumber: string) => {
-      fetchNui<ServerPromiseResp<void>>(MessageEvents.REMOVE_GROUP_MEMBER, {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_GROUP_MEMBER, {
         conversationList,
         conversationId,
         phoneNumber,

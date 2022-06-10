@@ -13,7 +13,7 @@ RegisterNuiProxy(MessageEvents.DELETE_MESSAGE);
 RegisterNuiProxy(MessageEvents.FETCH_MESSAGES);
 RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);
-RegisterNuiProxy(MessageEvents.REMOVE_GROUP_MEMBER);
+RegisterNuiProxy(MessageEvents.DELETE_GROUP_MEMBER);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);
 RegisterNuiProxy(MessageEvents.GET_MESSAGE_LOCATION);
@@ -34,10 +34,10 @@ onNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, (result: MessageConvers
   sendMessageEvent(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, result);
 });
 
-onNet(MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION, (result: number[]) => {
-  sendMessageEvent(MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION, result);
+onNet(MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, (result: number[]) => {
+  sendMessageEvent(MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, result);
 });
 
-onNet(MessageEvents.REMOVE_GROUP_MEMBER_LIST, (result: RemoveGroupMemberResponse) => {
-  sendMessageEvent(MessageEvents.REMOVE_GROUP_MEMBER_LIST, result);
+onNet(MessageEvents.DELETE_GROUP_MEMBER_LIST, (result: RemoveGroupMemberResponse) => {
+  sendMessageEvent(MessageEvents.DELETE_GROUP_MEMBER_LIST, result);
 });

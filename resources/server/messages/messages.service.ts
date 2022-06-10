@@ -312,7 +312,7 @@ class _MessagesService {
             if (!reqObj.data.leaveGroup && participant === reqObj.data.phoneNumber) {
               //if the player is the one being removed
               emitNetTyped(
-                MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION,
+                MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION,
                 {
                   conversationID: [reqObj.data.conversationId],
                 },
@@ -321,7 +321,7 @@ class _MessagesService {
             } else {
               //if the player is not the one being removed
               emitNetTyped<RemoveGroupMemberResponse>(
-                MessageEvents.REMOVE_GROUP_MEMBER_LIST,
+                MessageEvents.DELETE_GROUP_MEMBER_LIST,
                 {
                   conversationId: reqObj.data.conversationId,
                   phoneNumber: reqObj.data.phoneNumber,

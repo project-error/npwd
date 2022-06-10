@@ -75,6 +75,6 @@ export const useMessagesService = () => {
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
   useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
-  useNuiEvent('MESSAGES', MessageEvents.REMOVE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
-  useNuiEvent('MESSAGES', MessageEvents.REMOVE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
+  useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
+  useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
 };
