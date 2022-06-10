@@ -143,7 +143,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           conversationLabel: conversation.conversationLabel,
           participants: conversation.participants,
           isGroupChat: conversation.isGroupChat,
-          createdBy: conversation.createdBy,
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {

@@ -78,7 +78,7 @@ class _MessagesService {
           label: conversation.conversationLabel,
           conversationList,
           isGroupChat: conversation.isGroupChat,
-          createdBy: conversation.createdBy,
+          createdBy: playerPhoneNumber,
         };
 
         return resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
@@ -91,7 +91,7 @@ class _MessagesService {
         conversationList,
         conversation.conversationLabel,
         conversation.isGroupChat,
-        conversation.createdBy,
+        playerPhoneNumber,
       );
 
       // Return data
@@ -100,7 +100,7 @@ class _MessagesService {
         label: conversation.conversationLabel,
         conversationList,
         isGroupChat: conversation.isGroupChat,
-        createdBy: conversation.createdBy,
+        createdBy: playerPhoneNumber,
       };
 
       resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });

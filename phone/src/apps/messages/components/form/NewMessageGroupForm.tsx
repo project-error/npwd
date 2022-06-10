@@ -31,7 +31,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       conversationLabel: isGroupChat ? conversationLabel : '',
       participants: [myPhoneNumber, ...selectedParticipants],
       isGroupChat,
-      createdBy: myPhoneNumber,
     };
 
     addConversation(dto);

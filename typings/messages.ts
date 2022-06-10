@@ -42,7 +42,6 @@ export interface PreDBConversation {
   participants: string[];
   conversationLabel: string;
   isGroupChat: boolean;
-  createdBy: string;
 }
 
 export interface MessagesRequest {
