@@ -198,6 +198,15 @@ export class _MessagesDB {
     return count > 0;
   }
 
+  async getGroupOwner(conversationID: number): Promise<string> {
+    const query = `SELECT createdBy FROM npwd_messages_conversations WHERE id = ?`;
+
+    const [results] = await DbInterface._rawExec(query, [conversationID]);
+    const result = <any>results;
+
+    return result[0].createdBy;
+  }
+
   async doesConversationExistForPlayer(
     conversationList: string,
     phoneNumber: string,

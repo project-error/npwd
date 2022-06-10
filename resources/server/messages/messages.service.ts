@@ -295,6 +295,14 @@ class _MessagesService {
     reqObj: PromiseRequest<RemoveGroupMemberRequest>,
     resp: PromiseEventResp<void>,
   ) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const groupOwner = await this.messagesDB.getGroupOwner(reqObj.data.conversationId);
+
+    if (groupOwner !== phoneNumber) {
+      messagesLogger.error(`Use does not own group. Error`);
+      return resp({ status: 'error' });
+    }
+
     try {
       await this.messagesDB.removeGroupMember(
         reqObj.data.conversationList,
@@ -342,7 +350,7 @@ class _MessagesService {
         }
       }
     } catch (err) {
-      messagesLogger.error(`Failed to read message. Error: ${err.message}`);
+      messagesLogger.error(`Failed to remove from group. Error: ${err.message}`);
       resp({ status: 'error' });
     }
   }
