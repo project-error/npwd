@@ -7,6 +7,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { findParticipants } from '../../utils/helpers';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import { useTranslation } from 'react-i18next';
 
 interface GroupDetailsModalProps {
   open: boolean;
@@ -27,6 +28,8 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   removeMember,
   leaveGroup,
 }) => {
+  const [t] = useTranslation();
+
   const myPhoneNumber = useMyPhoneNumber();
   const { getContactByNumber } = useContactActions();
 
@@ -82,7 +85,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
         }}
         onClick={leaveGroup}
       >
-        Leave Group
+        {t('GENERIC.LEAVE')}
       </Button>
     </Modal>
   );

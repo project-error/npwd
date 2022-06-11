@@ -274,7 +274,8 @@
       "SHARE": "Share",
       "ADD": "Add",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
+      "LEAVE": "Leave"
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",
