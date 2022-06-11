@@ -4,6 +4,7 @@ declare global {
       isPhoneOpen: boolean;
       isPhoneDisabled: boolean;
       isPlayerLoaded: boolean;
+      clientPhoneNumber: string | null;
     }
   }
 }

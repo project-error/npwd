@@ -12,6 +12,7 @@ import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import SystemMessage from '../ui/SystemMessage';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -134,6 +135,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                   {getContact()?.display ?? message.author}
                 </Typography>
               )}
+              <Typography mt={2} fontSize={12}>
+                {dayjs.unix(message.createdAt).fromNow()}
+              </Typography>
             </>
           )}
         </Paper>

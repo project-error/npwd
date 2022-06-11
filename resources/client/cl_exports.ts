@@ -5,6 +5,7 @@ import { initializeCallHandler } from './calls/cl_calls.controller';
 import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { AddNoteExportData, NotesEvents } from '../../typings/notes';
 import { hidePhone, showPhone } from './cl_main';
+import { ClUtils } from './client';
 
 const exps = global.exports;
 
@@ -77,4 +78,12 @@ exps('fillNewContact', (contactData: AddContactExportData) => {
 exps('fillNewNote', (noteData: AddNoteExportData) => {
   verifyExportArgType('fillNewNote', noteData, ['object']);
   sendNotesEvent(NotesEvents.ADD_NOTE_EXPORT, noteData);
+});
+
+exps('getPhoneNumber', async () => {
+  if (!global.clientPhoneNumber) {
+    const res = await ClUtils.emitNetPromise(PhoneEvents.GET_PHONE_NUMBER);
+    global.clientPhoneNumber = res.data;
+  }
+  return global.clientPhoneNumber;
 });

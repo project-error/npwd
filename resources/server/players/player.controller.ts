@@ -3,12 +3,21 @@ import PlayerService from './player.service';
 import { config } from '../config';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
   const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
 
   emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, src);
+});
+
+onNetPromise<void, string>(PhoneEvents.GET_PHONE_NUMBER, async (reqObj, resp) => {
+  const src = reqObj.source;
+
+  const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
+
+  resp({ status: 'ok', data: phoneNumber });
 });
 
 /**

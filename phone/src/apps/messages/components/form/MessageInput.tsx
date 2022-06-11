@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
@@ -40,6 +40,10 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
     }
   };
 
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setMessage(e.currentTarget.value);
+  };
+
   if (!messageConversation.id) return null;
 
   return (
@@ -53,7 +57,7 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
           fullWidth
           inputProps={{ style: { fontSize: '1.3em' } }}
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handleChange}
           placeholder={t('MESSAGES.NEW_MESSAGE')}
         />
       </Box>

@@ -8,6 +8,7 @@ export interface Message {
   is_system?: boolean;
   system_type?: 'leave' | 'remove' | 'add';
   system_number?: string;
+  createdAt: number;
 }
 
 export interface PreDBMessage {
@@ -146,6 +147,7 @@ export interface EmitMessageExportCtx {
   senderNumber: string;
   targetNumber: string;
   message: string;
+  embed?: any;
 }
 
 export enum MessageEvents {
