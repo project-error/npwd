@@ -113,7 +113,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           ) : (
             <>
               {message.is_embed ? (
-                <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
+                <MessageEmbed
+                  type={parsedEmbed.type}
+                  embed={parsedEmbed}
+                  isMine={isMine}
+                  message={message.message}
+                />
               ) : (
                 <StyledMessage>
                   {isImage(message.message) ? (
