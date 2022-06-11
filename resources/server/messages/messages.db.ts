@@ -55,7 +55,10 @@ export class _MessagesDB {
                           npwd_messages.author,
                           npwd_messages.message,
                           npwd_messages.is_embed,
-                          npwd_messages.embed
+                          npwd_messages.embed,
+                          npwd_messages.is_system,
+                          npwd_messages.system_type,
+                          npwd_messages.system_number
                    FROM npwd_messages
                    WHERE conversation_id = ?
                    ORDER BY createdAt DESC
@@ -110,8 +113,8 @@ export class _MessagesDB {
   }
 
   async createMessage(dto: CreateMessageDTO) {
-    const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed, is_system, system_type, system_number)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const [results] = await DbInterface._rawExec(query, [
       dto.message || '',
@@ -120,6 +123,9 @@ export class _MessagesDB {
       dto.authorPhoneNumber,
       dto.is_embed || false,
       dto.embed || '',
+      dto.is_system || false,
+      dto.system_type || '',
+      dto.system_number || '',
     ]);
 
     const result = <ResultSetHeader>results;

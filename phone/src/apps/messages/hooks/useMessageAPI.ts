@@ -20,6 +20,12 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
   sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
+  sendSystemMessage: ({
+    conversationId,
+    is_system,
+    system_type,
+    system_number,
+  }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (conversation: PreDBConversation) => void;
   deleteConversation: (conversationIds: number[]) => void;
@@ -244,6 +250,38 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     [setMessages, addAlert, t, history],
   );
 
+  const sendSystemMessage = useCallback(
+    ({
+      conversationId,
+      conversationList,
+      tgtPhoneNumber = '',
+      is_system,
+      system_number,
+      system_type,
+    }: PreDBMessage) => {
+      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
+        conversationId,
+        conversationList,
+        message: '',
+        tgtPhoneNumber,
+        sourcePhoneNumber: myPhoneNumber,
+        is_system,
+        system_number,
+        system_type,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        updateLocalMessages(resp.data);
+      });
+    },
+    [t, updateLocalMessages, addAlert, myPhoneNumber],
+  );
+
   const removeGroupMember = useCallback(
     (conversationList: string, conversationId: number, phoneNumber: string) => {
       fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_GROUP_MEMBER, {
@@ -259,9 +297,17 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           });
         }
         removeLocalGroupMember(conversationId, phoneNumber);
+        sendSystemMessage({
+          conversationId: conversationId,
+          conversationList: conversationList,
+          tgtPhoneNumber: '',
+          is_system: true,
+          system_number: phoneNumber,
+          system_type: 'remove',
+        });
       });
     },
-    [addAlert, removeLocalGroupMember, t],
+    [addAlert, removeLocalGroupMember, sendSystemMessage, t],
   );
 
   const leaveGroup = useCallback(
@@ -278,11 +324,20 @@ export const useMessageAPI = (): UseMessageAPIProps => {
             type: 'error',
           });
         }
+
         removeLocalConversation([conversationId]);
+        sendSystemMessage({
+          conversationId: conversationId,
+          conversationList: conversationList,
+          tgtPhoneNumber: '',
+          is_system: true,
+          system_number: '',
+          system_type: 'leave',
+        });
         return history.push('/messages');
       });
     },
-    [addAlert, history, removeLocalConversation, t],
+    [addAlert, history, removeLocalConversation, sendSystemMessage, t],
   );
 
   return {
@@ -295,5 +350,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     setMessageRead,
     removeGroupMember,
     leaveGroup,
+    sendSystemMessage,
   };
 };

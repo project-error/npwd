@@ -6,6 +6,14 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `embed` varchar(512) NOT NULL DEFAULT '';
 
+
+# Group Chat Overhaul SQL Update
+# ALTER TABLE npwd_messages ADD COLUMN `is_system` tinyint(4) NOT NULL DEFAULT 0;
+# ALTER TABLE npwd_messages ADD COLUMN `system_type` varchar(48) NOT NULL DEFAULT '';
+# ALTER TABLE npwd_messages ADD COLUMN `system_number` varchar(48) NOT NULL DEFAULT '';
+# ALTER TABLE npwd_messages_conversations ADD COLUMN `createdBy` varchar(48) NOT NULL DEFAULT '';
+
+
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
 (
     `id`           int         NOT NULL AUTO_INCREMENT,
@@ -144,6 +152,9 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `author`          varchar(255) NOT NULL,
     `is_embed`        tinyint(4)   NOT NULL default 0,
     `embed`           varchar(512) NOT NULL DEFAULT '',
+    `is_system`        tinyint(4)   NOT NULL default 0,
+    `system_type`      varchar(48) NOT NULL default '',
+    `system_number`    varchar(48) NOT NULL default '',
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );

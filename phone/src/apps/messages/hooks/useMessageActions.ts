@@ -128,6 +128,9 @@ export const useMessageActions = (): MessageActionProps => {
           id: messageDto.id,
           is_embed: messageDto.is_embed,
           embed: messageDto.embed,
+          is_system: messageDto.is_system,
+          system_number: messageDto.system_number,
+          system_type: messageDto.system_type,
         },
       ]);
     },

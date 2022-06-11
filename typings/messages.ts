@@ -5,6 +5,9 @@ export interface Message {
   author: string;
   is_embed?: boolean;
   embed?: any;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
 }
 
 export interface PreDBMessage {
@@ -15,6 +18,9 @@ export interface PreDBMessage {
   message?: string;
   is_embed?: boolean;
   embed?: any;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
 }
 
 export interface CreateMessageDTO {
@@ -24,6 +30,9 @@ export interface CreateMessageDTO {
   message: string;
   is_embed: boolean;
   embed: any;
+  is_system: boolean;
+  system_type: 'leave' | 'remove' | 'add';
+  system_number: string;
 }
 
 export interface MessageConversation {

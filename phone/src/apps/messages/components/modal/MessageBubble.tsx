@@ -11,6 +11,7 @@ import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import SystemMessage from '../ui/SystemMessage';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -38,6 +39,20 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     borderRadius: '15px',
     textOverflow: 'ellipsis',
+  },
+  system: {
+    float: 'left',
+    padding: '1px 12px',
+    width: 'auto',
+    marginLeft: 5,
+    maxWidth: '80%',
+    height: 'auto',
+    background: '#282828', //should by theme shit here for dark/light mode
+    color: '#ddd', //should by theme shit here for dark/light mode
+    border: '0px',
+    borderRadius: '8px',
+    display: 'flex',
+    justifyContent: 'center',
   },
   message: {
     wordBreak: 'break-word',
@@ -83,33 +98,43 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         display="flex"
         ml={1}
         alignItems="stretch"
-        justifyContent={isMine ? 'flex-end' : 'flex-start'}
+        justifyContent={message.is_system ? 'center' : isMine ? 'flex-end' : 'flex-start'}
         mt={1}
       >
-        {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
-        <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-          {message.is_embed ? (
-            <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
+        {!message.is_system && <>{!isMine ? <Avatar src={getContact()?.avatar} /> : null}</>}
+
+        <Paper
+          className={message.is_system ? classes.system : isMine ? classes.mySms : classes.sms}
+          variant="outlined"
+        >
+          {message.is_system ? (
+            <SystemMessage message={message} myNumber={myNumber} />
           ) : (
-            <StyledMessage>
-              {isImage(message.message) ? (
-                <PictureReveal>
-                  <PictureResponsive src={message.message} alt="message multimedia" />
-                </PictureReveal>
+            <>
+              {message.is_embed ? (
+                <MessageEmbed type={parsedEmbed.type} embed={parsedEmbed} isMine={isMine} />
               ) : (
-                <>{message.message}</>
+                <StyledMessage>
+                  {isImage(message.message) ? (
+                    <PictureReveal>
+                      <PictureResponsive src={message.message} alt="message multimedia" />
+                    </PictureReveal>
+                  ) : (
+                    <>{message.message}</>
+                  )}
+                  {isMine && (
+                    <IconButton color="primary" onClick={openMenu}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  )}
+                </StyledMessage>
               )}
-              {isMine && (
-                <IconButton color="primary" onClick={openMenu}>
-                  <MoreVertIcon />
-                </IconButton>
+              {!isMine && (
+                <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                  {getContact()?.display ?? message.author}
+                </Typography>
               )}
-            </StyledMessage>
-          )}
-          {!isMine && (
-            <Typography fontWeight="bold" fontSize={14} color="#ddd">
-              {getContact()?.display ?? message.author}
-            </Typography>
+            </>
           )}
         </Paper>
       </Box>

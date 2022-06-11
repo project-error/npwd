@@ -163,6 +163,9 @@ class _MessagesService {
         message: messageData.message,
         is_embed: messageData.is_embed,
         embed: messageData.embed,
+        is_system: messageData.is_system,
+        system_type: messageData.system_type,
+        system_number: messageData.system_number,
       });
 
       resp({
@@ -175,6 +178,9 @@ class _MessagesService {
           message: messageData.message,
           embed: messageData.embed,
           is_embed: messageData.is_embed,
+          is_system: messageData.is_system,
+          system_type: messageData.system_type,
+          system_number: messageData.system_number,
         },
       });
 
@@ -239,6 +245,9 @@ class _MessagesService {
                 message: messageData.message,
                 is_embed: messageData.is_embed,
                 embed: messageData.embed,
+                is_system: messageData.is_system,
+                system_type: messageData.system_type,
+                system_number: messageData.system_number,
               });
             }
           } catch (err) {
