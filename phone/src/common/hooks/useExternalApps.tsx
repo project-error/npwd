@@ -1,34 +1,41 @@
 import { IApp } from '@os/apps/config/apps';
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+
 const externalApps = require('../../../../config.apps');
 
-const generateAppConfig = async (importStatement): Promise<IApp> => {
-  const rawConfig = (await importStatement()).default;
-  const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
+const useExternalAppsAction = () => {
+  const theme = useTheme();
 
-  const Component = React.createElement(config.app, {
-    settings: { language: 'en', isDarkMode: true },
-  });
+  const generateAppConfig = async (importStatement): Promise<IApp> => {
+    const rawConfig = (await importStatement()).default;
+    const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
 
-  config.Component = Component;
-  config.icon = React.createElement(config.icon);
+    config.Component = React.createElement(config.app, {
+      settings: { language: 'en', theme },
+    });
+    config.icon = React.createElement(config.icon);
 
-  config.Route = <Route path={config.path}>{config.Component}</Route>;
+    config.Route = <Route path={config.path}>{config.Component}</Route>;
 
-  return config;
-};
+    return config;
+  };
 
-const getConfigs = async (communityApps) => {
-  const configs = await Promise.all(
-    Object.entries(communityApps).map(async ([key, value]) => {
-      const app = await generateAppConfig(value);
-      return app;
-    }),
-  );
+  const getConfigs = async (communityApps) => {
+    const configs = await Promise.all(
+      Object.entries(communityApps).map(async ([key, value]) => {
+        const app = await generateAppConfig(value);
+        return app;
+      }),
+    );
 
-  return configs;
+    return configs;
+  };
+
+  return {
+    getConfigs,
+  };
 };
 
 interface ReloadEvent {
@@ -38,6 +45,7 @@ interface ReloadEvent {
 
 export const useExternalApps = () => {
   const [apps, setApps] = useState<IApp[]>([]);
+  const { getConfigs } = useExternalAppsAction();
 
   const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
     const { data } = message;

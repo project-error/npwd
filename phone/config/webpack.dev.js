@@ -8,7 +8,7 @@ const externalApps = require('../../config.apps');
 const remotes = Object.keys(externalApps).reduce((prev, key) => {
   return {
     ...prev,
-    [key]: `${key}@http://localhost:3007/remoteEntry.js`,
+    [key]: `${key}@http://localhost:3002/remoteEntry.js`,
   };
 }, {});
 

@@ -1,1 +1,1 @@
-declare module 'bank/config';
+declare module 'weather/config';
