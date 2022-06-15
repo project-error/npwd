@@ -26,6 +26,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Telefonnummer",
+      "PREVIEW_SOUND": "Forhåndsvis",
       "CATEGORY": {
         "APPEARANCE": "Utseende",
         "PHONE": "Telefon",
@@ -60,6 +61,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Ugyldig lagrede innstillinger, vennligst resett innstillinger og prøv igjen",
         "SETTINGS_RESET": "Innstillingene er nå tilbakestilt!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Varslinger",
+        "NOTIFY_NEW_LISTING": "Send varsel ved nye annonser"
       }
     },
     "CAMERA": {
@@ -103,7 +108,14 @@
         "EDIT_PROFILE_SUCCESS": "Oppdaterte profilen din",
         "EDIT_PROFILE_FAILURE": "Kunne ikke oppdatere profil",
         "CREATE_FAILED": "Klarte ikke sende tweeten",
-        "RETWEET_EXISTS": "Du har allerede retweetet denne!"
+        "RETWEET_FAILED": "Klarte ikke å retweete",
+        "RETWEET_EXISTS": "Du har allerede retweetet denne!",
+        "LIKE_TWEET_FAILED": "Klarte ikke å like tweeten",
+        "REPORT_TWEET_SUCCESS": "Tweet rapportert",
+        "REPORT_TWEET_FAILED": "Klarte ikke å rapportere tweet",
+        "FETCH_TWEETS_FAILED": "Klarte ikke å hente tweets",
+        "DELETE_TWEET_FAILED": "Klarte ikke å slette tweet",
+        "FILTER_FETCH_FAILED": "Klarte ikke å filtrere tweets"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetet",
@@ -117,6 +129,7 @@
       "IMAGE_PLACEHOLDER": "Lenke til et bilde eller GIF",
       "EDIT_DEFAULT_PROFILE_NAME": "Velg profilnavn",
       "EDIT_PROFILE_AVATAR": "Profilbilde",
+      "AVATAR_CHOOSE_IMAGE": "Velg et bilde",
       "EDIT_PROFILE_NAME": "Profilnavn",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Område",
@@ -182,9 +195,13 @@
         "REPORT_LISTING_FAILED": "Annonsen er allerede blitt rapportert",
         "REPORT_LISTING_SUCCESS": "Rapporterte annonse"
       },
+      "NEW_LISTING": "Ny annonse",
+      "CHOOSE_IMAGE": "Velg et bilde",
       "FORM_TITLE": "Tittel",
+      "POST_LISTING": "Opprett annonse",
       "FORM_IMAGE": "Bilde eller URL",
-      "FORM_DESCRIPTION": "Beskrivelse"
+      "FORM_DESCRIPTION": "Beskrivelse",
+      "NO_IMAGE": "Bilde utilgjengelig"
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -208,10 +225,17 @@
       "DELETE_CONVERSATION": "Slett samtale",
       "NEW_MESSAGE": "Melding...",
       "NEW_MESSAGE_GROUP": "Telefonnumre...",
+      "SHARE_IMAGE_TITLE": "Vil du sende dette bildet?",
+      "SHARE_CONTACT_TITLE": "Vil du sende denne kontakten?",
       "GROUP_CHAT_LABEL": "Gruppenavn...",
-      "MEDIA_OPTION": "Kamera / Bilder",
+      "MEDIA_OPTION": "Kamera / bilde",
+      "CONTACT_OPTION": "Del kontaktkort",
+      "CONTACT_SHARED": "Kontaktkort delt",
+      "LOCATION_OPTION": "Send posisjon",
+      "LOCATION_MESSAGE": "Delt posisjon",
+      "LOCATION_TOOLTIP": "Vis i kart",
       "NEW_MESSAGE_GROUP_SUBMIT": "Send",
-      "INPUT_NAME_OR_NUMBER": "Søk kontakter eller skriv nummer og trykk enter",
+      "INPUT_NAME_OR_NUMBER": "Søk etter en kontakt, eller skriv nummeret og trykk enter",
       "ACTIONS_TITLE": "Handlinger",
       "ME": "Meg"
     },
@@ -245,6 +269,8 @@
       "CANCEL": "Avbryt",
       "TITLE": "Tittel",
       "CONTENT": "Innhold",
+      "SHARE": "Del",
+      "ADD": "Legg til",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopier {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierte {{content}} til utklippstavlen!"
     },
@@ -279,6 +305,9 @@
     "GENERIC_TITLE": "Tittel",
     "GENERIC_CONTENT": "Innhold",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopier {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierte {{content}} til utklippstavlen!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierte {{content}} til utklippstavlen!",
+    "GENERIC_DB_ERROR": "Klarte ikke å opprette eller oppdatere databasen.",
+    "GENERIC_INVALID_IMAGE_HOST": "Nettstedet du hentet bilde fra er ikke godkjent, kontakt serveradministratoren.",
+    "ERROR_RATE_LIMITED": "Du må vente litt før du prøver igjen."
   }
 }
