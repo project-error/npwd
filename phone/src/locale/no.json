@@ -59,7 +59,7 @@
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Ugyldig lagrede innstillinger, vennligst resett innstillinger og prøv igjen",
-        "SETTINGS_RESET": "Innstillingene er nå resatt!"
+        "SETTINGS_RESET": "Innstillingene er nå tilbakestilt!"
       }
     },
     "CAMERA": {
