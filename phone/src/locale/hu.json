@@ -2,14 +2,14 @@
   "translation": {
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Végzetes hiba",
-      "TOP_LEVEL_ERR_ACTION": "Újra töltés",
+      "TOP_LEVEL_ERR_ACTION": "Újratöltés",
       "TOP_LEVEL_ERR_MSG": "NPWD hibát talált, újra kell töltened az egész Nui ablakot. A hibát alul írja fejletők részére."
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Nincs új értesítés"
     },
-    "DATE_FORMAT": "MM/DD/YYYY",
-    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "DATE_FORMAT": "YYYY/MM/DD",
+    "DATE_TIME_FORMAT": "YYYY/MM/DD hh:mm A",
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Csengetés...",
@@ -114,7 +114,7 @@
         "REPORT_TWEET_FAILED": "Hiba, nem tudod jelenteni ezt a tweetet",
         "FETCH_TWEETS_FAILED": "Sikertelen Tweet betöltése",
         "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet",
-        "FILTER_FETCH_FAILED": "Failed to get filtered tweets"											  
+        "FILTER_FETCH_FAILED": "Nem sikerült lekérdezni a szűrt tweeteket"											  
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetelt valamit!",
@@ -305,7 +305,7 @@
     "GENERIC_CONTENT": "Tartalom",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
     "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!",
-    "GENERIC_DB_ERROR": "Create/update request failed.",
+    "GENERIC_DB_ERROR": "Hiba történt az adatbázis-műveletkor.",
     "GENERIC_INVALID_IMAGE_HOST": "Ez a képmegosztó amit használni szeretnél, nincs engedélyezve a szerver által.",
     "ERROR_RATE_LIMITED": "Várnod kell mielőtt újra próbálnád."
   }
