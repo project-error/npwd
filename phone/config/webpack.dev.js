@@ -5,7 +5,15 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('../package.json').dependencies;
 
 const externalApps = require('../../config.apps');
+
 const remotes = Object.keys(externalApps).reduce((prev, key) => {
+  if (process.env.REACT_IN_GAME) {
+    return {
+      ...prev,
+      [key]: `${key}@https://cfx-nui-npwd_${key}/release/remoteEntry.js`,
+    };
+  }
+
   return {
     ...prev,
     [key]: `${key}@http://localhost:3002/remoteEntry.js`,
