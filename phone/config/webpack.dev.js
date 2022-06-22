@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('../package.json').dependencies;
+const CopyPlugin = require('copy-webpack-plugin');
 
 const externalApps = require('../../config.apps');
 
@@ -23,13 +24,16 @@ const remotes = Object.keys(externalApps).reduce((prev, key) => {
 module.exports = {
   entry: './src/bootstrap.ts',
   output: {
-    publicPath: 'auto',
+    path: path.resolve(__dirname, '../../resources/html'),
     filename: '[name].js',
     clean: true,
   },
   devServer: {
     port: 3000,
     hot: true,
+    devMiddleware: {
+      writeToDisk: !!process.env.REACT_IN_GAME,
+    },
   },
   devtool: 'eval-source-map',
   module: {
@@ -55,6 +59,10 @@ module.exports = {
         test: /\.(css|s[ac]ss)$/i,
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [
@@ -75,6 +83,11 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './public/media', to: path.resolve(__dirname, '../../resources/html/media') },
+      ],
     }),
     new webpack.DefinePlugin({
       process: { env: {} },
