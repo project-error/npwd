@@ -2,6 +2,8 @@ import { IApp } from '@os/apps/config/apps';
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { useSettings } from '@apps/settings/hooks/useSettings';
+import { useCustomEvent } from '@os/events/useCustomEvents';
 
 const externalApps = require('../../../../config.apps');
 
@@ -46,6 +48,8 @@ interface ReloadEvent {
 export const useExternalApps = () => {
   const [apps, setApps] = useState<IApp[]>([]);
   const { getConfigs } = useExternalAppsAction();
+  const [settings] = useSettings();
+  const dispatch = useCustomEvent('initCustomApp', {});
 
   const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
     const { data } = message;
@@ -53,6 +57,9 @@ export const useExternalApps = () => {
       getConfigs(externalApps).then(setApps);
     }
   };
+
+  // We need to dispatch the current theme to each app. If we need anything else, we can add it here.
+  dispatch({ theme: settings.theme.value });
 
   useEffect(() => {
     window.addEventListener('message', handleReloadApp);
