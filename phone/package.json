@@ -14,7 +14,6 @@
     "@mui/material": "^5.2.1",
     "@mui/styles": "^5.2.1",
     "dayjs": "^1.10.7",
-    "dompurify": "^2.3.3",
     "emoji-mart": "^3.0.1",
     "fivem-nui-react-lib": "^2.2.8",
     "i18next": "^20.6.1",
@@ -28,7 +27,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.0",
-    "recoil": "^0.7.2"
+    "recoil": "^0.7.2",
+    "xss": "^1.0.13"
   },
   "devDependencies": {
     "@craco/craco": "^6.1.1",
