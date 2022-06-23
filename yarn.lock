@@ -2974,10 +2974,10 @@ lerna@^4.0.0:
     import-local "^3.0.2"
     npmlog "^4.1.2"
 
-lexical@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/lexical/-/lexical-0.3.1.tgz#8ba6d8a77d9df6245b027448f9539fd9e57cd207"
-  integrity sha512-pr3cv9HQadYl5j+Zzvg846mkp6bovx4Fq1i28DrrhQk3d8y0M7sVBS1LcwoCxj8oCzTXVt2GPs1vYFU6SdzFvQ==
+lexical@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/lexical/-/lexical-0.3.5.tgz#429ff5e455a625b5102eba5f325f0465740174cd"
+  integrity sha512-zi4OvEH7BFOl8NX27cjqbwJSm9qKCgtPw4JJrUfHgXVNCW5yMDV3rXSUW4KnCjeiXHKEi2E+dDk+awfKntroNg==
 
 libnpmaccess@^4.0.1:
   version "4.0.3"

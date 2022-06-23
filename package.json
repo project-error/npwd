@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "@lexical/react": "^0.3.1",
-    "lexical": "^0.3.1"
+    "lexical": "^0.3.5"
   }
 }
