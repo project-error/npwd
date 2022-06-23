@@ -28,7 +28,7 @@
     }
   },
   "dependencies": {
-    "@lexical/react": "^0.3.1",
+    "@lexical/react": "^0.3.5",
     "lexical": "^0.3.1"
   }
 }
