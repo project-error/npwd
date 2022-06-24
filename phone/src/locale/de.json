@@ -68,7 +68,7 @@
     },
     "CAMERA": {
       "SHARE_DESTINATION": "Wo wollen Sie das Bild teilen?",
-      "COPY_IMAGE": "Link zum Bild kopieren:",
+      "COPY_IMAGE": "Bildlink kopieren:",
       "FAILED_TO_DELETE": "Bild konnte nicht gelöscht werden!",
       "FAILED_TO_TAKE_PHOTO": "Bild konnte nicht gespeichert werden!"
     },
@@ -221,7 +221,7 @@
         "DELETE_CONVERSATION_FAILED": "Der Chat konnte nicht gelöscht werden"
       },
       "SEARCH_PLACEHOLDER": "Suche nach Nachrichten...",
-      "DELETE_CONVERSATION": "Löschen Sie einen Chat",
+      "DELETE_CONVERSATION": "Chat löschen",
       "NEW_MESSAGE": "Nachricht...",
       "NEW_MESSAGE_GROUP": "Telefonnummer...",
       "SHARE_IMAGE_TITLE": "Wollen Sie dieses Bild teilen?",
@@ -240,14 +240,14 @@
       "s": "vor ein Paar Sekunden",
       "m": "vor einer Minute",
       "mm": "%d Minuten",
-      "h": "eine Stunde",
-      "hh": "%d Stunde",
-      "d": "ein Tag",
-      "dd": "%d Tage",
-      "M": "ein Monat",
-      "MM": "%d Monate",
-      "y": "ein Jahr",
-      "yy": "%d Jahre"
+      "h": "einer Stunde",
+      "hh": "%d Stunden",
+      "d": "einem Tag",
+      "dd": "%d Tagen",
+      "M": "einem Monat",
+      "MM": "%d Monaten",
+      "y": "einem Jahr",
+      "yy": "%d Jahren"
     },
     "GENERIC": {
       "LOADING": "Lädt...",
