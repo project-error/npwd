@@ -26,6 +26,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Telefonnummer",
+      "PREVIEW_SOUND": "Tonbeispiel",
       "CATEGORY": {
         "APPEARANCE": "Benutzeroberfläche",
         "PHONE": "Handy",
@@ -229,6 +230,10 @@
       "GROUP_CHAT_LABEL": "Gruppenname...",
       "MEDIA_OPTION": "Kamera / Fotos",
       "CONTACT_OPTION": "Kontakt teilen",
+      "CONTACT_SHARED": "Kontakt geteilt",
+      "LOCATION_OPTION": "Standort teilen",
+      "LOCATION_MESSAGE": "Standort geteilt",
+      "LOCATION_TOOLTIP": "Wegpunkt setzen",
       "NEW_MESSAGE_GROUP_SUBMIT": "Senden",
       "INPUT_NAME_OR_NUMBER": "Suchen Sie nach einem Kontakt oder einer Nummer.",
       "ACTIONS_TITLE": "Aktionen",
