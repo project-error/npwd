@@ -30,15 +30,15 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
     animationService.startPhoneCall();
     // If something went wrong lets inform the client
     if (serverRes.status !== 'ok') {
-      return cb(serverRes);
+      return cb?.(serverRes);
     }
     const { transmitter, isTransmitter, receiver, isUnavailable } = serverRes.data;
     // Start the process of giving NUI feedback by opening NUI modal
     callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
-    cb(serverRes);
+    cb?.(serverRes);
   } catch (e) {
     console.error(e);
-    cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+    cb?.({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
   }
 };
 
