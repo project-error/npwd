@@ -1,5 +1,1 @@
-module.exports = {
-  weather: () => {
-    return import('weather/config');
-  },
-};
+module.exports = {};
