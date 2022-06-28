@@ -4,7 +4,6 @@ import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
 import { TextField } from '@ui/components/Input';
 import { styled } from '@mui/material';
-import { TweetEditor } from './TweetEditor';
 
 const MessageInput = styled(TextField)({
   flex: '1 1 100%',
