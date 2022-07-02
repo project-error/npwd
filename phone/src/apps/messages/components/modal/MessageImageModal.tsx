@@ -6,7 +6,8 @@ import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
+import useMessages from '../../hooks/useMessages';
 
 interface IProps {
   messageGroup: MessageConversation | undefined;
@@ -31,17 +32,19 @@ export const MessageImageModal = ({
     setImagePreview(null);
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
   }, [history, pathname, search, setImagePreview]);
+  const { activeMessageConversation } = useMessages();
 
   const sendImageMessage = useCallback(
     (m) => {
       sendMessage({
-        conversationId: messageGroup.conversation_id,
+        conversationId: messageGroup.id,
+        conversationList: activeMessageConversation.conversationList,
         message: m,
-        tgtPhoneNumber: messageGroup.phoneNumber,
+        tgtPhoneNumber: messageGroup.participant,
       });
       onClose();
     },
-    [sendMessage, messageGroup, onClose],
+    [sendMessage, messageGroup, onClose, activeMessageConversation],
   );
 
   const sendFromQueryParam = useCallback(

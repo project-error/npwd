@@ -47,7 +47,11 @@ export const twitterState = {
             },
           );
 
-          return resp.data.map(processTweet);
+          if (resp.data) {
+            return resp.data?.map(processTweet);
+          }
+
+          return [];
         } catch (e) {
           return [];
         }

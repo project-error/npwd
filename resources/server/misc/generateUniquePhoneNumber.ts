@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../server';
 import DbInterface from '../db/db_wrapper';
 
 const genNumber = (length: number): string => {
@@ -28,7 +28,7 @@ export async function generateUniquePhoneNumber(): Promise<string> {
   const query = `SELECT EXISTS(SELECT * FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?)`;
   const dashNumber = generateUsNumber();
 
-  const [results] = await DbInterface._rawExec(query, dashNumber);
+  const [results] = await DbInterface._rawExec(query, [dashNumber]);
 
   if (!results) return generateUniquePhoneNumber();
 

@@ -44,7 +44,7 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
       (resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
-            message: t('TWITTER.FEEDBACK.RETWEET_FAILED'),
+            message: t(resp.errorMsg),
             type: 'error',
           });
         }

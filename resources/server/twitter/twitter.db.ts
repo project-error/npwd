@@ -64,8 +64,8 @@ export class _TwitterDB {
     const [results] = await DbInterface._rawExec(query, [
       profileId,
       profileId,
-      TWEETS_PER_PAGE,
-      offset,
+      TWEETS_PER_PAGE.toString(),
+      offset.toString(),
     ]);
     const tweets = <Tweet[]>results;
     return tweets.map(formatTweets(profileId));
@@ -139,14 +139,15 @@ export class _TwitterDB {
   async createTweet(identifier: string, tweet: NewTweet): Promise<Tweet> {
     const profile = await this.getProfile(identifier);
     const query = `
-        INSERT INTO npwd_twitter_tweets (identifier, message, images, retweet)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO npwd_twitter_tweets (identifier, message, images, retweet, profile_id)
+        VALUES (?, ?, ?, ?, ?)
 		`;
     const [results] = await DbInterface._rawExec(query, [
       identifier,
       tweet.message,
       tweet.images,
       tweet.retweet,
+      profile.id,
     ]);
     // This should not be an any type and instead should be
     // a Tweet[] according to mysql2 documentation. But instead
@@ -230,7 +231,7 @@ export class _TwitterDB {
         UPDATE npwd_twitter_profiles
         SET avatar_url   = ?,
             profile_name = ?
-            WHERE identifier = ?
+        WHERE identifier = ?
 		`;
     await pool.execute(query, [avatar_url, profile_name, identifier]);
 

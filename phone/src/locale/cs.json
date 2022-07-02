@@ -26,6 +26,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Telefonní číslo",
+      "PREVIEW_SOUND": "Přehrát zvuk",
       "CATEGORY": {
         "APPEARANCE": "Vzhled",
         "PHONE": "Telefon",
@@ -50,6 +51,7 @@
           "DIALOG_PLACEHOLDER": "URL adresa obrázku",
           "DIALOG_ERROR": "Neplatný obrázek nebo odkaz"
         },
+        "CALL_VOLUME": "Hlasitost hovoru",
         "RINGTONE": "Vyzváněcí tón",
         "RINGTONE_VOLUME": "Hlasitost vyzvánění",
         "NOTIFICATION": "Oznámení",
@@ -59,6 +61,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Uložené nastavení je neplatné! Obnovte si ho v aplikaci Nastavení.",
         "SETTINGS_RESET": "Nastavení bylo obnoveno!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Oznámení",
+        "NOTIFY_NEW_LISTING": "Zobrazit oznámení na nové inzeráty"
       }
     },
     "CAMERA": {
@@ -93,7 +99,7 @@
       "NAVBAR_HISTORY": "Historie",
       "NAVBAR_DIAL": "Vytočit",
       "NAVBAR_CONTACTS": "Kontakty",
-      "NO_HISTORY": "Nemáte historii volání"
+      "NO_HISTORY": "Nemáte historii hovorů"
     },
     "TWITTER": {
       "FEEDBACK": {
@@ -108,7 +114,8 @@
         "REPORT_TWEET_SUCCESS": "Tweet byl úspěšně nahlášen",
         "REPORT_TWEET_FAILED": "Nepodařilo se nahlásit tweet",
         "FETCH_TWEETS_FAILED": "Nepodařilo se načíst tweety",
-        "DELETE_TWEET_FAILED": "Nepodařilo se vymazat tweet"
+        "DELETE_TWEET_FAILED": "Nepodařilo se vymazat tweet",
+        "FILTER_FETCH_FAILED": "Nepodařilo se získat filtrované tweety"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} někoho retweetnul!",
@@ -122,6 +129,7 @@
       "IMAGE_PLACEHOLDER": "Odkaz na obrázek nebo gif",
       "EDIT_DEFAULT_PROFILE_NAME": "Vyberte uživatelské jméno",
       "EDIT_PROFILE_AVATAR": "URL profilové fotky",
+      "AVATAR_CHOOSE_IMAGE": "Vybrat fotku",
       "EDIT_PROFILE_NAME": "Uživatelské jméno",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Lokace",
@@ -187,9 +195,13 @@
         "REPORT_LISTING_FAILED": "Tento inzerát byl již nahlášen",
         "REPORT_LISTING_SUCCESS": "Inzerát byl úspěšně nahlášen"
       },
+      "NEW_LISTING": "Nový inzerát",
+      "CHOOSE_IMAGE": "Vybrat fotku",
       "FORM_TITLE": "Název",
+      "POST_LISTING": "Zveřejnit",
       "FORM_IMAGE": "Obrázek nebo URL adresa",
-      "FORM_DESCRIPTION": "Popis"
+      "FORM_DESCRIPTION": "Popis",
+      "NO_IMAGE": "Nebyl poskytnut žádný obrázek"
     },
     "MESSAGES": {
       "MESSAGES": {
@@ -213,8 +225,15 @@
       "DELETE_CONVERSATION": "Vymazat konverzaci",
       "NEW_MESSAGE": "Zpráva...",
       "NEW_MESSAGE_GROUP": "Telefonní čísla...",
+      "SHARE_IMAGE_TITLE": "Chcete sdílet tento obrázek?",
+      "SHARE_CONTACT_TITLE": "Chcete sdílet tento kontakt?",
       "GROUP_CHAT_LABEL": "Název skupiny...",
       "MEDIA_OPTION": "Fotoaparát / Galerie",
+      "CONTACT_OPTION": "Sdílet kontakt",
+      "CONTACT_SHARED": "Kontakt byl sdílen",
+      "LOCATION_OPTION": "Sdílet lokaci",
+      "LOCATION_MESSAGE": "Lokace byla sdílena",
+      "LOCATION_TOOLTIP": "Nastavit trasu",
       "NEW_MESSAGE_GROUP_SUBMIT": "Odeslat",
       "INPUT_NAME_OR_NUMBER": "Vyhledejte kontakt / číslo a stiskněte Enter",
       "ACTIONS_TITLE": "Akce",
@@ -250,6 +269,8 @@
       "CANCEL": "Zrušit",
       "TITLE": "Název",
       "CONTENT": "Obsah",
+      "SHARE": "Sdílet",
+      "ADD": "Přidat",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Zkopírovat {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} zkopírován do schránky!"
     },
@@ -284,6 +305,9 @@
     "GENERIC_TITLE": "Název",
     "GENERIC_CONTENT": "Obsah",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Zkopírovat {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} zkopírován do schránky!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{ content }} zkopírován do schránky!",
+    "GENERIC_DB_ERROR": "Požadavek na vytvoření/aktualizace se nezdrařil.",
+    "GENERIC_INVALID_IMAGE_HOST": "Hostitel tohoto obrázku není povolen.",
+    "ERROR_RATE_LIMITED": "Musíte počkat, než to uděláte znovu."
   }
 }

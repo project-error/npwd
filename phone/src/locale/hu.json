@@ -2,14 +2,14 @@
   "translation": {
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Végzetes hiba",
-      "TOP_LEVEL_ERR_ACTION": "Újra töltés",
+      "TOP_LEVEL_ERR_ACTION": "Újratöltés",
       "TOP_LEVEL_ERR_MSG": "NPWD hibát talált, újra kell töltened az egész Nui ablakot. A hibát alul írja fejletők részére."
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Nincs új értesítés"
     },
-    "DATE_FORMAT": "MM/DD/YYYY",
-    "DATE_TIME_FORMAT": "MM/DD/YYYY hh:mm A",
+    "DATE_FORMAT": "YYYY/MM/DD",
+    "DATE_TIME_FORMAT": "YYYY/MM/DD hh:mm A",
     "CALLS": {
       "MESSAGES": {
         "RINGING": "Csengetés...",
@@ -41,7 +41,7 @@
         "RESET_SETTINGS": "Beállítások visszaállítása",
         "RESET_SETTINGS_DESC": "Ez törli a helyileg mentett adataid",
         "STREAMER_MODE": {
-          "TITLE": "Streamer mode",
+          "TITLE": "Streamer mód",
           "DESCRIPTION": "Képek autómatikus elrejtése"
         },
         "CUSTOM_WALLPAPER": {
@@ -60,6 +60,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Hibás beállítások, állítsd vissza őket a Beállításokban!",
         "SETTINGS_RESET": "Beállítások visszaállítva!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Értesítés",
+        "NOTIFY_NEW_LISTING": "Értesítés új hírdetés esetén"
       }
     },
     "CAMERA": {
@@ -108,8 +112,9 @@
         "LIKE_TWEET_FAILED": "Hiba, nem tudod likeolni ezt a tweetet",
         "REPORT_TWEET_SUCCESS": "Sikeresen jelentettet a tweetet",
         "REPORT_TWEET_FAILED": "Hiba, nem tudod jelenteni ezt a tweetet",
-        "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
-        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet"
+        "FETCH_TWEETS_FAILED": "Sikertelen Tweet betöltése",
+        "DELETE_TWEET_FAILED": "Hiba, nem tudod törölni ezt a tweetet",
+        "FILTER_FETCH_FAILED": "Nem sikerült lekérdezni a szűrt tweeteket"											  
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetelt valamit!",
@@ -154,7 +159,7 @@
         "NO_PROFILES": "Nincs profil a közeledben",
         "PROFILES_ERROR": "Hiba a profilok betöltése közben",
         "SAVE_LIKES_FAILED": "Hiba a likeok mentése közben",
-        "NEW_LIKE_FOUND": "Nem található pár!"
+        "NEW_LIKE_FOUND": "Valakivel párba áltál!"
       },
       "PROFILE_CONFIGURATION": "Hibásan van beállítva az app, kérlek szólj egy adminnak.",
       "EDIT_PROFILE_IMAGE": "Kép URL",
@@ -219,8 +224,15 @@
       "DELETE_CONVERSATION": "Üzenet törlése",
       "NEW_MESSAGE": "Üzenet...",
       "NEW_MESSAGE_GROUP": "Telefonszámok...",
+      "SHARE_IMAGE_TITLE": "Biztos megakarod osztani ezt a képet?",
+      "SHARE_CONTACT_TITLE": "Biztos megakarod osztani ezt a kontaktot?",
       "GROUP_CHAT_LABEL": "Csoportos beszélgetés címe...",
       "MEDIA_OPTION": "Kamera / Galéria",
+      "CONTACT_OPTION": "Kontakt megosztása",
+      "CONTACT_SHARED": "Kontakt Megosztva",
+      "LOCATION_OPTION": "Tartózkodási hely megosztása",
+      "LOCATION_MESSAGE": "Tartózkodási hely megosztva",
+      "LOCATION_TOOLTIP": "Beállítás GPS-en",
       "NEW_MESSAGE_GROUP_SUBMIT": "Küldés",
       "INPUT_NAME_OR_NUMBER": "Kontakot keresése, vagy írj be egy telefonszámot",
       "ACTIONS_TITLE": "Cselekvések",
@@ -256,6 +268,8 @@
       "CANCEL": "Mégse",
       "TITLE": "Cím",
       "CONTENT": "Tartalom",
+      "SHARE": "Megosztás",
+      "ADD": "Hozzáad",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!"
     },
@@ -272,7 +286,7 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Piac",
     "APPS_CAMERA": "Kamera",
-    "APPS_MATCH": "Társkereső",
+    "APPS_MATCH": "Tinder",
     "APPS_CALCULATOR_COPIED": "Eredmémy vágólapra másolva!",
     "GENERIC_CLICK_TO_REVEAL": "Kattints a megtekintéshez",
     "GENERIC_LOADING": "Betöltés...",
@@ -290,6 +304,9 @@
     "GENERIC_TITLE": "Cím",
     "GENERIC_CONTENT": "Tartalom",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Másolás: {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} másolva a vágólapra!",
+    "GENERIC_DB_ERROR": "Hiba történt az adatbázis-műveletkor.",
+    "GENERIC_INVALID_IMAGE_HOST": "Ez a képmegosztó amit használni szeretnél, nincs engedélyezve a szerver által.",
+    "ERROR_RATE_LIMITED": "Várnod kell mielőtt újra próbálnád."
   }
 }

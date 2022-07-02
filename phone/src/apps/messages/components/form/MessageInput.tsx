@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, Box, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
+import useMessages from '../../hooks/useMessages';
+import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
 
 interface IProps {
   onAddImageClick(): void;
@@ -17,13 +19,16 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
   const [t] = useTranslation();
   const [message, setMessage] = useState('');
   const { sendMessage } = useMessageAPI();
+  const { activeMessageConversation } = useMessages();
+  const { clean } = useWordFilter();
 
   const handleSubmit = async () => {
     if (message.trim()) {
       await sendMessage({
-        conversationId: messageConversation.conversation_id,
-        message,
-        tgtPhoneNumber: messageConversation.phoneNumber,
+        conversationId: messageConversation.id,
+        conversationList: activeMessageConversation.conversationList,
+        message: clean(message),
+        tgtPhoneNumber: messageConversation.participant,
       });
       setMessage('');
     }
@@ -35,7 +40,11 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
     }
   };
 
-  if (!messageConversation.conversation_id) return null;
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setMessage(e.currentTarget.value);
+  };
+
+  if (!messageConversation.id) return null;
 
   return (
     <Paper variant="outlined" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -48,7 +57,7 @@ const MessageInput = ({ messageConversation, onAddImageClick }: IProps) => {
           fullWidth
           inputProps={{ style: { fontSize: '1.3em' } }}
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handleChange}
           placeholder={t('MESSAGES.NEW_MESSAGE')}
         />
       </Box>

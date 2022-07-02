@@ -19,6 +19,10 @@
       "value": "projecterror.jpg"
     },
     {
+      "label": "NPWD 2020",
+      "value": "npwd2020.png"
+    },
+    {
       "label": "Default",
       "value": "default.jpg"
     }
@@ -54,6 +58,10 @@
     }
   ],
   "zoomOptions": [
+    {
+      "label": "150%",
+      "value": 1.5
+    },
     {
       "label": "100%",
       "value": 1
@@ -105,7 +113,7 @@
       "value": "hu"
     },
     {
-      "label": "Czech",
+      "label": "Čeština",
       "value": "cs"
     },
     {
@@ -127,26 +135,54 @@
     {
       "label": "Indonesia",
       "value": "id"
+    },
+    {
+      "label": "繁體中文",
+      "value": "zhtw"
+    },
+    {
+      "label": "Русский",
+      "value": "ru"
+    },
+    {
+      "label": "Svenska",
+      "value": "sv"
+    },
+    {
+      "label": "Türkçe",
+      "value": "tr"
     }
   ],
   "ringtones": [
     {
-      "label": "Marimba",
-      "value": "marimba"
+      "label": "iFruit",
+      "value": "PHONE_GENERIC_RING_01"
     },
     {
-      "label": "Pixel",
-      "value": "pixel"
+      "label": "Desk Phone",
+      "value": "PHONE_GENERIC_RING_02"
+    },
+    {
+      "label": "Rotary Phone",
+      "value": "PHONE_GENERIC_RING_03"
     }
   ],
   "notiSounds": [
     {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
     {
-      "label": "99kr",
-      "value": "99kr"
+      "label": "Michael",
+      "value": "Phone_SoundSet_Michael"
+    },
+    {
+      "label": "Trevor",
+      "value": "Phone_SoundSet_Trevor"
+    },
+    {
+      "label": "Franklin",
+      "value": "Phone_SoundSet_Franklin"
     }
   ],
   "notiFilters": [
@@ -191,15 +227,13 @@
     },
     "streamerMode": false,
     "ringtone": {
-      "label": "Pixel",
-      "value": "pixel"
+      "label": "iFruit",
+      "value": "PHONE_GENERIC_RING_01"
     },
     "notiSound": {
       "label": "Online",
-      "value": "online"
+      "value": "Phone_SoundSet_Default"
     },
-    "ringtoneVol": 50,
-    "notiSoundVol": 50,
     "TWITTER_notiFilter": {
       "label": "All Tweets",
       "value": "all"
@@ -209,7 +243,8 @@
       "value": "online"
     },
     "TWITTER_notiSoundVol": 25,
-    "TWITTER_notifyNewFeedTweet": true
+    "TWITTER_notifyNewFeedTweet": true,
+    "MARKETPLACE_notifyNewListing": true
   },
   "appSettings": {
     "browserHomePage": "https://docs.projecterror.dev"

@@ -14,4 +14,12 @@ export const phoneState = {
     key: 'phoneTime',
     default: null,
   }),
+  isPhoneDisabled: atom<boolean>({
+    key: 'isPhoneDisabled',
+    default: false,
+  }),
+  playerSource: atom<number>({
+    key: 'playerSource',
+    default: 0,
+  }),
 };

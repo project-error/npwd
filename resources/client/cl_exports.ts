@@ -1,10 +1,11 @@
-import { sendContactsEvent, sendMessage, sendNotesEvent } from '../utils/messages';
+import { sendContactsEvent, sendMessage, sendNotesEvent, sendPhoneEvent } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
 import { verifyExportArgType } from './cl_utils';
 import { initializeCallHandler } from './calls/cl_calls.controller';
 import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { AddNoteExportData, NotesEvents } from '../../typings/notes';
 import { hidePhone, showPhone } from './cl_main';
+import { ClUtils } from './client';
 
 const exps = global.exports;
 
@@ -38,6 +39,7 @@ exps('setPhoneDisabled', (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
   const coercedType = !!bool;
   global.isPhoneDisabled = coercedType;
+  sendPhoneEvent(PhoneEvents.IS_PHONE_DISABLED, bool);
 });
 
 exps('isPhoneDisabled', () => global.isPhoneDisabled);
@@ -74,6 +76,14 @@ exps('fillNewContact', (contactData: AddContactExportData) => {
 //   content?: string;
 // }
 exps('fillNewNote', (noteData: AddNoteExportData) => {
-  verifyExportArgType('fillNewNOte', noteData, ['object']);
+  verifyExportArgType('fillNewNote', noteData, ['object']);
   sendNotesEvent(NotesEvents.ADD_NOTE_EXPORT, noteData);
+});
+
+exps('getPhoneNumber', async () => {
+  if (!global.clientPhoneNumber) {
+    const res = await ClUtils.emitNetPromise(PhoneEvents.GET_PHONE_NUMBER);
+    global.clientPhoneNumber = res.data;
+  }
+  return global.clientPhoneNumber;
 });

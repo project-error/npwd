@@ -12,7 +12,7 @@ const classes = {
   root: `${PREFIX}-root`,
 };
 
-const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   [`& .${classes.urlInput}`]: {
     borderRadius: 18,
     borderWidth: 1,
@@ -21,12 +21,8 @@ const StyledBox = styled(Box)(() => ({
     paddingLeft: 10,
     marginLeft: 5,
     borderColor: '#787878FF',
-    color: '#909090',
+    color: theme.palette.text.disabled,
     transition: 'color 0.1s ease',
-  },
-
-  [`& .${classes.urlInputFocused}`]: {
-    color: '#fff',
   },
 
   [`&.${classes.root}`]: {},

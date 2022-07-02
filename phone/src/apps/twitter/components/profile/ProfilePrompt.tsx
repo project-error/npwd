@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import ProfileField from '../../../../ui/components/ProfileField';
 import { useProfile } from '../../hooks/useProfile';
@@ -12,21 +11,16 @@ import DefaultProfilePrompt from './DefaultProfilePrompt';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import fetchNui from '@utils/fetchNui';
+import { Box, styled } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    padding: '15px',
-  },
-  spacer: {
-    height: '8px',
-  },
-}));
+const PromptRoot = styled(Box)({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  padding: '15px',
+});
 
 export function ProfilePrompt() {
-  const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
   const setTwitterProfile = useSetTwitterProfile();
@@ -68,7 +62,7 @@ export function ProfilePrompt() {
   // case where profile doesn't exist, couldn't be created automatically
   // but the player IS allowed to edit their own profile name
   return (
-    <div className={classes.root}>
+    <PromptRoot>
       <ProfileField
         label={t('TWITTER.EDIT_PROFILE_NAME')}
         value={profileName}
@@ -76,7 +70,7 @@ export function ProfilePrompt() {
         allowChange
       />
       <ProfileUpdateButton handleClick={handleCreate} />
-    </div>
+    </PromptRoot>
   );
 }
 

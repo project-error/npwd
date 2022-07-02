@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "*": ["types/*"],
+      "@shared/*": ["../../shared/*"],
+      "@typings/*": ["../../typings/*"]
     },
     "outDir": "./",
     "noImplicitAny": true,
@@ -15,6 +17,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["./**/*"],
+  "include": ["./**/*", "../../config.default.json"],
   "exclude": ["**/node_modules", "**/__tests__/*"]
 }

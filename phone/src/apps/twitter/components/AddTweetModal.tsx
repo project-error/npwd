@@ -1,5 +1,4 @@
 import React, { memo, useCallback, useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
@@ -20,34 +19,16 @@ import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { toggleKeys } from '../../../ui/components/Input';
+import { Box, styled } from '@mui/material';
+import { useWordFilter } from '../../../os/wordfilter/hooks/useWordFilter';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    zIndex: 10,
-    marginTop: '15px',
-    width: '90%',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    position: 'absolute',
-    top: '80px',
-  },
-  button: {
-    margin: 5,
-    marginTop: 20,
-  },
-  buttonsContainer: {
-    paddingBottom: '8px',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'space-between',
-    flex: '1 0 45px',
-  },
-  emojiPicker: {
-    background: 'none',
-    border: 'none',
-    boxShadow: 'none',
-  },
-}));
+const ButtonsContainer = styled(Box)({
+  paddingBottom: '8px',
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'space-between',
+  flex: '1 0 45px',
+});
 
 interface Image {
   id: string;
@@ -55,11 +36,11 @@ interface Image {
 }
 
 const AddTweetModal = () => {
-  const classes = useStyles();
   const { message, setMessage, modalVisible, setModalVisible } = useModal();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const { t } = useTranslation();
+  const { clean } = useWordFilter();
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
@@ -87,6 +68,7 @@ const AddTweetModal = () => {
 
   if (!ResourceConfig) return null;
   const { characterLimit, newLineLimit } = ResourceConfig.twitter;
+
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
     if (getNewLineCount(message) < newLineLimit) return true;
@@ -94,12 +76,12 @@ const AddTweetModal = () => {
 
   const submitTweet = async () => {
     await promiseTimeout(200);
-    const cleanedMessage = message.trim();
+    const cleanedMessage = clean(message.trim());
     if (cleanedMessage.length === 0) return;
     if (!isValidMessage(cleanedMessage)) return;
 
     const data: NewTweet = {
-      message,
+      message: cleanedMessage,
       retweet: null,
       images:
         images && images.length > 0 ? images.map((image) => image.link).join(IMAGE_DELIMITER) : '',
@@ -176,7 +158,7 @@ const AddTweetModal = () => {
         images={images}
         removeImage={removeImage}
       />
-      <div className={classes.buttonsContainer}>
+      <ButtonsContainer>
         <IconButtons
           onImageClick={
             images.length < ResourceConfig.twitter.maxImages ? toggleShowImagePrompt : null
@@ -189,7 +171,7 @@ const AddTweetModal = () => {
           onPrimaryClick={showImagePrompt ? addImage : submitTweet}
           onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
         />
-      </div>
+      </ButtonsContainer>
     </Modal>
   );
 };

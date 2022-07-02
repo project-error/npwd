@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, IconButton, List } from '@mui/material';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
@@ -9,11 +9,12 @@ import { useTranslation } from 'react-i18next';
 import {
   useCheckedConversations,
   useFilteredConversationsValue,
-  useFilterValueState,
   useIsEditing,
+  useSetFilterValue,
 } from '../../hooks/state';
+import { useDebounce } from '@os/phone/hooks/useDebounce';
 import EditIcon from '@mui/icons-material/Edit';
-import { useMessageActions } from '../../hooks/useMessageActions';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const MessagesList = (): any => {
   const [isEditing, setIsEditing] = useIsEditing();
@@ -24,15 +25,23 @@ const MessagesList = (): any => {
 
   const { conversations, goToConversation } = useMessages();
 
-  const { setMessageReadState } = useMessageActions();
+  const { setMessageRead } = useMessageAPI();
 
   const filteredConversations = useFilteredConversationsValue();
-  const [searchValue, setSearchValue] = useFilterValueState();
+  const setFilterVal = useSetFilterValue();
+
+  const [inputVal, setInputVal] = useState('');
+
+  const debouncedVal = useDebounce<string>(inputVal, 200);
+
+  useEffect(() => {
+    setFilterVal(debouncedVal);
+  }, [debouncedVal, setFilterVal]);
 
   if (!conversations) return <p>No messages</p>;
 
   const handleClick = (conversation: MessageConversation) => () => {
-    setMessageReadState(conversation.conversation_id, 0);
+    setMessageRead(conversation.id);
     goToConversation(conversation);
   };
 
@@ -40,7 +49,7 @@ const MessagesList = (): any => {
     setIsEditing((prev) => !prev);
   };
 
-  const handleToggleConversation = (conversationId: string) => {
+  const handleToggleConversation = (conversationId: number) => {
     const currentIndex = checkedConversation.indexOf(conversationId);
     const newChecked = [...checkedConversation];
 
@@ -64,8 +73,8 @@ const MessagesList = (): any => {
       )}
       <Box>
         <SearchField
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={inputVal}
+          onChange={(e) => setInputVal(e.target.value)}
           placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
         />
       </Box>
@@ -81,7 +90,7 @@ const MessagesList = (): any => {
                   handleToggle={handleToggleConversation}
                   isEditing={isEditing}
                   checked={checkedConversation}
-                  key={conversation.conversation_id}
+                  key={conversation.id}
                   messageConversation={conversation}
                   handleClick={handleClick}
                 />

@@ -1,10 +1,14 @@
-import { FormattedMatch, MatchEvents } from '@typings/match';
+import { FormattedMatch, FormattedProfile, MatchEvents } from '@typings/match';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { useSetFormattedProfiles, useSetMatches } from './state';
+import { matchState, useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Snapshot, useRecoilCallback } from 'recoil';
+
+const getIsMatchesLoading = (snapshot: Snapshot) =>
+  snapshot.getLoadable<FormattedProfile[]>(matchState.profiles).state !== 'hasValue';
 
 export const useMatchActions = () => {
   const setProfiles = useSetFormattedProfiles();
@@ -21,7 +25,7 @@ export const useMatchActions = () => {
         }),
       );
 
-      fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, [{ id, liked }]).then((resp) => {
+      fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, { id, liked }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
             message: t('MATCH.FEEDBACK.SAVE_LIKES_FAILED'),
@@ -38,16 +42,52 @@ export const useMatchActions = () => {
             message: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
             type: 'info',
           });
-          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES).then((resp) => {
-            setMatches(resp.data);
-          });
+          fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page: 0 }).then(
+            (resp) => {
+              setMatches(resp.data);
+            },
+          );
         }
       });
     },
     [setProfiles, addAlert, t, setMatches],
   );
 
+  const addMatchAccount = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (profile: FormattedProfile, myProfile: FormattedProfile) => {
+        if (profile.identifier === myProfile.identifier) return;
+
+        const matchesLoading = getIsMatchesLoading(snapshot);
+        if (matchesLoading) return;
+
+        set(matchState.profiles, (curVal) => [profile, ...curVal]);
+      },
+  );
+
+  const addMatchedAccount = async () => {
+    fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page: 0 }).then(
+      (resp) => {
+        if (resp.status !== 'ok') return;
+        setMatches(resp.data);
+      },
+    );
+  };
+
+  const newMatchesPage = (page: number) => {
+    fetchNui<ServerPromiseResp<FormattedMatch[]>>(MatchEvents.GET_MATCHES, { page }).then(
+      (resp) => {
+        if (resp.status !== 'ok') return;
+
+        setMatches(resp.data);
+      },
+    );
+  };
+
   return {
     setViewed,
+    addMatchAccount,
+    addMatchedAccount,
+    newMatchesPage,
   };
 };

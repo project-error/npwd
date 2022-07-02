@@ -17,6 +17,7 @@ import { TextField } from '@ui/components/Input';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useForm } from '../../hooks/state';
+import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,7 @@ export const ListingForm: React.FC = () => {
   const { pathname, search } = useLocation();
   const query = useQueryParams();
   const [formState, setFormState] = useForm();
+  const { clean } = useWordFilter();
 
   const areFieldsFilled = formState.title.trim() !== '' && formState.description.trim() !== '';
 
@@ -62,27 +64,29 @@ export const ListingForm: React.FC = () => {
       });
     }
 
-    fetchNui<ServerPromiseResp<MarketplaceResp>>(MarketplaceEvents.ADD_LISTING, formState).then(
-      (resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t(resp.errorMsg),
-            type: 'error',
-          });
-        }
+    fetchNui<ServerPromiseResp<MarketplaceResp>>(MarketplaceEvents.ADD_LISTING, {
+      ...formState,
+      title: clean(formState.title),
+      description: clean(formState.description),
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t(resp.errorMsg),
+          type: 'error',
+        });
+      }
 
-        addAlert({
-          message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
-          type: 'success',
-        });
-        history.push('/marketplace');
-        setFormState({
-          title: '',
-          description: '',
-          url: '',
-        });
-      },
-    );
+      addAlert({
+        message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
+        type: 'success',
+      });
+      history.push('/marketplace');
+      setFormState({
+        title: '',
+        description: '',
+        url: '',
+      });
+    });
   };
 
   const handleChooseImage = useCallback(() => {

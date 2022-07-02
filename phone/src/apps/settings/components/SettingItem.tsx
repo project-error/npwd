@@ -3,6 +3,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ListItemButton,
   ListItemSecondaryAction,
   Box,
   Slider,
@@ -11,8 +12,9 @@ import {
   Switch,
 } from '@mui/material';
 import { Tooltip } from '@ui/components/Tooltip';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
-interface ISettingItem {
+interface SettingItemProps {
   options?: any;
   label: string;
   value?: string | object | number | null;
@@ -20,21 +22,70 @@ interface ISettingItem {
   icon: JSX.Element;
 }
 
-export const SettingItem = ({ options, label, value, onClick, icon }: ISettingItem) => (
+export const SettingItem: React.FC<SettingItemProps> = ({
+  options,
+  label,
+  value,
+  onClick,
+  icon,
+}) => (
   <ListItem divider onClick={() => onClick?.(options)} button>
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={label} secondary={value ? value : undefined} />
   </ListItem>
 );
 
-interface ISettingSlider {
+interface SoundItemProps {
+  options?: any;
+  label: string;
+  value?: string | object | number | null;
+  onClick?: any;
+  icon: JSX.Element;
+  tooltip: string;
+  onPreviewClicked: any;
+}
+
+export const SoundItem: React.FC<SoundItemProps> = ({
+  options,
+  label,
+  value,
+  onClick,
+  icon,
+  tooltip,
+  onPreviewClicked,
+}) => (
+  <ListItem
+    divider
+    button
+    secondaryAction={
+      <Tooltip title={tooltip}>
+        <IconButton onClick={() => onPreviewClicked()}>
+          <PlayCircleIcon />
+        </IconButton>
+      </Tooltip>
+    }
+    disablePadding
+  >
+    <ListItemButton onClick={() => onClick?.(options)}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} secondary={value ? value : undefined} />
+    </ListItemButton>
+  </ListItem>
+);
+
+interface SettingSliderProps {
   label: string;
   icon: JSX.Element;
   value: number;
   onCommit: (event: React.SyntheticEvent | Event, value: number | number[]) => void;
 }
 
-export const SettingItemSlider = ({ icon, label, value, onCommit }: ISettingSlider) => (
+export const SettingItemSlider: React.FC<SettingSliderProps> = ({
+  icon,
+  label,
+  value,
+  onCommit,
+}) => (
   <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={label} secondary={`${value}%`} />
@@ -53,16 +104,7 @@ export const SettingItemSlider = ({ icon, label, value, onCommit }: ISettingSlid
   </ListItem>
 );
 
-interface ISettingItemIconAction {
-  icon: JSX.Element;
-  actionIcon: JSX.Element;
-  label: string;
-  labelSecondary: string;
-  handleAction: () => void;
-  actionLabel: string;
-}
-
-interface ISettingSwitch {
+interface SettingSwitchProps {
   label: string;
   value: boolean;
   onClick: any;
@@ -70,7 +112,13 @@ interface ISettingSwitch {
   secondary: string;
 }
 
-export const SettingSwitch = ({ label, value, onClick, icon, secondary }: ISettingSwitch) => (
+export const SettingSwitch: React.FC<SettingSwitchProps> = ({
+  label,
+  value,
+  onClick,
+  icon,
+  secondary,
+}) => (
   <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
     <ListItemText primary={label} secondary={secondary} />
@@ -80,14 +128,23 @@ export const SettingSwitch = ({ label, value, onClick, icon, secondary }: ISetti
   </ListItem>
 );
 
-export const SettingItemIconAction = ({
+interface SettingItemIconActionProps {
+  icon: JSX.Element;
+  actionIcon: JSX.Element;
+  label: string;
+  labelSecondary: string;
+  handleAction: () => void;
+  actionLabel: string;
+}
+
+export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
   icon,
   label,
   handleAction,
   actionIcon,
   labelSecondary,
   actionLabel,
-}: ISettingItemIconAction) => (
+}) => (
   <>
     <ListItem divider>
       <ListItemIcon>{icon}</ListItemIcon>

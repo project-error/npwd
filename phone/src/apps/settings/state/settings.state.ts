@@ -2,125 +2,54 @@ import { atom, AtomEffect, DefaultValue } from 'recoil';
 import { IPhoneSettings, SettingEvents } from '@typings/settings';
 import config from '../../../config/default.json';
 import fetchNui from '@utils/fetchNui';
-import { Schema, Validator } from 'jsonschema';
+import { isSchemaValid } from '../utils/schema';
+import { NPWD_STORAGE_KEY } from '../utils/constants';
+import { getDefaultLanguage } from '@utils/language';
 
-const NPWD_STORAGE_KEY = 'npwd_settings';
-
-const v = new Validator();
-
-const settingOptionSchema: Schema = {
-  id: '/SettingOption',
-  type: 'object',
-  properties: {
-    label: { type: 'string' },
-    val: { type: 'string' },
-  },
-  required: true,
+const getDefaultPhoneSettings = async () => {
+  return { ...config.defaultSettings, language: await getDefaultLanguage() };
 };
 
-const iconSetValueSchema: Schema = {
-  id: '/IconSetValue',
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    custom: { type: 'boolean' },
-  },
-  required: true,
-};
+const localStorageEffect: AtomEffect<IPhoneSettings> = ({ setSelf, onSet }) => {
+  const key = NPWD_STORAGE_KEY;
+  const savedVal = localStorage.getItem(key);
 
-const settingOptionIconSet: Schema = {
-  id: '/SettingOptionIconSet',
-  type: 'object',
-  properties: {
-    label: { type: 'string' },
-    value: { $ref: '/IconSetValue' },
-  },
-  required: true,
-};
+  if (!savedVal) setSelf(new DefaultValue());
 
-v.addSchema(iconSetValueSchema, '/IconSetValue');
-v.addSchema(settingOptionIconSet, '/SettingOptionIconSet');
-
-const settingsSchema: Schema = {
-  type: 'object',
-  properties: {
-    callVolume: { type: 'number', required: true },
-    iconSet: { $ref: '/SettingOptionIconSet', required: true },
-    language: { $ref: '/SettingOption', required: true },
-    wallpaper: { $ref: '/SettingOption', required: true },
-    frame: { $ref: '/SettingOption', required: true },
-    theme: { $ref: '/SettingOption', required: true },
-    zoom: { $ref: '/SettingOption', required: true },
-    streamerMode: { type: 'boolean', required: true },
-    ringtone: { $ref: '/SettingOption', required: true },
-    ringtoneVol: { type: 'number', required: true },
-    notiSound: { $ref: '/SettingOption', required: true },
-    notiSoundVol: { type: 'number', required: true },
-    TWITTER_notiFilter: { $ref: '/SettingOption', required: true },
-    TWITTER_notiSound: { $ref: '/SettingOption', required: true },
-    TWITTER_notiSoundVol: { type: 'number', required: true },
-    TWITTER_notifyNewFeedTweet: { type: 'boolean', required: true },
-  },
-};
-
-v.addSchema(settingOptionSchema, '/SettingOption');
-
-function isSchemaValid(schema: string): boolean {
-  const storedSettings = JSON.parse(schema);
-  const resp = v.validate(storedSettings, settingsSchema);
-  return resp.valid;
-}
-
-export function isSettingsSchemaValid(): boolean {
-  const localStore = localStorage.getItem(NPWD_STORAGE_KEY);
-  if (localStore) {
-    try {
-      const parsedSettings = JSON.parse(localStore);
-      return v.validate(parsedSettings, settingsSchema).valid;
-    } catch (e) {
-      console.error('Unable to parse settings JSON', e);
-    }
-  }
-  return true;
-}
-
-const localStorageEffect =
-  (key): AtomEffect<IPhoneSettings> =>
-  ({ setSelf, onSet }) => {
-    const savedVal = localStorage.getItem(key);
-
-    if (!savedVal) return setSelf(new DefaultValue());
+  const getConfig = async (): Promise<IPhoneSettings> => {
+    const defaultConfig = await getDefaultPhoneSettings();
 
     try {
       const validString = isSchemaValid(savedVal);
-      const settingsObj = !validString ? config.defaultSettings : JSON.parse(savedVal);
+      const settings: IPhoneSettings = validString ? JSON.parse(savedVal) : defaultConfig;
 
       if (!validString) {
         console.error('Settings Schema was invalid, applying default settings');
       }
 
       // Triggered on init
-      fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, settingsObj, {}).catch();
-      setSelf(settingsObj);
+      fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, settings, {}).catch();
+      return settings;
     } catch (e) {
-      // If we are unable to parse the json string, we set default settings
-      console.error('Unable to parse JSON');
-      setSelf(config.defaultSettings);
+      return defaultConfig;
     }
-
-    onSet((newValue) => {
-      // Triggered on set event
-      fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, newValue, {}).catch();
-      if (newValue instanceof DefaultValue) {
-        localStorage.removeItem(key);
-      } else {
-        localStorage.setItem(key, JSON.stringify(newValue));
-      }
-    });
   };
+
+  setSelf(getConfig());
+
+  onSet((newValue) => {
+    // Triggered on set event
+    fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, newValue, {}).catch();
+    if (newValue instanceof DefaultValue) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    }
+  });
+};
 
 export const settingsState = atom<IPhoneSettings>({
   key: 'settings',
-  default: config.defaultSettings,
-  effects_UNSTABLE: [localStorageEffect(NPWD_STORAGE_KEY)],
+  default: null,
+  effects: [localStorageEffect],
 });

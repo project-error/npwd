@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { Profile as IProfile, FormattedProfile, MatchEvents } from '@typings/match';
 import ProfileField from '@ui/components/ProfileField';
 import UpdateButton from '@ui/components/UpdateButton';
-import { Card } from '@mui/material';
+import { Box, Card } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
@@ -12,6 +12,11 @@ import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';
+import { Button } from '@ui/components/Button';
+import { useHistory, useLocation } from 'react-router-dom';
+import qs from 'qs';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 
 const useStyles = makeStyles({
   root: {
@@ -43,6 +48,9 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const setMyProfile = useSetMyProfile();
+  const history = useHistory();
+  const { pathname, search } = useLocation();
+  const query = useQueryParams();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -55,6 +63,10 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const [job, setJob] = useState(profile?.job || '');
   const [location, setLocation] = useState(profile?.location || '');
   const [tags, setTags] = useState(profile?.tags || '');
+
+  const handleOpenGallery = useCallback(() => {
+    history.push(`/camera?${qs.stringify({ referal: encodeURIComponent(pathname + search) })}`);
+  }, [history, pathname, search]);
 
   const update: FormattedProfile = {
     ...profile,
@@ -91,6 +103,12 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     });
   };
 
+  useEffect(() => {
+    if (!query?.image) return;
+    setImage(query.image);
+    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+  }, [query, history, setImage, pathname, search]);
+
   if (!profile && !ResourceConfig.match.allowEditableProfileName) {
     return <PageText text={t('MATCH.PROFILE_CONFIGURATION')} />;
   }
@@ -105,12 +123,19 @@ export function ProfileForm({ profile, showPreview }: IProps) {
 
   return (
     <div className={classes.root}>
-      <ProfileField
-        label={t('MATCH.EDIT_PROFILE_IMAGE')}
-        value={update.image}
-        handleChange={setImage}
-        allowChange
-      />
+      <Box>
+        <ProfileField
+          label={t('MATCH.EDIT_PROFILE_IMAGE')}
+          value={update.image}
+          handleChange={setImage}
+          allowChange
+        />
+        <Box mt={1} mb={2}>
+          <Button variant="contained" onClick={handleOpenGallery}>
+            Choose image
+          </Button>
+        </Box>
+      </Box>
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_NAME')}
         value={name}

@@ -8,6 +8,7 @@ import { ListingFormContainer } from './form/ListingFormContainer';
 import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
 import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
+import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
 
 export const MarketplaceApp: React.FC = () => {
   const marketplaceApp = useApp('MARKETPLACE');
@@ -17,10 +18,12 @@ export const MarketplaceApp: React.FC = () => {
       <AppWrapper id="marketplace-app">
         <AppTitle app={marketplaceApp} />
         <AppContent>
-          <Switch>
-            <Route path="/marketplace" exact component={MarketplaceListContainer} />
-            <Route path="/marketplace/new" component={ListingFormContainer} />
-          </Switch>
+          <WordFilterProvider>
+            <Switch>
+              <Route path="/marketplace" exact component={MarketplaceListContainer} />
+              <Route path="/marketplace/new" component={ListingFormContainer} />
+            </Switch>
+          </WordFilterProvider>
         </AppContent>
         <NavigationBar />
       </AppWrapper>

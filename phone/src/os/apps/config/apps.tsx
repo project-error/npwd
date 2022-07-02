@@ -42,12 +42,14 @@ export interface IAppConfig {
   backgroundColor: string;
   color: string;
   path: string;
+  disable?: boolean;
   Route: React.FC;
 }
 
 export type IApp = IAppConfig & {
   notification: INotificationIcon;
   icon: JSX.Element;
+  isDisabled: boolean;
   notificationIcon: JSX.Element;
   NotificationIcon: React.FC<SvgIconProps>;
   Icon?: React.FC<SvgIconProps>;
@@ -127,7 +129,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
-    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={true} />,
+    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={false} />,
   },
   {
     id: 'TWITTER',
@@ -160,7 +162,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
-    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true} />,
+    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={false} />,
   },
   {
     id: 'CAMERA',
@@ -168,7 +170,7 @@ export const APPS: IAppConfig[] = [
     backgroundColor: grey['A400'],
     color: common.white,
     path: '/camera',
-    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true} />,
+    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={false} />,
   },
 ];
 

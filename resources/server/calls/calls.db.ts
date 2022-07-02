@@ -25,7 +25,11 @@ export class CallsRepo {
   ): Promise<CallHistoryItem[]> {
     const query =
       'SELECT * FROM npwd_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC LIMIT ?';
-    const [result] = await DbInterface._rawExec(query, [phoneNumber, phoneNumber, limit]);
+    const [result] = await DbInterface._rawExec(query, [
+      phoneNumber,
+      phoneNumber,
+      limit.toString(),
+    ]);
 
     return <CallHistoryItem[]>result;
   }

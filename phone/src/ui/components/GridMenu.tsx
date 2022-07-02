@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { AppIcon } from './AppIcon';
 import { Box, Grid, GridSize } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -16,13 +16,17 @@ export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, 
       {items &&
         items.length &&
         items.map((item) => (
-          <Grid item xs={xs} key={item.id}>
-            <Box textAlign="center">
-              <Link to={item.path}>
-                <Component {...item} />
-              </Link>
-            </Box>
-          </Grid>
+          <Fragment key={item.id}>
+            {!item.isDisabled && (
+              <Grid item xs={xs} key={item.id}>
+                <Box textAlign="center">
+                  <Link to={item.path}>
+                    <Component {...item} />
+                  </Link>
+                </Box>
+              </Grid>
+            )}
+          </Fragment>
         ))}
     </Grid>
   );

@@ -17,7 +17,7 @@
         "INCOMING": "Appel entrant"
       },
       "FEEDBACK": {
-        "ERROR_MYSELF": "Vous ne pouvez pas vous appeler vous-même !",
+        "ERROR_MYSELF": "Vous ne pouvez pas vous appeler vous-même!",
         "ERROR": "Une erreur est survenue lors de cet appel"
       }
     },
@@ -26,6 +26,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Numéro de téléphone",
+      "PREVIEW_SOUND": "Prévisualiser",
       "CATEGORY": {
         "APPEARANCE": "Apparence",
         "PHONE": "Téléphone",
@@ -42,7 +43,7 @@
         "RESET_SETTINGS_DESC": "Cette action effacera toutes vos données",
         "STREAMER_MODE": {
           "TITLE": "Mode streamer",
-          "DESCRIPTION": "Masque les images avant qu'elles soient montrées"
+          "DESCRIPTION": "Masquer les images avant qu'elles ne soient montrées"
         },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",
@@ -50,7 +51,7 @@
           "DIALOG_PLACEHOLDER": "Lien de l'image",
           "DIALOG_ERROR": "Image ou lien invalide"
         },
-        "CALL_VOLUME": "Call Volume",
+        "CALL_VOLUME": "Volume de l'appel",
         "RINGTONE": "Sonnerie",
         "RINGTONE_VOLUME": "Volume de la sonnerie",
         "NOTIFICATION": "Notification",
@@ -60,10 +61,14 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
         "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notification",
+        "NOTIFY_NEW_LISTING": "Recevoir des notifications des nouvelles annonces"
       }
     },
     "CAMERA": {
-      "SHARE_DESTINATION": "Où voulez-vous partager l'image ?",
+      "SHARE_DESTINATION": "Où voulez-vous partager l'image?",
       "COPY_IMAGE": "Copiez le lien de l'image ici:",
       "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
       "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :("
@@ -100,7 +105,7 @@
       "FEEDBACK": {
         "CREATE_PROFILE_SUCCESS": "Profil créé avec succès",
         "CREATE_PROFILE_FAILURE": "Erreur lors de la création de votre profil",
-        "EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès !",
+        "EDIT_PROFILE_SUCCESS": "Votre profil a été mis à jour avec succès!",
         "EDIT_PROFILE_FAILURE": "Erreur lors de la mise à jour de votre profil",
         "CREATE_FAILED": "Erreur lors de l'envoi de votre tweet",
         "RETWEET_FAILED": "Erreur lors du retweet",
@@ -109,7 +114,8 @@
         "REPORT_TWEET_SUCCESS": "Tweet signalé avec succès",
         "REPORT_TWEET_FAILED": "Erreur lors du signalement du tweet",
         "FETCH_TWEETS_FAILED": "Erreur lors de la recherche des tweets",
-        "DELETE_TWEET_FAILED": "Erreur lors de la suppression de tweet"
+        "DELETE_TWEET_FAILED": "Erreur lors de la suppression de tweet",
+        "FILTER_FETCH_FAILED": "Erreur lors de l'obtention des tweets filtrés"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} a rewteeté quelqu'un!",
@@ -131,7 +137,7 @@
       "RETWEETED": "Retweeté",
       "TWEET_MESSAGE_CHAR_LIMIT": "Votre message dépasse la limite de caractères",
       "TWEET_MESSAGE_NEW_LINE_LIMIT": "Votre message dépasse la limite de ligne",
-      "TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf ?",
+      "TWEET_MESSAGE_PLACEHOLDER": "Quoi de neuf?",
       "SEARCH_TWEETS_PLACEHOLDER": "Chercher par profil ou message",
       "SEARCH_TWEETS": "Rechercher des tweets",
       "TIME_JUST_NOW": "À l'instant",
@@ -209,7 +215,7 @@
         "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
         "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
         "MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
-        "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
+        "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même!",
         "FETCHED_MESSAGES_FAILED": "Impossible de retrouver les messages",
         "DELETE_MESSAGE": "Supprimer les messages",
         "DELETE_MESSAGE_FAILED": "Impossible de supprimer le message",
@@ -219,8 +225,15 @@
       "DELETE_CONVERSATION": "Supprimer la conversation",
       "NEW_MESSAGE": "Message...",
       "NEW_MESSAGE_GROUP": "Numéros de téléphone...",
+      "SHARE_IMAGE_TITLE": "Voulez-vous partager cette image?",
+      "SHARE_CONTACT_TITLE": "Voulez-vous partager ce contact?",
       "GROUP_CHAT_LABEL": "Nom du groupe...",
       "MEDIA_OPTION": "Caméra / Galerie",
+      "CONTACT_OPTION": "Partager contact",
+      "CONTACT_SHARED": "Contact partagé",
+      "LOCATION_OPTION": "Partager localisation",
+      "LOCATION_MESSAGE": "Localisation partagée",
+      "LOCATION_TOOLTIP": "Définir point GPS",
       "NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
       "INPUT_NAME_OR_NUMBER": "Rechercher des contacts ou tapez un numéro et appuyez sur Entrée",
       "ACTIONS_TITLE": "Actions",
@@ -256,6 +269,8 @@
       "CANCEL": "Annuler",
       "TITLE": "Titre",
       "CONTENT": "Contenu",
+      "SHARE": "Partager",
+      "ADD": "Ajouter",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
     },
@@ -273,7 +288,7 @@
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Caméra",
     "APPS_MATCH": "Matchmaker",
-    "APPS_CALCULATOR_COPIED": "Résultat copiée dans le presse-papier!",
+    "APPS_CALCULATOR_COPIED": "Résultat copié dans le presse-papier!",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
     "GENERIC_LOADING": "Chargement...",
     "GENERIC_WAIT": "Veuillez patienter...",
@@ -290,6 +305,9 @@
     "GENERIC_TITLE": "Titre",
     "GENERIC_CONTENT": "Contenu",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!",
+    "GENERIC_DB_ERROR": "Erreur de la requête de création/édition",
+    "GENERIC_INVALID_IMAGE_HOST": "Cet hébergeur d'image n'est pas autorisé par ce serveur.",
+    "ERROR_RATE_LIMITED": "Veuillez patienter avant de refaire cette action."
   }
 }

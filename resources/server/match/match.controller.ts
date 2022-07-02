@@ -29,7 +29,7 @@ onNetPromise<void, FormattedProfile>(MatchEvents.GET_MY_PROFILE, (reqObj, resp) 
   });
 });
 
-onNetPromise<void, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => {
+onNetPromise<{ page: number }, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => {
   MatchService.handleGetMatches(reqObj, resp).catch((e) => {
     matchLogger.error(
       `Error occurred in fetch matches event (${reqObj.source}), Error: ${e.message}`,
@@ -38,7 +38,7 @@ onNetPromise<void, FormattedMatch[]>(MatchEvents.GET_MATCHES, (reqObj, resp) => 
   });
 });
 
-onNetPromise<Like[], boolean>(MatchEvents.SAVE_LIKES, (reqObj, resp) => {
+onNetPromise<Like, boolean>(MatchEvents.SAVE_LIKES, (reqObj, resp) => {
   MatchService.handleSaveLikes(reqObj, resp).catch((e) => {
     matchLogger.error(`Error occurred in save likes event (${reqObj.source}), Error: ${e.message}`);
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });

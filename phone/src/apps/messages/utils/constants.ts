@@ -3,62 +3,43 @@ import { ServerPromiseResp } from '@typings/common';
 
 export const MockMessageConversations: MessageConversation[] = [
   {
-    conversation_id: '4444+5555',
-    avatar: 'https://i.imgur.com/GCBVgXD.jpeg',
-    phoneNumber: '215-8139',
+    id: 1,
+    conversationList: '111-1134+215-8139',
+    participant: '111-1134',
     unread: 0,
-    display: 'Taso',
+    label: '',
     updatedAt: 5,
+    isGroupChat: false,
   },
   {
-    conversation_id: '4444+7777',
-    avatar: '',
-    phoneNumber: '603-275-8373',
-    unread: 3,
-    display: 'Chip',
-    updatedAt: 15,
-  },
-  {
-    conversation_id: '3333+5555',
-    avatar: '',
-    phoneNumber: '555-15196',
-    unread: 3,
-    display: 'Rocko',
+    id: 2,
+    conversationList: '111-1134+321+215-8139',
+    participant: '111-1134',
+    unread: 0,
+    label: 'Secret Project Error chat',
     updatedAt: 5,
-  },
-  {
-    conversation_id: '2222+1111',
-    avatar: '',
-    phoneNumber: '444-4444',
-    unread: 3,
-    display: 'Kidz',
-    updatedAt: 7,
+    isGroupChat: true,
   },
 ];
 
 const MockConversationMessages: Message[] = [
   {
-    id: 1,
-    author: '215-8139',
-    message: '',
-    conversation_id: '4444+5555',
-  },
-  {
     id: 2,
     author: '215-8139',
-    message:
-      'Hi asljdf klasdfjkasjdf sdfjf asdf djkjas k kksdfjjsl ks kldfs d fd asd asdfjasdjfjasdkljjfklasjldfjlj asdf sadfdsdkafjkljsdklfjklfjdf',
+    message: 'Dude, when is this rewrite done?????',
+    createdAt: 16234242422,
   },
   {
     id: 3,
-    author: '215-8139',
-    message: 'Hello',
-    conversation_id: '4444+5555',
+    author: '111-1134',
+    message: 'Bro, finish\nnotifications\napi?????',
+    createdAt: 16234242422,
   },
   {
-    id: 5,
-    author: '215-8139',
-    message: 'https://i.tasoagc.dev/LtuA.png',
+    id: 4,
+    author: '444-4444',
+    message: "Couldn't be me!",
+    createdAt: 16234242422,
   },
 ];
 

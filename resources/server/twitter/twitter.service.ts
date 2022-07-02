@@ -86,10 +86,12 @@ class _TwitterService {
       const identifier = PlayerService.getIdentifier(src);
       const profile = await this.twitterDB.getProfile(identifier);
 
-      if (!profile)
-        return twitterLogger.warn(
+      if (!profile) {
+        twitterLogger.warn(
           `Aborted fetching tweets for user ${identifier} because they do not have a profile.`,
         );
+        return resp({ status: 'ok', data: [] });
+      }
 
       const tweets = await this.twitterDB.fetchAllTweets(profile.id, pageIdx);
 
@@ -116,7 +118,7 @@ class _TwitterService {
       twitterLogger.error(`Fetch filtered tweets failed, ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: e.message });
+      resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.FILTERED_FETCH_FAILED' });
     }
   }
 
@@ -203,16 +205,16 @@ class _TwitterService {
       // alert the player that they have already retweeted
       // this post (or that they are the original poster)
       if (await this.twitterDB.doesRetweetExist(reqObj.data.tweetId, identifier)) {
-        resp({
+        return resp({
           status: 'error',
-          errorMsg: 'FEEDBACK.RETWEET_EXISTS',
+          errorMsg: 'TWITTER.FEEDBACK.RETWEET_EXISTS',
         });
       }
 
       // our message for this row is blank because when we
       // query for this tweet it will join off of the retweet
       // column and fetch the message from the related tweet
-      const retweet: NewTweet = { message: '', retweet: reqObj.data.tweetId };
+      const retweet: NewTweet = { message: '', images: '', retweet: reqObj.data.tweetId };
       const createdTweet = await this.twitterDB.createTweet(identifier, retweet);
 
       const profile = await this.twitterDB.getProfile(identifier);

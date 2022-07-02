@@ -1,9 +1,13 @@
-import { RewriteFrames } from '@sentry/integrations';
 import './config';
-import { config } from './config';
+
+import { RewriteFrames } from '@sentry/integrations';
+import { config as resourceConfig } from './config';
+export const config = resourceConfig;
+import { registerCommands } from './commands/registerCommands';
 
 // Setup controllers
 import './db/pool';
+import './boot/boot.controller';
 import './players/player.controller';
 import './calls/calls.controller';
 import './notes/notes.controller';
@@ -16,9 +20,14 @@ import './match/match.controller';
 
 // setup exports
 import './bridge/sv_exports';
+import './messages/middleware/emitMessage';
+import './rcon/exports';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
+
+// register commands
+registerCommands();
 
 // Setup sentry tracing
 if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
@@ -35,6 +44,6 @@ if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
 
 on('onServerResourceStart', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
-    mainLogger.info('Sucessfully started');
+    mainLogger.info('Successfully started');
   }
 });

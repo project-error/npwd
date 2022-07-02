@@ -34,7 +34,6 @@ onNetPromise<Profile, Profile>(TwitterEvents.UPDATE_PROFILE, async (reqObj, resp
 onNetPromise<{ searchValue: string }, Tweet[]>(
   TwitterEvents.FETCH_TWEETS_FILTERED,
   async (reqObj, resp) => {
-    console.log('getting some filtered tweets');
     const _source = getSource();
     TwitterService.handleFetchTweetsFiltered(reqObj, resp).catch((e) =>
       twitterLogger.error(
@@ -42,6 +41,7 @@ onNetPromise<{ searchValue: string }, Tweet[]>(
       ),
     );
   },
+  { rateLimit: 5000 },
 );
 
 onNetPromise<Tweet, void>(TwitterEvents.CREATE_TWEET, async (reqObj, resp) => {

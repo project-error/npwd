@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
@@ -15,34 +15,28 @@ import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
+import { useMatchService } from './apps/match/hooks/useMatchService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
 import { useCallModal } from '@os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
-import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import PhoneWrapper from './PhoneWrapper';
-
 import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
-import { useCall } from './os/call/hooks/useCall';
-import { isSettingsSchemaValid } from './apps/settings/state/settings.state';
+import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
+import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 
 function Phone() {
-  const { t, i18n } = useTranslation();
-
+  const { i18n } = useTranslation();
   const { apps } = useApps();
-
   const [settings] = useSettings();
-
-  const { addAlert } = useSnackbar();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes
@@ -50,37 +44,22 @@ function Phone() {
     i18n.changeLanguage(settings.language.value).catch((e) => console.error(e));
   }, [i18n, settings.language]);
 
-  useEffect(() => {
-    if (!isSettingsSchemaValid()) {
-      addAlert({
-        message: t('SETTINGS.MESSAGES.INVALID_SETTINGS'),
-        type: 'error',
-      });
-    }
-    // We only want to run this on first mount of the phone,
-    // so we leave an empty dep array. Otherwise, we hit a max depth error.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   useConfig();
-
   useKeyboardService();
   usePhoneService();
   useSimcardService();
   useTwitterService();
+  useMatchService();
   useMarketplaceService();
   useBankService();
   useMessagesService();
   useContactsListener();
   useNoteListener();
-  /*usePhotoService();*/
   useCallService();
   useDialService();
+  useInvalidSettingsHandler();
 
   const { modal: callModal } = useCallModal();
-  const { call } = useCall();
-
-  const showNavigation = call?.is_accepted || !callModal;
 
   return (
     <div>
@@ -93,13 +72,13 @@ function Phone() {
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
               {apps.map((App) => (
-                <App.Route key={App.id} />
+                <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
               ))}
             </>
             <NotificationAlert />
             <PhoneSnackbar />
           </div>
-          {showNavigation && <Navigation />}
+          <Navigation />
         </PhoneWrapper>
       </TopLevelErrorComponent>
     </div>

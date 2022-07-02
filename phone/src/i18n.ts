@@ -17,6 +17,8 @@ import nl from './locale/nl.json';
 import fi from './locale/fi.json';
 import it from './locale/it.json';
 import id from './locale/id.json';
+import zhtw from './locale/zhtw.json';
+import ru from './locale/ru.json';
 
 // Should we just programatically call for static files
 // on the scripts side to avoid having to parse all these
@@ -39,6 +41,8 @@ export const resources = {
   fi,
   it,
   id,
+  zhtw,
+  ru,
 } as const;
 
 const missingKeyHandler = (

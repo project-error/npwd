@@ -1,25 +1,20 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Fab } from '@mui/material';
+import { Box, Fab, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    bottom: '75px',
-    right: '10px',
-  },
-}));
+const UpdateButtonRoot = styled(Box)({
+  position: 'absolute',
+  bottom: '75px',
+  right: '10px',
+});
 
 export function ProfileUpdateButton({ handleClick }) {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <UpdateButtonRoot>
       <Fab color="primary" onClick={handleClick}>
         <SearchIcon />
       </Fab>
-    </div>
+    </UpdateButtonRoot>
   );
 }
 

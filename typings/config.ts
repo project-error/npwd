@@ -4,6 +4,7 @@ interface TwitterConfig {
   allowEditableProfileName: boolean;
   allowDeleteTweets: boolean;
   allowReportTweets: boolean;
+  allowRetweet: boolean;
   characterLimit: number;
   newLineLimit: number;
   enableAvatars: boolean;
@@ -17,6 +18,10 @@ interface MatchConfig {
   allowEditableProfileName: boolean;
 }
 
+interface MarketplaceConfig {
+  persistListings: boolean;
+}
+
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
@@ -28,6 +33,8 @@ interface General {
   useResourceIntegration: boolean;
   toggleKey: string;
   toggleCommand: string;
+  defaultLanguage: string;
+  showId: boolean;
 }
 
 interface NotificationConfig {
@@ -71,6 +78,11 @@ interface PhoneAsItemConfig {
   exportFunction: string;
 }
 
+interface ProfanityFilter {
+  enabled: boolean;
+  badWords: string[];
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -78,10 +90,12 @@ export interface ResourceConfig {
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;
+  marketplace: MarketplaceConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;
   debug: Debug;
   images: ImageConfig;
   imageSafety: ImageSafety;
+  profanityFilter: ProfanityFilter;
 }

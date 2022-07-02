@@ -1,6 +1,13 @@
 import { formatMatches, formatProfile, matchLogger } from './match.utils';
 import MatchDB, { _MatchDB } from './match.db';
-import { FormattedMatch, FormattedProfile, Like, MatchResp, Profile } from '../../../typings/match';
+import {
+  FormattedMatch,
+  FormattedProfile,
+  Like,
+  MatchEvents,
+  MatchResp,
+  Profile,
+} from '../../../typings/match';
 import PlayerService from '../players/player.service';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
@@ -34,6 +41,7 @@ class _MatchService {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
       const profile = await this.dispatchPlayerProfile(identifier);
+      emitNet(MatchEvents.CREATE_MATCH_ACCOUNT_BROADCAST, -1, profile);
       resp({ status: 'ok', data: profile });
     } catch (e) {
       matchLogger.error(`Error in handleGetMyProfile, ${e.message}`);
@@ -41,8 +49,9 @@ class _MatchService {
     }
   }
 
-  async handleSaveLikes(reqObj: PromiseRequest<Like[]>, resp: PromiseEventResp<boolean>) {
-    const identifier = PlayerService.getIdentifier(reqObj.source);
+  async handleSaveLikes(reqObj: PromiseRequest<Like>, resp: PromiseEventResp<boolean>) {
+    const player = PlayerService.getPlayer(reqObj.source);
+    const identifier = player.getIdentifier();
     matchLogger.debug(`Saving likes for identifier ${identifier}`);
 
     try {
@@ -53,10 +62,18 @@ class _MatchService {
     }
 
     try {
-      const newMatches = await this.matchDB.findNewMatches(identifier, reqObj.data);
+      const newMatches = await this.matchDB.checkIfMatched(identifier, reqObj.data);
 
-      if (newMatches.length > 0) {
+      if (newMatches) {
         resp({ status: 'ok', data: true });
+
+        const matchedPlayer = PlayerService.getPlayerFromIdentifier(newMatches.identifier);
+
+        if (matchedPlayer) {
+          emitNet(MatchEvents.SAVE_LIKES_BROADCAST, matchedPlayer.source, {
+            name: player.getName(),
+          });
+        }
       } else {
         resp({ status: 'ok', data: false });
       }
@@ -66,10 +83,13 @@ class _MatchService {
     }
   }
 
-  async handleGetMatches(reqObj: PromiseRequest<void>, resp: PromiseEventResp<FormattedMatch[]>) {
+  async handleGetMatches(
+    reqObj: PromiseRequest<{ page: number }>,
+    resp: PromiseEventResp<FormattedMatch[]>,
+  ) {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
-      const matchedProfiles = await this.matchDB.findAllMatches(identifier);
+      const matchedProfiles = await this.matchDB.findAllMatches(identifier, reqObj.data.page);
       const formattedMatches = matchedProfiles.map(formatMatches);
       resp({ status: 'ok', data: formattedMatches });
     } catch (e) {

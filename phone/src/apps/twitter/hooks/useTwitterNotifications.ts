@@ -44,18 +44,16 @@ export const useTwitterNotifications = () => {
     // we don't want notifications of our own tweets
     if (currentProfileName === profile_name) return;
 
+    const profileMentioned = isMentioned(currentProfileName, message);
+
     // if the player only wants notifications on tweets they are
     // mentioned in
-    if (
-      settings.TWITTER_notiFilter.value === SETTING_MENTIONS &&
-      !isMentioned(currentProfileName, message)
-    )
-      return;
+    if (settings.TWITTER_notiFilter.value === SETTING_MENTIONS && !profileMentioned) return;
 
     const notification = {
       app: 'TWITTER',
       id: NOTIFICATION_ID,
-      sound: true,
+      sound: profileMentioned,
       title: t(titleStr, { profile_name }),
       onClick: () => history.push('/twitter'),
       content: message,

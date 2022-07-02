@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 import { config } from './config';
 import path from 'path';
-const { createLogger, transports, format } = require('./logform');
+import { createLogger, transports, format } from 'winston';
 
 // Needed to manually apply a color to componenent property of log
 const manualColorize = (strToColor: string): string => `[\x1b[35m${strToColor}\x1b[0m]`;
@@ -18,14 +17,15 @@ const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName())
 // Initiate the main logger for NPWD
 
 export const mainLogger = createLogger({
-  level: config.debug.level ?? 'info',
   silent: !config.debug.enabled ?? false,
   transports: [
     new transports.File({
       filename: findLogPath(),
+      level: 'silly',
       format: format.combine(format.errors({ stack: true }), format.timestamp(), format.json()),
     }),
     new transports.Console({
+      level: config.debug.level ?? 'info',
       format: format.combine(
         format.label({ label: '[NPWD]' }),
         format.colorize({ all: true }),

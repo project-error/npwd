@@ -8,6 +8,7 @@ import { RegisterNuiCB } from './cl_utils';
 global.isPhoneOpen = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
+global.clientPhoneNumber = null;
 
 const exps = global.exports;
 
@@ -34,7 +35,11 @@ RegisterKeyMapping(
 );
 
 setTimeout(() => {
-  emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
+  emit(
+    'chat:addSuggestion',
+    `/${config.general.toggleCommand}`,
+    'Toggle displaying your cellphone',
+  );
 }, 1000);
 
 const getCurrentGameTime = () => {
@@ -107,7 +112,8 @@ RegisterCommand(
  *
  * * * * * * * * * * * * */
 
-const checkExportCanOpen = async (): Promise<boolean> => {
+export const checkHasPhone = async (): Promise<boolean> => {
+  if (!config.PhoneAsItem.enabled) return true;
   const exportResp = await Promise.resolve(
     exps[config.PhoneAsItem.exportResource][config.PhoneAsItem.exportFunction](),
   );
@@ -119,16 +125,16 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
-  if (config.PhoneAsItem.enabled) {
-    const canAccess = await checkExportCanOpen();
-    if (!canAccess) return;
-  }
+  const canAccess = await checkHasPhone();
+  if (!canAccess) return;
   if (global.isPhoneOpen) return await hidePhone();
   await showPhone();
 }
 
-onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
+onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, playerSource: number) => {
+  global.clientPhoneNumber = number;
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
+  sendMessage('PHONE', PhoneEvents.SEND_PLAYER_SOURCE, playerSource);
 });
 
 on('onResourceStop', (resource: string) => {
@@ -164,6 +170,26 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
     cb({});
   },
 );
+
+/* * * * * * * * * * * * *
+ *
+ *  PhoneAsItem Export Checker
+ *
+ * * * * * * * * * * * * */
+if (config.PhoneAsItem.enabled) {
+  setTimeout(() => {
+    let doesExportExist = false;
+
+    const { exportResource, exportFunction } = config.PhoneAsItem;
+    emit(`__cfx_export_${exportResource}_${exportFunction}`, () => {
+      doesExportExist = true;
+    });
+
+    if (!doesExportExist) {
+      console.log('\n^1Incorrect PhoneAsItem configuration detected. Export does not exist.^0\n');
+    }
+  }, 100);
+}
 
 // setTick(async () => {
 //   while (config.SwimDestroy) {

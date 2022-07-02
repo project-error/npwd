@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   icon: {
     color: 'white',
     boxShadow: '0 .5rem 3rem -.25em rgba(0,0,0,.3)',
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     width: 40,
   },
-}));
+});
 
 export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const classes = useStyles();

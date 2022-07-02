@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from '../utils/constants';
+import { Box, styled } from '@mui/material';
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  img: {
-    borderRadius: '50%',
-    objectFit: 'cover',
-  },
+const AvatarWrapper = styled(Box)({
+  width: '100%',
+});
+
+const Image = styled('img')({
+  borderRadius: '50%',
+  objectFit: 'cover',
 });
 
 function Avatar({ avatarUrl, showInvalidImage, height, width }) {
-  const classes = useStyles();
   const [showImageError, setShowImageError] = useState(false);
   const { ResourceConfig } = usePhone();
 
@@ -25,24 +23,22 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
   if (!ResourceConfig || !ResourceConfig.twitter.enableAvatars) return null;
 
   return (
-    <div className={classes.root}>
+    <AvatarWrapper>
       {showImageError && (
-        <img
-          className={classes.img}
+        <Image
           src={showInvalidImage ? IMG_INVALID_AVATAR : IMG_DEFAULT_AVATAR}
           alt="Invalid avatar"
           style={{ height, width }}
         />
       )}
-      <img
-        className={classes.img}
+      <Image
         src={avatarUrl || IMG_DEFAULT_AVATAR}
         alt="Your profile avatar"
         onError={handleImageError}
         onLoad={handleImageLoad}
         style={{ display: showImageError ? 'none' : 'block', height, width }}
       />
-    </div>
+    </AvatarWrapper>
   );
 }
 
