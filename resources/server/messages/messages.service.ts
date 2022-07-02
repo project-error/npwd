@@ -321,15 +321,38 @@ class _MessagesService {
         .split('+')
         .filter((number) => number != reqObj.data.phoneNumber)
         .join('+');
-
       await this.messagesDB.removeGroupMember(
         updatedConversationList,
         reqObj.data.conversationId,
         reqObj.data.phoneNumber,
       );
       resp({ status: 'ok', data: { conversationList: updatedConversationList } });
+
       const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
       const participants = reqObj.data.conversationList.split('+');
+
+      if (reqObj.data.leaveGroup && reqObj.data.phoneNumber === groupOwner) {
+        //owner is trying to leave group, we need to assign a new owner
+        //select a random member
+        const newOwner = participants[Math.floor(Math.random() * participants.length)];
+        //update the owner on the db
+        await this.messagesDB.makeGroupOwner(reqObj.data.conversationId, newOwner);
+        //get new owners identifier
+        const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(newOwner);
+        const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+        //if owner online then update
+        if (participantPlayer) {
+          emitNetTyped(
+            MessageEvents.UPDATE_GROUP_OWNER,
+            {
+              conversationId: reqObj.data.conversationId,
+              phoneNumber: newOwner,
+            },
+            participantPlayer.source,
+          );
+        }
+      }
+
       for (const participant of participants) {
         if (!reqObj.data.leaveGroup || participant === playerPhoneNumber) {
           //if not leave group (kick) and the participant is the person kicking then move to next player as he already has updated data
