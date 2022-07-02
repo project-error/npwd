@@ -31,9 +31,9 @@ export interface CreateMessageDTO {
   message: string;
   is_embed: boolean;
   embed: any;
-  is_system: boolean;
-  system_type: 'leave' | 'remove' | 'add';
-  system_number: string;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
 }
 
 export interface MessageConversation {
@@ -45,7 +45,8 @@ export interface MessageConversation {
   unread?: number;
   unreadCount?: number;
   updatedAt?: number;
-  createdBy: string;
+  owner?: string;
+  avatar?: string;
 }
 
 export interface PreDBConversation {
@@ -67,6 +68,15 @@ export interface RemoveGroupMemberRequest {
   conversationId: number;
   phoneNumber: string;
   leaveGroup: boolean;
+}
+
+export interface MakeGroupOwner {
+  conversationId: number;
+  phoneNumber: string;
+}
+
+export interface ConversationListResponse {
+  conversationList: string;
 }
 
 /**
@@ -127,6 +137,7 @@ export interface MessageConversationResponse {
   updatedAt: number;
   conversationList: string;
   label: string;
+  owner?: string;
 }
 
 export interface RemoveGroupMemberResponse {
@@ -176,6 +187,8 @@ export enum MessageEvents {
   DELETE_GROUP_MEMBER = 'nwpd:deleteGroupMember',
   DELETE_GROUP_MEMBER_CONVERSATION = 'nwpd:deleteGroupMemberChat',
   DELETE_GROUP_MEMBER_LIST = 'nwpd:deleteGroupMemberList',
+  MAKE_GROUP_OWNER = 'npwd:makeGroupOwner',
+  UPDATE_GROUP_OWNER = 'npwd:makeGroupOwnerSuccess',
 }
 
 export interface Location {

@@ -11,7 +11,7 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_system` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `system_type` varchar(48) NOT NULL DEFAULT '';
 # ALTER TABLE npwd_messages ADD COLUMN `system_number` varchar(48) NOT NULL DEFAULT '';
-# ALTER TABLE npwd_messages_conversations ADD COLUMN `createdBy` varchar(48) NOT NULL DEFAULT '';
+# ALTER TABLE npwd_messages_conversations ADD COLUMN `owner` varchar(48) NOT NULL DEFAULT '';
 
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
@@ -167,7 +167,7 @@ CREATE TABLE `npwd_messages_conversations`
     `createdAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `updatedAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `last_message_id`   INT(11)      NULL     DEFAULT NULL,
-    `createdBy`         varchar(48)  NOT NULL DEFAULT '',
+    `owner`         varchar(48)  NOT NULL DEFAULT '',
     `is_group_chat`     TINYINT(4)   NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`) USING BTREE
 );

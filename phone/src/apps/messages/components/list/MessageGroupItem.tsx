@@ -7,6 +7,8 @@ import {
   Avatar as MuiAvatar,
   Badge,
   ListItemIcon,
+  Box,
+  Grid,
 } from '@mui/material';
 
 import { MessageConversation } from '@typings/messages';
@@ -93,7 +95,13 @@ const MessageGroupItem = ({
           invisible={messageConversation.unreadCount <= 0}
         >
           {messageConversation.isGroupChat ? (
-            <MuiAvatar alt={messageConversation.label} />
+            <>
+              {messageConversation.avatar ? (
+                <MuiAvatar alt={messageConversation.label} src={messageConversation.avatar} />
+              ) : (
+                <MuiAvatar alt={messageConversation.label} />
+              )}
+            </>
           ) : (
             <>
               {getContact()?.avatar ? (

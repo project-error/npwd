@@ -20,6 +20,7 @@ interface MessageActionProps {
   getLabelOrContact: (messageConversation: MessageConversation) => string;
   getConversationParticipant: (conversationList: string) => Contact | null;
   removeLocalGroupMember: (conversationId: number, phoneNumber: string) => void;
+  updateLocalGroupOwner: (conversationId: number, phoneNumber: string) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -113,6 +114,23 @@ export const useMessageActions = (): MessageActionProps => {
     [setMessageConversation],
   );
 
+  const updateLocalGroupOwner = useCallback(
+    (conversationsId: number, phoneNumber: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationsId) {
+            return {
+              ...conversation,
+              owner: phoneNumber,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
+  );
+
   const updateLocalMessages = useCallback(
     (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
@@ -163,5 +181,6 @@ export const useMessageActions = (): MessageActionProps => {
     getLabelOrContact,
     getConversationParticipant,
     removeLocalGroupMember,
+    updateLocalGroupOwner,
   };
 };

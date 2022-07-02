@@ -24,15 +24,22 @@ export interface IContextMenuOption {
   selected?: boolean;
   icon?: React.ReactNode;
   key?: string;
+  hide?: boolean;
 }
 
 interface ContextMenuProps {
   open: boolean;
   onClose: () => void;
   options: Array<IContextMenuOption>;
+  marginBottom?: boolean;
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({
+  open,
+  onClose,
+  options,
+  marginBottom,
+}) => {
   const classes = useStyles();
   const [t] = useTranslation();
 
@@ -50,26 +57,35 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
     <Slide
       direction="up"
       in={open}
-      style={{ position: 'absolute', bottom: 0 }}
+      style={{
+        position: 'absolute',
+        bottom: marginBottom ? 16 : 0,
+      }}
       mountOnEnter
       unmountOnExit
     >
       <Paper square className={classes.root}>
         <List disablePadding>
-          {_options.map((option) => (
-            <ListItem
-              selected={option.selected}
-              key={option.key || option.label}
-              button
-              onClick={(e) => {
-                option.onClick(e, option);
-                onClose();
-              }}
-            >
-              {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
-              <ListItemText primary={option.label} secondary={option.description} />
-            </ListItem>
-          ))}
+          {_options.map((option) => {
+            if (option.hide) {
+              return null;
+            }
+
+            return (
+              <ListItem
+                selected={option.selected}
+                key={option.key || option.label}
+                button
+                onClick={(e) => {
+                  option.onClick(e, option);
+                  onClose();
+                }}
+              >
+                {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
+                <ListItemText primary={option.label} secondary={option.description} />
+              </ListItem>
+            );
+          })}
         </List>
       </Paper>
     </Slide>

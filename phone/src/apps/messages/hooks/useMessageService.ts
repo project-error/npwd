@@ -1,5 +1,6 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import {
+  MakeGroupOwner,
   Message,
   MessageConversation,
   MessageEvents,
@@ -18,6 +19,7 @@ export const useMessagesService = () => {
     setMessageReadState,
     removeLocalConversation,
     removeLocalGroupMember,
+    updateLocalGroupOwner,
   } = useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
@@ -52,7 +54,7 @@ export const useMessagesService = () => {
         conversationList: conversation.conversationList,
         label: conversation.label,
         unread: 0,
-        createdBy: conversation.createdBy,
+        owner: conversation.owner,
       });
     },
     [updateLocalConversations],
@@ -72,9 +74,17 @@ export const useMessagesService = () => {
     [removeLocalGroupMember],
   );
 
+  const updateGroupOwner = useCallback(
+    (conversation: MakeGroupOwner) => {
+      updateLocalGroupOwner(conversation.conversationId, conversation.phoneNumber);
+    },
+    [updateLocalGroupOwner],
+  );
+
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
   useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
   useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
   useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
+  useNuiEvent('MESSAGES', MessageEvents.UPDATE_GROUP_OWNER, updateGroupOwner);
 };

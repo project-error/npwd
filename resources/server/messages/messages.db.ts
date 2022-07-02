@@ -17,7 +17,7 @@ export class _MessagesDB {
                           npwd_messages_participants.unread_count               as unreadCount,
                           npwd_messages_conversations.is_group_chat             as isGroupChat,
                           npwd_messages_conversations.label,
-                          npwd_messages_conversations.createdBy,
+                          npwd_messages_conversations.owner,
                           UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt,
                           npwd_messages_participants.participant
                    FROM npwd_messages_conversations
@@ -35,7 +35,7 @@ export class _MessagesDB {
                           npwd_messages_conversations.conversation_list         as conversationList,
                           npwd_messages_conversations.is_group_chat             as isGroupChat,
                           npwd_messages_conversations.label,
-                          npwd_messages_conversations.createdBy,
+                          npwd_messages_conversations.owner,
                           UNIX_TIMESTAMP(npwd_messages_conversations.createdAt) as createdAt,
                           UNIX_TIMESTAMP(npwd_messages_conversations.updatedAt) as updatedAt
                    FROM npwd_messages_conversations
@@ -80,9 +80,9 @@ export class _MessagesDB {
     conversationList: string,
     conversationLabel: string,
     isGroupChat: boolean,
-    createdBy: string,
+    owner: string,
   ) {
-    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label, is_group_chat, createdBy)
+    const conversationQuery = `INSERT INTO npwd_messages_conversations (conversation_list, label, is_group_chat, owner)
                                VALUES (?, ?, ?, ?)`;
     const participantQuery = `INSERT INTO npwd_messages_participants (conversation_id, participant)
                               VALUES (?, ?)`;
@@ -91,7 +91,7 @@ export class _MessagesDB {
       conversationList,
       isGroupChat ? conversationLabel : '',
       isGroupChat,
-      createdBy,
+      owner,
     ]);
     const result = <ResultSetHeader>results;
 
@@ -114,7 +114,6 @@ export class _MessagesDB {
 
     return conversationId;
   }
-
 
   async createMessage(dto: CreateMessageDTO): Promise<Message> {
     const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed, is_system, system_type, system_number)
@@ -184,14 +183,15 @@ export class _MessagesDB {
   }
 
   async removeGroupMember(conversationList: string, conversationId: number, phoneNumber: string) {
-    const updatedConversationList = conversationList
-      .split('+')
-      .filter((number) => number != phoneNumber)
-      .join('+');
     const conversationQuery = `UPDATE npwd_messages_conversations SET conversation_list = ? WHERE id = ?`;
     const participantQuery = `DELETE FROM npwd_messages_participants WHERE conversation_id = ? AND participant = ?`;
-    await DbInterface._rawExec(conversationQuery, [updatedConversationList, conversationId]);
+    await DbInterface._rawExec(conversationQuery, [conversationList, conversationId]);
     await DbInterface._rawExec(participantQuery, [conversationId, phoneNumber]);
+  }
+
+  async makeGroupOwner(conversationId: number, phoneNumber: string) {
+    const query = `UPDATE npwd_messages_conversations SET owner = ? WHERE id = ?`;
+    await DbInterface._rawExec(query, [phoneNumber, conversationId]);
   }
 
   async doesConversationExist(conversationList: string): Promise<boolean> {
@@ -209,12 +209,12 @@ export class _MessagesDB {
   }
 
   async getGroupOwner(conversationID: number): Promise<string> {
-    const query = `SELECT createdBy FROM npwd_messages_conversations WHERE id = ?`;
+    const query = `SELECT owner FROM npwd_messages_conversations WHERE id = ?`;
 
     const [results] = await DbInterface._rawExec(query, [conversationID]);
     const result = <any>results;
 
-    return result[0].createdBy;
+    return result[0].owner;
   }
 
   async doesConversationExistForPlayer(

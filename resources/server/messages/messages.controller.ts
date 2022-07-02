@@ -1,6 +1,8 @@
 import { getSource } from '../utils/miscUtils';
 import {
+  ConversationListResponse,
   DeleteConversationRequest,
+  MakeGroupOwner,
   Message,
   MessageConversation,
   MessageEvents,
@@ -115,7 +117,7 @@ onNetPromise(MessageEvents.GET_MESSAGE_LOCATION, async (reqObj, resp) => {
   });
 });
 
-onNetPromise<RemoveGroupMemberRequest, void>(
+onNetPromise<RemoveGroupMemberRequest, ConversationListResponse>(
   MessageEvents.DELETE_GROUP_MEMBER,
   async (reqObj, resp) => {
     MessagesService.handleRemoveGroupMember(reqObj, resp).catch((e) => {
@@ -126,3 +128,12 @@ onNetPromise<RemoveGroupMemberRequest, void>(
     });
   },
 );
+
+onNetPromise<MakeGroupOwner, void>(MessageEvents.MAKE_GROUP_OWNER, async (reqObj, resp) => {
+  MessagesService.handleMakeGroupOwner(reqObj, resp).catch((e) => {
+    messagesLogger.error(
+      `Error occurred while making group owner (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});

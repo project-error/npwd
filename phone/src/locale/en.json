@@ -221,7 +221,8 @@
         "DELETE_MESSAGE_FAILED": "Failed to delete message",
         "DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
         "DELETE_GROUP_MEMBER_FAILED": "Failed to remove member",
-        "LEAVE_GROUP_FAILED": "Failed to leave group"
+        "LEAVE_GROUP_FAILED": "Failed to leave group",
+        "MAKE_GROUP_OWNER_FAILED": "Failed to make group owner"
       },
       "SEARCH_PLACEHOLDER": "Search messages...",
       "DELETE_CONVERSATION": "Delete conversation",

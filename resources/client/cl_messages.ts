@@ -1,5 +1,6 @@
 import {
   CreateMessageBroadcast,
+  MakeGroupOwner,
   MessageConversationResponse,
   MessageEvents,
   PreDBMessage,
@@ -14,6 +15,7 @@ RegisterNuiProxy(MessageEvents.FETCH_MESSAGES);
 RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.DELETE_GROUP_MEMBER);
+RegisterNuiProxy(MessageEvents.MAKE_GROUP_OWNER);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);
 RegisterNuiProxy(MessageEvents.GET_MESSAGE_LOCATION);
@@ -40,4 +42,8 @@ onNet(MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, (result: number[]) => {
 
 onNet(MessageEvents.DELETE_GROUP_MEMBER_LIST, (result: RemoveGroupMemberResponse) => {
   sendMessageEvent(MessageEvents.DELETE_GROUP_MEMBER_LIST, result);
+});
+
+onNet(MessageEvents.UPDATE_GROUP_OWNER, (result: MakeGroupOwner) => {
+  sendMessageEvent(MessageEvents.UPDATE_GROUP_OWNER, result);
 });

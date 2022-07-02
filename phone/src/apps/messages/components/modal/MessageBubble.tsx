@@ -136,11 +136,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 </StyledMessage>
               )}
               {!isMine && (
-                <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                <Typography mt={0.5} fontWeight="bold" fontSize={14} color="#ddd">
                   {getContact()?.display ?? message.author}
                 </Typography>
               )}
-              <Typography mt={2} fontSize={12}>
+              <Typography mt={0.5} fontSize={12}>
                 {dayjs.unix(message.createdAt).fromNow()}
               </Typography>
             </>

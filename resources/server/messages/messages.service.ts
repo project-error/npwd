@@ -17,6 +17,8 @@ import {
   Location,
   RemoveGroupMemberRequest,
   RemoveGroupMemberResponse,
+  ConversationListResponse,
+  MakeGroupOwner,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
 import { emitNetTyped } from '../utils/miscUtils';
@@ -78,7 +80,6 @@ class _MessagesService {
           label: conversation.conversationLabel,
           conversationList,
           isGroupChat: conversation.isGroupChat,
-          createdBy: playerPhoneNumber,
         };
 
         return resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
@@ -100,7 +101,7 @@ class _MessagesService {
         label: conversation.conversationLabel,
         conversationList,
         isGroupChat: conversation.isGroupChat,
-        createdBy: playerPhoneNumber,
+        owner: playerPhoneNumber,
       };
 
       resp({ status: 'ok', data: { ...respData, participant: playerPhoneNumber } });
@@ -187,7 +188,7 @@ class _MessagesService {
         label: conversationDetails.label,
         conversationList: conversationDetails.conversationList,
         isGroupChat: conversationDetails.isGroupChat,
-        createdBy: conversationDetails.createdBy,
+        owner: conversationDetails.owner,
       };
 
       // participantId is the participants phone number
@@ -299,23 +300,34 @@ class _MessagesService {
 
   async handleRemoveGroupMember(
     reqObj: PromiseRequest<RemoveGroupMemberRequest>,
-    resp: PromiseEventResp<void>,
+    resp: PromiseEventResp<ConversationListResponse>,
   ) {
     const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
     const groupOwner = await this.messagesDB.getGroupOwner(reqObj.data.conversationId);
 
-    if (groupOwner !== phoneNumber) {
-      messagesLogger.error(`Use does not own group. Error`);
+    if (!reqObj.data.leaveGroup && groupOwner !== phoneNumber) {
+      messagesLogger.error(`User does not own group. Error`);
+      return resp({ status: 'error' });
+    }
+
+    if (reqObj.data.leaveGroup && reqObj.data.phoneNumber !== phoneNumber) {
+      //if the user is leaving group and its not themself that is leaving then return an error as someone is trying to cheat
+      messagesLogger.error(`User is trying to force another member to leave. Error`);
       return resp({ status: 'error' });
     }
 
     try {
+      const updatedConversationList = reqObj.data.conversationList
+        .split('+')
+        .filter((number) => number != reqObj.data.phoneNumber)
+        .join('+');
+
       await this.messagesDB.removeGroupMember(
-        reqObj.data.conversationList,
+        updatedConversationList,
         reqObj.data.conversationId,
         reqObj.data.phoneNumber,
       );
-      resp({ status: 'ok' });
+      resp({ status: 'ok', data: { conversationList: updatedConversationList } });
       const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
       const participants = reqObj.data.conversationList.split('+');
       for (const participant of participants) {
@@ -398,7 +410,7 @@ class _MessagesService {
               label: '',
               isGroupChat: false,
               participant: targetNumber,
-              createdBy: senderNumber,
+              owner: senderNumber,
             },
             participantPlayer.source,
           );
@@ -459,6 +471,45 @@ class _MessagesService {
         coords: GetEntityCoords(playerPed),
       },
     });
+  }
+
+  async handleMakeGroupOwner(reqObj: PromiseRequest<MakeGroupOwner>, resp: PromiseEventResp<void>) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const groupOwner = await this.messagesDB.getGroupOwner(reqObj.data.conversationId);
+
+    if (groupOwner !== phoneNumber) {
+      messagesLogger.error(`User does not own group. Error`);
+      return resp({ status: 'error' });
+    }
+
+    try {
+      await this.messagesDB.makeGroupOwner(reqObj.data.conversationId, reqObj.data.phoneNumber);
+
+      resp({ status: 'ok' });
+      const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(
+        reqObj.data.phoneNumber,
+      );
+      const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+
+      if (!participantPlayer) {
+        //if not online return
+        return;
+      }
+
+      if (participantPlayer) {
+        emitNetTyped(
+          MessageEvents.UPDATE_GROUP_OWNER,
+          {
+            conversationId: reqObj.data.conversationId,
+            phoneNumber: reqObj.data.phoneNumber,
+          },
+          participantPlayer.source,
+        );
+      }
+    } catch (err) {
+      messagesLogger.error(`Failed to make group owner. Error: ${err.message}`);
+      resp({ status: 'error' });
+    }
   }
 }
 
