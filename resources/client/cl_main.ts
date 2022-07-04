@@ -92,7 +92,7 @@ RegisterCommand(
   async () => {
     //-- Toggles Phone
     // Check to see if the phone is marked as disabled
-    if (!global.isPhoneDisabled) await togglePhone();
+    if (!global.isPhoneDisabled && !IsPauseMenuActive()) await togglePhone();
   },
   false,
 );
