@@ -48,6 +48,10 @@ export class CallService {
     return this.currentCall === tgtCall;
   }
 
+  getCurrentCall() {
+    return this.currentPendingCall;
+  }
+
   isInPendingCall() {
     return !!this.currentPendingCall;
   }
@@ -141,3 +145,5 @@ export class CallService {
     });
   }
 }
+
+export const callService = new CallService();

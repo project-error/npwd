@@ -34,7 +34,7 @@ export const useCallService = () => {
   const history = useHistory();
   const { pathname } = useLocation();
   const setNavigationDisabled = useSetNavigationDisabled();
-  const { setCall, call } = useCall();
+  const { setCall, call, endCall } = useCall();
 
   const { setNotification, clearNotification } = useCallNotifications();
 
@@ -66,4 +66,5 @@ export const useCallService = () => {
     setNotification(callData);
   });
   useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, setModal);
+  useNuiEvent('CALL', CallEvents.END_CALL, endCall);
 };

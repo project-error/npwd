@@ -8,15 +8,13 @@ import {
   TransmitterNumDTO,
 } from '@typings/call';
 import { IAlertProps } from '@typings/alerts';
-import { CallService } from './cl_calls.service';
+import { callService, CallService } from './cl_calls.service';
 import { animationService } from '../animations/animation.controller';
 import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '@typings/common';
 import { NuiCallbackFunc } from '@project-error/pe-utils';
-
-const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
   if (callService.isInCall()) return;

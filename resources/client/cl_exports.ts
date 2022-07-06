@@ -6,6 +6,9 @@ import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { AddNoteExportData, NotesEvents } from '../../typings/notes';
 import { hidePhone, showPhone } from './cl_main';
 import { ClUtils } from './client';
+import { CallService, callService } from './calls/cl_calls.service';
+import { animationService } from './animations/animation.controller';
+import { CallEvents } from '../../typings/call';
 
 const exps = global.exports;
 
@@ -86,4 +89,15 @@ exps('getPhoneNumber', async () => {
     global.clientPhoneNumber = res.data;
   }
   return global.clientPhoneNumber;
+});
+
+exps('isInCall', () => {
+  return callService.isInCall();
+});
+
+exps('endCall', async () => {
+  if (callService.isInCall()) {
+    CallService.sendCallAction(CallEvents.END_CALL, null);
+    animationService.endPhoneCall();
+  }
 });
