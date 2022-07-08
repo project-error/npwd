@@ -7,4 +7,5 @@ export default {
   CONTACTS: 'CONTACTS',
   CAMERA: 'CAMERA',
   PHONE: 'PHONE',
+  TASKRABBIT: 'TASKRABBIT',
 };

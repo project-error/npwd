@@ -5,20 +5,20 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": false,
-    "toggleKey": "f1",
+    "useResourceIntegration": true,
+    "toggleKey": "m",
     "toggleCommand": "phone",
     "defaultLanguage": "en"
   },
   "profanityFilter": {
-    "enabled": false,
-    "badWords": ["esx"]
+    "enabled": true,
+    "badWords": ["nigger","transgender","nigg3r", "Nigger", "Nigg3r", " retard "]
   },
   "database": {
-    "useIdentifierPrefix": false,
+    "useIdentifierPrefix": true,
     "playerTable": "users",
     "identifierColumn": "identifier",
-    "identifierType": "license",
+    "identifierType": "char",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
