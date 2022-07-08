@@ -1,8 +1,8 @@
 {
   "PhoneAsItem": {
-    "enabled": false,
-    "exportResource": "my-core-resource",
-    "exportFunction": "myCheckerFunction"
+    "enabled": true,
+    "exportResource": "dsrp_main",
+    "exportFunction": "hasPhone"
   },
   "general": {
     "useResourceIntegration": true,
