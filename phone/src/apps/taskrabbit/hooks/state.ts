@@ -8,7 +8,7 @@ const jobData: TaskRabbitJobs[] = [
     description:
       'Are you the next greatest bass fisherman of DreamState? Well why not try your luck at fishing, there is different types to fish out there with more rewards to have.',
     stars: 2,
-    blip_location: [-404.4522, 6377.5044],
+    blip_location: [9.4722, 879.6013],
   },
   {
     id: 1,
