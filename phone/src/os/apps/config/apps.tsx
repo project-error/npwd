@@ -6,6 +6,7 @@ import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { TaskRabbitAppWrapper } from '../../../apps/taskrabbit/components/TaskRabbitAppWrapper';
+import { GarageAppWrapper } from '../../../apps/garage/components/GarageAppWrapper';
 import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
@@ -176,10 +177,17 @@ export const APPS: IAppConfig[] = [
   {
     id: 'TASKRABBIT',
     nameLocale: 'APPS_TASKRABBIT',
-    backgroundColor: "#03bb85",
+    backgroundColor: '#03bb85',
     color: blue[50],
     path: '/taskrabbit',
-    Route: () => <AppRoute id="TASKRABBIT" path="/taskrabbit" component={TaskRabbitAppWrapper} emitOnOpen={false} />,
+    Route: () => (
+      <AppRoute
+        id="TASKRABBIT"
+        path="/taskrabbit"
+        component={TaskRabbitAppWrapper}
+        emitOnOpen={false}
+      />
+    ),
   },
 ];
 
@@ -193,6 +201,16 @@ if (process.env.NODE_ENV === 'development') {
     path: '/example',
     Route: () => (
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
+    ),
+  });
+  APPS.push({
+    id: 'GARAGE',
+    nameLocale: 'APPS_GARAGE',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/garage',
+    Route: () => (
+      <AppRoute id="GARAGE" path="/garage" component={GarageAppWrapper} emitOnOpen={false} />
     ),
   });
 }

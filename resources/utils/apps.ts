@@ -8,4 +8,5 @@ export default {
   CAMERA: 'CAMERA',
   PHONE: 'PHONE',
   TASKRABBIT: 'TASKRABBIT',
+  GARAGE: 'GARAGE',
 };
