@@ -1,10 +1,12 @@
 export interface GarageVehicle {
   id: number;
-  model: string;
+  model: number;
   plate: string;
-  garage_name: string;
-  garage_location: number[];
+  garageId: number;
   health: number;
+  model_name?: string;
+  garage_name?: string;
+  garage_location?: number[];
 }
 
 export enum GarageEvents {
