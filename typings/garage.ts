@@ -11,4 +11,5 @@ export interface GarageVehicle {
 
 export enum GarageEvents {
   GET_VEHICLE_LIST = 'npwd:getVehicleList',
+  RESOLVE_HASH_TO_MODEL_NAME = 'npwd:getModelFromHash',
 }

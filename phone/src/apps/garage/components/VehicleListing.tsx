@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
 import { ListItem } from '@ui/components/ListItem';
@@ -11,6 +11,7 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { MessageEvents } from '@typings/messages';
 import { useHistory } from 'react-router';
 import Grid from '@mui/material/Grid';
+import { GarageEvents } from '@typings/garage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,6 +89,16 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
   const history = useHistory();
   const { addAlert } = useSnackbar();
 
+  const [vehName, setVehName] = useState<string>('');
+
+  useEffect(() => {
+    console.log(vehicle.model);
+    // Fetch Vehicle Model Name From Hash.
+    fetchNui<string>(GarageEvents.RESOLVE_HASH_TO_MODEL_NAME, {
+      model: vehicle.model,
+    }).then((modelName) => setVehName(modelName));
+  }, [vehicle.model]);
+
   const [isRotated, setIsRotated] = useState<boolean>(false);
 
   const handleSetWaypoint = () => {
@@ -127,7 +138,7 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
                     </Item>
                   </Grid>
                   <Grid item xs={5}>
-                    <Item elevation={0}>{vehicle.model}</Item>
+                    <Item elevation={0}>{vehName}</Item>
                   </Grid>
                   <Grid item xs={5}>
                     <Item elevation={0}>{vehicle.plate}</Item>
