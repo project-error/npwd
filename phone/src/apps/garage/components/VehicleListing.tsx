@@ -11,7 +11,7 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { MessageEvents } from '@typings/messages';
 import { useHistory } from 'react-router';
 import Grid from '@mui/material/Grid';
-import { GarageEvents } from '@typings/garage';
+import { grabVehicleByHash } from '../hooks/state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,11 +92,8 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
   const [vehName, setVehName] = useState<string>('');
 
   useEffect(() => {
-    console.log(vehicle.model);
     // Fetch Vehicle Model Name From Hash.
-    fetchNui<string>(GarageEvents.RESOLVE_HASH_TO_MODEL_NAME, {
-      model: vehicle.model,
-    }).then((modelName) => setVehName(modelName));
+    setVehName(grabVehicleByHash(vehicle.model));
   }, [vehicle.model]);
 
   const [isRotated, setIsRotated] = useState<boolean>(false);

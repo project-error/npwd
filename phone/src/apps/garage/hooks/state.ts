@@ -3,7 +3,7 @@ import { GarageEvents, GarageVehicle } from '@typings/garage';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { isEnvBrowser } from '@utils/misc';
-import { BrowserGarageState } from '../utils/constants';
+import { BrowserGarageState, ENUM_VEHICLE } from '../utils/constants';
 
 export const garageState = atom<GarageVehicle[]>({
   key: 'vehicleListings',
@@ -23,5 +23,10 @@ export const garageState = atom<GarageVehicle[]>({
     },
   }),
 });
+
+export const grabVehicleByHash = (model: string) => {
+  if (model == null) return null;
+  return ENUM_VEHICLE[model] ? ENUM_VEHICLE[model] : '🔮 IMPORT';
+};
 
 export const useGrabVehicleList = () => useRecoilValue(garageState);
