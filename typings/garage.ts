@@ -1,6 +1,6 @@
 export interface GarageVehicle {
   id: number;
-  model: number;
+  model: string;
   plate: string;
   garageId: number;
   health: number;
