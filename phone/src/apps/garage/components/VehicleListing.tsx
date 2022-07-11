@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
 import { ListItem } from '@ui/components/ListItem';
 import { Paper } from '@mui/material';
-import { GarageVehicle } from '@typings/garage';
+import { GarageHub, GarageVehicle } from '@typings/garage';
 import CarRentalIcon from '@mui/icons-material/CarRental';
 import { styled } from '@mui/material/styles';
 import fetchNui from '../../../utils/fetchNui';
@@ -11,7 +11,7 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { MessageEvents } from '@typings/messages';
 import { useHistory } from 'react-router';
 import Grid from '@mui/material/Grid';
-import { grabVehicleByHash } from '../hooks/state';
+import { fetchGarageNameById, fetchVehicleNameByHash } from '../hooks/state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,10 +68,17 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0,
     display: 'none',
   },
-  garageLocation: {
+  garageLocationStored: {
     color: 'white',
     '&:hover': {
       boxShadow: '0px 8px 8px 0px green',
+    },
+  },
+  garageLocationImpound: {
+    color: 'white',
+    cursor: 'auto',
+    '&:hover': {
+      boxShadow: '0px 8px 8px 0px yellow',
     },
   },
 }));
@@ -90,23 +97,30 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
   const { addAlert } = useSnackbar();
 
   const [vehName, setVehName] = useState<string>('');
+  const [garageData, setGarageData] = useState<GarageHub>({
+    name: 'Contact Local Impound',
+    location: null,
+  });
 
   useEffect(() => {
     // Fetch Vehicle Model Name From Hash.
-    setVehName(grabVehicleByHash(vehicle.model));
-  }, [vehicle.model]);
+    setVehName(fetchVehicleNameByHash(vehicle.model));
+    if (vehicle.stored == 1) {
+      setGarageData(fetchGarageNameById(vehicle.garageId));
+    }
+  }, [vehicle.model, vehicle.garageId]);
 
   const [isRotated, setIsRotated] = useState<boolean>(false);
 
   const handleSetWaypoint = () => {
     // sets GPS waypoint.
     fetchNui(MessageEvents.MESSAGES_SET_WAYPOINT, {
-      coords: vehicle.garage_location,
+      coords: [garageData.location.x, garageData.location.y],
     });
 
     // Alerts user of the GPS waypoint.
     addAlert({
-      message: '📍 ' + vehicle.garage_name + ' has been marked on your GPS.',
+      message: '📍 ' + garageData.name + ' has been marked on your GPS.',
       type: 'success',
     });
 
@@ -145,8 +159,15 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
               <Grid
                 className={isRotated ? classes.garageLocationShow : classes.garageLocationHidden}
               >
-                <Item className={classes.garageLocation} onClick={handleSetWaypoint}>
-                  📍 {vehicle.garage_name}
+                <Item
+                  className={
+                    garageData.location
+                      ? classes.garageLocationStored
+                      : classes.garageLocationImpound
+                  }
+                  onClick={garageData.location && handleSetWaypoint}
+                >
+                  📍 {garageData.name}
                 </Item>
               </Grid>
             </Box>

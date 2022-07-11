@@ -1,4 +1,4 @@
-import { GarageVehicle } from '@typings/garage';
+import { GarageVehicle, GarageHub } from '@typings/garage';
 
 export const BrowserGarageState: GarageVehicle[] = [
   {
@@ -9,6 +9,7 @@ export const BrowserGarageState: GarageVehicle[] = [
     garage_location: [100, 200, 300],
     health: 100,
     garageId: 1,
+    stored: 1,
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const BrowserGarageState: GarageVehicle[] = [
     garage_location: [23.1, 21.2, -33.2],
     health: 21,
     garageId: 2,
+    stored: 1,
   },
   {
     id: 3,
@@ -27,6 +29,7 @@ export const BrowserGarageState: GarageVehicle[] = [
     garage_location: [12.1, -23.2, 43.2],
     health: 60,
     garageId: 11,
+    stored: 1,
   },
   {
     id: 4,
@@ -36,6 +39,17 @@ export const BrowserGarageState: GarageVehicle[] = [
     garage_name: 'West Coast Salvage',
     garage_location: [100.12, 200.42, 300.52],
     health: 100,
+    stored: 1,
+  },
+  {
+    id: 5,
+    model: '1373123368',
+    plate: 'NEK 8239',
+    garageId: 5,
+    garage_name: '',
+    garage_location: [],
+    health: 100,
+    stored: 0,
   },
 ];
 
@@ -558,4 +572,297 @@ export const ENUM_VEHICLE: VEH = {
   '1951180813': 'Taco',
   '65402552': 'Youga',
   '1026149675': 'Youga2',
+};
+
+type GARAGE = {
+  [key: number]: GarageHub;
+};
+
+export const ENUM_GARAGE: GARAGE = {
+  1: {
+    location: { x: 232.34, y: -763.98, z: 30.5, h: 251.98 },
+    name: 'Legion Square',
+  },
+  2: {
+    location: { x: 1737.84, y: 3719.28, z: 33.04, h: 21.22 },
+    name: 'Sandy Shores',
+  },
+  3: {
+    location: { x: -782.44, y: -194.35, z: 37.28, h: 28.22 },
+    name: 'Lux Autos',
+  },
+
+  4: {
+    location: { x: 128.7822, y: 6622.9965, z: 30.7828, h: 315.01 },
+    name: 'Paleto Bay',
+  },
+  5: {
+    location: { x: -277.76, y: -899.42, z: 31.08, h: 238.65 },
+    name: 'Alta Apartments',
+  },
+  6: {
+    location: { x: 1199.02, y: 330.92, z: 80.99, h: 144.86 },
+    name: 'Casino',
+  },
+  7: {
+    location: { x: 291.39, y: -337.78, z: 44.61, h: 161.11 },
+    name: 'North Pillbox',
+  },
+  8: {
+    location: { x: 1108.12, y: 2670.4, z: 38.15, h: 268.83 },
+    name: 'Sandy Motel',
+  },
+
+  9: {
+    location: { x: -1438.22, y: -675.96, z: 26.45, h: 120.85 },
+    name: 'Del Perro',
+  },
+
+  10: {
+    location: { x: -695.75, y: 5773.63, z: 17.33, h: 65.12 },
+    name: 'Paleto Cove',
+  },
+
+  11: {
+    location: { x: -934.18, y: -1287.74, z: 5.03, h: 83.52 },
+    name: 'Vespucci BLVD',
+  },
+
+  12: {
+    location: { x: -383.87, y: -115.2, z: 38.69, h: 36.02 },
+    name: 'West Coast Customs',
+  },
+
+  13: {
+    location: { x: 732.47, y: -549.79, z: 26.63, h: 153.74 },
+    name: 'Poplar Street',
+  },
+
+  14: {
+    location: { x: 461.81, y: 241.5, z: 103.21, h: 334.1 },
+    name: 'Clinton Ave',
+  },
+
+  15: {
+    location: { x: 346.62, y: -629.52, z: 29.29, h: 241.93 },
+    name: 'Lower PillBox',
+  },
+
+  16: {
+    location: { x: 984.53, y: -213.13, z: 70.72, h: 327.0 },
+    name: 'SOA Garage',
+  },
+
+  50: {
+    location: { x: -24.29, y: -1453.66, z: 30.76, h: 185.43 },
+    name: 'Forum Drive',
+  },
+
+  51: {
+    location: { x: 970.47, y: -1816.04, z: 31.1, h: 82.71 },
+    name: 'Innocense BLVD',
+  },
+
+  52: {
+    location: { x: 128.14, y: -1996.82, z: 18.35, h: 165.08 },
+    name: 'Dutch London ST',
+  },
+
+  53: {
+    location: { x: -3196.67, y: 803.77, z: 8.93, h: 211.33 },
+    name: 'Chumash Mansion',
+  },
+
+  54: {
+    location: { x: -1576.62, y: 122.42, z: 58.39, h: 85.71 },
+    name: 'Playboy Mansion',
+  },
+
+  55: {
+    location: { x: -1907.58, y: 2054.61, z: 140.74, h: 168.44 },
+    name: 'Vineyard',
+  },
+
+  56: {
+    location: { x: -1519.14, y: 871.66, z: 181.74, h: 340.23 },
+    name: 'Rehab Center',
+  },
+
+  57: {
+    location: { x: -100.42, y: -1589.59, z: 31.43, h: 318.79 },
+    name: 'Forum & Strawyberry',
+  },
+
+  58: {
+    location: { x: 134.67, y: 310.49, z: 112.14, h: 84.89 },
+    name: 'The Lost HQ',
+  },
+  100: {
+    location: { x: -1805.85, y: 456.85, z: 128.28, h: 86.24 },
+    name: 'Brians Mansion',
+  },
+  101: {
+    location: { x: -1505.65, y: 427.49, z: 111.11, h: 43.02 },
+    name: 'Private Ace Jones Dr',
+  },
+
+  102: {
+    location: { x: -314.17, y: -729.01, z: 28.03, h: 336.29 },
+    name: 'Private Caesars',
+  },
+
+  103: {
+    location: { x: -1449.95, y: -58.44, z: 52.54, h: 238.65 },
+    name: 'Private West Eclipse BLVD',
+  },
+  104: {
+    location: { x: 365.5, y: -824.56, z: 29.29, h: 163 },
+    name: 'Best Buds',
+  },
+  105: {
+    location: { x: 244.23, y: -1155.71, z: 29.2, h: 112.0 },
+    name: 'Courthouse Rear Parking',
+  },
+  106: {
+    location: { x: -342.61, y: -142.67, z: 60.61, h: 112.0 },
+    name: 'West Coast HeliPad',
+  },
+  107: {
+    location: { x: 1770.57, y: 3346.17, z: 40.82, h: 214.844 },
+    name: 'Flywheels',
+  },
+
+  108: {
+    location: { x: 822.87, y: -949.18, z: 26.5, h: 175.0 },
+    name: 'Hitmen Garage',
+  },
+  109: {
+    location: { x: -810.14, y: 301.51, z: 86.12, h: 181.0 },
+    name: 'Eclipse Towers',
+  },
+  110: {
+    location: { x: -240.49, y: -1610.29, z: 33.58, h: 354.0 },
+    name: 'Ballas Parking',
+  },
+
+  111: {
+    location: { x: 1449.0457, y: 1092.1364, z: 115.0351, h: 110.1366 },
+    name: 'La Fuente Blanca',
+  },
+  112: {
+    location: { x: -21.3447, y: -1021.1732, z: 28.8973, h: 47.5346 },
+    name: 'Bennys Garage',
+  },
+  113: {
+    location: { x: 439.3168, y: -1518.0502, z: 29.2786, h: 140.7432 },
+    name: 'Moonshiners Garage',
+  },
+  114: {
+    location: { x: 171.4351, y: -3001.3411, z: 5.7733, h: 22.4762 },
+    name: '6Str Garage',
+  },
+  115: {
+    location: { x: 58.0756, y: -106.1718, z: 56.1924, h: 249.818 },
+    name: 'Sugar Babies',
+  },
+  116: {
+    location: { x: -552.7853, y: 307.5055, z: 82.8806, h: 263.5727 },
+    name: 'Tequilala',
+  },
+  117: {
+    location: { x: -834.9075, y: -700.4159, z: 27.2896, h: 87.429 },
+    name: 'SOB Garage',
+  },
+  118: {
+    location: { x: -548.2089, y: -892.0982, z: 24.863, h: 191.4648 },
+    name: 'Redline Garage',
+  },
+  119: {
+    location: { x: -289.7607, y: 6281.335, z: 31.4922, h: 119.0903 },
+    name: 'HenHouse Garage',
+  },
+  120: {
+    location: { x: -2605.19, y: 1678.09, z: 141.89, h: 119.0903 },
+    name: 'Private S. Buen Vino RD',
+  },
+  121: {
+    location: { x: 1850.3848, y: 3691.1699, z: 33.9745, h: 227.1455 },
+    name: 'BCSO Garage',
+  },
+  122: {
+    location: { x: 921.9344, y: -1769.6501, z: 22.1381, h: 190.0916 },
+    name: 'Underground Drift Garage',
+  },
+  123: {
+    location: { x: 1135.3556, y: -407.6466, z: 67.049, h: 265.6064 },
+    name: 'Rear Cool Beans Parking',
+  },
+  124: {
+    location: { x: -820.7101, y: 183.2761, z: 72.3182, h: 120.0666 },
+    name: "Michael's House",
+  },
+  125: {
+    location: { x: -1750.0438, y: 365.8117, z: 89.7232, h: 112.7708 },
+    name: 'Private Richman St',
+  },
+  126: {
+    location: { x: -966.0759, y: -1477.8003, z: 5.0194, h: 102.3286 },
+    name: "Not PF Chang's",
+  },
+  127: {
+    location: { x: -2573.364, y: 1926.6976, z: 167.6918, h: 231.8385 },
+    name: 'Private N. Buen Vino Rd',
+  },
+  128: {
+    location: { x: -1530.3009, y: -349.2014, z: 45.0255, h: 54.9597 },
+    name: 'Prosperity St',
+  },
+  129: {
+    location: { x: -1390.4526, y: 65.1707, z: 53.6164, h: 123.8095 },
+    name: 'Golf Course Garage',
+  },
+  130: {
+    location: { x: 289.4589, y: -903.1738, z: 29.0553, h: 71.0257 },
+    name: 'Level Up Garage',
+  },
+  131: {
+    location: { x: -349.2355, y: 55.8406, z: 49.1073, h: 90.9228 },
+    name: 'WCC Underground Garage',
+  },
+  132: {
+    location: { x: -1117.5848, y: 374.8771, z: 70.2646, h: 49.9602 },
+    name: 'Private Picture Perfect Dr',
+  },
+  133: {
+    location: { x: 373.1402, y: 789.2575, z: 187.1326, h: 164.8387 },
+    name: 'Park Ranger Garage',
+  },
+  134: {
+    location: { x: -1026.228, y: -882.3233, z: 6.5531, h: 136.8311 },
+    name: 'Private Vespucci Garage',
+  },
+  135: {
+    location: { x: 2570.6697, y: 6184.832, z: 162.9407, h: 234.2276 },
+    name: 'Private Lake House Garage',
+  },
+  136: {
+    location: { x: 149.0471, y: -1307.262, z: 29.2023, h: 101.3805 },
+    name: 'Vanilla Unicorn',
+  },
+  137: {
+    location: { x: 543.6726, y: -141.958, z: 58.7313, h: 89.7869 },
+    name: 'Auto Exotic Garage',
+  },
+  138: {
+    location: { x: -1339.5099, y: -1204.6058, z: 4.7714, h: 270.3822 },
+    name: 'Smoke On The Water Garage',
+  },
+  139: {
+    location: { x: -2117.3704, y: 2666.0435, z: 2.8324, h: 14.3396 },
+    name: 'Salvaging Garage',
+  },
+  140: {
+    location: { x: 3796.8311, y: 4454.6094, z: 4.8722, h: 7.6987 },
+    name: 'Salvaging Garage EC',
+  },
 };

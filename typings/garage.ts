@@ -4,9 +4,22 @@ export interface GarageVehicle {
   plate: string;
   garageId: number;
   health: number;
+  stored: number;
   model_name?: string;
   garage_name?: string;
   garage_location?: number[];
+}
+
+export interface FIVEM_COORDS {
+  x: number;
+  y: number;
+  z: number;
+  h: number;
+}
+
+export interface GarageHub {
+  location: FIVEM_COORDS;
+  name: string;
 }
 
 export enum GarageEvents {

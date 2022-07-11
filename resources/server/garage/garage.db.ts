@@ -8,7 +8,7 @@ export class _GarageDB {
     console.log(identifier);
     console.log('garage/db we have an identifier and now we are pinging the database.');
     const query =
-      'SELECT plate, JSON_VALUE(vehicle, ?) AS model, garageId, health FROM owned_vehicles WHERE owner = ? AND job = ? ORDER BY plate ASC;';
+      'SELECT plate, JSON_VALUE(vehicle, ?) AS model, garageId, health, stored FROM owned_vehicles WHERE owner = ? AND job = ? ORDER BY plate ASC;';
     const [results] = await DbInterface._rawExec(query, [`$.model`, identifier, 'civ']);
     console.log('we have results and now we send back to state.');
     return <GarageVehicle[]>results;
