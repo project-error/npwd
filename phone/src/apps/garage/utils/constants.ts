@@ -562,6 +562,7 @@ export const ENUM_VEHICLE: VEH = {
   '1951180813': 'Taco',
   '65402552': 'Youga',
   '1026149675': 'Youga2',
+  '1118611807': 'ASBO',
 };
 
 type GARAGE = {

@@ -189,6 +189,16 @@ export const APPS: IAppConfig[] = [
       />
     ),
   },
+  {
+    id: 'GARAGE',
+    nameLocale: 'APPS_GARAGE',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/garage',
+    Route: () => (
+      <AppRoute id="GARAGE" path="/garage" component={GarageAppWrapper} emitOnOpen={false} />
+    ),
+  },
 ];
 
 // Example app only in dev
@@ -201,16 +211,6 @@ if (process.env.NODE_ENV === 'development') {
     path: '/example',
     Route: () => (
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
-    ),
-  });
-  APPS.push({
-    id: 'GARAGE',
-    nameLocale: 'APPS_GARAGE',
-    backgroundColor: blue[500],
-    color: blue[50],
-    path: '/garage',
-    Route: () => (
-      <AppRoute id="GARAGE" path="/garage" component={GarageAppWrapper} emitOnOpen={false} />
     ),
   });
 }
