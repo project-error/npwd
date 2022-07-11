@@ -37,6 +37,7 @@ import { INotificationIcon } from '@os/notifications/providers/NotificationsProv
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
+import { DebtKollectorAppWrapper } from '../../../apps/debtkollector/components/DebtKollectorAppWrapper';
 
 export interface IAppConfig {
   id: string;
@@ -211,6 +212,21 @@ if (process.env.NODE_ENV === 'development') {
     path: '/example',
     Route: () => (
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
+    ),
+  });
+  APPS.push({
+    id: 'DEBTKOLLECTOR',
+    nameLocale: 'APPS_DEBTKOLLECTOR',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/debtkollector',
+    Route: () => (
+      <AppRoute
+        id="DEBTKOLLECTOR"
+        path="/debtkollector"
+        component={DebtKollectorAppWrapper}
+        emitOnOpen={false}
+      />
     ),
   });
 }
