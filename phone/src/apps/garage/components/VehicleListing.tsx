@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   garageLocationImpound: {
     color: 'white',
-    cursor: 'auto',
+    cursor: 'default',
     '&:hover': {
       boxShadow: '0px 8px 8px 0px yellow',
     },
@@ -101,6 +101,7 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
     name: 'Contact Local Impound',
     location: null,
   });
+  const [isRotated, setIsRotated] = useState<boolean>(false); // Hover Effect
 
   useEffect(() => {
     // Fetch Vehicle Model Name From Hash.
@@ -110,13 +111,22 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
     }
   }, [vehicle.model, vehicle.garageId, vehicle.stored]);
 
-  const [isRotated, setIsRotated] = useState<boolean>(false);
-
   const handleSetWaypoint = () => {
     // sets GPS waypoint.
     fetchNui(MessageEvents.MESSAGES_SET_WAYPOINT, {
       coords: [garageData.location.x, garageData.location.y],
     });
+
+    // Debug to fix VEHICLE_ENUM.
+    if (vehName === '🔮 IMPORT') {
+      console.log(
+        '=-= PLEASE COPY PASTE MODEL HASH AND DM TO Stella WITH MODEL NAME OF THE IMPORT VEHICLE YOU CLICKED <3 =-=',
+      );
+      console.log('=-= STEP {1} => Click on Open Log button on the bottom right of panel. =-=');
+      console.log('=-= STEP {2} => Scroll to bottom & Copy MODEL HASH. =-=');
+      console.log('=-= STEP {3} => DM @Stella on Discord with Hash + the vehicle name. =-=');
+      console.log('=-= MODEL HASH: ' + vehicle.model + ' =-=');
+    }
 
     // Alerts user of the GPS waypoint.
     addAlert({
