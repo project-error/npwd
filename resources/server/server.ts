@@ -18,6 +18,7 @@ import './marketplace/marketplace.controller';
 import './garage/garage.controller';
 import './twitter/twitter.controller';
 import './match/match.controller';
+import './debtkollector/debtkollector.controller';
 
 // setup exports
 import './bridge/sv_exports';
