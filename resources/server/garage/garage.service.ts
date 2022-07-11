@@ -14,12 +14,9 @@ class _GarageService {
 
   async handleFetchListings(req: PromiseRequest<void>, resp: PromiseEventResp<GarageVehicle[]>) {
     try {
-      console.log('garage/service has been hit. We grab identifier and then pull listings with.');
-      // Might be a bug here with req.source.
       const identifier = PlayerService.getIdentifier(req.source);
-      console.log('player identifier: ' + identifier);
+      // Grabs Vehicles pertaining to the player.
       const listings = await this.garageDB.fetchListings(identifier);
-
       resp({ data: listings, status: 'ok' });
     } catch (e) {
       garageLogger.error(`Failed to fetch vehicles, ${e.message}`, {

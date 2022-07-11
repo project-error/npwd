@@ -105,10 +105,10 @@ export const VehicleListing: React.FC<GarageVehicle> = ({ children, ...vehicle }
   useEffect(() => {
     // Fetch Vehicle Model Name From Hash.
     setVehName(fetchVehicleNameByHash(vehicle.model));
-    if (vehicle.stored == 1) {
+    if (vehicle.stored === 1) {
       setGarageData(fetchGarageNameById(vehicle.garageId));
     }
-  }, [vehicle.model, vehicle.garageId]);
+  }, [vehicle.model, vehicle.garageId, vehicle.stored]);
 
   const [isRotated, setIsRotated] = useState<boolean>(false);
 

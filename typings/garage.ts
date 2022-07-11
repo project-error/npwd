@@ -5,9 +5,6 @@ export interface GarageVehicle {
   garageId: number;
   health: number;
   stored: number;
-  model_name?: string;
-  garage_name?: string;
-  garage_location?: number[];
 }
 
 export interface FIVEM_COORDS {
@@ -24,5 +21,4 @@ export interface GarageHub {
 
 export enum GarageEvents {
   GET_VEHICLE_LIST = 'npwd:getVehicleList',
-  RESOLVE_HASH_TO_MODEL_NAME = 'npwd:getModelFromHash',
 }
