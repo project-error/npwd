@@ -1,6 +1,5 @@
 export interface Bills {
   id: number;
-  target: string;
   label: string;
   amount: number;
 }

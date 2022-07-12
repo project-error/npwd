@@ -200,6 +200,21 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="GARAGE" path="/garage" component={GarageAppWrapper} emitOnOpen={false} />
     ),
   },
+  {
+    id: 'DEBTKOLLECTOR',
+    nameLocale: 'APPS_DEBTKOLLECTOR',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/debtkollector',
+    Route: () => (
+      <AppRoute
+        id="DEBTKOLLECTOR"
+        path="/debtkollector"
+        component={DebtKollectorAppWrapper}
+        emitOnOpen={false}
+      />
+    ),
+  },
 ];
 
 // Example app only in dev
@@ -214,19 +229,19 @@ if (process.env.NODE_ENV === 'development') {
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
     ),
   });
-  APPS.push({
-    id: 'DEBTKOLLECTOR',
-    nameLocale: 'APPS_DEBTKOLLECTOR',
-    backgroundColor: blue[500],
-    color: blue[50],
-    path: '/debtkollector',
-    Route: () => (
-      <AppRoute
-        id="DEBTKOLLECTOR"
-        path="/debtkollector"
-        component={DebtKollectorAppWrapper}
-        emitOnOpen={false}
-      />
-    ),
-  });
+  // APPS.push({
+  //   id: 'DEBTKOLLECTOR',
+  //   nameLocale: 'APPS_DEBTKOLLECTOR',
+  //   backgroundColor: blue[500],
+  //   color: blue[50],
+  //   path: '/debtkollector',
+  //   Route: () => (
+  //     <AppRoute
+  //       id="DEBTKOLLECTOR"
+  //       path="/debtkollector"
+  //       component={DebtKollectorAppWrapper}
+  //       emitOnOpen={false}
+  //     />
+  //   ),
+  // });
 }
