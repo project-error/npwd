@@ -19,6 +19,7 @@ import './garage/garage.controller';
 import './twitter/twitter.controller';
 import './match/match.controller';
 import './debtkollector/debtkollector.controller';
+import './banking/banking.controller';
 
 // setup exports
 import './bridge/sv_exports';

@@ -5,6 +5,9 @@ const theme: ThemeOptions = {
     primary: {
       main: '#202128',
     },
+    secondary: {
+      main: '#2596be',
+    },
   },
 };
 
