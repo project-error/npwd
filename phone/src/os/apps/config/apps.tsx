@@ -8,6 +8,7 @@ import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { TaskRabbitAppWrapper } from '../../../apps/taskrabbit/components/TaskRabbitAppWrapper';
 import { GarageAppWrapper } from '../../../apps/garage/components/GarageAppWrapper';
 import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
+import { BankingAppWrapper } from '../../../apps/banking/components/BankingAppWrapper';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
@@ -229,6 +230,17 @@ if (process.env.NODE_ENV === 'development') {
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
     ),
   });
+  APPS.push({
+    id: 'BANKING',
+    nameLocale: 'APPS_BANKING',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/banking',
+    Route: () => (
+      <AppRoute id="BANKING" path="/banking" component={BankingAppWrapper} emitOnOpen={false} />
+    ),
+  });
+
   // APPS.push({
   //   id: 'DEBTKOLLECTOR',
   //   nameLocale: 'APPS_DEBTKOLLECTOR',
