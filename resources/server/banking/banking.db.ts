@@ -4,10 +4,13 @@ import DbInterface from '../db/db_wrapper';
 export class _BankingDB {
   async fetchAccounts(identifier: string): Promise<Account> {
     if (identifier == null) return null;
-    const query =
-      'SELECT JSON_VALUE(accounts, "$.bank") AS bank, iban FROM users WHERE identifier = ?';
-    const [results] = await DbInterface._rawExec(query, [identifier]);
-    return <Account>(<Account[]>results)[0];
+    console.log('identifier', identifier);
+    const query = 'SELECT JSON_VALUE(accounts, ?) AS bank, iban FROM users WHERE identifier = ?';
+    const [results] = await DbInterface._rawExec(query, ['$.bank', identifier]);
+    console.log('results', results);
+    console.log('finalresult', (<Account[]>results)[0]);
+
+    return (<Account[]>results)[0];
   }
 }
 

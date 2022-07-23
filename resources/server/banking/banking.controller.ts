@@ -1,6 +1,4 @@
-import { BillingEvents, Bills } from '../../../typings/debtkollector';
 import { bankingLogger } from './banking.utils';
-import BillingService from './banking.service';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import bankingService from './banking.service';
 import { Account, BankingEvents } from '../../../typings/banking';
