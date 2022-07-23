@@ -82,26 +82,56 @@ export const BankingDashboardPage: React.FC = () => {
           <InputAdornment position="end">
             <IconButton
               onClick={() => {
-                const target_iban = document.getElementById('transaction-iban');
-                const amount = document.getElementById('transaction-amount');
+                const target_iban: HTMLInputElement = document.getElementById(
+                  'transaction-iban',
+                ) as HTMLInputElement;
+                const transaction_amount: HTMLInputElement = document.getElementById(
+                  'transaction-amount',
+                ) as HTMLInputElement;
 
+                console.log('clicked');
                 fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
-                  targetIBAN: target_iban,
-                  amount: amount,
-                }).then((resp) => {
-                  if (resp.data === TransactionStatus.SUCCESS) {
-                    const notification: INotification = {
+                  targetIBAN: target_iban.value,
+                  amount: transaction_amount.value,
+                })
+                  .then((resp) => {
+                    let notification: INotification;
+                    switch (resp.data) {
+                      case TransactionStatus.SUCCESS:
+                        notification = {
+                          app: 'BANKING',
+                          id: 'banking:transaction:success',
+                          title: 'transaction completed succesfully',
+                          content: 'Succesfully transfered money to the account.',
+                          icon,
+                          notificationIcon,
+                        };
+
+                        break;
+                      default:
+                        notification = {
+                          app: 'BANKING',
+                          id: 'banking:transaction:error',
+                          title: 'uh oh!',
+                          content: 'Something went wrong!',
+                          icon,
+                          notificationIcon,
+                        };
+                        break;
+                    }
+                    addNotificationAlert(notification);
+                  })
+                  .catch(() => {
+                    let notification: INotification = {
                       app: 'BANKING',
-                      id: 'banking:transaction:success',
-                      title: 'transaction completed succesfully',
-                      content: 'Succesfully transfered money to the account.',
+                      id: 'banking:transaction:error',
+                      title: 'uh oh!',
+                      content: 'Something went wrong!',
                       icon,
                       notificationIcon,
                     };
-
                     addNotificationAlert(notification);
-                  }
-                });
+                  });
               }}
             >
               <SendIcon />
