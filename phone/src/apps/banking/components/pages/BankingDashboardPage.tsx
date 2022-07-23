@@ -3,10 +3,12 @@ import fetchNui from '@utils/fetchNui';
 import {
   Box,
   IconButton,
+  Input,
   InputAdornment,
   InputLabel,
   LinearProgress,
   OutlinedInput,
+  TextField,
   Typography,
 } from '@mui/material';
 import Fab from '@mui/material/Fab';
@@ -19,6 +21,7 @@ import { isEnvBrowser } from '@utils/misc';
 import Divider from '@mui/material/Divider';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { INotification } from '@os/notifications/providers/NotificationsProvider';
+import FormControl from '@mui/material/FormControl';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -71,77 +74,84 @@ export const BankingDashboardPage: React.FC = () => {
         Send money:
       </Typography>
 
-      <InputLabel htmlFor="transaction-iban">IBAN:</InputLabel>
-      <OutlinedInput id="transaction-iban" label="Standard" style={{ width: '100%' }} />
+      <FormControl fullWidth sx={{ m: 1 }}>
+        {/*<InputLabel htmlFor="transaction-iban">IBAN</InputLabel>*/}
+        <TextField
+          id="transaction-iban"
+          label="IBAN"
+          style={{ width: '100%', marginTop: '0.5em', textTransform: 'uppercase' }}
+        />
+      </FormControl>
+      <FormControl fullWidth sx={{ m: 1 }}>
+        <InputLabel htmlFor="transaction-amount">Amount</InputLabel>
+        <OutlinedInput
+          style={{ width: '100%', marginTop: '0.5em', appearance: 'textfield' }}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => {
+                  const target_iban: HTMLInputElement = document.getElementById(
+                    'transaction-iban',
+                  ) as HTMLInputElement;
+                  const transaction_amount: HTMLInputElement = document.getElementById(
+                    'transaction-amount',
+                  ) as HTMLInputElement;
 
-      <InputLabel htmlFor="transaction-amount">Amount:</InputLabel>
-      <OutlinedInput
-        style={{ width: '100%' }}
-        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              onClick={() => {
-                const target_iban: HTMLInputElement = document.getElementById(
-                  'transaction-iban',
-                ) as HTMLInputElement;
-                const transaction_amount: HTMLInputElement = document.getElementById(
-                  'transaction-amount',
-                ) as HTMLInputElement;
-
-                console.log('clicked');
-                fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
-                  targetIBAN: target_iban.value,
-                  amount: transaction_amount.value,
-                })
-                  .then((resp) => {
-                    let notification: INotification;
-                    switch (resp.data) {
-                      case TransactionStatus.SUCCESS:
-                        notification = {
-                          app: 'BANKING',
-                          id: 'banking:transaction:success',
-                          title: 'transaction completed succesfully',
-                          content: 'Succesfully transfered money to the account.',
-                          icon,
-                          notificationIcon,
-                        };
-
-                        break;
-                      default:
-                        notification = {
-                          app: 'BANKING',
-                          id: 'banking:transaction:error',
-                          title: 'uh oh!',
-                          content: 'Something went wrong!',
-                          icon,
-                          notificationIcon,
-                        };
-                        break;
-                    }
-                    addNotificationAlert(notification);
+                  console.log('clicked');
+                  fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
+                    targetIBAN: target_iban.value,
+                    amount: transaction_amount.value,
                   })
-                  .catch(() => {
-                    let notification: INotification = {
-                      app: 'BANKING',
-                      id: 'banking:transaction:error',
-                      title: 'uh oh!',
-                      content: 'Something went wrong!',
-                      icon,
-                      notificationIcon,
-                    };
-                    addNotificationAlert(notification);
-                  });
-              }}
-            >
-              <SendIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-        id="transaction-amount"
-        type={'number'}
-        label="Standard"
-      />
+                    .then((resp) => {
+                      let notification: INotification;
+                      switch (resp.data) {
+                        case TransactionStatus.SUCCESS:
+                          notification = {
+                            app: 'BANKING',
+                            id: 'banking:transaction:success',
+                            title: 'transaction completed succesfully',
+                            content: 'Succesfully transfered money to the account.',
+                            icon,
+                            notificationIcon,
+                          };
+
+                          break;
+                        default:
+                          notification = {
+                            app: 'BANKING',
+                            id: 'banking:transaction:error',
+                            title: 'uh oh!',
+                            content: 'Something went wrong!',
+                            icon,
+                            notificationIcon,
+                          };
+                          break;
+                      }
+                      addNotificationAlert(notification);
+                    })
+                    .catch(() => {
+                      let notification: INotification = {
+                        app: 'BANKING',
+                        id: 'banking:transaction:error',
+                        title: 'uh oh!',
+                        content: 'Something went wrong!',
+                        icon,
+                        notificationIcon,
+                      };
+                      addNotificationAlert(notification);
+                    });
+                }}
+              >
+                <SendIcon />
+              </IconButton>
+            </InputAdornment>
+          }
+          id="transaction-amount"
+          type={'number'}
+          label="Amount"
+        />
+      </FormControl>
       <br></br>
     </Box>
   );

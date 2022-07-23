@@ -17,6 +17,8 @@ export interface INotification {
   keepWhenPhoneClosed?: boolean;
   onClose?: (notification: INotification) => void;
   onClick?: (notification: INotification) => void;
+  backgroundColor?: string;
+  color?: string;
 }
 
 type INotificationAlert = INotification & {
