@@ -9,11 +9,13 @@ client_scripts {
     'resources/client/*.lua'
 }
 
-server_script {
+server_scripts {
     -- This is a file that lives purely in source code and isn't compiled alongside
     -- rest of the release. It's used to detect whether a user can read or not.
     'build-detector.js',
-    'resources/dist/server/server.js'
+    'resources/dist/server/server.js',
+    '@mysql-async/lib/MySQL.lua',
+    'resources/server/events.lua'
 }
 
 ui_page 'resources/html/index.html'
@@ -26,5 +28,6 @@ files {
 
 dependency {
 	'screenshot-basic',
-  'pma-voice'
+  'pma-voice',
+    'esx'
 }
