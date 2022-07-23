@@ -70,43 +70,6 @@ export class _BankingDB {
           transaction: null,
         };
 
-      // const upDateBankQuery = `UPDATE users SET accounts=JSON_SET(accounts, '$.bank', JSON_VALUE(accounts, '$.bank') + ? ) WHERE iban = ?;`;
-      //
-      // //Update Target Bank Account [[ Add Money ]]
-      // const updateTargetBankAccount = DbInterface.exec(upDateBankQuery, [
-      //   amount,
-      //   transaction.target_iban,
-      // ]);
-      //
-      // // Update Self Bank Account [[ Remove Money ]]
-      // const updateSelfBankAccount = DbInterface.exec(upDateBankQuery, [
-      //   amount * -1,
-      //   transaction.iban,
-      // ]);
-      //
-      // const addTransactionQuery = `INSERT INTO okokbanking_transactions (receiver_identifier, receiver_name, sender_identifier,  sender_name,  date,  value, type)
-      //   SELECT receiver_identifiers.identifier as receiver_identifier, receiver_identifiers.iban as receiver_name, sender_identifiers.identifier as sender_identifier, sender_identifiers.iban as sender_name, NOW() as date, ? as value, 'transfer' as type
-      //   FROM (SELECT * FROM users WHERE iban = ?) AS receiver_identifiers,
-      //   (SELECT * FROM users WHERE iban = ?) AS sender_identifiers;`;
-      //
-      // // Add Transactions to okokTransactions
-      // const addTransaction = DbInterface.exec(addTransactionQuery, [
-      //   amount,
-      //   transaction.target_iban,
-      //   transaction.iban,
-      // ]);
-      //
-      // await Promise.all([updateTargetBankAccount, updateSelfBankAccount, addTransaction]);
-      /*
-  id: number;
-  value: number;
-  sender_name: string;
-  receiver_name: string;
-  type: TransactionType;
-  sender_identifier: string;
-  receiver_identifier: string;
-  bank: number;
- */
       return {
         status: TransactionStatus.SUCCESS,
         transaction: {
@@ -121,6 +84,7 @@ export class _BankingDB {
         },
       };
     } catch (e) {
+      console.log(e);
       return {
         status: TransactionStatus.GENERIC_ERROR,
         transaction: null,

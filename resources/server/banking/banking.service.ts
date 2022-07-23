@@ -21,6 +21,7 @@ class _BankingService {
     try {
       // Grabs Player ID
       const identifier = PlayerService.getIdentifier(req.source);
+
       // Grabs transactions pertaining to the player.
       const listings = await this.bankingDB.fetchTransactions(identifier);
       resp({ data: listings, status: 'ok' });
