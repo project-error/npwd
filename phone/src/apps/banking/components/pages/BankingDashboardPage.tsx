@@ -23,9 +23,30 @@ import { INotification } from '@os/notifications/providers/NotificationsProvider
 import FormControl from '@mui/material/FormControl';
 import { TextField } from '@ui/components/Input';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
-import SavingsIcon from '@mui/icons-material/Savings';
+import makeStyles from '@mui/styles/makeStyles';
+import { formatMoney } from '../../utils/banking.utils';
+
+const useStyles = makeStyles((theme) => ({
+  numberInput: {
+    width: '100%',
+    marginTop: '0.5em',
+    appearance: 'textfield',
+    '&[type=number]': {
+      '-moz-appearance': 'textfield',
+    },
+    '&::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+    },
+    '&::-webkit-inner-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+    },
+  },
+}));
 
 export const BankingDashboardPage: React.FC = () => {
+  const classes = useStyles();
   const banking = useApp('BANKING');
   const [balance, setBalance] = useState(<LinearProgress color="success" />);
   const [iban, setIban] = useState('-');
@@ -43,7 +64,7 @@ export const BankingDashboardPage: React.FC = () => {
     } else {
       fetchNui<ServerPromiseResp<Account>>(BankingEvents.GET_ACCOUNTS).then((resp) => {
         if (resp.data) {
-          setBalance(<span>{resp.data.bank}</span>);
+          setBalance(<span>{formatMoney(resp.data.bank)}</span>);
           setIban(resp.data.iban);
         }
       });
@@ -52,8 +73,8 @@ export const BankingDashboardPage: React.FC = () => {
 
   return (
     <Box height="100%" width="100%" p={2}>
-      <Typography variant={'h4'} style={{ color: 'green' }}>
-        <SavingsIcon style={{ color: 'pink' }} fontSize="large" />${balance}
+      <Typography variant={'h3'} style={{ color: 'rgb(33, 150, 243)' }}>
+        ${balance}
       </Typography>
       <InputLabel htmlFor="account-number" />
       <OutlinedInput
@@ -65,7 +86,10 @@ export const BankingDashboardPage: React.FC = () => {
         disabled={true}
       />
       <Divider />
-      <Typography variant={'h4'} style={{ color: 'white', marginTop: '3em' }}>
+      <Typography
+        variant={'h4'}
+        style={{ color: 'rgb(33, 150, 243)', marginTop: '3em', textAlign: 'center' }}
+      >
         <ForwardToInboxIcon /> Send money ⬇
       </Typography>
 
@@ -83,7 +107,7 @@ export const BankingDashboardPage: React.FC = () => {
       <FormControl fullWidth sx={{ m: 1 }}>
         <InputLabel htmlFor="transaction-amount">Amount</InputLabel>
         <OutlinedInput
-          style={{ width: '100%', marginTop: '0.5em', appearance: 'textfield' }}
+          className={classes.numberInput}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           endAdornment={
             <InputAdornment position="end">
@@ -98,7 +122,7 @@ export const BankingDashboardPage: React.FC = () => {
                   ) as HTMLInputElement;
 
                   // saves data to temp variables.
-                  const targetIbanValue: string = target_iban.value;
+                  const targetIbanValue: string = target_iban.value.toUpperCase();
                   const targetAmount: string = transaction_amount.value;
 
                   // Clear Data + Disable button.
