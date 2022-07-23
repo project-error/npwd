@@ -22,8 +22,10 @@ export class _BankingDB {
                     FROM users,  
                     (SELECT iban AS target_iban, JSON_VALUE(accounts, "$.bank") AS target_bank FROM users WHERE iban =?) AS target 
                     WHERE identifier = ?`;
-      const [results] = await DbInterface._rawExec(GetTransactionquery, [targetIBAN, identifier]);
-      const result = <TransactionData[]>results;
+      const result = await DbInterface.fetch<TransactionData[]>(GetTransactionquery, [
+        targetIBAN,
+        identifier,
+      ]);
       const amountResult: number = result.length;
       if (amountResult == 0) return TransactionStatus.GENERIC_ERROR;
 
@@ -48,7 +50,7 @@ export class _BankingDB {
                 (receiver_identifiers.identifier, receiver_identifiers.iban, sender_identifiers.identifier, sender_identifiers.iban, NOW(), ?, "transfer")
     `;
 
-      DbInterface._rawExec(query, [
+      DbInterface.exec(query, [
         amount,
         transaction.target_iban,
         amount,
