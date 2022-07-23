@@ -3,7 +3,7 @@ import { bankingLogger } from './banking.utils';
 import BankingDB, { _BankingDB } from './banking.db';
 import { Bills } from '../../../typings/debtkollector';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
-import { Account } from '../../../typings/banking';
+import { Account, TransactionStatus, TranscationArguments } from '../../../typings/banking';
 
 class _BankingService {
   private readonly bankingDB: _BankingDB;
@@ -23,6 +23,29 @@ class _BankingService {
       resp({ data: listings, status: 'ok' });
     } catch (e) {
       bankingLogger.error(`Failed to fetch bank info, ${e.message}`, {
+        source: req.source,
+      });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+    }
+  }
+
+  async handleBankTransfer(
+    req: PromiseRequest<TranscationArguments>,
+    resp: PromiseEventResp<TransactionStatus>,
+  ) {
+    try {
+      // Grabs Player ID
+      const identifier = PlayerService.getIdentifier(req.source);
+      // Grabs Bills pertaining to the player.
+      const listings = await this.bankingDB.TransferMoney(
+        identifier,
+        req.data.targetIBAN,
+        req.data.amount,
+      );
+
+      resp({ data: listings, status: 'ok' });
+    } catch (e) {
+      bankingLogger.error(`Failed to complete transaction, ${e.message}`, {
         source: req.source,
       });
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });

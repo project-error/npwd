@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rotate: {
     transform: 'rotate(90deg)',
-    color: 'green',
+    color: 'rgb(33, 150, 243)',
     transition: 'transform 150ms ease', // smooth transition
   },
   row: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   garageLocationStored: {
     color: 'white',
     '&:hover': {
-      boxShadow: '0px 8px 8px 0px green',
+      boxShadow: '0px 8px 8px 0px rgb(33, 150, 243)',
     },
   },
   garageLocationImpound: {
