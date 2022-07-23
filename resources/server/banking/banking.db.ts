@@ -32,31 +32,34 @@ export class _BankingDB {
       if (transaction.target_iban == null) return TransactionStatus.INVALID_TARGET_IBAN;
       if (transaction.bank < amount) return TransactionStatus.INSUFFICIENT_BALANCE;
 
-      const query = `
-                UPDATE users SET accounts=JSON_SET(accounts, "$.bank", JSON_VALUE(accounts, "$.bank") + ? ) WHERE iban = ?;
-               
-                UPDATE users SET accounts=JSON_SET(accounts, "$.bank", JSON_VALUE(accounts, "$.bank") - ? ) WHERE iban = ?;
-                
-                WITH receiver_identifiers AS (
-                SELECT * FROM users WHERE iban = ?
-                ), sender_identifiers AS (
-                SELECT * FROM users WHERE iban = ?
-                )
-                INSERT INTO okokbanking_transactions 
-                (receiver_identifier, receiver_name, sender_identifier, sender_name, date, value, type)
-                VALUES 
-                (receiver_identifiers.identifier, receiver_identifiers.iban, sender_identifiers.identifier, sender_identifiers.iban, NOW(), ?, "transfer")
-    `;
+      const upDateBankQuery = `UPDATE users SET accounts=JSON_SET(accounts, '$.bank', JSON_VALUE(accounts, '$.bank') + ? ) WHERE iban = ?;`;
 
-      DbInterface._rawExec(query, [
+      //Update Target Bank Account [[ Add Money ]]
+      const updateTargetBankAccount = DbInterface.exec(upDateBankQuery, [
         amount,
         transaction.target_iban,
-        amount,
-        transaction.iban,
-        transaction.target_iban,
-        transaction.iban,
-        amount,
       ]);
+
+      // Update Self Bank Account [[ Remove Money ]]
+      const updateSelfBankAccount = DbInterface.exec(upDateBankQuery, [
+        amount * -1,
+        transaction.iban,
+      ]);
+
+      const addTransactionQuery = `INSERT INTO okokbanking_transactions (receiver_identifier, receiver_name, sender_identifier,  sender_name,  date,  value, type)
+        SELECT receiver_identifiers.identifier as receiver_identifier, receiver_identifiers.iban as receiver_name, sender_identifiers.identifier as sender_identifier, sender_identifiers.iban as sender_name, NOW() as date, ? as value, 'transfer' as type
+        FROM (SELECT * FROM users WHERE iban = ?) AS receiver_identifiers,
+        (SELECT * FROM users WHERE iban = ?) AS sender_identifiers;`;
+
+      // Add Transactions to okokTransactions
+      const addTransaction = DbInterface.exec(addTransactionQuery, [
+        amount,
+        transaction.target_iban,
+        transaction.iban,
+      ]);
+
+      await Promise.all([updateTargetBankAccount, updateSelfBankAccount, addTransaction]);
+      return TransactionStatus.SUCCESS;
     } catch (e) {
       return TransactionStatus.GENERIC_ERROR;
     }
