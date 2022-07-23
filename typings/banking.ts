@@ -6,6 +6,8 @@ export interface Account {
 export interface TransactionData {
   bank: number;
   iban: string;
+  identifier: string;
+  target_identifier: string;
   target_bank: number;
   target_iban: string;
 }
@@ -40,6 +42,12 @@ export interface Transaction {
   type: TransactionType;
   sender_identifier: string;
   receiver_identifier: string;
+  bank: number;
+}
+
+export interface TransactionResult {
+  status: TransactionStatus;
+  transaction: Transaction;
 }
 
 export enum TransactionType {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import fetchNui from '@utils/fetchNui';
+
 import {
   Box,
   IconButton,
@@ -15,7 +16,7 @@ import { styled } from '@mui/material/styles';
 import { useApp } from '@os/apps/hooks/useApps';
 import SendIcon from '@mui/icons-material/Send';
 import { ServerPromiseResp } from '@typings/common';
-import { Account, BankingEvents, TransactionStatus } from '@typings/banking';
+import { Account, BankingEvents, TransactionResult, TransactionStatus } from '@typings/banking';
 import { isEnvBrowser } from '@utils/misc';
 import Divider from '@mui/material/Divider';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
@@ -132,15 +133,17 @@ export const BankingDashboardPage: React.FC = () => {
                   target_iban.value = '';
                   transaction_amount.value = '';
 
-                  fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
+                  fetchNui<ServerPromiseResp<TransactionResult>>(BankingEvents.TRANSFER_MONEY, {
                     targetIBAN: targetIbanValue,
                     amount: targetAmount,
                   })
                     .then((resp) => {
                       setUpdater(updater + 1);
                       let notification: INotification;
-                      switch (resp.data) {
+                      switch (resp.data.status) {
                         case TransactionStatus.SUCCESS:
+                          fetchNui<ServerPromiseResp>('npwd:transferFinal', resp.data.transaction);
+
                           notification = {
                             app: 'BANKING',
                             id: 'banking:transaction:success',

@@ -18,6 +18,8 @@ onNetPromise<void, Account>(BankingEvents.GET_ACCOUNTS, async (reqObj, resp) => 
   });
 });
 
+//just a server callback
+//server event npwd:transfermoney
 onNetPromise<TranscationArguments, TransactionStatus>(
   BankingEvents.TRANSFER_MONEY,
   async (reqObj, resp) => {
