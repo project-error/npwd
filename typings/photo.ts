@@ -17,4 +17,5 @@ export enum PhotoEvents {
   UPLOAD_PHOTO = 'npwd:UploadPhoto',
   FETCH_PHOTOS = 'npwd:FetchPhotos',
   DELETE_PHOTO = 'npwd:deletePhoto',
+  GET_AUTHORISATION_TOKEN = 'npwd:getAuthToken',
 }

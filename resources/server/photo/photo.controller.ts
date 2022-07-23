@@ -29,3 +29,10 @@ onNetPromise<GalleryPhoto, void>(PhotoEvents.DELETE_PHOTO, (reqObj, resp) => {
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });
+
+onNetPromise<void, string>(PhotoEvents.GET_AUTHORISATION_TOKEN, (reqObj, resp) => {
+  resp({
+    status: 'ok',
+    data: GetConvar('SCREENSHOT_BASIC_TOKEN', 'none'),
+  });
+});

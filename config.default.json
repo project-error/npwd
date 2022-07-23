@@ -20,13 +20,15 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://api.imgur.com/3/image",
-    "type": "imgur",
+    "url": "https://api.projecterror.dev/image",
+    "type": "pe_image",
     "imageEncoding": "jpg",
     "contentType": "multipart/form-data",
-    "authorizationPrefix": "Client-ID",
+    "useContentType": false,
+    "authorizationHeader": "PE-Secret",
+    "authorizationPrefix": "",
     "useAuthorization": true,
-    "returnedDataIndexes": ["data", "link"]
+    "returnedDataIndexes": ["url"]
   },
   "imageSafety": {
     "filterUnsafeImageUrls": true,
@@ -39,7 +41,8 @@
       "tenor.com",
       "discord.com",
       "discordapp.com",
-      "wikipedia.org"
+      "wikipedia.org",
+      "i.projecterror.dev"
     ]
   },
   "profanityFilter": {

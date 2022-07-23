@@ -6,8 +6,17 @@ import { ClUtils } from './client';
 import { config } from './cl_config';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
+import { ServerPromiseResp } from '@typings/common';
 
-const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
+let SCREENSHOT_BASIC_TOKEN: string;
+setImmediate(() => {
+  ClUtils.emitNetPromise<ServerPromiseResp<string>>(PhotoEvents.GET_AUTHORISATION_TOKEN).then(
+    ({ data }) => {
+      SCREENSHOT_BASIC_TOKEN = data;
+    },
+  );
+});
+
 const exp = global.exports;
 
 let inCameraMode = false;
@@ -124,10 +133,10 @@ const takePhoto = () =>
       {
         encoding: config.images.imageEncoding,
         headers: {
-          authorization: config.images.useAuthorization
-            ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`
-            : undefined,
-          'content-type': config.images.contentType,
+          [config.images.useAuthorization &&
+          config.images
+            .authorizationHeader]: `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`,
+          [config.images.useContentType && 'Content-Type']: config.images.contentType,
         },
       },
       async (data: any) => {
