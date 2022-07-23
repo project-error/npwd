@@ -8,7 +8,6 @@ import {
   InputLabel,
   LinearProgress,
   OutlinedInput,
-  TextField,
   Typography,
 } from '@mui/material';
 import Fab from '@mui/material/Fab';
@@ -22,6 +21,7 @@ import Divider from '@mui/material/Divider';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { INotification } from '@os/notifications/providers/NotificationsProvider';
 import FormControl from '@mui/material/FormControl';
+import { TextField } from '@ui/components/Input';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -41,6 +41,8 @@ export const BankingDashboardPage: React.FC = () => {
   const { addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MARKETPLACE');
   const [updater, setUpdater] = useState(0);
+  const [click, setClick] = useState<boolean>(false);
+
   useEffect(() => {
     if (isEnvBrowser()) {
       setTimeout(() => {
@@ -77,7 +79,6 @@ export const BankingDashboardPage: React.FC = () => {
       </Typography>
 
       <FormControl fullWidth sx={{ m: 1 }}>
-        {/*<InputLabel htmlFor="transaction-iban">IBAN</InputLabel>*/}
         <TextField
           id="transaction-iban"
           label="IBAN"
@@ -92,6 +93,7 @@ export const BankingDashboardPage: React.FC = () => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
+                style={{ display: `${click ? 'none' : 'block'}` }}
                 onClick={() => {
                   const target_iban: HTMLInputElement = document.getElementById(
                     'transaction-iban',
@@ -100,10 +102,19 @@ export const BankingDashboardPage: React.FC = () => {
                     'transaction-amount',
                   ) as HTMLInputElement;
 
-                  console.log('clicked');
+                  // saves data to temp variables.
+                  const targetIbanValue: string = target_iban.value;
+                  const targetAmount: string = transaction_amount.value;
+
+                  // Clear Data + Disable button.
+                  setClick(true);
+                  // resets values.
+                  target_iban.value = '';
+                  transaction_amount.value = '';
+
                   fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
-                    targetIBAN: target_iban.value,
-                    amount: transaction_amount.value,
+                    targetIBAN: targetIbanValue,
+                    amount: targetAmount,
                   })
                     .then((resp) => {
                       setUpdater(updater + 1);
@@ -142,6 +153,9 @@ export const BankingDashboardPage: React.FC = () => {
                           break;
                       }
                       addNotificationAlert(notification);
+                      setTimeout(function () {
+                        setClick(false);
+                      }, 500);
                     })
                     .catch(() => {
                       let notification: INotification = {
@@ -153,6 +167,9 @@ export const BankingDashboardPage: React.FC = () => {
                         notificationIcon,
                       };
                       addNotificationAlert(notification);
+                      setTimeout(function () {
+                        setClick(false);
+                      }, 500);
                     });
                 }}
               >
