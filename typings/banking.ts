@@ -44,6 +44,6 @@ export interface Transaction {
 
 export enum TransactionType {
   WITHDRAW = 'withdraw',
-  DEPOSIT = 'DEPOSIT',
-  TRANSFER = 'TRANSFER',
+  DEPOSIT = 'deposit',
+  TRANSFER = 'transfer',
 }
