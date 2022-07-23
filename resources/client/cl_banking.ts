@@ -2,7 +2,7 @@ import { BankingEvents, Transaction } from '../../typings/banking';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 // import { onNetPromise } from '../server/lib/PromiseNetEvents/onNetPromise';
 import { sendMessage } from '../utils/messages';
-interface INotification {
+export interface IUniversalNotification {
   app: string;
   id?: string;
   title: string;
@@ -12,8 +12,8 @@ interface INotification {
   sound?: boolean;
   cantClose?: boolean;
   keepWhenPhoneClosed?: boolean;
-  onClose?: (notification: INotification) => void;
-  onClick?: (notification: INotification) => void;
+  onClose?: () => void;
+  onClick?: () => void;
   backgroundColor?: string;
   color?: string;
 }
@@ -35,7 +35,7 @@ RegisterNuiCB<Transaction>(BankingEvents.TRANSFER_FINAL, (transaction, cb) => {
   cb({});
 });
 
-onNet('npwd:sendNotification', (data: INotification) => {
+onNet('npwd:sendNotification', (data: IUniversalNotification) => {
   sendMessage('GLOBALNOTIFICATION', 'sendNotification', data);
 });
 
