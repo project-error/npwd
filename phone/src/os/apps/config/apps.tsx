@@ -216,6 +216,16 @@ export const APPS: IAppConfig[] = [
       />
     ),
   },
+  {
+    id: 'BANKING',
+    nameLocale: 'APPS_BANKING',
+    backgroundColor: blue[500],
+    color: blue[50],
+    path: '/banking',
+    Route: () => (
+      <AppRoute id="BANKING" path="/banking" component={BankingAppWrapper} emitOnOpen={false} />
+    ),
+  },
 ];
 
 // Example app only in dev
@@ -228,16 +238,6 @@ if (process.env.NODE_ENV === 'development') {
     path: '/example',
     Route: () => (
       <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
-    ),
-  });
-  APPS.push({
-    id: 'BANKING',
-    nameLocale: 'APPS_BANKING',
-    backgroundColor: blue[500],
-    color: blue[50],
-    path: '/banking',
-    Route: () => (
-      <AppRoute id="BANKING" path="/banking" component={BankingAppWrapper} emitOnOpen={false} />
     ),
   });
 

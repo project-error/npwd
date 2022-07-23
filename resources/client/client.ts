@@ -16,5 +16,6 @@ import './functions';
 import './cl_exports';
 import './settings/client-settings';
 import './cl_notifications';
+import './cl_banking';
 
 export const ClUtils = new ClientUtils();

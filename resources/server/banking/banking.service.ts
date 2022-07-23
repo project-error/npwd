@@ -5,7 +5,7 @@ import { Bills } from '../../../typings/debtkollector';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { Account, TransactionStatus, TranscationArguments } from '../../../typings/banking';
 
-class _BillingService {
+class _BankingService {
   private readonly bankingDB: _BankingDB;
 
   constructor() {
@@ -19,9 +19,10 @@ class _BillingService {
       const identifier = PlayerService.getIdentifier(req.source);
       // Grabs Bills pertaining to the player.
       const listings = await this.bankingDB.fetchAccounts(identifier);
+      console.log('listings', listings);
       resp({ data: listings, status: 'ok' });
     } catch (e) {
-      bankingLogger.error(`Failed to fetch bills, ${e.message}`, {
+      bankingLogger.error(`Failed to fetch bank info, ${e.message}`, {
         source: req.source,
       });
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
@@ -52,5 +53,5 @@ class _BillingService {
   }
 }
 
-const BillingService = new _BillingService();
-export default BillingService;
+const BankingService = new _BankingService();
+export default BankingService;
