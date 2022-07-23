@@ -4,6 +4,7 @@ import bankingService from './banking.service';
 import {
   Account,
   BankingEvents,
+  Transaction,
   TransactionStatus,
   TranscationArguments,
 } from '../../../typings/banking';
@@ -28,3 +29,10 @@ onNetPromise<TranscationArguments, TransactionStatus>(
     });
   },
 );
+
+onNetPromise<void, Transaction[]>(BankingEvents.GET_TRANSACTIONS, async (reqObj, resp) => {
+  bankingService.handleFetchTransactions(reqObj, resp).catch((e) => {
+    bankingLogger.error(`Error occurred in transfer money (${reqObj.source}), Error: ${e.message}`);
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});

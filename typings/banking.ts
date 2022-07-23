@@ -21,6 +21,7 @@ export interface TranscationArguments {
 export enum BankingEvents {
   GET_ACCOUNTS = 'npwd:getAccounts',
   TRANSFER_MONEY = 'npwd:transferMoney',
+  GET_TRANSACTIONS = 'npwd:getTransactinos',
 }
 
 export enum TransactionStatus {
@@ -29,4 +30,20 @@ export enum TransactionStatus {
   INSUFFICIENT_BALANCE,
   INVALID_NUMBER,
   GENERIC_ERROR,
+}
+
+export interface Transaction {
+  value: number;
+  sender_name: string;
+  receiver_name: string;
+  type: TransactionType;
+  sender_identifier: string;
+  receiver_identifier: string;
+  date: string;
+}
+
+export enum TransactionType {
+  WITHDRAW = 'withdraw',
+  DEPOSIT = 'DEPOSIT',
+  TRANSFER = 'TRANSFER',
 }
