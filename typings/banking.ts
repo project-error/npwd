@@ -24,6 +24,7 @@ export enum BankingEvents {
   GET_ACCOUNTS = 'npwd:getAccounts',
   TRANSFER_MONEY = 'npwd:transferMoney',
   GET_TRANSACTIONS = 'npwd:getTransactinos',
+  TRANSFER_FINAL = 'npwd:transferFinal',
 }
 
 export enum TransactionStatus {
