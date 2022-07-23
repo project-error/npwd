@@ -22,19 +22,10 @@ import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { INotification } from '@os/notifications/providers/NotificationsProvider';
 import FormControl from '@mui/material/FormControl';
 import { TextField } from '@ui/components/Input';
-
-const StyledFab = styled(Fab)({
-  position: 'absolute',
-  zIndex: 1,
-  top: -30,
-  left: 0,
-  right: 0,
-  margin: '0 auto',
-});
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import SavingsIcon from '@mui/icons-material/Savings';
 
 export const BankingDashboardPage: React.FC = () => {
-  // const String = useExampleStringValue();
-
   const banking = useApp('BANKING');
   const [balance, setBalance] = useState(<LinearProgress color="success" />);
   const [iban, setIban] = useState('-');
@@ -61,27 +52,31 @@ export const BankingDashboardPage: React.FC = () => {
 
   return (
     <Box height="100%" width="100%" p={2}>
-      <Typography variant={'h3'} style={{ color: 'green' }}>
-        ${balance}
+      <Typography variant={'h4'} style={{ color: 'green' }}>
+        <SavingsIcon style={{ color: 'pink' }} fontSize="large" />${balance}
       </Typography>
-      <InputLabel htmlFor="account-number">your IBAN:</InputLabel>
+      <InputLabel htmlFor="account-number" />
       <OutlinedInput
         id="account-number"
         label="Standard"
         style={{ width: '100%' }}
-        value={iban}
+        value={`IBAN: ${iban}`}
         readOnly={true}
         disabled={true}
       />
       <Divider />
       <Typography variant={'h4'} style={{ color: 'white', marginTop: '3em' }}>
-        Send money:
+        <ForwardToInboxIcon /> Send money ⬇
       </Typography>
 
       <FormControl fullWidth sx={{ m: 1 }}>
         <TextField
           id="transaction-iban"
           label="IBAN"
+          variant="outlined"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">#</InputAdornment>,
+          }}
           style={{ width: '100%', marginTop: '0.5em', textTransform: 'uppercase' }}
         />
       </FormControl>
@@ -108,6 +103,7 @@ export const BankingDashboardPage: React.FC = () => {
 
                   // Clear Data + Disable button.
                   setClick(true);
+
                   // resets values.
                   target_iban.value = '';
                   transaction_amount.value = '';
