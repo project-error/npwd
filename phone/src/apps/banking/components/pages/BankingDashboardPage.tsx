@@ -8,7 +8,6 @@ import {
   InputLabel,
   LinearProgress,
   OutlinedInput,
-  TextField,
   Typography,
 } from '@mui/material';
 import Fab from '@mui/material/Fab';
@@ -22,6 +21,7 @@ import Divider from '@mui/material/Divider';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { INotification } from '@os/notifications/providers/NotificationsProvider';
 import FormControl from '@mui/material/FormControl';
+import { TextField } from '@ui/components/Input';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
