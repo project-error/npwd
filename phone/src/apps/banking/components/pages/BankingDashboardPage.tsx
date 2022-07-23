@@ -40,7 +40,7 @@ export const BankingDashboardPage: React.FC = () => {
   const [iban, setIban] = useState('-');
   const { addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MARKETPLACE');
-
+  const [updater, setUpdater] = useState(0);
   useEffect(() => {
     if (isEnvBrowser()) {
       setTimeout(() => {
@@ -49,8 +49,10 @@ export const BankingDashboardPage: React.FC = () => {
       }, 1000);
     } else {
       fetchNui<ServerPromiseResp<Account>>(BankingEvents.GET_ACCOUNTS).then((resp) => {
-        setBalance(<span>{resp.data.bank}</span>);
-        setIban(resp.data.iban);
+        if (resp.data) {
+          setBalance(<span>{resp.data.bank}</span>);
+          setIban(resp.data.iban);
+        }
       });
     }
   });
@@ -104,6 +106,7 @@ export const BankingDashboardPage: React.FC = () => {
                     amount: transaction_amount.value,
                   })
                     .then((resp) => {
+                      setUpdater(updater + 1);
                       let notification: INotification;
                       switch (resp.data) {
                         case TransactionStatus.SUCCESS:
