@@ -1,4 +1,4 @@
-import { Account, TransactionData, TransactionStatus } from '../../../typings/banking';
+import { Account, Transaction, TransactionData, TransactionStatus } from '../../../typings/banking';
 import DbInterface from '../db/db_wrapper';
 
 export class _BankingDB {
@@ -7,6 +7,15 @@ export class _BankingDB {
     const query = 'SELECT JSON_VALUE(accounts, ?) AS bank, iban FROM users WHERE identifier = ?';
     const [results] = await DbInterface._rawExec(query, ['$.bank', identifier]);
     return <Account>(<Account[]>results)[0];
+  }
+
+  async fetchTransactions(identifier: string): Promise<Transaction[]> {
+    if (identifier == null) return null;
+    const query = `SELECT * FROM okokbanking_transactions WHERE sender_identifier = ? OR receiver_identifier = ? ORDER BY date DESC LIMIT 30`;
+
+    const transactions = await DbInterface.fetch<Transaction[]>(query, [identifier]);
+
+    return transactions;
   }
 
   async TransferMoney(

@@ -127,6 +127,16 @@ export const BankingDashboardPage: React.FC = () => {
                           };
 
                           break;
+                        case TransactionStatus.INVALID_TARGET_IBAN:
+                          notification = {
+                            app: 'BANKING',
+                            id: 'banking:transaction:invalid_iban',
+                            title: 'no such iban',
+                            content: 'The IBAN you provided',
+                            icon,
+                            notificationIcon,
+                          };
+                          break;
                         default:
                           notification = {
                             app: 'BANKING',

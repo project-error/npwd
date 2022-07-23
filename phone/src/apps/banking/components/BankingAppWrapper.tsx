@@ -15,7 +15,7 @@ import ListIcon from '@mui/icons-material/List';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { styled } from '@mui/material/styles';
 import { Fab } from '@mui/material';
-import { BankingTransactionsPage } from './pages/BankingTransactions';
+import { BankingTransactionsPage } from './pages/BankingTransactionsPage';
 import { BankingBillsPage } from './pages/BankingBillsPage';
 import { DebtKollectorApp } from '../../debtkollector/components/DebtKollectorApp';
 // AppContent by default has a React.Suspense which can be used to handle the app as a whole, for
