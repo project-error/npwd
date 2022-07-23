@@ -13,7 +13,7 @@ export class _BankingDB {
     if (identifier == null) return null;
     const query = `SELECT * FROM okokbanking_transactions WHERE sender_identifier = ? OR receiver_identifier = ? ORDER BY date DESC LIMIT 30`;
 
-    const transactions = await DbInterface.fetch<Transaction[]>(query, [identifier]);
+    const transactions = await DbInterface.fetch<Transaction[]>(query, [identifier, identifier]);
 
     return transactions;
   }
