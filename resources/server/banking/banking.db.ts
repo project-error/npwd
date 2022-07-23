@@ -108,7 +108,7 @@ export class _BankingDB {
   bank: number;
  */
       return {
-        status: TransactionStatus.INVALID_TARGET_IBAN,
+        status: TransactionStatus.SUCCESS,
         transaction: {
           id: null,
           value: amount,

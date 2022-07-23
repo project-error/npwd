@@ -21,6 +21,7 @@ class _BankingService {
     try {
       // Grabs Player ID
       const identifier = PlayerService.getIdentifier(req.source);
+
       // Grabs transactions pertaining to the player.
       const listings = await this.bankingDB.fetchTransactions(identifier);
       resp({ data: listings, status: 'ok' });
@@ -60,7 +61,7 @@ class _BankingService {
         req.data.targetIBAN,
         req.data.amount,
       );
-      resp({ data: listings, status: 'ok' });
+      resp({ data: listings.status, status: 'ok' });
     } catch (e) {
       bankingLogger.error(`Failed to complete transaction, ${e.message}`, {
         source: req.source,

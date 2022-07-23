@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
 import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
+import { GlobalNotifier } from './globalNotifier';
 
 jest.useFakeTimers();
 
@@ -15,6 +16,7 @@ test('renders Phone', () => {
     <MemoryRouter>
       <NuiProvider resource="npwd">
         <React.Suspense fallback={null}>
+          <GlobalNotifier />
           <RecoilRootManager>
             <RecoilDebugObserver>
               <PhoneProviders />
