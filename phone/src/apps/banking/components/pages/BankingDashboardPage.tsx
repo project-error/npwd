@@ -23,8 +23,8 @@ import { INotification } from '@os/notifications/providers/NotificationsProvider
 import FormControl from '@mui/material/FormControl';
 import { TextField } from '@ui/components/Input';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
-import SavingsIcon from '@mui/icons-material/Savings';
 import makeStyles from '@mui/styles/makeStyles';
+import { formatMoney } from '../../utils/banking.utils';
 
 const useStyles = makeStyles((theme) => ({
   numberInput: {
@@ -64,7 +64,7 @@ export const BankingDashboardPage: React.FC = () => {
     } else {
       fetchNui<ServerPromiseResp<Account>>(BankingEvents.GET_ACCOUNTS).then((resp) => {
         if (resp.data) {
-          setBalance(<span>{resp.data.bank}</span>);
+          setBalance(<span>{formatMoney(resp.data.bank)}</span>);
           setIban(resp.data.iban);
         }
       });
@@ -86,7 +86,10 @@ export const BankingDashboardPage: React.FC = () => {
         disabled={true}
       />
       <Divider />
-      <Typography variant={'h4'} style={{ color: 'white', marginTop: '3em', textAlign: 'center' }}>
+      <Typography
+        variant={'h4'}
+        style={{ color: 'rgb(33, 150, 243)', marginTop: '3em', textAlign: 'center' }}
+      >
         <ForwardToInboxIcon /> Send money ⬇
       </Typography>
 
@@ -119,7 +122,7 @@ export const BankingDashboardPage: React.FC = () => {
                   ) as HTMLInputElement;
 
                   // saves data to temp variables.
-                  const targetIbanValue: string = target_iban.value;
+                  const targetIbanValue: string = target_iban.value.toUpperCase();
                   const targetAmount: string = transaction_amount.value;
 
                   // Clear Data + Disable button.

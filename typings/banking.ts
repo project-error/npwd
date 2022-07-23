@@ -33,17 +33,17 @@ export enum TransactionStatus {
 }
 
 export interface Transaction {
+  id: number;
   value: number;
   sender_name: string;
   receiver_name: string;
   type: TransactionType;
   sender_identifier: string;
   receiver_identifier: string;
-  date: string;
 }
 
 export enum TransactionType {
   WITHDRAW = 'withdraw',
-  DEPOSIT = 'DEPOSIT',
-  TRANSFER = 'TRANSFER',
+  DEPOSIT = 'deposit',
+  TRANSFER = 'transfer',
 }

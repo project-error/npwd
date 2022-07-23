@@ -21,40 +21,40 @@ export const BankingTransactionsPage: React.FC = () => {
     if (isEnvBrowser()) {
       const trans: Transaction[] = [
         {
+          id: 1,
           value: 100,
           sender_name: 'DSRPDEV',
           receiver_name: 'DSRPTEST',
           type: TransactionType.TRANSFER,
           sender_identifier: 'test',
           receiver_identifier: 'test',
-          date: '30-05-2001',
         },
         {
+          id: 2,
           value: 100,
           sender_name: 'DSRPDEV',
           receiver_name: 'DSRPTEST',
           type: TransactionType.DEPOSIT,
           sender_identifier: 'test',
           receiver_identifier: 'test',
-          date: '30-05-2001',
         },
         {
+          id: 3,
           value: 100,
           sender_name: 'DSRPDEV',
           receiver_name: 'DSRPTEST',
           type: TransactionType.WITHDRAW,
           sender_identifier: 'test',
           receiver_identifier: 'test',
-          date: '30-05-2001',
         },
         {
+          id: 4,
           value: 100,
           sender_name: 'DSRPDEV',
           receiver_name: 'DSRPTEST',
           type: TransactionType.TRANSFER,
           sender_identifier: 'test',
           receiver_identifier: 'test',
-          date: '30-05-2001',
         },
       ];
       setTransactions(trans);
@@ -76,7 +76,6 @@ export const BankingTransactionsPage: React.FC = () => {
               <TableCell>$</TableCell>
               <TableCell>From</TableCell>
               <TableCell>To</TableCell>
-              <TableCell>date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
