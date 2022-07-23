@@ -142,7 +142,13 @@ export const BankingDashboardPage: React.FC = () => {
                       let notification: INotification;
                       switch (resp.data.status) {
                         case TransactionStatus.SUCCESS:
-                          fetchNui<ServerPromiseResp>('npwd:transferFinal', resp.data.transaction);
+                          console.log('Transaction Success Has Been Reached.');
+                          console.log(resp.data.transaction);
+                          console.log('Hitting Final Transfer FetchNui');
+                          fetchNui<ServerPromiseResp>(
+                            BankingEvents.TRANSFER_FINAL,
+                            resp.data.transaction,
+                          );
 
                           notification = {
                             app: 'BANKING',

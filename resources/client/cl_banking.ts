@@ -21,10 +21,11 @@ interface INotification {
 RegisterNuiProxy(BankingEvents.GET_ACCOUNTS);
 RegisterNuiProxy(BankingEvents.TRANSFER_MONEY);
 RegisterNuiProxy(BankingEvents.GET_TRANSACTIONS);
-RegisterNuiCB<Transaction>('npwd:transferFinal', (transaction, cb) => {
+RegisterNuiCB<Transaction>(BankingEvents.TRANSFER_FINAL, (transaction, cb) => {
+  console.log('transfer final was hit.');
   console.log(transaction);
   emitNet(
-    'npwd:TransferMoney',
+    'okokBanking:TransferMoney',
     transaction.value,
     transaction.sender_name,
     transaction.receiver_identifier,
