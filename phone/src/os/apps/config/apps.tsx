@@ -201,21 +201,21 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="GARAGE" path="/garage" component={GarageAppWrapper} emitOnOpen={false} />
     ),
   },
-  {
-    id: 'DEBTKOLLECTOR',
-    nameLocale: 'APPS_DEBTKOLLECTOR',
-    backgroundColor: blue[500],
-    color: blue[50],
-    path: '/debtkollector',
-    Route: () => (
-      <AppRoute
-        id="DEBTKOLLECTOR"
-        path="/debtkollector"
-        component={DebtKollectorAppWrapper}
-        emitOnOpen={false}
-      />
-    ),
-  },
+  // {
+  //   id: 'DEBTKOLLECTOR',
+  //   nameLocale: 'APPS_DEBTKOLLECTOR',
+  //   backgroundColor: blue[500],
+  //   color: blue[50],
+  //   path: '/debtkollector',
+  //   Route: () => (
+  //     <AppRoute
+  //       id="DEBTKOLLECTOR"
+  //       path="/debtkollector"
+  //       component={DebtKollectorAppWrapper}
+  //       emitOnOpen={false}
+  //     />
+  //   ),
+  // },
   {
     id: 'BANKING',
     nameLocale: 'APPS_BANKING',
