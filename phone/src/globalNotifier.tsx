@@ -1,7 +1,6 @@
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useNuiCallback, useNuiEvent } from 'fivem-nui-react-lib';
 import { INotification } from '@os/notifications/providers/NotificationsProvider';
-import { IAlert } from '@os/snackbar/hooks/useSnackbar';
 
 export const GlobalNotifier = function () {
   const { addNotificationAlert } = useNotifications();

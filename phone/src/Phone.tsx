@@ -32,6 +32,7 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
+import { GlobalNotifier } from './globalNotifier';
 
 function Phone() {
   const { i18n } = useTranslation();
@@ -66,6 +67,7 @@ function Phone() {
       <TopLevelErrorComponent>
         <WindowSnackbar />
         <PhoneWrapper>
+          <GlobalNotifier />
           <NotificationBar />
           <div className="PhoneAppContainer">
             <>
