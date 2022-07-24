@@ -3,15 +3,15 @@ import { ActiveCall } from '@typings/call';
 
 export const callerState = {
   currentCall: atom<ActiveCall | null>({
-    key: 'currentCall',
+    key: 'currentCallEmergency',
     default: null,
   }),
   callModal: atom<boolean>({
-    key: 'callingModal',
+    key: 'callingModalEmergency',
     default: false,
   }),
   callDuration: atom({
-    key: 'callDuration',
+    key: 'callDurationEmergency',
     default: { ms: 0, s: 0, m: 0, h: 0 },
   }),
 };

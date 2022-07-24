@@ -1,6 +1,7 @@
 export enum EmergencyEvents {
   PLAY_AUDIO = 'npwd:playDispatchAudioStart',
   DISPATCH = 'npwd:dispatchEmergencyService',
+  ANIMATION = 'npwd:callAnimationEmergency',
 }
 export enum EmergencyServices {
   POLICE = 'police',
@@ -21,6 +22,10 @@ export interface AudioEventArguments {
 export interface DispatchModel {
   message: string;
   job: EmergencyServices;
+}
+
+export interface AnimationModel {
+  isCalling: bool;
 }
 
 // addEventHandler("core_dispatch:addCall", function(code, title, info, location, job, cooldown, sprite, color)

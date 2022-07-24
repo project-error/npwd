@@ -1,34 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography,
-} from '@mui/material';
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
-import HealingIcon from '@mui/icons-material/Healing';
+import { Box, IconButton } from '@mui/material';
+
+import { TextField } from '@ui/components/Input';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import {
-  AudioEventArguments,
-  AudioTypes,
-  DispatchModel,
-  EmergencyEvents,
-  EmergencyServices,
-} from '@typings/emergency';
-import { setContext } from '@sentry/react';
-import {
-  AskDescription,
-  DispatchAmbulance,
-  DispatchIntro,
-  DispatchPolice,
-} from '@os/emergency/config';
+import { DispatchModel, EmergencyEvents, EmergencyServices } from '@typings/emergency';
+
+import { DispatchAmbulance, DispatchPolice } from '@os/emergency/config';
 import { hangup } from '@os/emergency/utils';
 import { useHistory } from 'react-router';
 import { Send } from '@mui/icons-material';
@@ -40,13 +18,10 @@ export const EmergencyDetails = React.forwardRef((props: any, ref) => {
 
   const dispatchServices = (message) => {
     fetchNui<ServerPromiseResp<DispatchModel>>(EmergencyEvents.DISPATCH, {
-      job: props.job,
+      job: props.service,
       message: message,
     }).then((data) => {
-      console.log('played nui PLAY_AUDIO');
-      DispatchIntro.play().then((playback) => {
-        setTimeout(() => {}, DispatchIntro.duration * 1000);
-      });
+      console.log('dispatched nui', data);
     });
   };
   const handleSendDescription = () => {

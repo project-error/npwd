@@ -22,7 +22,12 @@ import { styled } from '@mui/styles';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { Account, BankingEvents, TransactionStatus } from '@typings/banking';
-import { AudioEventArguments, AudioTypes, EmergencyEvents } from '@typings/emergency';
+import {
+  AnimationModel,
+  AudioEventArguments,
+  AudioTypes,
+  EmergencyEvents,
+} from '@typings/emergency';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import HealingIcon from '@mui/icons-material/Healing';
 import { EmergencyChoice } from '@os/emergency/components/EmergencyChoice';
@@ -51,6 +56,9 @@ export const EmergencyModal: React.FC = () => {
         }, DispatchIntro.duration * 1000);
       });
     } else {
+      fetchNui<ServerPromiseResp<AnimationModel>>(EmergencyEvents.ANIMATION, {
+        isCalling: true,
+      });
       console.log('fetching nui PLAY_AUDIO');
       fetchNui<ServerPromiseResp<AudioEventArguments>>(EmergencyEvents.PLAY_AUDIO, {
         type: AudioTypes.START_CALL,
