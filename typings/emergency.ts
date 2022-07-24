@@ -17,3 +17,5 @@ export enum AudioTypes {
 export interface AudioEventArguments {
   type: AudioTypes;
 }
+
+export interface DispatchModel {}

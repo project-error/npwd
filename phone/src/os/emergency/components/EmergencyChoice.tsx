@@ -14,9 +14,15 @@ import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { AudioTypes, EmergencyEvents, EmergencyServices } from '@typings/emergency';
 import { setContext } from '@sentry/react';
-import { DispatchAmbulance, DispatchIntro, DispatchPolice } from '@os/emergency/config';
+import {
+  AskDescription,
+  DispatchAmbulance,
+  DispatchIntro,
+  DispatchPolice,
+} from '@os/emergency/config';
 import { hangup } from '@os/emergency/utils';
 import { useHistory } from 'react-router';
+import { EmergencyDetails } from '@os/emergency/components/EmergencyDetails';
 
 export const EmergencyChoice = React.forwardRef((props: any, ref) => {
   const history = useHistory();
@@ -29,11 +35,17 @@ export const EmergencyChoice = React.forwardRef((props: any, ref) => {
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
-              DispatchPolice.play().then((playback) => {
+              AskDescription.play().then((playback) => {
                 props.setContext(<></>);
                 setTimeout(() => {
-                  hangup(history);
-                }, DispatchPolice.duration * 1000);
+                  //hangup(history);
+                  props.setContext(
+                    <EmergencyDetails
+                      setContext={props.setContext}
+                      service={EmergencyServices.POLICE}
+                    />,
+                  );
+                }, AskDescription.duration * 1000);
               });
             }}
           >
@@ -46,11 +58,17 @@ export const EmergencyChoice = React.forwardRef((props: any, ref) => {
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
-              DispatchAmbulance.play().then((playback) => {
+              AskDescription.play().then((playback) => {
                 props.setContext(<></>);
                 setTimeout(() => {
-                  hangup(history);
-                }, DispatchAmbulance.duration * 1000);
+                  //hangup(history);
+                  props.setContext(
+                    <EmergencyDetails
+                      setContext={props.setContext}
+                      service={EmergencyServices.AMBULANCE}
+                    />,
+                  );
+                }, AskDescription.duration * 1000);
               });
             }}
           >
