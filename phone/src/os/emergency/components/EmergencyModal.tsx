@@ -52,6 +52,7 @@ export const EmergencyModal: React.FC = () => {
       fetchNui<ServerPromiseResp<AudioEventArguments>>(EmergencyEvents.PLAY_AUDIO, {
         type: AudioTypes.START_CALL,
       }).then(() => {
+        console.log('played nui PLAY_AUDIO');
         setContext(<EmergencyChoice setContext={setContext} />);
       });
     }

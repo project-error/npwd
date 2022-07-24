@@ -8,9 +8,9 @@ export enum EmergencyServices {
 }
 
 export enum AudioTypes {
-  START_CALL,
-  DISPATCH_POLICE,
-  DISPATCH_AMBULANCE,
+  START_CALL = 'startCall',
+  DISPATCH_POLICE = 'dispatchPolice',
+  DISPATCH_AMBULANCE = 'Dispatch_ambulance',
 }
 
 export interface AudioEventArguments {
