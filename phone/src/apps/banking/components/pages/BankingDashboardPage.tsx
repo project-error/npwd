@@ -54,7 +54,7 @@ export const BankingDashboardPage: React.FC = () => {
   const { addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MARKETPLACE');
   const [updater, setUpdater] = useState(0);
-  const [click, setClick] = useState<boolean>(false);
+  const [clickable, setClickable] = useState<boolean>(false);
 
   useEffect(() => {
     if (isEnvBrowser()) {
@@ -63,14 +63,27 @@ export const BankingDashboardPage: React.FC = () => {
         setIban('BOBBYB');
       }, 1000);
     } else {
-      fetchNui<ServerPromiseResp<Account>>(BankingEvents.GET_ACCOUNTS).then((resp) => {
-        if (resp.data) {
-          setBalance(<span>{formatMoney(resp.data.bank)}</span>);
-          setIban(resp.data.iban);
-        }
-      });
+      fetchNui<ServerPromiseResp<Account>>(BankingEvents.GET_ACCOUNTS)
+        .then((resp) => {
+          if (resp.data) {
+            setBalance(<span>{formatMoney(resp.data.bank)}</span>);
+            setIban(resp.data.iban);
+          }
+        })
+        .catch(() => {
+          let notification: INotification = {
+            app: 'BANKING',
+            id: 'banking:transaction:error',
+            title: '404',
+            content: 'Not found',
+            icon,
+            notificationIcon,
+            sound: true,
+          };
+          addNotificationAlert(notification);
+        });
     }
-  });
+  }, [updater]);
 
   return (
     <Box height="100%" width="100%" p={2}>
@@ -113,8 +126,10 @@ export const BankingDashboardPage: React.FC = () => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                style={{ display: `${click ? 'none' : 'block'}` }}
+                // style={{ display: `${click ? 'none' : 'block'}` }}
                 onClick={() => {
+                  if (!clickable) return;
+                  setClickable(false);
                   const target_iban: HTMLInputElement = document.getElementById(
                     'transaction-iban',
                   ) as HTMLInputElement;
@@ -127,45 +142,62 @@ export const BankingDashboardPage: React.FC = () => {
                   const targetAmount: string = transaction_amount.value;
 
                   // Clear Data + Disable button.
-                  setClick(true);
+                  //setClick(true);
 
                   // resets values.
                   target_iban.value = '';
                   transaction_amount.value = '';
+                  console.log('Attempting transfer..');
+                  if (isEnvBrowser()) {
+                    let notification: INotification = {
+                      app: 'BANKING',
+                      id: 'banking:transaction:invalid_iban',
+                      title: 'success',
+                      content: 'mock success',
+                      icon,
+                      notificationIcon,
+                    };
+                    addNotificationAlert(notification);
+                    return;
+                  }
 
-                  fetchNui<ServerPromiseResp<TransactionResult>>(BankingEvents.TRANSFER_MONEY, {
+                  fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
                     targetIBAN: targetIbanValue,
                     amount: targetAmount,
                   })
                     .then((resp) => {
-                      setUpdater(updater + 1);
                       let notification: INotification;
-                      switch (resp.data.status) {
+                      console.log(resp.data);
+                      switch (resp.data) {
                         case TransactionStatus.SUCCESS:
-                          console.log('Transaction Success Has Been Reached.');
-                          console.log(resp.data.transaction);
-                          console.log('Hitting Final Transfer FetchNui');
-                          fetchNui<ServerPromiseResp>(
-                            BankingEvents.TRANSFER_FINAL,
-                            resp.data.transaction,
-                          );
-
-                          notification = {
-                            app: 'BANKING',
-                            id: 'banking:transaction:success',
-                            title: 'transaction completed succesfully',
-                            content: 'Succesfully transfered money to the account.',
-                            icon,
-                            notificationIcon,
-                          };
-
+                          console.log('transferring..');
                           break;
                         case TransactionStatus.INVALID_TARGET_IBAN:
                           notification = {
                             app: 'BANKING',
                             id: 'banking:transaction:invalid_iban',
                             title: 'no such iban',
-                            content: 'The IBAN you provided',
+                            content: 'The IBAN you provided does not exist',
+                            icon,
+                            notificationIcon,
+                          };
+                          break;
+                        case TransactionStatus.INVALID_NUMBER:
+                          notification = {
+                            app: 'BANKING',
+                            id: 'banking:transaction:hackerman',
+                            title: 'Hackerman',
+                            content: 'That is not even a number!?',
+                            icon,
+                            notificationIcon,
+                          };
+                          break;
+                        case TransactionStatus.INSUFFICIENT_BALANCE:
+                          notification = {
+                            app: 'BANKING',
+                            id: 'banking:transaction:insufficient_balance',
+                            title: 'Poor man',
+                            content: 'You do not have this amount of money',
                             icon,
                             notificationIcon,
                           };
@@ -175,7 +207,7 @@ export const BankingDashboardPage: React.FC = () => {
                             app: 'BANKING',
                             id: 'banking:transaction:error',
                             title: 'uh oh!',
-                            content: 'Something went wrong!',
+                            content: `Something went wrong (default)!`,
                             icon,
                             notificationIcon,
                           };
@@ -183,21 +215,24 @@ export const BankingDashboardPage: React.FC = () => {
                       }
                       addNotificationAlert(notification);
                       setTimeout(function () {
-                        setClick(false);
+                        setClickable(true);
+                        setUpdater(updater + 1);
                       }, 500);
                     })
                     .catch(() => {
+                      console.log('error in banking dashboard');
                       let notification: INotification = {
                         app: 'BANKING',
                         id: 'banking:transaction:error',
-                        title: 'uh oh!',
-                        content: 'Something went wrong!',
+                        title: 'error!',
+                        content: 'Bobby didnt test this...',
                         icon,
                         notificationIcon,
                       };
                       addNotificationAlert(notification);
                       setTimeout(function () {
-                        setClick(false);
+                        setClickable(true);
+                        setUpdater(updater + 1);
                       }, 500);
                     });
                 }}

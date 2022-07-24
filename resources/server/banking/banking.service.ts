@@ -56,13 +56,14 @@ class _BankingService {
       // Grabs Player ID
       const identifier = PlayerService.getIdentifier(req.source);
       // Grabs Bills pertaining to the player.
-      const listings = await this.bankingDB.TransferMoney(
+      const transStatus: TransactionStatus = await this.bankingDB.TransferMoney(
         identifier,
         req.data.targetIBAN,
         req.data.amount,
       );
-      resp({ data: listings.status, status: 'ok' });
+      resp({ data: transStatus, status: 'ok' });
     } catch (e) {
+      console.log(e);
       bankingLogger.error(`Failed to complete transaction, ${e.message}`, {
         source: req.source,
       });

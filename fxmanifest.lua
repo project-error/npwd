@@ -14,7 +14,7 @@ server_scripts {
     -- rest of the release. It's used to detect whether a user can read or not.
     'build-detector.js',
     'resources/dist/server/server.js',
-    '@mysql-async/lib/MySQL.lua',
+    '@oxmysql/lib/MySQL.lua',
     'resources/server/events.lua'
 }
 
@@ -29,5 +29,10 @@ files {
 dependency {
 	'screenshot-basic',
   'pma-voice',
-    'esx'
+
+}
+
+exports{
+    "getBalance"
+
 }

@@ -66,7 +66,7 @@ export const BankingTransactionsPage: React.FC = () => {
         }
       });
     }
-  });
+  }, []);
   return (
     <div id={'transactions-page'}>
       <TableContainer component={Paper}>

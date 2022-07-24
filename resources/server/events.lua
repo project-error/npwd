@@ -5,15 +5,131 @@
 ---
 
 ESX = nil
-
+identifiers = {}
 TriggerEvent("esx:getSharedObject",
         function(obj)
             ESX = obj
         end)
 
 
+function getPlayerInfoFromIBAN(iban)
+local result = MySQL.Sync.fetchAll('SELECT * FROM users WHERE iban = @iban', { ['@iban'] = iban })[1]
 
-RegisterServerEvent("npwd:TransferMoney")
-AddEventHandler("npwd:TransferMoney", function(src, target_iban, amount)
-    local xPlayer = ESX.GetPlayerFromId(_source)
+return result
+end
+function getPlayerInfoFromIdentifier(identifier)
+    local result = MySQL.Sync.fetchAll('SELECT * FROM users WHERE identifier = @identifier', { ['@identifier'] = identifier })[1]
+  
+    return result
+end
+
+function getServerIdFromIdentifier(identifier)
+    -- if (identifiers[identifier] ~=nil) then 
+    --     print("using cached identifier",identifiers[identifier])
+    --     return identifiers[identifier];
+    -- else 
+    local xPlayers = ESX.GetPlayers()
+	for i=1, #xPlayers, 1 do
+        local xForPlayer = ESX.GetPlayerFromId(xPlayers[i])
+        if xForPlayer.identifier == identifier and identifier ~= nil then
+            identifiers[identifier] = i
+            print("inserting new identifier in table", i, identifiers[identifier])
+            return i
+        end
+    end
+-- end
+    return nil
+end
+
+
+RegisterNetEvent("npwd:TransferMoney")
+AddEventHandler("npwd:TransferMoney", function(source_iban, target_iban, amount)
+
+    amount = tonumber(amount)
+    local targetInfo = getPlayerInfoFromIBAN(target_iban)
+    local targetPlayerID = getServerIdFromIdentifier(targetInfo.identifier)
+    local targetXPlayer = ESX.GetPlayerFromId(targetPlayerID)
+
+    local sourceInfo = getPlayerInfoFromIBAN(source_iban)
+    local sourcePlayerID = getServerIdFromIdentifier(sourceInfo.identifier)
+    local sourceXPlayer = ESX.GetPlayerFromId(sourcePlayerID)
+
+    --iban doesnt exist
+    if (targetInfo==nil or targetInfo.iban == nil or sourceInfo ==nil or sourceInfo.iban==nil) then return end
+
+    print("source", sourcePlayerID, sourceInfo.iban, sourceXPlayer)
+    print("target", targetPlayerID, targetInfo.iban, targetXPlayer)
+
+--sender is offline
+    if (sourceXPlayer ~=nil) then 
+        if (source_iban:upper()==target_iban:upper()) then 
+            TriggerClientEvent("npwd:sendNotification", sourcePlayerID, {
+                title="Self payments",
+                content="Sending money to yourself is a bit useless isnt it?",
+                icon="bank",
+                sound=true
+            })
+        return 
+        end
+        print("source is online, adding accountmoney")
+        if (sourceXPlayer.getAccount("bank").money < amount) then print("insufficient balance") return end
+
+        sourceXPlayer.removeAccountMoney('bank', amount)
+        TriggerClientEvent("npwd:sendNotification",sourcePlayerID, {
+            title="Money transferred",
+            content="Succesfully sent $"..amount.." to "..targetInfo.iban,
+            icon="bank",
+            sound=true
+        })
+    else 
+        print("source is offline, updating in db5")
+        if (tonumber(MySQL.Sync.fetchScalar("SELECT JSON_VALUE(accounts, '$.bank') FROM users WHERE iban =?", {source_iban:upper()})) < amount ) then print("insufficient balance") return end
+        MySQL.update("UPDATE users SET accounts=JSON_SET(accounts, '$.bank', JSON_VALUE(accounts, '$.bank') - ? ) WHERE iban = ?", {amount, source_iban:upper()}) 
+    end
+
+    if (targetXPlayer~=nil) then 
+        
+     
+
+        TriggerClientEvent("npwd:sendNotification",targetPlayerID, {
+            title="Money received",
+            content="You received $"..amount.." from "..sourceInfo.iban,
+            icon="bank",
+            sound=true
+        })
+    else 
+        print("target is offline, updating in db5")
+        MySQL.update("UPDATE users SET accounts=JSON_SET(accounts, '$.bank', JSON_VALUE(accounts, '$.bank') - ? ) WHERE iban = ?", {amount, target_iban:upper()}) 
+    end
+    MySQL.insert([[
+    INSERT INTO okokbanking_transactions (receiver_identifier, receiver_name, sender_identifier,  sender_name,  date,  value, type)
+    SELECT receiver_identifiers.identifier as receiver_identifier, receiver_identifiers.iban as receiver_name, sender_identifiers.identifier as sender_identifier, sender_identifiers.iban as sender_name, NOW() as date, ? as value, 'transfer' as type
+    FROM (SELECT * FROM users WHERE iban = ?) AS receiver_identifiers,
+         (SELECT * FROM users WHERE iban = ?) AS sender_identifiers
+    ]],{amount,tar})
 end)
+
+
+
+
+
+RegisterNetEvent("npwd:GetBankAmount")
+AddEventHandler("npwd:GetBankAmount", function(identifier, event, cb)
+
+    local xPlayer = ESX.GetPlayerFromId(getServerIdFromIdentifier(identifier))
+    print(identifier)
+    print(xPlayer)
+
+local balance = xPlayer.getAccount('bank')
+print("calling back balance", balance.money, "to", event)
+TriggerEvent(event, balance.money)
+
+end)
+
+
+function getBalance(identifier)
+    local xPlayer = ESX.GetPlayerFromId(getServerIdFromIdentifier(identifier))
+    local balance = xPlayer.getAccount('bank')
+    return balance
+
+end
