@@ -106,7 +106,7 @@ AddEventHandler("npwd:TransferMoney", function(source_iban, target_iban, amount)
     SELECT receiver_identifiers.identifier as receiver_identifier, receiver_identifiers.iban as receiver_name, sender_identifiers.identifier as sender_identifier, sender_identifiers.iban as sender_name, NOW() as date, ? as value, 'transfer' as type
     FROM (SELECT * FROM users WHERE iban = ?) AS receiver_identifiers,
          (SELECT * FROM users WHERE iban = ?) AS sender_identifiers
-    ]],{amount,tar})
+    ]],{amount, targetInfo.iban, sourceInfo.iban})
 end)
 
 

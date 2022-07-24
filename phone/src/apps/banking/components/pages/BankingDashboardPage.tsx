@@ -54,7 +54,7 @@ export const BankingDashboardPage: React.FC = () => {
   const { addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MARKETPLACE');
   const [updater, setUpdater] = useState(0);
-  const [clickable, setClickable] = useState<boolean>(false);
+  const [click, setClick] = useState<boolean>(false);
 
   useEffect(() => {
     if (isEnvBrowser()) {
@@ -126,10 +126,9 @@ export const BankingDashboardPage: React.FC = () => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                // style={{ display: `${click ? 'none' : 'block'}` }}
+                style={{ display: `${click ? 'none' : 'block'}` }}
                 onClick={() => {
-                  if (!clickable) return;
-                  setClickable(false);
+                  setClick(true);
                   const target_iban: HTMLInputElement = document.getElementById(
                     'transaction-iban',
                   ) as HTMLInputElement;
@@ -213,9 +212,12 @@ export const BankingDashboardPage: React.FC = () => {
                           };
                           break;
                       }
-                      addNotificationAlert(notification);
+                      if (notification != undefined) {
+                        addNotificationAlert(notification);
+                      }
+
                       setTimeout(function () {
-                        setClickable(true);
+                        setClick(false);
                         setUpdater(updater + 1);
                       }, 500);
                     })
@@ -231,7 +233,7 @@ export const BankingDashboardPage: React.FC = () => {
                       };
                       addNotificationAlert(notification);
                       setTimeout(function () {
-                        setClickable(true);
+                        setClick(false);
                         setUpdater(updater + 1);
                       }, 500);
                     });

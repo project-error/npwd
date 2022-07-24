@@ -14,17 +14,7 @@ export class _BankingDB {
     const query = 'SELECT JSON_VALUE(accounts, ?) AS bank, iban FROM users WHERE identifier = ?';
     const result = (await DbInterface.fetch<Account[]>(query, ['$.bank', identifier]))[0];
     let listener;
-    const balance = await new Promise<number>((resolve) => {
-      const eventID = `npwd:setBankAmount-${Date.now()}`;
-      console.log('npwd:GetBankAmount');
-      listener = on(eventID, function (balance: number) {
-        console.log(`triggered event handler: ${eventID}`);
-        console.log(balance);
-        resolve(balance);
-      });
-      emit('npwd:GetBankAmount', identifier, eventID);
-      console.log(`starting event handler: ${eventID}`);
-    });
+    const balance = await getBalance(identifier);
 
     removeEventListener(listener, () => {});
 
@@ -47,33 +37,53 @@ export class _BankingDB {
     targetIBAN: string,
     amount: number,
   ): Promise<TransactionStatus> {
-    if (identifier == null) return TransactionStatus.GENERIC_ERROR;
+    try {
+      if (identifier == null) return TransactionStatus.GENERIC_ERROR;
 
-    if (amount <= 0) return TransactionStatus.INVALID_NUMBER;
+      if (amount <= 0) return TransactionStatus.INVALID_NUMBER;
 
-    const GetTransactionquery = `SELECT identifier AS identifier, JSON_VALUE(accounts, "$.bank") AS bank, iban, target.target_bank, target.target_iban
+      const GetTransactionquery = `SELECT identifier AS identifier, JSON_VALUE(accounts, "$.bank") AS bank, iban, target.target_bank, target.target_iban
                     FROM users,  
                     (SELECT identifier AS target_identifier, iban AS target_iban, JSON_VALUE(accounts, "$.bank") AS target_bank FROM users WHERE iban =?) AS target 
                     WHERE identifier = ?`;
 
-    const result = await DbInterface.fetch<TransactionData[]>(GetTransactionquery, [
-      targetIBAN,
-      identifier,
-    ]);
+      const result = await DbInterface.fetch<TransactionData[]>(GetTransactionquery, [
+        targetIBAN,
+        identifier,
+      ]);
+      const balance = await getBalance(identifier);
+      const amountResult: number = result.length;
+      if (amountResult == 0) return TransactionStatus.INVALID_TARGET_IBAN;
 
-    const amountResult: number = result.length;
-    if (amountResult == 0) return TransactionStatus.INVALID_TARGET_IBAN;
+      const transaction: TransactionData = result[0];
 
-    const transaction: TransactionData = result[0];
+      if (transaction.target_iban == null) return TransactionStatus.INVALID_TARGET_IBAN;
 
-    if (transaction.target_iban == null) return TransactionStatus.INVALID_TARGET_IBAN;
+      if (balance < amount) return TransactionStatus.INSUFFICIENT_BALANCE;
 
-    if (transaction.bank < amount) return TransactionStatus.INSUFFICIENT_BALANCE;
-
-    emit('npwd:TransferMoney', result[0].iban, result[0].target_iban, amount);
-    return TransactionStatus.SUCCESS;
+      emit('npwd:TransferMoney', result[0].iban, result[0].target_iban, amount);
+      return TransactionStatus.SUCCESS;
+    } catch (e) {
+      console.log('error in dbcontroller', e);
+      return TransactionStatus.GENERIC_ERROR;
+    }
   }
 }
 
+const getBalance = async (identifier: string) => {
+  let listener;
+  const balance = await new Promise<number>((resolve) => {
+    const eventID = `npwd:setBankAmount-${Date.now()}`;
+    console.log('npwd:GetBankAmount');
+    listener = on(eventID, function (balance: number) {
+      console.log(`triggered event handler: ${eventID}`);
+      console.log(balance);
+      resolve(balance);
+    });
+    emit('npwd:GetBankAmount', identifier, eventID);
+    console.log(`starting event handler: ${eventID}`);
+  });
+  return balance;
+};
 const BankingDB = new _BankingDB();
 export default BankingDB;
