@@ -25,6 +25,7 @@ import { AudioTypes, EmergencyEvents } from '@typings/emergency';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import HealingIcon from '@mui/icons-material/Healing';
 import { EmergencyChoice } from '@os/emergency/components/emergencyChoice';
+import { isEnvBrowser } from '@utils/misc';
 
 const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
   height: '100%',
@@ -40,9 +41,13 @@ export const EmergencyModal: React.FC = () => {
   const [context, setContext] = useState(<></>);
   //if (!call) return null;
   useEffect(() => {
-    fetchNui<ServerPromiseResp>(EmergencyEvents.PLAY_AUDIO, AudioTypes.START_CALL).then(() => {
+    if (isEnvBrowser()) {
       setContext(<EmergencyChoice setContext={setContext} />);
-    });
+    } else {
+      fetchNui<ServerPromiseResp>(EmergencyEvents.PLAY_AUDIO, AudioTypes.START_CALL).then(() => {
+        setContext(<EmergencyChoice setContext={setContext} />);
+      });
+    }
   }, []);
 
   return (
@@ -59,6 +64,8 @@ export const EmergencyModal: React.FC = () => {
               <EmergencyTimer /> <RingingText />
             </Box>
             {context}
+
+            <EmergencyControls />
           </StyledBoxRoot>
         </React.Suspense>
       </AppContent>
