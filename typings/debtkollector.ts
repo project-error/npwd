@@ -6,4 +6,5 @@ export interface Bills {
 
 export enum BillingEvents {
   GET_BILLS = 'npwd:getBills',
+  PAY_BILL = 'npwd:payBill',
 }

@@ -11,6 +11,7 @@ class _BillingService {
     this.billsDB = BillsDB;
     billsLogger.debug('Garage service started');
   }
+  //RegisterNuiProxy(BillingEvents.GET_BILLS);
 
   async handleFetchBills(req: PromiseRequest<void>, resp: PromiseEventResp<Bills[]>) {
     try {

@@ -36,6 +36,7 @@ RegisterNuiCB<Transaction>(BankingEvents.TRANSFER_FINAL, (transaction, cb) => {
 });
 
 onNet('npwd:sendNotification', (data: IUniversalNotification) => {
+  console.log('dispatching notification');
   sendMessage('GLOBALNOTIFICATION', 'sendNotification', data);
 });
 

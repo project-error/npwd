@@ -37,8 +37,13 @@ export const DialerInput: React.FC = () => {
 
   const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
+  //call handler
   const handleCall = (number: string) => {
-    initializeCall(number);
+    if (number != '911') {
+      initializeCall(number);
+    } else {
+      history.push(`/banking`);
+    }
   };
 
   const handleNewContact = (number: string) => {

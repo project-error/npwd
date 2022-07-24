@@ -10,13 +10,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export const DebtKollectorApp: React.FC = () => {
   const [billData, setBillData] = useState<Bills[]>(null);
+  const [updater, setUpdater] = useState(0);
   useEffect(() => {
     const getBills = async () => {
       const billsList = await fetchBills();
       setBillData(billsList);
     };
     getBills();
-  }, []);
+  }, [updater]);
 
   return (
     <Box height="100%" width="100%" p={2}>

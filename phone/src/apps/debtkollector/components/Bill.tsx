@@ -1,12 +1,14 @@
-import { Bills } from '@typings/debtkollector';
+import { Bills, BillingEvents } from '@typings/debtkollector';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { ListItem } from '@ui/components/ListItem';
-import { Paper } from '@mui/material';
+import { Paper, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { AttachMoney } from '@mui/icons-material';
+import { ServerPromiseResp } from '@typings/common';
+import fetchNui from '@utils/fetchNui';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,13 +93,21 @@ export const Bill: React.FC<Bills> = ({ children, ...bill }) => {
   const classes = useStyles();
   const [isClicked, setIsClicked] = useState<boolean>(false); // Click Effect
   const [isHover, setIsHover] = useState<boolean>(false); // Hover Effect
-
-  const handlePayBill = () => {
+  const [deleted, setDeleted] = useState<boolean>(false);
+  const handlePayBill = (e) => {
     // fetch bill by { bill.id }
     // pay the bill
+    e.stopPropagation();
+    console.log(`paying bill ${JSON.stringify(bill)}`);
+    fetchNui<ServerPromiseResp<Bills>>(BillingEvents.PAY_BILL, bill.id).then(() => {
+      console.log('emitted paybill');
+      setDeleted(true);
+    });
   };
 
-  return (
+  return deleted ? (
+    <></>
+  ) : (
     <Box height="100%" width="100%">
       <ListItem
         className={classes.root}
@@ -129,9 +139,9 @@ export const Bill: React.FC<Bills> = ({ children, ...bill }) => {
               <Grid
                 className={isClicked ? classes.garageLocationShow : classes.garageLocationHidden}
               >
-                <Item className={classes.garageLocationStored} onClick={handlePayBill}>
+                <Button className={classes.garageLocationStored} onClick={handlePayBill}>
                   Pay Bill
-                </Item>
+                </Button>
               </Grid>
             </Box>
           </Paper>
