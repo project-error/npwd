@@ -1,4 +1,4 @@
-import { AudioTypes, EmergencyEvents } from '../../typings/emergency';
+import { AudioEventArguments, AudioTypes, EmergencyEvents } from '../../typings/emergency';
 import { RegisterNuiCB } from './cl_utils';
 import { Sound } from './sounds/client-sound.class';
 import { Ringtone } from './sounds/client-ringtone.class';
@@ -16,9 +16,9 @@ RegisterNuiCB(EmergencyEvents.DISPATCH, (transaction, cb) => {
   cb({});
 });
 
-RegisterNuiCB(EmergencyEvents.PLAY_AUDIO, ({ audioType }, cb) => {
-  console.log('Data in cl_emergency', audioType);
-  switch (audioType) {
+RegisterNuiCB<AudioEventArguments>(EmergencyEvents.PLAY_AUDIO, (args, cb) => {
+  console.log('Data in cl_emergency', args.type);
+  switch (args.type) {
     case AudioTypes.START_CALL:
       callSound = new Sound(callSoundName, soundSet);
       callSound.play();

@@ -1,5 +1,5 @@
 export enum EmergencyEvents {
-  PLAY_AUDIO = 'npwd:playAmergencyAudio',
+  PLAY_AUDIO = 'npwd:playDispatchAudioStart',
   DISPATCH = 'npwd:dispatchEmergencyService',
 }
 export enum EmergencyServices {
@@ -11,4 +11,8 @@ export enum AudioTypes {
   START_CALL,
   DISPATCH_POLICE,
   DISPATCH_AMBULANCE,
+}
+
+export interface AudioEventArguments {
+  type: AudioTypes;
 }
