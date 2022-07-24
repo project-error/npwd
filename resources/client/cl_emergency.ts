@@ -23,6 +23,7 @@ RegisterNuiCB<AudioEventArguments>(EmergencyEvents.PLAY_AUDIO, (args, cb) => {
       callSound = new Sound(callSoundName, soundSet);
       callSound.play();
       setTimeout(() => {
+        console.log('stopping sound');
         callSound.stop();
         cb({});
       }, 1000);
