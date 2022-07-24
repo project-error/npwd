@@ -44,7 +44,7 @@ export const EmergencyModal: React.FC = () => {
     if (isEnvBrowser()) {
       setContext(<EmergencyChoice setContext={setContext} />);
     } else {
-      fetchNui<ServerPromiseResp<AudioTypes>>(EmergencyEvents.PLAY_AUDIO, {
+      fetchNui(EmergencyEvents.PLAY_AUDIO, {
         type: AudioTypes.START_CALL,
       }).then(() => {
         setContext(<EmergencyChoice setContext={setContext} />);
