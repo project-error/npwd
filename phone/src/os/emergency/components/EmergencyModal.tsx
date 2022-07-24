@@ -20,8 +20,8 @@ import { useWallpaper } from '../../../apps/settings/hooks/useWallpaper';
 import { styled } from '@mui/styles';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { Account, BankingEvents } from '@typings/banking';
-import { AudioTypes, EmergencyEvents } from '@typings/emergency';
+import { Account, BankingEvents, TransactionStatus } from '@typings/banking';
+import { AudioEventArguments, AudioTypes, EmergencyEvents } from '@typings/emergency';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import HealingIcon from '@mui/icons-material/Healing';
 import { EmergencyChoice } from '@os/emergency/components/emergencyChoice';
@@ -44,7 +44,12 @@ export const EmergencyModal: React.FC = () => {
     if (isEnvBrowser()) {
       setContext(<EmergencyChoice setContext={setContext} />);
     } else {
-      fetchNui(EmergencyEvents.PLAY_AUDIO, {
+      console.log('fetching nui PLAY_AUDIO');
+      // fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
+      //   targetIBAN: targetIbanValue,
+      //   amount: targetAmount,
+      // })
+      fetchNui<ServerPromiseResp<AudioEventArguments>>(EmergencyEvents.PLAY_AUDIO, {
         type: AudioTypes.START_CALL,
       }).then(() => {
         setContext(<EmergencyChoice setContext={setContext} />);
