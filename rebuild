@@ -1,3 +1,12 @@
 #!/bin/bash
+TSKILL FxServer
+
+OLD_HEAD=$(git rev-parse HEAD)
 git pull
+NEW_HEAD=$(git rev-parse HEAD)
+
+if [ $OLD_HEAD != $NEW_HEAD ]; then
 yarn build
+fi
+"C:\Users\Administrator\Desktop\FIVEM\FXServer.exe"
+

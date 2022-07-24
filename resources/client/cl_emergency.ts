@@ -11,7 +11,7 @@ const hangUpSoundSet = 'Phone_SoundSet_Michael';
 const callSound: Sound = new Sound(callSoundName, soundSet);
 const hangupSound = new Sound(hangUpSoundName, hangUpSoundSet);
 
-RegisterNuiCB(EmergencyEvents.DISPATCH, (transaction, cb) => {
+RegisterNuiCB(EmergencyEvents.DISPATCH, (DispatchModel: DispatchModel, cb) => {
   //TODO: implement
   console.log('dispatch');
   cb({});
