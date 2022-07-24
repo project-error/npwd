@@ -41,27 +41,6 @@ export const EmergencyControls = ({ isSmall }: { isSmall?: boolean }) => {
         onClick={handleEndCall}
         className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
       >
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          aria-label="contacts"
-        >
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LocalPoliceIcon />
-              </ListItemIcon>
-              <ListItemText primary="Police" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <HealingIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Ambulance" />
-            </ListItemButton>
-          </ListItem>
-        </List>
         <CallEndIcon
           className={classes.icon}
           onClick={() => {

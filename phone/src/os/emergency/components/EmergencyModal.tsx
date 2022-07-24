@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { EmergencyTimer } from './emergencyTimer';
 import { EmergencyControls } from './EmergencyControls';
-import { Box, BoxProps } from '@mui/material';
+import {
+  Box,
+  BoxProps,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import CallContactContainer from './EmergencyContactContainer';
 import RingingText from './RingingText';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { useWallpaper } from '../../../apps/settings/hooks/useWallpaper';
 import { styled } from '@mui/styles';
+import fetchNui from '@utils/fetchNui';
+import { ServerPromiseResp } from '@typings/common';
+import { Account, BankingEvents } from '@typings/banking';
+import { AudioTypes, EmergencyEvents } from '@typings/emergency';
+import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
+import HealingIcon from '@mui/icons-material/Healing';
+import { EmergencyChoice } from '@os/emergency/components/emergencyChoice';
 
 const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
   height: '100%',
@@ -22,8 +37,13 @@ const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
 export const EmergencyModal: React.FC = () => {
   //const { call } = useCall();
   const wallpaper = useWallpaper();
-
+  const [context, setContext] = useState(<></>);
   //if (!call) return null;
+  useEffect(() => {
+    fetchNui<ServerPromiseResp>(EmergencyEvents.PLAY_AUDIO, AudioTypes.START_CALL).then(() => {
+      setContext(<EmergencyChoice setContext={setContext} />);
+    });
+  }, []);
 
   return (
     <AppWrapper>
@@ -38,7 +58,7 @@ export const EmergencyModal: React.FC = () => {
               <CallContactContainer />
               <EmergencyTimer /> <RingingText />
             </Box>
-            <EmergencyControls />
+            {context}
           </StyledBoxRoot>
         </React.Suspense>
       </AppContent>
