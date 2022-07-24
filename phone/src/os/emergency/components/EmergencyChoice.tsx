@@ -13,10 +13,15 @@ import HealingIcon from '@mui/icons-material/Healing';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { AudioTypes, EmergencyEvents, EmergencyServices } from '@typings/emergency';
+import { setContext } from '@sentry/react';
+import { DispatchAmbulance, DispatchIntro, DispatchPolice } from '@os/emergency/config';
+import { hangup } from '@os/emergency/utils';
+import { useHistory } from 'react-router';
 
-export const EmergencyChoice = (props: any) => {
+export const EmergencyChoice = React.forwardRef((props: any, ref) => {
+  const history = useHistory();
   return (
-    <Box>
+    <Box ref={ref}>
       <List
         sx={{ width: '100%', maxWidth: 360, bgcolor: '#3d3939', borderRadius: '5px' }}
         aria-label="contacts"
@@ -24,9 +29,12 @@ export const EmergencyChoice = (props: any) => {
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
-              fetchNui<ServerPromiseResp>(EmergencyEvents.DISPATCH, EmergencyServices.POLICE).then(
-                () => {},
-              );
+              DispatchPolice.play().then((playback) => {
+                props.setContext(<></>);
+                setTimeout(() => {
+                  hangup(history);
+                }, DispatchPolice.duration * 1000);
+              });
             }}
           >
             <ListItemIcon>
@@ -38,10 +46,12 @@ export const EmergencyChoice = (props: any) => {
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
-              fetchNui<ServerPromiseResp>(
-                EmergencyEvents.DISPATCH,
-                EmergencyServices.AMBULANCE,
-              ).then(() => {});
+              DispatchAmbulance.play().then((playback) => {
+                props.setContext(<></>);
+                setTimeout(() => {
+                  hangup(history);
+                }, DispatchAmbulance.duration * 1000);
+              });
             }}
           >
             <ListItemIcon>
@@ -53,4 +63,4 @@ export const EmergencyChoice = (props: any) => {
       </List>
     </Box>
   );
-};
+});

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Slide,
 } from '@mui/material';
 import CallContactContainer from './EmergencyContactContainer';
 import RingingText from './RingingText';
@@ -24,8 +25,10 @@ import { Account, BankingEvents, TransactionStatus } from '@typings/banking';
 import { AudioEventArguments, AudioTypes, EmergencyEvents } from '@typings/emergency';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import HealingIcon from '@mui/icons-material/Healing';
-import { EmergencyChoice } from '@os/emergency/components/emergencyChoice';
+import { EmergencyChoice } from '@os/emergency/components/EmergencyChoice';
 import { isEnvBrowser } from '@utils/misc';
+import { DispatchIntro } from '@os/emergency/config';
+import '../utils';
 
 const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
   height: '100%',
@@ -38,22 +41,26 @@ const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
 export const EmergencyModal: React.FC = () => {
   //const { call } = useCall();
   const wallpaper = useWallpaper();
-  const [context, setContext] = useState(<></>);
+  const [context, setContext] = useState(null);
   //if (!call) return null;
   useEffect(() => {
     if (isEnvBrowser()) {
-      setContext(<EmergencyChoice setContext={setContext} />);
+      DispatchIntro.play().then((playback) => {
+        setTimeout(() => {
+          setContext(<EmergencyChoice setContext={setContext} />);
+        }, DispatchIntro.duration * 1000);
+      });
     } else {
       console.log('fetching nui PLAY_AUDIO');
-      // fetchNui<ServerPromiseResp<TransactionStatus>>(BankingEvents.TRANSFER_MONEY, {
-      //   targetIBAN: targetIbanValue,
-      //   amount: targetAmount,
-      // })
       fetchNui<ServerPromiseResp<AudioEventArguments>>(EmergencyEvents.PLAY_AUDIO, {
         type: AudioTypes.START_CALL,
       }).then((data) => {
         console.log('played nui PLAY_AUDIO');
-        setContext(<EmergencyChoice setContext={setContext} />);
+        DispatchIntro.play().then((playback) => {
+          setTimeout(() => {
+            setContext(<EmergencyChoice setContext={setContext} />);
+          }, DispatchIntro.duration * 1000);
+        });
       });
     }
   }, []);
@@ -69,10 +76,10 @@ export const EmergencyModal: React.FC = () => {
           <StyledBoxRoot padding={5}>
             <Box>
               <CallContactContainer />
-              <EmergencyTimer /> <RingingText />
+              <EmergencyTimer />
+              <RingingText />
             </Box>
             {context}
-
             <EmergencyControls />
           </StyledBoxRoot>
         </React.Suspense>

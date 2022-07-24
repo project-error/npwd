@@ -11,6 +11,7 @@ export enum AudioTypes {
   START_CALL = 'startCall',
   DISPATCH_POLICE = 'dispatchPolice',
   DISPATCH_AMBULANCE = 'Dispatch_ambulance',
+  END_CALL = 'endCall',
 }
 
 export interface AudioEventArguments {

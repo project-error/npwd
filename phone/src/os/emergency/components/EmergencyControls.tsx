@@ -9,6 +9,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { useHistory } from 'react-router-dom';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import HealingIcon from '@mui/icons-material/Healing';
+import { hangup } from '@os/emergency/utils';
 const useStyles = makeStyles({
   icon: {
     color: 'white',
@@ -41,12 +42,7 @@ export const EmergencyControls = ({ isSmall }: { isSmall?: boolean }) => {
         onClick={handleEndCall}
         className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
       >
-        <CallEndIcon
-          className={classes.icon}
-          onClick={() => {
-            history.replace('/');
-          }}
-        />
+        <CallEndIcon className={classes.icon} onClick={() => hangup(history)} />
       </StatusIconButton>
     </Box>
   );
