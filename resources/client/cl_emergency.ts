@@ -1,4 +1,10 @@
-import { AudioEventArguments, AudioTypes, EmergencyEvents } from '../../typings/emergency';
+import {
+  AudioEventArguments,
+  AudioTypes,
+  DispatchModel,
+  EmergencyEvents,
+  EmergencyServices,
+} from '../../typings/emergency';
 import { RegisterNuiCB } from './cl_utils';
 import { Sound } from './sounds/client-sound.class';
 import { Ringtone } from './sounds/client-ringtone.class';
@@ -11,9 +17,15 @@ const hangUpSoundSet = 'Phone_SoundSet_Michael';
 const callSound: Sound = new Sound(callSoundName, soundSet);
 const hangupSound = new Sound(hangUpSoundName, hangUpSoundSet);
 
-RegisterNuiCB(EmergencyEvents.DISPATCH, (transaction, cb) => {
+RegisterNuiCB<DispatchModel>(EmergencyEvents.DISPATCH, (dispatch, cb) => {
   //TODO: implement
   console.log('dispatch');
+  emitNet(
+    'core_dispatch:addMessage',
+    dispatch.message,
+    GetEntityCoords(GetPlayerPed(-1), true),
+    dispatch.job,
+  );
   cb({});
 });
 
