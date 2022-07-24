@@ -12,7 +12,7 @@ const hangUpSoundSet = 'Phone_SoundSet_Michael';
 
 RegisterNuiCB(EmergencyEvents.DISPATCH, (transaction, cb) => {
   //TODO: implement
-
+  console.log('dispatch');
   cb({});
 });
 
