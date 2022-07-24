@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
+import { EmergencyModal } from '@os/emergency/components/EmergencyModal';
 import { HomeApp } from './apps/home/components/Home';
 import { NotificationBar } from '@os/notifications/components/NotificationBar';
 import { Navigation } from '@os/navigation-bar/components/Navigation';
@@ -73,6 +74,7 @@ function Phone() {
             <>
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
+              <Route exact path="/emergency" component={EmergencyModal} />
               {apps.map((App) => (
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
               ))}

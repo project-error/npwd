@@ -42,7 +42,7 @@ export const DialerInput: React.FC = () => {
     if (number != '911') {
       initializeCall(number);
     } else {
-      history.push(`/banking`);
+      history.push(`/emergency`);
     }
   };
 
