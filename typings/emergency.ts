@@ -3,8 +3,8 @@ export enum EmergencyEvents {
   DISPATCH = 'npwd:dispatchEmergencyService',
 }
 export enum EmergencyServices {
-  POLICE,
-  AMBULANCE,
+  POLICE = 'police',
+  AMBULANCE = 'ambulance',
 }
 
 export enum AudioTypes {
@@ -18,4 +18,10 @@ export interface AudioEventArguments {
   type: AudioTypes;
 }
 
-export interface DispatchModel {}
+export interface DispatchModel {
+  message: string;
+  job: EmergencyServices;
+}
+
+// addEventHandler("core_dispatch:addCall", function(code, title, info, location, job, cooldown, sprite, color)
+//    TriggerServerEvent("core_dispatch:addCall","10-90","Bank Robbery in Progress",{{icon = "fa-university", info = ''}},{LD.FleecaBanks[name].doors.startloc.x, LD.FleecaBanks[name].doors.startloc.y, LD.FleecaBanks[name].doors.startloc.z},"police",5000,375,21)

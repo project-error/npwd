@@ -124,6 +124,7 @@ TriggerEvent(event, balance.money)
 end)
 
 
+
 function getBalance(identifier)
     local xPlayer = ESX.GetPlayerFromId(getServerIdFromIdentifier(identifier))
     local balance = xPlayer.getAccount('bank')

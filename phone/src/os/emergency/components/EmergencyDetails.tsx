@@ -18,6 +18,7 @@ import { ServerPromiseResp } from '@typings/common';
 import {
   AudioEventArguments,
   AudioTypes,
+  DispatchModel,
   EmergencyEvents,
   EmergencyServices,
 } from '@typings/emergency';
@@ -37,9 +38,10 @@ export const EmergencyDetails = React.forwardRef((props: any, ref) => {
   const history = useHistory();
   const [helper, setHelper] = useState(null);
 
-  const dispatchServices = () => {
-    fetchNui<ServerPromiseResp<AudioEventArguments>>(EmergencyEvents.DISPATCH, {
-      type: AudioTypes.START_CALL,
+  const dispatchServices = (message) => {
+    fetchNui<ServerPromiseResp<DispatchModel>>(EmergencyEvents.DISPATCH, {
+      job: props.job,
+      message: message,
     }).then((data) => {
       console.log('played nui PLAY_AUDIO');
       DispatchIntro.play().then((playback) => {
@@ -67,11 +69,14 @@ export const EmergencyDetails = React.forwardRef((props: any, ref) => {
       case EmergencyServices.AMBULANCE:
         dispatchSound = DispatchAmbulance;
         break;
+      default:
+        break;
     }
 
     dispatchSound.play().then((playback) => {
       props.setContext(<></>);
       setTimeout(() => {
+        dispatchServices(value);
         hangup(history);
       }, dispatchSound.duration * 1000);
       props.setContext(<></>);
