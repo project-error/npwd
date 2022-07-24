@@ -16,8 +16,8 @@ RegisterNuiCB(EmergencyEvents.DISPATCH, (transaction, cb) => {
   cb({});
 });
 
-RegisterNuiCB(EmergencyEvents.PLAY_AUDIO, (audio: AudioTypes, cb) => {
-  switch (audio) {
+RegisterNuiCB<AudioTypes>(EmergencyEvents.PLAY_AUDIO, (audioType, cb) => {
+  switch (audioType) {
     case AudioTypes.START_CALL:
       callSound = new Sound(callSoundName, soundSet);
       callSound.play();
