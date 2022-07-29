@@ -36,11 +36,12 @@
     "embedUrl": "https://i.example.com/embed",
     "safeImageUrls": [
       "i.imgur.com",
-      "file.glass",
+      "i.file.glass",
       "dropbox.com",
       "c.tenor.com",
       "discord.com",
       "cdn.discordapp.com",
+      "media.discordapp.com",
       "upload.wikipedia.org",
       "i.projecterror.dev"
     ]
