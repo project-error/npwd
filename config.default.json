@@ -35,13 +35,13 @@
     "embedUnsafeImages": false,
     "embedUrl": "https://i.example.com/embed",
     "safeImageUrls": [
-      "imgur.com",
+      "i.imgur.com",
       "file.glass",
       "dropbox.com",
-      "tenor.com",
+      "c.tenor.com",
       "discord.com",
-      "discordapp.com",
-      "wikipedia.org",
+      "cdn.discordapp.com",
+      "upload.wikipedia.org",
       "i.projecterror.dev"
     ]
   },
