@@ -7,18 +7,23 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const externalApps = require('../../config.apps');
 
-const remotes = Object.keys(externalApps).reduce((prev, key) => {
-  return {
-    ...prev,
-    [key]: `${key}@https://cfx-nui-${key}/release/remoteEntry.js`,
-  };
+const ingame = Boolean(process.env.APP_IN_GAME);
+const remotes = ({ mode }) =>
+  Object.keys(externalApps).reduce((prev, key) => {
+    if (mode === 'production' || ingame) {
+      return {
+        ...prev,
+        [key]: `${key}@https://cfx-nui-${key}/web/dist/remoteEntry.js`,
+      };
+    }
 
-  /*return {
-				...prev,
-				[key]: `${key}@http://localhost:3002/remoteEntry.js`,
-			};*/
-}, {});
-module.exports = {
+    return {
+      ...prev,
+      [key]: `${key}@http://localhost:3007/remoteEntry.js`,
+    };
+  }, {});
+
+module.exports = (env, mode) => ({
   entry: './src/bootstrap.ts',
   output: {
     path: path.resolve(__dirname, '../../resources/html'),
@@ -65,7 +70,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'layout',
-      remotes,
+      remotes: remotes(mode),
       shared: {
         ...deps,
         react: {
@@ -83,7 +88,11 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './public/media', to: path.resolve(__dirname, '../../resources/html/media') },
+        {
+          from: './public/media',
+          to: path.resolve(__dirname, '../../resources/html/media'),
+          toType: 'dir',
+        },
       ],
     }),
     new webpack.DefinePlugin({
@@ -102,4 +111,4 @@ module.exports = {
       '@shared': path.resolve(__dirname, '../../shared'),
     },
   },
-};
+});
