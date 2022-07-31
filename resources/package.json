@@ -7,9 +7,9 @@
   "private": false,
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
-    "build": "cd ../ && go run build.go",
+    "build": "node ./scripts/build.js",
     "build:release": "cross-env IS_SENTRY=true webpack --mode production",
-    "watch": "cd ../ && go run watch.go",
+    "watch": "node ./scripts/watch.js",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
@@ -43,6 +43,7 @@
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.3",
+    "esbuild": "^0.14.50",
     "eslint": "^7.32.0",
     "jest": "^26.5.3",
     "remove-files-webpack-plugin": "^1.4.3",
