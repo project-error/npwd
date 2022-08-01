@@ -35,6 +35,7 @@ import { INotificationIcon } from '@os/notifications/providers/NotificationsProv
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
+import { IPhoneSettings } from '@typings/settings';
 
 export interface IAppConfig {
   id: string;
@@ -43,7 +44,7 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC;
+  Route: React.FC<{ settings?: IPhoneSettings }>;
 }
 
 export type IApp = IAppConfig & {

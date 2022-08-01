@@ -38,10 +38,7 @@ function Phone() {
   const { i18n } = useTranslation();
   const externalApps = useExternalApps();
 
-  console.log('externalApps', externalApps);
-
   const { apps } = useApps();
-
   const [settings] = useSettings();
 
   // Set language from local storage
@@ -81,9 +78,11 @@ function Phone() {
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
               ))}
 
-              {/* @ts-ignore */}
-              {externalApps.length > 0 &&
-                externalApps.map((App) => <Fragment key={App.id}>{App.Route}</Fragment>)}
+              {externalApps.map((App) => (
+                <Fragment key={App.id}>
+                  <App.Route settings={settings} />
+                </Fragment>
+              ))}
             </>
             <NotificationAlert />
             <PhoneSnackbar />

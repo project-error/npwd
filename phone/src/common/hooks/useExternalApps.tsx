@@ -1,25 +1,25 @@
 import { IApp } from '@os/apps/config/apps';
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
 import { useSettings } from '@apps/settings/hooks/useSettings';
 import { useCustomEvent } from '@os/events/useCustomEvents';
 
 const externalApps = require('../../../../config.apps');
 
 const useExternalAppsAction = () => {
-  const theme = useTheme();
-
   const generateAppConfig = async (importStatement): Promise<IApp> => {
     const rawConfig = (await importStatement()).default;
     const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
 
-    config.Component = React.createElement(config.app, {
-      settings: { language: 'en', theme },
-    });
+    config.Component = (props: object) => React.createElement(config.app, props);
+
     config.icon = React.createElement(config.icon);
 
-    config.Route = <Route path={config.path}>{config.Component}</Route>;
+    config.Route = (props: object) => (
+      <Route path={config.path}>
+        <config.Component {...props} />
+      </Route>
+    );
 
     return config;
   };
