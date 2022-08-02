@@ -8,8 +8,11 @@ const CopyPlugin = require('copy-webpack-plugin');
 const externalApps = require('../../config.apps');
 
 const ingame = Boolean(process.env.APP_IN_GAME);
-const remotes = ({ mode }) =>
-  Object.keys(externalApps).reduce((prev, key) => {
+const remotes = ({ mode }) => {
+  console.log("TOTAL REMOTES", Object.keys(externalApps).length)
+  if (Object.keys(externalApps).length === 0) return {};
+  
+  return Object.keys(externalApps).reduce((prev, key) => {
     if (mode === 'production' || ingame) {
       return {
         ...prev,
@@ -22,6 +25,7 @@ const remotes = ({ mode }) =>
       [key]: `${key}@http://localhost:3007/remoteEntry.js`,
     };
   }, {});
+}
 
 module.exports = (env, mode) => ({
   entry: './src/bootstrap.ts',
