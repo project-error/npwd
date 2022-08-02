@@ -2,6 +2,8 @@ import { contactsState, useSetContacts } from './state';
 
 import { Contact } from '@typings/contact';
 import { useRecoilCallback } from 'recoil';
+import { messageState } from '../../messages/hooks/state';
+import { MessageConversation } from '@typings/messages';
 
 interface UseContactsValue {
   getDisplayByNumber: (number: string) => string;
@@ -11,6 +13,10 @@ interface UseContactsValue {
   deleteLocalContact: (id: number) => void;
   addLocalContact: (contact: Contact) => void;
   updateLocalContact: (contact: Contact) => void;
+  findExistingConversation: (
+    myPhoneNumber: string,
+    targetPhoneNumber: string,
+  ) => MessageConversation | null;
 }
 
 export const useContactActions = (): UseContactsValue => {
@@ -109,6 +115,22 @@ export const useContactActions = (): UseContactsValue => {
     [],
   );
 
+  const findExistingConversation = useRecoilCallback<[string, string], MessageConversation | null>(
+    ({ snapshot }) =>
+      (myPhoneNumber, targetPhoneNumber) => {
+        const { state, contents } = snapshot.getLoadable(messageState.messageCoversations);
+        if (state !== 'hasValue') return null;
+
+        const conversationList = [myPhoneNumber, targetPhoneNumber].sort().join('+');
+        const doesConversationExist = contents.find(
+          (conversation) => conversation.conversationList === conversationList,
+        );
+
+        if (!doesConversationExist) return null;
+        return doesConversationExist;
+      },
+  );
+
   return {
     getDisplayByNumber,
     getContact,
@@ -117,5 +139,6 @@ export const useContactActions = (): UseContactsValue => {
     deleteLocalContact,
     updateLocalContact,
     addLocalContact,
+    findExistingConversation,
   };
 };
