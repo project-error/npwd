@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MessageContextMenu from './MessageContextMenu';
+import AudioContextMenu from './AudioContextMenu';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
@@ -22,6 +23,8 @@ export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
 const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
+  const [audioContextMenuOpen, setAudioContextMenuOpen] = useState(false);
+
   const query = useQueryParams();
   const referalImage = query?.image || null;
   const referalNote = query?.note || null;
@@ -103,11 +106,16 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
           </Box>
         </Box>
       </Box>
-      <MessageInput
-        messageGroupName={activeMessageGroup.participant}
-        messageConversation={activeMessageGroup}
-        onAddImageClick={() => setContextMenuOpen(true)}
-      />
+      {audioContextMenuOpen ? (
+        <AudioContextMenu onClose={() => setAudioContextMenuOpen(false)} />
+      ) : (
+        <MessageInput
+          messageGroupName={activeMessageGroup.participant}
+          messageConversation={activeMessageGroup}
+          onAddImageClick={() => setContextMenuOpen(true)}
+          onVoiceClick={() => setAudioContextMenuOpen(true)}
+        />
+      )}
     </>
   );
 };
