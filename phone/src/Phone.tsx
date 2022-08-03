@@ -80,7 +80,7 @@ function Phone() {
 
               {externalApps.map((App) => (
                 <Fragment key={App.id}>
-                  <App.Route settings={settings} />
+                  <App.Route settings={settings} i18n={i18n} />
                 </Fragment>
               ))}
             </>

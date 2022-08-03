@@ -36,6 +36,7 @@ import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 import { IPhoneSettings } from '@typings/settings';
+import { i18n } from 'i18next';
 
 export interface IAppConfig {
   id: string;
@@ -44,7 +45,7 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC<{ settings?: IPhoneSettings }>;
+  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n }>;
 }
 
 export type IApp = IAppConfig & {
