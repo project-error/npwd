@@ -35,6 +35,8 @@ import { INotificationIcon } from '@os/notifications/providers/NotificationsProv
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
+import { IPhoneSettings } from '@typings/settings';
+import { i18n } from 'i18next';
 
 export interface IAppConfig {
   id: string;
@@ -43,7 +45,7 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC;
+  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n }>;
 }
 
 export type IApp = IAppConfig & {
@@ -53,6 +55,7 @@ export type IApp = IAppConfig & {
   notificationIcon: JSX.Element;
   NotificationIcon: React.FC<SvgIconProps>;
   Icon?: React.FC<SvgIconProps>;
+  theme?: any;
 };
 
 export const APPS: IAppConfig[] = [

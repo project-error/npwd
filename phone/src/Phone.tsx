@@ -32,9 +32,12 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
+import { useExternalApps } from '@common/hooks/useExternalApps';
 
 function Phone() {
   const { i18n } = useTranslation();
+  const externalApps = useExternalApps();
+
   const { apps } = useApps();
   const [settings] = useSettings();
 
@@ -73,6 +76,12 @@ function Phone() {
               {callModal && <Route exact path="/call" component={CallModal} />}
               {apps.map((App) => (
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
+              ))}
+
+              {externalApps.map((App) => (
+                <Fragment key={App.id}>
+                  <App.Route settings={settings} i18n={i18n} />
+                </Fragment>
               ))}
             </>
             <NotificationAlert />

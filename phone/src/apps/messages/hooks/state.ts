@@ -9,7 +9,7 @@ import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 import { MockMessageConversations } from '../utils/constants';
-import { contactsState } from '../../contacts/hooks/state';
+import { contacts } from '../../contacts/hooks/state';
 import { Contact } from '@typings/contact';
 
 const currentGroupId = atom({ key: 'currentGroupId', default: null });
@@ -42,18 +42,22 @@ export const messageState = {
     key: 'defaultFilteredMessageConversations',
     get: ({ get }) => {
       const filterValue: string = get(messageState.filterValue);
-      const messageConversations: MessageConversation[] = get(messageState.messageCoversations);      
+      const messageConversations: MessageConversation[] = get(messageState.messageCoversations);
       if (!filterValue) return messageConversations;
 
-      const searchRegex = new RegExp(filterValue, "i");
+      const searchRegex = new RegExp(filterValue, 'i');
 
-      const contacts: Contact[] = get(contactsState.contacts)
+      const contactsValue: Contact[] = get(contacts);
 
       return messageConversations.filter((messageConversation) => {
-        for (const contact of contacts) {
-          if (searchRegex.test(contact.display) && messageConversation.conversationList.includes(contact.number)) return true
+        for (const contact of contactsValue) {
+          if (
+            searchRegex.test(contact.display) &&
+            messageConversation.conversationList.includes(contact.number)
+          )
+            return true;
         }
-        
+
         return searchRegex.test(messageConversation.label);
       });
     },
