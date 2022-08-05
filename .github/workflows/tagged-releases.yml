@@ -31,6 +31,15 @@ jobs:
           go-version: '1.18'
           check-latest: true
 
+      - name: Genereate typings
+        run: yarn generate:typings
+      -name: Publish typings to NPM
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: '../npwdTypes/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+          access: 'public'
+
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 

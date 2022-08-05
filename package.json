@@ -20,7 +20,8 @@
     "format": "pretty-quick",
     "format:staged": "pretty-quick --staged",
     "postinstall": "husky install && yarn bootstrap",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "generate:typings": "tsc ./typings/index.ts --declaration --emitDeclarationOnly --outFile ./npwdTypes/index.d.ts"
   },
   "husky": {
     "hooks": {

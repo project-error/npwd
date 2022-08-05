@@ -1,0 +1,7 @@
+{
+  "name": "@project-error/npwd-types",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Project Error",
+  "license": "MIT"
+}
