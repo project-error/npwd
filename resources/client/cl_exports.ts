@@ -101,3 +101,7 @@ exps('endCall', async () => {
     animationService.endPhoneCall();
   }
 });
+
+exps('sendUIMessage', (type: string, payload = {}) => {
+  SendNUIMessage({ type, payload });
+});
