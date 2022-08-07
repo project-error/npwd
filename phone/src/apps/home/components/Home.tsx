@@ -11,8 +11,7 @@ export const HomeApp: React.FC = () => {
   return (
     <AppWrapper>
       <Box component="div" mt={6} px={1}>
-        {apps && <GridMenu xs={3} items={apps} />}
-        {externalApps.length > 0 && <GridMenu xs={3} items={externalApps} />}
+        {apps && <GridMenu xs={3} items={[...apps, ...externalApps]} />}
       </Box>
     </AppWrapper>
   );
