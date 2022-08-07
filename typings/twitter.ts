@@ -35,7 +35,7 @@ export interface FormattedTweet extends Omit<Tweet, 'images'> {
   images: Image[];
 }
 
-export interface Profile {
+export interface TwitterProfile {
   id: number;
   profile_name: string;
   identifier: string;
