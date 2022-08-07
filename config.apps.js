@@ -1,5 +1,5 @@
 module.exports = {
-  template: () => {
+  /*template: () => {
     return import('template/config');
-  },
+  },*/
 };
