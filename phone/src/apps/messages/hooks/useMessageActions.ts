@@ -94,7 +94,6 @@ export const useMessageActions = (): MessageActionProps => {
   const updateLocalMessages = useCallback(
     (messageDto: Message) => {
       if (messageLoading !== 'hasValue') return;
-
       if (conversationId !== messageDto.conversation_id) return;
 
       setMessages((currVal) => [

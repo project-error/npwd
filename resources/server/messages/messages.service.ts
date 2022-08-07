@@ -222,6 +222,7 @@ class _MessagesService {
 
               emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
                 ...message,
+                conversation_id: messageData.conversationId,
                 author: authorPhoneNumber,
               });
               emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
