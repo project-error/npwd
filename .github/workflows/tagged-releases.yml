@@ -34,7 +34,11 @@ jobs:
       - name: Generate typings
         run: yarn generate:typings
       - name: Bump typings version
-        run: cd ./npwdTypes && yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
+        run: |
+          cd ./npwdTypes
+          git config user.email "chip@projecterror.dev"
+          git config user.name "itschip"
+          yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
 
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
