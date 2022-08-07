@@ -30,7 +30,7 @@ import {
   TWITTER_APP_TEXT_COLOR,
 } from '../../../apps/twitter/twitter.theme';
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
-import { SvgIconProps } from '@mui/material';
+import { SvgIconProps, Theme } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
@@ -45,7 +45,7 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n }>;
+  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n; theme?: Theme }>;
 }
 
 export type IApp = IAppConfig & {

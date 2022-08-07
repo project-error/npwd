@@ -33,6 +33,7 @@ import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useExternalApps } from '@common/hooks/useExternalApps';
+import { useTheme } from '@mui/material';
 
 function Phone() {
   const { i18n } = useTranslation();
@@ -40,6 +41,7 @@ function Phone() {
 
   const { apps } = useApps();
   const [settings] = useSettings();
+  const theme = useTheme();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes
@@ -80,7 +82,7 @@ function Phone() {
 
               {externalApps.map((App) => (
                 <Fragment key={App.id}>
-                  <App.Route settings={settings} i18n={i18n} />
+                  <App.Route settings={settings} i18n={i18n} theme={theme} />
                 </Fragment>
               ))}
             </>
