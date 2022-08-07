@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, ButtonGroup, Fade, IconButton, Paper, Tooltip } from '@mui/material';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CloseIcon from '@mui/icons-material/Close';
 import StopIcon from '@mui/icons-material/Stop';
@@ -25,31 +24,46 @@ interface RecordingButtonsProps {
 
 interface InteractButtonsProps {
   playing: boolean;
-  setPlaying: (playing: boolean) => void;
+  play: () => Promise<void>;
+  pause: () => void;
 }
 
 const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
-  const { audio, recordingState, startRecording, stopRecording } = useRecorder();
-  const { duration, currentTime, playing, setPlaying } = useAudioPlayer(audio);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const {
+    audio: recordedAudio,
+    recordingState,
+    startRecording,
+    stopRecording,
+    audioElement,
+  } = useRecorder();
+  const { playing, play, pause } = useAudioPlayer(audioElement);
+
+  const [duration, setDuration] = useState<number>(null);
 
   const handleStartRecord = async () => {
     await startRecording();
   };
 
   const handleStopRecording = () => {
+    // Maybe try to get the duration here, maybe even create a timeout
+    // Do want to create a audioRef from useRecorder, or do it all here?
     stopRecording();
   };
 
-  const formatDuration = (dur: number) => {
-    return dayjs.duration(dur).format('mm:ss');
-  };
+  useEffect(() => {
+    audioElement.onloadeddata = () => {
+      console.log('duration', audioElement.duration);
+    };
+  }, [audioElement, recordedAudio, recordingState]);
 
   return (
     <Paper variant="outlined">
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box pl={1}>
-          {audio && !recordingState.isRecording ? (
-            <InteractButtons playing={playing} setPlaying={setPlaying} />
+          {recordedAudio && !recordingState.isRecording ? (
+            <InteractButtons play={play} pause={pause} playing={playing} />
           ) : (
             <RecordingButtons
               startRecording={handleStartRecord}
@@ -58,15 +72,7 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
             />
           )}
         </Box>
-        <audio id="voiceMessageAudio" src={audio} />
-        {audio && !recordingState.isRecording && (
-          <Box>
-            <Box>
-              <span>{currentTime && currentTime}</span>
-              <span>{duration && duration}</span>
-            </Box>
-          </Box>
-        )}
+        <Box></Box>
         <Box pt={1} pb={1}>
           <Button
             disabled={recordingState.isRecording}
@@ -103,15 +109,11 @@ const RecordingButtons: React.FC<RecordingButtonsProps> = ({
   </Box>
 );
 
-const InteractButtons: React.FC<InteractButtonsProps> = ({ playing, setPlaying }) => (
+const InteractButtons: React.FC<InteractButtonsProps> = ({ playing, play, pause }) => (
   <Box>
     <ButtonGroup>
       <IconButton size="small">
-        {playing ? (
-          <PauseIcon onClick={() => setPlaying(false)} />
-        ) : (
-          <PlayArrowIcon onClick={() => setPlaying(true)} />
-        )}
+        {playing ? <PauseIcon onClick={pause} /> : <PlayArrowIcon onClick={play} />}
       </IconButton>
     </ButtonGroup>
   </Box>

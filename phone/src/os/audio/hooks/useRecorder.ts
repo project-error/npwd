@@ -8,6 +8,7 @@ type RecordingState = {
 
 interface RecorderProps {
   audio: string | null;
+  audioElement: HTMLAudioElement;
   recordingState: RecordingState;
   startRecording: () => Promise<void>;
   stopRecording: () => void;
@@ -21,6 +22,7 @@ export const useRecorder = (): RecorderProps => {
   });
   const [audio, setAudio] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement>(null);
 
   const startRecording = async (): Promise<void> => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -38,6 +40,7 @@ export const useRecorder = (): RecorderProps => {
   const stopRecording = (): void => {
     recordingState.recorder.stop();
     recordingState.mediaStream.getAudioTracks().forEach((track) => track.stop());
+    recordingState.recorder.stream.getAudioTracks().forEach((track) => track.stop());
   };
 
   useEffect(() => {
@@ -62,9 +65,6 @@ export const useRecorder = (): RecorderProps => {
         const blob = new Blob(chunks, { type: 'audio/ogg' });
         const blob_url = URL.createObjectURL(blob);
 
-        setAudio(blob_url);
-        setAudioBlob(blob);
-
         setRecordingState((prev) => {
           return {
             ...prev,
@@ -73,6 +73,12 @@ export const useRecorder = (): RecorderProps => {
             mediaStream: null,
           };
         });
+
+        setAudio(blob_url);
+        setAudioBlob(blob);
+
+        const audioEl = new Audio(blob_url);
+        setAudioElement(audioEl);
       };
     }
 
@@ -85,6 +91,7 @@ export const useRecorder = (): RecorderProps => {
 
   return {
     audio,
+    audioElement,
     recordingState,
     startRecording,
     stopRecording,
