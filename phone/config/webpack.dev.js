@@ -9,9 +9,9 @@ const externalApps = require('../../config.apps');
 
 const ingame = Boolean(process.env.APP_IN_GAME);
 const remotes = ({ mode }) => {
-  console.log("TOTAL REMOTES", Object.keys(externalApps).length)
+  console.log('TOTAL REMOTES', Object.keys(externalApps).length);
   if (Object.keys(externalApps).length === 0) return {};
-  
+
   return Object.keys(externalApps).reduce((prev, key) => {
     if (mode === 'production' || ingame) {
       return {
@@ -22,10 +22,10 @@ const remotes = ({ mode }) => {
 
     return {
       ...prev,
-      [key]: `${key}@http://localhost:3007/remoteEntry.js`,
+      [key]: `${key}@http://localhost:3002/remoteEntry.js`,
     };
   }, {});
-}
+};
 
 module.exports = (env, mode) => ({
   entry: './src/bootstrap.ts',

@@ -1,5 +1,5 @@
 module.exports = {
-  pefcl: () => {
-    return import('pefcl/config');
+  template: () => {
+    return import('template/config');
   },
 };
