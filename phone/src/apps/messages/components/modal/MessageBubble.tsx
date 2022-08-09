@@ -95,6 +95,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               embed={parsedEmbed}
               isMine={isMine}
               message={message.message}
+              openMenu={openMenu}
             />
           ) : (
             <StyledMessage>

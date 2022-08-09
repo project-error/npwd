@@ -9,28 +9,38 @@ import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import fetchNui from '../../../../utils/fetchNui';
 import TravelExplore from '@mui/icons-material/TravelExplore';
 import { MessageEvents } from '@typings/messages';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface MessageEmbedProps {
   type: string;
   embed: any;
   isMine: boolean;
   message: string;
+  openMenu: () => void;
 }
 
 type MessageEmbedType = {
   [key: string]: JSX.Element;
 };
 
-const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, message }) => {
+const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, message, openMenu }) => {
   const embedType: MessageEmbedType = {
-    contact: <ContactEmbed embed={embed} isMine={isMine} />,
-    location: <LocationEmbed embed={embed} isMine={isMine} message={message} />,
+    contact: <ContactEmbed embed={embed} isMine={isMine} openMenu={openMenu} />,
+    location: <LocationEmbed embed={embed} isMine={isMine} message={message} openMenu={openMenu} />,
   };
 
   return <>{embedType[type]}</>;
 };
 
-const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) => {
+const ContactEmbed = ({
+  isMine,
+  embed,
+  openMenu,
+}: {
+  isMine: boolean;
+  embed: Contact;
+  openMenu: () => void;
+}) => {
   const [t] = useTranslation();
   const history = useHistory();
   const { pathname } = useLocation();
@@ -57,17 +67,25 @@ const ContactEmbed = ({ isMine, embed }: { isMine: boolean; embed: Contact }) =>
           </Button>
         </Box>
       )}
+      {isMine && (
+        <IconButton color="primary" onClick={openMenu}>
+          <MoreVertIcon />
+        </IconButton>
+      )}
     </StyledMessage>
   );
 };
 
 const LocationEmbed = ({
+  isMine,
   embed,
   message,
+  openMenu,
 }: {
   embed: Location;
   isMine: boolean;
   message: string;
+  openMenu: () => void;
 }) => {
   const [t] = useTranslation();
 
@@ -88,6 +106,11 @@ const LocationEmbed = ({
             <TravelExplore />
           </IconButton>
         </Tooltip>
+        {isMine && (
+          <IconButton color="primary" onClick={openMenu}>
+            <MoreVertIcon />
+          </IconButton>
+        )}
       </Box>
     </StyledMessage>
   );
