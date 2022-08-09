@@ -33,6 +33,7 @@ jobs:
   create-tagged-release:
     name: Build and Create Tagged Release
     runs-on: ubuntu-latest
+    needs: [bump-manifest-version]
 
     steps:
       - name: Get tag
