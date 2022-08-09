@@ -68,7 +68,7 @@
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "start": "webpack serve --config config/webpack.dev.js --mode development",
     "build": "webpack --config config/webpack.dev.js --mode production",
-    "serve": "cross-env REACT-APP_IN_GAME=1 BROWSER=none webpack --config config/webpack.dev.js --mode development --watch",
+    "serve": "cross-env REACT_APP_IN_GAME=1 BROWSER=none webpack --config config/webpack.dev.js --mode development --watch",
     "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
     "build:release": "cross-env SENTRY_RELEASE=true craco build",
     "test": "craco test --watchAll=false --silent",

@@ -38,7 +38,7 @@ module.exports = (env, mode) => ({
     port: 3000,
     hot: true,
     devMiddleware: {
-      writeToDisk: !!process.env.REACT_IN_GAME,
+      writeToDisk: !!process.env.REACT_APP_IN_GAME,
     },
   },
   devtool: 'eval-source-map',
