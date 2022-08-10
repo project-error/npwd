@@ -9,7 +9,7 @@ import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fab from '@mui/material/Fab';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';

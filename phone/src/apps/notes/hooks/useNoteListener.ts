@@ -1,6 +1,6 @@
 import { AddNoteExportData, NotesEvents } from '@typings/notes';
 import { useApps } from '@os/apps/hooks/useApps';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { useCallback } from 'react';
