@@ -94,9 +94,12 @@ function Phone() {
   );
 }
 
-export default Phone;
-
 InjectDebugData<any>([
+  {
+    app: 'PHONE',
+    method: PhoneEvents.SET_CONFIG,
+    data: DefaultConfig,
+  },
   {
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
@@ -104,17 +107,8 @@ InjectDebugData<any>([
   },
   {
     app: 'PHONE',
-    method: PhoneEvents.SET_PHONE_READY,
-    data: true,
-  },
-  {
-    app: 'PHONE',
     method: PhoneEvents.SET_TIME,
     data: dayjs().format('hh:mm'),
   },
-  {
-    app: 'PHONE',
-    method: PhoneEvents.SET_CONFIG,
-    data: DefaultConfig,
-  },
 ]);
+export default Phone;
