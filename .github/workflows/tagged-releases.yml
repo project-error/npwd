@@ -6,7 +6,6 @@ on:
 jobs:
   bump-manifest-version:
     name: 'Bump fxmanifest version'
-    needs: create-tagged-release
     runs-on: ubuntu-latest
     steps:
       - name: Get tag
