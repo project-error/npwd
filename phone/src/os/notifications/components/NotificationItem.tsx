@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, ListItem, ListItemAvatar, ListItemText, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { INotification } from '../providers/NotificationsProvider';
+import { useCurrentCall } from '@os/call/hooks/state';
 
 const useStyles = makeStyles<Theme, { cantClose: boolean }>((theme) => ({
   closeNotifBtn: {
@@ -26,13 +27,14 @@ export const NotificationItem = ({
 }) => {
   const { title, icon, content, cantClose, onClick } = notification;
   const classes = useStyles({ cantClose });
+  const call = useCurrentCall();
 
   return (
     <ListItem
       divider
       button
       onClick={(e) => {
-        if (onClick) {
+        if (onClick && !call) {
           onClick(notification);
           onClickClose(e);
         }

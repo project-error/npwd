@@ -4,7 +4,6 @@ import { phoneState } from '@os/phone/hooks/state';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 import { AlertEvents } from '@typings/alerts';
 import fetchNui from '../../../utils/fetchNui';
-import { useCurrentCall } from '@os/call/hooks/state';
 
 export interface INotification {
   app: string;
@@ -60,13 +59,12 @@ export function NotificationsProvider({ children }) {
   const alertTimeout = useRef<NodeJS.Timeout>();
   const [alerts, setAlerts] = useState<Array<[INotification, (n: INotification) => void]>>([]);
   const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
-  const call = useCurrentCall();
 
   useEffect(() => {
-    if (!call && isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
+    if (isPhoneOpen && currentAlert && currentAlert.keepWhenPhoneClosed) {
       currentAlert.resolve();
     }
-  }, [isPhoneOpen, currentAlert, call]);
+  }, [isPhoneOpen, currentAlert]);
 
   const updateNotification = useCallback((idx: number, value: INotification) => {
     setNotifications((all) => {
