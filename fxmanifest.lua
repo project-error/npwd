@@ -3,7 +3,6 @@ game "gta5"
 description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
 version '1.5.3'
-
 client_scripts {
 	"resources/dist/client/client.js",
 	"resources/client/*.lua",
