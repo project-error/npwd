@@ -15,7 +15,6 @@ import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '@typings/common';
 import { NuiCallbackFunc } from '@project-error/pe-utils';
-import { stat } from 'fs';
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
   if (callService.isInCall()) return;
