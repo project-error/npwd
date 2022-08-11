@@ -15,6 +15,7 @@ import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '@typings/common';
 import { NuiCallbackFunc } from '@project-error/pe-utils';
+import { stat } from 'fs';
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
   if (callService.isInCall()) return;
@@ -99,4 +100,11 @@ RegisterNuiProxy(CallEvents.FETCH_CALLS);
 
 onNet(CallEvents.SEND_ALERT, (alert: IAlertProps) => {
   callService.handleSendAlert(alert);
+});
+
+RegisterNuiCB(CallEvents.TOGGLE_MUTE_CALL, (data: { call: ActiveCall; state: boolean }, cb) => {
+  const { state, call } = data;
+  callService.handleMute(state, call);
+
+  cb({});
 });

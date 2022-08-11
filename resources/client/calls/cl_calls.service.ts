@@ -137,6 +137,14 @@ export class CallService {
     hangUpSound.play();
   }
 
+  handleMute(state: boolean, callData: ActiveCall) {
+    if (state) {
+      exp['pma-voice'].setCallChannel(0);
+    } else {
+      exp['pma-voice'].setCallChannel(callData.channelId);
+    }
+  }
+
   handleSendAlert(alert: IAlertProps) {
     SendNUIMessage({
       app: 'DIALER',
