@@ -8,6 +8,9 @@ RegisterNuiProxy(DarkchatEvents.ADD_CHANNEL);
 RegisterNuiProxy(DarkchatEvents.SEND_MESSAGE);
 RegisterNuiProxy(DarkchatEvents.LEAVE_CHANNEL);
 RegisterNuiProxy(DarkchatEvents.UPDATE_CHANNEL_LABEL);
+RegisterNuiProxy(DarkchatEvents.FETCH_MEMBERS);
+RegisterNuiProxy(DarkchatEvents.TRANSFER_OWNERSHIP);
+RegisterNuiProxy(DarkchatEvents.DELETE_CHANNEL);
 
 onNet(DarkchatEvents.BROADCAST_MESSAGE, (data: ChannelMessageProps) => {
   sendMessage('DARKCHAT', DarkchatEvents.BROADCAST_MESSAGE, data);

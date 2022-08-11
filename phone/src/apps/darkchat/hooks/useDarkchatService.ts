@@ -1,11 +1,16 @@
 import { useActiveDarkchatValue, useSetDarkchatMessagesState } from '../state/state';
 import { useDarkchatActions } from './useDarkchatActions';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
-import { ChannelMessageProps, DarkchatEvents, UpdateLabelDto } from '@typings/darkchat';
+import {
+  ChannelMessageProps,
+  DarkchatEvents,
+  OwnerTransferResp,
+  UpdateLabelDto,
+} from '@typings/darkchat';
 import { useCallback } from 'react';
 
 export const useDarkchatService = () => {
-  const { addLocalMessage, updateLocalChannelLabel } = useDarkchatActions();
+  const { addLocalMessage, updateLocalChannelLabel, localTransferOwner } = useDarkchatActions();
   const activeConversation = useActiveDarkchatValue();
 
   const handleUpdateMessages = useCallback(
@@ -26,6 +31,14 @@ export const useDarkchatService = () => {
     [activeConversation, addLocalMessage],
   );
 
+  const handleUpdateOwner = useCallback(
+    (dto: OwnerTransferResp) => {
+      localTransferOwner(dto);
+    },
+    [localTransferOwner],
+  );
+
   useNuiEvent('DARKCHAT', DarkchatEvents.BROADCAST_MESSAGE, handleUpdateMessages);
   useNuiEvent('DARKCHAT', DarkchatEvents.BROADCAST_LABEL_UPDATE, handleUpdateChannelLabel);
+  useNuiEvent('DARKCHAT', DarkchatEvents.TRANSFER_OWNERSHIP_SUCCESS, handleUpdateOwner);
 };

@@ -1,10 +1,13 @@
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import {
   ChannelItemProps,
+  ChannelMember,
   ChannelMessageProps,
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  OwnerTransferReq,
+  OwnerTransferResp,
   UpdateLabelDto,
 } from '../../../typings/darkchat';
 import DarkchatService from './darkchat.service';
@@ -61,3 +64,27 @@ onNetPromise<UpdateLabelDto, void>(DarkchatEvents.UPDATE_CHANNEL_LABEL, async (r
     );
   });
 });
+
+onNetPromise<{ channelId: number }, void>(DarkchatEvents.DELETE_CHANNEL, async (reqObj, resp) => {
+  DarkchatService.deleteChannel(reqObj, resp).catch((err) => {
+    darkchatLogger.error(
+      `Error occurred in delete channel event (${reqObj.source}). Error: ${err.message}`,
+    );
+  });
+});
+
+onNetPromise<OwnerTransferReq, OwnerTransferResp>(
+  DarkchatEvents.TRANSFER_OWNERSHIP,
+  async (reqObj, resp) => {},
+);
+
+onNetPromise<{ channelId: number }, ChannelMember[]>(
+  DarkchatEvents.FETCH_MEMBERS,
+  async (reqObj, resp) => {
+    DarkchatService.handleGetMembers(reqObj, resp).catch((err) => {
+      darkchatLogger.error(
+        `Error occurred in delete channel event (${reqObj.source}). Error: ${err.message}`,
+      );
+    });
+  },
+);

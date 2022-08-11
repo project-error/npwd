@@ -1,4 +1,4 @@
-import { ChannelItemProps, ChannelMessageProps } from '@typings/darkchat';
+import { ChannelItemProps, ChannelMember, ChannelMessageProps } from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
 
 export const MockChannels: ChannelItemProps[] = [
@@ -22,6 +22,25 @@ export const MockChannels: ChannelItemProps[] = [
     identifier: '123',
     lastMessage: 'uh oh',
     owner: '111-1134',
+  },
+];
+
+export const MockChannelMembers: ChannelMember[] = [
+  {
+    phoneNumber: '23423',
+    identifier: 'sklfjsdklfd',
+    channelId: 2,
+  },
+  {
+    phoneNumber: '5534542324',
+    identifier: 'sdfaffsdf',
+    channelId: 2,
+  },
+  {
+    // me
+    phoneNumber: '111-1134',
+    identifier: 'iofjsdklafjdsfjklfjklas',
+    channelId: 2,
   },
 ];
 

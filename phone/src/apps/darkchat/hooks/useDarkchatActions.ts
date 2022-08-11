@@ -1,17 +1,29 @@
-import { darkChatState, useSetChannelsState, useSetDarkchatMessagesState } from '../state/state';
+import {
+  darkChatState,
+  useSetActiveDarkchatState,
+  useSetChannelsState,
+  useSetDarkchatMessagesState,
+} from '../state/state';
 import { useRecoilCallback } from 'recoil';
-import { ChannelItemProps, ChannelMessageProps, UpdateLabelDto } from '@typings/darkchat';
+import {
+  ChannelItemProps,
+  ChannelMessageProps,
+  OwnerTransferResp,
+  UpdateLabelDto,
+} from '@typings/darkchat';
 
 interface DarkchatActionsProps {
   addLocalChannel: (channel: ChannelItemProps) => void;
   addLocalMessage: (message: ChannelMessageProps) => void;
   leaveLocalChannel: (id: number) => void;
   updateLocalChannelLabel: (dto: UpdateLabelDto) => void;
+  localTransferOwner: (dto: OwnerTransferResp) => void;
 }
 
 export const useDarkchatActions = (): DarkchatActionsProps => {
   const setChannels = useSetChannelsState();
   const setMessages = useSetDarkchatMessagesState();
+  const setActiveChannel = useSetActiveDarkchatState();
 
   const addLocalChannel = useRecoilCallback<[ChannelItemProps], void>(
     ({ snapshot }) =>
@@ -66,10 +78,45 @@ export const useDarkchatActions = (): DarkchatActionsProps => {
       },
   );
 
+  const localTransferOwner = useRecoilCallback<[OwnerTransferResp], void>(
+    ({ snapshot }) =>
+      async (dto) => {
+        const { state } = await snapshot.getLoadable(darkChatState.channels);
+        if (state !== 'hasValue') return null;
+
+        setChannels((curVal) =>
+          [...curVal].map((channel) => {
+            if (dto.channelId === channel.id) {
+              return {
+                ...channel,
+                owner: dto.ownerPhoneNumber,
+              };
+            }
+
+            return channel;
+          }),
+        );
+
+        setActiveChannel((curVal) =>
+          [...curVal].map((channel) => {
+            if (dto.channelId === channel.id) {
+              return {
+                ...channel,
+                owner: dto.ownerPhoneNumber,
+              };
+            }
+
+            return channel;
+          }),
+        );
+      },
+  );
+
   return {
     addLocalChannel,
     addLocalMessage,
     leaveLocalChannel,
     updateLocalChannelLabel,
+    localTransferOwner,
   };
 };

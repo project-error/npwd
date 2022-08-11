@@ -1,7 +1,12 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ChannelItemProps, ChannelMessageProps, DarkchatEvents } from '@typings/darkchat';
+import {
+  ChannelItemProps,
+  ChannelMember,
+  ChannelMessageProps,
+  DarkchatEvents,
+} from '@typings/darkchat';
 import fetchNui from '@utils/fetchNui';
-import { MockChannels } from '../utils/constants';
+import { MockChannelMembers, MockChannels } from '../utils/constants';
 import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 
@@ -27,6 +32,27 @@ export const darkChatState = {
       },
     }),
   }),
+  members: atom<ChannelMember[]>({
+    key: 'darkchatMembers',
+    default: selector({
+      key: 'defaultDarkchatMembers',
+      get: async ({ get }) => {
+        const activeConversation = get(darkChatState.activeConversation);
+        try {
+          const res = await fetchNui<ServerPromiseResp<ChannelMember[]>>(
+            DarkchatEvents.FETCH_MEMBERS,
+            { channelId: activeConversation.id },
+            buildRespObj(MockChannelMembers),
+          );
+
+          return res.data;
+        } catch (err) {
+          console.error(err);
+          return [];
+        }
+      },
+    }),
+  }),
   darkChatMessages: atom<ChannelMessageProps[]>({
     key: 'darkChatMessages',
     default: [],
@@ -39,6 +65,10 @@ export const darkChatState = {
     key: 'darkChatShowUploadModal',
     default: false,
   }),
+  showOwnerModal: atom<boolean>({
+    key: 'darkChatShowOwnerModal',
+    default: false,
+  }),
   modalMedia: atom<string>({
     key: 'darkChatModalMedia',
     default: '',
@@ -48,10 +78,14 @@ export const darkChatState = {
 export const useChannelsValue = () => useRecoilValue(darkChatState.channels);
 export const useSetChannelsState = () => useSetRecoilState(darkChatState.channels);
 
-export const useActiveDarkchatValue = () => useRecoilValue(darkChatState.activeConversation);
+export const useActiveDarkchatValue = () =>
+  useRecoilValue<ChannelItemProps>(darkChatState.activeConversation);
 export const useSetActiveDarkchatState = () => useSetRecoilState(darkChatState.activeConversation);
 export const useActiveDarkchatState = () => useRecoilState(darkChatState.activeConversation);
 
-export const useDarkchatMessagesValue = () => useRecoilValue(darkChatState.darkChatMessages);
+export const useDarkchatMessagesValue = () =>
+  useRecoilValue<ChannelMessageProps[]>(darkChatState.darkChatMessages);
 export const useSetDarkchatMessagesState = () => useSetRecoilState(darkChatState.darkChatMessages);
 export const useDarkchatMessagesState = () => useRecoilState(darkChatState.darkChatMessages);
+
+export const useDarkchatMembersValue = () => useRecoilValue<ChannelMember[]>(darkChatState.members);

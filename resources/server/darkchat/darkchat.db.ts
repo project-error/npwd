@@ -3,7 +3,6 @@ import {
   ChannelItemProps,
   ChannelMember,
   ChannelMessageProps,
-  RawChannelMessageProps,
   UpdateLabelDto,
 } from '../../../typings/darkchat';
 import { ResultSetHeader } from 'mysql2';
@@ -11,13 +10,13 @@ import PlayerService from '../players/player.service';
 
 export class _DarkchatDB {
   async getAllChannels(userIdentifier: string): Promise<ChannelItemProps[]> {
-    const query = `SELECT darkchat_channels.id,
-                          darkchat_channels.channel_identifier AS identifier,
-                          darkchat_channels.label
-                   FROM darkchat_channels
-                            LEFT JOIN darkchat_channel_members
-                                      on darkchat_channels.id = darkchat_channel_members.channel_id
-                   WHERE darkchat_channel_members.user_identifier = ?`;
+    const query = `SELECT npwd_darkchat_channels.id,
+                          npwd_darkchat_channels.channel_identifier AS identifier,
+                          npwd_darkchat_channels.label
+                   FROM npwd_darkchat_channels
+                            LEFT JOIN npwd_darkchat_channel_members
+                                      on npwd_darkchat_channels.id = npwd_darkchat_channel_members.channel_id
+                   WHERE npwd_darkchat_channel_members.user_identifier = ?`;
 
     const [results] = await DbInterface._rawExec(query, [userIdentifier]);
 
@@ -36,12 +35,48 @@ export class _DarkchatDB {
     );
   }
 
+  async getMembers(channelId: number): Promise<ChannelMember[]> {
+    const query = `SELECT npwd_darkchat_channel_members.channel_id      AS channelId,
+                          npwd_darkchat_channel_members.is_owner        AS isOwner,
+                          npwd_darkchat_channel_members.user_identifier AS identifier
+                   FROM npwd_darkchat_channel_members
+                   WHERE channel_id = ?`;
+
+    const [results] = await DbInterface._rawExec(query, [channelId]);
+    const members = <ChannelMember[]>results;
+
+    return Promise.all(
+      members.map(async (member) => {
+        const player = await PlayerService.getPlayerFromIdentifier(member.identifier);
+
+        return {
+          ...member,
+          phoneNumber: player.getPhoneNumber(),
+        };
+      }),
+    );
+  }
+
+  async transferChannelOwnership(
+    oldOwnerIdentifier: string,
+    newOwnerIdentifier: string,
+    channelId: number,
+  ) {
+    const query = `UPDATE npwd_darkchat_channel_members
+                   SET is_owner = ?
+                   WHERE user_identifier = ?
+                     AND channel_id = ?`;
+
+    await DbInterface._rawExec(query, [0, oldOwnerIdentifier, channelId]);
+    await DbInterface._rawExec(query, [1, newOwnerIdentifier, channelId]);
+  }
+
   /*
    * Returns the identifier of the channel owner
    * */
   async getChannelOwner(channelId: number): Promise<string> {
     const query = `SELECT user_identifier
-                   FROM darkchat_channel_members
+                   FROM npwd_darkchat_channel_members
                    WHERE channel_id = ?
                      AND is_owner = 1`;
 
@@ -59,9 +94,9 @@ export class _DarkchatDB {
                           message,
                           user_identifier           AS identifier,
                           UNIX_TIMESTAMP(createdAt) AS createdAt,
-       										is_image                  AS type 
-                   FROM darkchat_messages
-                   WHERE darkchat_messages.channel_id = ?`;
+                          is_image                  AS type
+                   FROM npwd_darkchat_messages
+                   WHERE npwd_darkchat_messages.channel_id = ?`;
 
     const [results] = await DbInterface._rawExec(query, [channelId]);
     return <ChannelMessageProps[]>results;
@@ -69,7 +104,7 @@ export class _DarkchatDB {
 
   async getChannelIdAndLabel(channelIdentifier: string): Promise<{ id: number; label: string }> {
     const query = `SELECT id, label
-                   FROM darkchat_channels
+                   FROM npwd_darkchat_channels
                    WHERE channel_identifier = ?`;
     const [results] = await DbInterface._rawExec(query, [channelIdentifier]);
 
@@ -84,7 +119,7 @@ export class _DarkchatDB {
   ): Promise<number> {
     const { id: channelId } = await this.getChannelIdAndLabel(channelIdentifier);
 
-    const query = `INSERT INTO darkchat_channel_members (channel_id, user_identifier, is_owner)
+    const query = `INSERT INTO npwd_darkchat_channel_members (channel_id, user_identifier, is_owner)
                    VALUES (?, ?, ?)`;
 
     await DbInterface._rawExec(query, [channelId, userIdentifier, isOwner]);
@@ -93,7 +128,7 @@ export class _DarkchatDB {
   }
 
   async createChannel(channelIdentifier: string): Promise<number> {
-    const query = `INSERT INTO darkchat_channels (channel_identifier, label)
+    const query = `INSERT INTO npwd_darkchat_channels (channel_identifier, label)
                    VALUES (?, ?)`;
     const [results] = await DbInterface._rawExec(query, [channelIdentifier, channelIdentifier]);
 
@@ -104,7 +139,7 @@ export class _DarkchatDB {
 
   async doesChannelExist(channelIdentifier: string): Promise<boolean> {
     const query = `SELECT *
-                   FROM darkchat_channels
+                   FROM npwd_darkchat_channels
                    WHERE channel_identifier = ?`;
 
     const [results] = await DbInterface._rawExec(query, [channelIdentifier]);
@@ -118,8 +153,8 @@ export class _DarkchatDB {
                           message,
                           user_identifier           AS identifier,
                           UNIX_TIMESTAMP(createdAt) AS createdAt,
-       										is_image									AS type
-                   FROM darkchat_messages
+                          is_image                  AS type
+                   FROM npwd_darkchat_messages
                    WHERE channel_id = ?
                      AND id = ?`;
 
@@ -134,7 +169,7 @@ export class _DarkchatDB {
     message: string,
     is_image: boolean,
   ): Promise<ChannelMessageProps> {
-    const query = `INSERT INTO darkchat_messages (channel_id, message, user_identifier, is_image)
+    const query = `INSERT INTO npwd_darkchat_messages (channel_id, message, user_identifier, is_image)
                    VALUES (?, ?, ?, ?)`;
 
     const [results] = await DbInterface._rawExec(query, [
@@ -152,7 +187,7 @@ export class _DarkchatDB {
     const query = `SELECT channel_id      AS channelId,
                           user_identifier AS identifier,
                           is_owner        AS isOwner
-                   FROM darkchat_channel_members
+                   FROM npwd_darkchat_channel_members
                    WHERE channel_id = ?`;
 
     const [results] = await DbInterface._rawExec(query, [channelId]);
@@ -161,7 +196,7 @@ export class _DarkchatDB {
 
   async leaveChannel(channelId: number, userIdentifier: string): Promise<void> {
     const query = `DELETE
-                   FROM darkchat_channel_members
+                   FROM npwd_darkchat_channel_members
                    WHERE channel_id = ?
                      AND user_identifier = ?`;
 
@@ -169,11 +204,18 @@ export class _DarkchatDB {
   }
 
   async updateChannelLabel(dto: UpdateLabelDto): Promise<void> {
-    const query = `UPDATE darkchat_channels
+    const query = `UPDATE npwd_darkchat_channels
                    SET label = ?
                    WHERE id = ?`;
 
     await DbInterface._rawExec(query, [dto.label, dto.channelId]);
+  }
+
+  async deleteChannel(channelId: number): Promise<void> {
+    const query = `DELETE
+                   FROM npwd_darkchat_channels
+                   WHERE id = ?`;
+    await DbInterface._rawExec(query, [channelId]);
   }
 }
 

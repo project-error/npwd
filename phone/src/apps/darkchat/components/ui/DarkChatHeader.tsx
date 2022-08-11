@@ -10,6 +10,8 @@ import { useActiveDarkchatValue } from '../../state/state';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { TextField } from '@ui/components/Input';
+import { useModal } from '@apps/darkchat/hooks/useModal';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 interface HeaderProps {
   background: string;
@@ -31,6 +33,7 @@ const LeaveButton = styled(Button)(({ theme }) => ({
 const DarkChatHeader: React.FC = () => {
   const { backgroundColor } = useApp('DARKCHAT');
   const activeConversation = useActiveDarkchatValue();
+  const { setOwnerModal } = useModal();
   const { leaveChannel, updateChannelLabel } = useDarkchatAPI();
   const { goBack } = useHistory();
   const myPhoneNumber = useMyPhoneNumber();
@@ -40,6 +43,10 @@ const DarkChatHeader: React.FC = () => {
 
   const handleLeaveChannel = () => {
     leaveChannel(activeConversation.id);
+  };
+
+  const openOwnerModal = () => {
+    setOwnerModal(true);
   };
 
   const handleUpdateLabel = () => {
@@ -91,7 +98,13 @@ const DarkChatHeader: React.FC = () => {
         </Box>
       </Box>
       <Box pr={2}>
-        <LeaveButton onClick={handleLeaveChannel}>Leave</LeaveButton>
+        {isOwner ? (
+          <IconButton onClick={openOwnerModal}>
+            <AdminPanelSettingsIcon />
+          </IconButton>
+        ) : (
+          <LeaveButton onClick={handleLeaveChannel}>Leave</LeaveButton>
+        )}
       </Box>
     </Header>
   );

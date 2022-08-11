@@ -6,6 +6,8 @@ import {
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  OwnerTransferReq,
+  OwnerTransferResp,
   UpdateLabelDto,
 } from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
@@ -21,11 +23,17 @@ interface DarkchatAPIProps {
   fetchMessages: (conversationId: number) => void;
   sendMessage: (dto: MessageDTO) => void;
   updateChannelLabel: (dto: UpdateLabelDto) => void;
+  transferOwnership: (channelId: number, identifier: string, phoneNumber: string) => void;
 }
 
 export const useDarkchatAPI = (): DarkchatAPIProps => {
-  const { addLocalChannel, addLocalMessage, leaveLocalChannel, updateLocalChannelLabel } =
-    useDarkchatActions();
+  const {
+    addLocalChannel,
+    addLocalMessage,
+    leaveLocalChannel,
+    updateLocalChannelLabel,
+    localTransferOwner,
+  } = useDarkchatActions();
   const history = useHistory();
   const setMessages = useSetDarkchatMessagesState();
   const { addAlert } = useSnackbar();
@@ -60,6 +68,27 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
 
       leaveLocalChannel(id);
       history.goBack();
+    });
+  };
+
+  const transferOwnership = (channelId: number, identifier: string, phoneNumber: string) => {
+    fetchNui<ServerPromiseResp<OwnerTransferResp>, OwnerTransferReq>(
+      DarkchatEvents.TRANSFER_OWNERSHIP,
+      {
+        userIdentifier: identifier,
+        channelId,
+        newOwnerPhoneNumber: phoneNumber,
+      },
+    ).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.TRANSFER_OWNERSHIP_FAILED'),
+        });
+      }
+
+      localTransferOwner(resp.data);
+      history.push('/darkchat');
     });
   };
 
@@ -112,5 +141,12 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     );
   };
 
-  return { addChannel, fetchMessages, sendMessage, leaveChannel, updateChannelLabel };
+  return {
+    addChannel,
+    fetchMessages,
+    sendMessage,
+    leaveChannel,
+    updateChannelLabel,
+    transferOwnership,
+  };
 };

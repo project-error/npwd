@@ -1,10 +1,13 @@
 import DarkchatDB, { _DarkchatDB } from './darkchat.db';
 import {
   ChannelItemProps,
+  ChannelMember,
   ChannelMessageProps,
   DarkchatEvents,
   JoinChannelDTO,
   MessageDTO,
+  OwnerTransferReq,
+  OwnerTransferResp,
   UpdateLabelDto,
 } from '../../../typings/darkchat';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
@@ -30,6 +33,58 @@ class _DarkchatService {
       resp({ status: 'ok', data: channels });
     } catch (err) {
       darkchatLogger.error(`Failed to fetch channels. Error: ${err.message}`);
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+    }
+  }
+
+  async handleGetMembers(
+    reqObj: PromiseRequest<{ channelId: number }>,
+    resp: PromiseEventResp<ChannelMember[]>,
+  ): Promise<void> {
+    try {
+      const members = await this.darkchatDB.getMembers(reqObj.data.channelId);
+
+      resp({ status: 'ok', data: members });
+    } catch (err) {
+      darkchatLogger.error(`Failed to fetch members. Error: ${err.message}`);
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+    }
+  }
+
+  async handleTransferOwnership(
+    reqObj: PromiseRequest<OwnerTransferReq>,
+    resp: PromiseEventResp<OwnerTransferResp>,
+  ) {
+    // the current owner
+    const ownerIdentifier = PlayerService.getIdentifier(reqObj.source);
+    try {
+      await this.darkchatDB.transferChannelOwnership(
+        ownerIdentifier,
+        reqObj.data.userIdentifier,
+        reqObj.data.channelId,
+      );
+
+      resp({
+        status: 'ok',
+        data: {
+          ownerPhoneNumber: reqObj.data.newOwnerPhoneNumber,
+          channelId: reqObj.data.channelId,
+        },
+      });
+
+      const newOwnerPlayer = PlayerService.getPlayerFromIdentifier(reqObj.data.userIdentifier);
+      if (newOwnerPlayer) {
+        emitNetTyped<OwnerTransferResp>(
+          DarkchatEvents.TRANSFER_OWNERSHIP_SUCCESS,
+          {
+            ownerPhoneNumber: reqObj.data.newOwnerPhoneNumber,
+            channelId: reqObj.data.channelId,
+          },
+          newOwnerPlayer.source,
+        );
+      }
+    } catch (err) {
+      darkchatLogger.error(`Failed to transfer ownership. Error: ${err.message}`);
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
@@ -199,6 +254,26 @@ class _DarkchatService {
       }
     } catch (err) {
       darkchatLogger.error(`Failed to update channel label. Error: ${err.message}`);
+      resp({ status: 'error', errorMsg: err.message });
+    }
+  }
+
+  async deleteChannel(
+    reqObj: PromiseRequest<{ channelId: number }>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const userIdentifier = PlayerService.getIdentifier(reqObj.source);
+
+    try {
+      const owner = await this.darkchatDB.getChannelOwner(reqObj.data.channelId);
+      if (owner === userIdentifier) {
+        await this.darkchatDB.deleteChannel(reqObj.data.channelId);
+        return resp({ status: 'ok' });
+      }
+
+      return resp({ status: 'error', errorMsg: 'NOT_OWNER' });
+    } catch (err) {
+      darkchatLogger.error(`Failed to delete channel. Error: ${err.message}`);
       resp({ status: 'error', errorMsg: err.message });
     }
   }

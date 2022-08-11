@@ -37,9 +37,21 @@ export type MessageDTO = {
 };
 
 export type ChannelMember = {
-  isOwner: boolean;
-  channelId: string;
+  isOwner?: boolean;
+  channelId: number;
   identifier: string;
+  phoneNumber?: string;
+};
+
+export type OwnerTransferReq = {
+  userIdentifier: string;
+  channelId: number;
+  newOwnerPhoneNumber;
+};
+
+export type OwnerTransferResp = {
+  ownerPhoneNumber: string;
+  channelId: number;
 };
 
 export type UpdateLabelDto = {
@@ -50,6 +62,10 @@ export type UpdateLabelDto = {
 export enum DarkchatEvents {
   ADD_CHANNEL = 'npwd:darkchatAddChannel',
   LEAVE_CHANNEL = 'npwd:darkchatLeaveChannel',
+  DELETE_CHANNEL = 'npwd:darkchatDeleteChannel',
+  FETCH_MEMBERS = 'npwd:darkchatFetchMembers',
+  TRANSFER_OWNERSHIP = 'npwd:darkchatTransferOwnership',
+  TRANSFER_OWNERSHIP_SUCCESS = 'npwd:darkchatTransferOwnershipSuccess',
   FETCH_MESSAGES = 'npwd:darkchatFetchMessages',
   FETCH_CHANNELS = 'npwd:darkchatFetchChannels',
   BROADCAST_MESSAGE = 'npwd:darkchatBroadcastMessage',
