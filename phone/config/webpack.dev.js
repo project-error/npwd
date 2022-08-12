@@ -9,7 +9,6 @@ const externalApps = require('../../config.apps');
 
 const ingame = Boolean(process.env.APP_IN_GAME);
 const remotes = ({ mode }) => {
-  console.log('TOTAL REMOTES', Object.keys(externalApps).length);
   if (Object.keys(externalApps).length === 0) return {};
 
   return Object.keys(externalApps).reduce((prev, key) => {
