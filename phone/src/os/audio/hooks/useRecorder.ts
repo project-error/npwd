@@ -8,7 +8,6 @@ type RecordingState = {
 
 interface RecorderProps {
   audio: string | null;
-  audioElement: HTMLAudioElement;
   recordingState: RecordingState;
   startRecording: () => Promise<void>;
   stopRecording: () => void;
@@ -22,7 +21,6 @@ export const useRecorder = (): RecorderProps => {
   });
   const [audio, setAudio] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement>(null);
 
   const startRecording = async (): Promise<void> => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -76,9 +74,6 @@ export const useRecorder = (): RecorderProps => {
 
         setAudio(blob_url);
         setAudioBlob(blob);
-
-        const audioEl = new Audio(blob_url);
-        setAudioElement(audioEl);
       };
     }
 
@@ -91,7 +86,6 @@ export const useRecorder = (): RecorderProps => {
 
   return {
     audio,
-    audioElement,
     recordingState,
     startRecording,
     stopRecording,

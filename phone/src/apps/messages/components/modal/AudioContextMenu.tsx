@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Button, ButtonGroup, Fade, IconButton, Paper, Tooltip } from '@mui/material';
+import { Box, Button, ButtonGroup, IconButton, Paper, Tooltip } from '@mui/material';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CloseIcon from '@mui/icons-material/Close';
 import StopIcon from '@mui/icons-material/Stop';
@@ -29,18 +29,21 @@ interface InteractButtonsProps {
 }
 
 const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const { audio: recordedAudio, recordingState, startRecording, stopRecording } = useRecorder();
+  const audioRef = useRef(new Audio());
+  const { duration } = audioRef.current;
 
-  const {
-    audio: recordedAudio,
-    recordingState,
-    startRecording,
-    stopRecording,
-    audioElement,
-  } = useRecorder();
-  const { playing, play, pause } = useAudioPlayer(audioElement);
+  const play = async () => {
+    await audioRef.current.play();
+    setPlaying(true);
+  };
 
-  const [duration, setDuration] = useState<number>(null);
+  const pause = () => {
+    audioRef.current.pause();
+    setPlaying(false);
+  };
 
   const handleStartRecord = async () => {
     await startRecording();
@@ -53,10 +56,17 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
   };
 
   useEffect(() => {
-    audioElement.onloadeddata = () => {
-      console.log('duration', audioElement.duration);
-    };
-  }, [audioElement, recordedAudio, recordingState]);
+    audioRef.current.src = recordedAudio;
+    console.log(recordedAudio);
+  }, [recordedAudio]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.ontimeupdate = (e) => {
+        setCurrentTime(Math.trunc(audioRef.current.currentTime));
+      };
+    }
+  });
 
   return (
     <Paper variant="outlined">
@@ -72,7 +82,16 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
             />
           )}
         </Box>
-        <Box></Box>
+        {recordedAudio && !isNaN(duration) ? (
+          <Box>
+            <p>
+              {dayjs.duration(currentTime * 1000).format('mm:ss')} -{' '}
+              {dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')}
+            </p>
+          </Box>
+        ) : (
+          <p>Loading</p>
+        )}
         <Box pt={1} pb={1}>
           <Button
             disabled={recordingState.isRecording}
