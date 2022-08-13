@@ -6,6 +6,8 @@ import { useCustomEvent } from '@os/events/useCustomEvents';
 import { QuestionMark } from '@mui/icons-material';
 
 import externalApps from '../../../../config.apps';
+import { createTheme } from '@mui/material';
+import { deepMergeObjects } from '@shared/deepMergeObjects';
 
 const InvalidAppConfig = (id: string): IApp => ({
   id,
@@ -39,11 +41,15 @@ const useExternalAppsAction = () => {
 
       config.icon = React.createElement(config.icon);
 
-      config.Route = (props: object) => (
-        <Route path={config.path}>
-          <config.Component {...props} />
-        </Route>
-      );
+      config.Route = (props: object) => {
+        const appTheme = createTheme(deepMergeObjects(props.theme, config.theme));
+        const newProps = { ...props, theme: appTheme };
+        return (
+          <Route path={config.path}>
+            <config.Component {...newProps} />
+          </Route>
+        );
+      };
 
       return config;
     } catch (error: unknown) {
