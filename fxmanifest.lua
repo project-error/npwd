@@ -2,7 +2,7 @@ fx_version "cerulean"
 game "gta5"
 description 'js runtime monkaW'
 authors { "itschip",  "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw"}
-version '1.4.1'
+version '1.4.2'
 
 client_scripts {
     'resources/dist/client/client.js',
