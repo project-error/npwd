@@ -56,15 +56,23 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
             />
           )}
         </Box>
-        {recordedAudio && !isNaN(duration) ? (
+        {!recordedAudio ? (
+          <p>Record voice message</p>
+        ) : recordingState.isRecording ? (
+          <p>Recording...</p>
+        ) : recordedAudio && !isNaN(duration) ? (
           <Box>
             <p>
               {dayjs.duration(currentTime * 1000).format('mm:ss')} -{' '}
-              {dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')}
+              {isNaN(duration) ? (
+                <p>Loading duration...</p>
+              ) : (
+                dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')
+              )}
             </p>
           </Box>
         ) : (
-          <p>Loading</p>
+          <p>Click to play voice message</p>
         )}
         <Box pt={1} pb={1}>
           <Button

@@ -34,7 +34,7 @@ export const useAudioPlayer = (audioSrc: string): AudioPlayerProps => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.ontimeupdate = (e) => {
+      audioRef.current.ontimeupdate = () => {
         // we need to trunc becuase dayjs does not like decimals
         setCurrentTime(Math.trunc(audioRef.current.currentTime));
       };

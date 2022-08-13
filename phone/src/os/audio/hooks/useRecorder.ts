@@ -17,7 +17,7 @@ export const useRecorder = (): RecorderProps => {
   const [recordingState, setRecordingState] = useState<RecordingState>({
     mediaStream: null,
     recorder: null,
-    isRecording: null,
+    isRecording: false,
   });
   const [audio, setAudio] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
