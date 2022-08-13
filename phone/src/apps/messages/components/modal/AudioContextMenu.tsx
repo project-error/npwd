@@ -29,21 +29,8 @@ interface InteractButtonsProps {
 }
 
 const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
-  const [playing, setPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
   const { audio: recordedAudio, recordingState, startRecording, stopRecording } = useRecorder();
-  const audioRef = useRef(new Audio());
-  const { duration } = audioRef.current;
-
-  const play = async () => {
-    await audioRef.current.play();
-    setPlaying(true);
-  };
-
-  const pause = () => {
-    audioRef.current.pause();
-    setPlaying(false);
-  };
+  const { currentTime, duration, playing, play, pause } = useAudioPlayer(recordedAudio);
 
   const handleStartRecord = async () => {
     await startRecording();
@@ -54,19 +41,6 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     // Do want to create a audioRef from useRecorder, or do it all here?
     stopRecording();
   };
-
-  useEffect(() => {
-    audioRef.current.src = recordedAudio;
-    console.log(recordedAudio);
-  }, [recordedAudio]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.ontimeupdate = (e) => {
-        setCurrentTime(Math.trunc(audioRef.current.currentTime));
-      };
-    }
-  });
 
   return (
     <Paper variant="outlined">
