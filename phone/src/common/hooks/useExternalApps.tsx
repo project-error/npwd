@@ -35,7 +35,8 @@ const useExternalAppsAction = () => {
   ): Promise<IApp> => {
     try {
       const rawConfig = (await importStatement()).default;
-      if (!rawConfig) return null;
+      console.log('what is rawConfig', rawConfig);
+      if (typeof rawConfig === 'object') return;
       const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
 
       config.Component = (props: object) => React.createElement(config.app, props);
@@ -61,12 +62,11 @@ const useExternalAppsAction = () => {
 
   const getConfigs = async (externalApps: Record<string, CallableFunction>) => {
     const configs = await Promise.all(
-      Object.entries(externalApps)
-        .filter(([k, v]) => !v)
-        .map(async ([key, value]) => {
-          const app = await generateAppConfig(value, key);
-          return app;
-        }),
+      Object.entries(externalApps).map(async ([key, value]) => {
+        const app = await generateAppConfig(value, key);
+        if (!app) return null;
+        return app;
+      }),
     );
 
     return configs;
@@ -109,5 +109,5 @@ export const useExternalApps = () => {
     getConfigs(externalApps).then(setApps);
   }, []);
 
-  return apps;
+  return apps.filter((app) => app);
 };
