@@ -4,7 +4,7 @@ import { Box, IconButton, Slide } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useNotifications } from '../hooks/useNotifications';
 import { Alert, AlertTitle } from '@mui/material';
-import { useCurrentCall } from '@os/call/hooks/state';
+import { useCurrentCallValue } from '@os/call/hooks/state';
 
 const useStyles = makeStyles((theme) => ({
   snackbar: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationAlert = () => {
   const classes = useStyles();
   const { currentAlert } = useNotifications();
-  const call = useCurrentCall();
+  const call = useCurrentCallValue();
 
   return (
     <div className={classes.snackbar}>
