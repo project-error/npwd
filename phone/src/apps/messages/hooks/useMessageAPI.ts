@@ -7,6 +7,7 @@ import {
   PreDBConversation,
   PreDBMessage,
   RemoveGroupMemberRequest,
+  AddGroupMemberRequest,
 } from '@typings/messages';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
@@ -40,6 +41,12 @@ type UseMessageAPIProps = {
   ) => void;
   leaveGroup: (conversationList: string, conversationId: number, phoneNumber: string) => void;
   makeGroupOwner: (conversationId: number, phoneNumber: string) => void;
+  addGroupMembers: (
+    conversationId: number,
+    phoneNumbers: string[],
+    myNumber: string,
+    conversationList: string,
+  ) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -53,6 +60,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     removeLocalGroupMember,
     setMessageReadState,
     updateLocalGroupOwner,
+    addLocalConversationParticipants,
   } = useMessageActions();
   const history = useHistory();
   const { state: messageConversationsState, contents: messageConversationsContents } =
@@ -335,6 +343,43 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     [addAlert, removeLocalGroupMember, sendSystemMessage, t],
   );
 
+  const addGroupMembers = useCallback(
+    (
+      conversationId: number,
+      phoneNumbers: string[],
+      myNumber: string,
+      conversationList: string,
+    ) => {
+      fetchNui<ServerPromiseResp<ConversationListResponse>, AddGroupMemberRequest>(
+        MessageEvents.ADD_GROUP_MEMBER,
+        {
+          phoneNumbers,
+          conversationId,
+          conversationList,
+        },
+      ).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.ADD_GROUP_MEMBER_FAILED'),
+            type: 'error',
+          });
+        }
+        addLocalConversationParticipants(conversationId, resp.data.conversationList);
+        phoneNumbers.forEach((phoneNumber) => {
+          sendSystemMessage({
+            conversationId: conversationId,
+            conversationList: resp.data.conversationList,
+            tgtPhoneNumber: '',
+            is_system: true,
+            system_number: phoneNumber,
+            system_type: 'add',
+          });
+        });
+      });
+    },
+    [addAlert, addLocalConversationParticipants, sendSystemMessage, t],
+  );
+
   const leaveGroup = useCallback(
     (conversationList: string, conversationId: number, phoneNumber: string) => {
       fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_GROUP_MEMBER, {
@@ -377,5 +422,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     leaveGroup,
     sendSystemMessage,
     makeGroupOwner,
+    addGroupMembers,
   };
 };

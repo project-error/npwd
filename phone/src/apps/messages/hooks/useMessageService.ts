@@ -5,6 +5,7 @@ import {
   MessageConversation,
   MessageEvents,
   RemoveGroupMemberResponse,
+  AddGroupMemberResponse,
 } from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
@@ -20,6 +21,7 @@ export const useMessagesService = () => {
     removeLocalConversation,
     removeLocalGroupMember,
     updateLocalGroupOwner,
+    addLocalConversationParticipants,
   } = useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
@@ -61,8 +63,8 @@ export const useMessagesService = () => {
   );
 
   const handleDeleteConversation = useCallback(
-    (conversationId: number[]) => {
-      removeLocalConversation(conversationId);
+    (conversationsId: number[]) => {
+      removeLocalConversation(conversationsId);
     },
     [removeLocalConversation],
   );
@@ -81,10 +83,18 @@ export const useMessagesService = () => {
     [updateLocalGroupOwner],
   );
 
+  const updateParticipantList = useCallback(
+    (conversation: AddGroupMemberResponse) => {
+      addLocalConversationParticipants(conversation.conversationId, conversation.conversationList);
+    },
+    [addLocalConversationParticipants],
+  );
+
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
   useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
   useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
   useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
   useNuiEvent('MESSAGES', MessageEvents.UPDATE_GROUP_OWNER, updateGroupOwner);
+  useNuiEvent('MESSAGES', MessageEvents.UPDATE_PARTICIPANT_LIST, updateParticipantList);
 };

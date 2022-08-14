@@ -19,6 +19,9 @@ import { MessageConversation } from '@typings/messages';
 import { SearchField } from '@ui/components/SearchField';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import GroupMemberInfo from './GroupMemberInfo';
+import AddParticipantModal from './AddParticipantModal';
+import Backdrop from '@ui/components/Backdrop';
+import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +80,7 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   const groupAmount = conversation.conversationList.split('+').length;
   const myPhoneNumber = useMyPhoneNumber();
   const { getContactByNumber } = useContactActions();
+  const { addGroupMembers } = useMessageAPI();
   const [inputVal, setInputVal] = useState('');
 
   const [participants, setParticipants] = useState(
@@ -104,6 +108,16 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
     setParticipants(participants.filter((participant) => participant !== number));
   };
 
+  const handleAddGroupMembers = (selectedParticipants: string[]) => {
+    setParticipants([...participants, ...selectedParticipants]);
+    addGroupMembers(
+      conversation.id,
+      selectedParticipants,
+      myPhoneNumber,
+      conversation.conversationList,
+    );
+  };
+
   const closeGroupSettings = () => {
     setInputVal(null);
     setSelectedMember('');
@@ -114,6 +128,8 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
   const [selectedMember, setSelectedMember] = useState('');
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const selectMember = (member: string) => {
     setSelectedMember(member);
@@ -129,6 +145,14 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
   return (
     <Slide direction="left" in={open}>
       <Paper className={classes.root} square>
+        <AddParticipantModal
+          open={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(!isAddModalOpen)}
+          participants={participants}
+          myPhoneNumber={myPhoneNumber}
+          handleAddGroupMembers={handleAddGroupMembers}
+        />
+        {isAddModalOpen && <Backdrop />}
         <GroupMemberInfo
           open={isOptionsModalOpen}
           onClose={closeOptionsModal}
@@ -203,7 +227,12 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
         </div>
         <div className={classes.buttons}>
           {isGroupOwner && (
-            <Button size="medium" variant="outlined" disabled={isOptionsModalOpen}>
+            <Button
+              size="medium"
+              variant="outlined"
+              disabled={isOptionsModalOpen}
+              onClick={() => setIsAddModalOpen(!isAddModalOpen)}
+            >
               Add Participant
             </Button>
           )}

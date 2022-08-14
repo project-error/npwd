@@ -77,7 +77,16 @@ const GroupMemberInfo: React.FC<GroupDetailsModalProps> = ({
         hide: !isGroupOwner,
       },
     ],
-    [isGroupOwner, contact, messageContact, participant, initializeCall, addContact, removeMember],
+    [
+      isGroupOwner,
+      contact,
+      makeOwner,
+      participant,
+      addContact,
+      messageContact,
+      initializeCall,
+      removeMember,
+    ],
   );
 
   return <ContextMenu open={open} onClose={onClose} options={menuOptions} marginBottom={true} />;

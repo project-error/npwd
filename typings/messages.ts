@@ -70,12 +70,23 @@ export interface RemoveGroupMemberRequest {
   leaveGroup: boolean;
 }
 
+export interface AddGroupMemberRequest {
+  phoneNumbers: string[];
+  conversationId: number;
+  conversationList: string;
+}
+
 export interface MakeGroupOwner {
   conversationId: number;
   phoneNumber: string;
 }
 
 export interface ConversationListResponse {
+  conversationList: string;
+}
+
+export interface AddGroupMemberResponse {
+  conversationId: number;
   conversationList: string;
 }
 
@@ -187,8 +198,10 @@ export enum MessageEvents {
   DELETE_GROUP_MEMBER = 'nwpd:deleteGroupMember',
   DELETE_GROUP_MEMBER_CONVERSATION = 'nwpd:deleteGroupMemberChat',
   DELETE_GROUP_MEMBER_LIST = 'nwpd:deleteGroupMemberList',
+  ADD_GROUP_MEMBER = 'nwpd:addGroupMember',
   MAKE_GROUP_OWNER = 'npwd:makeGroupOwner',
   UPDATE_GROUP_OWNER = 'npwd:makeGroupOwnerSuccess',
+  UPDATE_PARTICIPANT_LIST = 'npwd:updateParticipantList',
 }
 
 export interface Location {

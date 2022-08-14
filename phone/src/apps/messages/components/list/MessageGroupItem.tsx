@@ -7,8 +7,6 @@ import {
   Avatar as MuiAvatar,
   Badge,
   ListItemIcon,
-  Box,
-  Grid,
 } from '@mui/material';
 
 import { MessageConversation } from '@typings/messages';

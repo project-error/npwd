@@ -48,9 +48,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 5,
     maxWidth: '80%',
     height: 'auto',
-    background: '#282828', //should by theme shit here for dark/light mode
-    color: '#ddd', //should by theme shit here for dark/light mode
-    border: '0px',
+    background: theme.palette.background.default,
+    color: theme.palette.text.secondary,
     borderRadius: '8px',
     display: 'flex',
     justifyContent: 'center',

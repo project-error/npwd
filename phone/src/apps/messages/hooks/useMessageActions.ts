@@ -21,6 +21,7 @@ interface MessageActionProps {
   getConversationParticipant: (conversationList: string) => Contact | null;
   removeLocalGroupMember: (conversationId: number, phoneNumber: string) => void;
   updateLocalGroupOwner: (conversationId: number, phoneNumber: string) => void;
+  addLocalConversationParticipants: (conversationId: number, conversationList: string) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -83,9 +84,7 @@ export const useMessageActions = (): MessageActionProps => {
   const removeLocalConversation = useCallback(
     (conversationsId: number[]) => {
       if (conversationLoading !== 'hasValue') return;
-
       if (!conversations.length) return;
-
       setMessageConversation((curVal) =>
         [...curVal].filter((conversation) => !conversationsId.includes(conversation.id)),
       );
@@ -172,6 +171,23 @@ export const useMessageActions = (): MessageActionProps => {
     [getContactByNumber, myPhoneNumber],
   );
 
+  const addLocalConversationParticipants = useCallback(
+    (conversationId: number, conversationList: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationId) {
+            return {
+              ...conversation,
+              conversationList: conversationList,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
+  );
+
   return {
     updateLocalConversations,
     removeLocalConversation,
@@ -182,5 +198,6 @@ export const useMessageActions = (): MessageActionProps => {
     getConversationParticipant,
     removeLocalGroupMember,
     updateLocalGroupOwner,
+    addLocalConversationParticipants,
   };
 };

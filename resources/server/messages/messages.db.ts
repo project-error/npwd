@@ -115,6 +115,11 @@ export class _MessagesDB {
     return conversationId;
   }
 
+  async updateConversationList(conversationId: number, conversationList: string) {
+    const conversationQuery = `UPDATE npwd_messages_conversations SET conversation_list = ? WHERE id = ?`;
+    await DbInterface._rawExec(conversationQuery, [conversationList, conversationId]);
+  }
+
   async createMessage(dto: CreateMessageDTO): Promise<Message> {
     const query = `INSERT INTO npwd_messages (message, user_identifier, conversation_id, author, is_embed, embed, is_system, system_type, system_number)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;

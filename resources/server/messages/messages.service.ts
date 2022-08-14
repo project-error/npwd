@@ -19,6 +19,8 @@ import {
   RemoveGroupMemberResponse,
   ConversationListResponse,
   MakeGroupOwner,
+  AddGroupMemberRequest,
+  AddGroupMemberResponse,
 } from '../../../typings/messages';
 import PlayerService from '../players/player.service';
 import { emitNetTyped } from '../utils/miscUtils';
@@ -298,6 +300,82 @@ class _MessagesService {
     }
   }
 
+  async handleAddGroupMember(
+    reqObj: PromiseRequest<AddGroupMemberRequest>,
+    resp: PromiseEventResp<ConversationListResponse>,
+  ) {
+    const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    const groupOwner = await this.messagesDB.getGroupOwner(reqObj.data.conversationId);
+
+    if (groupOwner !== phoneNumber) {
+      messagesLogger.error(`User does not own group. Error`);
+      return resp({ status: 'error' });
+    }
+
+    try {
+      const updatedConversationList = reqObj.data.conversationList
+        .split('+')
+        .concat(reqObj.data.phoneNumbers)
+        .join('+');
+
+      await this.messagesDB.updateConversationList(
+        reqObj.data.conversationId,
+        updatedConversationList,
+      );
+      reqObj.data.phoneNumbers.forEach(async (phoneNumber) => {
+        await this.messagesDB.addParticipantToConversation(updatedConversationList, phoneNumber);
+      });
+
+      resp({ status: 'ok', data: { conversationList: updatedConversationList } });
+
+      const playerPhoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+      const participants = reqObj.data.conversationList.split('+');
+
+      const conversationData = await this.messagesDB.getConversation(reqObj.data.conversationId);
+
+      for (const participant of participants) {
+        if (participant === playerPhoneNumber) {
+          // Don't send to self
+          continue;
+        }
+
+        const participantIdentifier = await PlayerService.getIdentifierByPhoneNumber(participant);
+        const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
+
+        if (!participantPlayer) {
+          //if not online, move to next player
+          continue;
+        }
+
+        //if this is the member already in the conversation
+        if (!reqObj.data.phoneNumbers.includes(participant)) {
+          emitNetTyped<AddGroupMemberResponse>(
+            MessageEvents.UPDATE_PARTICIPANT_LIST,
+            {
+              conversationId: reqObj.data.conversationId,
+              conversationList: updatedConversationList,
+            },
+            participantPlayer.source,
+          );
+        }
+
+        //if this is the new member being added
+        if (reqObj.data.phoneNumbers.includes(participant)) {
+          emitNetTyped<MessageConversation>(
+            MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
+            {
+              ...conversationData,
+            },
+            participantPlayer.source,
+          );
+        }
+      }
+    } catch (err) {
+      messagesLogger.error(`Failed to remove from group. Error: ${err.message}`);
+      resp({ status: 'error' });
+    }
+  }
+
   async handleRemoveGroupMember(
     reqObj: PromiseRequest<RemoveGroupMemberRequest>,
     resp: PromiseEventResp<ConversationListResponse>,
@@ -354,7 +432,7 @@ class _MessagesService {
       }
 
       for (const participant of participants) {
-        if (!reqObj.data.leaveGroup || participant === playerPhoneNumber) {
+        if (!reqObj.data.leaveGroup && participant === playerPhoneNumber) {
           //if not leave group (kick) and the participant is the person kicking then move to next player as he already has updated data
           continue;
         }
@@ -369,10 +447,10 @@ class _MessagesService {
 
         if (!reqObj.data.leaveGroup && participant === reqObj.data.phoneNumber) {
           //if not leave group/leave themself and participant is equal to nubmer remove then remove the chat from their list
-          emitNetTyped(
+          emitNetTyped<{ conversationsId: number[] }>(
             MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION,
             {
-              conversationID: [reqObj.data.conversationId],
+              conversationsId: [reqObj.data.conversationId],
             },
             participantPlayer.source,
           );

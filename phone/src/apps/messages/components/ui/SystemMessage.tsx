@@ -2,8 +2,10 @@ import { Message } from '@typings/messages';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import React from 'react';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const SystemMessage = ({ message, myNumber }: { message: Message; myNumber: string }) => {
+  const [t] = useTranslation();
   const { getContactByNumber } = useContactActions();
   const getContact = (number: string) => {
     if (number === myNumber) {
@@ -16,16 +18,18 @@ const SystemMessage = ({ message, myNumber }: { message: Message; myNumber: stri
   return (
     <>
       {message.system_type === 'add' ? (
-        <Typography fontSize={14}>{`${getContact(message.author)} added ${getContact(
-          message.system_number,
-        )}`}</Typography>
+        <Typography fontSize={14}>{`${getContact(message.author)} ${t(
+          'MESSAGES.SYSTEM_MESSAGES.ADDED',
+        )} ${getContact(message.system_number)}`}</Typography>
       ) : message.system_type === 'remove' ? (
-        <Typography fontSize={14}>{`${getContact(message.author)} removed ${getContact(
-          message.system_number,
-        )}`}</Typography>
+        <Typography fontSize={14}>{`${getContact(message.author)} ${t(
+          'MESSAGES.SYSTEM_MESSAGES.REMOVED',
+        )} ${getContact(message.system_number)}`}</Typography>
       ) : (
         message.system_type === 'leave' && (
-          <Typography fontSize={14}>{`${getContact(message.author)} left`}</Typography>
+          <Typography fontSize={14}>{`${getContact(message.author)} ${t(
+            'MESSAGES.SYSTEM_MESSAGES.LEFT',
+          )}`}</Typography>
         )
       )}
     </>

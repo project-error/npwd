@@ -9,6 +9,7 @@ import {
   PreDBConversation,
   PreDBMessage,
   RemoveGroupMemberRequest,
+  AddGroupMemberRequest,
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
@@ -123,6 +124,18 @@ onNetPromise<RemoveGroupMemberRequest, ConversationListResponse>(
     MessagesService.handleRemoveGroupMember(reqObj, resp).catch((e) => {
       messagesLogger.error(
         `Error occurred while removing a group member (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
+
+onNetPromise<AddGroupMemberRequest, ConversationListResponse>(
+  MessageEvents.ADD_GROUP_MEMBER,
+  async (reqObj, resp) => {
+    MessagesService.handleAddGroupMember(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred while adding group members (${reqObj.source}), Error: ${e.message}`,
       );
       resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
