@@ -9,6 +9,8 @@ import { useRecorder } from '@os/audio/hooks/useRecorder';
 import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import SendIcon from '@mui/icons-material/Send';
+import { useAudioMessageAPI } from '@apps/messages/hooks/useAudioMessageAPI';
 
 dayjs.extend(duration);
 
@@ -29,8 +31,16 @@ interface InteractButtonsProps {
 }
 
 const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
-  const { audio: recordedAudio, recordingState, startRecording, stopRecording } = useRecorder();
+  const {
+    blob,
+    audio: recordedAudio,
+    recordingState,
+    startRecording,
+    stopRecording,
+  } = useRecorder();
   const { currentTime, duration, playing, play, pause } = useAudioPlayer(recordedAudio);
+  const { uploadRecording } = useAudioMessageAPI();
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const handleStartRecord = async () => {
     await startRecording();
@@ -40,6 +50,18 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     // Maybe try to get the duration here, maybe even create a timeout
     // Do want to create a audioRef from useRecorder, or do it all here?
     stopRecording();
+  };
+
+  const handleSendRecording = async () => {
+    try {
+      if (!blob) return;
+      setIsSending(true);
+      await uploadRecording(blob);
+      onClose();
+    } catch (err) {
+      setIsSending(false);
+      console.error(err);
+    }
   };
 
   return (
@@ -64,7 +86,7 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
           <Box>
             <p>
               {dayjs.duration(currentTime * 1000).format('mm:ss')} -{' '}
-              {isNaN(duration) ? (
+              {duration === Infinity ? (
                 <p>Loading duration...</p>
               ) : (
                 dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')
@@ -75,14 +97,14 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
           <p>Click to play voice message</p>
         )}
         <Box pt={1} pb={1}>
-          <Button
-            disabled={recordingState.isRecording}
-            variant="text"
-            size="small"
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </Button>
+          {!recordingState.isRecording && recordedAudio && blob && (
+            <IconButton onClick={handleSendRecording} size="small">
+              <SendIcon color="primary" />
+            </IconButton>
+          )}
+          <IconButton disabled={recordingState.isRecording} size="small" onClick={onClose}>
+            <CloseIcon color="error" />
+          </IconButton>
         </Box>
       </Box>
     </Paper>

@@ -7,6 +7,7 @@ type RecordingState = {
 };
 
 interface RecorderProps {
+  blob: Blob | null;
   audio: string | null;
   recordingState: RecordingState;
   startRecording: () => Promise<void>;
@@ -86,6 +87,7 @@ export const useRecorder = (): RecorderProps => {
 
   return {
     audio,
+    blob: audioBlob,
     recordingState,
     startRecording,
     stopRecording,

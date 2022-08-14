@@ -12,7 +12,7 @@ export const useAudioPlayer = (audioSrc: string): AudioPlayerProps => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(null);
 
-  const audioRef = useRef<HTMLAudioElement>(new Audio());
+  const audioRef = useRef<HTMLAudioElement>(new Audio(audioSrc));
   const { duration } = audioRef.current;
 
   const play = async () => {
@@ -24,13 +24,6 @@ export const useAudioPlayer = (audioSrc: string): AudioPlayerProps => {
     audioRef.current.pause();
     setPlaying(false);
   };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = audioSrc;
-      console.log(audioSrc);
-    }
-  }, [audioSrc]);
 
   useEffect(() => {
     if (audioRef.current) {
