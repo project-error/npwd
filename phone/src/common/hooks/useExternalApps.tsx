@@ -54,7 +54,7 @@ const useExternalAppsAction = () => {
 
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = process.env.REACT_APP_IN_GAME;
+      const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
         : 'http://localhost:3002/remoteEntry.js';
