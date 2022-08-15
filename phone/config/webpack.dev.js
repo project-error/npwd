@@ -5,27 +5,6 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('../package.json').dependencies;
 const CopyPlugin = require('copy-webpack-plugin');
 
-const externalApps = require('../../config.apps');
-
-const ingame = Boolean(process.env.APP_IN_GAME);
-const remotes = ({ mode }) => {
-  if (Object.keys(externalApps).length === 0) return {};
-
-  return Object.keys(externalApps).reduce((prev, key) => {
-    if (mode === 'production' || ingame) {
-      return {
-        ...prev,
-        [key]: `${key}@https://cfx-nui-${key}/web/dist/remoteEntry.js`,
-      };
-    }
-
-    return {
-      ...prev,
-      [key]: `${key}@http://localhost:3002/remoteEntry.js`,
-    };
-  }, {});
-};
-
 module.exports = (env, mode) => ({
   entry: './src/bootstrap.ts',
   output: {
@@ -73,10 +52,10 @@ module.exports = (env, mode) => ({
   plugins: [
     new ModuleFederationPlugin({
       name: 'layout',
-      remotes: remotes(mode),
       exposes: {
         './ui': './src/ui/components/index',
       },
+      remotes: {},
       shared: {
         ...deps,
         react: {

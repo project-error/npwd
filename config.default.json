@@ -75,5 +75,6 @@
     "level": "error",
     "enabled": true,
     "sentryEnabled": true
-  }
+  },
+  "apps": []
 }

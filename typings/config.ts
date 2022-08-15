@@ -100,4 +100,5 @@ export interface ResourceConfig {
   images: ImageConfig;
   imageSafety: ImageSafety;
   profanityFilter: ProfanityFilter;
+  apps: string[];
 }

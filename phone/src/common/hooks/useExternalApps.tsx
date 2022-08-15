@@ -8,6 +8,8 @@ import { QuestionMark } from '@mui/icons-material';
 import externalApps from '../../../../config.apps';
 import { createTheme } from '@mui/material';
 import { deepMergeObjects } from '@shared/deepMergeObjects';
+import { useConfig, usePhone } from '@os/phone/hooks';
+import { usePhoneConfig } from 'config/hooks/usePhoneConfig';
 
 const InvalidAppConfig = (id: string): IApp => ({
   id,
@@ -29,21 +31,56 @@ const InvalidAppConfig = (id: string): IApp => ({
 });
 
 const useExternalAppsAction = () => {
-  const generateAppConfig = async (
-    importStatement: CallableFunction,
-    id: string,
-  ): Promise<IApp> => {
+  const loadScript = async (url, scope, module) => {
+    await new Promise((resolve, reject) => {
+      const element = document.createElement('script');
+
+      element.src = url;
+      element.type = 'text/javascript';
+      element.async = true;
+
+      element.onload = (): void => {
+        element.parentElement.removeChild(element);
+        resolve(true);
+      };
+      element.onerror = (error) => {
+        element.parentElement.removeChild(element);
+        reject(error);
+      };
+
+      document.head.appendChild(element);
+    });
+  };
+
+  const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const rawConfig = (await importStatement()).default;
-      console.log('what is rawConfig', rawConfig);
-      if (typeof rawConfig === 'object') return;
-      const config = typeof rawConfig === 'function' ? rawConfig({ language: 'sv' }) : rawConfig;
+      const url = 'http://localhost:3002/remoteEntry.js';
+      const scope = appName;
+      const module = './config';
+
+      console.log('url', url);
+      console.log('scope', scope);
+      console.log('module', module);
+
+      await loadScript(url, scope, module);
+
+      await __webpack_init_sharing__('default');
+      const container = window[scope];
+
+      console.log('container', container);
+
+      await container.init(__webpack_share_scopes__.default);
+      const factory = await window[scope].get(module);
+      const Module = factory();
+
+      const appConfig = Module.default();
+      console.log('oompa', appConfig);
+
+      const config = appConfig;
 
       config.Component = (props: object) => React.createElement(config.app, props);
 
-      config.icon = React.createElement(config.icon);
-
-      config.Route = (props: object) => {
+      config.Route = (props: any) => {
         const appTheme = createTheme(deepMergeObjects(props.theme, config.theme));
         const newProps = { ...props, theme: appTheme };
         return (
@@ -53,6 +90,8 @@ const useExternalAppsAction = () => {
         );
       };
 
+      config.icon = React.createElement(config.icon);
+
       return config;
     } catch (error: unknown) {
       console.error('Failed to load external app.', error);
@@ -60,10 +99,10 @@ const useExternalAppsAction = () => {
     }
   };
 
-  const getConfigs = async (externalApps: Record<string, CallableFunction>) => {
+  const getConfigs = async (externalApps: string[] = []) => {
     const configs = await Promise.all(
-      Object.entries(externalApps).map(async ([key, value]) => {
-        const app = await generateAppConfig(value, key);
+      externalApps.map(async (appName) => {
+        const app = await generateAppConfig(appName);
         if (!app) return null;
         return app;
       }),
@@ -87,11 +126,12 @@ export const useExternalApps = () => {
   const { getConfigs } = useExternalAppsAction();
   const [settings] = useSettings();
   const dispatch = useCustomEvent('initCustomApp', {});
+  const { ResourceConfig } = usePhone();
 
   const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
     const { data } = message;
     if (data.type === 'RELOAD') {
-      getConfigs(externalApps).then(setApps);
+      getConfigs(ResourceConfig.apps).then(setApps);
     }
   };
 
@@ -106,8 +146,8 @@ export const useExternalApps = () => {
   }, []);
 
   useEffect(() => {
-    getConfigs(externalApps).then(setApps);
-  }, []);
+    getConfigs(ResourceConfig?.apps).then(setApps);
+  }, [ResourceConfig]);
 
   return apps.filter((app) => app);
 };
