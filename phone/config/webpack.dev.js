@@ -74,6 +74,9 @@ module.exports = (env, mode) => ({
     new ModuleFederationPlugin({
       name: 'layout',
       remotes: remotes(mode),
+      exposes: {
+        './ui': './src/ui/components/index',
+      },
       shared: {
         ...deps,
         react: {
