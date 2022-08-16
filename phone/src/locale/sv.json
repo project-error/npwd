@@ -1,9 +1,12 @@
 {
   "translation": {
     "MISC": {
-      "TOP_LEVEL_ERR_TITLE": "Error 404",
-      "TOP_LEVEL_ERR_ACTION": "Laddar om",
-      "TOP_LEVEL_ERR_MSG": "NPWD har stött på ett problem som det inte gick att återställa. Du måste ladda om NUI-fönstret."
+      "TOP_LEVEL_ERR_TITLE": "Allvarligt fel",
+      "TOP_LEVEL_ERR_ACTION": "Ladda om",
+      "TOP_LEVEL_ERR_MSG": "Ett allvarligt fel inträffade. NPWD kunde inte återställas automatiskt. Du måste ladda om NUI-fönstret.",
+      "APP_CRASHED_TITLE": "Applikationen kraschade",
+      "APP_CRASHED_MSG": "Applikationen har stött på ett allvarligt fel.",
+      "APP_CRASHED_ACTION": "Ladda om applikationen"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Inga notifikationer"
