@@ -13,15 +13,17 @@ import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MessageContextMenu from './MessageContextMenu';
 import AudioContextMenu from './AudioContextMenu';
+import { useConfig } from '@os/phone/hooks';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
   messages: Message[];
+  isVoiceEnabled: boolean;
 }
 
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
-const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
+const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceEnabled }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const [audioContextMenuOpen, setAudioContextMenuOpen] = useState(false);
 
@@ -114,6 +116,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
           messageConversation={activeMessageGroup}
           onAddImageClick={() => setContextMenuOpen(true)}
           onVoiceClick={() => setAudioContextMenuOpen(true)}
+          voiceEnabled={isVoiceEnabled}
         />
       )}
     </>

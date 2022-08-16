@@ -9,15 +9,22 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
+import { useConfig } from '@os/phone/hooks';
 
 interface IProps {
   onAddImageClick(): void;
   onVoiceClick: () => void;
   messageConversation: MessageConversation | undefined;
   messageGroupName: string | undefined;
+  voiceEnabled: boolean;
 }
 
-const MessageInput = ({ messageConversation, onAddImageClick, onVoiceClick }: IProps) => {
+const MessageInput = ({
+  messageConversation,
+  onAddImageClick,
+  onVoiceClick,
+  voiceEnabled,
+}: IProps) => {
   const [t] = useTranslation();
   const [message, setMessage] = useState('');
   const { sendMessage } = useMessageAPI();
@@ -67,9 +74,11 @@ const MessageInput = ({ messageConversation, onAddImageClick, onVoiceClick }: IP
       </Box>
       <Box pr={1}>
         <ButtonGroup size="small">
-          <Button size="small" onClick={onVoiceClick}>
-            <MicIcon />
-          </Button>
+          {voiceEnabled && (
+            <Button size="small" onClick={onVoiceClick}>
+              <MicIcon />
+            </Button>
+          )}
           <Button size="small" onClick={onAddImageClick}>
             <IosShareIcon />
           </Button>

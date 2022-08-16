@@ -86,6 +86,7 @@ interface ProfanityFilter {
 }
 
 interface VoiceMessageConfig {
+  enabled: boolean;
   token: string;
   url: string;
   authorizationHeader: string;

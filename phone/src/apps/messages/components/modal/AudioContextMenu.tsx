@@ -96,7 +96,7 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
         ) : (
           <p>Click to play voice message</p>
         )}
-        <Box pt={1} pb={1}>
+        <Box pt={1} pb={1} pr={1}>
           {!recordingState.isRecording && recordedAudio && blob && (
             <IconButton onClick={handleSendRecording} size="small">
               <SendIcon color="primary" />

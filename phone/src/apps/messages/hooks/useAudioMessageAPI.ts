@@ -1,3 +1,4 @@
+import { usePhone } from '@os/phone/hooks';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
@@ -13,13 +14,17 @@ export const useAudioMessageAPI = () => {
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
   const { updateLocalMessages } = useMessageActions();
+  const { ResourceConfig } = usePhone();
   const uploadRecording = async (blob: Blob) => {
     try {
       const form_data = new FormData();
       form_data.append('recording', blob);
 
-      const res = await fetch('http://localhost:5001/recording', {
+      const res = await fetch(ResourceConfig.voiceMessage.url, {
         method: 'POST',
+        headers: {
+          [ResourceConfig.voiceMessage.authorizationHeader]: ResourceConfig.voiceMessage.token,
+        },
         body: form_data,
       });
 

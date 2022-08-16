@@ -197,8 +197,6 @@ const AudioEmbed = ({
       ? 0
       : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
-  console.log('duration', duration);
-
   return (
     <AudioMessage>
       <IconButton onClick={playing ? pause : play}>
