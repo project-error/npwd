@@ -4,6 +4,8 @@ import { deepMergeObjects } from '@shared/deepMergeObjects';
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import { IApp } from '../config/apps';
 import styled from '@emotion/styled';
+import { ExternalAppBoundary } from './externalAppBoundary';
+import { useTranslation } from 'react-i18next';
 
 const colorShade = (col: any, amt: number) => {
   col = col.replace(/^#/, '');
@@ -76,12 +78,15 @@ const IconWrapper = styled.div`
   }
 `;
 
+const generateBackground = (bg: string) => {
+  const light = colorShade(bg, 30);
+  const dark = colorShade(bg, -30);
+  return `linear-gradient(45deg,${light}, ${dark}, ${light}, ${dark}, ${dark})`;
+};
+
 const SplashScreen = (props: IApp) => {
   const { backgroundColor, icon } = props;
-
-  const light = colorShade(backgroundColor, 30);
-  const dark = colorShade(backgroundColor, -30);
-  const background = `linear-gradient(45deg,${light}, ${dark}, ${light}, ${dark}, ${dark})`;
+  const background = generateBackground(backgroundColor);
 
   return (
     <Container {...props} background={background}>
@@ -96,18 +101,22 @@ const SplashScreen = (props: IApp) => {
 
 export function createExternalAppProvider(config: IApp) {
   return ({ children }: { children: React.ReactNode }) => {
+    const { t } = useTranslation();
     const phoneTheme = usePhoneTheme();
+    const background = generateBackground(config.backgroundColor ?? '#222');
 
     const mergedTheme = useMemo(() => {
       return createTheme(deepMergeObjects(phoneTheme, config?.theme));
     }, [phoneTheme]);
 
     return (
-      <StyledEngineProvider injectFirst>
-        <React.Suspense fallback={<SplashScreen {...config} />}>
-          <ThemeProvider theme={mergedTheme}>{children}</ThemeProvider>
-        </React.Suspense>
-      </StyledEngineProvider>
+      <ExternalAppBoundary background={background} color={config.color} t={t}>
+        <StyledEngineProvider injectFirst>
+          <React.Suspense fallback={<SplashScreen {...config} />}>
+            <ThemeProvider theme={mergedTheme}>{children}</ThemeProvider>
+          </React.Suspense>
+        </StyledEngineProvider>
+      </ExternalAppBoundary>
     );
   };
 }
