@@ -5,16 +5,17 @@ import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListConta
 import { NavigationBar } from './navigation/NavigationBar';
 import { Switch, Route } from 'react-router-dom';
 import { ListingFormContainer } from './form/ListingFormContainer';
-import { MarketplaceThemeProvider } from '../providers/MarketplaceThemeProvider';
 import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
 import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
+import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
 
 export const MarketplaceApp: React.FC = () => {
   const marketplaceApp = useApp('MARKETPLACE');
+  const Provider = createExternalAppProvider(marketplaceApp);
 
   return (
-    <MarketplaceThemeProvider>
+    <Provider>
       <AppWrapper id="marketplace-app">
         <AppTitle app={marketplaceApp} />
         <AppContent>
@@ -27,6 +28,6 @@ export const MarketplaceApp: React.FC = () => {
         </AppContent>
         <NavigationBar />
       </AppWrapper>
-    </MarketplaceThemeProvider>
+    </Provider>
   );
 };
