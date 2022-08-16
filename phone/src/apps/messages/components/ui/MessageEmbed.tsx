@@ -192,7 +192,10 @@ const AudioEmbed = ({
 }) => {
   const { play, pause, playing, currentTime, duration } = useAudioPlayer(embed.url);
 
-  const calculateProgress = (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
+  const calculateProgress =
+    isNaN(duration) || duration == Infinity
+      ? 0
+      : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
   console.log('duration', duration);
 
@@ -206,9 +209,7 @@ const AudioEmbed = ({
         )}
       </IconButton>
       <Box sx={{ width: '60%' }}>
-        {duration !== Infinity && (
-          <LinearProgress variant="determinate" value={calculateProgress} />
-        )}
+        <LinearProgress variant="determinate" value={calculateProgress} />
       </Box>
       {isMine && (
         <IconButton color="primary" onClick={openMenu}>

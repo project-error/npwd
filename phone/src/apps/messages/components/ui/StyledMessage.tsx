@@ -13,7 +13,6 @@ export const AudioMessage = styled(Box)({
   width: '100%',
   display: 'flex',
   justifyContent: 'flex-start',
-  gap: 10,
   alignItems: 'center',
 });
 

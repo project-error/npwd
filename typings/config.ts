@@ -85,6 +85,14 @@ interface ProfanityFilter {
   badWords: string[];
 }
 
+interface VoiceMessageConfig {
+  token: string;
+  url: string;
+  authorizationHeader: string;
+  authorizationPrefix: string;
+  returnedDataIndexes: Array<any>;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -101,4 +109,5 @@ export interface ResourceConfig {
   imageSafety: ImageSafety;
   profanityFilter: ProfanityFilter;
   apps: string[];
+  voiceMessage: VoiceMessageConfig;
 }

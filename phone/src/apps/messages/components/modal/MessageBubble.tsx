@@ -44,18 +44,18 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     margin: theme.spacing(1),
     width: 'auto',
-    minWidth: '50%',
+    minWidth: '60%',
     maxWidth: '100%',
     background: theme.palette.primary.light,
     color: theme.palette.getContrastText(theme.palette.primary.light),
-    borderRadius: '20px',
+    borderRadius: '12px',
     textOverflow: 'ellipsis',
   },
   audioSms: {
     float: 'left',
     width: 'auto',
     marginLeft: 5,
-    minWidth: '50%',
+    minWidth: '60%',
     maxWidth: '80%',
     background: theme.palette.background.default,
     color: theme.palette.text.primary,
@@ -119,6 +119,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               message={message.message}
               openMenu={openMenu}
             />
+            {!isMine && (
+              <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                {getContact()?.display ?? message.author}
+              </Typography>
+            )}
+            <Typography ml={2} fontSize={12}>
+              {dayjs.unix(message.createdAt).fromNow()}
+            </Typography>
           </Paper>
         </Box>
         <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
