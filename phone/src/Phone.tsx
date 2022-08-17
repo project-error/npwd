@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useEffect } from 'react';
+import React, { Dispatch, Fragment, SetStateAction, Suspense, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
@@ -35,7 +35,11 @@ import { useExternalApps } from '@common/hooks/useExternalApps';
 import { useTheme } from '@mui/material';
 import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
 
-function Phone() {
+interface PhoneProps {
+  notiRefCB: Dispatch<SetStateAction<HTMLElement>>;
+}
+
+const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   const { i18n } = useTranslation();
 
   const { apps } = useApps();
@@ -73,7 +77,7 @@ function Phone() {
         <WindowSnackbar />
         <PhoneWrapper>
           <NotificationBar />
-          <div className="PhoneAppContainer">
+          <div className="PhoneAppContainer" id="notificationAppContainer" ref={notiRefCB}>
             <>
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
@@ -95,7 +99,7 @@ function Phone() {
       </TopLevelErrorComponent>
     </div>
   );
-}
+};
 
 InjectDebugData<any>([
   {

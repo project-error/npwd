@@ -58,3 +58,7 @@
 *::-webkit-scrollbar-thumb {
   background-color: #f5f5f5;
 }
+
+.notistack-SnackbarContainer {
+  position: absolute;
+}
