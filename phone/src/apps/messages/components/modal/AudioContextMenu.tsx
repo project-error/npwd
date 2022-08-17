@@ -38,9 +38,29 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     startRecording,
     stopRecording,
   } = useRecorder();
-  const { currentTime, duration, playing, play, pause } = useAudioPlayer(recordedAudio);
+  //const { currentTime, duration, playing,  } = useAudioPlayer(recordedAudio);
   const { uploadRecording } = useAudioMessageAPI();
   const [isSending, setIsSending] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
+
+  const audioRef = useRef(new Audio());
+
+  const currentTime = 0;
+  const duration = audioRef.current.duration;
+
+  useEffect(() => {
+    audioRef.current.src = recordedAudio;
+  }, [recordedAudio]);
+
+  const play = async () => {
+    await audioRef.current.play();
+    setPlaying(true);
+  };
+
+  const pause = () => {
+    audioRef.current.pause();
+    setPlaying(false);
+  };
 
   const handleStartRecord = async () => {
     await startRecording();
@@ -124,7 +144,7 @@ const RecordingButtons: React.FC<RecordingButtonsProps> = ({
         </IconButton>
       </Tooltip>
       {isRecording && (
-        <IconButton color="error" size="small" onClick={stopRecording}>
+        <IconButton color="error" size="small" onClick={isRecording && stopRecording}>
           <StopIcon />
         </IconButton>
       )}

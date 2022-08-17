@@ -73,6 +73,8 @@ export const useRecorder = (): RecorderProps => {
           };
         });
 
+        console.log('blob url', blob_url);
+
         setAudio(blob_url);
         setAudioBlob(blob);
       };

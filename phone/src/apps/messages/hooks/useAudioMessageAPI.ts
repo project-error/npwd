@@ -22,6 +22,8 @@ export const useAudioMessageAPI = () => {
 
       const res = await fetch(ResourceConfig.voiceMessage.url, {
         method: 'POST',
+        cache: 'no-store',
+        mode: 'cors',
         headers: {
           [ResourceConfig.voiceMessage.authorizationHeader]: ResourceConfig.voiceMessage.token,
         },
@@ -30,9 +32,13 @@ export const useAudioMessageAPI = () => {
 
       const response = await res.json();
 
-      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_EMBED_MESSAGE, {
+      let recordingUrl: string = '';
+      for (const index of ResourceConfig.voiceMessage.returnedDataIndexes)
+        recordingUrl = response[index];
+
+      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId: activeConversation.id,
-        embed: JSON.stringify({ url: response.url }),
+        embed: JSON.stringify({ type: 'audio', url: recordingUrl }),
         is_embed: true,
         tgtPhoneNumber: '',
         conversationList: activeConversation.conversationList,
@@ -46,12 +52,15 @@ export const useAudioMessageAPI = () => {
           });
         }
 
+        console.log(res.data);
         updateLocalMessages(res.data);
       });
-
-      // TODO: Update local state
     } catch (err) {
       console.error(err);
+      return addAlert({
+        type: 'error',
+        message: t('MESSAGE.FEEDBACK.NEW_MESSAGE_FAILED'),
+      });
     }
   };
 
