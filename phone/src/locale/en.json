@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Fatal Error",
       "TOP_LEVEL_ERR_ACTION": "Reload",
-      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference.",
+      "APP_CRASHED_TITLE": "Fatal application error",
+      "APP_CRASHED_MSG": "The application has encountered an error it was unable to recover from.",
+      "APP_CRASHED_ACTION": "Reload the application"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "No unread notifications"
