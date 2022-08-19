@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Vakava virhe",
       "TOP_LEVEL_ERR_ACTION": "Käynnistä uudelleen",
-      "TOP_LEVEL_ERR_MSG": "NPWD kohtasi virheen, josta se ei voinut palautua. Käynnistä puhelin uudelleen. Virheviesti näkyy alla."
+      "TOP_LEVEL_ERR_MSG": "NPWD kohtasi virheen, josta se ei voinut palautua. Käynnistä puhelin uudelleen. Virheviesti näkyy alla.",
+      "APP_CRASHED_TITLE": "Sovelluksessa vakava virhe",
+      "APP_CRASHED_MSG": "Sovellus kohtasi virheen, josta se ei voinut palautua.",
+      "APP_CRASHED_ACTION": "Käynnistä sovellus uudelleen"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Ei lukemattomia ilmoituksia"
