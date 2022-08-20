@@ -14,6 +14,7 @@ export enum PhotoEvents {
   NPWD_PHOTO_MODE_STARTED = 'npwd:PhotoModeStarted',
   NPWD_PHOTO_MODE_ENDED = 'npwd:PhotoModeEnded',
   TAKE_PHOTO_SUCCESS = 'npwd:TakePhotoSuccess',
+  SAVE_IMAGE = 'npwd:saveImage',
   UPLOAD_PHOTO = 'npwd:UploadPhoto',
   FETCH_PHOTOS = 'npwd:FetchPhotos',
   DELETE_PHOTO = 'npwd:deletePhoto',

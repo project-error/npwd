@@ -78,6 +78,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     return getContactByNumber(message.author);
   };
 
+  const isMessageImage = isImage(message.message);
+
   return (
     <>
       <Box
@@ -106,11 +108,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               ) : (
                 <>{message.message}</>
               )}
-              {isMine && (
-                <IconButton color="primary" onClick={openMenu}>
-                  <MoreVertIcon />
-                </IconButton>
-              )}
+              {isMine ||
+                (isImage(message.message) && (
+                  <IconButton color="primary" onClick={openMenu}>
+                    <MoreVertIcon />
+                  </IconButton>
+                ))}
             </StyledMessage>
           )}
           {!isMine && (
@@ -123,7 +126,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           </Typography>
         </Paper>
       </Box>
-      <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
+      <MessageBubbleMenu
+        message={message}
+        isImage={isMessageImage}
+        open={menuOpen}
+        handleClose={() => setMenuOpen(false)}
+      />
     </>
   );
 };
