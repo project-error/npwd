@@ -5,7 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": true,
+    "useResourceIntegration": false,
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en"
@@ -15,7 +15,7 @@
     "badWords": ["esx"]
   },
   "database": {
-    "useIdentifierPrefix": true,
+    "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",
     "identifierType": "license",
@@ -23,7 +23,7 @@
     "phoneNumberColumn": "phone_number"
   },
   "debug": {
-    "level": "silly",
+    "level": "error",
     "enabled": true,
     "sentryEnabled": true
   },
