@@ -38,7 +38,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 4,
     author: '444-4444',
-    message: "Couldn't be me!",
+    message: 'https://i.imgur.com/7juREyw.png',
     createdAt: 16234242422,
   },
 ];

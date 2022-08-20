@@ -68,6 +68,23 @@ class _PhotoService {
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
     }
   }
+
+  async handleSaveImage(
+    reqObj: PromiseRequest<{ url: string }>,
+    resp: PromiseEventResp<GalleryPhoto>,
+  ): Promise<void> {
+    try {
+      const identifier = PlayerService.getIdentifier(reqObj.source);
+      const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data.url);
+
+      resp({ status: 'ok', data: photo });
+    } catch (e) {
+      photoLogger.error(`Failed to upload photo, ${e.message}`, {
+        source: reqObj.source,
+      });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+    }
+  }
 }
 
 const PhotoService = new _PhotoService();
