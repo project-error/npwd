@@ -21,10 +21,11 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
   const channelMembers = useDarkchatMembersValue();
   const myPhoneNumber = useMyPhoneNumber();
 
-  const filteredMembers = channelMembers.filter((member) => member.phoneNumber !== myPhoneNumber);
+  const filteredMembers =
+    channelMembers && channelMembers.filter((member) => member.phoneNumber !== myPhoneNumber);
 
   const [t] = useTranslation();
-  const { transferOwnership } = useDarkchatAPI();
+  const { transferOwnership, deleteChannel } = useDarkchatAPI();
   const history = useHistory();
   const activeDarkChat = useActiveDarkchatValue();
 
@@ -34,10 +35,13 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
 
   const handleDeleteChannel = () => {
     // del
+    closeModal();
+    deleteChannel(activeDarkChat.id);
     history.push('/darkchat');
   };
 
   const handleTransferOwnership = (memberIdentifier: string, phoneNumber: string) => {
+    closeModal();
     transferOwnership(activeDarkChat.id, memberIdentifier, phoneNumber);
   };
 
@@ -54,24 +58,27 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
         </TabList>
         <TabPanel value="1">
           <List>
-            {filteredMembers.map((member) => (
-              <ListItem
-                secondaryAction={
-                  <Tooltip title="Transfer ownership" placement="left">
-                    <IconButton
-                      onClick={() => handleTransferOwnership(member.identifier, member.phoneNumber)}
-                      edge="end"
-                      aria-label="delete"
-                    >
-                      <SwapHorizIcon />
-                    </IconButton>
-                  </Tooltip>
-                }
-              >
-                {/* This is anon, so should we really show their name???????? */}
-                <ListItemText>{member.phoneNumber}</ListItemText>
-              </ListItem>
-            ))}
+            {filteredMembers &&
+              filteredMembers.map((member) => (
+                <ListItem
+                  secondaryAction={
+                    <Tooltip title="Transfer ownership" placement="left">
+                      <IconButton
+                        onClick={() =>
+                          handleTransferOwnership(member.identifier, member.phoneNumber)
+                        }
+                        edge="end"
+                        aria-label="delete"
+                      >
+                        <SwapHorizIcon />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                >
+                  {/* This is anon, so should we really show their name???????? */}
+                  <ListItemText>{member.phoneNumber}</ListItemText>
+                </ListItem>
+              ))}
           </List>
         </TabPanel>
         {isOwner && (

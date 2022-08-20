@@ -31,6 +31,7 @@ const ChannelInput: React.FC = () => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       handleSendMessage();
+      setMessage('');
     }
   };
 

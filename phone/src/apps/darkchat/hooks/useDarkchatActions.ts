@@ -2,11 +2,13 @@ import {
   darkChatState,
   useSetActiveDarkchatState,
   useSetChannelsState,
+  useSetDarkchatMembers,
   useSetDarkchatMessagesState,
 } from '../state/state';
 import { useRecoilCallback } from 'recoil';
 import {
   ChannelItemProps,
+  ChannelMember,
   ChannelMessageProps,
   OwnerTransferResp,
   UpdateLabelDto,
@@ -18,12 +20,14 @@ interface DarkchatActionsProps {
   leaveLocalChannel: (id: number) => void;
   updateLocalChannelLabel: (dto: UpdateLabelDto) => void;
   localTransferOwner: (dto: OwnerTransferResp) => void;
+  addLocalMembers: (members: ChannelMember[]) => void;
 }
 
 export const useDarkchatActions = (): DarkchatActionsProps => {
   const setChannels = useSetChannelsState();
   const setMessages = useSetDarkchatMessagesState();
   const setActiveChannel = useSetActiveDarkchatState();
+  const setChatMembers = useSetDarkchatMembers();
 
   const addLocalChannel = useRecoilCallback<[ChannelItemProps], void>(
     ({ snapshot }) =>
@@ -54,6 +58,15 @@ export const useDarkchatActions = (): DarkchatActionsProps => {
 
         if (state !== 'hasValue') return null;
         setMessages((curVal) => [...curVal, message]);
+      },
+  );
+
+  const addLocalMembers = useRecoilCallback<[ChannelMember[]], void>(
+    ({ snapshot }) =>
+      async (members) => {
+        const { state } = await snapshot.getLoadable(darkChatState.members);
+        if (state !== 'hasValue') return null;
+        setChatMembers(members);
       },
   );
 
@@ -118,5 +131,6 @@ export const useDarkchatActions = (): DarkchatActionsProps => {
     leaveLocalChannel,
     updateLocalChannelLabel,
     localTransferOwner,
+    addLocalMembers,
   };
 };

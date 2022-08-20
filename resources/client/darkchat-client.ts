@@ -1,5 +1,10 @@
 import { RegisterNuiProxy } from './cl_utils';
-import { ChannelMessageProps, DarkchatEvents, UpdateLabelDto } from '@typings/darkchat';
+import {
+  ChannelMessageProps,
+  DarkchatEvents,
+  OwnerTransferResp,
+  UpdateLabelDto,
+} from '@typings/darkchat';
 import { sendMessage } from '../utils/messages';
 
 RegisterNuiProxy(DarkchatEvents.FETCH_CHANNELS);
@@ -18,4 +23,13 @@ onNet(DarkchatEvents.BROADCAST_MESSAGE, (data: ChannelMessageProps) => {
 
 onNet(DarkchatEvents.BROADCAST_LABEL_UPDATE, (data: UpdateLabelDto) => {
   sendMessage('DARKCHAT', DarkchatEvents.BROADCAST_LABEL_UPDATE, data);
+});
+
+onNet(DarkchatEvents.TRANSFER_OWNERSHIP_SUCCESS, (dto: OwnerTransferResp) => {
+  sendMessage('DARKCHAT', DarkchatEvents.TRANSFER_OWNERSHIP_SUCCESS, dto);
+});
+
+onNet(DarkchatEvents.DELETE_CHANNEL_SUCCESS, (dto: any) => {
+  console.log('delete dto', dto);
+  sendMessage('DARKCHAT', DarkchatEvents.DELETE_CHANNEL_SUCCESS, dto);
 });

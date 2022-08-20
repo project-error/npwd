@@ -181,7 +181,7 @@ class _DarkchatService {
         ...message,
         channelId: messageData.channelId,
         isMine: messageData.phoneNumber === phoneNumber,
-        type: messageData.type,
+        //type: messageData.type,
       };
 
       resp({ status: 'ok', data: resObj });
@@ -195,7 +195,7 @@ class _DarkchatService {
               ...message,
               channelId: messageData.channelId,
               isMine: messageData.phoneNumber === participant.getPhoneNumber(),
-              type: messageData.type,
+              //type: messageData.type,
             };
 
             emitNetTyped<ChannelMessageProps>(
@@ -266,9 +266,21 @@ class _DarkchatService {
 
     try {
       const owner = await this.darkchatDB.getChannelOwner(reqObj.data.channelId);
+      const members = await this.darkchatDB.getMembers(reqObj.data.channelId);
       if (owner === userIdentifier) {
         await this.darkchatDB.deleteChannel(reqObj.data.channelId);
-        return resp({ status: 'ok' });
+        resp({ status: 'ok' });
+
+        for (const member of members) {
+          if (member.identifier !== userIdentifier) {
+            const participant = PlayerService.getPlayerFromIdentifier(member.identifier);
+            if (participant) {
+              emitNet(DarkchatEvents.DELETE_CHANNEL_SUCCESS, participant.source, {
+                channelId: reqObj.data.channelId,
+              });
+            }
+          }
+        }
       }
 
       return resp({ status: 'error', errorMsg: 'NOT_OWNER' });

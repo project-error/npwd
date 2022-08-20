@@ -34,24 +34,7 @@ export const darkChatState = {
   }),
   members: atom<ChannelMember[]>({
     key: 'darkchatMembers',
-    default: selector({
-      key: 'defaultDarkchatMembers',
-      get: async ({ get }) => {
-        const activeConversation = get(darkChatState.activeConversation);
-        try {
-          const res = await fetchNui<ServerPromiseResp<ChannelMember[]>>(
-            DarkchatEvents.FETCH_MEMBERS,
-            { channelId: activeConversation.id },
-            buildRespObj(MockChannelMembers),
-          );
-
-          return res.data;
-        } catch (err) {
-          console.error(err);
-          return [];
-        }
-      },
-    }),
+    default: null,
   }),
   darkChatMessages: atom<ChannelMessageProps[]>({
     key: 'darkChatMessages',
@@ -89,3 +72,4 @@ export const useSetDarkchatMessagesState = () => useSetRecoilState(darkChatState
 export const useDarkchatMessagesState = () => useRecoilState(darkChatState.darkChatMessages);
 
 export const useDarkchatMembersValue = () => useRecoilValue<ChannelMember[]>(darkChatState.members);
+export const useSetDarkchatMembers = () => useSetRecoilState(darkChatState.members);

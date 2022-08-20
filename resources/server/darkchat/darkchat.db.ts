@@ -82,7 +82,6 @@ export class _DarkchatDB {
 
     const [results] = await DbInterface._rawExec(query, [channelId]);
     const result = <any[]>results;
-    console.log('GET CHANNEL OWNER', result[0]);
 
     return result[0].user_identifier;
   }
@@ -94,7 +93,7 @@ export class _DarkchatDB {
                           message,
                           user_identifier           AS identifier,
                           UNIX_TIMESTAMP(createdAt) AS createdAt,
-                          is_image                  AS type
+                          is_image                  AS isImage 
                    FROM npwd_darkchat_messages
                    WHERE npwd_darkchat_messages.channel_id = ?`;
 
@@ -153,7 +152,7 @@ export class _DarkchatDB {
                           message,
                           user_identifier           AS identifier,
                           UNIX_TIMESTAMP(createdAt) AS createdAt,
-                          is_image                  AS type
+                          is_image                  AS isImage 
                    FROM npwd_darkchat_messages
                    WHERE channel_id = ?
                      AND id = ?`;
@@ -212,9 +211,14 @@ export class _DarkchatDB {
   }
 
   async deleteChannel(channelId: number): Promise<void> {
+    const messageQuery = `DELETE FROM npwd_darkchat_messages WHERE channel_id  = ?`;
+    const memberQuery = `DELETE FROM npwd_darkchat_channel_members WHERE channel_id = ?`;
     const query = `DELETE
                    FROM npwd_darkchat_channels
                    WHERE id = ?`;
+
+    await DbInterface._rawExec(messageQuery, [channelId]);
+    await DbInterface._rawExec(memberQuery, [channelId]);
     await DbInterface._rawExec(query, [channelId]);
   }
 }

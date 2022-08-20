@@ -17,7 +17,7 @@ import { OwnerModal } from '@apps/darkchat/components/modals/OwnerModal';
 
 export const ConversationView: React.FC = () => {
   const activeConversation = useActiveDarkchatValue();
-  const { fetchMessages } = useDarkchatAPI();
+  const { fetchMessages, fetchMembers } = useDarkchatAPI();
   const messages = useDarkchatMessagesValue();
   const history = useHistory();
   const query = useQueryParams();
@@ -34,6 +34,7 @@ export const ConversationView: React.FC = () => {
 
   useEffect(() => {
     fetchMessages(activeConversation.id);
+    fetchMembers(activeConversation.id);
   }, [activeConversation]);
 
   if (!activeConversation && !messages) return <LoadingSpinner />;
@@ -45,10 +46,11 @@ export const ConversationView: React.FC = () => {
       {modalVisible || (ownerModal && <Backdrop />)}
       <Box display="flex" flexDirection="column" width="100%" height={605} overflow="auto">
         {messages.map((message) =>
-          message.type === 'text' ? (
-            <ChannelMessageBubble {...message} />
-          ) : (
+          /* type is wether or not the message is a image or not */
+          message.isImage ? (
             <ChannelImageBubble {...message} />
+          ) : (
+            <ChannelMessageBubble {...message} />
           ),
         )}
       </Box>

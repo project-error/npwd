@@ -2,6 +2,7 @@ import { useDarkchatActions } from './useDarkchatActions';
 import fetchNui from '@utils/fetchNui';
 import {
   ChannelItemProps,
+  ChannelMember,
   ChannelMessageProps,
   DarkchatEvents,
   JoinChannelDTO,
@@ -11,11 +12,13 @@ import {
   UpdateLabelDto,
 } from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
-import { MockChannelMessagesResp } from '../utils/constants';
+import { MockChannelMembers, MockChannelMessagesResp } from '../utils/constants';
 import { useHistory } from 'react-router-dom';
 import { useSetDarkchatMessagesState } from '../state/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { buildRespObj } from '@utils/misc';
+import { DarkChatThemeProvider } from '../providers/DarkChatThemeProvider';
 
 interface DarkchatAPIProps {
   addChannel: (channelDto: JoinChannelDTO) => void;
@@ -24,6 +27,8 @@ interface DarkchatAPIProps {
   sendMessage: (dto: MessageDTO) => void;
   updateChannelLabel: (dto: UpdateLabelDto) => void;
   transferOwnership: (channelId: number, identifier: string, phoneNumber: string) => void;
+  fetchMembers: (conversationId: number) => void;
+  deleteChannel: (id: number) => void;
 }
 
 export const useDarkchatAPI = (): DarkchatAPIProps => {
@@ -33,11 +38,29 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     leaveLocalChannel,
     updateLocalChannelLabel,
     localTransferOwner,
+    addLocalMembers,
   } = useDarkchatActions();
   const history = useHistory();
   const setMessages = useSetDarkchatMessagesState();
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
+
+  const fetchMembers = (conversationId: number) => {
+    fetchNui<ServerPromiseResp<ChannelMember[]>>(
+      DarkchatEvents.FETCH_MEMBERS,
+      { channelId: conversationId },
+      buildRespObj(MockChannelMembers),
+    ).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.FETCH_MEMBERS_FAILED'),
+        });
+      }
+
+      addLocalMembers(resp.data);
+    });
+  };
 
   const addChannel = (channelDto: JoinChannelDTO) => {
     fetchNui<ServerPromiseResp<ChannelItemProps>, JoinChannelDTO>(DarkchatEvents.ADD_CHANNEL, {
@@ -141,6 +164,21 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     );
   };
 
+  const deleteChannel = (channelId: number) => {
+    fetchNui<ServerPromiseResp<{ channelId: number }>>(DarkchatEvents.DELETE_CHANNEL, {
+      channelId,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: t('DARKCHAT.FEEDBACK.DELETE_CHANNEL_FAILED'),
+        });
+      }
+
+      leaveLocalChannel(channelId);
+    });
+  };
+
   return {
     addChannel,
     fetchMessages,
@@ -148,5 +186,7 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     leaveChannel,
     updateChannelLabel,
     transferOwnership,
+    fetchMembers,
+    deleteChannel,
   };
 };

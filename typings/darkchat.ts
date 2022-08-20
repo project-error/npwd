@@ -21,7 +21,7 @@ export interface ChannelMessageProps {
   createdAt: number;
   isMine: boolean;
   channelId?: number;
-  type: string;
+  isImage: boolean;
 }
 
 export type JoinChannelDTO = {
@@ -63,6 +63,7 @@ export enum DarkchatEvents {
   ADD_CHANNEL = 'npwd:darkchatAddChannel',
   LEAVE_CHANNEL = 'npwd:darkchatLeaveChannel',
   DELETE_CHANNEL = 'npwd:darkchatDeleteChannel',
+  DELETE_CHANNEL_SUCCESS = 'npwd:darkchatDeleteChannelSuccess',
   FETCH_MEMBERS = 'npwd:darkchatFetchMembers',
   TRANSFER_OWNERSHIP = 'npwd:darkchatTransferOwnership',
   TRANSFER_OWNERSHIP_SUCCESS = 'npwd:darkchatTransferOwnershipSuccess',

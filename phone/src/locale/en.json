@@ -252,7 +252,9 @@
         "LEAVE_CHANNEL_FAILED": "Failed to leave channel",
         "SEND_MESSAGE_FAILED": "Failed to send message",
         "UPDATE_LABEL_FAILED": "Failed to update channel name",
-        "TRANSFER_OWNERSHIP_FAILED": "Failed to update ownership"
+        "TRANSFER_OWNERSHIP_FAILED": "Failed to update ownership",
+        "FETCH_MEMBERS_FAILED": "Failed to fetch members",
+        "DELETE_CHANNEL_FAILED": "Failed to delete channel"
       },
       "NEW_CHANNEL_TITLE": "Join channel on ID",
       "DELETE_CHANNEL_TITLE": "Delete channel",
