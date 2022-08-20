@@ -10,8 +10,25 @@ const CallContactContainer = () => {
 
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
-  const getDisplayOrNumber = () =>
-    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+  const getDisplayOrNumber = () => {
+    if (call.label) {
+      return call.label;
+    }
+
+    return call.isTransmitter
+      ? getDisplayByNumber(call?.receiver)
+      : getDisplayByNumber(call?.transmitter);
+  };
+
+  const getDisplayAvatar = () => {
+    if (call.label) {
+      return call.label;
+    }
+
+    return call.isTransmitter
+      ? getPictureByNumber(call.receiver)
+      : getPictureByNumber(call?.transmitter);
+  };
 
   return (
     <Box display="flex" alignItems="center">
@@ -26,11 +43,7 @@ const CallContactContainer = () => {
       <Avatar
         sx={{ ml: 1, height: 80, width: 80 }}
         alt={getDisplayOrNumber()}
-        src={
-          call.isTransmitter
-            ? getPictureByNumber(call.receiver)
-            : getPictureByNumber(call?.transmitter)
-        }
+        src={getDisplayAvatar()}
       />
     </Box>
   );

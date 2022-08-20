@@ -24,7 +24,11 @@ export const useDialService = () => {
 
         if (state !== 'hasValue') return;
 
-        setHistory((curHistory) => [callObj, ...curHistory]);
+        // If label is forwarded through ctx.forward, put that as the transmitter otherwise the character it got forwarded to will be shown in history.
+        setHistory((curHistory) => [
+          { ...callObj, transmitter: callObj.label || callObj.transmitter },
+          ...curHistory,
+        ]);
       },
     [],
   );

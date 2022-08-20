@@ -2,6 +2,7 @@ export interface ActiveCall {
   is_accepted: boolean;
   isTransmitter: boolean;
   transmitter: string;
+  label?: string;
   receiver: string;
   channelId?: number;
   isUnavailable?: boolean;
@@ -11,10 +12,12 @@ export interface ActiveCall {
 
 export interface InitializeCallDTO {
   receiverNumber: string;
+  label?: string;
 }
 
 export interface StartCallEventData {
   transmitter: string;
+  label?: string;
   receiver: string;
   isTransmitter: boolean;
   isUnavailable?: boolean;
@@ -40,6 +43,7 @@ export interface ActiveCallRaw {
   identifier: string;
   transmitter: string;
   transmitterSource: number;
+  label?: string;
   receiver: string;
   receiverSource: number;
   start: string;
@@ -51,6 +55,7 @@ export interface CallHistoryItem {
   identifier?: string;
   transmitter: string;
   transmitterSource?: number;
+  label?: string;
   receiver: string;
   receiverSource?: number;
   start: string;
@@ -91,5 +96,5 @@ export interface OnCallExportCtx {
   exit: () => void;
   next: () => void;
   reply: (msg: string) => void;
-  forward: (tgt: string) => void;
+  forward: (tgt: string, label?: string) => void;
 }

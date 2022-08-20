@@ -40,8 +40,11 @@ onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, async (r
               message,
             });
           },
-          forward: (receiverNumber) => {
-            CallService.handleInitializeCall({ ...reqObj, data: { receiverNumber } }, resp)
+          forward: (receiverNumber, numberLabel) => {
+            CallService.handleInitializeCall(
+              { ...reqObj, data: { receiverNumber, label: numberLabel } },
+              resp,
+            )
               .catch((e) => {
                 resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
                 callLogger.error(`Error occured handling init call: ${e.message}`);

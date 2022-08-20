@@ -26,6 +26,14 @@ export const useCallNotifications = () => {
     [contacts, getDisplayByNumber],
   );
 
+  const notificationDisplayLabel = (call: ActiveCall) => {
+    if (call.label) {
+      return call.label;
+    }
+
+    return contactDisplay(call.transmitter) || call.transmitter;
+  };
+
   const callNotificationBase = {
     app: 'CALL',
     id: NOTIFICATION_ID,
@@ -50,13 +58,13 @@ export const useCallNotifications = () => {
       addNotificationAlert({
         ...callNotificationBase,
         title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
-          transmitter: contactDisplay(call.transmitter) || call.transmitter,
+          transmitter: notificationDisplayLabel(call),
         }),
         keepWhenPhoneClosed: true,
         content: (
           <CallNotification>
             {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
-              transmitter: contactDisplay(call.transmitter) || call.transmitter,
+              transmitter: notificationDisplayLabel(call),
             })}
           </CallNotification>
         ),

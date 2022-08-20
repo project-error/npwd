@@ -63,6 +63,7 @@ class CallsService {
         status: 'ok',
         data: {
           transmitter: transmitterNumber,
+          label: reqObj.data.label,
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
@@ -85,6 +86,7 @@ class CallsService {
         data: {
           is_accepted: false,
           transmitter: transmitterNumber,
+          label: reqObj.data.label,
           isTransmitter: true,
           receiver: reqObj.data.receiverNumber,
           isUnavailable: true,
@@ -102,6 +104,7 @@ class CallsService {
       identifier: callIdentifier,
       transmitter: transmitterNumber,
       transmitterSource: transmittingPlayer.source,
+      label: reqObj.data.label,
       receiver: reqObj.data.receiverNumber,
       receiverSource: receivingPlayer.source,
       start: startCallTimeUnix.toString(),
@@ -112,7 +115,10 @@ class CallsService {
     this.setCallInMap(callObj.transmitter, callObj);
 
     try {
-      await this.callsDB.saveCall(callObj);
+      await this.callsDB.saveCall({
+        ...callObj,
+        transmitter: callObj.label || callObj.transmitter,
+      });
     } catch (e) {
       callLogger.error(
         `Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.message}`,
@@ -127,6 +133,7 @@ class CallsService {
       data: {
         is_accepted: false,
         transmitter: transmitterNumber,
+        label: reqObj.data.label,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: true,
         start: startCallTimeUnix.toString(),
@@ -139,6 +146,7 @@ class CallsService {
       {
         is_accepted: false,
         transmitter: transmitterNumber,
+        label: reqObj.data.label,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: false,
       },
@@ -155,7 +163,7 @@ class CallsService {
     const channelId = targetCallItem.transmitterSource;
 
     await this.callsDB.updateCall(targetCallItem, true, null);
-    callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
+    callLogger.debug(`Call with key ${targetCallItem.identifier} was updated to be accepted`);
 
     // player who is being called
     emitNetTyped<ActiveCall>(
@@ -163,6 +171,7 @@ class CallsService {
       {
         is_accepted: true,
         transmitter: transmitterNumber,
+        label: targetCallItem.label,
         receiver: targetCallItem.receiver,
         isTransmitter: false,
         channelId,
@@ -178,6 +187,7 @@ class CallsService {
       {
         is_accepted: true,
         transmitter: transmitterNumber,
+        label: targetCallItem.label,
         receiver: targetCallItem.receiver,
         isTransmitter: true,
         channelId,
