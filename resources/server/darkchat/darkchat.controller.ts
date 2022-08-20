@@ -75,7 +75,13 @@ onNetPromise<{ channelId: number }, void>(DarkchatEvents.DELETE_CHANNEL, async (
 
 onNetPromise<OwnerTransferReq, OwnerTransferResp>(
   DarkchatEvents.TRANSFER_OWNERSHIP,
-  async (reqObj, resp) => {},
+  async (reqObj, resp) => {
+    DarkchatService.handleTransferOwnership(reqObj, resp).catch((err) => {
+      darkchatLogger.error(
+        `Error occurred in transfer ownership event (${reqObj.source}). Error: ${err.message}`,
+      );
+    });
+  },
 );
 
 onNetPromise<{ channelId: number }, ChannelMember[]>(

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { List, ListItem, Modal, TextField, Tooltip } from '@ui/components';
 import { useTranslation } from 'react-i18next';
-import { Box, IconButton, ListItemButton, ListItemText, Tab, Typography } from '@mui/material';
+import { Box, IconButton, ListItemText, Tab, Typography } from '@mui/material';
 import { Button } from '@ui/components/Button';
 import { useDarkchatAPI } from '@apps/darkchat/hooks/useDarkchatAPI';
 import { useHistory } from 'react-router-dom';
@@ -29,6 +29,8 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
   const activeDarkChat = useActiveDarkchatValue();
 
   const canDelete = activeDarkChat.identifier === channelValue;
+
+  const isOwner = activeDarkChat.owner === myPhoneNumber;
 
   const handleDeleteChannel = () => {
     // del
@@ -72,32 +74,34 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
             ))}
           </List>
         </TabPanel>
-        <TabPanel value="2">
-          <Typography>{t('DARKCHAT.DELETE_CHANNEL_TITLE')}</Typography>
+        {isOwner && (
+          <TabPanel value="2">
+            <Typography>{t('DARKCHAT.DELETE_CHANNEL_TITLE')}</Typography>
 
-          <Box mt={2} mb={2}>
-            <Typography>
-              Type <span style={{ fontWeight: 'bold' }}>{activeDarkChat.identifier}</span> to
-              confirm.
-            </Typography>
+            <Box mt={2} mb={2}>
+              <Typography>
+                Type <span style={{ fontWeight: 'bold' }}>{activeDarkChat.identifier}</span> to
+                confirm.
+              </Typography>
 
-            <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2}>
-              <TextField
-                placeholder="Channel ID"
-                value={channelValue}
-                onChange={(e) => setChannelValue(e.currentTarget.value)}
-              />
-              <Button
-                onClick={handleDeleteChannel}
-                disabled={!canDelete}
-                variant="outlined"
-                color="secondary"
-              >
-                {t('GENERIC.DELETE')}
-              </Button>
+              <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2}>
+                <TextField
+                  placeholder="Channel ID"
+                  value={channelValue}
+                  onChange={(e) => setChannelValue(e.currentTarget.value)}
+                />
+                <Button
+                  onClick={handleDeleteChannel}
+                  disabled={!canDelete}
+                  variant="outlined"
+                  color="secondary"
+                >
+                  {t('GENERIC.DELETE')}
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </TabPanel>
+          </TabPanel>
+        )}
       </TabContext>
     </Modal>
   );
