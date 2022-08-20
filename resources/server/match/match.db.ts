@@ -23,15 +23,17 @@ export class _MatchDB {
         SELECT npwd_match_profiles.*,
                UNIX_TIMESTAMP(npwd_match_profiles.updatedAt) AS lastActive,
                MaxDates.lastSeen
+               MaxDates.liked
         FROM npwd_match_profiles
                  LEFT OUTER JOIN (
-            SELECT id, profile, MAX(createdAt) AS lastSeen
+            SELECT id, profile, liked, MAX(createdAt) AS lastSeen
             FROM npwd_match_views
             WHERE identifier = ?
-            GROUP BY id, profile
+            GROUP BY id, profile, liked
         ) AS MaxDates ON npwd_match_profiles.id = MaxDates.profile
         WHERE npwd_match_profiles.identifier != ?
           AND (MaxDates.lastSeen IS NULL OR MaxDates.lastSeen < NOW() - INTERVAL 7 DAY)
+          AND MaxDates.liked IS NULL
         ORDER BY npwd_match_profiles.updatedAt DESC
         LIMIT 25
 		`;
@@ -70,7 +72,7 @@ export class _MatchDB {
                                  ON npwd_match_views.identifier = targetProfile.identifier
         WHERE playerProfile.identifier = ?
           AND targetProfile.id = ?
-          AND Liked = 1
+          AND liked = 1
 		`;
     const [results] = await DbInterface._rawExec(query, [identifier, id]);
     return <Profile[]>results;

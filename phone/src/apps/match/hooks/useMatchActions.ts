@@ -25,6 +25,8 @@ export const useMatchActions = () => {
         }),
       );
 
+      // we don't want to store profiles you dislike (erp moment)
+      if (!liked) return;
       fetchNui<ServerPromiseResp<boolean>>(MatchEvents.SAVE_LIKES, { id, liked }).then((resp) => {
         if (resp.status !== 'ok') {
           return addAlert({
