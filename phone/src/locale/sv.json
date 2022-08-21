@@ -20,7 +20,7 @@
         "INCOMING": "Inkommande samtal"
       },
       "FEEDBACK": {
-        "ERROR_MYSELF": "Du kan inte ringa ditt egna telefon nummer!",
+        "ERROR_MYSELF": "Du kan inte ringa ditt egna telefonnummer!",
         "ERROR": "Ett fel uppstod när det här samtalet slutfördes"
       }
     },
@@ -35,7 +35,7 @@
         "ACTIONS": "Allmänt"
       },
       "OPTIONS": {
-        "ICONSET": "Ikon Set",
+        "ICONSET": "Ikonset",
         "THEME": "Tema",
         "LANGUAGE": "Språk",
         "FRAME": "Ram",
@@ -50,39 +50,39 @@
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Anpassad bakgrundsbild",
           "DIALOG_CONTENT": "Ställ in en anpassad bakgrund genom att ange webbadressen till bilden nedan!",
-          "DIALOG_PLACEHOLDER": "Bild URL",
+          "DIALOG_PLACEHOLDER": "Bildlänk",
           "DIALOG_ERROR": "Ogiltig bild eller länk"
         },
         "RINGTONE": "Ringsignal",
-        "RINGTONE_VOLUME": "Ringsignal Volym",
+        "RINGTONE_VOLUME": "Ringsignalsvolym",
         "NOTIFICATION": "Notifikation",
-        "NOTIFICATION_VOLUME": "Notifikation Volym",
-        "NOTIFICATION_FILTER": "Notifikation Filtrering"
+        "NOTIFICATION_VOLUME": "Notifikationsvolym",
+        "NOTIFICATION_FILTER": "Notifikationsfiltrering"
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Felaktiga inställningar! Vänligen återställ i appen Inställningar.",
-        "SETTINGS_RESET": "Inställningarna har återställts!!"
+        "SETTINGS_RESET": "Inställningarna har återställts!"
       }
     },
     "CAMERA": {
       "SHARE_DESTINATION": "Vart vill du dela din bild?",
-      "COPY_IMAGE": "Kopiera bildens url här:",
-      "FAILED_TO_DELETE": "Bilden kunde inte tasbort :(",
-      "FAILED_TO_TAKE_PHOTO": "Bilden kunde inte sparas :("
+      "COPY_IMAGE": "Kopiera bildlänk",
+      "FAILED_TO_DELETE": "Bilden kunde inte tas bort.",
+      "FAILED_TO_TAKE_PHOTO": "Bilden kunde inte sparas."
     },
     "CONTACTS": {
       "FEEDBACK": {
         "ADD_FAILED": "Det gick inte att skapa kontakten!",
-        "ADD_SUCCESS": "Skapat ny kontakt!",
-        "UPDATE_FAILED": "Det gick inte att uppdatera kontakten!",
-        "UPDATE_SUCCESS": "Uppdaterat kontakten!",
+        "ADD_SUCCESS": "Kontakten skapades!",
+        "UPDATE_FAILED": "Det gick inte att uppdatera kontakten.",
+        "UPDATE_SUCCESS": "Kontakten sparades!",
         "DELETE_FAILED": "Det gick inte att ta bort kontakten!",
-        "DELETE_SUCCESS": "Kontakt borttagen!"
+        "DELETE_SUCCESS": "Kontakten togs bort!"
       },
       "PLACEHOLDER_SEARCH_CONTACTS": "Sök kontakt...",
       "FORM_NAME": "Namn",
       "FORM_NUMBER": "Nummer",
-      "FORM_AVATAR": "Avatar URL",
+      "FORM_AVATAR": "Bildlänk",
       "MODAL_BUTTON_ADD": "Lägg till kontakt"
     },
     "DIALER": {
@@ -93,10 +93,10 @@
         "TRANSMITTER_IS_CALLING": "{{ transmitter }} ringer dig!"
       },
       "INPUT_PLACEHOLDER": "Ange ett nummer",
-      "NAVBAR_HISTORY": "Historik",
+      "NAVBAR_HISTORY": "Senaste",
       "NAVBAR_DIAL": "Knappsats",
       "NAVBAR_CONTACTS": "Kontakter",
-      "NO_HISTORY": "Du har ingen samtals historik"
+      "NO_HISTORY": "Du har ingen samtalshistorik"
     },
     "TWITTER": {
       "FEEDBACK": {
@@ -220,11 +220,14 @@
       "SEARCH_PLACEHOLDER": "Sök meddelande...",
       "DELETE_CONVERSATION": "Ta bort konverstationen",
       "NEW_MESSAGE": "Meddelande...",
-      "NEW_MESSAGE_GROUP": "Telefon nummer...",
+      "NEW_MESSAGE_GROUP": "Telefonnummer...",
       "GROUP_CHAT_LABEL": "Gruppchattetikett...",
-      "MEDIA_OPTION": "Kamera / Galleri",
+      "MEDIA_OPTION": "Dela en bild",
+      "CONTACT_OPTION": "Dela en kontakt",
+      "LOCATION_OPTION": "Dela din position",
+      "LOCATION_MESSAGE": "Position delad",
       "NEW_MESSAGE_GROUP_SUBMIT": "Skicka",
-      "INPUT_NAME_OR_NUMBER": "Sök kontakter eller skriv nummer och tryck enter",
+      "INPUT_NAME_OR_NUMBER": "Kontaktnamn eller nummer",
       "ACTIONS_TITLE": "Allmänt",
       "ME": "Jag"
     },
