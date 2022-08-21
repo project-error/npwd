@@ -28,9 +28,8 @@ export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
     <Modal visible={!!meta} handleClose={onClose}>
       <div className={classes.shareModal}>
         <div className={classes.innerShareModal}>
-          <h4>{t('CAMERA.COPY_IMAGE')}</h4>
           <Button onClick={handleCopyImage} variant="contained">
-            Copy image
+            {t('CAMERA.COPY_IMAGE')}
           </Button>
         </div>
       </div>
