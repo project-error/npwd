@@ -36,7 +36,6 @@ import { useTheme } from '@mui/material';
 
 function Phone() {
   const { i18n } = useTranslation();
-  const externalApps = useExternalApps();
 
   const { apps } = useApps();
   const [settings] = useSettings();
@@ -61,6 +60,8 @@ function Phone() {
   useCallService();
   useDialService();
   useInvalidSettingsHandler();
+
+  const externalApps = useExternalApps();
 
   const { modal: callModal } = useCallModal();
 

@@ -22,4 +22,8 @@ export const phoneState = {
     key: 'playerSource',
     default: 0,
   }),
+  extApps: atom({
+    key: 'phoneExtApps',
+    default: [],
+  }),
 };

@@ -1,10 +1,9 @@
 import { IApp } from '@os/apps/config/apps';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
-import { useSettings } from '@apps/settings/hooks/useSettings';
-import { useCustomEvent } from '@os/events/useCustomEvents';
-import { usePhone } from '@os/phone/hooks';
 import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { phoneState } from '@os/phone/hooks/state';
 
 const useExternalAppsAction = () => {
   const loadScript = async (url, scope, module) => {
@@ -101,21 +100,16 @@ interface ReloadEvent {
 }
 
 export const useExternalApps = () => {
-  const [apps, setApps] = useState<IApp[]>([]);
+  const [apps, setApps] = useRecoilState(phoneState.extApps);
   const { getConfigs } = useExternalAppsAction();
-  const [settings] = useSettings();
-  const dispatch = useCustomEvent('initCustomApp', {});
-  const { ResourceConfig } = usePhone();
+  const config = useRecoilValue(phoneState.resourceConfig);
 
   const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
     const { data } = message;
     if (data.type === 'RELOAD') {
-      getConfigs(ResourceConfig.apps).then(setApps);
+      getConfigs(config.apps).then(setApps);
     }
   };
-
-  // We need to dispatch the current theme to each app. If we need anything else, we can add it here.
-  dispatch({ theme: settings.theme.value });
 
   useEffect(() => {
     window.addEventListener('message', handleReloadApp);
@@ -125,8 +119,8 @@ export const useExternalApps = () => {
   }, []);
 
   useEffect(() => {
-    getConfigs(ResourceConfig?.apps).then(setApps);
-  }, [ResourceConfig]);
+    getConfigs(config?.apps).then(setApps);
+  }, [config]);
 
   return apps.filter((app) => app);
 };
