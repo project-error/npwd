@@ -22,7 +22,7 @@ export class _MatchDB {
     const query = `
         SELECT npwd_match_profiles.*,
                UNIX_TIMESTAMP(npwd_match_profiles.updatedAt) AS lastActive,
-               MaxDates.lastSeen
+               MaxDates.lastSeen,
                MaxDates.liked
         FROM npwd_match_profiles
                  LEFT OUTER JOIN (
