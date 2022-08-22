@@ -1,4 +1,4 @@
-import parseUrl from 'parse-url';
+import parsePath from 'parse-path';
 
 interface GetLocationFromUrlValue {
   pathname: string;
@@ -6,7 +6,7 @@ interface GetLocationFromUrlValue {
 }
 
 export const getLocationFromUrl = (url: string): GetLocationFromUrlValue => {
-  const { pathname, search } = parseUrl(url);
+  const { href, search } = parsePath(url);
   const searchStr = '?' + (search || '');
-  return { pathname, search: searchStr };
+  return { pathname: href, search: searchStr };
 };

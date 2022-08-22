@@ -1,5 +1,5 @@
 import qs from 'qs';
-import url from 'parse-url';
+import parsePath from 'parse-path';
 
 interface IRouterLocation {
   pathname: string;
@@ -10,7 +10,7 @@ export const deleteQueryFromLocation = (
   location: Record<string, unknown> & IRouterLocation,
   key = '',
 ) => {
-  const { query } = url(location.pathname + location.search);
+  const { query } = parsePath(location.pathname + location.search);
   return `${location.pathname}/?${qs.stringify({
     ...query,
     [key]: undefined,

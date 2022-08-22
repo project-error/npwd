@@ -1,5 +1,5 @@
 import qs from 'qs';
-import url from 'parse-url';
+import parsePath from 'parse-path';
 
 interface IRouterLocation {
   pathname: string;
@@ -11,7 +11,7 @@ export const addQueryToLocation = (
   key = '',
   value = '',
 ) => {
-  const { query } = url(pathname + search);
+  const { query } = parsePath(pathname + search);
   return `${pathname}?${qs.stringify({
     ...query,
     [key]: value,
