@@ -20,6 +20,13 @@ export const usePhotoActions = () => {
     [setPhotos],
   );
 
+  const deletePhotos = useCallback(
+    (photoIds: number[]) => {
+      setPhotos((curPhotos) => [...curPhotos].filter((photo) => !photoIds.includes(photo.id)));
+    },
+    [setPhotos],
+  );
+
   const saveLocalImage = useRecoilCallback<[GalleryPhoto], void>(
     ({ snapshot }) =>
       async (dto) => {
@@ -31,5 +38,5 @@ export const usePhotoActions = () => {
     [setPhotos],
   );
 
-  return { takePhoto, deletePhoto, saveLocalImage };
+  return { takePhoto, deletePhoto, saveLocalImage, deletePhotos };
 };

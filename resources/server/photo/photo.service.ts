@@ -69,6 +69,25 @@ class _PhotoService {
     }
   }
 
+  async handleDeleteMultiplePhotos(
+    reqObj: PromiseRequest<number[]>,
+    resp: PromiseEventResp<void>,
+  ): Promise<void> {
+    const identifier = PlayerService.getIdentifier(reqObj.source);
+    const photoIds = reqObj.data;
+    try {
+      for (const photo of photoIds) {
+        await this.photoDB.deletePhotoById(photo, identifier);
+      }
+      resp({ status: 'ok' });
+    } catch (e) {
+      photoLogger.error(`Failed to delete photos, ${e.message}`, {
+        source: reqObj.source,
+      });
+      resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+    }
+  }
+
   async handleSaveImage(
     reqObj: PromiseRequest<{ url: string }>,
     resp: PromiseEventResp<GalleryPhoto>,

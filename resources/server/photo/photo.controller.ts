@@ -30,6 +30,15 @@ onNetPromise<GalleryPhoto, void>(PhotoEvents.DELETE_PHOTO, (reqObj, resp) => {
   });
 });
 
+onNetPromise<number[], void>(PhotoEvents.DELETE_MULTIPLE_PHOTOS, (reqObj, resp) => {
+  PhotoService.handleDeleteMultiplePhotos(reqObj, resp).catch((e) => {
+    photoLogger.error(
+      `Error occurred in delete multiple photos event (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+  });
+});
+
 onNetPromise<{ url: string }, GalleryPhoto>(PhotoEvents.SAVE_IMAGE, (reqObj, resp) => {
   PhotoService.handleSaveImage(reqObj, resp).catch((e) => {
     photoLogger.error(`Error occurred in save image event (${reqObj.source}), Error: ${e.message}`);

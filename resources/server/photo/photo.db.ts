@@ -18,6 +18,11 @@ export class _PhotoDB {
     const query = 'DELETE FROM npwd_phone_gallery WHERE image = ? AND identifier = ?';
     await DbInterface._rawExec(query, [photo.image, identifier]);
   }
+
+  async deletePhotoById(photo: number, identifier: string) {
+    const query = 'DELETE FROM npwd_phone_gallery WHERE id = ? AND identifier = ?';
+    await DbInterface._rawExec(query, [photo, identifier]);
+  }
 }
 
 const PhotoDB = new _PhotoDB();
