@@ -80,6 +80,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
   const isMessageImage = isImage(message.message);
 
+  const showVertIcon = isMine || isMessageImage;
+
   return (
     <>
       <Box
@@ -101,19 +103,18 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             />
           ) : (
             <StyledMessage>
-              {isImage(message.message) ? (
+              {isMessageImage ? (
                 <PictureReveal>
                   <PictureResponsive src={message.message} alt="message multimedia" />
                 </PictureReveal>
               ) : (
                 <>{message.message}</>
               )}
-              {isMine ||
-                (isImage(message.message) && (
-                  <IconButton color="primary" onClick={openMenu}>
-                    <MoreVertIcon />
-                  </IconButton>
-                ))}
+              {showVertIcon && (
+                <IconButton color="primary" onClick={openMenu}>
+                  <MoreVertIcon />
+                </IconButton>
+              )}
             </StyledMessage>
           )}
           {!isMine && (
