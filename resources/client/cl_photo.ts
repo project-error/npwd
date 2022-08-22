@@ -155,3 +155,5 @@ const takePhoto = () =>
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
 RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);
 RegisterNuiProxy(PhotoEvents.SAVE_IMAGE);
+RegisterNuiProxy(PhotoEvents.DELETE_MULTIPLE_PHOTOS);
+RegisterNuiProxy(PhotoEvents.SAVE_IMAGE);
