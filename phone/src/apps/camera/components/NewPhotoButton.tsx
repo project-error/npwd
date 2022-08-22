@@ -43,15 +43,15 @@ const NewPhotoButton = () => {
   };
 
   const handleDeletePhotos = () => {
-    fetchNui<ServerPromiseResp<number[]>>(PhotoEvents.DELETE_MULTIPLE_PHOTOS, {
-      checkedPhotos,
-    }).then((serverResp) => {
-      if (serverResp.status !== 'ok') {
-        return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
-      }
-      deletePhotos(checkedPhotos);
-      setIsEditing(false);
-    });
+    fetchNui<ServerPromiseResp<number[]>>(PhotoEvents.DELETE_MULTIPLE_PHOTOS, checkedPhotos).then(
+      (serverResp) => {
+        if (serverResp.status !== 'ok') {
+          return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
+        }
+        deletePhotos(checkedPhotos);
+        setIsEditing(false);
+      },
+    );
   };
 
   if (isLoading)
