@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { Add, Delete } from '@mui/icons-material';
 import { Fab, CircularProgress } from '@mui/material';
 import { useIsEditing } from '../hooks/state';
@@ -10,17 +9,15 @@ import { usePhotoActions } from '../hooks/usePhotoActions';
 import { useCheckedPhotosValue } from '../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { styled } from '@mui/system';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    bottom: theme.spacing(5),
-    right: theme.spacing(3),
-  },
+const FloatBtn = styled(Fab)(({ theme }) => ({
+  position: 'absolute',
+  bottom: theme.spacing(5),
+  right: theme.spacing(3),
 }));
 
 const NewPhotoButton = () => {
-  const classes = useStyles();
   const [isEditing, setIsEditing] = useIsEditing();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const checkedPhotos = useCheckedPhotosValue();
@@ -59,19 +56,15 @@ const NewPhotoButton = () => {
 
   if (isLoading)
     return (
-      <Fab className={classes.root} color="primary" disabled={true}>
+      <FloatBtn color="primary" disabled={true}>
         <CircularProgress />
-      </Fab>
+      </FloatBtn>
     );
 
   return (
-    <Fab
-      className={classes.root}
-      color="primary"
-      onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}
-    >
+    <FloatBtn color="primary" onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}>
       {!isEditing ? <Add /> : <Delete />}
-    </Fab>
+    </FloatBtn>
   );
 };
 
