@@ -102,6 +102,6 @@ exps('endCall', async () => {
   }
 });
 
-exps('sendUIMessage', (type: string, payload = {}) => {
-  SendNUIMessage({ type, payload });
+exps('sendUIMessage', (action: { type: string; payload: unknown }) => {
+  SendNUIMessage(action);
 });
