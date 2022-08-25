@@ -24,6 +24,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const query = useQueryParams();
   const referalImage = query?.image || null;
+  const referalNote = query?.note || null;
   const conversationId = useConversationId();
   const { addAlert } = useSnackbar();
   const history = useHistory();
@@ -66,6 +67,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
           isOpen={contextMenuOpen}
           onClose={() => setContextMenuOpen(false)}
           image={referalImage}
+          note={referalNote}
         />
         <Box id={CONVERSATION_ELEMENT_ID} style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
           <Box
