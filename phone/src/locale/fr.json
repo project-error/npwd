@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Erreur fatale",
       "TOP_LEVEL_ERR_ACTION": "Rafraîchir",
-      "TOP_LEVEL_ERR_MSG": "NPWD a rencontré une erreur impossible à contourner. Vous devez recharger la fenêtre NUI. L'erreur est affichée en dessous pour pouvoir la rapporter aux développeurs."
+      "TOP_LEVEL_ERR_MSG": "NPWD a rencontré une erreur impossible à contourner. Vous devez recharger la fenêtre NUI. L'erreur est affichée en dessous pour pouvoir la rapporter aux développeurs.",
+      "APP_CRASHED_TITLE": "Erreur fatale d'une application",
+      "APP_CRASHED_MSG": "Cette application a rencontré une erreur impossible à contourner.",
+      "APP_CRASHED_ACTION": "Recharger l'application"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Aucune notification(s)"
