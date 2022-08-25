@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputBase } from '@ui/components/Input';
 import { useCall } from '@os/call/hooks/useCall';
+import { toggleKeys } from '@ui/components/Input';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -65,6 +66,7 @@ export const DialerInput: React.FC = () => {
       <IconButton
         className={classes.iconBtn}
         onClick={() => handleNewContact(inputVal)}
+        onMouseUp={() => {toggleKeys(false);}}
         size="large"
       >
         <PersonAddIcon fontSize="large" />
