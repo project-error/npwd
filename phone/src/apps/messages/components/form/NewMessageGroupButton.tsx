@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface NewMessageGroupButtonProps {
   onClick(): void;
+  onMouseUp(): void,
 }
 
 export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ onClick }) => {

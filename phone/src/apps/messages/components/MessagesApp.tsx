@@ -11,6 +11,7 @@ import NewMessageGroupButton from './form/NewMessageGroupButton';
 import { MessagesThemeProvider } from '../providers/MessagesThemeProvider';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
+import { toggleKeys } from '@ui/components';
 
 export const MessagesApp = () => {
   const messages = useApp('MESSAGES');
@@ -39,7 +40,7 @@ export const MessagesApp = () => {
             </React.Suspense>
           </AppContent>
           <Route exact path="/messages">
-            <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
+            <NewMessageGroupButton onClick={() => history.push('/messages/new')} onMouseUp={() => {toggleKeys(false);}}/>
           </Route>
         </WordFilterProvider>
       </AppWrapper>

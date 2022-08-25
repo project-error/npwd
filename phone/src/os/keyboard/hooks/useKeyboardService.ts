@@ -102,11 +102,10 @@ export const useKeyboardService = () => {
   );
 
   const closePhoneHandler = (event) => {
-    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase()) || call) {
-      return;
+    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+      event.target.blur();
     }
-
-    closePhone();
+      closePhone();  
   };
 
   useEffect(
