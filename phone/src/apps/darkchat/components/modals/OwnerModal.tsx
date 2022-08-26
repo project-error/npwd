@@ -53,8 +53,8 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
     <Modal visible={open} handleClose={closeModal}>
       <TabContext value={tabValue}>
         <TabList indicatorColor="secondary" textColor="secondary" onChange={handleTabChange}>
-          <Tab label="Members" value="1" />
-          <Tab label="Danger zone" value="2" />
+          <Tab label={t('DARKCHAT.MEMBERS')} value="1" />
+          <Tab label={t('DARKCHAT.DANGER_ZONE')} value="2" />
         </TabList>
         <TabPanel value="1">
           <List>
@@ -62,7 +62,7 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
               filteredMembers.map((member) => (
                 <ListItem
                   secondaryAction={
-                    <Tooltip title="Transfer ownership" placement="left">
+                    <Tooltip title={t('DARKCHAT.TRANSFER_OWNERSHIP')} placement="left">
                       <IconButton
                         onClick={() =>
                           handleTransferOwnership(member.identifier, member.phoneNumber)
@@ -87,13 +87,14 @@ export const OwnerModal: React.FC<OwnerModalProps> = ({ open, closeModal }) => {
 
             <Box mt={2} mb={2}>
               <Typography>
-                Type <span style={{ fontWeight: 'bold' }}>{activeDarkChat.identifier}</span> to
-                confirm.
+                {t('DARKCHAT.TYPE_TO_CONFIRM', {
+                  identifier: activeDarkChat.identifier,
+                })}
               </Typography>
 
               <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2}>
                 <TextField
-                  placeholder="Channel ID"
+                  placeholder={t('DARKCHAT.NEW_CHANNEL_INPUT_PLACEHOLDER')}
                   value={channelValue}
                   onChange={(e) => setChannelValue(e.currentTarget.value)}
                 />

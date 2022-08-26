@@ -12,6 +12,7 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { TextField } from '@ui/components/Input';
 import { useModal } from '@apps/darkchat/hooks/useModal';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   background: string;
@@ -37,6 +38,7 @@ const DarkChatHeader: React.FC = () => {
   const { leaveChannel, updateChannelLabel } = useDarkchatAPI();
   const { goBack } = useHistory();
   const myPhoneNumber = useMyPhoneNumber();
+  const [t] = useTranslation();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [label, setLabel] = useState<string>(activeConversation.label);
@@ -103,7 +105,7 @@ const DarkChatHeader: React.FC = () => {
             <AdminPanelSettingsIcon />
           </IconButton>
         ) : (
-          <LeaveButton onClick={handleLeaveChannel}>Leave</LeaveButton>
+          <LeaveButton onClick={handleLeaveChannel}>{t('DARKCHAT.LEAVE')}</LeaveButton>
         )}
       </Box>
     </Header>

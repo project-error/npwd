@@ -256,14 +256,19 @@
         "FETCH_MEMBERS_FAILED": "Failed to fetch members",
         "DELETE_CHANNEL_FAILED": "Failed to delete channel"
       },
+      "TYPE_TO_CONFIRM": "Type \"{{ identifier }}\" to confirm.",
+      "LEAVE": "Leave",
       "NEW_CHANNEL_TITLE": "Join channel on ID",
       "DELETE_CHANNEL_TITLE": "Delete channel",
       "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
       "JOIN_BUTTON": "Join channel",
+      "TRANSFER_OWNERSHIP": "Transfer ownership",
       "MESSAGE_PLACEHOLDER": "Send a message",
       "MEDIA_PLACEHOLDER": "Image URL",
       "MEDIA_UPLOAD": "Upload Image",
-      "MEDIA_GALLERY": "CHOOSE IMAGE"
+      "MEDIA_GALLERY": "CHOOSE IMAGE",
+      "MEMBERS": "Members",
+      "DANGER_ZONE": "Danger zone"
     },
     "RELATIVE_TIME": {
       "future": "in %s",
