@@ -228,6 +228,31 @@
       "ACTIONS_TITLE": "Allmänt",
       "ME": "Jag"
     },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Meddelanden kunde inte laddas in",
+        "JOIN_CHANNEL_FAILED": "Misslyckades att gå med i chattrummet",
+        "LEAVE_CHANNEL_FAILED": "Misslyckades att lämna chattrummet",
+        "SEND_MESSAGE_FAILED": "Meddelandet skickades inte",
+        "UPDATE_LABEL_FAILED": "Misslyckades med namnbytet",
+        "TRANSFER_OWNERSHIP_FAILED": "Ägarbyte misslyckades",
+        "FETCH_MEMBERS_FAILED": "Medlemmar kunde inte laddas in",
+        "DELETE_CHANNEL_FAILED": "Något gick fel vid borttagningen"
+      },
+      "TYPE_TO_CONFIRM": "Skriv \"{{ identifier }}\" för att godkänna.",
+      "LEAVE": "Lämna",
+      "NEW_CHANNEL_TITLE": "Gå med i chattrum",
+      "DELETE_CHANNEL_TITLE": "Ta bort chattrum",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Chattrumsnamn",
+      "JOIN_BUTTON": "Gå med",
+      "TRANSFER_OWNERSHIP": "Överför ägarskap",
+      "MESSAGE_PLACEHOLDER": "Meddelande...",
+      "MEDIA_PLACEHOLDER": "Bildlänk",
+      "MEDIA_UPLOAD": "Ladda upp bild",
+      "MEDIA_GALLERY": "Galleri",
+      "MEMBERS": "Medlemmar",
+      "DANGER_ZONE": "Admin"
+    },
     "RELATIVE_TIME": {
       "future": "om %s",
       "past": "%s sedan",
@@ -257,6 +282,7 @@
       "CLOSE": "Stäng",
       "CANCEL": "Avbryt",
       "TITLE": "Titel",
+      "SEND": "Skicka",
       "CONTENT": "Innehåll",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
@@ -276,6 +302,7 @@
     "APPS_CAMERA": "Kamera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Resultatet kopierades till urklipp!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Tryck för att visa",
     "GENERIC_LOADING": "Laddar...",
     "GENERIC_WAIT": "Vänta...",
