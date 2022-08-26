@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import PinDrop from '@mui/icons-material/PinDrop';
 import { ContextMenu, IContextMenuOption } from '@ui/components/ContextMenu';
 import qs from 'qs';
@@ -14,12 +15,14 @@ import fetchNui from '../../../../utils/fetchNui';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import useMessages from '../../hooks/useMessages';
 import { Location } from '@typings/messages';
+import { MessageNoteModal } from './MessageNoteModal';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
   onClose: () => void;
   messageGroup: MessageConversation | undefined;
   image?: string;
+  note?: string;
 }
 
 const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
@@ -27,16 +30,18 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   onClose,
   messageGroup,
   image,
+  note,
 }) => {
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
   const [imagePreview, setImagePreview] = useState(null);
+  const [notePreview, setNotePreview] = useState(null);
   const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
   const { sendEmbedMessage } = useMessageAPI();
   const { activeMessageConversation } = useMessages();
 
-  const modalsVisible = imagePreview || contactModalOpen;
+  const modalsVisible = imagePreview || contactModalOpen || notePreview;
 
   const menuOptions: IContextMenuOption[] = useMemo(
     () => [
@@ -54,6 +59,16 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         label: t('MESSAGES.CONTACT_OPTION'),
         icon: <ContactPageIcon />,
         onClick: () => setContactModalOpen(true),
+      },
+      {
+        label: t('MESSAGES.NOTE_OPTION'),
+        icon: <TextSnippetIcon />,
+        onClick: () =>
+          history.push(
+            `/notes?${qs.stringify({
+              referal: encodeURIComponent(pathname + search),
+            })}`,
+          ),
       },
       {
         label: t('MESSAGES.LOCATION_OPTION'),
@@ -85,6 +100,15 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         messageGroup={messageGroup}
         onClose={onClose}
       />
+      {
+        <MessageNoteModal
+          noteId={note}
+          notePreview={notePreview}
+          setNotePreview={setNotePreview}
+          messageGroup={messageGroup}
+          onClose={onClose}
+        />
+      }
       {
         <MessageContactModal
           messageGroup={messageGroup}

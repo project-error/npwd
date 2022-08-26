@@ -10,6 +10,9 @@ import fetchNui from '../../../../utils/fetchNui';
 import TravelExplore from '@mui/icons-material/TravelExplore';
 import { MessageEvents } from '@typings/messages';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import { NoteItem } from '@typings/notes';
+import qs from 'qs';
 
 interface MessageEmbedProps {
   type: string;
@@ -27,6 +30,7 @@ const MessageEmbed: React.FC<MessageEmbedProps> = ({ type, embed, isMine, messag
   const embedType: MessageEmbedType = {
     contact: <ContactEmbed embed={embed} isMine={isMine} openMenu={openMenu} />,
     location: <LocationEmbed embed={embed} isMine={isMine} message={message} openMenu={openMenu} />,
+    note: <NoteEmbed embed={embed} isMine={isMine} openMenu={openMenu} />,
   };
 
   return <>{embedType[type]}</>;
@@ -72,6 +76,51 @@ const ContactEmbed = ({
           <MoreVertIcon />
         </IconButton>
       )}
+    </StyledMessage>
+  );
+};
+
+const NoteEmbed = ({
+  isMine,
+  embed,
+  openMenu,
+}: {
+  isMine: boolean;
+  embed: NoteItem;
+  openMenu: () => void;
+}) => {
+  const [t] = useTranslation();
+  const history = useHistory();
+  const { pathname } = useLocation();
+
+  const handleViewNote = () => {
+    const queryStr = qs.stringify({
+      title: embed?.title,
+      content: embed?.content,
+    });
+
+    const referal = encodeURIComponent(pathname);
+    history.push(`/notes/?${queryStr}&referal=${referal}`);
+  };
+
+  return (
+    <StyledMessage>
+      <Box>
+        <Typography>{embed?.title}</Typography>
+        <Typography>{embed?.content.substring(0, 8) + ' ...'}</Typography>
+      </Box>
+      <Box>
+        <Tooltip title={t('MESSAGES.NOTE_TOOLTIP')}>
+          <IconButton color="primary" onClick={handleViewNote}>
+            <TextSnippetIcon />
+          </IconButton>
+        </Tooltip>
+        {isMine && (
+          <IconButton color="primary" onClick={openMenu}>
+            <MoreVertIcon />
+          </IconButton>
+        )}
+      </Box>
     </StyledMessage>
   );
 };

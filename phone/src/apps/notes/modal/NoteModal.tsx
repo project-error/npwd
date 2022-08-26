@@ -7,7 +7,6 @@ import { StatusButton } from '@ui/components/StatusButton';
 import { TextField } from '@ui/components/Input';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useApps } from '@os/apps/hooks/useApps';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
 export const NoteModal: React.FC = () => {
@@ -20,10 +19,7 @@ export const NoteModal: React.FC = () => {
   const [noteContent, setNoteContent] = useState('');
 
   const history = useHistory();
-  const { getApp } = useApps();
   const location = useLocation();
-
-  const notesApp = useMemo(() => getApp('NOTES'), [getApp]);
 
   const isNewNote = !Boolean(selectedNote?.id);
 
@@ -53,6 +49,7 @@ export const NoteModal: React.FC = () => {
   const handleNewNote = () => {
     addNewNote({ title: noteTitle, content: noteContent })
       .then(() => {
+        if (location.search) history.goBack();
         setModalVisible(false);
       })
       .catch(console.error);
@@ -72,7 +69,7 @@ export const NoteModal: React.FC = () => {
 
   const handleClearContent = () => {
     setSelectedNote(null);
-    if (location.search) history.push(notesApp.path);
+    if (location.search) history.goBack();
   };
 
   if (selectedNote === null) return null;
