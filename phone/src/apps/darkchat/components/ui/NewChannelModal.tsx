@@ -18,6 +18,8 @@ export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeMod
 
   const handleJoinChannel = () => {
     addChannel({ channelIdentifier: channelValue });
+
+    closeModal();
   };
 
   return (
