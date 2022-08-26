@@ -192,3 +192,42 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_gallery`
     PRIMARY KEY (id),
     INDEX `identifier` (`identifier`)
 );
+
+CREATE TABLE `npwd_darkchat_channels` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`channel_identifier` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`label` VARCHAR(255) NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `darkchat_channels_channel_identifier_uindex` (`channel_identifier`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=20
+;
+
+CREATE TABLE `npwd_darkchat_channel_members` (
+	`channel_id` INT(11) NOT NULL,
+	`user_identifier` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`is_owner` TINYINT(4) NOT NULL DEFAULT '0',
+	INDEX `npwd_darkchat_channel_members_npwd_darkchat_channels_id_fk` (`channel_id`) USING BTREE,
+	CONSTRAINT `npwd_darkchat_channel_members_npwd_darkchat_channels_id_fk` FOREIGN KEY (`channel_id`) REFERENCES `npwd_darkchat_channels` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `npwd_darkchat_messages` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`channel_id` INT(11) NOT NULL,
+	`message` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`user_identifier` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`createdAt` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	`is_image` TINYINT(4) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `darkchat_messages_darkchat_channels_id_fk` (`channel_id`) USING BTREE,
+	CONSTRAINT `darkchat_messages_darkchat_channels_id_fk` FOREIGN KEY (`channel_id`) REFERENCES `npwd_darkchat_channels` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=31
+;

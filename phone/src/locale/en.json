@@ -245,6 +245,26 @@
       "ACTIONS_TITLE": "Actions",
       "ME": "Me"
     },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Failed to fetch messages",
+        "JOIN_CHANNEL_FAILED": "Failed to join channel",
+        "LEAVE_CHANNEL_FAILED": "Failed to leave channel",
+        "SEND_MESSAGE_FAILED": "Failed to send message",
+        "UPDATE_LABEL_FAILED": "Failed to update channel name",
+        "TRANSFER_OWNERSHIP_FAILED": "Failed to update ownership",
+        "FETCH_MEMBERS_FAILED": "Failed to fetch members",
+        "DELETE_CHANNEL_FAILED": "Failed to delete channel"
+      },
+      "NEW_CHANNEL_TITLE": "Join channel on ID",
+      "DELETE_CHANNEL_TITLE": "Delete channel",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
+      "JOIN_BUTTON": "Join channel",
+      "MESSAGE_PLACEHOLDER": "Send a message",
+      "MEDIA_PLACEHOLDER": "Image URL",
+      "MEDIA_UPLOAD": "Upload Image",
+      "MEDIA_GALLERY": "CHOOSE IMAGE"
+    },
     "RELATIVE_TIME": {
       "future": "in %s",
       "past": "%s ago",
@@ -277,6 +297,7 @@
       "CONTENT": "Content",
       "SHARE": "Share",
       "ADD": "Add",
+      "SEND": "Send",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
     },
@@ -295,6 +316,7 @@
     "APPS_CAMERA": "Camera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",
