@@ -30,6 +30,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
         props.onBlur(e);
       }
     }}
+    onFocusCapture={() => {
+      toggleKeys(false);
+    }}
   />
 ));
 
@@ -48,6 +51,9 @@ export const InputBase: React.FC<InputBaseProps> = forwardRef((props, ref) => (
       if (props.onBlur) {
         props.onBlur(e);
       }
+    }}
+    onFocusCapture={() => {
+      toggleKeys(false);
     }}
   />
 ));
