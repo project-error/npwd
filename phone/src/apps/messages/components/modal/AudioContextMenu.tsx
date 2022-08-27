@@ -59,10 +59,6 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     audioRef.current.src = recordedAudio;
   }, [recordedAudio]);
 
-  const updateCurrentTime = () => {
-    setCurrentTime(audioRef.current.currentTime);
-  };
-
   useEffect(() => {
     console.log('rerender');
     if (audioRef.current) {
