@@ -81,6 +81,7 @@
     "enabled": false,
     "authorizationHeader": "PE-Secret",
     "token": "",
-    "url": ""
+    "url": "",
+    "returnedDataIndexes": ["url"]
   }
 }

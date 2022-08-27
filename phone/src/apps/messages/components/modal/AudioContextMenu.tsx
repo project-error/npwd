@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Button, ButtonGroup, IconButton, Paper, Tooltip } from '@mui/material';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  IconButton,
+  Paper,
+  Tooltip,
+} from '@mui/material';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CloseIcon from '@mui/icons-material/Close';
 import StopIcon from '@mui/icons-material/Stop';
@@ -38,19 +46,32 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     startRecording,
     stopRecording,
   } = useRecorder();
-  //const { currentTime, duration, playing,  } = useAudioPlayer(recordedAudio);
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
   const { uploadRecording } = useAudioMessageAPI();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
 
   const audioRef = useRef(new Audio());
 
-  const currentTime = 0;
   const duration = audioRef.current.duration;
 
   useEffect(() => {
     audioRef.current.src = recordedAudio;
   }, [recordedAudio]);
+
+  const updateCurrentTime = () => {
+    setCurrentTime(audioRef.current.currentTime);
+  };
+
+  useEffect(() => {
+    console.log('rerender');
+    if (audioRef.current) {
+      audioRef.current.ontimeupdate = () => {
+        // we need to trunc becuase dayjs does not like decimals
+        setCurrentTime(Math.trunc(audioRef.current.currentTime));
+      };
+    }
+  });
 
   const play = async () => {
     await audioRef.current.play();
@@ -84,6 +105,16 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     }
   };
 
+  if (isSending) {
+    return (
+      <Paper variant="outlined">
+        <Box display="flex" height={50} alignItems="center" justifyContent="center">
+          <CircularProgress size={30} />
+        </Box>
+      </Paper>
+    );
+  }
+
   return (
     <Paper variant="outlined">
       <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -105,12 +136,10 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
         ) : recordedAudio && !isNaN(duration) ? (
           <Box>
             <p>
-              {dayjs.duration(currentTime * 1000).format('mm:ss')} -{' '}
-              {duration === Infinity ? (
-                <p>Loading duration...</p>
-              ) : (
-                dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')
-              )}
+              {dayjs.duration(currentTime * 1000).format('mm:ss')}
+              {duration === Infinity
+                ? null
+                : ` - ${dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')}`}
             </p>
           </Box>
         ) : (

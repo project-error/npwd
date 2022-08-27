@@ -199,21 +199,29 @@ const AudioEmbed = ({
 
   return (
     <AudioMessage>
-      <IconButton onClick={playing ? pause : play}>
-        {playing ? (
-          <PauseIcon sx={{ color: '#232323' }} />
-        ) : (
-          <PlayArrowIcon sx={{ color: '#232323' }} />
-        )}
-      </IconButton>
-      <Box sx={{ width: '60%' }}>
-        <LinearProgress variant="determinate" value={calculateProgress} />
+      <Box display="flex" flexDirection="column" width="100%">
+        <Box>
+          <IconButton onClick={playing ? pause : play}>
+            {playing ? (
+              <PauseIcon sx={{ color: '#232323' }} />
+            ) : (
+              <PlayArrowIcon sx={{ color: '#232323' }} />
+            )}
+          </IconButton>
+          <Box sx={{ width: '60%' }}>
+            {!calculateProgress && playing ? (
+              <LinearProgress />
+            ) : (
+              <LinearProgress variant="determinate" value={calculateProgress} />
+            )}
+          </Box>
+          {isMine && (
+            <IconButton color="primary" onClick={openMenu}>
+              <MoreVertIcon />
+            </IconButton>
+          )}
+        </Box>
       </Box>
-      {isMine && (
-        <IconButton color="primary" onClick={openMenu}>
-          <MoreVertIcon />
-        </IconButton>
-      )}
     </AudioMessage>
   );
 };
