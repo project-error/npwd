@@ -4,6 +4,7 @@ import { Add, Delete } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 import { useCheckedConversationsValue, useIsEditing } from '../../hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { toggleKeys } from '@ui/components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 interface NewMessageGroupButtonProps {
   onClick(): void;
-  onMouseUp(): void,
 }
 
 export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ onClick }) => {
@@ -34,6 +34,7 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
       className={classes.root}
       color="primary"
       onClick={!isEditing ? onClick : handleDeleteConversations}
+      onMouseUp={() => {toggleKeys(false);}}
     >
       {!isEditing ? <Add /> : <Delete />}
     </Fab>

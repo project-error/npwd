@@ -40,7 +40,7 @@ export const MessagesApp = () => {
             </React.Suspense>
           </AppContent>
           <Route exact path="/messages">
-            <NewMessageGroupButton onClick={() => history.push('/messages/new')} onMouseUp={() => {toggleKeys(false);}}/>
+            <NewMessageGroupButton onClick={() => history.push('/messages/new')} />
           </Route>
         </WordFilterProvider>
       </AppWrapper>
