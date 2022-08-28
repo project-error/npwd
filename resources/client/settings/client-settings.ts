@@ -11,6 +11,9 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
 
   KvpService.setKvp(KvpItems.NPWD_RINGTONE, cfg.ringtone.value);
   KvpService.setKvp(KvpItems.NPWD_NOTIFICATION, cfg.notiSound.value);
+  const frameValue: string = cfg.frame.value;
+  const frameName = frameValue.substr(0, frameValue.lastIndexOf('.'));
+  KvpService.setKvp(KvpItems.NPWD_FRAME, `prop_npwd_${frameName}`);
   cb({});
 });
 
