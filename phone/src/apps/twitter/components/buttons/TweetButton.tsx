@@ -2,6 +2,7 @@ import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Fab } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
+import { toggleKeys } from '@ui/components';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,7 +20,7 @@ export function TweetButton({ openModal }) {
 
   return (
     <div className={classes.root}>
-      <Fab className={classes.button} color="primary" onClick={openModal}>
+      <Fab className={classes.button} color="primary" onClick={openModal} onMouseUp={() => {toggleKeys(false);}}>
         <CreateIcon />
       </Fab>
     </div>
