@@ -60,7 +60,6 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
   }, [recordedAudio]);
 
   useEffect(() => {
-    console.log('rerender');
     if (audioRef.current) {
       audioRef.current.ontimeupdate = () => {
         // we need to trunc becuase dayjs does not like decimals
@@ -93,8 +92,7 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
     try {
       if (!blob) return;
       setIsSending(true);
-      await uploadRecording(blob);
-      onClose();
+      await uploadRecording(blob, onClose);
     } catch (err) {
       setIsSending(false);
       console.error(err);

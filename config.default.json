@@ -80,7 +80,6 @@
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",
-    "token": "",
     "url": "",
     "returnedDataIndexes": ["url"]
   }

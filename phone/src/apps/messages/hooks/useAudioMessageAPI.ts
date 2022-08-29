@@ -7,6 +7,8 @@ import fetchNui from '@utils/fetchNui';
 import { useTranslation } from 'react-i18next';
 import { useActiveMessageConversation } from './state';
 import { useMessageActions } from './useMessageActions';
+import { AudioEvents, AudioRequest, AudioResponse } from '@typings/audio';
+import { blobToBase64 } from '@utils/seralize';
 
 export const useAudioMessageAPI = () => {
   const activeConversation = useActiveMessageConversation();
@@ -14,31 +16,24 @@ export const useAudioMessageAPI = () => {
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
   const { updateLocalMessages } = useMessageActions();
-  const { ResourceConfig } = usePhone();
-  const uploadRecording = async (blob: Blob) => {
-    try {
-      const form_data = new FormData();
-      form_data.append('recording', blob);
 
-      const res = await fetch(ResourceConfig.voiceMessage.url, {
-        method: 'POST',
-        cache: 'no-store',
-        mode: 'cors',
-        headers: {
-          [ResourceConfig.voiceMessage.authorizationHeader]: ResourceConfig.voiceMessage.token,
-        },
-        body: form_data,
-      });
+  const uploadRecording = async (blob: Blob, onClose: () => void) => {
+    const b64 = await blobToBase64(blob);
 
-      const response = await res.json();
-
-      let recordingUrl: string = '';
-      for (const index of ResourceConfig.voiceMessage.returnedDataIndexes)
-        recordingUrl = response[index];
+    fetchNui<ServerPromiseResp<AudioResponse>, AudioRequest>(AudioEvents.UPLOAD_AUDIO, {
+      file: b64,
+      size: blob.size,
+    }).then((audioRes) => {
+      if (audioRes.status !== 'ok') {
+        return addAlert({
+          type: 'error',
+          message: audioRes.errorMsg,
+        });
+      }
 
       fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
         conversationId: activeConversation.id,
-        embed: JSON.stringify({ type: 'audio', url: recordingUrl }),
+        embed: JSON.stringify({ type: 'audio', url: audioRes.data.url }),
         is_embed: true,
         tgtPhoneNumber: '',
         conversationList: activeConversation.conversationList,
@@ -54,14 +49,9 @@ export const useAudioMessageAPI = () => {
 
         console.log(res.data);
         updateLocalMessages(res.data);
+        onClose();
       });
-    } catch (err) {
-      console.error(err);
-      return addAlert({
-        type: 'error',
-        message: t('MESSAGE.FEEDBACK.NEW_MESSAGE_FAILED'),
-      });
-    }
+    });
   };
 
   return {
