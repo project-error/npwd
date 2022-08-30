@@ -52,6 +52,7 @@ module.exports = (env, mode) => ({
   plugins: [
     new ModuleFederationPlugin({
       name: 'layout',
+      filename: 'remoteEntry.js',
       exposes: {
         './ui': './src/ui/components/index',
       },
