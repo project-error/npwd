@@ -32,11 +32,13 @@ class _AudioService {
         body: form_data,
       });
 
-      const response: any = await res.json();
       if (res.status !== 200) {
-        console.log('hello, something failed when uploading audio:', response);
-        return resp({ status: 'error', errorMsg: response });
+        const errorText = await res.text();
+        audioLogger.error(`Failed to upload audio. Error: ${errorText}`);
+        return resp({ status: 'error', errorMsg: 'Failed to upload audio' });
       }
+
+      const response: any = await res.json();
 
       let recordingUrl = '';
       for (const index of config.voiceMessage.returnedDataIndexes) {
