@@ -22,7 +22,7 @@
   "images": {
     "url": "https://api.projecterror.dev/image",
     "type": "pe_image",
-    "imageEncoding": "jpg",
+    "imageEncoding": "webp",
     "contentType": "multipart/form-data",
     "useContentType": false,
     "authorizationHeader": "PE-Secret",

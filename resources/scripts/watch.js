@@ -16,7 +16,7 @@ build({
     },
   },
   platform: 'node',
-  target: 'es2016',
+  target: 'es2020',
 })
   .then(() => {
     console.log('Server built successfully');

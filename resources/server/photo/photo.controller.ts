@@ -3,7 +3,7 @@ import PhotoService from './photo.service';
 import { photoLogger } from './photo.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
-onNetPromise<string, GalleryPhoto>(PhotoEvents.UPLOAD_PHOTO, (reqObj, resp) => {
+onNetPromise<void, GalleryPhoto>(PhotoEvents.UPLOAD_PHOTO, (reqObj, resp) => {
   PhotoService.handleUploadPhoto(reqObj, resp).catch((e) => {
     photoLogger.error(
       `Error occurred in upload photo event (${reqObj.source}), Error: ${e.message}`,

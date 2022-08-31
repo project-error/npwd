@@ -8,15 +8,6 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 import { ServerPromiseResp } from '@typings/common';
 
-let SCREENSHOT_BASIC_TOKEN: string;
-setImmediate(() => {
-  ClUtils.emitNetPromise<ServerPromiseResp<string>>(PhotoEvents.GET_AUTHORISATION_TOKEN).then(
-    ({ data }) => {
-      SCREENSHOT_BASIC_TOKEN = data;
-    },
-  );
-});
-
 const exp = global.exports;
 
 let inCameraMode = false;
@@ -105,7 +96,7 @@ const handleTakePicture = async () => {
     animationService.openPhone();
     emit('npwd:disableControlActions', true);
   }, 200);
-  const resp = await takePhoto();
+  const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO);
   inCameraMode = false;
   return resp;
 };
@@ -120,37 +111,6 @@ const handleCameraExit = async () => {
   openPhoneTemp();
   inCameraMode = false;
 };
-
-const takePhoto = () =>
-  new Promise((res, rej) => {
-    // Return and log error if screenshot basic token not found
-    if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.useAuthorization) {
-      return console.error('Screenshot basic token not found. Please set in server.cfg');
-    }
-    exp['screenshot-basic'].requestScreenshotUpload(
-      config.images.url,
-      config.images.type,
-      {
-        encoding: config.images.imageEncoding,
-        headers: {
-          [config.images.useAuthorization &&
-          config.images
-            .authorizationHeader]: `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`,
-          [config.images.useContentType && 'Content-Type']: config.images.contentType,
-        },
-      },
-      async (data: any) => {
-        try {
-          let parsedData = JSON.parse(data);
-          for (const index of config.images.returnedDataIndexes) parsedData = parsedData[index];
-          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
-          res(resp);
-        } catch (e) {
-          rej(e.message);
-        }
-      },
-    );
-  });
 
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
 RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);
