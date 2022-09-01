@@ -13,6 +13,7 @@ import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { OnCallMap } from './middleware/onCall';
 import PlayerService from '../players/player.service';
 import MessagesService from '../messages/messages.service';
+import { v4 as uuidv4 } from 'uuid';
 
 onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, async (reqObj, resp) => {
   const funcRef = OnCallMap.get(reqObj.data.receiverNumber);
@@ -54,18 +55,24 @@ onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, async (r
         });
       });
     } catch (e) {
-      return resp({
+      const tempSaveCallObj = {
+        identifier: uuidv4(),
+        isTransmitter: true,
+        transmitter: incomingCaller.number,
+        receiver: reqObj.data.receiverNumber,
+        is_accepted: false,
+        isUnavailable: true,
+        start: Math.floor(new Date().getTime() / 1000).toString(),
+      };
+
+      resp({
         status: 'ok',
-        data: {
-          transmitter: incomingCaller.number,
-          isTransmitter: true,
-          receiver: reqObj.data.receiverNumber,
-          isUnavailable: true,
-          is_accepted: false,
-          start: Math.floor(new Date().getTime() / 1000).toString(),
-          identifier: caller.getIdentifier(),
-        },
+        data: tempSaveCallObj,
       });
+
+      return setTimeout(() => {
+        emitNet(CallEvents.WAS_REJECTED, reqObj.source, tempSaveCallObj);
+      }, 2000);
     }
   }
 
