@@ -12,3 +12,11 @@ export interface CreatePlayerInstance {
   identifier: string;
   phoneNumber: string;
 }
+
+export interface ExportedPlayerData {
+  phoneNumber: string;
+  firstName: string;
+  lastName: string;
+  name: string;
+  identifier: string;
+}
