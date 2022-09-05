@@ -43,3 +43,19 @@ if (config.general.useResourceIntegration) {
 exp('getPhoneNumber', (src: number): string => {
   return PlayerService.getPlayer(src).getPhoneNumber();
 });
+
+exp('getPlayerIdentifier', (src: number): string => {
+  return PlayerService.getIdentifier(src);
+});
+
+exp('getPlayerName', (src: number): string => {
+  return PlayerService.getPlayer(src).getName();
+});
+
+exp('getPlayerFirstName', (src: number): string => {
+  return PlayerService.getPlayer(src).getFirstName();
+});
+
+exp('getPlayerLastName', (src: number): string => {
+  return PlayerService.getPlayer(src).getLastName();
+});
