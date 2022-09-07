@@ -19,4 +19,5 @@ export interface ExportedPlayerData {
   lastName: string;
   name: string;
   identifier: string;
+  source: number;
 }

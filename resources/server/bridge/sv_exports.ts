@@ -84,5 +84,6 @@ exp('getPlayerData', async (locator: PlayerDataExportArgs): Promise<ExportedPlay
     lastName: player.getLastName(),
     name: player.getName(),
     identifier: player.getIdentifier(),
+    source: player.source,
   };
 });
