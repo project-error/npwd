@@ -1,40 +1,30 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { activeNotificationIds } from '@os/new-notifications/state';
+import { useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { DEFAULT_ALERT_HIDE_TIME } from '@os/notifications/notifications.constants';
 import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
-  const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
-  const { currentAlert } = useNotifications();
+  const visibility = useRecoilValue(phoneState.visibility);
   const [{ zoom }] = useSettings();
-
+  const activeNotifications = useRecoilValue(activeNotificationIds);
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
-  const notificationTimer = useRef<NodeJS.Timeout>();
-
   useEffect(() => {
-    if (visibility) {
+    let timer = null;
+    if (activeNotifications.length && !visibility) {
+      setNotifVisibility(true);
+      timer = setTimeout(() => {
+        setNotifVisibility(false);
+      }, 3000);
+    } else {
       setNotifVisibility(false);
     }
-  }, [visibility]);
 
-  useEffect(() => {
-    if (!visibility && currentAlert) {
-      setNotifVisibility(true);
-      if (notificationTimer.current) {
-        clearTimeout(notificationTimer.current);
-        notificationTimer.current = undefined;
-      }
-      if (currentAlert?.keepWhenPhoneClosed) {
-        return;
-      }
-      notificationTimer.current = setTimeout(() => {
-        setNotifVisibility(false);
-      }, DEFAULT_ALERT_HIDE_TIME);
-    }
-  }, [currentAlert, visibility, setVisibility]);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [activeNotifications, visibility]);
 
   const bottom = useMemo(() => {
     if (!visibility) {

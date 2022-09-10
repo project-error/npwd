@@ -1,7 +1,7 @@
 import { useSnackbar } from 'notistack';
 import { useRecoilCallback } from 'recoil';
 import { useApps } from '../apps/hooks/useApps';
-import { NotificationBaseComponent } from './components/NotificationBase';
+//import { NotificationBaseComponent } from './components/NotificationBase';
 import {
   notifications,
   allNotificationIds,
@@ -18,12 +18,12 @@ interface NotificationProps {
   clearAllNotifications: () => void;
 }
 
-type VariantMap = {
+/*type VariantMap = {
   npwdNotification: NotificationBaseComponent;
-};
+};*/
 
 export const useNotification = (): NotificationProps => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar<VariantMap>();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { getApp } = useApps();
 
   const enqueueNotification = useRecoilCallback(

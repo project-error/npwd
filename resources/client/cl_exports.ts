@@ -9,6 +9,7 @@ import { ClUtils } from './client';
 import { CallService, callService } from './calls/cl_calls.service';
 import { animationService } from './animations/animation.controller';
 import { CallEvents } from '../../typings/call';
+import { CreateNotificationDTO, NotificationEvents } from '@typings/notifications';
 
 const exps = global.exports;
 
@@ -104,4 +105,8 @@ exps('endCall', async () => {
 
 exps('sendUIMessage', (action: { type: string; payload: unknown }) => {
   SendNUIMessage(action);
+});
+
+exps('createNotification', (dto: CreateNotificationDTO) => {
+  sendMessage('PHONE', NotificationEvents.CREATE_NOTIFICATION, dto);
 });

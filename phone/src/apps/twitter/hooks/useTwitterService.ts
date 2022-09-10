@@ -4,7 +4,6 @@ import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState, useTweetsState } from './state';
-import { useTwitterNotifications } from './useTwitterNotifications';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
@@ -21,7 +20,6 @@ import { useNotification } from '@os/new-notifications/useNotification';
 // TODO: Bring back notifications
 
 export const useTwitterService = () => {
-  const { setNotification } = useTwitterNotifications();
   const { addTweet } = useTwitterActions();
   const [tweets, setTweets] = useTweetsState();
   const { enqueueNotification } = useNotification();

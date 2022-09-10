@@ -15,6 +15,7 @@ export const notifications = atomFamily<NPWDNotification, string>({
     key: id,
     id,
     content: '',
+    secondaryTitle: '',
     path: '',
     onClick: null,
     keepOpen: false,
