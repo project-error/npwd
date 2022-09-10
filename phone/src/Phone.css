@@ -60,5 +60,5 @@
 }
 
 .notistack-SnackbarContainer {
-  position: absolute;
+  position: absolute !important;
 }

@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import { NotificationsProvider } from '@os/notifications/providers/NotificationsProvider';
-import { NotificationProvider as NewNotisProvider } from '@os/new-notifications/NotificationProvider';
 import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
 import Phone from './Phone';
 import { SnackbarProvider as NotistackProvider } from 'notistack';
 import { makeStyles } from '@mui/styles';
+import NotificationBase from '@os/new-notifications/components/NotificationBase';
+import { IApp } from '@os/apps/config/apps';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
+}
+declare module 'notistack' {
+  interface VariantOverrides {
+    npwdNotification: {
+      app: IApp;
+      path?: string;
+      onClick?: () => void;
+      secondaryTitle?: string;
+    };
+  }
 }
 
 const useStyles = makeStyles({
@@ -32,8 +43,6 @@ export const PhoneProviders = () => {
   const [notiEl, setNotiEl] = useState<HTMLElement>();
   const classes = useStyles();
 
-  console.log('notis el', notiEl);
-
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={currentTheme}>
@@ -44,15 +53,16 @@ export const PhoneProviders = () => {
             }}
             autoHideDuration={3000}
             maxSnack={2}
+            Components={{
+              npwdNotification: NotificationBase,
+            }}
             disableWindowBlurListener={true}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
             domRoot={notiEl}
           >
-            <NewNotisProvider>
-              <SnackbarProvider>
-                <Phone notiRefCB={setNotiEl} />
-              </SnackbarProvider>
-            </NewNotisProvider>
+            <SnackbarProvider>
+              <Phone notiRefCB={setNotiEl} />
+            </SnackbarProvider>
           </NotistackProvider>
         </NotificationsProvider>
       </ThemeProvider>

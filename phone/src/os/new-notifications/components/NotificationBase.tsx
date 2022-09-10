@@ -1,9 +1,11 @@
+import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { IApp } from '@os/apps/config/apps';
-import { SnackbarContent } from 'notistack';
+import { SnackbarContent, CustomContentProps } from 'notistack';
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -15,16 +17,35 @@ const StyledMessage = styled('div')({
   lineClamp: 2,
 });
 
-interface NotificationBaseProps {
+interface NotificationBaseProps extends CustomContentProps {
   app: IApp;
-  message: string | React.ReactNode;
+  secondaryTitle?: string;
+  path?: string;
+  onClick?: () => void;
 }
 
-export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
-  const { app, message } = props;
+export type NotificationBaseComponent = React.FC<NotificationBaseProps>;
+
+const StyledSnackbar = styled(SnackbarContent)({
+  padding: '14px 16px',
+  display: 'flex',
+  background: 'rgba(38,38,38,0.85) !important',
+  borderRadius: '12px !important',
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+  backdropFilter: 'blur(4px)',
+});
+
+const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
+  const { app, message, secondaryTitle, path, onClick } = props;
   const [t] = useTranslation();
+  const history = useHistory();
+
+  const handleNotisClick = () => {
+    path ? history.push(path) : onClick();
+  };
+
   return (
-    <SnackbarContent ref={ref} style={{ minWidth: '340px' }}>
+    <StyledSnackbar onClick={handleNotisClick} ref={ref} style={{ minWidth: '340px' }}>
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7}>
         <Box
           p="5px"
@@ -39,8 +60,13 @@ export const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps
         <Box color="#bfbfbf" fontWeight={400} paddingLeft={1} flexGrow={1} fontSize={16}>
           {t(app.nameLocale)}
         </Box>
+        <Box>
+          <Typography color="#bfbfbf">{secondaryTitle}</Typography>
+        </Box>
       </Box>
       <StyledMessage>{message}</StyledMessage>
-    </SnackbarContent>
+    </StyledSnackbar>
   );
 });
+
+export default NotificationBase;

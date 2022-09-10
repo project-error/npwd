@@ -8,6 +8,7 @@ import { useTwitterNotifications } from './useTwitterNotifications';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
+import { useNotification } from '@os/new-notifications/useNotification';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -23,15 +24,29 @@ export const useTwitterService = () => {
   const { setNotification } = useTwitterNotifications();
   const { addTweet } = useTwitterActions();
   const [tweets, setTweets] = useTweetsState();
+  const { enqueueNotification } = useNotification();
 
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     twitterState.profile,
   );
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
 
-  const _setFilteredTweets = (tweets) => {
+  const _setFilteredTweets = (tweets: Tweet[]) => {
     setFilteredTweets(tweets.map(processTweet));
   };
+
+  const addNotification = useCallback(
+    (data: any) => {
+      enqueueNotification({
+        appId: 'TWITTER',
+        content: data.message,
+        notisId: 'npwd:tweetBroadcast',
+        secondaryTitle: data.profile_name,
+        path: '/twitter',
+      });
+    },
+    [enqueueNotification],
+  );
 
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
@@ -42,14 +57,13 @@ export const useTwitterService = () => {
         setTweets((curT) => curT.slice(0, -1));
       }
 
-      setNotification(tweet);
+      addNotification(tweet);
       const processedTweet = processBroadcastedTweet(tweet, profileContent);
-
       addTweet(processedTweet);
     },
-    [addTweet, setNotification, profileContent, profileLoading, setTweets, tweets.length],
+    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length],
   );
 
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
-  //useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_BROADCAST, handleTweetBroadcast);
+  useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_BROADCAST, handleTweetBroadcast);
 };
