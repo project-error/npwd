@@ -4,33 +4,45 @@ import { AudioRequest, AudioResponse } from '../../../typings/audio';
 import { audioLogger } from './audio.utils';
 import fetch, { FormData, fileFromSync } from 'node-fetch';
 import * as fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+
+const path = GetResourcePath('npwd') + '/uploads';
 
 class _AudioService {
-  async uploadAudio(reqObj: PromiseRequest<AudioRequest>, resp: PromiseEventResp<AudioResponse>) {
-    const uploadToken = GetConvar('NPWD_AUDIO_TOKEN', '');
+  private readonly TOKEN: string;
 
-    if (!uploadToken) {
+  constructor() {
+    this.TOKEN = GetConvar('NPWD_AUDIO_TOKEN', '');
+  }
+
+  async uploadAudio(reqObj: PromiseRequest<AudioRequest>, resp: PromiseEventResp<AudioResponse>) {
+    if (!this.TOKEN) {
       audioLogger.error('Could not find upload token for audio! Please add the token the convar.');
       return resp({ status: 'error', errorMsg: 'No upload token found!' });
     }
 
+    if (!fs.existsSync(path)) fs.mkdirSync(path);
+    const filePath = `${path}/recording-${uuidv4()}.ogg`;
+
     fs.writeFileSync(
-      'recording.ogg',
+      filePath,
       Buffer.from(reqObj.data.file.replace('data:audio/ogg;base64,', ''), 'base64'),
     );
 
     try {
       const form_data = new FormData();
-      const blob = fileFromSync('./recording.ogg', 'audio/ogg');
+      const blob = fileFromSync(filePath, 'audio/ogg');
       form_data.append('recording', blob);
 
       const res = await fetch(config.voiceMessage.url, {
         method: 'POST',
         headers: {
-          [config.voiceMessage.authorizationHeader]: uploadToken,
+          [config.voiceMessage.authorizationHeader]: this.TOKEN,
         },
         body: form_data,
       });
+
+      fs.rmSync(filePath);
 
       if (res.status !== 200) {
         const errorText = await res.text();
