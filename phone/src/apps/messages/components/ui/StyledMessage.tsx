@@ -9,4 +9,11 @@ const StyledMessage = styled(Box)({
   whiteSpace: 'pre-line',
 });
 
+export const AudioMessage = styled(Box)({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'flex-start',
+  flexDirection: 'column',
+});
+
 export default StyledMessage;

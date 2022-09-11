@@ -12,16 +12,21 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MessageContextMenu from './MessageContextMenu';
+import AudioContextMenu from './AudioContextMenu';
+import { useConfig } from '@os/phone/hooks';
 
 interface IProps {
   activeMessageGroup: MessageConversation;
   messages: Message[];
+  isVoiceEnabled: boolean;
 }
 
 export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 
-const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
+const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceEnabled }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
+  const [audioContextMenuOpen, setAudioContextMenuOpen] = useState(false);
+
   const query = useQueryParams();
   const referalImage = query?.image || null;
   const referalNote = query?.note || null;
@@ -103,11 +108,17 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
           </Box>
         </Box>
       </Box>
-      <MessageInput
-        messageGroupName={activeMessageGroup.participant}
-        messageConversation={activeMessageGroup}
-        onAddImageClick={() => setContextMenuOpen(true)}
-      />
+      {audioContextMenuOpen ? (
+        <AudioContextMenu onClose={() => setAudioContextMenuOpen(false)} />
+      ) : (
+        <MessageInput
+          messageGroupName={activeMessageGroup.participant}
+          messageConversation={activeMessageGroup}
+          onAddImageClick={() => setContextMenuOpen(true)}
+          onVoiceClick={() => setAudioContextMenuOpen(true)}
+          voiceEnabled={isVoiceEnabled}
+        />
+      )}
     </>
   );
 };

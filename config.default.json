@@ -76,5 +76,11 @@
     "enabled": true,
     "sentryEnabled": true
   },
-  "apps": []
+  "apps": [],
+  "voiceMessage": {
+    "enabled": false,
+    "authorizationHeader": "PE-Secret",
+    "url": "",
+    "returnedDataIndexes": ["url"]
+  }
 }

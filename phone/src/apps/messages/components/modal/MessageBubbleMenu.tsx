@@ -11,8 +11,8 @@ import { usePhotoAPI } from '@apps/camera/hooks/usePhotoAPI';
 interface MessageBubbleMenuProps {
   open: boolean;
   handleClose: () => void;
-  isImage: boolean;
-  message: Message;
+  isImage?: boolean;
+  message?: Message;
 }
 
 const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({

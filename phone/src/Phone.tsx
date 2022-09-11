@@ -114,4 +114,5 @@ InjectDebugData<any>([
     data: dayjs().format('hh:mm'),
   },
 ]);
+
 export default Phone;

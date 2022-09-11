@@ -27,5 +27,11 @@
     "enabled": true,
     "sentryEnabled": true
   },
-  "apps": ["pefcl"]
+  "apps": ["pefcl"],
+  "voiceMessage": {
+    "enabled": false,
+    "authorizationHeader": "PE-Secret",
+    "url": "",
+    "returnedDataIndexes": ["url"]
+  }
 }

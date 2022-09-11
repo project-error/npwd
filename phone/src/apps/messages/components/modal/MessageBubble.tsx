@@ -40,6 +40,28 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
+  myAudioSms: {
+    float: 'right',
+    margin: theme.spacing(1),
+    width: 'auto',
+    minWidth: '60%',
+    maxWidth: '100%',
+    background: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
+    borderRadius: '12px',
+    textOverflow: 'ellipsis',
+  },
+  audioSms: {
+    float: 'left',
+    width: 'auto',
+    marginLeft: 5,
+    minWidth: '60%',
+    maxWidth: '80%',
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    borderRadius: '15px',
+    textOverflow: 'ellipsis',
+  },
   message: {
     wordBreak: 'break-word',
     display: 'flex',
@@ -79,6 +101,38 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   const isMessageImage = isImage(message.message);
+  if (message.is_embed && parsedEmbed.type === 'audio') {
+    return (
+      <>
+        <Box
+          display="flex"
+          ml={1}
+          alignItems="stretch"
+          justifyContent={isMine ? 'flex-end' : 'flex-start'}
+          mt={1}
+        >
+          <Paper className={isMine ? classes.myAudioSms : classes.audioSms} variant="outlined">
+            <MessageEmbed
+              type={parsedEmbed.type}
+              embed={parsedEmbed}
+              isMine={isMine}
+              message={message.message}
+              openMenu={openMenu}
+            />
+            {!isMine && (
+              <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                {getContact()?.display ?? message.author}
+              </Typography>
+            )}
+            <Typography ml={2} fontSize={12}>
+              {dayjs.unix(message.createdAt).fromNow()}
+            </Typography>
+          </Paper>
+        </Box>
+        <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
+      </>
+    );
+  }
 
   const showVertIcon = isMine || isMessageImage;
 
@@ -94,13 +148,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
         <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
           {message.is_embed ? (
-            <MessageEmbed
-              type={parsedEmbed.type}
-              embed={parsedEmbed}
-              isMine={isMine}
-              message={message.message}
-              openMenu={openMenu}
-            />
+            <>
+              <MessageEmbed
+                type={parsedEmbed.type}
+                embed={parsedEmbed}
+                isMine={isMine}
+                message={message.message}
+                openMenu={openMenu}
+              />
+            </>
           ) : (
             <StyledMessage>
               {isMessageImage ? (
