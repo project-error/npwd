@@ -46,10 +46,10 @@ class _AudioService {
 
       fs.rmSync(filePath);
 
-      if ((res.status !== 201) && (res.status !== 200)) {
+      if ((res.status !== 200) && (res.status !== 201)) {
         const errorText = await res.text();
         audioLogger.error(`Failed to upload audio. Error: ${errorText}`);
-        return resp({ status: "error", errorMsg: "Failed to upload audio" });
+        return resp({ status: 'error', errorMsg: 'Failed to upload audio' });
       }
       const response = await res.json();
       let recordingUrl = "";
@@ -57,7 +57,7 @@ class _AudioService {
         recordingUrl = response[index];
       }
       if (config.voiceMessage.xBackBone) {
-        recordingUrl = recordingUrl +"/raw"
+        recordingUrl = recordingUrl +'/raw'
       }
 
       resp({ status: 'ok', data: { url: recordingUrl } });
