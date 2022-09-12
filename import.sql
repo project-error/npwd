@@ -6,6 +6,9 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `embed` varchar(512) NOT NULL DEFAULT '';
 
+#match voice messages update
+# ALTER TABLE npwd_match_profiles ADD COLUMN `voiceMessage` varchar(512) DEFAULT NULL;
+
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
 (
     `id`           int         NOT NULL AUTO_INCREMENT,
@@ -63,16 +66,17 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
 
 CREATE TABLE IF NOT EXISTS `npwd_match_profiles`
 (
-    `id`         int          NOT NULL AUTO_INCREMENT,
-    `identifier` varchar(48)  NOT NULL COLLATE 'utf8mb4_general_ci',
-    `name`       varchar(90)  NOT NULL,
-    `image`      varchar(255) NOT NULL,
-    `bio`        varchar(512)          DEFAULT NULL,
-    `location`   varchar(45)           DEFAULT NULL,
-    `job`        varchar(45)           DEFAULT NULL,
-    `tags`       varchar(255) NOT NULL DEFAULT '',
-    `createdAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`            int          NOT NULL AUTO_INCREMENT,
+    `identifier`    varchar(48)  NOT NULL COLLATE 'utf8mb4_general_ci',
+    `name`          varchar(90)  NOT NULL,
+    `image`         varchar(255) NOT NULL,
+    `bio`           varchar(512)          DEFAULT NULL,
+    `location`      varchar(45)           DEFAULT NULL,
+    `job`           varchar(45)           DEFAULT NULL,
+    `tags`          varchar(255) NOT NULL DEFAULT '',
+    `voiceMessage`  varchar(512)         DEFAULT NULL,
+    `createdAt`     timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt`     timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `identifier_UNIQUE` (`identifier`)
 );

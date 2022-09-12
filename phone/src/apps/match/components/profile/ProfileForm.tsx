@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Profile as IProfile, FormattedProfile, MatchEvents } from '@typings/match';
 import ProfileField from '@ui/components/ProfileField';
 import UpdateButton from '@ui/components/UpdateButton';
-import { Box, Card } from '@mui/material';
+import { Box, Card, IconButton, LinearProgress, Stack, Typography } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
@@ -17,6 +17,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'qs';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
+import MicIcon from '@mui/icons-material/Mic';
+import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+import RecordVoiceMessage from '../RecordVoiceMessage';
+import Backdrop from '@ui/components/Backdrop';
+import { blobToBase64 } from '@utils/seralize';
+import { AudioEvents, AudioRequest, AudioResponse } from '@typings/audio';
 
 const useStyles = makeStyles({
   root: {
@@ -63,6 +71,22 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   const [job, setJob] = useState(profile?.job || '');
   const [location, setLocation] = useState(profile?.location || '');
   const [tags, setTags] = useState(profile?.tags || '');
+  const [voiceMessage, setVoiceMessage] = useState<Blob | null>(null);
+  const [recordVoiceMessage, setRecordVoiceMessage] = useState(false);
+  const { play, pause, playing, currentTime, duration } = useAudioPlayer(profile.voiceMessage);
+
+  const closeVoiceMessageModal = () => {
+    setRecordVoiceMessage((curVal) => !curVal);
+  };
+
+  const handleSetVoiceMessage = (voiceMessage: Blob) => {
+    setVoiceMessage(voiceMessage);
+  };
+
+  const calculateProgress =
+    isNaN(duration) || duration == Infinity
+      ? 0
+      : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
   const handleOpenGallery = useCallback(() => {
     history.push(`/camera?${qs.stringify({ referal: encodeURIComponent(pathname + search) })}`);
@@ -78,13 +102,34 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     tagList: tags.split(',').map((tag) => tag.trim()),
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
+    let voiceMessageURL: string | null = null;
+
+    if (voiceMessage && voiceMessage.size) {
+      const b64 = await blobToBase64(voiceMessage);
+
+      await fetchNui<ServerPromiseResp<AudioResponse>, AudioRequest>(AudioEvents.UPLOAD_AUDIO, {
+        file: b64,
+        size: voiceMessage.size,
+      }).then((audioRes) => {
+        if (audioRes.status !== 'ok') {
+          return addAlert({
+            type: 'error',
+            message: audioRes.errorMsg,
+          });
+        }
+        voiceMessageURL = audioRes.data.url;
+      });
+    }
+
     const updatedProfile: IProfile = {
       ...update,
       name: update.name.trim(),
       image: update.image.trim(),
       tags: update.tagList.join(','),
+      voiceMessage: voiceMessageURL,
     };
+
     const event = profile ? MatchEvents.UPDATE_MY_PROFILE : MatchEvents.CREATE_MY_PROFILE;
     fetchNui<ServerPromiseResp<FormattedProfile>>(event, updatedProfile).then((resp) => {
       if (resp.status !== 'ok') {
@@ -123,6 +168,12 @@ export function ProfileForm({ profile, showPreview }: IProps) {
 
   return (
     <div className={classes.root}>
+      <RecordVoiceMessage
+        open={recordVoiceMessage}
+        closeModal={closeVoiceMessageModal}
+        setVoiceMessage={handleSetVoiceMessage}
+      />
+      {recordVoiceMessage && <Backdrop />}
       <Box>
         <ProfileField
           label={t('MATCH.EDIT_PROFILE_IMAGE')}
@@ -161,6 +212,38 @@ export function ProfileForm({ profile, showPreview }: IProps) {
         maxLength={50}
       />
       <ProfileField label={t('MATCH.EDIT_PROFILE_TAGS')} value={tags} handleChange={setTags} />
+
+      {ResourceConfig && ResourceConfig.voiceMessage && (
+        <>
+          <Typography variant="body2" color="textSecondary" component="p" sx={{ marginTop: '8px' }}>
+            {t('MATCH.EDIT_VOICE_MESSAGE')}
+          </Typography>
+
+          <Stack direction="row">
+            <IconButton onClick={() => setRecordVoiceMessage(true)}>
+              <MicIcon />
+            </IconButton>
+
+            {profile.voiceMessage && (
+              <Box sx={{ width: '100%' }}>
+                <Box display="flex" alignItems="center">
+                  <IconButton onClick={playing ? pause : play}>
+                    {playing ? <PauseIcon /> : <PlayArrowIcon />}
+                  </IconButton>
+                  <Box sx={{ width: '60%' }}>
+                    {!calculateProgress && playing ? (
+                      <LinearProgress />
+                    ) : (
+                      <LinearProgress variant="determinate" value={calculateProgress} />
+                    )}
+                  </Box>
+                </Box>
+              </Box>
+            )}
+          </Stack>
+        </>
+      )}
+
       <UpdateButton handleClick={handleUpdate} />
     </div>
   );

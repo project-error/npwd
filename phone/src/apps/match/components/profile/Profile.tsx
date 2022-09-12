@@ -1,9 +1,19 @@
 import React from 'react';
-import { CardContent, CardMedia, Chip, Typography } from '@mui/material';
+import {
+  Box,
+  CardContent,
+  CardMedia,
+  Chip,
+  IconButton,
+  LinearProgress,
+  Typography,
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-
 import { FormattedProfile, FormattedMatch } from '@typings/match';
+import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 
 const useStyles = makeStyles({
   tags: {
@@ -32,6 +42,12 @@ const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_im
 const Profile = ({ profile }: IProps) => {
   const c = useStyles();
   const [t] = useTranslation();
+  const { play, pause, playing, currentTime, duration } = useAudioPlayer(profile.voiceMessage);
+
+  const calculateProgress =
+    isNaN(duration) || duration == Infinity
+      ? 0
+      : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
   function parseSecondaryBio(): string | undefined {
     const { location, job } = profile;
@@ -69,6 +85,27 @@ const Profile = ({ profile }: IProps) => {
         <Typography variant="body2" color="textSecondary" component="p">
           {profile.bio}
         </Typography>
+
+        {profile.voiceMessage && (
+          <Box>
+            <Box display="flex" alignItems="center">
+              <IconButton onClick={playing ? pause : play}>
+                {playing ? (
+                  <PauseIcon sx={{ color: '#232323' }} />
+                ) : (
+                  <PlayArrowIcon sx={{ color: '#232323' }} />
+                )}
+              </IconButton>
+              <Box sx={{ width: '60%' }}>
+                {!calculateProgress && playing ? (
+                  <LinearProgress />
+                ) : (
+                  <LinearProgress variant="determinate" value={calculateProgress} />
+                )}
+              </Box>
+            </Box>
+          </Box>
+        )}
       </CardContent>
     </>
   );

@@ -139,13 +139,13 @@ export class _MatchDB {
    * @returns Profile - the created profile
    */
   async createProfile(identifier: string, profile: NewProfile): Promise<Profile> {
-    const { name, image, bio, location, job, tags } = profile;
+    const { name, image, bio, location, job, tags, voiceMessage } = profile;
     const query = `
-        INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags, voiceMessage)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 		`;
 
-    await pool.execute(query, [identifier, name, image, bio, location, job, tags]);
+    await pool.execute(query, [identifier, name, image, bio, location, job, tags, voiceMessage]);
     return await this.getPlayerProfile(identifier);
   }
 
@@ -155,7 +155,7 @@ export class _MatchDB {
    * @param profile Profile - player's updated profile
    */
   async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
-    const { image, name, bio, location, job, tags } = profile;
+    const { image, name, bio, location, job, tags, voiceMessage } = profile;
     const query = `
         UPDATE npwd_match_profiles
         SET image    = ?,
@@ -163,10 +163,11 @@ export class _MatchDB {
             bio      = ?,
             location = ?,
             job      = ?,
-            tags     = ?
+            tags     = ?,
+            voiceMessage = ?
         WHERE identifier = ?
 		`;
-    await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
+    await pool.execute(query, [image, name, bio, location, job, tags, voiceMessage, identifier]);
     return await this.getPlayerProfile(identifier);
   }
 
