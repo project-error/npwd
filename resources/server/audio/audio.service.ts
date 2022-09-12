@@ -33,7 +33,9 @@ class _AudioService {
       const form_data = new FormData();
       const blob = fileFromSync(filePath, 'audio/ogg');
       form_data.append('recording', blob);
-
+      if (config.voiceMessage.xBackBone) {
+        form_data.append(config.voiceMessage.authorizationHeader, this.TOKEN);
+      }
       const res = await fetch(config.voiceMessage.url, {
         method: 'POST',
         headers: {
@@ -44,17 +46,18 @@ class _AudioService {
 
       fs.rmSync(filePath);
 
-      if (res.status !== 200) {
+      if ((res.status !== 201) && (res.status !== 200)) {
         const errorText = await res.text();
         audioLogger.error(`Failed to upload audio. Error: ${errorText}`);
-        return resp({ status: 'error', errorMsg: 'Failed to upload audio' });
+        return resp({ status: "error", errorMsg: "Failed to upload audio" });
       }
-
-      const response: any = await res.json();
-
-      let recordingUrl = '';
+      const response = await res.json();
+      let recordingUrl = "";
       for (const index of config.voiceMessage.returnedDataIndexes) {
-        recordingUrl = response[index] as string;
+        recordingUrl = response[index];
+      }
+      if (config.voiceMessage.xBackBone) {
+        recordingUrl = recordingUrl +"/raw"
       }
 
       resp({ status: 'ok', data: { url: recordingUrl } });
