@@ -32,6 +32,7 @@
     "enabled": false,
     "authorizationHeader": "PE-Secret",
     "url": "",
-    "returnedDataIndexes": ["url"]
+    "returnedDataIndexes": ["url"],
+    "xBackBone": false
   }
 }
