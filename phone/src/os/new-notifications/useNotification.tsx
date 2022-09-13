@@ -27,7 +27,7 @@ export const useNotification = (): NotificationProps => {
   const { getApp } = useApps();
 
   const enqueueNotification = useRecoilCallback(
-    ({ set }) =>
+    ({ set, snapshot }) =>
       ({
         appId,
         content,
@@ -72,6 +72,19 @@ export const useNotification = (): NotificationProps => {
           },
           persist: keepOpen,
           key: notisId,
+          onExited: async () => {
+            const release = snapshot.retain();
+            try {
+              const notification = await snapshot.getPromise(notifications(notisId));
+
+              set(notifications(notisId), {
+                ...notification,
+                isActive: false,
+              });
+            } finally {
+              release();
+            }
+          },
           onClick,
           secondaryTitle,
           path,

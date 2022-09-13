@@ -27,6 +27,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
+import { NotificationsContext } from '@os/notifications/providers/NotificationsProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,6 +106,7 @@ interface UnreadNotificationListItemProps {
 
 const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({ tgtNotiId }) => {
   const notiContents = useRecoilValue(notifications(tgtNotiId));
+  console.log('NOTI CONTENTS', notiContents);
 
   return <NotificationItem key={tgtNotiId} {...notiContents} />;
 };

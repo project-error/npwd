@@ -14,9 +14,6 @@ export const usePhoneVisibility = () => {
     let timer = null;
     if (activeNotifications.length && !visibility) {
       setNotifVisibility(true);
-      timer = setTimeout(() => {
-        setNotifVisibility(false);
-      }, 3000);
     } else {
       setNotifVisibility(false);
     }
