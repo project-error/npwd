@@ -8,6 +8,7 @@ import { SnackbarProvider as NotistackProvider } from 'notistack';
 import { makeStyles } from '@mui/styles';
 import NotificationBase from '@os/new-notifications/components/NotificationBase';
 import { IApp } from '@os/apps/config/apps';
+import { CallNotificationBase } from '@os/new-notifications/components/calls/CallNotificationBase';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -21,6 +22,12 @@ declare module 'notistack' {
       onClick?: () => void;
       secondaryTitle?: string;
     };
+    npwdCallNotification: {
+      title: string;
+      transmitter: string;
+      onAccept: () => void;
+      onEnd: () => void;
+    };
   }
 }
 
@@ -28,12 +35,10 @@ const useStyles = makeStyles({
   rootOverride: {
     '&.SnackbarContainer-center': {
       position: 'absolute !important',
-      top: 'unset !important',
       maxWidth: '370px !important',
     },
     '&.CollapseWrapper': {
       padding: '0 !important',
-      backdropFilter: 'blur(4px) !important',
     },
   },
 });
@@ -55,6 +60,7 @@ export const PhoneProviders = () => {
             maxSnack={2}
             Components={{
               npwdNotification: NotificationBase,
+              npwdCallNotification: CallNotificationBase,
             }}
             disableWindowBlurListener={true}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}

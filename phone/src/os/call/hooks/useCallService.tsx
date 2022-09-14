@@ -9,6 +9,7 @@ import { callerState } from './state';
 import { useCallNotifications } from './useCallNotifications';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useSetNavigationDisabled } from '@os/navigation-bar/state/navigation.state';
+import { useCallNotification } from '@os/new-notifications/useCallNotification';
 
 // InjectDebugData<CallProps | boolean>([
 //   {
@@ -37,6 +38,7 @@ export const useCallService = () => {
   const { setCall, call, endCall } = useCall();
 
   const { setNotification, clearNotification } = useCallNotifications();
+  const { enqueueCallNotification } = useCallNotification();
 
   const setModal = useSetRecoilState(callerState.callModal);
 
@@ -63,8 +65,9 @@ export const useCallService = () => {
   useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALL_INFO, (callData) => {
     setCall(callData);
     if (!callData) return clearNotification();
-    setNotification(callData);
+    enqueueCallNotification(callData);
   });
+
   useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, setModal);
   useNuiEvent('CALL', CallEvents.END_CALL, endCall);
 };

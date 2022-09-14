@@ -1,6 +1,6 @@
-import { css } from '@emotion/css';
-import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
+import { styled, lighten, darken } from '@mui/material/styles';
+import { useTheme } from '@mui/styles';
 import { IApp } from '@os/apps/config/apps';
 import { SnackbarContent, CustomContentProps } from 'notistack';
 import React, { forwardRef } from 'react';
@@ -45,7 +45,7 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
   };
 
   return (
-    <StyledSnackbar onClick={handleNotisClick} ref={ref} style={{ minWidth: '340px' }}>
+    <StyledSnackbar onClick={handleNotisClick} ref={ref} style={{ minWidth: '370px' }}>
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7}>
         <Box
           p="5px"

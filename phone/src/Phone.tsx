@@ -35,6 +35,7 @@ import { useExternalApps } from '@common/hooks/useExternalApps';
 import { useTheme } from '@mui/material';
 import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
 import { useNotificationListener } from '@os/new-notifications/useNotificationListener';
+import { CallEvents } from '@typings/call';
 
 interface PhoneProps {
   notiRefCB: Dispatch<SetStateAction<HTMLElement>>;

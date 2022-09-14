@@ -102,7 +102,6 @@ export const useNotification = (): NotificationProps => {
 
         for (const id of allActiveIds) {
           const noti = await snapshot.getPromise(notifications(id));
-
           if (!noti) continue;
 
           set(notifications(id), {
