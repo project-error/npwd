@@ -187,13 +187,14 @@ export class _MatchDB {
     // some database misconfiguration or error
     if (!defaultProfileName) return null;
 
-    const defaultProfile = {
+    const defaultProfile: NewProfile = {
       name: defaultProfileName,
       image: DEFAULT_IMAGE,
       bio: '',
       location: '',
       job: '',
       tags: '',
+      voiceMessage: null,
     };
 
     matchLogger.info(`Creating default match profile ${defaultProfileName} for ${identifier}`);
