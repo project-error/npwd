@@ -92,6 +92,7 @@ interface VoiceMessageConfig {
   authorizationHeader: string;
   authorizationPrefix: string;
   returnedDataIndexes: Array<any>;
+  xBackBone: boolean;
 }
 
 export interface ResourceConfig {
