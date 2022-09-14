@@ -35,15 +35,19 @@ class _AudioService {
       form_data.append('recording', blob);
       if (config.voiceMessage.xBackBone) {
         form_data.append(config.voiceMessage.authorizationHeader, this.TOKEN);
+        const res = await fetch(config.voiceMessage.url, {
+          method: 'POST',
+          body: form_data,
+        });
+      } else {
+        const res = await fetch(config.voiceMessage.url, {
+          method: 'POST',
+          headers: {
+            [config.voiceMessage.authorizationHeader]: this.TOKEN,
+          },
+          body: form_data,
+        });
       }
-      const res = await fetch(config.voiceMessage.url, {
-        method: 'POST',
-        headers: {
-          [config.voiceMessage.authorizationHeader]: this.TOKEN,
-        },
-        body: form_data,
-      });
-
       fs.rmSync(filePath);
 
       if ((res.status !== 200) && (res.status !== 201)) {
