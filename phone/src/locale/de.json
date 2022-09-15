@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Schwerwiegender Fehler",
       "TOP_LEVEL_ERR_ACTION": "Lädt erneut",
-      "TOP_LEVEL_ERR_MSG": "Es ist ein Fehler für NPDW aufgetreten, Sie müssen das NUI Fenster neu laden. Dieser Fehler wird unten angezeigt für Developer Referenzen."
+      "TOP_LEVEL_ERR_MSG": "Es ist ein Fehler für NPDW aufgetreten, Sie müssen das NUI Fenster neu laden. Dieser Fehler wird unten angezeigt für Developer Referenzen.",
+      "APP_CRASHED_TITLE": "Es ist ein schwerwiegender Fehler aufgetreten!",
+      "APP_CRASHED_MSG": "Die App hatte einen Fehler und ist abgestürzt!",
+      "APP_CRASHED_ACTION": "Die App erneut starten"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Keine neuen Mitteilungen"
@@ -226,18 +229,46 @@
       "NEW_MESSAGE": "Nachricht...",
       "NEW_MESSAGE_GROUP": "Telefonnummer...",
       "SHARE_IMAGE_TITLE": "Wollen Sie dieses Bild teilen?",
+      "SHARE_NOTE_TITLE": "Wollen Sie diese Notiz teilen?",
       "SHARE_CONTACT_TITLE": "Wollen Sie diesen Kontakt teilen?",
       "GROUP_CHAT_LABEL": "Gruppenname...",
       "MEDIA_OPTION": "Kamera / Fotos",
       "CONTACT_OPTION": "Kontakt teilen",
       "CONTACT_SHARED": "Kontakt geteilt",
+      "NOTE_OPTION": "Notiz teilen",
       "LOCATION_OPTION": "Standort teilen",
       "LOCATION_MESSAGE": "Standort geteilt",
       "LOCATION_TOOLTIP": "Wegpunkt setzen",
+      "NOTE_TOOLTIP": "Notiz ansehen",
       "NEW_MESSAGE_GROUP_SUBMIT": "Senden",
       "INPUT_NAME_OR_NUMBER": "Suchen Sie nach einem Kontakt oder einer Nummer.",
       "ACTIONS_TITLE": "Aktionen",
       "ME": "Ich"
+    },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Laden der Nachrichten fehlgeschlagen",
+        "JOIN_CHANNEL_FAILED": "Beitreten des Chats fehlgeschlagen",
+        "LEAVE_CHANNEL_FAILED": "Verlassen des Chats fehlgeschlagen",
+        "SEND_MESSAGE_FAILED": "Senden der Nachricht fehlgeschlagen",
+        "UPDATE_LABEL_FAILED": "Umbennen des Chats fehlgeschlagen",
+        "TRANSFER_OWNERSHIP_FAILED": "Aktualisieren der Adminrechte fehlgeschlagen",
+        "FETCH_MEMBERS_FAILED": "Laden der Mitglieder fehlgeschlagen",
+        "DELETE_CHANNEL_FAILED": "Löschen des Chats fehlgeschlagen"
+      },
+      "TYPE_TO_CONFIRM": "Tippe \"{{ identifier }}\" um zu bestätigen.",
+      "LEAVE": "Verlassen",
+      "NEW_CHANNEL_TITLE": "Chat mit ID beitreten",
+      "DELETE_CHANNEL_TITLE": "Chat löschen",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Chat ID",
+      "JOIN_BUTTON": "Chat beitreten",
+      "TRANSFER_OWNERSHIP": "Adminrechte übergeben",
+      "MESSAGE_PLACEHOLDER": "Eine Nachricht senden",
+      "MEDIA_PLACEHOLDER": "Bild URL",
+      "MEDIA_UPLOAD": "Bild hochladen",
+      "MEDIA_GALLERY": "BILD AUSWÄHLEN",
+      "MEMBERS": "Mitglieder",
+      "DANGER_ZONE": "Gefahrenzone"
     },
     "RELATIVE_TIME": {
       "future": "in %s",
@@ -271,6 +302,7 @@
       "CONTENT": "Inhalt",
       "SHARE": "Teilen",
       "ADD": "Hinzufügen",
+      "SEND": "Senden",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
     },
@@ -281,7 +313,7 @@
     "APPS_MESSAGES": "Nachrichten",
     "APPS_CALCULATOR": "Rechner",
     "APPS_SETTINGS": "Einstellungen",
-    "APPS_BANK": "WhoDis Online-Banking",
+    "APPS_BANK": "Online-Banking",
     "APPS_NOTES": "Notizen",
     "APPS_EXAMPLE": "Beispiel App",
     "APPS_TWITTER": "Twitter",
@@ -289,6 +321,7 @@
     "APPS_CAMERA": "Kamera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Ergebnis wurde in die Zwischenablage kopiert!",
+    "APPS_DARKCHAT": "Darkchat",
     "GENERIC_CLICK_TO_REVEAL": "Klicke zum Aufdecken",
     "GENERIC_LOADING": "Lädt...",
     "GENERIC_WAIT": "Bitte warten Sie...",
