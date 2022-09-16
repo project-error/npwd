@@ -27,7 +27,6 @@ import {
 import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
-import { NotificationsContext } from '@os/notifications/providers/NotificationsProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +80,7 @@ interface WrapperGridProps extends GridProps {
   key: string | number;
 }
 
-const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNoti, children }) => {
+const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNoti }) => {
   const notificationTgtApp = useApp(tgtNoti.appId);
 
   return (
@@ -106,6 +105,7 @@ interface UnreadNotificationListItemProps {
 
 const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({ tgtNotiId }) => {
   const notiContents = useRecoilValue(notifications(tgtNotiId));
+  const unreadNotifications = useUnreadNotifications();
   console.log('NOTI CONTENTS', notiContents);
 
   return <NotificationItem key={tgtNotiId} {...notiContents} />;
@@ -171,9 +171,11 @@ export const NotificationBar = () => {
           <Box py={1}>
             <List>
               <Divider />
-              {unreadNotificationIds.map((notification, idx) => (
-                <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
-              ))}
+              {unreadNotificationIds
+                .filter((val, idx, self) => idx === self.findIndex((t: string) => t === val))
+                .map((notification, idx) => (
+                  <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
+                ))}
             </List>
           </Box>
           <Box display="flex" flexDirection="column">

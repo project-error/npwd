@@ -20,7 +20,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ id, key }) =
 
   const handleOnClose = () => {
     markAsRead(id);
-    closeBar(false);
+    closeBar(false); // set's to be to collapsed - wording is weird
     history.push(path);
   };
 

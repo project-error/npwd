@@ -14,14 +14,18 @@ export const useCallNotification = () => {
       persist: true,
       title: 'Call',
       transmitter: dto.transmitter,
+      key: 'npwd:callNotification',
       onEnd: () => console.log('Ended'),
       onAccept: () => console.log('Accepted'),
     });
   });
 
-  const removeNotification = () => {};
+  const removeNotification = () => {
+    closeSnackbar('npwd:callNotification');
+  };
 
   return {
     enqueueCallNotification,
+    removeNotification,
   };
 };

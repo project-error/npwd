@@ -1,12 +1,13 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { FormattedProfile, MatchEvents } from '@typings/match';
-import { useMatchNotifications } from './useMatchNotifications';
 import { useCallback } from 'react';
 import { useMatchActions } from './useMatchActions';
 import { useRecoilValueLoadable } from 'recoil';
 import { matchState } from './state';
 import { useLocation } from 'react-router-dom';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
+import { useNotification } from '@os/new-notifications/useNotification';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -16,13 +17,13 @@ import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
  * there and have moved that logic here instead.
  */
 
-// TODO: Bring back notifications
-
 export const useMatchService = () => {
   const { pathname } = useLocation();
   const { visibility } = usePhoneVisibility();
-  const { setNotification } = useMatchNotifications();
   const { addMatchAccount, addMatchedAccount } = useMatchActions();
+  const [t] = useTranslation();
+
+  const { enqueueNotification } = useNotification();
 
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     matchState.myProfile,
@@ -33,7 +34,15 @@ export const useMatchService = () => {
       return;
     }
 
-    setNotification({ name });
+    enqueueNotification({
+      appId: 'MATCH',
+      content: name,
+      secondaryTitle: t('MATCH.MESSAGES.NEW_MATCH'),
+      notisId: 'npwd:matchBroadcast',
+      path: '/match',
+      keepOpen: false,
+      duration: 3000,
+    });
     addMatchedAccount();
   };
 

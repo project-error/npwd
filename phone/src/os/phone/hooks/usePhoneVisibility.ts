@@ -11,16 +11,12 @@ export const usePhoneVisibility = () => {
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
   useEffect(() => {
-    let timer = null;
     if (activeNotifications.length && !visibility) {
+      console.log('activeNotificationsIds', activeNotifications);
       setNotifVisibility(true);
     } else {
       setNotifVisibility(false);
     }
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, [activeNotifications, visibility]);
 
   const bottom = useMemo(() => {

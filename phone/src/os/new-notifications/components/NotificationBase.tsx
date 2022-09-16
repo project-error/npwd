@@ -26,14 +26,13 @@ interface NotificationBaseProps extends CustomContentProps {
 
 export type NotificationBaseComponent = React.FC<NotificationBaseProps>;
 
-const StyledSnackbar = styled(SnackbarContent)({
+const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
   padding: '14px 16px',
   display: 'flex',
-  background: 'rgba(38,38,38,0.85) !important',
+  background: theme.palette.background.paper,
   borderRadius: '12px !important',
   boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-  backdropFilter: 'blur(4px)',
-});
+}));
 
 const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
   const { app, message, secondaryTitle, path, onClick } = props;

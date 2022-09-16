@@ -113,12 +113,7 @@ InjectDebugData<any>([
   {
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
-    data: true,
-  },
-  {
-    app: 'PHONE',
-    method: PhoneEvents.SET_TIME,
-    data: dayjs().format('hh:mm'),
+    data: false,
   },
 ]);
 

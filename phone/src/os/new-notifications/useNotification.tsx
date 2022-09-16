@@ -1,7 +1,8 @@
 import { useSnackbar } from 'notistack';
 import { useRecoilCallback } from 'recoil';
 import { useApps } from '../apps/hooks/useApps';
-//import { NotificationBaseComponent } from './components/NotificationBase';
+import uuid from 'react-uuid';
+
 import {
   notifications,
   allNotificationIds,
@@ -18,17 +19,13 @@ interface NotificationProps {
   clearAllNotifications: () => void;
 }
 
-/*type VariantMap = {
-  npwdNotification: NotificationBaseComponent;
-};*/
-
 export const useNotification = (): NotificationProps => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { getApp } = useApps();
 
   const enqueueNotification = useRecoilCallback(
     ({ set, snapshot }) =>
-      ({
+      async ({
         appId,
         content,
         secondaryTitle,
@@ -40,7 +37,15 @@ export const useNotification = (): NotificationProps => {
       }: any) => {
         const app = getApp(appId);
 
-        set(notifications(notisId), {
+        const curNotis = await snapshot.getPromise(allNotificationIds);
+        const uniqID = `${notisId}:${uuid()}`;
+
+        if (curNotis.includes(notisId)) {
+          console.error(`Notification with key: [${uniqID}] already exists!`);
+          return;
+        }
+
+        set(notifications(uniqID), {
           appId: app.id,
           content,
           path,
@@ -49,17 +54,17 @@ export const useNotification = (): NotificationProps => {
           isActive: true,
           keepOpen,
           duration,
-          id: notisId,
+          id: uniqID,
         });
 
-        set(allNotificationIds, (curIds: string[]) => [...curIds, notisId]);
-        set(activeNotificationIds, (curIds: string[]) => [...curIds, notisId]);
-        set(unreadNotificationIds, (curIds: string[]) => [...curIds, notisId]);
+        set(allNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
+        set(activeNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
+        set(unreadNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
 
         set(unreadNotifications, (curVal) => [
           ...curVal,
           {
-            id: notisId,
+            id: uniqID,
             appId,
           },
         ]);
@@ -71,19 +76,9 @@ export const useNotification = (): NotificationProps => {
             horizontal: 'center',
           },
           persist: keepOpen,
-          key: notisId,
-          onExited: async () => {
-            const release = snapshot.retain();
-            try {
-              const notification = await snapshot.getPromise(notifications(notisId));
-
-              set(notifications(notisId), {
-                ...notification,
-                isActive: false,
-              });
-            } finally {
-              release();
-            }
+          key: uniqID,
+          onExited: () => {
+            removeActive(uniqID);
           },
           onClick,
           secondaryTitle,
