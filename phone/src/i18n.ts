@@ -8,6 +8,7 @@ import ba from './locale/ba.json';
 import sv from './locale/sv.json';
 import no from './locale/no.json';
 import tr from './locale/tr.json';
+import lt from './locale/lt.json';
 import ptbr from './locale/ptbr.json';
 import hu from './locale/hu.json';
 import cs from './locale/cs.json';
@@ -32,6 +33,7 @@ export const resources = {
   sv,
   de,
   tr,
+  lt,
   ptbr,
   pt,
   pl,
