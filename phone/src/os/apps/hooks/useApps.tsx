@@ -8,6 +8,7 @@ import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
 import { useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
+import { extname } from 'path';
 
 export const useApps = () => {
   const { icons } = useNotifications();

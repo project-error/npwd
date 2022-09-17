@@ -16,6 +16,7 @@ interface NotificationProps {
   removeAllActive: () => void;
   removeActive: (id: string) => void;
   markAsRead: (key: string) => void;
+  markAllAsRead: () => Promise<void>;
   clearAllNotifications: () => void;
 }
 
@@ -171,11 +172,19 @@ export const useNotification = (): NotificationProps => {
       [closeSnackbar],
     );
 
+  const markAllAsRead = useRecoilCallback(({ snapshot }) => async () => {
+    const allNotis = await snapshot.getPromise(unreadNotificationIds);
+
+    for (const id of allNotis) {
+      await markAsRead(id);
+    }
+  });
+
   const clearAllNotifications = useRecoilCallback(({ reset, snapshot }) => async () => {
-    const allActiveNotis = await snapshot.getPromise(activeNotificationIds);
+    const allNotis = await snapshot.getPromise(allNotificationIds);
 
     // In case we still have one open, we want to clear everything prior to reset.
-    for (const id of allActiveNotis) {
+    for (const id of allNotis) {
       const tgtAtom = notifications(id);
       const noti = await snapshot.getPromise(tgtAtom);
 
@@ -187,6 +196,8 @@ export const useNotification = (): NotificationProps => {
       reset(tgtAtom);
     }
 
+    reset(unreadNotificationIds);
+    reset(unreadNotifications);
     reset(activeNotificationIds);
     reset(allNotificationIds);
   });
@@ -196,6 +207,7 @@ export const useNotification = (): NotificationProps => {
     removeAllActive,
     removeActive,
     markAsRead,
+    markAllAsRead,
     clearAllNotifications,
   };
 };

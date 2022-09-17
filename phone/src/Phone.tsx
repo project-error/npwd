@@ -113,7 +113,7 @@ InjectDebugData<any>([
   {
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
-    data: false,
+    data: true,
   },
 ]);
 

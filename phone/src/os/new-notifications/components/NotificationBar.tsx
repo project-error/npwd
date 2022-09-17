@@ -9,6 +9,7 @@ import {
   List,
   Divider,
   GridProps,
+  Button,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
@@ -27,6 +28,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
+import { useNotification } from '../useNotification';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     backgroundColor: theme.palette.background.default,
-    //backgroundColor: 'rgba(0, 0, 0, 0.7)',
     width: '100%',
     position: 'absolute',
     top: '30px',
@@ -105,8 +106,6 @@ interface UnreadNotificationListItemProps {
 
 const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({ tgtNotiId }) => {
   const notiContents = useRecoilValue(notifications(tgtNotiId));
-  const unreadNotifications = useUnreadNotifications();
-  console.log('NOTI CONTENTS', notiContents);
 
   return <NotificationItem key={tgtNotiId} {...notiContents} />;
 };
@@ -119,6 +118,13 @@ export const NotificationBar = () => {
   const unreadNotificationIds = useUnreadNotificationIds();
 
   const unreadNotifications = useUnreadNotifications();
+
+  const { markAllAsRead } = useNotification();
+
+  const handleClearNotis = async () => {
+    setBarUncollapsed(false);
+    await markAllAsRead();
+  };
 
   useEffect(() => {
     if (unreadNotificationIds.length === 0) {
@@ -139,11 +145,12 @@ export const NotificationBar = () => {
         }}
       >
         <Grid container item wrap="nowrap">
-          {unreadNotifications
-            .filter((val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId))
-            .map((notification, idx) => {
-              return <IconUnreadGrid tgtNoti={notification} key={idx} />;
-            })}
+          {unreadNotifications &&
+            unreadNotifications
+              .filter((val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId))
+              .map((notification, idx) => {
+                return <IconUnreadGrid tgtNoti={notification} key={idx} />;
+              })}
         </Grid>
         {time && (
           <Grid item className={classes.item}>
@@ -169,13 +176,21 @@ export const NotificationBar = () => {
       <Slide direction="down" in={barCollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
           <Box py={1}>
+            {unreadNotificationIds?.length !== 0 && (
+              <Box pl={2}>
+                <Button color="primary" size="small" onClick={handleClearNotis}>
+                  Clear all notification
+                </Button>
+              </Box>
+            )}
             <List>
               <Divider />
-              {unreadNotificationIds
-                .filter((val, idx, self) => idx === self.findIndex((t: string) => t === val))
-                .map((notification, idx) => (
-                  <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
-                ))}
+              {unreadNotificationIds &&
+                unreadNotificationIds
+                  .filter((val, idx, self) => idx === self.findIndex((t: string) => t === val))
+                  .map((notification, idx) => (
+                    <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
+                  ))}
             </List>
           </Box>
           <Box display="flex" flexDirection="column">
