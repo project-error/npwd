@@ -1,6 +1,8 @@
 export enum NotificationEvents {
   CREATE_NOTIFICATION = 'npwd:createNotification',
   REMOVE_NOTIFICATOIN = 'npwd:removeNotification',
+  CREATE_SYSTEM_NOTIFICATION = 'npwd:createSystemNotification',
+  REMOVE_SYSTEM_NOTIFICATION = 'npwd:removeSystemNotification',
 }
 
 export type NPWDNotification = {
@@ -30,4 +32,12 @@ export type CreateNotificationDTO = {
   path: string;
   notisId: string;
   onClick: () => void | null;
+};
+
+export type SystemNotificationDTO = {
+  uniqId: string;
+  content: string;
+  secondaryTitle: string;
+  keepOpen: boolean;
+  duration: number;
 };
