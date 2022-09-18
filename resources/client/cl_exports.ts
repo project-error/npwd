@@ -9,7 +9,12 @@ import { ClUtils } from './client';
 import { CallService, callService } from './calls/cl_calls.service';
 import { animationService } from './animations/animation.controller';
 import { CallEvents } from '../../typings/call';
-import { CreateNotificationDTO, NotificationEvents } from '@typings/notifications';
+import {
+  CreateNotificationDTO,
+  NotificationEvents,
+  SystemNotificationDTO,
+} from '@typings/notifications';
+import { unix } from 'dayjs';
 
 const exps = global.exports;
 
@@ -108,5 +113,32 @@ exps('sendUIMessage', (action: { type: string; payload: unknown }) => {
 });
 
 exps('createNotification', (dto: CreateNotificationDTO) => {
+  verifyExportArgType('createSystemNotification', dto, ['object']);
+  verifyExportArgType('createSystemNotification', dto.notisId, ['string']);
   sendMessage('PHONE', NotificationEvents.CREATE_NOTIFICATION, dto);
 });
+
+exps('createSystemNotification', (dto: SystemNotificationDTO) => {
+  verifyExportArgType('createSystemNotification', dto, ['object']);
+  verifyExportArgType('createSystemNotification', dto.uniqId, ['string']);
+  sendMessage('SYSTEM', NotificationEvents.CREATE_SYSTEM_NOTIFICATION, dto);
+});
+
+exps('removeSystemNotification', (uniqId: string) => {
+  verifyExportArgType('createSystemNotification', uniqId, ['string']);
+  sendMessage('SYSTEM', NotificationEvents.REMOVE_SYSTEM_NOTIFICATION, { uniqId });
+});
+
+RegisterCommand(
+  'csn',
+  () => {
+    exps['npwd'].createSystemNotification({
+      uniqId: 'robberyNoti',
+      content: 'Bro, this is not going very well...I can tell you that!',
+      secondaryTitle: 'Robbery',
+      keepOpen: false,
+      duration: 3000,
+    });
+  },
+  false,
+);

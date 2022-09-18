@@ -310,6 +310,7 @@
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",
+    "APPS_SYSTEM": "System",
     "APPS_DIALER": "Phone",
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",

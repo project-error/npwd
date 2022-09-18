@@ -9,6 +9,7 @@ import { makeStyles } from '@mui/styles';
 import NotificationBase from '@os/new-notifications/components/NotificationBase';
 import { IApp } from '@os/apps/config/apps';
 import { CallNotificationBase } from '@os/new-notifications/components/calls/CallNotificationBase';
+import { SystemNotificationBase } from '@os/new-notifications/components/system/SystemNotificationBase';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,6 +28,9 @@ declare module 'notistack' {
       transmitter: string;
       onAccept: () => void;
       onEnd: () => void;
+    };
+    npwdSystemNotification: {
+      secondaryTitle?: string;
     };
   }
 }
@@ -61,6 +65,7 @@ export const PhoneProviders = () => {
             Components={{
               npwdNotification: NotificationBase,
               npwdCallNotification: CallNotificationBase,
+              npwdSystemNotification: SystemNotificationBase,
             }}
             disableWindowBlurListener={true}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}

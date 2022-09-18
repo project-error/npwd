@@ -36,6 +36,7 @@ import { useTheme } from '@mui/material';
 import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
 import { useNotificationListener } from '@os/new-notifications/useNotificationListener';
 import { CallEvents } from '@typings/call';
+import { useSystemNotificationListener } from '@os/new-notifications/components/system/useSystemNotificationListener';
 
 interface PhoneProps {
   notiRefCB: Dispatch<SetStateAction<HTMLElement>>;
@@ -59,6 +60,7 @@ const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   usePhoneService();
   useSimcardService();
   useNotificationListener();
+  useSystemNotificationListener();
   useTwitterService();
   useMatchService();
   useMarketplaceService();

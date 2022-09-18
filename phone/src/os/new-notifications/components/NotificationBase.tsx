@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { styled, lighten, darken } from '@mui/material/styles';
-import { useTheme } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import { IApp } from '@os/apps/config/apps';
 import { SnackbarContent, CustomContentProps } from 'notistack';
 import React, { forwardRef } from 'react';
