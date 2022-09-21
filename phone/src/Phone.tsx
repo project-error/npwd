@@ -22,7 +22,6 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
 import PhoneWrapper from './PhoneWrapper';
-import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useConfig } from '@os/phone/hooks/useConfig';
@@ -35,7 +34,6 @@ import { useExternalApps } from '@common/hooks/useExternalApps';
 import { useTheme } from '@mui/material';
 import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
 import { useNotificationListener } from '@os/new-notifications/useNotificationListener';
-import { CallEvents } from '@typings/call';
 import { useSystemNotificationListener } from '@os/new-notifications/components/system/useSystemNotificationListener';
 
 interface PhoneProps {

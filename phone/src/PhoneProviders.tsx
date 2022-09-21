@@ -27,6 +27,7 @@ declare module 'notistack' {
       title: string;
       transmitter: string;
       onAccept: () => void;
+      onReject: () => void;
       onEnd: () => void;
     };
     npwdSystemNotification: {
