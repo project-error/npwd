@@ -52,7 +52,7 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
       value={message}
       inputProps={{
         style: {
-          fontSize: '22px',
+          fontSize: '18px',
           paddingTop: '8px',
         },
       }}

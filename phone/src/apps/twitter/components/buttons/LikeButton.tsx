@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress } from '@mui/material';
+import { Button, CircularProgress, Icon, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { TwitterEvents } from '@typings/twitter';
@@ -7,8 +7,25 @@ import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { Box } from '@mui/material/node_modules/@mui/system';
+import { styled, lighten } from '@mui/material/styles';
 
-function LikeButton({ tweetId, isLiked }) {
+const ButtonWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '2px',
+  alignItems: 'center',
+  padding: '2px',
+  paddingRight: '5px',
+  paddingLeft: '5px',
+  cursor: 'pointer',
+  borderRadius: 8,
+  transition: '0.2s',
+  ':hover': {
+    background: lighten(theme.palette.background.paper, 0.1),
+  },
+}));
+
+function LikeButton({ tweetId, isLiked, likes }) {
   const [liked, setLiked] = useState(isLiked);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -38,8 +55,13 @@ function LikeButton({ tweetId, isLiked }) {
   }
 
   return (
-    <Button onClick={handleClick}>
-      {liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
+    <Button
+      onClick={handleClick}
+      startIcon={liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
+    >
+      <Typography color="#bfbfbf" fontSize="16px">
+        {likes}
+      </Typography>
     </Button>
   );
 }

@@ -62,7 +62,10 @@ const AddTweetModal = () => {
     setModalVisible(false);
   };
 
-  const handleImageChange = useCallback((link) => setLink(link), []);
+  const handleImageChange = useCallback((link, shouldSubmit) => {
+    setLink(link);
+    if (shouldSubmit) return setShowImagePrompt(true);
+  }, []);
 
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 

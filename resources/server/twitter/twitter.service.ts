@@ -1,6 +1,6 @@
 import PlayerService from '../players/player.service';
 import TwitterDB, { _TwitterDB } from './twitter.db';
-import { NewTweet, Profile, Tweet, TwitterEvents } from '../../../typings/twitter';
+import { NewTweet, Tweet, TwitterEvents, TwitterProfile } from '../../../typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
@@ -17,7 +17,7 @@ class _TwitterService {
 
   async handleGetOrCreateProfile(
     reqObj: PromiseRequest<void>,
-    resp: PromiseEventResp<Profile | string[]>,
+    resp: PromiseEventResp<TwitterProfile | string[]>,
   ) {
     const identifier = PlayerService.getIdentifier(reqObj.source);
 
@@ -47,7 +47,10 @@ class _TwitterService {
     }
   }
 
-  async handleCreateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<Profile>) {
+  async handleCreateProfile(
+    reqObj: PromiseRequest<TwitterProfile>,
+    resp: PromiseEventResp<TwitterProfile>,
+  ) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.createProfile(identifier, reqObj.data.profile_name);
@@ -62,7 +65,10 @@ class _TwitterService {
   }
 
   // we get both the profile and a profile name
-  async handleUpdateProfile(reqObj: PromiseRequest<Profile>, resp: PromiseEventResp<Profile>) {
+  async handleUpdateProfile(
+    reqObj: PromiseRequest<TwitterProfile>,
+    resp: PromiseEventResp<TwitterProfile>,
+  ) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const imageUrl = checkAndFilterImage(reqObj.data.avatar_url);
@@ -181,6 +187,9 @@ class _TwitterService {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
       const likeExists = await this.twitterDB.doesLikeExist(profile.id, reqObj.data.tweetId);
+
+      console.log('PROFILE ID', profile.id);
+      console.log('TWEET ID', reqObj.data.tweetId);
 
       if (likeExists) {
         await this.twitterDB.deleteLike(profile.id, reqObj.data.tweetId);

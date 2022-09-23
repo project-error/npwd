@@ -68,6 +68,8 @@ export class _TwitterDB {
       offset.toString(),
     ]);
     const tweets = <Tweet[]>results;
+
+    console.log(tweets);
     return tweets.map(formatTweets(profileId));
   }
 
@@ -244,11 +246,16 @@ export class _TwitterDB {
    * @param tweetId - primary key of the tweet being liked
    */
   async createLike(profileId: number, tweetId: number): Promise<void> {
+    console.log('createLike P', profileId);
+    console.log('createLike TID', tweetId);
     const query = `
         INSERT INTO npwd_twitter_likes (profile_id, tweet_id)
         VALUES (?, ?)
 		`;
     await pool.execute(query, [profileId, tweetId]);
+    await DbInterface._rawExec(`UPDATE npwd_twitter_tweets SET likes = likes + 1 WHERE id = ?`, [
+      tweetId,
+    ]);
   }
 
   /**
@@ -264,6 +271,19 @@ export class _TwitterDB {
           AND tweet_id = ?
 		`;
     await pool.execute(query, [profileId, tweetId]);
+
+    await DbInterface._rawExec(`UPDATE npwd_twitter_tweets SET likes = likes - 1 WHERE id = ?`, [
+      tweetId,
+    ]);
+  }
+
+  async getTotalLikesFromTweet(tweetId: number): Promise<number> {
+    const query = `SELECT COUNT(*) as count FROM npwd_twitter_likes WHERE tweet_id = ?`;
+
+    const [results] = await DbInterface._rawExec(query, [tweetId]);
+    const result = <{ count: number }[]>results;
+
+    return result[0].count;
   }
 
   /**

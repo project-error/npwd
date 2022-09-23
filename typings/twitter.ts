@@ -17,6 +17,7 @@ export interface Tweet extends NewTweet {
   isReported: boolean;
   avatar_url: string;
   isRetweet: number | boolean;
+  likes: number;
   isRetweetedByPlayer?: boolean;
   retweetIdentifier: string;
   retweetId: string;

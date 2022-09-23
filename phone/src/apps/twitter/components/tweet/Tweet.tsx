@@ -39,6 +39,7 @@ export const Tweet = (tweet: FormattedTweet) => {
     isMine,
     isReported,
     isRetweet,
+    likes,
   } = tweet;
   const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
@@ -91,7 +92,7 @@ export const Tweet = (tweet: FormattedTweet) => {
           {enableImages && <ImageDisplay visible images={images} small />}
           <TweetButtonContainer>
             <ReplyButton profile_name={profile_name} />
-            <LikeButton tweetId={id} isLiked={isLiked} />
+            <LikeButton likes={likes} tweetId={id} isLiked={isLiked} />
             {ResourceConfig.twitter.allowRetweet && !isMine && (
               <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />
             )}
