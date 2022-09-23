@@ -191,28 +191,9 @@ if (config.PhoneAsItem.enabled) {
   }, 100);
 }
 
-// setTick(async () => {
-//   while (config.SwimDestroy) {
-//     await Delay(config.RunRate * 1000);
-//     if (IsPedSwimming(PlayerPedId())) {
-//       let chance = Math.floor(Math.random() * 100 + 1);
-//       if (chance <= config.DestoryChance) {
-//         countPhone((countPhone: boolean) => {
-//           if (countPhone) {
-//             ESX.ShowNotification("Your phone is ruined from the water!");
-//             destroyedPhone = true;
-//           }
-//         });
-//       }
-//       if (destroyedPhone) {
-//         await Delay(config.DestroyPhoneReCheck * 60000);
-//       }
-//     }
-//   }
-// });
-
 // Will update the phone's time even while its open
-// setInterval(() => {
-//   const time = getCurrentGameTime()
-//   sendMessage('PHONE', 'setTime', time)
-// }, 2000);
+setInterval(() => {
+  const time = getCurrentGameTime() as string;
+  console.log('TIME', time);
+  sendMessage('PHONE', PhoneEvents.SET_TIME, time);
+}, 2000);
