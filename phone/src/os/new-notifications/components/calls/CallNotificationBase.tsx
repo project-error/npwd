@@ -4,11 +4,13 @@ import Call from '@mui/icons-material/Call';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import { SnackbarContent, CustomContentProps } from 'notistack';
-import React, { forwardRef } from 'react';
-import { useContactActions } from '@apps/contacts/hooks/useContactActions';
+import React, { forwardRef, MutableRefObject, useRef } from 'react';
+//import { useContactActions } from '@apps/contacts/hooks/useContactActions';
 import { useCurrentCallValue } from '@os/call/hooks/state';
+//import useTimer from '@os/call/hooks/useTimer';
+import { useCall } from '@os/call/hooks/useCall';
+import { callbackify } from 'util';
 import useTimer from '@os/call/hooks/useTimer';
-import { on } from 'events';
 
 const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
   padding: '14px 16px',
@@ -23,9 +25,6 @@ const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
 interface CallNotificationBaseProps extends CustomContentProps {
   title: string;
   transmitter: string;
-  onAccept: () => void;
-  onReject: () => void;
-  onEnd: () => void;
 }
 
 export type CallNotificationBaseComponent = React.FC<CallNotificationBaseProps>;
@@ -34,45 +33,46 @@ const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 
 export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationBaseProps>(
   (props, ref) => {
-    const { transmitter, onAccept, onEnd, onReject } = props;
+    const { endCall, acceptCall, rejectCall } = useCall();
+    const { transmitter } = props;
     const call = useCurrentCallValue();
-    const { hours, minutes, seconds, startTimer, resetTimer } = useTimer();
-    const { getPictureByNumber, getDisplayByNumber } = useContactActions();
+    const { minutes, seconds, startTimer, resetTimer } = useTimer();
 
     const handleAcceptCall = () => {
-      onAccept();
+      acceptCall();
       startTimer();
     };
 
-    const handleEndCall = () => {
-      onEnd();
-      resetTimer();
-    };
-
-    const handleRejectCall = () => {
-      onReject();
-      resetTimer();
+    const handleEndOrRejectCall = () => {
+      console.log('handleEndOrRejectCall call:', call);
+      if (!call.is_accepted && !call.isTransmitter) {
+        rejectCall();
+      } else {
+        endCall();
+      }
     };
 
     return (
       <StyledSnackbar ref={ref} style={{ minWidth: '370px' }}>
         <Box display="flex" alignItems="center" gap={1} color="white" mb={0.7}>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar src={getPictureByNumber(transmitter) ?? null} alt="Transmitter" />
+            <Avatar src="" alt="Transmitter" />
           </Box>
           <Box>
-            <Typography color="#bfbfbf">
-              {getDisplayByNumber(transmitter) ?? transmitter}
-            </Typography>
+            {call.isTransmitter ? (
+              <Typography color="#bfbfbf">{call.receiver}</Typography>
+            ) : (
+              <Typography color="#bfbfbf">{transmitter}</Typography>
+            )}
           </Box>
         </Box>
         <Box display="flex" gap={1}>
-          {call && (
-            <Typography>
-              {`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}
+          {call.is_accepted && (
+            <Typography color="#bfbfbf">
+              {`${formatTime(minutes)}:${formatTime(seconds)}`}
             </Typography>
           )}
-          {!call && (
+          {!call.isTransmitter && !call.is_accepted && (
             <IconButton
               onClick={handleAcceptCall}
               size="small"
@@ -82,7 +82,7 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
             </IconButton>
           )}
           <IconButton
-            onClick={call ? handleEndCall : handleRejectCall}
+            onClick={handleEndOrRejectCall}
             size="small"
             sx={{ backgroundColor: red[500] }}
           >

@@ -26,9 +26,6 @@ declare module 'notistack' {
     npwdCallNotification: {
       title: string;
       transmitter: string;
-      onAccept: () => void;
-      onReject: () => void;
-      onEnd: () => void;
     };
     npwdSystemNotification: {
       secondaryTitle?: string;

@@ -1,27 +1,39 @@
-import { useCall } from '@os/call/hooks/useCall';
+import { useContactsValue } from '@apps/contacts/hooks/state';
+import { useContactActions } from '@apps/contacts/hooks/useContactActions';
+import { useCurrentCallValue } from '@os/call/hooks/state';
 import { useSnackbar } from 'notistack';
-import { useRecoilCallback } from 'recoil';
+import { useCallback } from 'react';
 
 export const useCallNotification = () => {
+  const currentCall = useCurrentCallValue();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { acceptCall, endCall, rejectCall } = useCall();
 
-  const enqueueCallNotification = useRecoilCallback(({ set, snapshot }) => (dto: any) => {
-    enqueueSnackbar('', {
-      variant: 'npwdCallNotification',
-      anchorOrigin: {
-        vertical: 'top',
-        horizontal: 'center',
-      },
-      persist: true,
-      title: 'Call',
-      transmitter: dto.transmitter,
-      key: 'npwd:callNotification',
-      onEnd: () => endCall(),
-      onReject: () => rejectCall(),
-      onAccept: () => acceptCall(),
-    });
-  });
+  const contacts = useContactsValue();
+  const { getDisplayByNumber } = useContactActions();
+
+  const contactDisplay = useCallback(
+    (number: string): string => {
+      return contacts.length ? getDisplayByNumber(number) : number;
+    },
+    [contacts, getDisplayByNumber],
+  );
+
+  const enqueueCallNotification = (dto: any) => {
+    if (!currentCall) {
+      closeSnackbar('npwd:callNotification');
+      enqueueSnackbar('', {
+        variant: 'npwdCallNotification',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+        persist: true,
+        title: 'Call',
+        transmitter: contactDisplay(dto.transmitter),
+        key: 'npwd:callNotification',
+      });
+    }
+  };
 
   const removeNotification = () => {
     closeSnackbar('npwd:callNotification');
