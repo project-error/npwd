@@ -39,7 +39,7 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
   const history = useHistory();
 
   const handleNotisClick = () => {
-    path ? history.push(path) : onClick();
+    path && !onClick ? history.push(path) : onClick();
   };
 
   return (

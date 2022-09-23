@@ -14,7 +14,7 @@ import {
   NotificationEvents,
   SystemNotificationDTO,
 } from '@typings/notifications';
-import { unix } from 'dayjs';
+import { NotificationFuncRefs } from './cl_notifications';
 
 const exps = global.exports;
 
@@ -121,6 +121,17 @@ exps('createNotification', (dto: CreateNotificationDTO) => {
 exps('createSystemNotification', (dto: SystemNotificationDTO) => {
   verifyExportArgType('createSystemNotification', dto, ['object']);
   verifyExportArgType('createSystemNotification', dto.uniqId, ['string']);
+
+  const actionSet = dto.onConfirm || dto.onCancel;
+
+  if (!dto.controls && actionSet)
+    return console.log('Controls must be set to true in order to use notifcation actions');
+
+  if (dto.controls) {
+    NotificationFuncRefs.set(`${dto.uniqId}:confirm`, dto.onConfirm);
+    NotificationFuncRefs.set(`${dto.uniqId}:cancel`, dto.onCancel);
+  }
+
   sendMessage('SYSTEM', NotificationEvents.CREATE_SYSTEM_NOTIFICATION, dto);
 });
 
@@ -128,17 +139,3 @@ exps('removeSystemNotification', (uniqId: string) => {
   verifyExportArgType('createSystemNotification', uniqId, ['string']);
   sendMessage('SYSTEM', NotificationEvents.REMOVE_SYSTEM_NOTIFICATION, { uniqId });
 });
-
-RegisterCommand(
-  'csn',
-  () => {
-    exps['npwd'].createSystemNotification({
-      uniqId: 'robberyNoti',
-      content: 'Bro, this is not going very well...I can tell you that!',
-      secondaryTitle: 'Robbery',
-      keepOpen: false,
-      duration: 3000,
-    });
-  },
-  false,
-);

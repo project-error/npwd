@@ -26,9 +26,11 @@ declare module 'notistack' {
     npwdCallNotification: {
       title: string;
       transmitter: string;
+      receiver: string;
     };
     npwdSystemNotification: {
       secondaryTitle?: string;
+      controls: boolean;
     };
   }
 }

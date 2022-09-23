@@ -11,6 +11,7 @@ export const useSystemNotificationListener = () => {
       key: dto.uniqId,
       persist: dto.keepOpen || false,
       autoHideDuration: dto.duration || 3000,
+      controls: dto.controls ?? false,
     });
   };
 

@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
+
 export const useSubscription = <T = unknown>(event: string, handler: any) => {
-  window.addEventListener(event, handler);
+  useEffect(() => {
+    window.addEventListener(event, handler);
+  });
 
   const unsubscribe = () => window.removeEventListener(event, handler);
 

@@ -4,8 +4,6 @@ import { CallEvents } from '@typings/call';
 import fetchNui from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
 import { ServerPromiseResp } from '@typings/common';
 
 interface CallHook {

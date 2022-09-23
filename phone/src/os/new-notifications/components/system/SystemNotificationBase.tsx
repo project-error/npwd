@@ -1,11 +1,15 @@
-import { styled, Box, Typography } from '@mui/material';
+import { styled, Box, Typography, IconButton } from '@mui/material';
 import { useApps } from '@os/apps/hooks/useApps';
+import fetchNui from '@utils/fetchNui';
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 interface SystemNotificationBaseProps extends CustomContentProps {
   secondaryTitle?: string;
+  controls: boolean;
 }
 
 const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
@@ -30,7 +34,7 @@ export type SystemNotificationBaseComponent = React.FC<SystemNotificationBasePro
 
 export const SystemNotificationBase = forwardRef<HTMLDivElement, SystemNotificationBaseProps>(
   (props, ref) => {
-    const { secondaryTitle, message } = props;
+    const { secondaryTitle, message, controls } = props;
     const { closeSnackbar } = useSnackbar();
     const { getApp } = useApps();
     const app = getApp('SETTINGS');
@@ -38,6 +42,14 @@ export const SystemNotificationBase = forwardRef<HTMLDivElement, SystemNotificat
 
     const handleCloseNoti = () => {
       closeSnackbar(props.id);
+    };
+
+    const handleConfirmAction = async () => {
+      await fetchNui('npwd:onNotificationConfirm', props.id);
+    };
+
+    const handleCancelAction = async () => {
+      await fetchNui('npwd:onNotificationCancel', props.id);
     };
 
     return (
@@ -61,6 +73,16 @@ export const SystemNotificationBase = forwardRef<HTMLDivElement, SystemNotificat
           </Box>
         </Box>
         <StyledMessage>{message}</StyledMessage>
+        {controls && (
+          <Box>
+            <IconButton size="small" onClick={handleConfirmAction}>
+              <CheckCircleIcon />
+            </IconButton>
+            <IconButton size="small" onClick={handleCancelAction}>
+              <CancelIcon />
+            </IconButton>
+          </Box>
+        )}
       </StyledSnackbar>
     );
   },

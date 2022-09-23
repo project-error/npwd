@@ -1,11 +1,12 @@
 import { useContactsValue } from '@apps/contacts/hooks/state';
 import { useContactActions } from '@apps/contacts/hooks/useContactActions';
-import { useCurrentCallValue } from '@os/call/hooks/state';
+import { useCurrentCall } from '@os/call/hooks/state';
+import { ActiveCall } from '@typings/call';
 import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 
 export const useCallNotification = () => {
-  const currentCall = useCurrentCallValue();
+  const [currentCall, setCurrenCall] = useCurrentCall();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contacts = useContactsValue();
@@ -18,7 +19,7 @@ export const useCallNotification = () => {
     [contacts, getDisplayByNumber],
   );
 
-  const enqueueCallNotification = (dto: any) => {
+  const enqueueCallNotification = (dto: ActiveCall) => {
     if (!currentCall) {
       closeSnackbar('npwd:callNotification');
       enqueueSnackbar('', {
@@ -29,7 +30,11 @@ export const useCallNotification = () => {
         },
         persist: true,
         title: 'Call',
+        onExited: () => {
+          setCurrenCall(null);
+        },
         transmitter: contactDisplay(dto.transmitter),
+        receiver: contactDisplay(dto.receiver),
         key: 'npwd:callNotification',
       });
     }

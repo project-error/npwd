@@ -40,4 +40,7 @@ export type SystemNotificationDTO = {
   secondaryTitle: string;
   keepOpen: boolean;
   duration: number;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  controls?: boolean;
 };

@@ -4,12 +4,9 @@ import Call from '@mui/icons-material/Call';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import { SnackbarContent, CustomContentProps } from 'notistack';
-import React, { forwardRef, MutableRefObject, useRef } from 'react';
-//import { useContactActions } from '@apps/contacts/hooks/useContactActions';
+import React, { forwardRef, useMemo } from 'react';
 import { useCurrentCallValue } from '@os/call/hooks/state';
-//import useTimer from '@os/call/hooks/useTimer';
 import { useCall } from '@os/call/hooks/useCall';
-import { callbackify } from 'util';
 import useTimer from '@os/call/hooks/useTimer';
 
 const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
@@ -25,6 +22,7 @@ const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
 interface CallNotificationBaseProps extends CustomContentProps {
   title: string;
   transmitter: string;
+  receiver: string;
 }
 
 export type CallNotificationBaseComponent = React.FC<CallNotificationBaseProps>;
@@ -34,9 +32,14 @@ const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationBaseProps>(
   (props, ref) => {
     const { endCall, acceptCall, rejectCall } = useCall();
-    const { transmitter } = props;
+    const { transmitter, receiver } = props;
     const call = useCurrentCallValue();
     const { minutes, seconds, startTimer, resetTimer } = useTimer();
+
+    const RECEIVER_TEXT = useMemo(
+      () => (call?.is_accepted ? receiver : `Calling ${receiver}`),
+      [call.is_accepted, receiver],
+    );
 
     const handleAcceptCall = () => {
       acceptCall();
@@ -50,7 +53,12 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
       } else {
         endCall();
       }
+      resetTimer();
     };
+
+    if (!call) {
+      return null;
+    }
 
     return (
       <StyledSnackbar ref={ref} style={{ minWidth: '370px' }}>
@@ -59,20 +67,20 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
             <Avatar src="" alt="Transmitter" />
           </Box>
           <Box>
-            {call.isTransmitter ? (
-              <Typography color="#bfbfbf">{call.receiver}</Typography>
+            {call?.isTransmitter ? (
+              <Typography color="#bfbfbf">{RECEIVER_TEXT}</Typography>
             ) : (
               <Typography color="#bfbfbf">{transmitter}</Typography>
             )}
           </Box>
         </Box>
         <Box display="flex" gap={1}>
-          {call.is_accepted && (
+          {call?.is_accepted && (
             <Typography color="#bfbfbf">
               {`${formatTime(minutes)}:${formatTime(seconds)}`}
             </Typography>
           )}
-          {!call.isTransmitter && !call.is_accepted && (
+          {!call?.isTransmitter && !call?.is_accepted && (
             <IconButton
               onClick={handleAcceptCall}
               size="small"

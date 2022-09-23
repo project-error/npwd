@@ -1,3 +1,4 @@
+import { useCurrentCallValue } from '@os/call/hooks/state';
 import { activeNotificationIds } from '@os/new-notifications/state';
 import { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -9,15 +10,18 @@ export const usePhoneVisibility = () => {
   const [{ zoom }] = useSettings();
   const activeNotifications = useRecoilValue(activeNotificationIds);
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
+  const currentCall = useCurrentCallValue();
+
+  const hasNotis = currentCall || activeNotifications.length;
 
   useEffect(() => {
-    if (activeNotifications.length && !visibility) {
+    if (hasNotis && !visibility) {
       console.log('activeNotificationsIds', activeNotifications);
       setNotifVisibility(true);
     } else {
       setNotifVisibility(false);
     }
-  }, [activeNotifications, visibility]);
+  }, [hasNotis, activeNotifications, visibility]);
 
   const bottom = useMemo(() => {
     if (!visibility) {
