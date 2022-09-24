@@ -61,7 +61,7 @@ jobs:
         run: yarn generate:typings
       - name: Bump typings version
         run: |
-          cd ./packages/npwdTypes
+          cd ./packages/npwd-types
           git config user.email "chip@projecterror.dev"
           git config user.name "itschip"
           yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
@@ -111,5 +111,5 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwdTypes/package.json'
+          package: './packages/npwd-types/package.json'
           access: 'public'

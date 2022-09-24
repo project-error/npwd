@@ -6,7 +6,7 @@ import dts from 'rollup-plugin-dts';
 const config = [
   {
     input: './typings/index.ts',
-    output: [{ file: 'npwdTypes/index.d.ts', format: 'es' }],
+    output: [{ file: 'packages/npwd-types/index.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];
