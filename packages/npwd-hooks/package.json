@@ -1,0 +1,12 @@
+{
+  "name": "@npwd/hooks",
+  "version": "1.0.0",
+  "private": false,
+  "main": "dist/hooks.js",
+  "module": "dist/hooks.mjs",
+  "typings": "dist/hooks.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c"
+  }
+}
