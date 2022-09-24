@@ -69,7 +69,6 @@ export class _TwitterDB {
     ]);
     const tweets = <Tweet[]>results;
 
-    console.log(tweets);
     return tweets.map(formatTweets(profileId));
   }
 
@@ -246,8 +245,6 @@ export class _TwitterDB {
    * @param tweetId - primary key of the tweet being liked
    */
   async createLike(profileId: number, tweetId: number): Promise<void> {
-    console.log('createLike P', profileId);
-    console.log('createLike TID', tweetId);
     const query = `
         INSERT INTO npwd_twitter_likes (profile_id, tweet_id)
         VALUES (?, ?)

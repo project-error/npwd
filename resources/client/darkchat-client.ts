@@ -30,6 +30,5 @@ onNet(DarkchatEvents.TRANSFER_OWNERSHIP_SUCCESS, (dto: OwnerTransferResp) => {
 });
 
 onNet(DarkchatEvents.DELETE_CHANNEL_SUCCESS, (dto: any) => {
-  console.log('delete dto', dto);
   sendMessage('DARKCHAT', DarkchatEvents.DELETE_CHANNEL_SUCCESS, dto);
 });

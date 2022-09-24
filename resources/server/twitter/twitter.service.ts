@@ -188,9 +188,6 @@ class _TwitterService {
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
       const likeExists = await this.twitterDB.doesLikeExist(profile.id, reqObj.data.tweetId);
 
-      console.log('PROFILE ID', profile.id);
-      console.log('TWEET ID', reqObj.data.tweetId);
-
       if (likeExists) {
         await this.twitterDB.deleteLike(profile.id, reqObj.data.tweetId);
       } else {

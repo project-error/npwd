@@ -194,6 +194,5 @@ if (config.PhoneAsItem.enabled) {
 // Will update the phone's time even while its open
 setInterval(() => {
   const time = getCurrentGameTime() as string;
-  console.log('TIME', time);
   sendMessage('PHONE', PhoneEvents.SET_TIME, time);
 }, 2000);

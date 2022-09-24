@@ -47,7 +47,6 @@ export const useAudioMessageAPI = () => {
           });
         }
 
-        console.log(res.data);
         updateLocalMessages(res.data);
         onClose();
       });

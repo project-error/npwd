@@ -94,11 +94,3 @@ if (!config.twitter.allowEditableProfileName && !config.twitter.generateProfileN
     `for the Twitter App and won't be able to use it!`;
   twitterLogger.warn(warning);
 }
-
-RegisterCommand(
-  'getlikes',
-  () => {
-    TwitterDB.fetchAllTweets(1, 0);
-  },
-  false,
-);
