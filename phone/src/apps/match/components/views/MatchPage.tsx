@@ -35,7 +35,6 @@ const MatchPage = () => {
   }, []);
 
   const handleSwipe = (id: number, liked: boolean) => {
-    console.log('liked', liked);
     // the user didn't choose (didn't swipe far enough)
     if (liked === null) return;
     setViewed(id, liked);

@@ -11,7 +11,6 @@ export const ImageDisplay = ({ visible, images, removeImage }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleOpenImage = (e, id: number) => {
-    console.log(e);
     setAnchorEl(e.currentTarget);
     setImageOpen(id);
   };

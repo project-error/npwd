@@ -80,7 +80,6 @@ const RecordVoiceMessage = ({ open, closeModal, setVoiceMessage }: IProps) => {
   };
 
   const handleSaveRecording = () => {
-    console.log('handle save', blob);
     if (!blob) return;
     setVoiceMessage(blob);
     closeModal();

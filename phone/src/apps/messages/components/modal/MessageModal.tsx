@@ -78,8 +78,6 @@ export const MessageModal = () => {
 
   const { ResourceConfig } = usePhone();
 
-  console.log(ResourceConfig);
-
   const myPhoneNumber = useMyPhoneNumber();
 
   useEffect(() => {

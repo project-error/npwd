@@ -41,7 +41,6 @@ export const useDarkchatService = () => {
 
   const handleDeleteChannel = useCallback(
     (dto: { channelId: number }) => {
-      console.log(dto);
       leaveLocalChannel(dto.channelId);
     },
     [leaveLocalChannel],

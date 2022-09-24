@@ -72,8 +72,6 @@ export const SettingsApp: React.FC = () => {
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
 
-    console.log(key, value);
-
     if (key === 'theme') {
       dispatchEvent(value);
     }

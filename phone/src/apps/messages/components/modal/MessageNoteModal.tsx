@@ -65,8 +65,6 @@ export const MessageNoteModal = ({
     setNotePreview(note[0]);
   }, [noteId, notes, setNotePreview]);
 
-  console.log(notePreview);
-
   return (
     <>
       <Modal visible={notePreview} handleClose={removeQueryParamImage}>
