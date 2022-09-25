@@ -124,6 +124,9 @@ exps('createSystemNotification', (dto: SystemNotificationDTO) => {
 
   const actionSet = dto.onConfirm || dto.onCancel;
 
+  if (dto.controls && !dto.keepOpen)
+    return console.log('Notification must be set to keepOpen in order to use notifcation actions');
+
   if (!dto.controls && actionSet)
     return console.log('Controls must be set to true in order to use notifcation actions');
 

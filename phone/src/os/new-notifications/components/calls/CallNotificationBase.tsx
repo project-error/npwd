@@ -47,7 +47,6 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
     };
 
     const handleEndOrRejectCall = () => {
-      console.log('handleEndOrRejectCall call:', call);
       if (!call.is_accepted && !call.isTransmitter) {
         rejectCall();
       } else {
