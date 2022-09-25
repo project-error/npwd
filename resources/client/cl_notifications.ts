@@ -18,6 +18,9 @@ RegisterNuiCB('npwd:onNotificationConfirm', (notisId, cb) => {
     return console.log(`NPWD could not find any function ref for notification: ${notisId}`);
   funcRef();
 
+  // delete as controls are only available when the notifiation persist.
+  // if we need a option to store these notis in the top bar, this should be removed.
+  NotificationFuncRefs.delete(`${notisId}:confirm`);
   cb({});
 });
 
@@ -27,5 +30,8 @@ RegisterNuiCB('npwd:onNotificationCancel', (notisId, cb) => {
     return console.log(`NPWD could not find any function ref for notification: ${notisId}`);
   funcRef();
 
+  // delete as controls are only available when the notifiation persist.
+  // if we need a option to store these notis in the top bar, this should be removed.
+  NotificationFuncRefs.delete(`${notisId}:cancel`);
   cb({});
 });

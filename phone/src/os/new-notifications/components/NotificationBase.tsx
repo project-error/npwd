@@ -5,6 +5,7 @@ import { SnackbarContent, CustomContentProps } from 'notistack';
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { useNotification } from '../useNotification';
 
 const StyledMessage = styled('div')({
   color: 'white',
@@ -34,12 +35,14 @@ const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
 }));
 
 const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((props, ref) => {
+  const { markAsRead } = useNotification();
   const { app, message, secondaryTitle, path, onClick } = props;
   const [t] = useTranslation();
   const history = useHistory();
 
   const handleNotisClick = () => {
     path && !onClick ? history.push(path) : onClick();
+    markAsRead(props.id.toString());
   };
 
   return (

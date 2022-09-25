@@ -60,7 +60,6 @@ export const useApps = () => {
   const allApps = [...apps, ...externalApps];
   const getApp = useCallback(
     (id: string): IApp => {
-      console.log('ALL APPS', allApps);
       return allApps.find((a) => a.id === id) || null;
     },
     [apps, externalApps],
