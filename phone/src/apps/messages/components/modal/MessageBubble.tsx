@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '8px',
     display: 'flex',
     justifyContent: 'center',
+  },
   myAudioSms: {
     float: 'right',
     margin: theme.spacing(1),
@@ -158,56 +159,47 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         justifyContent={message.is_system ? 'center' : isMine ? 'flex-end' : 'flex-start'}
         mt={1}
       >
-
         {!message.is_system && <>{!isMine ? <Avatar src={getContact()?.avatar} /> : null}</>}
 
         <Paper
           className={message.is_system ? classes.system : isMine ? classes.mySms : classes.sms}
           variant="outlined"
         >
-          {message.is_system ? (
-            <SystemMessage message={message} myNumber={myNumber} />
-          ) : (
+          {message.is_system && <SystemMessage message={message} myNumber={myNumber} />}
+          {!message.is_system && (
             <>
-          {message.is_embed ? (
-            <>
-              <MessageEmbed
-                type={parsedEmbed.type}
-                embed={parsedEmbed}
-                isMine={isMine}
-                message={message.message}
-                openMenu={openMenu}
-              />
-            </>
-          ) : (
-            <StyledMessage>
-              {isMessageImage ? (
-                <PictureReveal>
-                  <PictureResponsive src={message.message} alt="message multimedia" />
-                </PictureReveal>
-
+              {message.is_embed ? (
+                <>
+                  <MessageEmbed
+                    type={parsedEmbed.type}
+                    embed={parsedEmbed}
+                    isMine={isMine}
+                    message={message.message}
+                    openMenu={openMenu}
+                  />
+                </>
               ) : (
                 <StyledMessage>
-                  {isImage(message.message) ? (
+                  {isMessageImage ? (
                     <PictureReveal>
                       <PictureResponsive src={message.message} alt="message multimedia" />
                     </PictureReveal>
                   ) : (
                     <>{message.message}</>
                   )}
-                  {isMine && (
+                  {showVertIcon && (
                     <IconButton color="primary" onClick={openMenu}>
                       <MoreVertIcon />
                     </IconButton>
                   )}
                 </StyledMessage>
               )}
-              {showVertIcon && (
-                <IconButton color="primary" onClick={openMenu}>
-                  <MoreVertIcon />
-                </IconButton>
+              {!isMine && (
+                <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                  {getContact()?.display ?? message.author}
+                </Typography>
               )}
-              <Typography mt={0.5} fontSize={12}>
+              <Typography mt={2} fontSize={12}>
                 {dayjs.unix(message.createdAt).fromNow()}
               </Typography>
             </>

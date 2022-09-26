@@ -66,6 +66,18 @@ const MockConversationMessages: Message[] = [
       phoneNumber: '111-1134',
     }),
   },
+  {
+    id: 6,
+    author: '111-1134',
+    message: '',
+    createdAt: 16234242422,
+    is_system: true,
+    system_type: 'leave',
+  },
+
+  // is_system?: boolean;
+  // system_type?: 'leave' | 'remove' | 'add';
+  // system_number?: string;
 ];
 
 export const MockConversationServerResp: ServerPromiseResp<Message[]> = {
