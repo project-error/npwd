@@ -223,7 +223,16 @@
         "FETCHED_MESSAGES_FAILED": "Failed to retrieve messages",
         "DELETE_MESSAGE": "Delete message",
         "DELETE_MESSAGE_FAILED": "Failed to delete message",
-        "DELETE_CONVERSATION_FAILED": "Failed to delete conversation"
+        "DELETE_CONVERSATION_FAILED": "Failed to delete conversation",
+        "DELETE_GROUP_MEMBER_FAILED": "Failed to remove member",
+        "ADD_GROUP_MEMBER_FAILED": "Failed to add member",
+        "LEAVE_GROUP_FAILED": "Failed to leave group",
+        "MAKE_GROUP_OWNER_FAILED": "Failed to make group owner"
+      },
+      "SYSTEM_MESSAGES": {
+        "ADDED": "added",
+        "REMOVED": "removed",
+        "LEFT": "left"
       },
       "SEARCH_PLACEHOLDER": "Search messages...",
       "DELETE_CONVERSATION": "Delete conversation",
@@ -305,7 +314,8 @@
       "ADD": "Add",
       "SEND": "Send",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
+      "LEAVE": "Leave"
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",

@@ -1,10 +1,13 @@
 import fetchNui from '@utils/fetchNui';
 import {
+  ConversationListResponse,
   Message,
   MessageConversation,
   MessageEvents,
   PreDBConversation,
   PreDBMessage,
+  RemoveGroupMemberRequest,
+  AddGroupMemberRequest,
 } from '@typings/messages';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
@@ -20,11 +23,30 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 type UseMessageAPIProps = {
   sendMessage: ({ conversationId, message, tgtPhoneNumber }: PreDBMessage) => void;
   sendEmbedMessage: ({ conversationId, embed }: PreDBMessage) => void;
+  sendSystemMessage: ({
+    conversationId,
+    is_system,
+    system_type,
+    system_number,
+  }: PreDBMessage) => void;
   deleteMessage: (message: Message) => void;
   addConversation: (conversation: PreDBConversation) => void;
   deleteConversation: (conversationIds: number[]) => void;
   fetchMessages: (conversationId: string, page: number) => void;
   setMessageRead: (conversationId: number) => void;
+  removeGroupMember: (
+    conversationList: string,
+    conversationId: number,
+    phoneNumber: string,
+  ) => void;
+  leaveGroup: (conversationList: string, conversationId: number, phoneNumber: string) => void;
+  makeGroupOwner: (conversationId: number, phoneNumber: string) => void;
+  addGroupMembers: (
+    conversationId: number,
+    phoneNumbers: string[],
+    myNumber: string,
+    conversationList: string,
+  ) => void;
 };
 
 export const useMessageAPI = (): UseMessageAPIProps => {
@@ -35,7 +57,10 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     deleteLocalMessage,
     updateLocalConversations,
     removeLocalConversation,
+    removeLocalGroupMember,
     setMessageReadState,
+    updateLocalGroupOwner,
+    addLocalConversationParticipants,
   } = useMessageActions();
   const history = useHistory();
   const { state: messageConversationsState, contents: messageConversationsContents } =
@@ -178,6 +203,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           isGroupChat: resp.data.isGroupChat,
           unread: 0,
           unreadCount: 0,
+          owner: resp.data.owner,
         });
 
         history.push(`/messages`);
@@ -236,6 +262,154 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     [setMessages, addAlert, t, history],
   );
 
+  const sendSystemMessage = useCallback(
+    ({
+      conversationId,
+      conversationList,
+      tgtPhoneNumber = '',
+      is_system,
+      system_number,
+      system_type,
+    }: PreDBMessage) => {
+      fetchNui<ServerPromiseResp<Message>, PreDBMessage>(MessageEvents.SEND_MESSAGE, {
+        conversationId,
+        conversationList,
+        message: '',
+        tgtPhoneNumber,
+        sourcePhoneNumber: myPhoneNumber,
+        is_system,
+        system_number,
+        system_type,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+            type: 'error',
+          });
+        }
+
+        updateLocalMessages(resp.data);
+      });
+    },
+    [t, updateLocalMessages, addAlert, myPhoneNumber],
+  );
+
+  const makeGroupOwner = useCallback(
+    (conversationId: number, phoneNumber: string) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.MAKE_GROUP_OWNER, {
+        conversationId,
+        phoneNumber,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.MAKE_GROUP_OWNER_FAILED'),
+            type: 'error',
+          });
+        }
+        updateLocalGroupOwner(conversationId, phoneNumber);
+      });
+    },
+    [addAlert, updateLocalGroupOwner, t],
+  );
+
+  const removeGroupMember = useCallback(
+    (conversationList: string, conversationId: number, phoneNumber: string) => {
+      fetchNui<ServerPromiseResp<ConversationListResponse>, RemoveGroupMemberRequest>(
+        MessageEvents.DELETE_GROUP_MEMBER,
+        {
+          conversationList,
+          conversationId,
+          phoneNumber,
+          leaveGroup: false,
+        },
+      ).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.DELETE_GROUP_MEMBER_FAILED'),
+            type: 'error',
+          });
+        }
+        removeLocalGroupMember(conversationId, phoneNumber);
+        sendSystemMessage({
+          conversationId: conversationId,
+          conversationList: resp.data.conversationList,
+          tgtPhoneNumber: '',
+          is_system: true,
+          system_number: phoneNumber,
+          system_type: 'remove',
+        });
+      });
+    },
+    [addAlert, removeLocalGroupMember, sendSystemMessage, t],
+  );
+
+  const addGroupMembers = useCallback(
+    (
+      conversationId: number,
+      phoneNumbers: string[],
+      myNumber: string,
+      conversationList: string,
+    ) => {
+      fetchNui<ServerPromiseResp<ConversationListResponse>, AddGroupMemberRequest>(
+        MessageEvents.ADD_GROUP_MEMBER,
+        {
+          phoneNumbers,
+          conversationId,
+          conversationList,
+        },
+      ).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.ADD_GROUP_MEMBER_FAILED'),
+            type: 'error',
+          });
+        }
+        addLocalConversationParticipants(conversationId, resp.data.conversationList);
+        phoneNumbers.forEach((phoneNumber) => {
+          sendSystemMessage({
+            conversationId: conversationId,
+            conversationList: resp.data.conversationList,
+            tgtPhoneNumber: '',
+            is_system: true,
+            system_number: phoneNumber,
+            system_type: 'add',
+          });
+        });
+      });
+    },
+    [addAlert, addLocalConversationParticipants, sendSystemMessage, t],
+  );
+
+  const leaveGroup = useCallback(
+    (conversationList: string, conversationId: number, phoneNumber: string) => {
+      fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_GROUP_MEMBER, {
+        conversationList,
+        conversationId,
+        phoneNumber,
+        leaveGroup: true,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({
+            message: t('MESSAGES.FEEDBACK.LEAVE_GROUP_FAILED'),
+            type: 'error',
+          });
+        }
+
+        removeLocalConversation([conversationId]);
+        sendSystemMessage({
+          conversationId: conversationId,
+          conversationList: conversationList,
+          tgtPhoneNumber: '',
+          is_system: true,
+          system_number: '',
+          system_type: 'leave',
+        });
+        return history.push('/messages');
+      });
+    },
+    [addAlert, history, removeLocalConversation, sendSystemMessage, t],
+  );
+
   return {
     sendMessage,
     deleteMessage,
@@ -244,5 +418,10 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     fetchMessages,
     sendEmbedMessage,
     setMessageRead,
+    removeGroupMember,
+    leaveGroup,
+    sendSystemMessage,
+    makeGroupOwner,
+    addGroupMembers,
   };
 };

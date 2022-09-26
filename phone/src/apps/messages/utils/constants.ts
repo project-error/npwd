@@ -10,15 +10,28 @@ export const MockMessageConversations: MessageConversation[] = [
     label: '',
     updatedAt: 5,
     isGroupChat: false,
+    owner: '111-1134',
   },
   {
     id: 2,
-    conversationList: '111-1134+321+215-8139',
+    conversationList: '111-1134+222-4325+215-8139',
     participant: '111-1134',
     unread: 0,
     label: 'Secret Project Error chat',
     updatedAt: 5,
     isGroupChat: true,
+    owner: '222-4325',
+    avatar: 'http://i.tasoagc.dev/2QYV',
+  },
+  {
+    id: 3,
+    conversationList: '111-1134+444-4444',
+    participant: '111-1134',
+    unread: 0,
+    label: '',
+    updatedAt: 5,
+    isGroupChat: false,
+    owner: '111-1134',
   },
 ];
 
@@ -32,7 +45,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 3,
     author: '111-1134',
-    message: 'Bro, finish\nnotifications\napi?????',
+    message: 'Bro, finish notifications api?????',
     createdAt: 16234242422,
   },
   {
@@ -53,6 +66,18 @@ const MockConversationMessages: Message[] = [
       phoneNumber: '111-1134',
     }),
   },
+  {
+    id: 6,
+    author: '111-1134',
+    message: '',
+    createdAt: 16234242422,
+    is_system: true,
+    system_type: 'leave',
+  },
+
+  // is_system?: boolean;
+  // system_type?: 'leave' | 'remove' | 'add';
+  // system_number?: string;
 ];
 
 export const MockConversationServerResp: ServerPromiseResp<Message[]> = {

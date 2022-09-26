@@ -1,5 +1,12 @@
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { Message, MessageConversation, MessageEvents } from '@typings/messages';
+import {
+  MakeGroupOwner,
+  Message,
+  MessageConversation,
+  MessageEvents,
+  RemoveGroupMemberResponse,
+  AddGroupMemberResponse,
+} from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
 import { useMessageNotifications } from './useMessageNotifications';
@@ -8,8 +15,15 @@ import { useActiveMessageConversation } from './state';
 import { usePhoneVisibility } from '@os/phone/hooks';
 
 export const useMessagesService = () => {
-  const { updateLocalMessages, updateLocalConversations, setMessageReadState } =
-    useMessageActions();
+  const {
+    updateLocalMessages,
+    updateLocalConversations,
+    setMessageReadState,
+    removeLocalConversation,
+    removeLocalGroupMember,
+    updateLocalGroupOwner,
+    addLocalConversationParticipants,
+  } = useMessageActions();
   const { setNotification } = useMessageNotifications();
   const { pathname } = useLocation();
   const activeConversation = useActiveMessageConversation();
@@ -44,12 +58,45 @@ export const useMessagesService = () => {
         conversationList: conversation.conversationList,
         label: conversation.label,
         unread: 0,
+        owner: conversation.owner,
       });
     },
     [updateLocalConversations],
   );
 
+  const handleDeleteConversation = useCallback(
+    (conversationsId: number[]) => {
+      removeLocalConversation(conversationsId);
+    },
+    [removeLocalConversation],
+  );
+
+  const handleRemoveGroupMember = useCallback(
+    (conversation: RemoveGroupMemberResponse) => {
+      removeLocalGroupMember(conversation.conversationId, conversation.phoneNumber);
+    },
+    [removeLocalGroupMember],
+  );
+
+  const updateGroupOwner = useCallback(
+    (conversation: MakeGroupOwner) => {
+      updateLocalGroupOwner(conversation.conversationId, conversation.phoneNumber);
+    },
+    [updateLocalGroupOwner],
+  );
+
+  const updateParticipantList = useCallback(
+    (conversation: AddGroupMemberResponse) => {
+      addLocalConversationParticipants(conversation.conversationId, conversation.conversationList);
+    },
+    [addLocalConversationParticipants],
+  );
+
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
   useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, handleUpdateMessages);
   useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, handleAddConversation);
+  useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_CONVERSATION, handleDeleteConversation);
+  useNuiEvent('MESSAGES', MessageEvents.DELETE_GROUP_MEMBER_LIST, handleRemoveGroupMember);
+  useNuiEvent('MESSAGES', MessageEvents.UPDATE_GROUP_OWNER, updateGroupOwner);
+  useNuiEvent('MESSAGES', MessageEvents.UPDATE_PARTICIPANT_LIST, updateParticipantList);
 };

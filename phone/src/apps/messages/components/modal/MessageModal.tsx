@@ -24,11 +24,11 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
 import { Call } from '@mui/icons-material';
 import { useMessageActions } from '../../hooks/useMessageActions';
-import GroupDetailsModal from './GroupDetailsModal';
-import Backdrop from '@ui/components/Backdrop';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import GroupDetailsModal from './GroupDetailsModal';
 import { usePhone } from '@os/phone/hooks';
 import { log } from 'console';
+
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -69,12 +69,13 @@ export const MessageModal = () => {
   const { fetchMessages } = useMessageAPI();
   const { getLabelOrContact, getConversationParticipant } = useMessageActions();
   const { initializeCall } = useCall();
+  const { removeGroupMember, leaveGroup, makeGroupOwner } = useMessageAPI();
 
   const { getContactByNumber } = useContactActions();
   const [messages, setMessages] = useMessagesState();
 
   const [isLoaded, setLoaded] = useState(false);
-  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [isGroupSettingsModalOpen, setIsGroupSettingsModalOpen] = useState(false);
 
   const { ResourceConfig } = usePhone();
 
@@ -104,12 +105,12 @@ export const MessageModal = () => {
     history.push('/messages');
   };
 
-  const openGroupModal = () => {
-    setIsGroupModalOpen(true);
+  const openGroupSettingsModal = () => {
+    setIsGroupSettingsModalOpen(true);
   };
 
-  const closeGroupModal = () => {
-    setIsGroupModalOpen(false);
+  const closeGroupSettingsModal = () => {
+    setIsGroupSettingsModalOpen(false);
   };
 
   useEffect(() => {
@@ -152,6 +153,26 @@ export const MessageModal = () => {
     return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
+  const handleGroupRemove = (number: string) => {
+    removeGroupMember(
+      activeMessageConversation.conversationList,
+      activeMessageConversation.id,
+      number,
+    );
+  };
+
+  const handleMakeGroupOwner = (number: string) => {
+    makeGroupOwner(activeMessageConversation.id, number);
+  };
+
+  const handleLeaveGroup = () => {
+    leaveGroup(
+      activeMessageConversation.conversationList,
+      activeMessageConversation.id,
+      myPhoneNumber,
+    );
+  };
+
   // This only gets used for 1 on 1 conversations
   let conversationList = activeMessageConversation.conversationList.split('+');
   conversationList = conversationList.filter((targetNumber) => targetNumber !== myPhoneNumber);
@@ -174,12 +195,14 @@ export const MessageModal = () => {
         }}
       >
         <GroupDetailsModal
-          open={isGroupModalOpen}
-          onClose={closeGroupModal}
-          conversationList={activeMessageConversation.conversationList}
+          open={isGroupSettingsModalOpen}
+          onClose={closeGroupSettingsModal}
+          conversation={activeMessageConversation}
           addContact={handleAddContact}
+          leaveGroup={handleLeaveGroup}
+          removeMember={handleGroupRemove}
+          makeOwner={handleMakeGroupOwner}
         />
-        {isGroupModalOpen && <Backdrop />}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -205,7 +228,7 @@ export const MessageModal = () => {
           )}
           {activeMessageConversation.isGroupChat ? (
             <Button>
-              <GroupIcon onClick={openGroupModal} fontSize="large" />
+              <GroupIcon onClick={openGroupSettingsModal} fontSize="large" />
             </Button>
           ) : !activeMessageConversation.isGroupChat && !doesContactExist ? (
             <Button>

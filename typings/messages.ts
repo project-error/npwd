@@ -5,6 +5,9 @@ export interface Message {
   author: string;
   is_embed?: boolean;
   embed?: any;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
   createdAt: number;
 }
 
@@ -16,6 +19,9 @@ export interface PreDBMessage {
   message?: string;
   is_embed?: boolean;
   embed?: any;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
 }
 
 export interface CreateMessageDTO {
@@ -25,6 +31,9 @@ export interface CreateMessageDTO {
   message: string;
   is_embed: boolean;
   embed: any;
+  is_system?: boolean;
+  system_type?: 'leave' | 'remove' | 'add';
+  system_number?: string;
 }
 
 export interface MessageConversation {
@@ -36,6 +45,8 @@ export interface MessageConversation {
   unread?: number;
   unreadCount?: number;
   updatedAt?: number;
+  owner?: string;
+  avatar?: string;
 }
 
 export interface PreDBConversation {
@@ -51,6 +62,32 @@ export interface MessagesRequest {
 
 export interface DeleteConversationRequest {
   conversationsId: number[];
+}
+export interface RemoveGroupMemberRequest {
+  conversationList: string;
+  conversationId: number;
+  phoneNumber: string;
+  leaveGroup: boolean;
+}
+
+export interface AddGroupMemberRequest {
+  phoneNumbers: string[];
+  conversationId: number;
+  conversationList: string;
+}
+
+export interface MakeGroupOwner {
+  conversationId: number;
+  phoneNumber: string;
+}
+
+export interface ConversationListResponse {
+  conversationList: string;
+}
+
+export interface AddGroupMemberResponse {
+  conversationId: number;
+  conversationList: string;
 }
 
 /**
@@ -111,6 +148,12 @@ export interface MessageConversationResponse {
   updatedAt: number;
   conversationList: string;
   label: string;
+  owner?: string;
+}
+
+export interface RemoveGroupMemberResponse {
+  conversationId: number;
+  phoneNumber: string;
 }
 
 export interface OnMessageExportCtx {
@@ -152,6 +195,13 @@ export enum MessageEvents {
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
   GET_MESSAGE_LOCATION = 'npwd:getMessageLocation',
   MESSAGES_SET_WAYPOINT = 'npwd:setWaypoint',
+  DELETE_GROUP_MEMBER = 'nwpd:deleteGroupMember',
+  DELETE_GROUP_MEMBER_CONVERSATION = 'nwpd:deleteGroupMemberChat',
+  DELETE_GROUP_MEMBER_LIST = 'nwpd:deleteGroupMemberList',
+  ADD_GROUP_MEMBER = 'nwpd:addGroupMember',
+  MAKE_GROUP_OWNER = 'npwd:makeGroupOwner',
+  UPDATE_GROUP_OWNER = 'npwd:makeGroupOwnerSuccess',
+  UPDATE_PARTICIPANT_LIST = 'npwd:updateParticipantList',
 }
 
 export interface Location {

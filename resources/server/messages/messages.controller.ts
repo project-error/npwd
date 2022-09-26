@@ -1,11 +1,15 @@
 import { getSource } from '../utils/miscUtils';
 import {
+  ConversationListResponse,
   DeleteConversationRequest,
+  MakeGroupOwner,
   Message,
   MessageConversation,
   MessageEvents,
   PreDBConversation,
   PreDBMessage,
+  RemoveGroupMemberRequest,
+  AddGroupMemberRequest,
 } from '../../../typings/messages';
 import MessagesService from './messages.service';
 import { messagesLogger } from './messages.utils';
@@ -111,5 +115,38 @@ onNetPromise(MessageEvents.GET_MESSAGE_LOCATION, async (reqObj, resp) => {
   const src = getSource();
   MessagesService.handleGetLocation(reqObj, resp).catch((e) => {
     messagesLogger.error(`Error occurred in get location event (${src}), Error: ${e.message}`);
+  });
+});
+
+onNetPromise<RemoveGroupMemberRequest, ConversationListResponse>(
+  MessageEvents.DELETE_GROUP_MEMBER,
+  async (reqObj, resp) => {
+    MessagesService.handleRemoveGroupMember(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred while removing a group member (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
+
+onNetPromise<AddGroupMemberRequest, ConversationListResponse>(
+  MessageEvents.ADD_GROUP_MEMBER,
+  async (reqObj, resp) => {
+    MessagesService.handleAddGroupMember(reqObj, resp).catch((e) => {
+      messagesLogger.error(
+        `Error occurred while adding group members (${reqObj.source}), Error: ${e.message}`,
+      );
+      resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+  },
+);
+
+onNetPromise<MakeGroupOwner, void>(MessageEvents.MAKE_GROUP_OWNER, async (reqObj, resp) => {
+  MessagesService.handleMakeGroupOwner(reqObj, resp).catch((e) => {
+    messagesLogger.error(
+      `Error occurred while making group owner (${reqObj.source}), Error: ${e.message}`,
+    );
+    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });

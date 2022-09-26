@@ -93,9 +93,21 @@ const MessageGroupItem = ({
           invisible={messageConversation.unreadCount <= 0}
         >
           {messageConversation.isGroupChat ? (
-            <MuiAvatar alt={messageConversation.label} />
+            <>
+              {messageConversation.avatar ? (
+                <MuiAvatar alt={messageConversation.label} src={messageConversation.avatar} />
+              ) : (
+                <MuiAvatar alt={messageConversation.label} />
+              )}
+            </>
           ) : (
-            <MuiAvatar alt={getContact()?.display ?? ''} src={getContact()?.avatar} />
+            <>
+              {getContact()?.avatar ? (
+                <MuiAvatar alt={getContact()?.display ?? ''} src={getContact()?.avatar} />
+              ) : (
+                <MuiAvatar>{getContact().display.charAt(0)}</MuiAvatar>
+              )}
+            </>
           )}
         </Badge>
       </ListItemAvatar>

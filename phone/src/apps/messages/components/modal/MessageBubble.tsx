@@ -11,6 +11,7 @@ import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import SystemMessage from '../ui/SystemMessage';
 import dayjs from 'dayjs';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +40,19 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     borderRadius: '15px',
     textOverflow: 'ellipsis',
+  },
+  system: {
+    float: 'left',
+    padding: '1px 12px',
+    width: 'auto',
+    marginLeft: 5,
+    maxWidth: '80%',
+    height: 'auto',
+    background: theme.palette.background.default,
+    color: theme.palette.text.secondary,
+    borderRadius: '8px',
+    display: 'flex',
+    justifyContent: 'center',
   },
   myAudioSms: {
     float: 'right',
@@ -142,45 +156,54 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         display="flex"
         ml={1}
         alignItems="stretch"
-        justifyContent={isMine ? 'flex-end' : 'flex-start'}
+        justifyContent={message.is_system ? 'center' : isMine ? 'flex-end' : 'flex-start'}
         mt={1}
       >
-        {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
-        <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-          {message.is_embed ? (
+        {!message.is_system && <>{!isMine ? <Avatar src={getContact()?.avatar} /> : null}</>}
+
+        <Paper
+          className={message.is_system ? classes.system : isMine ? classes.mySms : classes.sms}
+          variant="outlined"
+        >
+          {message.is_system && <SystemMessage message={message} myNumber={myNumber} />}
+          {!message.is_system && (
             <>
-              <MessageEmbed
-                type={parsedEmbed.type}
-                embed={parsedEmbed}
-                isMine={isMine}
-                message={message.message}
-                openMenu={openMenu}
-              />
-            </>
-          ) : (
-            <StyledMessage>
-              {isMessageImage ? (
-                <PictureReveal>
-                  <PictureResponsive src={message.message} alt="message multimedia" />
-                </PictureReveal>
+              {message.is_embed ? (
+                <>
+                  <MessageEmbed
+                    type={parsedEmbed.type}
+                    embed={parsedEmbed}
+                    isMine={isMine}
+                    message={message.message}
+                    openMenu={openMenu}
+                  />
+                </>
               ) : (
-                <>{message.message}</>
+                <StyledMessage>
+                  {isMessageImage ? (
+                    <PictureReveal>
+                      <PictureResponsive src={message.message} alt="message multimedia" />
+                    </PictureReveal>
+                  ) : (
+                    <>{message.message}</>
+                  )}
+                  {showVertIcon && (
+                    <IconButton color="primary" onClick={openMenu}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  )}
+                </StyledMessage>
               )}
-              {showVertIcon && (
-                <IconButton color="primary" onClick={openMenu}>
-                  <MoreVertIcon />
-                </IconButton>
+              {!isMine && (
+                <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                  {getContact()?.display ?? message.author}
+                </Typography>
               )}
-            </StyledMessage>
+              <Typography mt={2} fontSize={12}>
+                {dayjs.unix(message.createdAt).fromNow()}
+              </Typography>
+            </>
           )}
-          {!isMine && (
-            <Typography fontWeight="bold" fontSize={14} color="#ddd">
-              {getContact()?.display ?? message.author}
-            </Typography>
-          )}
-          <Typography mt={2} fontSize={12}>
-            {dayjs.unix(message.createdAt).fromNow()}
-          </Typography>
         </Paper>
       </Box>
       <MessageBubbleMenu

@@ -6,8 +6,16 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `embed` varchar(512) NOT NULL DEFAULT '';
 
+
+# Group Chat Overhaul SQL Update
+# ALTER TABLE npwd_messages ADD COLUMN `is_system` tinyint(4) NOT NULL DEFAULT 0;
+# ALTER TABLE npwd_messages ADD COLUMN `system_type` varchar(48) NOT NULL DEFAULT '';
+# ALTER TABLE npwd_messages ADD COLUMN `system_number` varchar(48) NOT NULL DEFAULT '';
+# ALTER TABLE npwd_messages_conversations ADD COLUMN `owner` varchar(48) NOT NULL DEFAULT '';
+
 #match voice messages update
 # ALTER TABLE npwd_match_profiles ADD COLUMN `voiceMessage` varchar(512) DEFAULT NULL;
+
 
 CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
 (
@@ -148,6 +156,9 @@ CREATE TABLE IF NOT EXISTS `npwd_messages`
     `author`          varchar(255) NOT NULL,
     `is_embed`        tinyint(4)   NOT NULL default 0,
     `embed`           varchar(512) NOT NULL DEFAULT '',
+    `is_system`        tinyint(4)   NOT NULL default 0,
+    `system_type`      varchar(48) NOT NULL default '',
+    `system_number`    varchar(48) NOT NULL default '',
     PRIMARY KEY (id),
     INDEX `user_identifier` (`user_identifier`)
 );
@@ -160,6 +171,7 @@ CREATE TABLE `npwd_messages_conversations`
     `createdAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `updatedAt`         TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
     `last_message_id`   INT(11)      NULL     DEFAULT NULL,
+    `owner`         varchar(48)  NOT NULL DEFAULT '',
     `is_group_chat`     TINYINT(4)   NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`) USING BTREE
 );

@@ -19,6 +19,9 @@ interface MessageActionProps {
   setMessageReadState: (conversationId: number, unreadCount: number) => void;
   getLabelOrContact: (messageConversation: MessageConversation) => string;
   getConversationParticipant: (conversationList: string) => Contact | null;
+  removeLocalGroupMember: (conversationId: number, phoneNumber: string) => void;
+  updateLocalGroupOwner: (conversationId: number, phoneNumber: string) => void;
+  addLocalConversationParticipants: (conversationId: number, conversationList: string) => void;
 }
 
 export const useMessageActions = (): MessageActionProps => {
@@ -81,14 +84,50 @@ export const useMessageActions = (): MessageActionProps => {
   const removeLocalConversation = useCallback(
     (conversationsId: number[]) => {
       if (conversationLoading !== 'hasValue') return;
-
       if (!conversations.length) return;
-
       setMessageConversation((curVal) =>
         [...curVal].filter((conversation) => !conversationsId.includes(conversation.id)),
       );
     },
     [setMessageConversation, conversationLoading, conversations],
+  );
+
+  const removeLocalGroupMember = useCallback(
+    (conversationsId: number, phoneNumber: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationsId) {
+            const conversationListRemove = conversation.conversationList
+              .split('+')
+              .filter((number) => number !== phoneNumber)
+              .join('+');
+            return {
+              ...conversation,
+              conversationList: conversationListRemove,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
+  );
+
+  const updateLocalGroupOwner = useCallback(
+    (conversationsId: number, phoneNumber: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationsId) {
+            return {
+              ...conversation,
+              owner: phoneNumber,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
   );
 
   const updateLocalMessages = useCallback(
@@ -106,6 +145,9 @@ export const useMessageActions = (): MessageActionProps => {
           createdAt: messageDto.createdAt,
           is_embed: messageDto.is_embed,
           embed: messageDto.embed,
+          is_system: messageDto.is_system,
+          system_number: messageDto.system_number,
+          system_type: messageDto.system_type,
         },
       ]);
     },
@@ -128,6 +170,23 @@ export const useMessageActions = (): MessageActionProps => {
     [getContactByNumber, myPhoneNumber],
   );
 
+  const addLocalConversationParticipants = useCallback(
+    (conversationId: number, conversationList: string) => {
+      setMessageConversation((curVal) =>
+        curVal.map((conversation) => {
+          if (conversation.id === conversationId) {
+            return {
+              ...conversation,
+              conversationList: conversationList,
+            };
+          }
+          return conversation;
+        }),
+      );
+    },
+    [setMessageConversation],
+  );
+
   return {
     updateLocalConversations,
     removeLocalConversation,
@@ -136,5 +195,8 @@ export const useMessageActions = (): MessageActionProps => {
     setMessageReadState,
     getLabelOrContact,
     getConversationParticipant,
+    removeLocalGroupMember,
+    updateLocalGroupOwner,
+    addLocalConversationParticipants,
   };
 };
