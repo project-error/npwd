@@ -26,6 +26,9 @@ import { Call } from '@mui/icons-material';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import GroupDetailsModal from './GroupDetailsModal';
+import { usePhone } from '@os/phone/hooks';
+import { log } from 'console';
+
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -74,15 +77,22 @@ export const MessageModal = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [isGroupSettingsModalOpen, setIsGroupSettingsModalOpen] = useState(false);
 
+  const { ResourceConfig } = usePhone();
+
+  console.log(ResourceConfig);
+
   const myPhoneNumber = useMyPhoneNumber();
 
   useEffect(() => {
-    fetchMessages(groupId, 0);
+    if (groupId) {
+      fetchMessages(groupId, 0);
+    }
   }, [groupId, fetchMessages]);
 
   useEffect(() => {
+    let timeout;
     if (activeMessageConversation && messages) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setLoaded(true);
       }, MINIMUM_LOAD_TIME);
       return;
@@ -226,8 +236,12 @@ export const MessageModal = () => {
             </Button>
           ) : !activeMessageConversation.isGroupChat && doesContactExist ? null : null}
         </Box>
-        {isLoaded && activeMessageConversation ? (
-          <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
+        {isLoaded && activeMessageConversation && ResourceConfig ? (
+          <Conversation
+            isVoiceEnabled={ResourceConfig.voiceMessage.enabled}
+            messages={messages}
+            activeMessageGroup={activeMessageConversation}
+          />
         ) : (
           <MessageSkeletonList />
         )}

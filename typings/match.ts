@@ -5,6 +5,7 @@ export interface NewProfile {
   job: string;
   location: string;
   tags: string;
+  voiceMessage?: string | null;
 }
 
 export interface Profile extends NewProfile {
@@ -52,5 +53,5 @@ export enum MatchEvents {
   GET_MATCHES = 'phone:getMatches',
   SAVE_LIKES = 'phone:saveLikes',
   SAVE_LIKES_BROADCAST = 'phone:saveLikesBroadcast',
-  CREATE_MATCH_ACCOUNT_BROADCAST = 'phone:matchAccountBroadcast'
+  CREATE_MATCH_ACCOUNT_BROADCAST = 'phone:matchAccountBroadcast',
 }

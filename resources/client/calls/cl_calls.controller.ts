@@ -8,15 +8,13 @@ import {
   TransmitterNumDTO,
 } from '@typings/call';
 import { IAlertProps } from '@typings/alerts';
-import { CallService } from './cl_calls.service';
+import { callService, CallService } from './cl_calls.service';
 import { animationService } from '../animations/animation.controller';
 import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '@typings/common';
 import { NuiCallbackFunc } from '@project-error/pe-utils';
-
-const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
   if (callService.isInCall()) return;
@@ -30,15 +28,15 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
     animationService.startPhoneCall();
     // If something went wrong lets inform the client
     if (serverRes.status !== 'ok') {
-      return cb(serverRes);
+      return cb?.(serverRes);
     }
     const { transmitter, isTransmitter, receiver, isUnavailable } = serverRes.data;
     // Start the process of giving NUI feedback by opening NUI modal
     callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
-    cb(serverRes);
+    cb?.(serverRes);
   } catch (e) {
     console.error(e);
-    cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+    cb?.({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
   }
 };
 
@@ -101,4 +99,11 @@ RegisterNuiProxy(CallEvents.FETCH_CALLS);
 
 onNet(CallEvents.SEND_ALERT, (alert: IAlertProps) => {
   callService.handleSendAlert(alert);
+});
+
+RegisterNuiCB(CallEvents.TOGGLE_MUTE_CALL, (data: { call: ActiveCall; state: boolean }, cb) => {
+  const { state, call } = data;
+  callService.handleMute(state, call);
+
+  cb({});
 });

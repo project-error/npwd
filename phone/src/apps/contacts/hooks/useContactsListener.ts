@@ -1,7 +1,7 @@
 import { useContactActions } from './useContactActions';
 import { AddContactExportData, ContactEvents, ContactsDatabaseLimits } from '@typings/contact';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';

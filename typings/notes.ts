@@ -1,6 +1,6 @@
 import { IAlertProps } from './alerts';
 
-export type AlertCategory =
+export type NotesAlertCategory =
   | 'NOTES_ADD_SUCCESS'
   | 'NOTES_ADD_FAILED'
   | 'NOTES_UPDATE_SUCCESS'
@@ -9,8 +9,8 @@ export type AlertCategory =
   | 'NOTES_DELETE_FAILED';
 
 export interface INotesAlert {
-  alert: AlertCategory;
-  setAlert: (type: AlertCategory) => void;
+  alert: NotesAlertCategory;
+  setAlert: (type: NotesAlertCategory) => void;
 }
 
 export interface BeforeDBNote {

@@ -77,7 +77,7 @@ class _TwitterService {
       twitterLogger.error(`Failed to update twitter profile: ${e.message}`, {
         source: reqObj.source,
       });
-      resp({ status: 'error', errorMsg: e.message });
+      resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.EDIT_PROFILE_FAILURE' });
     }
   }
 

@@ -26,8 +26,22 @@ export const photoState = {
       },
     }),
   }),
+  isEditing: atom<boolean>({
+    key: 'galleryIsEditing',
+    default: false,
+  }),
+  checkedPhotos: atom<number[]>({
+    key: 'checkedPhotos',
+    default: [],
+  }),
 };
 
 export const useSetPhotos = () => useSetRecoilState(photoState.photos);
 export const usePhotos = () => useRecoilState(photoState.photos);
 export const usePhotosValue = () => useRecoilValue(photoState.photos);
+
+export const useIsEditing = () => useRecoilState(photoState.isEditing);
+export const useIsEditingValue = () => useRecoilValue(photoState.isEditing);
+
+export const useCheckedPhotos = () => useRecoilState(photoState.checkedPhotos);
+export const useCheckedPhotosValue = () => useRecoilValue(photoState.checkedPhotos);

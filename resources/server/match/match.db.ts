@@ -22,16 +22,18 @@ export class _MatchDB {
     const query = `
         SELECT npwd_match_profiles.*,
                UNIX_TIMESTAMP(npwd_match_profiles.updatedAt) AS lastActive,
-               MaxDates.lastSeen
+               MaxDates.lastSeen,
+               MaxDates.liked
         FROM npwd_match_profiles
                  LEFT OUTER JOIN (
-            SELECT id, profile, MAX(createdAt) AS lastSeen
+            SELECT id, profile, liked, MAX(createdAt) AS lastSeen
             FROM npwd_match_views
             WHERE identifier = ?
-            GROUP BY id, profile
+            GROUP BY id, profile, liked
         ) AS MaxDates ON npwd_match_profiles.id = MaxDates.profile
         WHERE npwd_match_profiles.identifier != ?
           AND (MaxDates.lastSeen IS NULL OR MaxDates.lastSeen < NOW() - INTERVAL 7 DAY)
+          AND MaxDates.liked IS NULL
         ORDER BY npwd_match_profiles.updatedAt DESC
         LIMIT 25
 		`;
@@ -70,7 +72,7 @@ export class _MatchDB {
                                  ON npwd_match_views.identifier = targetProfile.identifier
         WHERE playerProfile.identifier = ?
           AND targetProfile.id = ?
-          AND Liked = 1
+          AND liked = 1
 		`;
     const [results] = await DbInterface._rawExec(query, [identifier, id]);
     return <Profile[]>results;
@@ -137,13 +139,13 @@ export class _MatchDB {
    * @returns Profile - the created profile
    */
   async createProfile(identifier: string, profile: NewProfile): Promise<Profile> {
-    const { name, image, bio, location, job, tags } = profile;
+    const { name, image, bio, location, job, tags, voiceMessage } = profile;
     const query = `
-        INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO npwd_match_profiles (identifier, name, image, bio, location, job, tags, voiceMessage)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 		`;
 
-    await pool.execute(query, [identifier, name, image, bio, location, job, tags]);
+    await pool.execute(query, [identifier, name, image, bio, location, job, tags, voiceMessage]);
     return await this.getPlayerProfile(identifier);
   }
 
@@ -153,7 +155,7 @@ export class _MatchDB {
    * @param profile Profile - player's updated profile
    */
   async updateProfile(identifier: string, profile: Profile): Promise<Profile> {
-    const { image, name, bio, location, job, tags } = profile;
+    const { image, name, bio, location, job, tags, voiceMessage } = profile;
     const query = `
         UPDATE npwd_match_profiles
         SET image    = ?,
@@ -161,10 +163,11 @@ export class _MatchDB {
             bio      = ?,
             location = ?,
             job      = ?,
-            tags     = ?
+            tags     = ?,
+            voiceMessage = ?
         WHERE identifier = ?
 		`;
-    await pool.execute(query, [image, name, bio, location, job, tags, identifier]);
+    await pool.execute(query, [image, name, bio, location, job, tags, voiceMessage, identifier]);
     return await this.getPlayerProfile(identifier);
   }
 
@@ -184,13 +187,14 @@ export class _MatchDB {
     // some database misconfiguration or error
     if (!defaultProfileName) return null;
 
-    const defaultProfile = {
+    const defaultProfile: NewProfile = {
       name: defaultProfileName,
       image: DEFAULT_IMAGE,
       bio: '',
       location: '',
       job: '',
       tags: '',
+      voiceMessage: null,
     };
 
     matchLogger.info(`Creating default match profile ${defaultProfileName} for ${identifier}`);

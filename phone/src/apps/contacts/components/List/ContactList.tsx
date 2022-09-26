@@ -9,11 +9,18 @@ import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
 import { useCall } from '@os/call/hooks/useCall';
+import { useContactActions } from '../../hooks/useContactActions';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import { useMessageActions } from '../../../messages/hooks/useMessageActions';
+import useMessages from '../../../messages/hooks/useMessages';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
   const history = useHistory();
   const { initializeCall } = useCall();
+  const { findExistingConversation } = useContactActions();
+  const myPhoneNumber = useMyPhoneNumber();
+  const { goToConversation } = useMessages();
 
   const openContactInfo = (contactId: number) => {
     history.push(`/contacts/${contactId}`);
@@ -34,6 +41,11 @@ export const ContactList: React.FC = () => {
       level: 1,
       data: { phoneNumber },
     });
+    const conversation = findExistingConversation(myPhoneNumber, phoneNumber);
+    if (conversation) {
+      return goToConversation(conversation);
+    }
+
     history.push(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 

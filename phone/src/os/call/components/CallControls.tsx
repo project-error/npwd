@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CallIcon from '@mui/icons-material/Call';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import { useCall } from '../hooks/useCall';
@@ -7,6 +7,8 @@ import { StatusIconButton } from '@ui/components/StatusIconButton';
 import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useHistory } from 'react-router-dom';
+import MutedIcon from '@mui/icons-material/VolumeOff';
+import UnmutedIcon from '@mui/icons-material/VolumeUp';
 
 const useStyles = makeStyles({
   icon: {
@@ -27,7 +29,8 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const classes = useStyles();
   const history = useHistory();
   const { setModal } = useCallModal();
-  const { call, endCall, acceptCall, rejectCall } = useCall();
+  const { call, endCall, acceptCall, rejectCall, muteCall } = useCall();
+  const [muted, setMuted] = useState(false);
 
   const handleAcceptCall = (e) => {
     e.stopPropagation();
@@ -51,7 +54,12 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   // or we are the one calling
   if (call?.is_accepted || call?.isTransmitter)
     return (
-      <Box display="flex" justifyContent="center" px={2} my={2}>
+      <Box
+        display="flex"
+        justifyContent={call?.is_accepted ? 'space-between' : 'center'}
+        px={2}
+        my={2}
+      >
         <StatusIconButton
           color="error"
           size={isSmall ? 'small' : 'medium'}
@@ -60,6 +68,23 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
         >
           <CallEndIcon className={classes.icon} />
         </StatusIconButton>
+        {call?.is_accepted && (
+          <StatusIconButton
+            color={muted ? 'error' : 'success'}
+            size={isSmall ? 'small' : 'medium'}
+            onClick={() => {
+              setMuted((state) => !state);
+              muteCall(!muted);
+            }}
+            className={isSmall ? classes.smallIconWrapper : classes.iconWrapper}
+          >
+            {muted ? (
+              <MutedIcon className={classes.icon} />
+            ) : (
+              <UnmutedIcon className={classes.icon} />
+            )}
+          </StatusIconButton>
+        )}
       </Box>
     );
 

@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Fatal Error",
       "TOP_LEVEL_ERR_ACTION": "Reload",
-      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference."
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference.",
+      "APP_CRASHED_TITLE": "Fatal application error",
+      "APP_CRASHED_MSG": "The application has encountered an error it was unable to recover from.",
+      "APP_CRASHED_ACTION": "Reload the application"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "No unread notifications"
@@ -169,6 +172,7 @@
       "EDIT_PROFILE_LOCATION": "Location",
       "EDIT_PROFILE_JOB": "Job",
       "EDIT_PROFILE_TAGS": "Tags",
+      "EDIT_VOICE_MESSAGE": "Voice Message",
       "EDIT_PROFILE_PREVIEW": "Show Preview",
       "LIKE": "Like",
       "DISLIKE": "Dislike"
@@ -235,18 +239,46 @@
       "NEW_MESSAGE": "Message...",
       "NEW_MESSAGE_GROUP": "Phone numbers...",
       "SHARE_IMAGE_TITLE": "Do you want to share this image?",
+      "SHARE_NOTE_TITLE": "Do you want to share this note?",
       "SHARE_CONTACT_TITLE": "Do you want to share this contact?",
       "GROUP_CHAT_LABEL": "Group chat label...",
       "MEDIA_OPTION": "Camera / Gallery",
       "CONTACT_OPTION": "Share contact",
       "CONTACT_SHARED": "Contact Shared",
+      "NOTE_OPTION": "Share Note",
       "LOCATION_OPTION": "Share location",
       "LOCATION_MESSAGE": "Location shared",
       "LOCATION_TOOLTIP": "Set waypoint",
+      "NOTE_TOOLTIP": "View Note",
       "NEW_MESSAGE_GROUP_SUBMIT": "Send",
       "INPUT_NAME_OR_NUMBER": "Search contacts or type number and press enter",
       "ACTIONS_TITLE": "Actions",
       "ME": "Me"
+    },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Failed to fetch messages",
+        "JOIN_CHANNEL_FAILED": "Failed to join channel",
+        "LEAVE_CHANNEL_FAILED": "Failed to leave channel",
+        "SEND_MESSAGE_FAILED": "Failed to send message",
+        "UPDATE_LABEL_FAILED": "Failed to update channel name",
+        "TRANSFER_OWNERSHIP_FAILED": "Failed to update ownership",
+        "FETCH_MEMBERS_FAILED": "Failed to fetch members",
+        "DELETE_CHANNEL_FAILED": "Failed to delete channel"
+      },
+      "TYPE_TO_CONFIRM": "Type \"{{ identifier }}\" to confirm.",
+      "LEAVE": "Leave",
+      "NEW_CHANNEL_TITLE": "Join channel on ID",
+      "DELETE_CHANNEL_TITLE": "Delete channel",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Channel ID",
+      "JOIN_BUTTON": "Join channel",
+      "TRANSFER_OWNERSHIP": "Transfer ownership",
+      "MESSAGE_PLACEHOLDER": "Send a message",
+      "MEDIA_PLACEHOLDER": "Image URL",
+      "MEDIA_UPLOAD": "Upload Image",
+      "MEDIA_GALLERY": "CHOOSE IMAGE",
+      "MEMBERS": "Members",
+      "DANGER_ZONE": "Danger zone"
     },
     "RELATIVE_TIME": {
       "future": "in %s",
@@ -280,6 +312,7 @@
       "CONTENT": "Content",
       "SHARE": "Share",
       "ADD": "Add",
+      "SEND": "Send",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
       "LEAVE": "Leave"
@@ -299,6 +332,7 @@
     "APPS_CAMERA": "Camera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
     "GENERIC_LOADING": "Loading...",
     "GENERIC_WAIT": "Please wait...",

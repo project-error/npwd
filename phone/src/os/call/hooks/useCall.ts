@@ -15,6 +15,7 @@ interface CallHook {
   rejectCall(): void;
   endCall(): void;
   initializeCall(number: string): void;
+  muteCall(state: boolean): void;
 }
 
 // const TIME_TILL_AUTO_HANGUP = 15000;
@@ -65,5 +66,15 @@ export const useCall = (): CallHook => {
     });
   }, [call, myPhoneNumber]);
 
-  return { call, setCall, acceptCall, rejectCall, endCall, initializeCall };
+  const muteCall = useCallback(
+    (state) => {
+      fetchNui(CallEvents.TOGGLE_MUTE_CALL, {
+        call,
+        state,
+      });
+    },
+    [call],
+  );
+
+  return { call, setCall, acceptCall, rejectCall, endCall, initializeCall, muteCall };
 };

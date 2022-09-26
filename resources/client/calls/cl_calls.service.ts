@@ -48,6 +48,10 @@ export class CallService {
     return this.currentCall === tgtCall;
   }
 
+  getCurrentCall() {
+    return this.currentPendingCall;
+  }
+
   isInPendingCall() {
     return !!this.currentPendingCall;
   }
@@ -133,6 +137,14 @@ export class CallService {
     hangUpSound.play();
   }
 
+  handleMute(state: boolean, callData: ActiveCall) {
+    if (state) {
+      exp['pma-voice'].setCallChannel(0);
+    } else {
+      exp['pma-voice'].setCallChannel(callData.channelId);
+    }
+  }
+
   handleSendAlert(alert: IAlertProps) {
     SendNUIMessage({
       app: 'DIALER',
@@ -141,3 +153,5 @@ export class CallService {
     });
   }
 }
+
+export const callService = new CallService();

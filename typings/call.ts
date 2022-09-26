@@ -77,4 +77,19 @@ export enum CallEvents {
   SET_CALL_MODAL = 'npwd:callModal',
   SEND_ALERT = 'npwd:callSetAlert',
   SAVE_CALL = 'npwd:saveCall',
+  TOGGLE_MUTE_CALL = 'npwd:toggleMuteCall',
+}
+
+interface IncomingCallerCtx {
+  source: number;
+  number: string;
+  name: string;
+}
+
+export interface OnCallExportCtx {
+  incomingCaller: IncomingCallerCtx;
+  exit: () => void;
+  next: () => void;
+  reply: (msg: string) => void;
+  forward: (tgt: string) => void;
 }

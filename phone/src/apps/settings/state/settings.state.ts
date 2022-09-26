@@ -50,6 +50,6 @@ const localStorageEffect: AtomEffect<IPhoneSettings> = ({ setSelf, onSet }) => {
 
 export const settingsState = atom<IPhoneSettings>({
   key: 'settings',
-  default: null,
+  default: getDefaultPhoneSettings(),
   effects: [localStorageEffect],
 });

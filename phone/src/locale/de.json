@@ -3,7 +3,10 @@
     "MISC": {
       "TOP_LEVEL_ERR_TITLE": "Schwerwiegender Fehler",
       "TOP_LEVEL_ERR_ACTION": "Lädt erneut",
-      "TOP_LEVEL_ERR_MSG": "Es ist ein Fehler für NPDW aufgetreten, Sie müssen das NUI Fenster neu laden. Dieser Fehler wird unten angezeigt für Developer Referenzen."
+      "TOP_LEVEL_ERR_MSG": "Es ist ein Fehler für NPDW aufgetreten, Sie müssen das NUI Fenster neu laden. Dieser Fehler wird unten angezeigt für Developer Referenzen.",
+      "APP_CRASHED_TITLE": "Es ist ein schwerwiegender Fehler aufgetreten!",
+      "APP_CRASHED_MSG": "Die App hatte einen Fehler und ist abgestürzt!",
+      "APP_CRASHED_ACTION": "Die App erneut starten"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Keine neuen Mitteilungen"
@@ -26,6 +29,7 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Telefonnummer",
+      "PREVIEW_SOUND": "Tonbeispiel",
       "CATEGORY": {
         "APPEARANCE": "Benutzeroberfläche",
         "PHONE": "Handy",
@@ -68,7 +72,7 @@
     },
     "CAMERA": {
       "SHARE_DESTINATION": "Wo wollen Sie das Bild teilen?",
-      "COPY_IMAGE": "Link zum Bild kopieren:",
+      "COPY_IMAGE": "Bildlink kopieren:",
       "FAILED_TO_DELETE": "Bild konnte nicht gelöscht werden!",
       "FAILED_TO_TAKE_PHOTO": "Bild konnte nicht gespeichert werden!"
     },
@@ -221,18 +225,50 @@
         "DELETE_CONVERSATION_FAILED": "Der Chat konnte nicht gelöscht werden"
       },
       "SEARCH_PLACEHOLDER": "Suche nach Nachrichten...",
-      "DELETE_CONVERSATION": "Löschen Sie einen Chat",
+      "DELETE_CONVERSATION": "Chat löschen",
       "NEW_MESSAGE": "Nachricht...",
       "NEW_MESSAGE_GROUP": "Telefonnummer...",
       "SHARE_IMAGE_TITLE": "Wollen Sie dieses Bild teilen?",
+      "SHARE_NOTE_TITLE": "Wollen Sie diese Notiz teilen?",
       "SHARE_CONTACT_TITLE": "Wollen Sie diesen Kontakt teilen?",
       "GROUP_CHAT_LABEL": "Gruppenname...",
       "MEDIA_OPTION": "Kamera / Fotos",
       "CONTACT_OPTION": "Kontakt teilen",
+      "CONTACT_SHARED": "Kontakt geteilt",
+      "NOTE_OPTION": "Notiz teilen",
+      "LOCATION_OPTION": "Standort teilen",
+      "LOCATION_MESSAGE": "Standort geteilt",
+      "LOCATION_TOOLTIP": "Wegpunkt setzen",
+      "NOTE_TOOLTIP": "Notiz ansehen",
       "NEW_MESSAGE_GROUP_SUBMIT": "Senden",
       "INPUT_NAME_OR_NUMBER": "Suchen Sie nach einem Kontakt oder einer Nummer.",
       "ACTIONS_TITLE": "Aktionen",
       "ME": "Ich"
+    },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Laden der Nachrichten fehlgeschlagen",
+        "JOIN_CHANNEL_FAILED": "Beitreten des Chats fehlgeschlagen",
+        "LEAVE_CHANNEL_FAILED": "Verlassen des Chats fehlgeschlagen",
+        "SEND_MESSAGE_FAILED": "Senden der Nachricht fehlgeschlagen",
+        "UPDATE_LABEL_FAILED": "Umbennen des Chats fehlgeschlagen",
+        "TRANSFER_OWNERSHIP_FAILED": "Aktualisieren der Adminrechte fehlgeschlagen",
+        "FETCH_MEMBERS_FAILED": "Laden der Mitglieder fehlgeschlagen",
+        "DELETE_CHANNEL_FAILED": "Löschen des Chats fehlgeschlagen"
+      },
+      "TYPE_TO_CONFIRM": "Tippe \"{{ identifier }}\" um zu bestätigen.",
+      "LEAVE": "Verlassen",
+      "NEW_CHANNEL_TITLE": "Chat mit ID beitreten",
+      "DELETE_CHANNEL_TITLE": "Chat löschen",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Chat ID",
+      "JOIN_BUTTON": "Chat beitreten",
+      "TRANSFER_OWNERSHIP": "Adminrechte übergeben",
+      "MESSAGE_PLACEHOLDER": "Eine Nachricht senden",
+      "MEDIA_PLACEHOLDER": "Bild URL",
+      "MEDIA_UPLOAD": "Bild hochladen",
+      "MEDIA_GALLERY": "BILD AUSWÄHLEN",
+      "MEMBERS": "Mitglieder",
+      "DANGER_ZONE": "Gefahrenzone"
     },
     "RELATIVE_TIME": {
       "future": "in %s",
@@ -240,14 +276,14 @@
       "s": "vor ein Paar Sekunden",
       "m": "vor einer Minute",
       "mm": "%d Minuten",
-      "h": "eine Stunde",
-      "hh": "%d Stunde",
-      "d": "ein Tag",
-      "dd": "%d Tage",
-      "M": "ein Monat",
-      "MM": "%d Monate",
-      "y": "ein Jahr",
-      "yy": "%d Jahre"
+      "h": "einer Stunde",
+      "hh": "%d Stunden",
+      "d": "einem Tag",
+      "dd": "%d Tagen",
+      "M": "einem Monat",
+      "MM": "%d Monaten",
+      "y": "einem Jahr",
+      "yy": "%d Jahren"
     },
     "GENERIC": {
       "LOADING": "Lädt...",
@@ -266,6 +302,7 @@
       "CONTENT": "Inhalt",
       "SHARE": "Teilen",
       "ADD": "Hinzufügen",
+      "SEND": "Senden",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiere {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} wurde kopiert und befindet sich nun in der Zwischenablage!"
     },
@@ -276,7 +313,7 @@
     "APPS_MESSAGES": "Nachrichten",
     "APPS_CALCULATOR": "Rechner",
     "APPS_SETTINGS": "Einstellungen",
-    "APPS_BANK": "WhoDis Online-Banking",
+    "APPS_BANK": "Online-Banking",
     "APPS_NOTES": "Notizen",
     "APPS_EXAMPLE": "Beispiel App",
     "APPS_TWITTER": "Twitter",
@@ -284,6 +321,7 @@
     "APPS_CAMERA": "Kamera",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Ergebnis wurde in die Zwischenablage kopiert!",
+    "APPS_DARKCHAT": "Darkchat",
     "GENERIC_CLICK_TO_REVEAL": "Klicke zum Aufdecken",
     "GENERIC_LOADING": "Lädt...",
     "GENERIC_WAIT": "Bitte warten Sie...",

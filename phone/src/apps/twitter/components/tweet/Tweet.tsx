@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import DOMPurify from 'dompurify';
+import xss from 'xss';
 import { useTranslation } from 'react-i18next';
 import { ListItemAvatar, Avatar as MuiAvatar } from '@mui/material';
 
@@ -53,9 +53,11 @@ export const Tweet = (tweet: FormattedTweet) => {
   const formattedMessage = message.replace(/\n\r?/g, '<br />');
 
   // Therefore we need to sanitize this message to protect against XSS
-  const sanitizedMessage = DOMPurify.sanitize(formattedMessage, {
+  const sanitizedMessage = xss(formattedMessage, {
     // Be as strict as possible, whitelisting <br> tag
-    ALLOWED_TAGS: ['br'],
+    whiteList: {
+      br: [],
+    },
   });
 
   const profileName = isRetweet ? retweetProfileName : profile_name;

@@ -3,7 +3,7 @@ import { PhoneEvents } from '@typings/phone';
 import { phoneState } from './state';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 

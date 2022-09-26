@@ -18,6 +18,7 @@ export const MockProfilesData: FormattedProfile[] = [
     phoneNumber: '987-6543',
     tagList: ['shitframework', 'vue sucks'],
     lastActiveFormatted: '1616004986',
+    voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
   },
   {
     id: 2,
@@ -36,6 +37,7 @@ export const MockProfilesData: FormattedProfile[] = [
     phoneNumber: '654-3219',
     tagList: ['tinkering', 'robotics'],
     lastActiveFormatted: '12332425',
+    voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
   },
   {
     id: 3,
@@ -53,6 +55,7 @@ export const MockProfilesData: FormattedProfile[] = [
     phoneNumber: '123-4567',
     tagList: ['reading', 'coolstuff', 'coffee'],
     lastActiveFormatted: '12332425',
+    voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
   },
 ];
 
@@ -73,6 +76,7 @@ export const MockMyProfileData: FormattedProfile = {
   phoneNumber: '999-9999',
   tagList: ['code', 'javascript'],
   lastActiveFormatted: '12332425',
+  voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
 };
 
 export const MockMatchesData: FormattedMatch[] = [
@@ -94,6 +98,7 @@ export const MockMatchesData: FormattedMatch[] = [
     lastActiveFormatted: '525343252',
     matchedAtFormatted: '3452355',
     phoneNumber: '654-3219',
+    voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
   },
   {
     id: 6,
@@ -112,5 +117,6 @@ export const MockMatchesData: FormattedMatch[] = [
     phoneNumber: '123-4567',
     lastActiveFormatted: '525343252',
     matchedAtFormatted: '3452355',
+    voiceMessage: 'https://i.projecterror.dev/EZiezGo89KeMdVSxoTGpRb',
   },
 ];

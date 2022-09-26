@@ -6,6 +6,10 @@ import { NoteItem } from '@typings/notes';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
+import { useQueryParams } from '@common/hooks/useQueryParams';
+import { useHistory } from 'react-router-dom';
+import { addQueryToLocation } from '@common/utils/addQueryToLocation';
+import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 
 const useStyles = makeStyles((theme: Theme) => ({
   noNotes: {
@@ -20,8 +24,16 @@ const NoteList = () => {
   const setNote = useSetSelectedNote();
   const [t] = useTranslation();
   const setModalVisible = useSetModalVisible();
+  const query = useQueryParams();
+  const history = useHistory();
+
+  const referal = query.referal && decodeURIComponent(query.referal);
 
   const handleNoteModal = (note: NoteItem) => {
+    if (referal) {
+      history.push(addQueryToLocation(getLocationFromUrl(referal), 'note', String(note.id)));
+      return;
+    }
     setNote(note);
     setModalVisible(true);
   };

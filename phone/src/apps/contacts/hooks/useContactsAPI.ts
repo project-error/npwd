@@ -5,7 +5,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { Contact, ContactEvents, PreDBContact } from '@typings/contact';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from './useContactActions';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 export const useContactsAPI = () => {
   const { addAlert } = useSnackbar();

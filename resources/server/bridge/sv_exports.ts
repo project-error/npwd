@@ -1,10 +1,11 @@
 import { generateUniquePhoneNumber } from '../misc/generateUniquePhoneNumber';
 import { bridgeLogger } from './bridge.utils';
 import { config } from '../config';
-import { PlayerAddData } from '../players/player.interfaces';
+import { ExportedPlayerData, PlayerAddData } from '../players/player.interfaces';
 import { playerLogger } from '../players/player.utils';
 import PlayerService from '../players/player.service';
 import { PhoneEvents } from '../../../typings/phone';
+import { Player } from '../players/player.class';
 
 const exp = global.exports;
 
@@ -41,5 +42,48 @@ if (config.general.useResourceIntegration) {
 }
 
 exp('getPhoneNumber', (src: number): string => {
+  playerLogger.error(
+    '[DEPRECATION WARNING]: deprecated export getPhoneNumber called, please use getPlayerData',
+  );
   return PlayerService.getPlayer(src).getPhoneNumber();
+});
+
+interface PlayerDataExportArgs {
+  source?: string | number;
+  identifier?: string;
+  phoneNumber?: string;
+}
+
+/**
+ * Returns an object containing various player data that NPWD stores
+ * @param locator: Object that must contain 1 of either a source, identifier or phone number
+ */
+exp('getPlayerData', async (locator: PlayerDataExportArgs): Promise<ExportedPlayerData | null> => {
+  let player: Player;
+
+  if (locator.source) {
+    player = PlayerService.getPlayer(
+      typeof locator.source === 'string' ? parseInt(locator.source) : locator.source,
+    );
+  }
+
+  if (locator.identifier) {
+    player = PlayerService.getPlayerFromIdentifier(locator.identifier);
+  }
+
+  if (locator.phoneNumber) {
+    const identifier = await PlayerService.getIdentifierFromPhoneNumber(locator.phoneNumber, false);
+    player = PlayerService.getPlayerFromIdentifier(identifier);
+  }
+
+  if (!player) return null;
+
+  return {
+    phoneNumber: player.getPhoneNumber(),
+    firstName: player.getFirstName(),
+    lastName: player.getLastName(),
+    name: player.getName(),
+    identifier: player.getIdentifier(),
+    source: player.source,
+  };
 });

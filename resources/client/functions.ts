@@ -1,8 +1,9 @@
+import { KvpItems } from '@typings/settings';
+import KvpService from './settings/client-kvp.service';
 import { Delay } from '../utils/fivem';
 
 let prop = 0;
 let propCreated = false;
-const phoneModel = 'prop_amb_phone';
 
 /* * * * * * * * * * * * *
  *
@@ -13,6 +14,13 @@ const phoneModel = 'prop_amb_phone';
 // TODO: add a option to make server side for people who use entity lockdown.
 
 export const newPhoneProp = async () => {
+  const hasNPWDProps = GetConvarInt('NPWD_PROPS', 0);
+  let phoneModel;
+  if (hasNPWDProps) {
+    phoneModel = KvpService.getKvpString(KvpItems.NPWD_FRAME) || 'prop_npwd_default';
+  } else {
+    phoneModel = 'prop_amb_phone';
+  }
   removePhoneProp(); //deletes the already existing prop before creating another.
   if (!propCreated) {
     RequestModel(phoneModel);

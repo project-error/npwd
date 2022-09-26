@@ -67,6 +67,8 @@ interface ImageConfig {
   type: string;
   imageEncoding: 'png' | 'jpg' | 'webp';
   contentType: string;
+  useContentType: boolean;
+  authorizationHeader: string;
   authorizationPrefix: string;
   useAuthorization: boolean;
   returnedDataIndexes: Array<any>;
@@ -81,6 +83,15 @@ interface PhoneAsItemConfig {
 interface ProfanityFilter {
   enabled: boolean;
   badWords: string[];
+}
+
+interface VoiceMessageConfig {
+  enabled: boolean;
+  token: string;
+  url: string;
+  authorizationHeader: string;
+  authorizationPrefix: string;
+  returnedDataIndexes: Array<any>;
 }
 
 export interface ResourceConfig {
@@ -98,4 +109,6 @@ export interface ResourceConfig {
   images: ImageConfig;
   imageSafety: ImageSafety;
   profanityFilter: ProfanityFilter;
+  apps: string[];
+  voiceMessage: VoiceMessageConfig;
 }

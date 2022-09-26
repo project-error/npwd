@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, Suspense, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
@@ -10,7 +10,6 @@ import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
-import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { useCallService } from '@os/call/hooks/useCallService';
@@ -32,11 +31,16 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useInvalidSettingsHandler } from './apps/settings/hooks/useInvalidSettingsHandler';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
+import { useExternalApps } from '@common/hooks/useExternalApps';
+import { useTheme } from '@mui/material';
+import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
 
 function Phone() {
   const { i18n } = useTranslation();
+
   const { apps } = useApps();
   const [settings] = useSettings();
+  const theme = useTheme();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes
@@ -51,13 +55,15 @@ function Phone() {
   useTwitterService();
   useMatchService();
   useMarketplaceService();
-  useBankService();
   useMessagesService();
   useContactsListener();
   useNoteListener();
   useCallService();
   useDialService();
+  useDarkchatService();
   useInvalidSettingsHandler();
+
+  const externalApps = useExternalApps();
 
   const { modal: callModal } = useCallModal();
 
@@ -74,6 +80,12 @@ function Phone() {
               {apps.map((App) => (
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
               ))}
+
+              {externalApps.map((App) => (
+                <Fragment key={App.id}>
+                  <App.Route settings={settings} i18n={i18n} theme={theme} />
+                </Fragment>
+              ))}
             </>
             <NotificationAlert />
             <PhoneSnackbar />
@@ -85,9 +97,12 @@ function Phone() {
   );
 }
 
-export default Phone;
-
 InjectDebugData<any>([
+  {
+    app: 'PHONE',
+    method: PhoneEvents.SET_CONFIG,
+    data: DefaultConfig,
+  },
   {
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
@@ -95,17 +110,9 @@ InjectDebugData<any>([
   },
   {
     app: 'PHONE',
-    method: PhoneEvents.SET_PHONE_READY,
-    data: true,
-  },
-  {
-    app: 'PHONE',
     method: PhoneEvents.SET_TIME,
     data: dayjs().format('hh:mm'),
   },
-  {
-    app: 'PHONE',
-    method: PhoneEvents.SET_CONFIG,
-    data: DefaultConfig,
-  },
 ]);
+
+export default Phone;

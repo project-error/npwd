@@ -1,19 +1,40 @@
-import { Box } from '@mui/material';
-import React from 'react';
+import { Box, Popper } from '@mui/material';
+import { PictureResponsive } from '@ui/components';
+import Backdrop from '@ui/components/Backdrop';
+import React, { useState } from 'react';
 
 import Image from './Image';
 
 export const ImageDisplay = ({ visible, images, removeImage }) => {
   if (!visible || !images || images.length === 0) return null;
+  const [imageOpen, setImageOpen] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleOpenImage = (e, id: number) => {
+    console.log(e);
+    setAnchorEl(e.currentTarget);
+    setImageOpen(id);
+  };
+
+  const closeImage = () => {
+    setImageOpen(null);
+    setAnchorEl(null);
+  };
 
   return (
     <Box p={1}>
+      {imageOpen && <Backdrop onClick={closeImage} />}
       {images.map((image) => (
-        <Image
-          key={image.id}
-          link={image.link}
-          handleClick={removeImage ? () => removeImage(image.id) : null}
-        />
+        <Box onClick={(e) => handleOpenImage(e, image.id)}>
+          <Image
+            key={image.id}
+            link={image.link}
+            handleClick={removeImage ? () => removeImage(image.id) : null}
+          />
+          <Popper anchorEl={anchorEl} placement="left" open={imageOpen === image.id}>
+            <PictureResponsive popper alt="image" src={image.link} />
+          </Popper>
+        </Box>
       ))}
     </Box>
   );

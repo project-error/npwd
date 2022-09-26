@@ -6,6 +6,7 @@ import useMessages from './useMessages';
 import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
 import { MessageConversation } from '@typings/messages';
+import { useContactActions } from '@apps/contacts/hooks/useContactActions';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -16,6 +17,7 @@ export const useMessageNotifications = () => {
   const { icon, notificationIcon } = useApp('MESSAGES');
   const { getMessageConversationById, goToConversation } = useMessages();
   const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
+  const { getDisplayByNumber } = useContactActions();
 
   // Remove notifications from groups when opening them
   history.listen((location) => {
@@ -41,7 +43,7 @@ export const useMessageNotifications = () => {
       app: 'MESSAGES',
       id,
       sound: true,
-      title: conversationName,
+      title: getDisplayByNumber(conversationName) ?? conversationName,
       onClick: () => goToConversation(group),
       content: message,
       icon,

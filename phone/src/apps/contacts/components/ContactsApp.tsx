@@ -9,10 +9,11 @@ import { ContactPage } from './views/ContactsPage';
 import { ContactsThemeProvider } from '../providers/ContactsThemeProvider';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fab from '@mui/material/Fab';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { toggleKeys } from '@ui/components';
 
 const useStyles = makeStyles((theme: Theme) => ({
   absolute: {
@@ -45,6 +46,7 @@ export const ContactsApp: React.FC = () => {
             color="primary"
             onClick={() => history.push('/contacts/-1')}
             className={classes.absolute}
+            onMouseUp={() => {toggleKeys(false);}}
           >
             <PersonAddIcon />
           </Fab>

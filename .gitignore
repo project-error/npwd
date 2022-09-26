@@ -27,3 +27,6 @@ sv_npwd.log
 
 # FXServer Yarn
 .yarn.installed
+
+# Temporary image/audio storage
+uploads

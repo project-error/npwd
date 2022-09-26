@@ -90,10 +90,23 @@ export const useKeyboardService = () => {
     return () => window.removeEventListener('keyup', onKeyUp);
   }, []);
 
+  useEffect(function handleNUIKeyboardPress() {
+    function onKeyDown(event) {
+      const { key } = event;
+      if (key === 'Tab') {
+        event.preventDefault();
+        return;
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   const backspaceHandler = useCallback(
     (event) => {
       if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase()) || call) {
-        // Dont anything if we are typing something, or if we're in a call :)
+        // Dont do anything if we are typing something, or if we're in a call :)
         return;
       }
       history.goBack();
@@ -101,9 +114,16 @@ export const useKeyboardService = () => {
     [history, call],
   );
 
+  const closePhoneHandler = (event) => {
+    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+      event.target.blur();
+    }
+      closePhone();  
+  };
+
   useEffect(
     function registerDefaultHandlers() {
-      handlers.current.set('Escape', () => closePhone());
+      handlers.current.set('Escape', closePhoneHandler);
       handlers.current.set('Backspace', backspaceHandler);
     },
     [setEscape, setBackspace, history, backspaceHandler, closePhone],

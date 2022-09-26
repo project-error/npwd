@@ -53,6 +53,27 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '8px',
     display: 'flex',
     justifyContent: 'center',
+  myAudioSms: {
+    float: 'right',
+    margin: theme.spacing(1),
+    width: 'auto',
+    minWidth: '60%',
+    maxWidth: '100%',
+    background: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
+    borderRadius: '12px',
+    textOverflow: 'ellipsis',
+  },
+  audioSms: {
+    float: 'left',
+    width: 'auto',
+    marginLeft: 5,
+    minWidth: '60%',
+    maxWidth: '80%',
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    borderRadius: '15px',
+    textOverflow: 'ellipsis',
   },
   message: {
     wordBreak: 'break-word',
@@ -92,6 +113,42 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     return getContactByNumber(message.author);
   };
 
+  const isMessageImage = isImage(message.message);
+  if (message.is_embed && parsedEmbed.type === 'audio') {
+    return (
+      <>
+        <Box
+          display="flex"
+          ml={1}
+          alignItems="stretch"
+          justifyContent={isMine ? 'flex-end' : 'flex-start'}
+          mt={1}
+        >
+          <Paper className={isMine ? classes.myAudioSms : classes.audioSms} variant="outlined">
+            <MessageEmbed
+              type={parsedEmbed.type}
+              embed={parsedEmbed}
+              isMine={isMine}
+              message={message.message}
+              openMenu={openMenu}
+            />
+            {!isMine && (
+              <Typography fontWeight="bold" fontSize={14} color="#ddd">
+                {getContact()?.display ?? message.author}
+              </Typography>
+            )}
+            <Typography ml={2} fontSize={12}>
+              {dayjs.unix(message.createdAt).fromNow()}
+            </Typography>
+          </Paper>
+        </Box>
+        <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
+      </>
+    );
+  }
+
+  const showVertIcon = isMine || isMessageImage;
+
   return (
     <>
       <Box
@@ -101,6 +158,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         justifyContent={message.is_system ? 'center' : isMine ? 'flex-end' : 'flex-start'}
         mt={1}
       >
+
         {!message.is_system && <>{!isMine ? <Avatar src={getContact()?.avatar} /> : null}</>}
 
         <Paper
@@ -111,13 +169,23 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             <SystemMessage message={message} myNumber={myNumber} />
           ) : (
             <>
-              {message.is_embed ? (
-                <MessageEmbed
-                  type={parsedEmbed.type}
-                  embed={parsedEmbed}
-                  isMine={isMine}
-                  message={message.message}
-                />
+          {message.is_embed ? (
+            <>
+              <MessageEmbed
+                type={parsedEmbed.type}
+                embed={parsedEmbed}
+                isMine={isMine}
+                message={message.message}
+                openMenu={openMenu}
+              />
+            </>
+          ) : (
+            <StyledMessage>
+              {isMessageImage ? (
+                <PictureReveal>
+                  <PictureResponsive src={message.message} alt="message multimedia" />
+                </PictureReveal>
+
               ) : (
                 <StyledMessage>
                   {isImage(message.message) ? (
@@ -134,10 +202,10 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                   )}
                 </StyledMessage>
               )}
-              {!isMine && (
-                <Typography mt={0.5} fontWeight="bold" fontSize={14} color="#ddd">
-                  {getContact()?.display ?? message.author}
-                </Typography>
+              {showVertIcon && (
+                <IconButton color="primary" onClick={openMenu}>
+                  <MoreVertIcon />
+                </IconButton>
               )}
               <Typography mt={0.5} fontSize={12}>
                 {dayjs.unix(message.createdAt).fromNow()}
@@ -146,7 +214,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           )}
         </Paper>
       </Box>
-      <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
+      <MessageBubbleMenu
+        message={message}
+        isImage={isMessageImage}
+        open={menuOpen}
+        handleClose={() => setMenuOpen(false)}
+      />
     </>
   );
 };

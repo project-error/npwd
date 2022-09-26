@@ -18,10 +18,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     ref={ref}
     {...props}
     variant={props.variant ?? 'standard'}
-    onFocus={(e) => {
+    onMouseUp={(e) => {
       toggleKeys(false);
-      if (props.onFocus) {
-        props.onFocus(e);
+      if (props.onMouseUp) {
+        props.onMouseUp(e);
       }
     }}
     onBlur={(e) => {
@@ -37,10 +37,10 @@ export const InputBase: React.FC<InputBaseProps> = forwardRef((props, ref) => (
   <MUIInputBase
     ref={ref}
     {...props}
-    onFocus={(e) => {
+    onMouseUp={(e) => {
       toggleKeys(false);
-      if (props.onFocus) {
-        props.onFocus(e);
+      if (props.onMouseUp) {
+        props.onMouseUp(e);
       }
     }}
     onBlur={(e) => {

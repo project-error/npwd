@@ -35,7 +35,7 @@ custom framework.
 
 For further details on this system, please refer to our installation [documentation](https://projecterror.dev/docs/npwd/start/installation).
 
-**As of 1/6/2021, you must use our fork of [screenshot-basic](https://github.com/project-error/screenshot-basic)
+You will also need [screenshot-basic](https://github.com/citizenfx/screenshot-basic).
 
 ## Technical Stack and Development
 
