@@ -8,6 +8,7 @@ import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 import { useNotification } from '@os/new-notifications/useNotification';
+import { useLocation, useRouteMatch } from 'react-router-dom';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -23,6 +24,7 @@ export const useTwitterService = () => {
   const { addTweet } = useTwitterActions();
   const [tweets, setTweets] = useTweetsState();
   const { enqueueNotification } = useNotification();
+  const { pathname } = useLocation();
 
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     twitterState.profile,
@@ -55,11 +57,14 @@ export const useTwitterService = () => {
         setTweets((curT) => curT.slice(0, -1));
       }
 
-      addNotification(tweet);
+      if (!pathname.includes('/twitter')) {
+        addNotification(tweet);
+      }
+
       const processedTweet = processBroadcastedTweet(tweet, profileContent);
       addTweet(processedTweet);
     },
-    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length],
+    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length, pathname],
   );
 
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
