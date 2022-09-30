@@ -4,8 +4,6 @@ import { CallEvents } from '@typings/call';
 import fetchNui from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useTranslation } from 'react-i18next';
 import { ServerPromiseResp } from '@typings/common';
 
 interface CallHook {
@@ -23,28 +21,24 @@ interface CallHook {
 export const useCall = (): CallHook => {
   const [call, setCall] = useCurrentCall();
   const myPhoneNumber = useMyPhoneNumber();
-  const [t] = useTranslation();
-  const { addAlert } = useSnackbar();
+  //const [t] = useTranslation();
 
-  const initializeCall = useCallback(
-    (number) => {
-      // We allow calling of ourselves in development
-      if (process.env.NODE_ENV !== 'development' && myPhoneNumber === number) {
+  const initializeCall = useCallback((number) => {
+    // We allow calling of ourselves in development
+    /*if (process.env.NODE_ENV !== 'development' && myPhoneNumber === number) {
         return addAlert({ message: t('CALLS.FEEDBACK.ERROR_MYSELF'), type: 'error' });
-      }
+      }*/
 
-      fetchNui<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, {
-        receiverNumber: number,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-          console.error(resp.errorMsg);
-          return;
-        }
-      });
-    },
-    [addAlert, myPhoneNumber, t],
-  );
+    fetchNui<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, {
+      receiverNumber: number,
+    }).then((resp) => {
+      if (resp.status !== 'ok') {
+        //          addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
+        console.error(resp.errorMsg);
+        return;
+      }
+    });
+  }, []);
 
   const acceptCall = useCallback(() => {
     fetchNui(CallEvents.ACCEPT_CALL, {

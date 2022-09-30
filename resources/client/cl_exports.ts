@@ -9,6 +9,12 @@ import { ClUtils } from './client';
 import { CallService, callService } from './calls/cl_calls.service';
 import { animationService } from './animations/animation.controller';
 import { CallEvents } from '../../typings/call';
+import {
+  CreateNotificationDTO,
+  NotificationEvents,
+  SystemNotificationDTO,
+} from '@typings/notifications';
+import { NotificationFuncRefs } from './cl_notifications';
 
 const exps = global.exports;
 
@@ -104,4 +110,35 @@ exps('endCall', async () => {
 
 exps('sendUIMessage', (action: { type: string; payload: unknown }) => {
   SendNUIMessage(action);
+});
+
+exps('createNotification', (dto: CreateNotificationDTO) => {
+  verifyExportArgType('createSystemNotification', dto, ['object']);
+  verifyExportArgType('createSystemNotification', dto.notisId, ['string']);
+  sendMessage('PHONE', NotificationEvents.CREATE_NOTIFICATION, dto);
+});
+
+exps('createSystemNotification', (dto: SystemNotificationDTO) => {
+  verifyExportArgType('createSystemNotification', dto, ['object']);
+  verifyExportArgType('createSystemNotification', dto.uniqId, ['string']);
+
+  const actionSet = dto.onConfirm || dto.onCancel;
+
+  if (dto.controls && !dto.keepOpen)
+    return console.log('Notification must be set to keepOpen in order to use notifcation actions');
+
+  if (!dto.controls && actionSet)
+    return console.log('Controls must be set to true in order to use notifcation actions');
+
+  if (dto.controls) {
+    NotificationFuncRefs.set(`${dto.uniqId}:confirm`, dto.onConfirm);
+    NotificationFuncRefs.set(`${dto.uniqId}:cancel`, dto.onCancel);
+  }
+
+  sendMessage('SYSTEM', NotificationEvents.CREATE_SYSTEM_NOTIFICATION, dto);
+});
+
+exps('removeSystemNotification', (uniqId: string) => {
+  verifyExportArgType('createSystemNotification', uniqId, ['string']);
+  sendMessage('SYSTEM', NotificationEvents.REMOVE_SYSTEM_NOTIFICATION, { uniqId });
 });

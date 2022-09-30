@@ -4,10 +4,11 @@ import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { APP_TWITTER } from '../utils/constants';
 import { twitterState, useTweetsState } from './state';
-import { useTwitterNotifications } from './useTwitterNotifications';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
+import { useNotification } from '@os/new-notifications/useNotification';
+import { useLocation, useRouteMatch } from 'react-router-dom';
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -20,18 +21,32 @@ import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 // TODO: Bring back notifications
 
 export const useTwitterService = () => {
-  const { setNotification } = useTwitterNotifications();
   const { addTweet } = useTwitterActions();
   const [tweets, setTweets] = useTweetsState();
+  const { enqueueNotification } = useNotification();
+  const { pathname } = useLocation();
 
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     twitterState.profile,
   );
   const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
 
-  const _setFilteredTweets = (tweets) => {
+  const _setFilteredTweets = (tweets: Tweet[]) => {
     setFilteredTweets(tweets.map(processTweet));
   };
+
+  const addNotification = useCallback(
+    (data: any) => {
+      enqueueNotification({
+        appId: 'TWITTER',
+        content: data.message,
+        notisId: 'npwd:tweetBroadcast',
+        secondaryTitle: data.profile_name,
+        path: '/twitter',
+      });
+    },
+    [enqueueNotification],
+  );
 
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
@@ -42,12 +57,14 @@ export const useTwitterService = () => {
         setTweets((curT) => curT.slice(0, -1));
       }
 
-      setNotification(tweet);
-      const processedTweet = processBroadcastedTweet(tweet, profileContent);
+      if (!pathname.includes('/twitter')) {
+        addNotification(tweet);
+      }
 
+      const processedTweet = processBroadcastedTweet(tweet, profileContent);
       addTweet(processedTweet);
     },
-    [addTweet, setNotification, profileContent, profileLoading, setTweets, tweets.length],
+    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length, pathname],
   );
 
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);

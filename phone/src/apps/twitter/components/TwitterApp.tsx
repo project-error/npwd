@@ -67,12 +67,13 @@ const TwitterApp = () => {
 };
 export default memo(TwitterApp);
 
-/*InjectDebugData<ITweet>(
+InjectDebugData<any>(
   [
     {
       app: 'TWITTER',
       method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
+        appId: 'TWITTER',
         profile_id: 41433131,
         profile_name: 'Bombay_Dev',
         isMine: false,
@@ -97,8 +98,9 @@ export default memo(TwitterApp);
       app: 'TWITTER',
       method: TwitterEvents.CREATE_TWEET_BROADCAST,
       data: {
-        profile_id: 41433131,
-        profile_name: 'Tabarra',
+        appId: 'TWITTER',
+        profile_id: 423443442,
+        profile_name: 'Chip',
         isMine: false,
         isLiked: false,
         retweetId: '',
@@ -108,10 +110,9 @@ export default memo(TwitterApp);
         retweetAvatarUrl: '',
         isReported: false,
         retweetIdentifier: '',
-        avatar_url:
-          'https://cdn.discordapp.com/avatars/272800190639898628/a_3560bc4a514b0dcb4098cc33e5c92e49.gif?size=4096',
-        id: 10000,
-        message: 'I am the txadmen',
+        avatar_url: '',
+        id: 115,
+        message: 'Go is better!',
         createdAt: '2021-12-01 00:42:03',
         updatedAt: '2021-12-01 00:42:03',
         identifier: '',
@@ -120,4 +121,4 @@ export default memo(TwitterApp);
     },
   ],
   4000,
-);*/
+);

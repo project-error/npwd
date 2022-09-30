@@ -22,5 +22,5 @@ export const RecoilRootManager: React.FC = ({ children }) => {
       <RecoilCacheReset />
       {children}
     </RecoilRoot>
-  )
+  );
 };

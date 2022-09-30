@@ -1,44 +1,31 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useCurrentCallValue } from '@os/call/hooks/state';
+import { activeNotificationIds } from '@os/new-notifications/state';
+import { useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { DEFAULT_ALERT_HIDE_TIME } from '@os/notifications/notifications.constants';
 import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
-  const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
-  const { currentAlert } = useNotifications();
+  const visibility = useRecoilValue(phoneState.visibility);
   const [{ zoom }] = useSettings();
-
+  const activeNotifications = useRecoilValue(activeNotificationIds);
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
+  const currentCall = useCurrentCallValue();
 
-  const notificationTimer = useRef<NodeJS.Timeout>();
+  const hasNotis = currentCall || activeNotifications.length;
 
   useEffect(() => {
-    if (visibility) {
+    if (hasNotis && !visibility) {
+      console.log('activeNotificationsIds', activeNotifications);
+      setNotifVisibility(true);
+    } else {
       setNotifVisibility(false);
     }
-  }, [visibility]);
-
-  useEffect(() => {
-    if (!visibility && currentAlert) {
-      setNotifVisibility(true);
-      if (notificationTimer.current) {
-        clearTimeout(notificationTimer.current);
-        notificationTimer.current = undefined;
-      }
-      if (currentAlert?.keepWhenPhoneClosed) {
-        return;
-      }
-      notificationTimer.current = setTimeout(() => {
-        setNotifVisibility(false);
-      }, DEFAULT_ALERT_HIDE_TIME);
-    }
-  }, [currentAlert, visibility, setVisibility]);
+  }, [hasNotis, activeNotifications, visibility]);
 
   const bottom = useMemo(() => {
     if (!visibility) {
-      return `${-728 * zoom.value}px`;
+      return `${-750 * zoom.value}px`;
     }
     return '0px';
   }, [visibility, zoom]);

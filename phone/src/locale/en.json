@@ -151,6 +151,7 @@
     "MATCH": {
       "MESSAGES": {
         "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
+        "NEW_MATCH": "New match!",
         "PROFILE_LAST_ACTIVE": "Last Active: {{ lastActive }}",
         "LIKED": "LIKE",
         "NOPE": "NOPE"
@@ -309,6 +310,7 @@
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initializing",
+    "APPS_SYSTEM": "System",
     "APPS_DIALER": "Phone",
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",

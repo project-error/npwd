@@ -1,9 +1,9 @@
-import React, { Fragment, Suspense, useEffect } from 'react';
+import React, { Dispatch, Fragment, SetStateAction, Suspense, useEffect } from 'react';
 import './Phone.css';
 import { Route } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
-import { NotificationBar } from '@os/notifications/components/NotificationBar';
+import { NotificationBar } from '@os/new-notifications/components/NotificationBar';
 import { Navigation } from '@os/navigation-bar/components/Navigation';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import { usePhoneService } from '@os/phone/hooks/usePhoneService';
@@ -22,7 +22,6 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
 import PhoneWrapper from './PhoneWrapper';
-import dayjs from 'dayjs';
 import DefaultConfig from '../../config.json';
 import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useConfig } from '@os/phone/hooks/useConfig';
@@ -34,8 +33,14 @@ import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useExternalApps } from '@common/hooks/useExternalApps';
 import { useTheme } from '@mui/material';
 import { useDarkchatService } from './apps/darkchat/hooks/useDarkchatService';
+import { useNotificationListener } from '@os/new-notifications/useNotificationListener';
+import { useSystemNotificationListener } from '@os/new-notifications/components/system/useSystemNotificationListener';
 
-function Phone() {
+interface PhoneProps {
+  notiRefCB: Dispatch<SetStateAction<HTMLElement>>;
+}
+
+const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   const { i18n } = useTranslation();
 
   const { apps } = useApps();
@@ -52,6 +57,8 @@ function Phone() {
   useKeyboardService();
   usePhoneService();
   useSimcardService();
+  useNotificationListener();
+  useSystemNotificationListener();
   useTwitterService();
   useMatchService();
   useMarketplaceService();
@@ -73,7 +80,7 @@ function Phone() {
         <WindowSnackbar />
         <PhoneWrapper>
           <NotificationBar />
-          <div className="PhoneAppContainer">
+          <div className="PhoneAppContainer" id="notificationAppContainer" ref={notiRefCB}>
             <>
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}
@@ -95,7 +102,7 @@ function Phone() {
       </TopLevelErrorComponent>
     </div>
   );
-}
+};
 
 InjectDebugData<any>([
   {
@@ -107,11 +114,6 @@ InjectDebugData<any>([
     app: 'PHONE',
     method: PhoneEvents.SET_VISIBILITY,
     data: true,
-  },
-  {
-    app: 'PHONE',
-    method: PhoneEvents.SET_TIME,
-    data: dayjs().format('hh:mm'),
   },
 ]);
 

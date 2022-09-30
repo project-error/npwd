@@ -7,7 +7,6 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { useNavigationDisabledValue } from '@os/navigation-bar/state/navigation.state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,15 +21,13 @@ export const Navigation: React.FC = () => {
   const { isExact } = useRouteMatch('/');
   const { closePhone } = usePhone();
   const { setBarUncollapsed } = useNotifications();
-  const isPageNavAvailable = useNavigationDisabledValue();
 
   const handleGoBackInHistory = () => {
-    if (!isPageNavAvailable) return;
     history.goBack();
   };
 
   const handleGoToMenu = () => {
-    if (!isPageNavAvailable && !isExact) return;
+    if (isExact) return;
     history.push('/');
   };
 
