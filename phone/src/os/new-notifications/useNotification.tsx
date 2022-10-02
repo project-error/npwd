@@ -67,6 +67,7 @@ export const useNotification = (): NotificationProps => {
           {
             id: uniqID,
             appId,
+            path: path,
           },
         ]);
 

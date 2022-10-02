@@ -57,12 +57,12 @@ export const useApps = () => {
     });
   }, [icons, curIconSet, theme]);
 
-  const allApps = [...apps, ...externalApps];
+  const allApps = useMemo(() => [...apps, ...externalApps], [apps, externalApps]);
   const getApp = useCallback(
     (id: string): IApp => {
       return allApps.find((a) => a.id === id) || null;
     },
-    [apps, externalApps],
+    [allApps],
   );
   return { apps, getApp };
 };
