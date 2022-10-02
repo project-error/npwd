@@ -8,7 +8,6 @@ import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
 import { useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
-import { extname } from 'path';
 
 export const useApps = () => {
   const { icons } = useNotifications();
@@ -19,12 +18,12 @@ export const useApps = () => {
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
       const SvgIcon = React.lazy<SvgIconComponent>(() =>
-        import(`${__dirname}/../icons/${curIconSet.name}/svg/${app.id}`).catch(
+        import(`../icons/${curIconSet.name}/svg/${app.id}`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
       const AppIcon = React.lazy<SvgIconComponent>(() =>
-        import(`${__dirname}/../icons/${curIconSet.name}/app/${app.id}`).catch(
+        import(`../icons/${curIconSet.name}/app/${app.id}`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );

@@ -27,14 +27,71 @@ const useExternalAppsAction = () => {
     });
   };
 
+  const loadJS = (url, fn) => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.onload = fn;
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  };
+
+  const scriptTypes = ['var'];
+  const importTypes = ['esm', 'systemjs'];
+
+  async function __federation_import(name) {
+    return __vitePreload(() => import(name), true ? [] : void 0);
+  }
+
+  var __federation__ = {
+    ensure: async (remoteId) => {
+      const remote = remoteId;
+      if (!remote.inited) {
+        if (scriptTypes.includes(remote.format)) {
+          // loading js with script tag
+          return new Promise((resolve) => {
+            const callback = () => {
+              if (!remote.inited) {
+                remote.lib = window[remoteId];
+                remote.lib.init(shareScope);
+                remote.inited = true;
+              }
+              resolve(remote.lib);
+            };
+            loadJS(remote.url, callback);
+          });
+        } else if (importTypes.includes(remote.format)) {
+          // loading js with import(...)
+          return new Promise((resolve) => {
+            __vitePreload(() => import(/* @vite-ignore */ remote.url), true ? [] : void 0).then(
+              (lib) => {
+                if (!remote.inited) {
+                  lib.init(shareScope);
+                  remote.lib = lib;
+                  remote.lib.init(shareScope);
+                  remote.inited = true;
+                }
+                resolve(remote.lib);
+              },
+            );
+          });
+        }
+      } else {
+        return remote.lib;
+      }
+    },
+  };
+
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
+      const IN_GAME = import.meta.env.PROD || import.meta.env.REACT_APP_IN_GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
         : 'http://localhost:3002/remoteEntry.js';
       const scope = appName;
       const module = './config';
+
+      const fed = __federation__.ensure(appName).then((remote) => console.log(remote));
+      console.log('FED', fed);
 
       await loadScript(url, scope, module);
 

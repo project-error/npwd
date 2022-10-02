@@ -23,17 +23,13 @@ dayjs.extend(updateLocale);
 
 const history = createBrowserHistory();
 
-const rootDir = __dirname ?? process.cwd();
+const rootDir = '../';
 // Enable Sentry when config setting is true and when in prod
-if (
-  PhoneConfig.SentryErrorMetrics &&
-  process.env.NODE_ENV !== 'development' &&
-  process.env.REACT_APP_VERSION
-) {
+if (PhoneConfig.SentryErrorMetrics && !import.meta.env.DEV && import.meta.env.REACT_APP_VERSION) {
   Sentry.init({
     dsn: 'https://0c8321c22b794dc7a648a571cc8c3c34@sentry.projecterror.dev/2',
     autoSessionTracking: true,
-    release: process.env.REACT_APP_VERSION,
+    release: import.meta.env.REACT_APP_VERSION,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
@@ -61,7 +57,7 @@ declare module '@emotion/react' {
 }
 
 // window.mockNuiEvent is restricted to development env only
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
   attachWindowDebug();
 }
 
