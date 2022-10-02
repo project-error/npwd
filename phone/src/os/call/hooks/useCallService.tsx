@@ -13,11 +13,9 @@ export const useCallService = () => {
 
   useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALL_INFO, (callData) => {
     if (!callData) {
-      console.log('NO CALL DATA');
       return removeNotification();
     }
 
-    console.log('we have call data');
     setCall(callData);
     enqueueCallNotification(callData);
   });

@@ -16,7 +16,6 @@ export const usePhoneVisibility = () => {
 
   useEffect(() => {
     if (hasNotis && !visibility) {
-      console.log('activeNotificationsIds', activeNotifications);
       setNotifVisibility(true);
     } else {
       setNotifVisibility(false);
