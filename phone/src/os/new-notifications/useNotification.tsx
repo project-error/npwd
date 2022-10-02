@@ -41,7 +41,7 @@ export const useNotification = (): NotificationProps => {
         const curNotis = await snapshot.getPromise(allNotificationIds);
         const uniqID = `${notisId}:${uuid()}`;
 
-        if (curNotis.includes(notisId)) {
+        if (curNotis.includes(uniqID)) {
           console.error(`Notification with key: [${uniqID}] already exists!`);
           return;
         }
