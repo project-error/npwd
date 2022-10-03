@@ -35,7 +35,6 @@
     "xss": "^1.0.13"
   },
   "devDependencies": {
-    "@craco/craco": "6.1.1",
     "@sentry/integrations": "^6.15.0",
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
@@ -54,7 +53,6 @@
     "@welldone-software/why-did-you-render": "^6.2.3",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^11.0.0",
-    "craco-alias": "^3.0.1",
     "cross-env": "^7.0.3",
     "css-loader": "^6.6.0",
     "dotenv": "^10.0.0",
@@ -72,12 +70,8 @@
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "start": "webpack serve --config config/webpack.dev.js --mode development",
-    "build": "webpack --config config/webpack.dev.js --mode production",
-    "serve": "cross-env REACT_APP_IN_GAME=1 BROWSER=none webpack --config config/webpack.dev.js --mode development --watch --progress",
-    "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
-    "build:release": "cross-env SENTRY_RELEASE=true craco build",
-    "test": "craco test --watchAll=false --silent",
-    "test:watch": "craco test --watch"
+    "build": "webpack --config config/webpack.dev.js --mode production --progress --color",
+    "serve": "cross-env REACT_APP_IN_GAME=1 BROWSER=none webpack --config config/webpack.dev.js --mode development --watch --progress"
   },
   "eslintConfig": {
     "extends": "react-app"

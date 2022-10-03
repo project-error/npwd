@@ -19,7 +19,6 @@ module.exports = (env, mode) => ({
       writeToDisk: !!process.env.REACT_APP_IN_GAME,
     },
   },
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {
