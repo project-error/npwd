@@ -1,5 +1,5 @@
 import PlayerService from '../players/player.service';
-import { FetchPhotosRequest, GalleryPhoto } from '../../../typings/photo';
+import { GalleryPhoto } from '../../../typings/photo';
 import PhotoDB, { _PhotoDB } from './photo.db';
 import { photoLogger } from './photo.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
@@ -102,13 +102,10 @@ class _PhotoService {
     }
   }
 
-  async handleFetchPhotos(
-    reqObj: PromiseRequest<FetchPhotosRequest>,
-    resp: PromiseEventResp<GalleryPhoto[]>,
-  ) {
+  async handleFetchPhotos(reqObj: PromiseRequest<void>, resp: PromiseEventResp<GalleryPhoto[]>) {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
-      const photos = await this.photoDB.getPhotosPageByIdentifier(reqObj.data.page, identifier);
+      const photos = await this.photoDB.getPhotosByIdentifier(identifier);
 
       resp({ status: 'ok', data: photos });
     } catch (e) {

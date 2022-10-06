@@ -1,16 +1,11 @@
-import React, { ChangeEvent } from 'react';
-import { Box, Checkbox, IconButton, Pagination } from '@mui/material';
+import React from 'react';
+import { Box, Checkbox, IconButton } from '@mui/material';
 import useStyles from './grid.styles';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
-import {
-  usePhotosValue,
-  useIsEditing,
-  useCheckedPhotos,
-  useSetCurrentPhotoPage,
-} from '../../hooks/state';
+import { usePhotosValue, useIsEditing, useCheckedPhotos } from '../../hooks/state';
 import EditIcon from '@mui/icons-material/Edit';
 
 export const GalleryGrid = () => {
@@ -18,7 +13,6 @@ export const GalleryGrid = () => {
   const history = useHistory();
   const query = useQueryParams();
   const photos = usePhotosValue();
-  const setPhotoPage = useSetCurrentPhotoPage();
   const [isEditing, setIsEditing] = useIsEditing();
   const [checkedPhotos, setCheckedPhotos] = useCheckedPhotos();
 
@@ -45,24 +39,17 @@ export const GalleryGrid = () => {
     setCheckedPhotos(newChecked);
   };
 
-  const handleChangePage = (e: ChangeEvent<unknown>, val: number) => {
-    setPhotoPage(val);
-  };
-
-  const imageLimitPerPage = 12;
-  const pageCount = Math.ceil(photos.count / imageLimitPerPage);
-
   return (
     <div>
       <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
-        {!!photos.images.length && (
+        {!!photos.length && (
           <Box position="absolute" top={10} right={3}>
-            <IconButton sx={{ backgroundColor: '#232323' }} color="primary" onClick={toggleEdit}>
+            <IconButton onClick={toggleEdit}>
               <EditIcon />
             </IconButton>
           </Box>
         )}
-        {photos.images.map((photo) => {
+        {photos.map((photo) => {
           return isEditing ? (
             <Box key={photo.id}>
               <div
@@ -79,9 +66,6 @@ export const GalleryGrid = () => {
             </Box>
           );
         })}
-        <Box position="absolute" bottom={15} display="flex" justifyContent="center" width="100%">
-          <Pagination count={pageCount} shape="rounded" onChange={handleChangePage} />
-        </Box>
       </Box>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Add, Delete } from '@mui/icons-material';
 import { Fab, CircularProgress } from '@mui/material';
 import { useIsEditing } from '../hooks/state';
@@ -13,7 +13,7 @@ import { styled } from '@mui/system';
 
 const FloatBtn = styled(Fab)(({ theme }) => ({
   position: 'absolute',
-  bottom: theme.spacing(8),
+  bottom: theme.spacing(5),
   right: theme.spacing(3),
 }));
 

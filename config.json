@@ -5,7 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": true,
+    "useResourceIntegration": false,
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en"
@@ -23,7 +23,7 @@
     "phoneNumberColumn": "phone_number"
   },
   "debug": {
-    "level": "silly",
+    "level": "error",
     "enabled": true,
     "sentryEnabled": true
   },
@@ -33,19 +33,5 @@
     "authorizationHeader": "PE-Secret",
     "url": "",
     "returnedDataIndexes": ["url"]
-  },
-  "twitter": {
-    "showNotifications": true,
-    "generateProfileNameFromUsers": true,
-    "allowEditableProfileName": true,
-    "allowDeleteTweets": true,
-    "allowReportTweets": true,
-    "allowRetweet": true,
-    "characterLimit": 160,
-    "newLineLimit": 10,
-    "enableAvatars": true,
-    "enableEmojis": true,
-    "enableImages": true,
-    "maxImages": 3
   }
 }
