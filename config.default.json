@@ -25,6 +25,7 @@
     "imageEncoding": "webp",
     "contentType": "multipart/form-data",
     "useContentType": false,
+    "useWebhook": false,
     "authorizationHeader": "PE-Secret",
     "authorizationPrefix": "",
     "useAuthorization": true,

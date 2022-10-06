@@ -7,6 +7,7 @@ import { config } from '../config';
 import { v4 as uuidv4 } from 'uuid';
 import fetch, { FormData, fileFromSync } from 'node-fetch';
 import * as fs from 'fs';
+import { apiPhotoUpload, webhookPhotoUpload } from '../lib/http-service';
 
 const exp = global.exports;
 const path = GetResourcePath('npwd') + '/uploads';
@@ -48,7 +49,7 @@ class _PhotoService {
               break;
           }
 
-          const filePath = `${path}/screentshot-${uuidv4()}.${config.images.imageEncoding}`;
+          const filePath = `${path}/screenshot-${uuidv4()}.${config.images.imageEncoding}`;
 
           const _data = Buffer.from(data.replace(`data:${type};base64`, ''), 'base64');
           fs.writeFileSync(filePath, _data);
@@ -62,26 +63,37 @@ class _PhotoService {
             body.append(config.images.type, blob);
           }
 
-          let returnData = await fetch(config.images.url, {
-            method: 'POST',
-            body,
-            headers: {
-              [config.images.useAuthorization &&
-              config.images
-                .authorizationHeader]: `${config.images.authorizationPrefix} ${this.TOKEN}`,
-              [config.images.useContentType && 'Content-Type']: config.images.contentType,
-            },
-          }).then(async (result) => {
-            if (result.status !== 200) {
-              const err = await result.text();
-              photoLogger.error(`Failed to upload photo, status code: ${result.status}: ${err}`, {
+          if (config.images.useWebhook) {
+            try {
+              const player = PlayerService.getPlayer(reqObj.source);
+              const res = await webhookPhotoUpload(this.TOKEN, filePath, blob, player);
+
+              const identifier = PlayerService.getIdentifier(reqObj.source);
+              const photo = await this.photoDB.uploadPhoto(identifier, res);
+
+              return resp({ status: 'ok', data: photo });
+            } catch (err) {
+              photoLogger.error(`Failed to upload photo`, {
                 source: reqObj.source,
               });
-              resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+              return resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
             }
+          }
 
-            return (await result.json()) as any;
-          });
+          let returnData;
+          await apiPhotoUpload(body, this.TOKEN)
+            .then((result) => {
+              returnData = result;
+            })
+            .catch((err) => {
+              photoLogger.error(
+                `Failed to upload photo, status code: ${err.statusCode}: ${err.errorText}`,
+                {
+                  source: reqObj.source,
+                },
+              );
+              resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+            });
 
           fs.rmSync(filePath);
           if (!returnData) return; // Already caught

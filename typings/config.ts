@@ -68,6 +68,7 @@ interface ImageConfig {
   imageEncoding: 'png' | 'jpg' | 'webp';
   contentType: string;
   useContentType: boolean;
+  useWebhook: boolean;
   authorizationHeader: string;
   authorizationPrefix: string;
   useAuthorization: boolean;
