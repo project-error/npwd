@@ -3,6 +3,15 @@ export interface GalleryPhoto {
   id: number;
 }
 
+export interface GalleryResponse {
+  images: GalleryPhoto[];
+  count: number;
+}
+
+export interface FetchPhotosRequest {
+  page: number;
+}
+
 export enum PhotoResp {
   GENERIC = 'CAMERA.FAILED_TO_TAKE_PHOTO',
   INVALID_IMAGE_HOST = 'GENERIC_INVALID_IMAGE_HOST',

@@ -8,21 +8,30 @@ export const usePhotoActions = () => {
 
   const takePhoto = useCallback(
     (photo) => {
-      setPhotos((curPhotos) => [photo, ...curPhotos]);
+      setPhotos((curVal) => ({
+        ...curVal,
+        images: [photo, ...curVal.images],
+      }));
     },
     [setPhotos],
   );
 
   const deletePhoto = useCallback(
     (image: string) => {
-      setPhotos((curPhotos) => [...curPhotos].filter((meta) => meta.image !== image));
+      setPhotos((curVal) => ({
+        ...curVal,
+        images: [...curVal.images].filter((meta) => meta.image !== image),
+      }));
     },
     [setPhotos],
   );
 
   const deletePhotos = useCallback(
     (photoIds: number[]) => {
-      setPhotos((curPhotos) => [...curPhotos].filter((photo) => !photoIds.includes(photo.id)));
+      setPhotos((curVal) => ({
+        ...curVal,
+        images: [...curVal.images].filter((photo) => !photoIds.includes(photo.id)),
+      }));
     },
     [setPhotos],
   );
@@ -33,7 +42,10 @@ export const usePhotoActions = () => {
         const { state } = await snapshot.getLoadable(photoState.photos);
         if (state !== 'hasValue') return;
 
-        setPhotos((curVal) => [dto, ...curVal]);
+        setPhotos((curVal) => ({
+          ...curVal,
+          images: [dto, ...curVal.images],
+        }));
       },
     [setPhotos],
   );
