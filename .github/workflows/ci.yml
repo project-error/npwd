@@ -20,8 +20,6 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies NUI
         run: yarn --frozen-lockfile
-      - name: Run Enzyme Tests
-        run: yarn test
       - name: Check build status
         run: yarn build
         env:
