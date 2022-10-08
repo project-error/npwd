@@ -137,25 +137,30 @@ jobs:
         run: yarn --frozen-lockfile
 
       # Build all packages
-      - name: Release @npwd/types
+      - name: Build @npwd/types
         run: |
           yarn generate:typings
           cd ./packages/npwd-types
           git config user.email "chip@projecterror.dev"
           git config user.name "itschip"
           yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
+
+      - name: Release @npwd/types
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: './packages/npwd-types/package.json'
           access: 'public'
 
-      - name: Release @npwd/hooks
+      - name: Build @npwd/hooks
         run: |
           cd ./packages/npwd-hooks
+          yarn build
           git config user.email "chip@projecterror.dev"
           git config user.name "itschip"
           yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
+
+      - name: Release @npwd/hooks
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
