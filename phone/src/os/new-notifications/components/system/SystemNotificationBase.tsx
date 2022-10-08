@@ -14,6 +14,7 @@ interface SystemNotificationBaseProps extends CustomContentProps {
 
 const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
   padding: '14px 16px',
+  flexDirection: 'column',
   display: 'flex',
   background: theme.palette.background.paper,
   borderRadius: '12px !important',
