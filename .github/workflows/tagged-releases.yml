@@ -51,21 +51,6 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Release @npwd/types
-        run: |
-          yarn generate:typings
-          cd ./packages/npwd-types
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
-      - name: Release @npwd/hooks
-        run: |
-          cd ./packages/npwd-hooks
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
 
@@ -106,13 +91,6 @@ jobs:
         env:
           CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish NPWD Typings
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwd-types/package.json'
-          access: 'public'
 
   build-npwd-packages:
     name: Build NPWD packages
