@@ -2,7 +2,7 @@ import { KvpItems } from '@typings/settings';
 import KvpService from './settings/client-kvp.service';
 import { Delay } from '../utils/fivem';
 
-let prop = 0;
+global.phoneProp = 0;
 let propCreated = false;
 
 /* * * * * * * * * * * * *
@@ -17,7 +17,7 @@ export const newPhoneProp = async () => {
   const hasNPWDProps = GetConvarInt('NPWD_PROPS', 0);
   let phoneModel;
   if (hasNPWDProps) {
-    phoneModel = KvpService.getKvpString(KvpItems.NPWD_FRAME) || 'prop_npwd_minimal';
+    phoneModel = 'dolu_npwd_phone';
   } else {
     phoneModel = 'prop_amb_phone';
   }
@@ -31,15 +31,14 @@ export const newPhoneProp = async () => {
 
     const playerPed = PlayerPedId();
     const [x, y, z] = GetEntityCoords(playerPed, true);
-    prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
-    //prop = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
+    global.phoneProp = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
     AttachEntityToEntity(
-      prop,
+      global.phoneProp,
       playerPed,
       boneIndex,
       0.0,
-      0.0,
+      0.05,
       0.0,
       0.0,
       0.0,
@@ -52,6 +51,9 @@ export const newPhoneProp = async () => {
       true,
     ); //-- Attaches the phone to the player.
     propCreated = true;
+
+    const txtVariation = KvpService.getKvpInt(KvpItems.NPWD_FRAME);
+    SetObjectTextureVariation(global.phoneProp, txtVariation || 7);
   } else if (propCreated) {
     console.log('prop already created');
   }
@@ -59,9 +61,9 @@ export const newPhoneProp = async () => {
 
 export function removePhoneProp() {
   //-- Triggered in newphoneProp function. Only way to destory the prop correctly.
-  if (prop != 0) {
-    DeleteEntity(prop);
-    prop = 0;
+  if (global.phoneProp != 0) {
+    DeleteEntity(global.phoneProp);
+    global.phoneProp = 0;
     propCreated = false;
   }
 }

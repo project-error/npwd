@@ -9,6 +9,7 @@ global.isPhoneOpen = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
 global.clientPhoneNumber = null;
+global.phoneProp = null;
 
 const exps = global.exports;
 

@@ -4,6 +4,23 @@ import KvpService from './client-kvp.service';
 import { Sound } from '../sounds/client-sound.class';
 import { Ringtone } from '../sounds/client-ringtone.class';
 
+const PHONE_PROPS: Record<string, number> = Object.freeze({
+  gold: 3,
+  default: 7,
+  minimal: 7,
+  blue: 0,
+  pink: 6,
+  white: 4,
+});
+
+// 1 - green
+// 2 - red
+// 3 - gold
+// 4 - white / gray
+// 5 - purple
+// 6 - pink
+// 7 - black
+
 // This will run once we first load NUI settings stored in localStorage, and every time
 // we update it.
 RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
@@ -13,7 +30,8 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
   KvpService.setKvp(KvpItems.NPWD_NOTIFICATION, cfg.notiSound.value);
   const frameValue: string = cfg.frame.value;
   const frameName = frameValue.substr(0, frameValue.lastIndexOf('.'));
-  KvpService.setKvp(KvpItems.NPWD_FRAME, `prop_npwd_${frameName}`);
+  KvpService.setKvpInt(KvpItems.NPWD_FRAME, PHONE_PROPS[frameName]);
+  SetObjectTextureVariation(global.phoneProp, PHONE_PROPS[frameName]);
   cb({});
 });
 
