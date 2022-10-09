@@ -17,7 +17,7 @@ export const newPhoneProp = async () => {
   const hasNPWDProps = GetConvarInt('NPWD_PROPS', 0);
   let phoneModel;
   if (hasNPWDProps) {
-    phoneModel = KvpService.getKvpString(KvpItems.NPWD_FRAME) || 'prop_npwd_default';
+    phoneModel = KvpService.getKvpString(KvpItems.NPWD_FRAME) || 'prop_npwd_minimal';
   } else {
     phoneModel = 'prop_amb_phone';
   }
