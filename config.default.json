@@ -5,7 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "customPhoneNumber": {
-    "enabled": true,
+    "enabled": false,
     "exportResource": "number-generator-resource",
     "exportFunction": "generateNumber"
   },
