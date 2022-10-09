@@ -81,6 +81,12 @@ interface PhoneAsItemConfig {
   exportFunction: string;
 }
 
+interface CustomNumberConfig {
+  enabled: boolean;
+  exportResource: string;
+  exportFunction: string;
+}
+
 interface ProfanityFilter {
   enabled: boolean;
   badWords: string[];
@@ -99,6 +105,7 @@ export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
   PhoneAsItem: PhoneAsItemConfig;
+  customPhoneNumber: CustomNumberConfig;
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;

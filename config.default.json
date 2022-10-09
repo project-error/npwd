@@ -4,6 +4,11 @@
     "exportResource": "my-core-resource",
     "exportFunction": "myCheckerFunction"
   },
+  "customPhoneNumber": {
+    "enabled": true,
+    "exportResource": "number-generator-resource",
+    "exportFunction": "generateNumber"
+  },
   "general": {
     "useResourceIntegration": false,
     "toggleKey": "f1",
