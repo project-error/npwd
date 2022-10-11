@@ -25,6 +25,11 @@ exps('openApp', (app: string) => {
   sendMessage('PHONE', PhoneEvents.OPEN_APP, app);
 });
 
+// Allow to handle dynamicly callModal
+exps('phoneModal', (show: boolean) => {
+  return callService.openCallModal(show);
+});
+
 // Will set the phone to open or closed based on based value
 exps('setPhoneVisible', async (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
