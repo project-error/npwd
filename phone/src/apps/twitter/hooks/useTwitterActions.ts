@@ -2,6 +2,7 @@ import { FormattedTweet, UpdateProfileProps } from '@typings/twitter';
 import { twitterState, useSetFilteredTweets, useSetTweets, useSetTwitterProfile } from './state';
 import { useCallback } from 'react';
 import { Snapshot, useRecoilCallback } from 'recoil';
+import AddTweetModal from '../components/AddTweetModal';
 
 interface TwitterActionProps {
   updateTweets: (tweets: FormattedTweet[]) => void;
@@ -9,6 +10,7 @@ interface TwitterActionProps {
   addTweet: (tweet: FormattedTweet) => void;
   deleteTweet: (tweetId: number) => void;
   updateLocalProfile: (profile: UpdateProfileProps) => void;
+  localToggleLike: (tweetId: number) => void;
 }
 
 const getIsTweetsLoading = (snapshot: Snapshot) =>
@@ -68,11 +70,30 @@ export const useTwitterActions = (): TwitterActionProps => {
     [setTweets],
   );
 
+  const localToggleLike = useCallback(
+    (tweetId: number) => {
+      setTweets((curVal) =>
+        [...curVal].map((tweet) => {
+          if (tweet.id === tweetId) {
+            return {
+              ...tweet,
+              isLiked: tweet.isLiked ? false : true,
+              likes: tweet.isLiked ? tweet.likes - 1 : tweet.likes + 1,
+            };
+          }
+          return tweet;
+        }),
+      );
+    },
+    [setTweets],
+  );
+
   return {
     updateTweets,
     updateFilteredTweets,
     addTweet,
     deleteTweet,
     updateLocalProfile,
+    localToggleLike,
   };
 };

@@ -7,29 +7,14 @@ import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { Box } from '@mui/material/node_modules/@mui/system';
-import { styled, lighten } from '@mui/material/styles';
-
-const ButtonWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: '2px',
-  alignItems: 'center',
-  padding: '2px',
-  paddingRight: '5px',
-  paddingLeft: '5px',
-  cursor: 'pointer',
-  borderRadius: 8,
-  transition: '0.2s',
-  ':hover': {
-    background: lighten(theme.palette.background.paper, 0.1),
-  },
-}));
+import { useTwitterActions } from '@apps/twitter/hooks/useTwitterActions';
 
 function LikeButton({ tweetId, isLiked, likes }) {
   const [liked, setLiked] = useState(isLiked);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
+  const { localToggleLike } = useTwitterActions();
 
   const handleClick = () => {
     setLoading(true);
@@ -43,6 +28,7 @@ function LikeButton({ tweetId, isLiked, likes }) {
 
       setLoading(false);
       setLiked(!liked);
+      localToggleLike(tweetId);
     });
   };
 
