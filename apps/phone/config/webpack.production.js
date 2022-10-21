@@ -59,6 +59,14 @@ module.exports = () => ({
           singleton: true,
           requiredVersion: deps['react-dom'],
         },
+        'react-router-dom': {
+          singleton: true,
+          requiredVersion: deps['react-router-dom'],
+        },
+        'recoil': {
+          singleton: true,
+          requiredVersion: deps['recoil'],
+        }
       },
     }),
     new HtmlWebpackPlugin({
