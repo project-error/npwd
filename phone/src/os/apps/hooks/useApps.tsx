@@ -9,12 +9,14 @@ import { IconSetObject } from '@typings/settings';
 import { useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
 import { extname } from 'path';
+import { usePhone } from '@os/phone/hooks';
 
 export const useApps = () => {
   const { icons } = useNotifications();
   const theme = useTheme();
   const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
   const externalApps = useRecoilValue(phoneState.extApps);
+  const { ResourceConfig } = usePhone();
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
@@ -64,7 +66,9 @@ export const useApps = () => {
     },
     [allApps],
   );
-  return { apps, getApp };
+
+  const filteredApps = apps.filter((app) => !ResourceConfig?.disabledApps.includes(app.id));
+  return { apps: filteredApps, getApp };
 };
 
 export const useApp = (id: string): IApp => {
