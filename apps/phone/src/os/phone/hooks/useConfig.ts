@@ -3,7 +3,7 @@ import { phoneState } from './state';
 import { isEnvBrowser } from '../../../utils/misc';
 import { useEffect } from 'react';
 import { fetchConfig } from '@utils/config';
-import DefaultConfig from '../../../../../config.default.json';
+import DefaultConfig from '../../../../../../config.default.json';
 import { ResourceConfig } from '@typings/config';
 
 export const useConfig = (): ResourceConfig => {

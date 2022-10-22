@@ -3,6 +3,12 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "dev:game": {
+      "cache": false
     }
   }
 }

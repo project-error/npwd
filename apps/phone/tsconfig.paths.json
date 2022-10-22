@@ -8,8 +8,8 @@
       "@apps/*": ["./apps/*"],
       "@utils/*": ["./utils/*"],
       "@common/*": ["./common/*"],
-      "@shared/*": ["../../shared/*"],
-      "@typings/*": ["../../typings/*"]
+      "@shared/*": ["../../../shared/*"],
+      "@typings/*": ["../../../typings/*"]
     }
   }
 }

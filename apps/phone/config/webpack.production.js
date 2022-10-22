@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const deps = require('../package.json').dependencies;
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = () => ({
@@ -9,13 +11,6 @@ module.exports = () => ({
     path: path.resolve(__dirname, '../../../dist/html'),
     filename: '[name].js',
     clean: true,
-  },
-  devServer: {
-    port: 3000,
-    hot: true,
-    devMiddleware: {
-      writeToDisk: !!process.env.REACT_APP_IN_GAME,
-    },
   },
   module: {
     rules: [
@@ -47,8 +42,36 @@ module.exports = () => ({
     ],
   },
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'layout',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './ui': './src/ui/components/index',
+      },
+      remotes: {},
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom'],
+        },
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: './public/media',
+          to: path.resolve(__dirname, '../../../dist/html/media'),
+          toType: 'dir',
+        },
+      ],
     }),
     new webpack.DefinePlugin({
       process: { env: { REACT_APP_IN_GAME: process.env.REACT_APP_IN_GAME } },

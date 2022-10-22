@@ -1,4 +1,4 @@
-import defaultConfig from '../../../config.default.json';
+import defaultConfig from '../../../../config.default.json';
 import { ResourceConfig } from '@typings/config';
 import { getResourceName } from './misc';
 import { deepMergeObjects } from '@shared/deepMergeObjects';
