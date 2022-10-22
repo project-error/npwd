@@ -82,7 +82,6 @@
     "enabled": true,
     "sentryEnabled": true
   },
-  "disabledApps": [],
   "apps": [],
   "voiceMessage": {
     "enabled": false,

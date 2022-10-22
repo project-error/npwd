@@ -148,6 +148,9 @@ on('onResourceStop', (resource: string) => {
   }
 });
 
+// DO NOT CHANGE THIS EITHER, PLEASE - CHIP
+// ^ AND WHAT ARE YOU GOING TO DO HUH? - KIDZ
+
 /* * * * * * * * * * * * *
  *
  *  NUI Service Callback Registration

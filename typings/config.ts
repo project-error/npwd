@@ -116,7 +116,6 @@ export interface ResourceConfig {
   debug: Debug;
   images: ImageConfig;
   imageSafety: ImageSafety;
-  disabledApps: string[];
   profanityFilter: ProfanityFilter;
   apps: string[];
   voiceMessage: VoiceMessageConfig;
