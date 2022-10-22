@@ -1,6 +1,6 @@
 import React from 'react';
 import ListItemText from '@mui/material/ListItemText';
-import { Button, ListItemAvatar, Avatar as MuiAvatar, List, ListItem } from '@mui/material';
+import { Button, List, ListSubheader } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -11,8 +11,9 @@ import { useFilteredContacts } from '../../hooks/state';
 import { useCall } from '@os/call/hooks/useCall';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import { useMessageActions } from '../../../messages/hooks/useMessageActions';
 import useMessages from '../../../messages/hooks/useMessages';
+import { usePhone } from '@os/phone/hooks';
+import { ContactItem } from './ContactItem';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
@@ -21,6 +22,7 @@ export const ContactList: React.FC = () => {
   const { findExistingConversation } = useContactActions();
   const myPhoneNumber = useMyPhoneNumber();
   const { goToConversation } = useMessages();
+  const { ResourceConfig } = usePhone();
 
   const openContactInfo = (contactId: number) => {
     history.push(`/contacts/${contactId}`);
@@ -52,38 +54,61 @@ export const ContactList: React.FC = () => {
   return (
     <>
       <SearchContacts />
-      <List>
-        {filteredContacts.map((contact) => (
-          <ListItem key={contact.id} divider>
-            <ListItemAvatar>
-              {contact.avatar ? (
-                <MuiAvatar src={contact.avatar} />
-              ) : (
-                <MuiAvatar>{contact.display.slice(0, 1).toUpperCase()}</MuiAvatar>
-              )}
-            </ListItemAvatar>
-            <ListItemText
-              primary={contact.display}
-              secondary={contact.number}
-              primaryTypographyProps={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-              secondaryTypographyProps={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
+      {!!ResourceConfig?.defaultContacts.length && (
+        <List
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Default contacts
+            </ListSubheader>
+          }
+        >
+          {ResourceConfig?.defaultContacts?.map((contact) => (
+            <ContactItem
+              id={contact.id}
+              avatar={contact.avatar}
+              display={contact.display}
+              number={contact.number}
+              render={
+                <>
+                  <Button onClick={() => startCall(contact.number)}>
+                    <PhoneIcon />
+                  </Button>
+                  <Button onClick={() => handleMessage(contact.number)}>
+                    <ChatIcon />
+                  </Button>
+                </>
+              }
             />
-            <Button onClick={() => startCall(contact.number)}>
-              <PhoneIcon />
-            </Button>
-            <Button onClick={() => handleMessage(contact.number)}>
-              <ChatIcon />
-            </Button>
-            <Button style={{ margin: -15 }} onClick={() => openContactInfo(contact.id)}>
-              <MoreVertIcon />
-            </Button>
-          </ListItem>
+          ))}
+        </List>
+      )}
+      <List
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            Contacts
+          </ListSubheader>
+        }
+      >
+        {filteredContacts.map((contact) => (
+          <ContactItem
+            id={contact.id}
+            avatar={contact.avatar}
+            display={contact.display}
+            number={contact.number}
+            render={
+              <>
+                <Button onClick={() => startCall(contact.number)}>
+                  <PhoneIcon />
+                </Button>
+                <Button onClick={() => handleMessage(contact.number)}>
+                  <ChatIcon />
+                </Button>
+                <Button style={{ margin: -15 }} onClick={() => openContactInfo(contact.id)}>
+                  <MoreVertIcon />
+                </Button>
+              </>
+            }
+          />
         ))}
       </List>
     </>

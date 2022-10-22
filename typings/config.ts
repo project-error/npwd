@@ -101,6 +101,13 @@ interface VoiceMessageConfig {
   returnedDataIndexes: Array<any>;
 }
 
+export interface DefaultContact {
+  id: number;
+  display: string;
+  number: string;
+  avatar?: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -112,6 +119,7 @@ export interface ResourceConfig {
   marketplace: MarketplaceConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
+  defaultContacts: DefaultContact[];
   general: General;
   debug: Debug;
   images: ImageConfig;
