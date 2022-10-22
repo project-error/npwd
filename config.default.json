@@ -82,6 +82,7 @@
     "enabled": true,
     "sentryEnabled": true
   },
+  "defaultContacts": [],
   "disabledApps": [],
   "apps": [],
   "voiceMessage": {
