@@ -75,8 +75,7 @@ jobs:
           cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
           cp -r ./dist/{game,html} ./temp/npwd/dist
           # Make sure we copy our one lua boy
-          mkdir ./temp/npwd/dist/client
-          cp ./apps/game/client/cl_controls.lua ./temp/npwd/dist/client/cl_controls.lua
+          cp ./apps/game/client/cl_controls.lua ./temp/npwd/dist/game/client/cl_controls.lua
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
