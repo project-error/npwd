@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "web": "pnpm --filter npwd-nui",
+    "web": "yarn workspace npwd-nui",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
     "format": "pretty-quick",
@@ -35,6 +35,5 @@
     "hooks": {
       "pre-commit": "npx run format:staged"
     }
-  },
-  "dependencies": {}
+  }
 }

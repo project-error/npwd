@@ -4,7 +4,7 @@
   "description": "Resources configuration",
   "main": "index.js",
   "license": "CC-BY-NC-SA-4.0",
-  "private": false,
+  "private": true,
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
     "build": "node ./scripts/build.js",

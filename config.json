@@ -4,6 +4,20 @@
     "exportResource": "my-core-resource",
     "exportFunction": "myCheckerFunction"
   },
+  "twitter": {
+    "showNotifications": true,
+    "generateProfileNameFromUsers": true,
+    "allowEditableProfileName": true,
+    "allowDeleteTweets": true,
+    "allowReportTweets": true,
+    "allowRetweet": true,
+    "characterLimit": 160,
+    "newLineLimit": 10,
+    "enableAvatars": true,
+    "enableEmojis": true,
+    "enableImages": true,
+    "maxImages": 3
+  },
   "general": {
     "useResourceIntegration": false,
     "toggleKey": "f1",
@@ -23,7 +37,7 @@
     "phoneNumberColumn": "phone_number"
   },
   "debug": {
-    "level": "error",
+    "level": "silly",
     "enabled": true,
     "sentryEnabled": true
   },

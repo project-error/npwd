@@ -9,7 +9,7 @@ import { usePhotoActions } from '../hooks/usePhotoActions';
 import { useCheckedPhotosValue } from '../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
 const FloatBtn = styled(Fab)(({ theme }) => ({
   position: 'absolute',

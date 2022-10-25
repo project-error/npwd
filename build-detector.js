@@ -13,7 +13,7 @@ on('onResourceStart', async (resName) => {
   if (resName !== currentResourceName && process.env.NODE_ENV !== 'development') return;
 
   const currentResourcePath = GetResourcePath(currentResourceName);
-  const targetBuildPath = path.join(currentResourcePath, 'resources', 'dist');
+  const targetBuildPath = path.join(currentResourcePath, 'dist', 'game');
 
   try {
     await fs.promises.access(targetBuildPath);
