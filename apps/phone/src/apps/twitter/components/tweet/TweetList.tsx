@@ -1,54 +1,22 @@
-import React, { memo } from 'react';
+import { memo, useState } from 'react';
 
 import { List } from '@ui/components/List';
 import Tweet from './Tweet';
 import { FormattedTweet } from '@typings/twitter';
+import Backdrop from '@ui/components/Backdrop';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
-  /*const [page, setPage] = useState<number>(1);
-	const [hasMore, setHasMore] = useState<boolean>(!!tweets.length);*/
-
-  /*const { addAlert } = useSnackbar();
-	const { t } = useTranslation();
-	const { updateTweets } = useTwitterActions();
-	*/
-  /*const handleNextTweets = useCallback(() => {
-		fetchNui<ServerPromiseResp<ITweet[]>>(
-			TwitterEvents.FETCH_TWEETS,
-			{ pageId: page },
-			{
-				status: 'ok',
-				data: [],
-				// data: MockTweets as unknown as ITweet[],
-			},
-		).then((resp) => {
-			if (resp.status !== 'ok') {
-				return addAlert({
-					type: 'error',
-					message: t('TWITTER.FEEDBACK.FETCH_TWEETS_FAILED'),
-				});
-			}
-			
-			if (resp.data.length === 0) {
-				setHasMore(false);
-				return;
-			}
-			
-			setHasMore(true);
-			setPage((curVal) => curVal + 1);
-			
-			updateTweets(resp.data.map(processTweet));
-		});
-	}, [page, updateTweets, addAlert, t]);*/
-
-  // Remove inf scroll for now
+  const [imageOpen, setImageOpen] = useState<string | null>(null);
 
   return (
-    <List>
-      {tweets.map((tweet) => (
-        <Tweet key={tweet.id} {...tweet} />
-      ))}
-    </List>
+    <>
+      {imageOpen && <Backdrop onClick={() => setImageOpen(null)} />}
+      <List>
+        {tweets.map((tweet) => (
+          <Tweet key={tweet.id} tweet={tweet} imageOpen={imageOpen} setImageOpen={setImageOpen} />
+        ))}
+      </List>
+    </>
   );
 }
 

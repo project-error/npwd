@@ -14,8 +14,9 @@ const useStyles = makeStyles({
   },
   rootPopper: {
     width: '100%',
+    maxWidth: 500,
+    height: 'auto',
     objectFit: 'contain',
-    transform: 'scale(1.2)',
   },
 });
 
@@ -23,4 +24,7 @@ export const PictureResponsive: React.FC<PictureResponsiveProps> = ({
   src,
   alt,
   popper = false,
-}) => <img className={popper ? useStyles().rootPopper : useStyles().root} src={src} alt={alt} />;
+}) => {
+  const styles = useStyles();
+  return <img className={popper ? styles.rootPopper : styles.root} src={src} alt={alt} />;
+};

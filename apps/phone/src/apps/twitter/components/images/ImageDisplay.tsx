@@ -1,28 +1,37 @@
 import { Box, Popper } from '@mui/material';
+import { Image as ImageType } from '@typings/twitter';
 import { PictureResponsive } from '@ui/components';
-import Backdrop from '@ui/components/Backdrop';
 import React, { useState } from 'react';
-
 import Image from './Image';
 
-export const ImageDisplay = ({ visible, images, removeImage }) => {
-  if (!visible || !images || images.length === 0) return null;
-  const [imageOpen, setImageOpen] = useState(null);
+interface ImageDisplayProps {
+  visible: boolean;
+  images: ImageType[];
+  removeImage?: (id: string) => void;
+  small?: boolean;
+  open: string;
+  onToggle: (value: string | null) => void;
+}
+
+export const ImageDisplay: React.FC<ImageDisplayProps> = ({
+  visible,
+  images,
+  small,
+  removeImage,
+  open,
+  onToggle,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleOpenImage = (e, id: number) => {
-    setAnchorEl(e.currentTarget);
-    setImageOpen(id);
-  };
+  if (!visible || !images || images.length === 0) return null;
 
-  const closeImage = () => {
-    setImageOpen(null);
-    setAnchorEl(null);
+  const handleOpenImage = (e, id: string) => {
+    setAnchorEl(e.currentTarget);
+    onToggle(id);
   };
 
   return (
     <Box p={1}>
-      {imageOpen && <Backdrop onClick={closeImage} />}
       {images.map((image) => (
         <Box onClick={(e) => handleOpenImage(e, image.id)}>
           <Image
@@ -30,7 +39,7 @@ export const ImageDisplay = ({ visible, images, removeImage }) => {
             link={image.link}
             handleClick={removeImage ? () => removeImage(image.id) : null}
           />
-          <Popper anchorEl={anchorEl} placement="left" open={imageOpen === image.id}>
+          <Popper anchorEl={anchorEl} placement="left" open={open === image.id}>
             <PictureResponsive popper alt="image" src={image.link} />
           </Popper>
         </Box>

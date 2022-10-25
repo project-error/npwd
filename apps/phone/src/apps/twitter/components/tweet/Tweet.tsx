@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import xss from 'xss';
 import { useTranslation } from 'react-i18next';
 import { ListItemAvatar, Avatar as MuiAvatar } from '@mui/material';
@@ -24,7 +24,13 @@ import {
   TweetProfile,
 } from './Tweet.styles';
 
-export const Tweet = (tweet: FormattedTweet) => {
+interface TweetProps {
+  tweet: FormattedTweet;
+  setImageOpen: (val: string | null) => void;
+  imageOpen: string | null;
+}
+
+export const Tweet: React.FC<TweetProps> = ({ tweet, imageOpen, setImageOpen }) => {
   const {
     id,
     message,
@@ -89,7 +95,9 @@ export const Tweet = (tweet: FormattedTweet) => {
               __html: sanitizedMessage,
             }}
           />
-          {enableImages && <ImageDisplay visible images={images} small />}
+          {enableImages && (
+            <ImageDisplay visible images={images} open={imageOpen} onToggle={setImageOpen} />
+          )}
           <TweetButtonContainer>
             <ReplyButton profile_name={profile_name} />
             <LikeButton likes={likes} tweetId={id} isLiked={isLiked} />

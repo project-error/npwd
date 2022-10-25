@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --filter npwd-nui",
+    "web": "pnpm --filter npwd-nui",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
     "format": "pretty-quick",

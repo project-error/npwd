@@ -56,6 +56,7 @@ export const MockTweets: Tweet[] = [
     retweetIdentifier: '',
     avatar_url: '',
     id: 112,
+    images: 'https://i.projecterror.dev/K45dbT6vsaKtxVMW4F66VZ.webp',
     message: 'Angular is best',
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
