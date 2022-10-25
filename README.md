@@ -14,18 +14,14 @@
 
 </div>
 
-# NPWD Release (Current version 1.x.x)
+## Monorepo structure
+### Apps
+- `phone`: The React code for NPWD.
+- `game`: Game releated scripts and code that runs on the client/server-side in FiveM.
 
-**New-Phone-Who-Dis** (*NPWD*) is a standalone and open source phone resource created for use in [*FiveM*](https://fivem.net/). It was built from 
-the ground up by some of the previous contributors and maintainers of the Reignited GCPhone project, who found
-the Vue 2 codebase littered with technical debt and legacy code that hindered continued development.
-
-*NPWD* is an attempt at solving these problems and making a codebase that can be adapted and extended on
-by the community. Maintainability has been our utmost priority as well. It has been designed to be as developer accessible as possible, with included utilities and tools
-to ease and streamline the phone development process.
-
-**Important Note:** As this resource is still in a beta phase, you may experience edge case issues
-with some frameworks and environments that we didn't account for. Please ensure you report these issues [here](https://github.com/project-error/npwd/issues/new?assignees=&labels=New+Issue&template=bug-report.yml&title=Bug%3A+%3Cshort+description%3E) or within the [Discord](https://discord.com/invite/HYwBjTbAY5).
+### Packages
+- `npwd-hooks`: Hooks used throughout external apps. Mainly to communicate with `npwd` through custom window events.
+- `npwd-types`: Auto-generated types from NPWD that can be used in external apps.
 
 ## Standalone Information & Installation
 

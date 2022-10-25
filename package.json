@@ -4,27 +4,31 @@
   "description": "A FiveM phone resource, made in React & TypeScript",
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "license": "CC-BY-NC-SA-4.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@octokit/core": "^3.6.0",
     "esbuild": "^0.15.9",
     "husky": "^7.0.4",
-    "lerna": "^4.0.0",
     "prettier": "^2.6.2",
     "pretty-quick": "^3.1.3",
     "rollup": "^2.77.2",
     "rollup-plugin-dts": "^4.2.2",
-    "rollup-plugin-esbuild": "^4.10.1"
+    "rollup-plugin-esbuild": "^4.10.1",
+    "turbo": "^1.6.1"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "turbo run build",
+    "dev": "turbo run dev --filter npwd-nui",
+    "dev:game": "turbo run dev:game",
     "prepare": "husky install",
-    "bootstrap": "lerna bootstrap",
     "format": "pretty-quick",
     "format:staged": "pretty-quick --staged",
-    "postinstall": "husky install && yarn bootstrap",
-    "test": "lerna run test",
+    "postinstall": "husky install",
     "generate:typings": "rollup --config rollup.config.js"
   },
   "husky": {

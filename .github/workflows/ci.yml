@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: phone
+        working-directory: apps/phone
  
     steps:
       - name: Checkout
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: resources
+        working-directory: apps/game
     
     steps:
       - name: Checkout
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: resources
+        working-directory: apps/game 
         
     steps:
       - name: Checkout

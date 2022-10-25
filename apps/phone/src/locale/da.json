@@ -1,0 +1,349 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "Fatal fejl",
+      "TOP_LEVEL_ERR_ACTION": "Genindlæs",
+      "TOP_LEVEL_ERR_MSG": "NPWD has encountered an error it was unable to recover from. You will need to reload the NUI window. The error is shown below for developer reference.",
+      "APP_CRASHED_TITLE": "Fatal applikationsfejl",
+      "APP_CRASHED_MSG": "Applikationen har stødt på en fejl, som den ikke kunne gendanne fra.",
+      "APP_CRASHED_ACTION": "Genindlæs applikationen"
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "Ingen ulæste notifikationer"
+    },
+    "DATE_FORMAT": "DD/MM/YYYY",
+    "DATE_TIME_FORMAT": "DD/MM/YYYY hh:mm",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "Ringer",
+        "OUTGOING": "Udgående opkald",
+        "INCOMING": "Indgående opkald"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "Du kan ikke ringe til dit eget telefonnummer!",
+        "ERROR": "Der opstod en fejl under fuldførelse af dette opkald"
+      }
+    },
+    "BROWSER": {
+      "NAME": "Browser"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "Telefonnummer",
+      "PREVIEW_SOUND": "Forhåndsvisning af lyd",
+      "CATEGORY": {
+        "APPEARANCE": "Udseende",
+        "PHONE": "Telefon",
+        "ACTIONS": "Handlinger"
+      },
+      "OPTIONS": {
+        "ICONSET": "Ikon sæt",
+        "THEME": "Tema",
+        "LANGUAGE": "Sprog",
+        "FRAME": "Ramme",
+        "ZOOM": "Zoom",
+        "WALLPAPER": "Baggrund",
+        "RESET_SETTINGS": "Nulstil indstillingerne",
+        "RESET_SETTINGS_DESC": "Dette vil rydde dine lokalt lagrede data",
+        "STREAMER_MODE": {
+          "TITLE": "Streamer-tilstand",
+          "DESCRIPTION": "Skjuler billeder, før de vises"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "brugerdefineret baggrund",
+          "DIALOG_CONTENT": "Indstil et brugerdefineret baggrund ved at indtaste URLen til billedet nedenfor!",
+          "DIALOG_PLACEHOLDER": "Billed URL",
+          "DIALOG_ERROR": "Ugyldigt billede eller link"
+        },
+        "CALL_VOLUME": "Opkaldsvolumen",
+        "RINGTONE": "Ringetone",
+        "RINGTONE_VOLUME": "Ringetonevolumen",
+        "NOTIFICATION": "Notifikation",
+        "NOTIFICATION_VOLUME": "Meddelelsesvolumen",
+        "NOTIFICATION_FILTER": "Notifikationsfiltre"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "Ugyldige gemte indstillinger! Nulstil venligst i appen Indstillinger.",
+        "SETTINGS_RESET": "Indstillinger er blevet nulstillet!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notifikation",
+        "NOTIFY_NEW_LISTING": "Vis meddelelse for nye opslag"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "Hvor vil du dele billedet?",
+      "COPY_IMAGE": "Kopier billedets url her:",
+      "FAILED_TO_DELETE": "Billedet kunne ikke slettes :(",
+      "FAILED_TO_TAKE_PHOTO": "Billedet kunne ikke gemmes :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "Kunne ikke oprette kontakt!",
+        "ADD_SUCCESS": "Kontakten er oprettet!",
+        "UPDATE_FAILED": "Kunne ikke opdatere kontakten!",
+        "UPDATE_SUCCESS": "Kontakten er opdateret!",
+        "DELETE_FAILED": "Kunne ikke slette kontakten!",
+        "DELETE_SUCCESS": "Kontakten blev slettet!"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "Søg kontakter...",
+      "FORM_NAME": "Navn",
+      "FORM_NUMBER": "Nummer",
+      "FORM_AVATAR": "Avatar URL",
+      "MODAL_BUTTON_ADD": "Tilføj kontakt"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "Aktuelt telefonopkald",
+        "INCOMING_CALL_TITLE": "Indgående telefonopkald",
+        "CURRENT_CALL_WITH": "I opkald med {{ transmitter }}",
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} ringer til dig!"
+      },
+      "INPUT_PLACEHOLDER": "Indtast et nummer",
+      "NAVBAR_HISTORY": "Historik",
+      "NAVBAR_DIAL": "Ring",
+      "NAVBAR_CONTACTS": "Kontakter",
+      "NO_HISTORY": "Du har ingen opkaldshistorik"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "Din profil er oprettet",
+        "CREATE_PROFILE_FAILURE": "Din profil kunne ikke oprettes",
+        "EDIT_PROFILE_SUCCESS": "Din profil blev opdateret",
+        "EDIT_PROFILE_FAILURE": "Kunne ikke opdatere din profil",
+        "CREATE_FAILED": "Kunne ikke sende dit tweet",
+        "RETWEET_FAILED": "Kunne ikke retweete dette tweet",
+        "RETWEET_EXISTS": "Du har allerede retweetet dette tweet!",
+        "LIKE_TWEET_FAILED": "Kunne ikke like tweet",
+        "REPORT_TWEET_SUCCESS": "Rapporteret tweet",
+        "REPORT_TWEET_FAILED": "Kunne ikke rapportere tweet",
+        "FETCH_TWEETS_FAILED": "Kunne ikke hente tweets",
+        "DELETE_TWEET_FAILED": "Kunne ikke slette tweet",
+        "FILTER_FETCH_FAILED": "Kunne ikke hente filtrerede tweets"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetede nogen!",
+        "NEW_BROADCAST": "Nyt tweet fra @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Du har {{ count }} nye tweets på din tidslinje!"
+      },
+      "SUBMIT_IMAGE": "Tilføj medier",
+      "TWEET": "Tweet",
+      "REPORTED": " Rapporteret",
+      "REPORT": "Rapport",
+      "IMAGE_PLACEHOLDER": "Link til billede eller gif",
+      "EDIT_DEFAULT_PROFILE_NAME": "Vælg Profilnavn",
+      "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "AVATAR_CHOOSE_IMAGE": "Vælg et billede",
+      "EDIT_PROFILE_NAME": "Profil navn",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Lokation",
+      "EDIT_PROFILE_JOB": "Job",
+      "RETWEETED": "Retweetet",
+      "TWEET_MESSAGE_CHAR_LIMIT": "Beskeden er over tegngrænsen",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Beskeden er over den nye linjegrænse",
+      "TWEET_MESSAGE_PLACEHOLDER": "Hvad sker der?",
+      "SEARCH_TWEETS_PLACEHOLDER": "Søg efter profilnavn eller besked",
+      "SEARCH_TWEETS": "Søg efter tweets",
+      "TIME_JUST_NOW": "Lige nu",
+      "TIME_MINUTES": "m",
+      "TIME_HOURS": "t",
+      "TIME_DAYS": "d"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "Matchet: {{ matchedAt }}",
+        "NEW_MATCH": "Nyt match!",
+        "PROFILE_LAST_ACTIVE": "Sidst aktive: {{ lastActive }}",
+        "LIKED": "SYNES GODT OM",
+        "NOPE": "NIX"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "Profilen kunne ikke opdateres",
+        "UPDATE_PROFILE_SUCCEEDED": "Profilen blev opdateret",
+        "MATCHES_ERROR": "Fejl ved indlæsning af match",
+        "NO_MATCHES": "Ingen match fundet",
+        "NO_PROFILES": "Ingen seneste profiler fundet",
+        "PROFILES_ERROR": "Fejl ved indlæsning af profiler",
+        "SAVE_LIKES_FAILED": "Kunne ikke gemme likes",
+        "NEW_LIKE_FOUND": "Nyt match fundet!"
+      },
+      "PROFILE_CONFIGURATION": "App is incorrectly configured - cannot create profile. Please contact an administrator.",
+      "EDIT_PROFILE_IMAGE": "Billed URL",
+      "EDIT_PROFILE_NAME": "Profil navn",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Lokation",
+      "EDIT_PROFILE_JOB": "Job",
+      "EDIT_PROFILE_TAGS": "Tags",
+      "EDIT_VOICE_MESSAGE": "Stemmemeddelelse",
+      "EDIT_PROFILE_PREVIEW": "Vis forhåndsvisning",
+      "LIKE": "Synes godt om",
+      "DISLIKE": "Kan ikke lide"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "Du har ingen noter",
+        "ADD_FAILED": "Noten kunne ikke gemmes.",
+        "ADD_SUCCESS": "Noten blev gemt.",
+        "DELETE_SUCCESS": "Noten blev slettet.",
+        "DELETE_FAILED": "Noten kunne ikke slettes.",
+        "UPDATE_FAILED": "Noten kunne ikke opdateres.",
+        "UPDATE_SUCCESS": "Noten blev opdateret."
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "Alle obligatoriske felter skal udfyldes!",
+        "CREATE_LISTING_FAILED": "Kunne ikke oprette en ny opslag",
+        "CREATE_LISTING_SUCCESS": "Der er oprettet en ny opslag",
+        "DELETE_LISTING_FAILED": "Opslaget kunne ikke slettes",
+        "DUPLICATE_LISTING": "Du kan ikke offentliggøre et opslag med samme titel!",
+        "DELETE_LISTING_SUCCESS": "Opslag blev slettet",
+        "REPORT_LISTING_FAILED": "Denne opslag er allerede blevet rapporteret",
+        "REPORT_LISTING_SUCCESS": "Opslaget blev rapporteret"
+      },
+      "NEW_LISTING": "Nyt opslag",
+      "CHOOSE_IMAGE": "Vælg et billede",
+      "FORM_TITLE": "Titel",
+      "POST_LISTING": "Læg op",
+      "FORM_IMAGE": "Billede eller URL",
+      "FORM_DESCRIPTION": "Beskrivelse",
+      "NO_IMAGE": "Intet billede angivet"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Ingen af telefonnumrene kunne findes!",
+        "UNREAD_MESSAGES": "Du har {{ count }} ulæste beskeder",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) er ikke registrerede numre."
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} er ikke et registreret nummer",
+        "NEW_MESSAGE_FAILED": "Kunne ikke sende besked",
+        "INVALID_PHONE_NUMBER": "Ugyldigt telefonnummer",
+        "MESSAGE_CONVERSATION_DUPLICATE": "Denne samtale eksisterer allerede!",
+        "MESSAGE_GROUP_CREATE_FAILED": "Kunne ikke oprette beskedsamtale",
+        "MESSAGE_GROUP_CREATE_MINE": "Du kan ikke tilføje dig selv!",
+        "FETCHED_MESSAGES_FAILED": "Kunne ikke hente beskeder",
+        "DELETE_MESSAGE": "Slet besked",
+        "DELETE_MESSAGE_FAILED": "Beskeden kunne ikke slettes",
+        "DELETE_CONVERSATION_FAILED": "Samtalen kunne ikke slettes"
+      },
+      "SEARCH_PLACEHOLDER": "Søg efter beskeder...",
+      "DELETE_CONVERSATION": "Slet samtale",
+      "NEW_MESSAGE": "Besked...",
+      "NEW_MESSAGE_GROUP": "Telefonnumre...",
+      "SHARE_IMAGE_TITLE": "Vil du dele dette billede?",
+      "SHARE_NOTE_TITLE": "Vil du dele denne note?",
+      "SHARE_CONTACT_TITLE": "Vil du dele denne kontakt?",
+      "GROUP_CHAT_LABEL": "Navn for gruppechat...",
+      "MEDIA_OPTION": "Kamera / Galleri",
+      "CONTACT_OPTION": "Del kontakt",
+      "CONTACT_SHARED": "Kontakt Delt",
+      "NOTE_OPTION": "Del note",
+      "LOCATION_OPTION": "Del placering",
+      "LOCATION_MESSAGE": "Placering delt",
+      "LOCATION_TOOLTIP": "Indstil et waypoint",
+      "NOTE_TOOLTIP": "Se note",
+      "NEW_MESSAGE_GROUP_SUBMIT": "Send",
+      "INPUT_NAME_OR_NUMBER": "Søg i kontakter, eller skriv nummeret, og tryk på Enter",
+      "ACTIONS_TITLE": "Handlinger",
+      "ME": "Mig"
+    },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Kunne ikke hente beskeder",
+        "JOIN_CHANNEL_FAILED": "Kunne ikke deltage i kanalen",
+        "LEAVE_CHANNEL_FAILED": "Kanalen kunne ikke forlades",
+        "SEND_MESSAGE_FAILED": "Kunne ikke sende besked",
+        "UPDATE_LABEL_FAILED": "Kanalnavnet kunne ikke opdateres",
+        "TRANSFER_OWNERSHIP_FAILED": "Kunne ikke opdatere ejerskabet",
+        "FETCH_MEMBERS_FAILED": "Kunne ikke hente medlemmer",
+        "DELETE_CHANNEL_FAILED": "Kanalen kunne ikke slettes"
+      },
+      "TYPE_TO_CONFIRM": "Type \"{{ identifier }}\" for at bekræfte.",
+      "LEAVE": "Forlad",
+      "NEW_CHANNEL_TITLE": "Tilmeld dig kanal på ID",
+      "DELETE_CHANNEL_TITLE": "Slet kanal",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "Kanal id",
+      "JOIN_BUTTON": "Tilmeld dig kanalen",
+      "TRANSFER_OWNERSHIP": "Overdrage ejerskab",
+      "MESSAGE_PLACEHOLDER": "Send en besked",
+      "MEDIA_PLACEHOLDER": "Billed URL",
+      "MEDIA_UPLOAD": "Upload billede",
+      "MEDIA_GALLERY": "VÆLG BILLEDE",
+      "MEMBERS": "Medlemmer",
+      "DANGER_ZONE": "Farezone"
+    },
+    "RELATIVE_TIME": {
+      "future": "om %s",
+      "past": "%s siden",
+      "s": "et par sekunder",
+      "m": "et minut",
+      "mm": "%d minutter",
+      "h": "en time",
+      "hh": "%d timer",
+      "d": "en dag",
+      "dd": "%d dage",
+      "M": "en måned",
+      "MM": "%d måneder",
+      "y": "et år",
+      "yy": "%d år"
+    },
+    "GENERIC": {
+      "LOADING": "Indlæser...",
+      "WAIT": "Vent venligst...",
+      "SAVE": "Gem",
+      "EDIT": "Redigere",
+      "UPDATE": "Opdater",
+      "REQUIRED": "Påkrævet",
+      "DELETE": "Slet",
+      "REPORT": "Rapport",
+      "CALL": "Opkald",
+      "MESSAGE": "Besked",
+      "CLOSE": "Luk",
+      "CANCEL": "Ophæv",
+      "TITLE": "Titel",
+      "CONTENT": "Indhold",
+      "SHARE": "Del",
+      "ADD": "Tilføje",
+      "SEND": "Send",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopi {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopieret {{content}} til udklipsholder!"
+    },
+    "COMING_SOON": "Kommer snart...",
+    "INITIALIZING": "Initialiserer",
+    "APPS_SYSTEM": "System",
+    "APPS_DIALER": "Telefon",
+    "APPS_CONTACTS": "Kontaktpersoner",
+    "APPS_MESSAGES": "Beskeder",
+    "APPS_CALCULATOR": "Lommeregner",
+    "APPS_SETTINGS": "Indstillinger",
+    "APPS_BANK": "WhoDis Banking",
+    "APPS_NOTES": "Noter",
+    "APPS_EXAMPLE": "Eksempel app",
+    "APPS_TWITTER": "Twitter",
+    "APPS_MARKETPLACE": "Markedsplads",
+    "APPS_CAMERA": "Kamera",
+    "APPS_MATCH": "Matchmaker",
+    "APPS_CALCULATOR_COPIED": "Resultatet blev kopieret til udklipsholder!",
+    "APPS_DARKCHAT": "IRC",
+    "GENERIC_CLICK_TO_REVEAL": "Klik for at afsløre",
+    "GENERIC_LOADING": "Indlæser...",
+    "GENERIC_WAIT": "Vent venligst...",
+    "GENERIC_SAVE": "Gem",
+    "GENERIC_EDIT": "Redigere",
+    "GENERIC_UPDATE": "Opdater",
+    "GENERIC_REQUIRED": "Påkrævet",
+    "GENERIC_DELETE": "Slet",
+    "GENERIC_REPORT": "Rapport",
+    "GENERIC_CALL": "Opkald",
+    "GENERIC_MESSAGE": "Besked",
+    "GENERIC_CLOSE": "Luk",
+    "GENERIC_CANCEL": "Ophæv",
+    "GENERIC_TITLE": "Titel",
+    "GENERIC_CONTENT": "Indhold",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopi {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopieret {{content}} til udklipsholder!",
+    "GENERIC_DB_ERROR": "Create/update request failed.",
+    "GENERIC_INVALID_IMAGE_HOST": "The image host you tried to use is not allowed by this server.",
+    "ERROR_RATE_LIMITED": "Du skal vente, før du gør det igen."
+  }
+}

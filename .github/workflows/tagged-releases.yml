@@ -71,12 +71,11 @@ jobs:
       #    sentry-cli releases deploys "$VERSION" new -e production
       - name: Bundle built files
         run: |
-          mkdir -p ./temp/npwd/resources
+          mkdir -p ./temp/npwd/dist
           cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
-          cp -r ./resources/{dist,html} ./temp/npwd/resources
+          cp -r ./dist/{game,html} ./temp/npwd/dist
           # Make sure we copy our one lua boy
-          mkdir ./temp/npwd/resources/client
-          cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
+          cp ./apps/game/client/cl_controls.lua ./temp/npwd/dist/game/client/cl_controls.lua
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
