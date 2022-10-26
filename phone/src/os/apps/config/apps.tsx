@@ -72,7 +72,7 @@ export const APPS: IAppConfig[] = [
     path: '/phone',
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
   },
-  {
+  /*{
     id: 'BROWSER',
     nameLocale: 'BROWSER.NAME',
     backgroundColor: blue['300'],
@@ -81,7 +81,7 @@ export const APPS: IAppConfig[] = [
     Route: () => (
       <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
     ),
-  },
+  },*/
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
