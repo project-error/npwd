@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "ES2017",
+		"module": "commonjs",
+		"lib": ["ESNext", "DOM"],
+		"strict": true,
+		"sourceMap": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"declarationDir": "./dist",
+		"outDir": "./dist",
+		"resolveJsonModule": true,
+		"typeRoots": ["node_modules/@types"]
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}

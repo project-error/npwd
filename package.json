@@ -6,7 +6,8 @@
   "license": "CC-BY-NC-SA-4.0",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
@@ -24,6 +25,7 @@
   "scripts": {
     "build": "turbo run build",
     "web": "yarn workspace npwd-nui",
+    "cli": "yarn workspace @npwd/cli",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
     "format": "pretty-quick",
