@@ -7,9 +7,11 @@ import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
-  const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
+  const player = PlayerService.getPlayer(src);
+  const phoneNumber = player.getPhoneNumber();
+  const playerIdentifier = player.getIdentifier();
 
-  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, src);
+  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, src, playerIdentifier);
 });
 
 onNetPromise<void, string>(PhoneEvents.GET_PHONE_NUMBER, async (reqObj, resp) => {

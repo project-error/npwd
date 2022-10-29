@@ -4,7 +4,7 @@ import { ResourceConfig } from '@typings/config';
 export const phoneState = {
   visibility: atom<boolean>({
     key: 'phoneVisibility',
-    default: false,
+    default: true,
   }),
   resourceConfig: atom<ResourceConfig>({
     key: 'resourceConfig',
@@ -21,6 +21,10 @@ export const phoneState = {
   playerSource: atom<number>({
     key: 'playerSource',
     default: 0,
+  }),
+  playerIdentifier: atom<string>({
+    key: 'playerIdentifier',
+    default: '1234',
   }),
   extApps: atom({
     key: 'phoneExtApps',
