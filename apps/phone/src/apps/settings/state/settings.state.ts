@@ -50,7 +50,6 @@ const localStorageEffect: AtomEffect<IPhoneSettings> = ({ setSelf, onSet }) => {
 };
 
 const multiLocalStorageEffect = ({ onSet, setSelf, getLoadable }) => {
-  console.log('multi storage effect');
   const key = NPWD_MULTI_STORAGE_KEY;
   const savedMultiVal = localStorage.getItem(key);
   const { state, contents: identifier } = getLoadable(phoneState.playerIdentifier);
@@ -77,7 +76,6 @@ const multiLocalStorageEffect = ({ onSet, setSelf, getLoadable }) => {
   setSelf(getConfig());
 
   onSet((newValue) => {
-    console.log('new value multi', newValue);
     if (newValue instanceof DefaultValue) {
       localStorage.removeItem(key);
     } else {

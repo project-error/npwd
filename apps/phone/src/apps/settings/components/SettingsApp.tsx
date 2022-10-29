@@ -40,7 +40,6 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useCustomWallpaperModal } from '../state/customWallpaper.state';
 import fetchNui from '@utils/fetchNui';
 import { SettingEvents } from '@typings/settings';
-import { useTheme } from '@mui/styles';
 import { useCustomEvent } from '@os/events/useCustomEvents';
 import { useSetRecoilState } from 'recoil';
 import { multiSettingsState } from '../state/settings.state';
@@ -66,7 +65,6 @@ export const SettingsApp: React.FC = () => {
   const [t] = useTranslation();
   const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
   const dispatchEvent = useCustomEvent('themeChanged', {});
-  const setMultiSettings = useSetRecoilState(multiSettingsState);
 
   const { addAlert } = useSnackbar();
 
@@ -74,7 +72,6 @@ export const SettingsApp: React.FC = () => {
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
-    setMultiSettings({ ...settings, [key]: value });
 
     if (key === 'theme') {
       dispatchEvent(value);
