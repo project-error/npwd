@@ -63,7 +63,14 @@ const multiLocalStorageEffect = ({ onSet, setSelf, getLoadable }) => {
     const defaultConfig = await getDefaultPhoneSettings();
 
     try {
-      const settings: IPhoneSettings = JSON.parse(savedMultiVal[identifier]) ?? defaultConfig;
+      const validString = isSchemaValid(parsedSavedMultiVal[identifier]);
+      const settings: IPhoneSettings = validString
+        ? JSON.parse(savedMultiVal[identifier])
+        : defaultConfig;
+
+      if (!validString) {
+        console.error('Settings Schema was invalid, applying default settings');
+      }
 
       // Triggered on init
       fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, settings, {}).catch();
@@ -75,7 +82,8 @@ const multiLocalStorageEffect = ({ onSet, setSelf, getLoadable }) => {
 
   setSelf(getConfig());
 
-  onSet((newValue) => {
+  onSet((newValue: IPhoneSettings) => {
+    fetchNui(SettingEvents.NUI_SETTINGS_UPDATED, newValue, {}).catch();
     if (newValue instanceof DefaultValue) {
       localStorage.removeItem(key);
     } else {
@@ -91,12 +99,6 @@ const multiLocalStorageEffect = ({ onSet, setSelf, getLoadable }) => {
     }
   });
 };
-
-export const settingsState = atom<IPhoneSettings>({
-  key: 'settings',
-  default: getDefaultPhoneSettings(),
-  effects: [localStorageEffect],
-});
 
 export const multiSettingsState = atom<IPhoneSettings>({
   key: 'multisettings',
