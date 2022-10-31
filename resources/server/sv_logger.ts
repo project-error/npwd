@@ -21,7 +21,7 @@ export const mainLogger = createLogger({
   transports: [
     new transports.File({
       filename: findLogPath(),
-      level: 'silly',
+      level: config.debug.level ?? 'warn',
       format: format.combine(format.errors({ stack: true }), format.timestamp(), format.json()),
     }),
     new transports.Console({
