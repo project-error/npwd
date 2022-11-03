@@ -1,8 +1,8 @@
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { settingsState, multiSettingsState } from '../state/settings.state';
+import { settingsState } from '../state/settings.state';
 
-export const useSettings = () => useRecoilState(multiSettingsState);
-export const useSettingsValue = () => useRecoilValue(multiSettingsState);
-export const useSetSettings = () => useSetRecoilState(multiSettingsState);
+export const useSettings = () => useRecoilState(settingsState);
+export const useSettingsValue = () => useRecoilValue(settingsState);
+export const useSetSettings = () => useSetRecoilState(settingsState);
 
-export const useResetSettings = () => useResetRecoilState(multiSettingsState);
+export const useResetSettings = () => useResetRecoilState(settingsState);

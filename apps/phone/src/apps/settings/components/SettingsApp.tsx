@@ -41,8 +41,6 @@ import { useCustomWallpaperModal } from '../state/customWallpaper.state';
 import fetchNui from '@utils/fetchNui';
 import { SettingEvents } from '@typings/settings';
 import { useCustomEvent } from '@os/events/useCustomEvents';
-import { useSetRecoilState } from 'recoil';
-import { multiSettingsState } from '../state/settings.state';
 
 const useStyles = makeStyles({
   backgroundModal: {

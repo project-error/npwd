@@ -1,4 +1,4 @@
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { PhoneEvents } from '@typings/phone';
 import { phoneState } from './state';
 import { useApps } from '@os/apps/hooks/useApps';
@@ -17,7 +17,11 @@ export const usePhoneService = () => {
   const setPhoneTime = useSetRecoilState(phoneState.phoneTime);
   const setIsPhoneDisabled = useSetRecoilState(phoneState.isPhoneDisabled);
   const setPlayerSource = useSetRecoilState(phoneState.playerSource);
-  const setPlayerIdentifier = useSetRecoilState(phoneState.playerIdentifier);
+  const setIdentifier = useSetRecoilState(phoneState.playerIdentifier);
+
+  const setPlayerIdentifier = (value: string) => {
+    setIdentifier(value);
+  };
 
   const handleOpenApp = useCallback(
     (app: string) => {
@@ -38,5 +42,5 @@ export const usePhoneService = () => {
   useNuiEvent<string>('PHONE', PhoneEvents.OPEN_APP, handleOpenApp);
   useNuiEvent('PHONE', PhoneEvents.IS_PHONE_DISABLED, setIsPhoneDisabled);
   useNuiEvent('PHONE', PhoneEvents.SEND_PLAYER_SOURCE, setPlayerSource);
-  useNuiEvent('PHONE', PhoneEvents.SEND_PLAYER_SOURCE, setPlayerIdentifier);
+  useNuiEvent('PHONE', PhoneEvents.SEND_PLAYER_IDENTIFIER, setPlayerIdentifier);
 };

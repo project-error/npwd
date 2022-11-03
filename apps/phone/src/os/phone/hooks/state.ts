@@ -24,7 +24,7 @@ export const phoneState = {
   }),
   playerIdentifier: atom<string>({
     key: 'playerIdentifier',
-    default: '',
+    default: null,
   }),
   extApps: atom({
     key: 'phoneExtApps',

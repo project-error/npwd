@@ -6,6 +6,7 @@ version("1.7.0")
 client_scripts({
 	"dist/game/client/client.js",
 	"dist/game/client/*.lua",
+	"apps/game/client/*.lua",
 })
 
 server_script({
