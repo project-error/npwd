@@ -7,9 +7,9 @@
   "homepage": "/game/html",
   "dependencies": {
     "@babel/runtime": "^7.17.2",
-    "@emotion/css": "^11.10.0",
+    "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.7.0",
-    "@emotion/styled": "^11.6.0",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.2.0",
     "@mui/lab": "^5.0.0-alpha.45",
     "@mui/material": "^5.2.1",
