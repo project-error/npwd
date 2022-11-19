@@ -5,7 +5,10 @@ import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
+import {
+  ExampleAppWrapper,
+  ExampleAppWrapperRoute,
+} from '../../../apps/example/components/ExampleAppWrapper';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
@@ -38,6 +41,8 @@ import TwitterContainer from '../../../apps/twitter/components/TwitterContainer'
 import { IPhoneSettings } from '@typings/settings';
 import { i18n } from 'i18next';
 import { Route } from 'react-router-dom';
+import { ExampleApp } from '@apps/example/components/ExampleApp';
+import { exampleAppRouter } from '@apps/example/example.router';
 /*import {
   DARKCHAT_APP_PRIMARY_COLOR,
   DARKCHAT_APP_TEXT_COLOR,
@@ -51,8 +56,8 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n; theme?: Theme }>;
-  Component: React.ReactNode | null;
+  RouteComponent: React.FC | null;
+  Routes: any[];
 }
 
 export type IApp = IAppConfig & {
@@ -193,11 +198,7 @@ if (process.env.NODE_ENV === 'development') {
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
-    Component: <ExampleAppWrapper />,
-    Route: () => (
-      <Route path={'/example'}>
-        <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
-      </Route>
-    ),
+    RouteComponent: ExampleAppWrapperRoute,
+    Routes: exampleAppRouter,
   });
 }

@@ -22,7 +22,11 @@ const Phone: React.FC = () => {
               <Routes>
                 <Route path="/" element={<HomeApp />} />
                 {apps.map((App) => (
-                  <Route path={App.path} element={App.Component} />
+                  <Route path={App.path} element={<App.RouteComponent />}>
+                    {App.Routes.map((router) => {
+                      return <>{router.Route}</>;
+                    })}
+                  </Route>
                 ))}
               </Routes>
             </>

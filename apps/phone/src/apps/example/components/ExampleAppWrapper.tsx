@@ -5,6 +5,7 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { ExampleThemeProvider } from '../providers/ExampleThemeProvider';
 import { AppTitle } from '@ui/components/AppTitle';
 import { ExampleApp } from './ExampleApp';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 // AppContent by default has a React.Suspense which can be used to handle the app as a whole, for
 // when it must resolve the render promise. But, we must make sure that this is is mounted in a component
@@ -19,6 +20,20 @@ export const ExampleAppWrapper: React.FC = () => {
         <AppTitle app={example} />
         <AppContent>
           <ExampleApp />
+        </AppContent>
+      </AppWrapper>
+    </ExampleThemeProvider>
+  );
+};
+
+export const ExampleAppWrapperRoute: React.FC = () => {
+  const example = useApp('EXAMPLE');
+  return (
+    <ExampleThemeProvider>
+      <AppWrapper>
+        <AppTitle app={example} />
+        <AppContent>
+          <Outlet />
         </AppContent>
       </AppWrapper>
     </ExampleThemeProvider>
