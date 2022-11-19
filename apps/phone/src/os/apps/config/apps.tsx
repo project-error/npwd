@@ -37,6 +37,7 @@ import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 import { IPhoneSettings } from '@typings/settings';
 import { i18n } from 'i18next';
+import { Route } from 'react-router-dom';
 /*import {
   DARKCHAT_APP_PRIMARY_COLOR,
   DARKCHAT_APP_TEXT_COLOR,
@@ -51,6 +52,7 @@ export interface IAppConfig {
   path: string;
   disable?: boolean;
   Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n; theme?: Theme }>;
+  Component: React.ReactNode | null;
 }
 
 export type IApp = IAppConfig & {
@@ -64,7 +66,7 @@ export type IApp = IAppConfig & {
 };
 
 export const APPS: IAppConfig[] = [
-  {
+  /*{
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
@@ -92,7 +94,7 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
   },
-  /*{
+  {
     id: 'DARKCHAT',
     nameLocale: 'APPS_DARKCHAT',
     backgroundColor: DARKCHAT_APP_PRIMARY_COLOR,
@@ -101,7 +103,7 @@ export const APPS: IAppConfig[] = [
     Route: () => (
       <AppRoute id="DARKCHAT" path="/darkchat" component={DarkChatApp} emitOnOpen={false} />
     ),
-  },*/
+  },
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
@@ -180,7 +182,7 @@ export const APPS: IAppConfig[] = [
     color: common.white,
     path: '/camera',
     Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={false} />,
-  },
+  }*/
 ];
 
 // Example app only in dev
@@ -191,8 +193,11 @@ if (process.env.NODE_ENV === 'development') {
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
+    Component: <ExampleAppWrapper />,
     Route: () => (
-      <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
+      <Route path={'/example'}>
+        <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
+      </Route>
     ),
   });
 }

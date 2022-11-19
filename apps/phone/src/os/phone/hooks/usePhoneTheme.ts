@@ -6,8 +6,5 @@ import themeOverrides from '../../../styles/themeOverrides';
 
 export const usePhoneTheme = () => {
   const [settings] = useSettings();
-  return useMemo(
-    () => createTheme(PhoneThemes[settings.theme.value], themeOverrides),
-    [settings.theme],
-  );
+  return useMemo(() => createTheme(PhoneThemes['taso-dark'], themeOverrides), [settings.theme]);
 };

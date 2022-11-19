@@ -7,7 +7,7 @@ import { NPWD_STORAGE_KEY } from '../utils/constants';
 import { getDefaultLanguage } from '@utils/language';
 
 const getDefaultPhoneSettings = async () => {
-  return { ...config.defaultSettings, language: await getDefaultLanguage() };
+  return { ...config.defaultSettings };
 };
 
 const localStorageEffect: AtomEffect<IPhoneSettings> = ({ setSelf, onSet }) => {
@@ -51,5 +51,4 @@ const localStorageEffect: AtomEffect<IPhoneSettings> = ({ setSelf, onSet }) => {
 export const settingsState = atom<IPhoneSettings>({
   key: 'settings',
   default: getDefaultPhoneSettings(),
-  effects: [localStorageEffect],
 });

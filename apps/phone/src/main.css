@@ -21,3 +21,7 @@ a:hover,
 a:active {
   text-decoration: none;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

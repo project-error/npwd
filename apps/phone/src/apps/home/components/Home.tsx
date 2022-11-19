@@ -11,7 +11,7 @@ export const HomeApp: React.FC = () => {
   return (
     <AppWrapper>
       <Box component="div" mt={6} px={1}>
-        {apps && <GridMenu xs={3} items={[...apps, ...externalApps]} />}
+        {apps && <GridMenu xs={3} items={[...apps, ...externalApps]} />}{' '}
       </Box>
     </AppWrapper>
   );

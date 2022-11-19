@@ -3,14 +3,14 @@ import { PhoneEvents } from '@typings/phone';
 import { phoneState } from './state';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const usePhoneService = () => {
   const { getApp } = useApps();
   const { addAlert } = useSnackbar();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const setVisibility = useSetRecoilState(phoneState.visibility);
   const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
@@ -30,9 +30,9 @@ export const usePhoneService = () => {
       const foundApp = getApp(app.toUpperCase());
 
       if (!foundApp) return console.error(`App "${app}" is an invalid app id to open`);
-      history.push(foundApp.path);
+      navigate(foundApp.path);
     },
-    [getApp, history],
+    [getApp, navigate],
   );
 
   useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);

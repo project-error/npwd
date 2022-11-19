@@ -2,37 +2,10 @@ import React from 'react';
 import { darken, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { green } from '@mui/material/colors';
-import { Avatar, Badge, Button, Zoom } from '@mui/material';
+import { Zoom } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { Tooltip } from './Tooltip';
-
-const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
-  root: {
-    padding: 0,
-    background: 'transparent',
-    marginTop: theme.spacing(3),
-  },
-  avatar: {
-    '&:hover': {
-      backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
-    },
-    backgroundColor: ({ backgroundColor }) => backgroundColor,
-    color: ({ color }) => color,
-    boxShadow: theme.shadows[2],
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-    fontSize: theme.typography.h4.fontSize,
-  },
-  icon: {
-    fontSize: theme.typography.h4.fontSize,
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-  },
-  tooltip: {
-    fontSize: 12,
-  },
-}));
 
 export interface AppIconProps {
   id: string;
@@ -54,21 +27,10 @@ export const AppIcon: React.FC<AppIconProps> = ({
   notification,
 }) => {
   const [t] = useTranslation();
-  const classes = useStyles({
-    backgroundColor: backgroundColor || green[50],
-    color: color || green[400],
-  });
 
   return (
-    <Tooltip
-      arrow
-      key={id}
-      title={t(nameLocale)}
-      placement="top"
-      classes={{ tooltip: classes.tooltip }}
-      TransitionComponent={Zoom}
-    >
-      <Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
+    <Tooltip arrow key={id} title={t(nameLocale)} placement="top" TransitionComponent={Zoom}>
+      {/*<Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
         <Badge
           color="error"
           badgeContent={notification?.badge}
@@ -80,7 +42,16 @@ export const AppIcon: React.FC<AppIconProps> = ({
             <Avatar className={classes.avatar}>{icon || t(nameLocale)}</Avatar>
           )}
         </Badge>
-      </Button>
+      </Button>*/}
+      <button className="mt-5">
+        {Icon ? (
+          <Icon className="" fontSize="large" />
+        ) : (
+          <div className="bg-gradient-to-b from-blue-500 to-blue-400 py-3 px-3 rounded-lg drop-shadow-lg">
+            <span className="text-white">{icon || t(nameLocale)}</span>
+          </div>
+        )}
+      </button>
     </Tooltip>
   );
 };
