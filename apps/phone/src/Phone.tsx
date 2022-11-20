@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React from 'react';
 import './Phone.css';
 import { Route, Routes } from 'react-router-dom';
 import { HomeApp } from './apps/home/components/Home';
@@ -9,6 +9,7 @@ import PhoneWrapper from './PhoneWrapper';
 import DefaultConfig from '../../../config.json';
 import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useApps } from '@os/apps/hooks/useApps';
+import { NotificationBar } from '@os/new-notifications/components/NotificationBar';
 
 const Phone: React.FC = () => {
   const { apps } = useApps();
@@ -17,6 +18,7 @@ const Phone: React.FC = () => {
     <div>
       <TopLevelErrorComponent>
         <PhoneWrapper>
+          <NotificationBar />
           <div className="PhoneAppContainer" id="notificationAppContainer">
             <>
               <Routes>

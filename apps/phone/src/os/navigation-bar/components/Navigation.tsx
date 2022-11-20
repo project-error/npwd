@@ -1,19 +1,28 @@
+import { useSpring, animated, config } from '@react-spring/web';
+import { useDrag, useGesture } from '@use-gesture/react';
 import React from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import AppsIcon from '@mui/icons-material/Apps';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { useNavigate, useMatch } from 'react-router-dom';
-import { usePhone } from '@os/phone/hooks/usePhone';
-import { useNotifications } from '@os/notifications/hooks/useNotifications';
-import { IconLayoutList, IconChevronLeft, IconOvalVertical } from '@tabler/icons';
+import { useNavigate } from 'react-router-dom';
 
 export const Navigation: React.FC = () => {
   const navigate = useNavigate();
-  //const { pathname } = useMatch("/");
+
+  const [{ y }, api] = useSpring(() => ({ y: 0 }));
+
+  const bind = useGesture(
+    {
+      onDrag: ({ down, movement: [, my], cancel }) => {
+        api.start({ y: down ? my : 0 });
+        if (my < -40) {
+          cancel();
+          api.start({ y: 0, immediate: false, config: config.wobbly });
+        }
+      },
+    },
+    { drag: { axis: 'y' } },
+  );
 
   const handleGoBackInHistory = () => {
+    // TODO: Check if we're on the base path
     navigate(-1);
   };
 
@@ -23,31 +32,17 @@ export const Navigation: React.FC = () => {
 
   return (
     <>
-      {/*<BottomNavigation
-      className={classes.root}
-      onChange={(_e, value) => {
-        setBarUncollapsed(false);
-        value();
-      }}
-    >
-      <BottomNavigationAction label="Home" value={handleGoToMenu} icon={<AppsIcon />} />
-      <BottomNavigationAction
-        label="Close"
-        value={closePhone}
-        icon={<RadioButtonUncheckedIcon />}
-      />
-      <BottomNavigationAction
-        label="Back"
-        value={handleGoBackInHistory}
-        icon={<KeyboardArrowLeftIcon />}
-      />
-    </BottomNavigation>*/}
-      <div className="bottom-0 absolute w-full">
-        <div className="w-full bg-neutral-900 py-4 px-12 flex items-center justify-between">
-          <IconLayoutList className="text-neutral-400 h-7 w-7 hover:text-neutral-200" />
-          <IconOvalVertical className="text-neutral-400 h-7 w-7 hover:text-neutral-200 " />
-          <IconChevronLeft className="text-neutral-400 h-7 w-7 hover:text-neutral-200" />
-        </div>
+      <div className="bottom-0 absolute w-full mx-auto">
+        <animated.div
+          {...bind()}
+          style={{ y }}
+          className="w-full bg-transparent py-4 px-12 mx-auto text-center"
+        >
+          <button
+            onClick={handleGoToMenu}
+            className="bg-white h-2 w-14 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out hover:scale-125"
+          />
+        </animated.div>
       </div>
     </>
   );

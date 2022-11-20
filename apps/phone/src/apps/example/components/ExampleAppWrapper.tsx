@@ -5,7 +5,7 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { ExampleThemeProvider } from '../providers/ExampleThemeProvider';
 import { AppTitle } from '@ui/components/AppTitle';
 import { ExampleApp } from './ExampleApp';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 // AppContent by default has a React.Suspense which can be used to handle the app as a whole, for
 // when it must resolve the render promise. But, we must make sure that this is is mounted in a component

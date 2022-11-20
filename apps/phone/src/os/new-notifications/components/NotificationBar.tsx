@@ -29,52 +29,7 @@ import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
 import { useNotification } from '../useNotification';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    height: '30px',
-    width: '100%',
-    color: theme.palette.text.primary,
-    zIndex: 99,
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    position: 'relative',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  item: {
-    margin: '0 6px',
-  },
-  text: {
-    position: 'relative',
-    lineHeight: '30px',
-    color: theme.palette.text.primary,
-  },
-  icon: {
-    padding: '4px',
-    color: theme.palette.text.primary,
-  },
-  drawer: {
-    backgroundColor: theme.palette.background.default,
-    width: '100%',
-    position: 'absolute',
-    top: '30px',
-    zIndex: 98,
-  },
-  closeNotifBtn: {
-    position: 'absolute',
-    right: '8px',
-    top: '8px',
-  },
-  notificationItem: {
-    position: 'relative',
-  },
-  collapseBtn: {
-    margin: '0 auto',
-  },
-}));
+import { IconAntennaBars4, IconSignal4g, IconWifi } from '@tabler/icons';
 
 interface WrapperGridProps extends GridProps {
   tgtNoti?: UnreadNotificationBarProps;
@@ -111,7 +66,6 @@ const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({
 };
 
 export const NotificationBar = () => {
-  const classes = useStyles();
   const time = usePhoneTime();
   const [barCollapsed, setBarUncollapsed] = useNavbarUncollapsed();
 
@@ -134,8 +88,7 @@ export const NotificationBar = () => {
 
   return (
     <>
-      <Grid
-        className={classes.root}
+      {/*<Grid
         container
         justifyContent="space-between"
         alignItems="center"
@@ -144,67 +97,32 @@ export const NotificationBar = () => {
           setBarUncollapsed((curr) => !curr);
         }}
       >
-        <Grid container item wrap="nowrap">
-          {unreadNotifications &&
-            unreadNotifications
-              .filter((val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId))
-              .map((notification, idx) => {
-                return <IconUnreadGrid tgtNoti={notification} key={idx} />;
-              })}
-        </Grid>
         {time && (
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {time}
-            </Typography>
+          <Grid item>
+            <Typography variant="button">{time}</Typography>
           </Grid>
         )}
         <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
           <Grid item>
             <SignalIcon fontSize="small" />
           </Grid>
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {Default.cellProvider}
-            </Typography>
+          <Grid item>
+            <Typography variant="button">{Default.cellProvider}</Typography>
           </Grid>
           <Grid item>
             <Battery90Icon style={{ transform: 'rotate(90deg)', display: 'block' }} />
           </Grid>
         </Grid>
-      </Grid>
-      <Slide direction="down" in={barCollapsed} mountOnEnter unmountOnExit>
-        <Paper square className={classes.drawer}>
-          <Box py={1}>
-            {unreadNotificationIds?.length !== 0 && (
-              <Box pl={2}>
-                <Button color="primary" size="small" onClick={handleClearNotis}>
-                  Clear all notification
-                </Button>
-              </Box>
-            )}
-            <List>
-              <Divider />
-              {unreadNotificationIds &&
-                unreadNotificationIds
-                  .filter((val, idx, self) => idx === self.findIndex((t: string) => t === val))
-                  .map((notification, idx) => (
-                    <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
-                  ))}
-            </List>
-          </Box>
-          <Box display="flex" flexDirection="column">
-            {!unreadNotificationIds.length && <NoNotificationText />}
-            <IconButton
-              className={classes.collapseBtn}
-              size="small"
-              onClick={() => setBarUncollapsed(false)}
-            >
-              <ArrowDropUpIcon />
-            </IconButton>
-          </Box>
-        </Paper>
-      </Slide>
+      </Grid>*/}
+      <div className="flex justify-between items-center px-5 mt-2 absolute z-[999] right-0 top-0">
+        <div></div>
+        <div></div>
+        <div className="flex items-center space-x-2">
+          <IconAntennaBars4 className="text-white" />
+          <IconWifi className="text-white" />
+          <div className="border border-white h-3 w-7 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500" />
+        </div>
+      </div>
     </>
   );
 };

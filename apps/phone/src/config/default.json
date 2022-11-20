@@ -210,7 +210,7 @@
     },
     "wallpaper": {
       "label": "Minimal",
-      "value": "minimal.jpg"
+      "value": "default.jpg"
     },
     "customWallpaper": "",
     "frame": {
