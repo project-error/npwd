@@ -1,0 +1,306 @@
+{
+  "translation": {
+    "MISC": {
+      "TOP_LEVEL_ERR_TITLE": "严重错误",
+      "TOP_LEVEL_ERR_ACTION": "重新载入",
+      "TOP_LEVEL_ERR_MSG": "NPWD发生无法处理的错误，您需要重新载入NUI。错误如下所示，仅供开发人员参考。"
+    },
+    "NOTIFICATIONS": {
+      "NO_UNREAD": "没有未读通知"
+    },
+    "DATE_FORMAT": "YYYY/MM/DD",
+    "DATE_TIME_FORMAT": "YYYY/MM/DD hh:mm A",
+    "CALLS": {
+      "MESSAGES": {
+        "RINGING": "铃声",
+        "OUTGOING": "拨通电话",
+        "INCOMING": "来电"
+      },
+      "FEEDBACK": {
+        "ERROR_MYSELF": "您不能拨打自己的电话号码！",
+        "ERROR": "完成此调用时发生错误"
+      }
+    },
+    "BROWSER": {
+      "NAME": "浏览器"
+    },
+    "SETTINGS": {
+      "PHONE_NUMBER": "电话号码",
+      "CATEGORY": {
+        "APPEARANCE": "手机壳",
+        "PHONE": "电话",
+        "ACTIONS": "动作"
+      },
+      "OPTIONS": {
+        "ICONSET": "图标",
+        "THEME": "主题",
+        "LANGUAGE": "语言",
+        "FRAME": "框架",
+        "ZOOM": "缩放",
+        "WALLPAPER": "壁纸",
+        "RESET_SETTINGS": "重置设置",
+        "RESET_SETTINGS_DESC": "这将清除您的本机数据",
+        "STREAMER_MODE": {
+          "TITLE": "直播模式",
+          "DESCRIPTION": "在显示之前隐藏图片"
+        },
+        "CUSTOM_WALLPAPER": {
+          "DIALOG_TITLE": "自定义壁纸",
+          "DIALOG_CONTENT": "输入图片外链以设置自定义壁纸",
+          "DIALOG_PLACEHOLDER": "图片网址",
+          "DIALOG_ERROR": "无效的图片或链接"
+        },
+        "CALL_VOLUME": "通话音量",
+        "RINGTONE": "铃声",
+        "RINGTONE_VOLUME": "铃声音量",
+        "NOTIFICATION": "通知",
+        "NOTIFICATION_VOLUME": "通知音量",
+        "NOTIFICATION_FILTER": "通知过滤器"
+      },
+      "MESSAGES": {
+        "INVALID_SETTINGS": "保存无效！请在设置APP中重置",
+        "SETTINGS_RESET": "设置已被重置！"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "通知",
+        "NOTIFY_NEW_LISTING": "显示新的未读通知"
+      }
+    },
+    "CAMERA": {
+      "SHARE_DESTINATION": "您想在哪里分享照片",
+      "COPY_IMAGE": "复制照片网址",
+      "FAILED_TO_DELETE": "照片无法删除 :(",
+      "FAILED_TO_TAKE_PHOTO": "照片无法保存 :("
+    },
+    "CONTACTS": {
+      "FEEDBACK": {
+        "ADD_FAILED": "新增联系人失败！",
+        "ADD_SUCCESS": "成功新增联系人！",
+        "UPDATE_FAILED": "更新联系人失败！",
+        "UPDATE_SUCCESS": "成功更新联系人！",
+        "DELETE_FAILED": "删除联系人失败！",
+        "DELETE_SUCCESS": "成功删除联系人！"
+      },
+      "PLACEHOLDER_SEARCH_CONTACTS": "搜寻联系人…",
+      "FORM_NAME": "姓名",
+      "FORM_NUMBER": "电话号码",
+      "FORM_AVATAR": "头像网址",
+      "MODAL_BUTTON_ADD": "新增联系人"
+    },
+    "DIALER": {
+      "MESSAGES": {
+        "CURRENT_CALL_TITLE": "通话中",
+        "INCOMING_CALL_TITLE": "来电",
+        "CURRENT_CALL_WITH": "与 {{ transmitter }} 通话",
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} 正在拨电话给您！"
+      },
+      "INPUT_PLACEHOLDER": "输入一个号码",
+      "NAVBAR_HISTORY": "历史纪录",
+      "NAVBAR_DIAL": "Dial",
+      "NAVBAR_CONTACTS": "联系人",
+      "NO_HISTORY": "您没有通话纪录"
+    },
+    "TWITTER": {
+      "FEEDBACK": {
+        "CREATE_PROFILE_SUCCESS": "成功新增您的联系人资料",
+        "CREATE_PROFILE_FAILURE": "无法新增您的联系人资料",
+        "EDIT_PROFILE_SUCCESS": "成功更新您的联系人资料",
+        "EDIT_PROFILE_FAILURE": "更新您的联系人资料失败",
+        "CREATE_FAILED": "发送推文失败",
+        "RETWEET_FAILED": "转发推文失败",
+        "RETWEET_EXISTS": "您已经转发了这则推文",
+        "LIKE_TWEET_FAILED": "点赞失败",
+        "REPORT_TWEET_SUCCESS": "举报推文成功",
+        "REPORT_TWEET_FAILED": "举报推文失败",
+        "FETCH_TWEETS_FAILED": "抓取推文失败",
+        "DELETE_TWEET_FAILED": "删除推文失败"
+      },
+      "MESSAGES": {
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} 转发自某人",
+        "NEW_BROADCAST": "来自 @{{ profile_name }} 的新推文！",
+        "UNREAD_MESSAGES": "您有 {{ count }} 则未读推文"
+      },
+      "SUBMIT_IMAGE": "新增影片",
+      "TWEET": "推文",
+      "REPORTED": " 已举报",
+      "REPORT": "举报",
+      "IMAGE_PLACEHOLDER": "图片或gif连结",
+      "EDIT_DEFAULT_PROFILE_NAME": "选择文件名称",
+      "EDIT_PROFILE_AVATAR": "大头贴网址",
+      "AVATAR_CHOOSE_IMAGE": "选择一个图片",
+      "EDIT_PROFILE_NAME": "个人资料名称",
+      "EDIT_PROFILE_BIO": "个人资料",
+      "EDIT_PROFILE_LOCATION": "位置",
+      "EDIT_PROFILE_JOB": "职业",
+      "RETWEETED": "转推",
+      "TWEET_MESSAGE_CHAR_LIMIT": "信息超过字符限制",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "信息超过新行数限制",
+      "TWEET_MESSAGE_PLACEHOLDER": "发生了什么新鲜事？",
+      "SEARCH_TWEETS_PLACEHOLDER": "按个人资料或信息搜寻",
+      "SEARCH_TWEETS": "搜寻推文",
+      "TIME_JUST_NOW": "刚刚",
+      "TIME_MINUTES": "分",
+      "TIME_HOURS": "小时",
+      "TIME_DAYS": "天"
+    },
+    "MATCH": {
+      "MESSAGES": {
+        "PROFILE_MATCHED_AT": "符合： {{ matchedAt }}",
+        "PROFILE_LAST_ACTIVE": "上次活动： {{ lastActive }}",
+        "LIKED": "喜欢",
+        "NOPE": "无"
+      },
+      "FEEDBACK": {
+        "UPDATE_PROFILE_FAILED": "更新配置文件失败",
+        "UPDATE_PROFILE_SUCCEEDED": "成功更新配置文件",
+        "MATCHES_ERROR": "载入配置文件发生错误",
+        "NO_MATCHES": "未找到匹配选项",
+        "NO_PROFILES": "未找到最近的配置文件",
+        "PROFILES_ERROR": "无法载入配置文件",
+        "SAVE_LIKES_FAILED": "点赞失败",
+        "NEW_LIKE_FOUND": "找到新的配置！"
+      },
+      "PROFILE_CONFIGURATION": "APP配置错误，无法新增APP，请联系管理员。",
+      "EDIT_PROFILE_IMAGE": "图片网址",
+      "EDIT_PROFILE_NAME": "个人资料名称",
+      "EDIT_PROFILE_BIO": "个人资料",
+      "EDIT_PROFILE_LOCATION": "位置",
+      "EDIT_PROFILE_JOB": "职业",
+      "EDIT_PROFILE_TAGS": "标签",
+      "EDIT_PROFILE_PREVIEW": "显示预览",
+      "LIKE": "喜欢",
+      "DISLIKE": "不喜欢"
+    },
+    "NOTES": {
+      "FEEDBACK": {
+        "NO_NOTES": "您没有笔记",
+        "ADD_FAILED": "保存笔记失败。",
+        "ADD_SUCCESS": "保存笔记成功。",
+        "DELETE_SUCCESS": "成功删除笔记。",
+        "DELETE_FAILED": "删除笔记失败。",
+        "UPDATE_FAILED": "更新笔记失败。",
+        "UPDATE_SUCCESS": "成功更新笔记。"
+      }
+    },
+    "MARKETPLACE": {
+      "FEEDBACK": {
+        "REQUIRED_FIELDS": "所有必填选项都须填写。",
+        "CREATE_LISTING_FAILED": "新增新列表失败",
+        "CREATE_LISTING_SUCCESS": "成功新增新列表",
+        "DELETE_LISTING_FAILED": "删除列表失败",
+        "DUPLICATE_LISTING": "您无法发布相同主题的列表！",
+        "DELETE_LISTING_SUCCESS": "成功删除列表",
+        "REPORT_LISTING_FAILED": "这则列表已被举报",
+        "REPORT_LISTING_SUCCESS": "成功举报列表"
+      },
+      "NEW_LISTING": "新列表",
+      "CHOOSE_IMAGE": "选择一张照片",
+      "FORM_TITLE": "标题",
+      "POST_LISTING": "发布",
+      "FORM_IMAGE": "照片或网址",
+      "FORM_DESCRIPTION": "叙述",
+      "NO_IMAGE": "没有提供图片"
+    },
+    "MESSAGES": {
+      "MESSAGES": {
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "找不到此电话号码！",
+        "UNREAD_MESSAGES": "您有 {{ count }} 则未读短信",
+        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) 不是已註册的电话号码"
+      },
+      "FEEDBACK": {
+        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} 不是已註册的电话号码",
+        "NEW_MESSAGE_FAILED": "无法发送短信",
+        "INVALID_PHONE_NUMBER": "电话号码无效",
+        "MESSAGE_CONVERSATION_DUPLICATE": "此对话已经存在",
+        "MESSAGE_GROUP_CREATE_FAILED": "新增短信失败",
+        "MESSAGE_GROUP_CREATE_MINE": "您无法选择自己的！",
+        "FETCHED_MESSAGES_FAILED": "读取短信失败！",
+        "DELETE_MESSAGE": "删除短信",
+        "DELETE_MESSAGE_FAILED": "无法删除短信",
+        "DELETE_CONVERSATION_FAILED": "无法删除对话"
+      },
+      "SEARCH_PLACEHOLDER": "搜索短信…",
+      "DELETE_CONVERSATION": "删除对话",
+      "NEW_MESSAGE": "短信…",
+      "NEW_MESSAGE_GROUP": "电话号码…",
+      "SHARE_IMAGE_TITLE": "您想分享这张照片吗？",
+      "SHARE_CONTACT_TITLE": "您想分享这个联系人吗？",
+      "GROUP_CHAT_LABEL": "群组聊天…",
+      "MEDIA_OPTION": "相机 / 照片库",
+      "CONTACT_OPTION": "分享联系人",
+      "NEW_MESSAGE_GROUP_SUBMIT": "发送",
+      "INPUT_NAME_OR_NUMBER": "搜索联系人或号码并按确定",
+      "ACTIONS_TITLE": "动做",
+      "ME": "我的"
+    },
+    "RELATIVE_TIME": {
+      "future": "在 %s 中",
+      "past": "%s 前",
+      "s": "几秒钟前",
+      "m": "1分钟前",
+      "mm": "%d 分钟前",
+      "h": "1小时前",
+      "hh": "%d 小时前",
+      "d": "1天",
+      "dd": "%d 天",
+      "M": "1个月前",
+      "MM": "%d 个月前",
+      "y": "1年",
+      "yy": "%d 年前"
+    },
+    "GENERIC": {
+      "LOADING": "载入中…",
+      "WAIT": "请稍后…",
+      "SAVE": "储存",
+      "EDIT": "编辑",
+      "UPDATE": "更新",
+      "REQUIRED": "必需",
+      "DELETE": "删除",
+      "REPORT": "举报",
+      "CALL": "拨话",
+      "MESSAGE": "短信",
+      "CLOSE": "关闭",
+      "CANCEL": "取消",
+      "TITLE": "标题",
+      "CONTENT": "内容",
+      "SHARE": "分享",
+      "ADD": "添加",
+      "WRITE_TO_CLIPBOARD_TOOLTIP": "复制 {{ content }}",
+      "WRITE_TO_CLIPBOARD_MESSAGE": "已经 {{content}} 复制到剪贴板！"
+    },
+    "COMING_SOON": "即将推出…",
+    "INITIALIZING": "初始话",
+    "APPS_DIALER": "电话",
+    "APPS_CONTACTS": "联系人",
+    "APPS_MESSAGES": "短信",
+    "APPS_CALCULATOR": "计算机",
+    "APPS_SETTINGS": "设置",
+    "APPS_BANK": "网路银行",
+    "APPS_NOTES": "笔记",
+    "APPS_EXAMPLE": "示例APP",
+    "APPS_TWITTER": "推特",
+    "APPS_MARKETPLACE": "市场",
+    "APPS_CAMERA": "相机",
+    "APPS_MATCH": "媒介",
+    "APPS_CALCULATOR_COPIED": "结果已复制到剪贴板！",
+    "GENERIC_CLICK_TO_REVEAL": "点击显示",
+    "GENERIC_LOADING": "载入中…",
+    "GENERIC_WAIT": "请稍后…",
+    "GENERIC_SAVE": "储存",
+    "GENERIC_EDIT": "编辑",
+    "GENERIC_UPDATE": "更新",
+    "GENERIC_REQUIRED": "必需",
+    "GENERIC_DELETE": "删除",
+    "GENERIC_REPORT": "举报",
+    "GENERIC_CALL": "拨话",
+    "GENERIC_MESSAGE": "短信",
+    "GENERIC_CLOSE": "关闭",
+    "GENERIC_CANCEL": "取消",
+    "GENERIC_TITLE": "标题",
+    "GENERIC_CONTENT": "内容",
+    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "复制 {{ content }}",
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "已经 {{content}} 复制到剪贴板！",
+    "GENERIC_DB_ERROR": "新增/更新请求失败。",
+    "GENERIC_INVALID_IMAGE_HOST": "您尝试使用的图片不被服务器所允许。"
+  }
+}
