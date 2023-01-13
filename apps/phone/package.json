@@ -14,7 +14,7 @@
     "@mui/lab": "^5.0.0-alpha.45",
     "@mui/material": "^5.2.1",
     "@mui/styles": "^5.2.1",
-    "dayjs": "^1.10.7",
+    "dayjs": "^1.11.7",
     "emoji-mart": "^3.0.1",
     "fivem-nui-react-lib": "^2.2.8",
     "i18next": "^20.6.1",
