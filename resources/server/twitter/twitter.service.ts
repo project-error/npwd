@@ -1,3 +1,4 @@
+import { config } from '../config';
 import PlayerService from '../players/player.service';
 import TwitterDB, { _TwitterDB } from './twitter.db';
 import { NewTweet, Tweet, TwitterEvents, TwitterProfile } from '../../../typings/twitter';
@@ -9,9 +10,11 @@ import { checkAndFilterImage } from './../utils/imageFiltering';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
+  private twitterSuspended: string[];
 
   constructor() {
     this.twitterDB = TwitterDB;
+    this.twitterSuspended = [];
     twitterLogger.debug('Twitter service started');
   }
 
@@ -134,6 +137,34 @@ class _TwitterService {
   ): Promise<void> {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
+
+      if (this.twitterSuspended.includes(reqObj.data.identifier)) {
+        return resp({
+          status: 'error',
+          errorMsg: 'TWITTER.FEEDBACK.ACCOUNT_SUSPENDED',
+        });
+      }
+
+      const plyPed = GetPlayerPed(reqObj.source as unknown as string);
+      if (GetEntityHealth(plyPed) == 0) {
+        return resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED' });
+      }
+
+      if (Player(reqObj.source).state.comserv) {
+        return resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED' });
+      }
+
+      if (config.twitter.badWords) {
+        for (let i = 0; i < config.twitter.badWords.length; i++) {
+          if (reqObj.data.message.includes(config.twitter.badWords[i])) {
+            this.twitterSuspended.push(reqObj.data.identifier);
+            return resp({
+              status: 'error',
+              errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED',
+            });
+          }
+        }
+      }
 
       let newImageString = '';
 

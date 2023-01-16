@@ -94,7 +94,7 @@ const AddTweetModal = () => {
       if (resp.status !== 'ok') {
         return addAlert({
           type: 'error',
-          message: t('TWITTER.FEEDBACK.CREATE_PROFILE_FAILURE'),
+          message: t(resp.errorMsg ? resp.errorMsg : 'TWITTER.FEEDBACK.CREATE_PROFILE_FAILURE'),
         });
       }
     });
