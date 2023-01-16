@@ -92,7 +92,8 @@ RegisterCommand(
   async () => {
     //-- Toggles Phone
     // Check to see if the phone is marked as disabled
-    if (!global.isPhoneDisabled && !IsPauseMenuActive()) await togglePhone();
+    if (!global.isPhoneDisabled && !IsPauseMenuActive() && !IsEntityDead(PlayerPedId()))
+      await togglePhone();
   },
   false,
 );
