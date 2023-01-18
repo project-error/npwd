@@ -18,6 +18,14 @@ class _TwitterService {
     twitterLogger.debug('Twitter service started');
   }
 
+  isTwitterSuspended(identifier: string) {
+    if (this.twitterSuspended.includes(identifier)) {
+      return true;
+    }
+
+    return false;
+  }
+
   async handleGetOrCreateProfile(
     reqObj: PromiseRequest<void>,
     resp: PromiseEventResp<TwitterProfile | string[]>,
@@ -138,7 +146,7 @@ class _TwitterService {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
 
-      if (this.twitterSuspended.includes(reqObj.data.identifier)) {
+      if (this.twitterSuspended.includes(identifier)) {
         return resp({
           status: 'error',
           errorMsg: 'TWITTER.FEEDBACK.ACCOUNT_SUSPENDED',
@@ -157,7 +165,7 @@ class _TwitterService {
       if (config.twitter.badWords) {
         for (let i = 0; i < config.twitter.badWords.length; i++) {
           if (reqObj.data.message.includes(config.twitter.badWords[i])) {
-            this.twitterSuspended.push(reqObj.data.identifier);
+            this.twitterSuspended.push(identifier);
             return resp({
               status: 'error',
               errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED',

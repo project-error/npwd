@@ -198,7 +198,8 @@
         "DUPLICATE_LISTING": "You cannot publish a listing with the same title!",
         "DELETE_LISTING_SUCCESS": "Successfully delete listing",
         "REPORT_LISTING_FAILED": "This listing has already been reported",
-        "REPORT_LISTING_SUCCESS": "Successfully reported listing"
+        "REPORT_LISTING_SUCCESS": "Successfully reported listing",
+        "ACCOUNT_SUSPENDED": "You have been suspended from Marketplace for violating community guidelines or rules."
       },
       "NEW_LISTING": "New listing",
       "CHOOSE_IMAGE": "Choose a image",

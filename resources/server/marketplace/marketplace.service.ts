@@ -12,6 +12,7 @@ import {
 import { reportListingToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
+import TwitterService from '../twitter/twitter.service';
 
 class _MarketplaceService {
   private readonly marketplaceDB: _MarketplaceDB;
@@ -30,6 +31,10 @@ class _MarketplaceService {
 
     const player = PlayerService.getPlayer(reqObj.source);
     const identifier = player.getIdentifier();
+
+    if (TwitterService.isTwitterSuspended(identifier)) {
+      return resp({ status: 'error', errorMsg: 'MARKETPLACE.FEEDBACK.ACCOUNT_SUSPENDED' });
+    }
 
     try {
       const doesListingExist = await this.marketplaceDB.doesListingExist(reqObj.data, identifier);
