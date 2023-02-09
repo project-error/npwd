@@ -48,19 +48,27 @@
     "maxImages": 1,
     "badWords": [
       "nigger",
+      "niggers",
       "comserv",
       "coms",
       "admin",
+      "admins",
       "gods",
       "bobby",
       "staff",
       "ooc",
       "sauce",
       "cheat",
+      "cheater",
       "hack",
-      "metagam",
+      "hacker",
+      "wizard",
+      "metagame",
+      "metagaming",
+      "discord",
       "rdm",
       "vdm",
+      "nlr",
       "report",
       "ticket"
     ]
@@ -86,7 +94,7 @@
     }
   ],
   "disabledApps": ["BROWSER"],
-  "apps": ["pefcl"],
+  "apps": ["pefcl", "npwd_services", "npwd_taxi", "npwd_jobs"],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

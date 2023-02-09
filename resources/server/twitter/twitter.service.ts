@@ -164,7 +164,10 @@ class _TwitterService {
 
       if (config.twitter.badWords) {
         for (let i = 0; i < config.twitter.badWords.length; i++) {
-          if (reqObj.data.message.includes(config.twitter.badWords[i])) {
+          const badWord = config.twitter.badWords[i];
+          const regex = new RegExp(`\\b${badWord}\\b`, 'i');
+
+          if (regex.test(reqObj.data.message)) {
             this.twitterSuspended.push(identifier);
             return resp({
               status: 'error',
