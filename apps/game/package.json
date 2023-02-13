@@ -53,7 +53,7 @@
     "remove-files-webpack-plugin": "^1.4.3",
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.2",
-    "typescript": "^4.5.2",
+    "typescript": "^4.9.5",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
