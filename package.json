@@ -12,7 +12,7 @@
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@octokit/core": "^3.6.0",
-    "esbuild": "^0.15.9",
+    "esbuild": "^0.15.15",
     "husky": "^7.0.4",
     "prettier": "^2.6.2",
     "pretty-quick": "^3.1.3",
