@@ -1047,6 +1047,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.20.6":
+  version "7.20.13"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.13.tgz#7055ab8a7cff2b8f6058bf6ae45ff84ad2aded4b"
+  integrity sha512-gt3PKXs0DBoL9xCvOIIZ2NEqAGZqHjAnmVbfQtB620V0uReIQutpel14KcneZuer7UioY8ALKZ7iocavvzTNFA==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
 "@babel/template@^7.18.10", "@babel/template@^7.3.3":
   version "7.18.10"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.10.tgz#6f9134835970d1dbf0835c0d100c9f38de0c5e71"
@@ -2087,12 +2094,12 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.11.tgz#e91640dfd2bd62c7f5b27da7e540f5d07e5cbc50"
   integrity sha512-u5ff+UCFDHcR8MoQ8tuJR4c35vt7T/ki3aMEE2O3XQoGs8KJSrBiisFpFKyldg9/W2NSyoZxN+kxEGIfRxh+9Q==
 
-"@mui/icons-material@^5.2.0":
-  version "5.10.9"
-  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.10.9.tgz#f9522c49797caf30146acc576e37ecb4f95bbc38"
-  integrity sha512-sqClXdEM39WKQJOQ0ZCPTptaZgqwibhj2EFV9N0v7BU1PO8y4OcX/a2wIQHn4fNuDjIZktJIBrmU23h7aqlGgg==
+"@mui/icons-material@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.11.0.tgz#9ea6949278b2266d2683866069cd43009eaf6464"
+  integrity sha512-I2LaOKqO8a0xcLGtIozC9xoXjZAto5G5gh0FYUMAlbsIHNHIjn4Xrw9rvjY20vZonyiGrZNMAlAXYkY6JvhF6A==
   dependencies:
-    "@babel/runtime" "^7.19.0"
+    "@babel/runtime" "^7.20.6"
 
 "@mui/lab@^5.0.0-alpha.45":
   version "5.0.0-alpha.105"
@@ -12347,6 +12354,11 @@ regenerate@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
+
+regenerator-runtime@^0.13.11:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
   version "0.13.10"

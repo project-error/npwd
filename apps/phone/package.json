@@ -10,7 +10,7 @@
     "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.2.0",
+    "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.45",
     "@mui/material": "^5.2.1",
     "@mui/styles": "^5.2.1",
