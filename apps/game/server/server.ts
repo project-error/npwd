@@ -7,6 +7,8 @@ import { registerCommands } from './commands/registerCommands';
 
 // Setup controllers
 import './db/pool';
+new NPWDDataSource();
+
 import './boot/boot.controller';
 import './players/player.controller';
 import './calls/calls.controller';
@@ -27,6 +29,7 @@ import './rcon/exports';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
+import { NPWDDataSource } from './db/data-source';
 
 // register commands
 registerCommands();

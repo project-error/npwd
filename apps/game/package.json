@@ -1,5 +1,5 @@
 {
-  "name": "npwd-game",
+  "name": "@npwd/game",
   "version": "0.1.0",
   "description": "Resources configuration",
   "main": "index.js",
@@ -23,6 +23,8 @@
     "md5": "^2.3.0",
     "mysql2": "^2.3.3",
     "node-fetch": "^3.2.10",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.12",
     "uuid": "^8.3.2",
     "winston": "^3.4.0"
   },

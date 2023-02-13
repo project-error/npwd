@@ -23,7 +23,8 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "web": "yarn workspace npwd-nui",
+    "web": "yarn workspace @npwd/nui",
+    "game": "yarn workspace @npwd/game",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
     "format": "pretty-quick",
