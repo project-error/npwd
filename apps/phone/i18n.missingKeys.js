@@ -4,7 +4,7 @@ console.log(args);
 
 const path = './src/locale/';
 
-const langs = ['bs', 'no', 'es', 'fr', 'pt', 'ptbr', 'sv', 'tr', 'lt', 'hu', 'ru'];
+const langs = ['bs', 'no', 'es', 'fr', 'pt', 'ptbr', 'sv', 'tr', 'lt', 'hu', 'ru', 'zhcn'];
 
 const defaultLang = 'en';
 
