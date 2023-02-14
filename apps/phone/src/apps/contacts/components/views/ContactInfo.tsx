@@ -68,9 +68,9 @@ const ContactsInfoPage: React.FC = () => {
 
   const contact = getContact(parseInt(id));
 
-  const [name, setName] = useState(() => contact?.display || '');
-  const [number, setNumber] = useState(() => contact?.number || '');
-  const [avatar, setAvatar] = useState(() => contact?.avatar || '');
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [avatar, setAvatar] = useState('');
   // Set state after checking if null
 
   const [t] = useTranslation();

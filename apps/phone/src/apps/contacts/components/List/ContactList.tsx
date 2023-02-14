@@ -1,5 +1,4 @@
 import React from 'react';
-import ListItemText from '@mui/material/ListItemText';
 import { Button, List, ListSubheader } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -89,7 +88,7 @@ export const ContactList: React.FC = () => {
           </ListSubheader>
         }
       >
-        {filteredContacts.map((contact) => (
+        {filteredContacts?.map((contact) => (
           <ContactItem
             id={contact.id}
             avatar={contact.avatar}

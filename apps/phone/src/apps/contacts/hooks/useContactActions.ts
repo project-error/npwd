@@ -70,6 +70,7 @@ export const useContactActions = (): UseContactsValue => {
         for (const contact of contents) {
           if (contact.id === id) return contact;
         }
+
         return null;
       },
     [],

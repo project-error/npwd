@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./",
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "ES2020",
+    "allowJs": false,
+    "lib": ["es2020"],
+    "types": ["@types/node"],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["./**/*"],
+  "exclude": ["**/node_modules"]
+}

@@ -24,6 +24,8 @@
   "scripts": {
     "build": "turbo run build",
     "web": "yarn workspace @npwd/nui",
+    "dev": "turbo run dev",
+    "api": "yarn workspace @npwd/api",
     "game": "yarn workspace @npwd/game",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
