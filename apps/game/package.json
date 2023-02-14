@@ -19,7 +19,7 @@
     "axios": "^0.21.4",
     "dayjs": "^1.11.7",
     "formdata-node": "^5.0.0",
-    "logform": "^2.3.2",
+    "logform": "^2.5.1",
     "md5": "^2.3.0",
     "mysql2": "^2.3.3",
     "node-fetch": "^3.2.10",
