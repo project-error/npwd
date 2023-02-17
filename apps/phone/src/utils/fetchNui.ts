@@ -17,7 +17,7 @@ async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?
     body: JSON.stringify(data),
   };
 
-  /*if (isEnvBrowser() && mockResp) {
+  if (isEnvBrowser() && mockResp) {
     LogDebugEvent({
       data: {
         request: data,
@@ -26,13 +26,13 @@ async function fetchNui<T = any, D = any>(eventName: string, data?: D, mockResp?
       action: `fetchNui (${eventName})`,
     });
     return mockResp;
-  } */
+  }
 
-  //const resourceName = (window as any).GetParentResourceName
-  //  ? (window as any).GetParentResourceName()
-  //  : 'npwd';
+  const resourceName = (window as any).GetParentResourceName
+    ? (window as any).GetParentResourceName()
+    : 'npwd';
 
-  const resp = await fetch(`http://localhost:6001/${eventName}`, options);
+  const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 
   const responseObj = await resp.json();
 

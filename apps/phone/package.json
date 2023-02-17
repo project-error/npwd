@@ -4,7 +4,7 @@
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "private": true,
   "license": "CC-BY-NC-SA-4.0",
-  "homepage": "/game/html",
+  "homepage": "/dist/html",
   "dependencies": {
     "@babel/runtime": "^7.17.2",
     "@emotion/css": "^11.10.5",
