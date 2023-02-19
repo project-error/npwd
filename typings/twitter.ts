@@ -50,6 +50,10 @@ export interface UpdateProfileProps {
   profile_name: string;
 }
 
+export interface TwitterSuspension {
+  identifier: string;
+}
+
 export enum TwitterEvents {
   FETCH_TWEETS = 'npwd:fetchTweets',
   FETCH_TWEETS_FILTERED = 'npwd:fetchTweetsFiltered',

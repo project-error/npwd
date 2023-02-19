@@ -1,4 +1,4 @@
-import { NewTweet, Profile, Tweet } from '../../../typings/twitter';
+import { NewTweet, Profile, Tweet, TwitterSuspension } from '../../../typings/twitter';
 import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '../config';
@@ -70,6 +70,31 @@ export class _TwitterDB {
     const tweets = <Tweet[]>results;
 
     return tweets.map(formatTweets(profileId));
+  }
+
+  /**
+   * Retrieve bad words patterns
+   */
+  async getBadWords(): Promise<any[]> {
+    const query = `
+      SELECT * FROM npwd_twitter_badwords
+    `;
+
+    const [results] = await DbInterface._rawExec(query);
+    return <any[]>results;
+  }
+
+  /**
+   * Retrieve permanent suspensions
+   */
+  async getPermanentSuspensions(): Promise<TwitterSuspension[]> {
+    const query = `
+      SELECT * FROM npwd_twitter_suspensions
+    `;
+
+    const [results] = await DbInterface._rawExec(query);
+    const suspensions = <TwitterSuspension[]>results;
+    return suspensions;
   }
 
   /**

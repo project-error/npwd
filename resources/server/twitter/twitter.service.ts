@@ -11,11 +11,27 @@ import { checkAndFilterImage } from './../utils/imageFiltering';
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
   private twitterSuspended: string[];
+  private badWords: string[];
 
   constructor() {
     this.twitterDB = TwitterDB;
     this.twitterSuspended = [];
     twitterLogger.debug('Twitter service started');
+    setTimeout(() => {
+      this.init();
+    }, 5000);
+  }
+
+  async init() {
+    const suspensions = await this.twitterDB.getPermanentSuspensions();
+    for (const suspension of suspensions) {
+      this.twitterSuspended.push(suspension.identifier);
+    }
+
+    const badWords = await this.twitterDB.getBadWords();
+    for (const row of badWords) {
+      this.badWords.push(row.pattern);
+    }
   }
 
   isTwitterSuspended(identifier: string) {
@@ -162,18 +178,15 @@ class _TwitterService {
         return resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED' });
       }
 
-      if (config.twitter.badWords) {
-        for (let i = 0; i < config.twitter.badWords.length; i++) {
-          const badWord = config.twitter.badWords[i];
-          const regex = new RegExp(`\\b${badWord}\\b`, 'i');
-
-          if (regex.test(reqObj.data.message)) {
-            this.twitterSuspended.push(identifier);
-            return resp({
-              status: 'error',
-              errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED',
-            });
-          }
+      for (const pattern in this.badWords) {
+        const modifiedPattern = pattern.replace(/\\/g, '\\\\');
+        const regex = new RegExp(modifiedPattern, 'i');
+        if (regex.test(reqObj.data.message)) {
+          this.twitterSuspended.push(identifier);
+          return resp({
+            status: 'error',
+            errorMsg: 'TWITTER.FEEDBACK.CREATE_FAILED',
+          });
         }
       }
 
