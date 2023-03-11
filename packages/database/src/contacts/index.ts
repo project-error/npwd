@@ -44,5 +44,4 @@ export class _ContactsDB {
   }
 }
 
-const ContactsDB = new _ContactsDB();
-export default ContactsDB;
+export const ContactsDB = new _ContactsDB();

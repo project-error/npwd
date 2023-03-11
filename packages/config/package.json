@@ -1,0 +1,14 @@
+{
+  "name": "@npwd/config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@citizenfx/server": "2.0.6316-1",
+    "@types/node": "^18.15.0",
+    "typescript": "^4.9.5"
+  }
+}

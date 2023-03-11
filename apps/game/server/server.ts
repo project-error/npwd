@@ -1,13 +1,16 @@
 import './config';
 
 import { RewriteFrames } from '@sentry/integrations';
-import { config as resourceConfig } from './config';
+//import { config as resourceConfig } from './config';
+import { config as resourceConfig } from '@npwd/config/server';
+
 export const config = resourceConfig;
 import { registerCommands } from './commands/registerCommands';
 
 // Setup controllers
-import './db/pool';
-new NPWDDataSource();
+//
+//import './db/pool';
+import '@npwd/database/src/db/pool';
 
 import './boot/boot.controller';
 import './players/player.controller';
@@ -29,7 +32,6 @@ import './rcon/exports';
 
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
-import { NPWDDataSource } from './db/data-source';
 
 // register commands
 registerCommands();

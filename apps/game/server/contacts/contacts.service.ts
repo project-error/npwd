@@ -1,9 +1,9 @@
 import PlayerService from '../players/player.service';
 import { contactsLogger } from './contacts.utils';
-import ContactsDB, { _ContactsDB } from './contacts.db';
 import { Contact, ContactDeleteDTO, ContactResp, PreDBContact } from '@typings/contact';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
+import { _ContactsDB, ContactsDB } from '@npwd/database';
 
 class _ContactService {
   private readonly contactsDB: _ContactsDB;

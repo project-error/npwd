@@ -1,3 +1,0 @@
-export class NpwdBase {
-  constructor() {}
-}
