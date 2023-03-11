@@ -5,9 +5,6 @@
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "license": "CC-BY-NC-SA-4.0",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
@@ -22,17 +19,21 @@
     "turbo": "^1.7.0"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
-    "web": "yarn workspace @npwd/nui",
     "dev": "turbo run dev",
-    "api": "yarn workspace @npwd/api",
-    "game": "yarn workspace @npwd/game",
     "dev:game": "turbo run dev:game",
     "prepare": "husky install",
     "format": "pretty-quick",
     "format:staged": "pretty-quick --staged",
     "postinstall": "husky install",
-    "generate:typings": "rollup --config rollup.config.js"
+    "generate:typings": "rollup --config rollup.config.js",
+    "web": "pnpm --filter @npwd/nui",
+    "api": "pnpm --filter @npwd/api",
+    "game": "pnpm --filter @npwd/game",
+    "database": "pnpm --filter @npwd/database",
+    "logger": "pnpm --filter @npwd/logger",
+    "npwd-config": "pnpm --filter @npwd/config"
   },
   "husky": {
     "hooks": {
