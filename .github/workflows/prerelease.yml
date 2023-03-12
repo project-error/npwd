@@ -77,6 +77,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           title: NPWD Pre Release | ${{ steps.get_tag.outputs.VERSION_TAG }}
           prerelease: true
+          automatic_release_tag: "latest"
           files: npwd.zip
 
         env:
