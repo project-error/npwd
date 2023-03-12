@@ -1,11 +1,11 @@
-name: Tagged Release Publisher
+name: Pre Release Publisher
 on:
   push:
     tags:
       - "pre-*"
 jobs:
   create-tagged-release:
-    name: Build and Create Tagged Release
+    name: Build and Create Pre Release
     runs-on: ubuntu-latest
     
     steps:

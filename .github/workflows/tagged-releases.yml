@@ -2,7 +2,7 @@ name: Tagged Release Publisher
 on:
   push:
     tags:
-      - "*"
+      - "v*"
 jobs:
   create-tagged-release:
     name: Build and Create Tagged Release
