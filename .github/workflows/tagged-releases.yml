@@ -17,16 +17,20 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.29.1
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm i --frozen-lockfile
 
       - name: Run build
-        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
+        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
         
       - name: Bump manifest version
         run: node .github/actions/bump-manifest-version.js
@@ -98,22 +102,26 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.29.1
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm i --frozen-lockfile
 
       # Build all packages
       - name: Build @npwd/types
         run: |
-          yarn generate:typings
+          pnpm generate:typings
           cd ./packages/npwd-types
           git config user.email "chip@projecterror.dev"
           git config user.name "itschip"
-          yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
+          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
 
       - name: Release @npwd/types
         uses: JS-DevTools/npm-publish@v1
@@ -125,10 +133,10 @@ jobs:
       - name: Build @npwd/hooks
         run: |
           cd ./packages/npwd-hooks
-          yarn build
+          pnpm build
           git config user.email "chip@projecterror.dev"
           git config user.name "itschip"
-          yarn version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
+          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
 
       - name: Release @npwd/hooks
         uses: JS-DevTools/npm-publish@v1
