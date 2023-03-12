@@ -1,19 +1,11 @@
-import React from 'react';
-import MaterialButton from '@mui/material/Button';
-import { ButtonProps } from '@mui/material';
 import { cva, VariantProps } from 'class-variance-authority';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export const Button: React.FC<ButtonProps> = ({ ...props }) => (
-  <MaterialButton aria-label="button" {...props}>
-    {props.children}
-  </MaterialButton>
-);
-
-const classes = cva('rounded-md w-full active:scale-95', {
+const classes = cva('rounded-md w-full', {
   variants: {
     variant: {
-      primary: ['dark:bg-blue-100 dark:text-blue-800 text-white'],
+      primary: ['bg-blue-800 text-white'],
     },
     size: {
       sm: 'px-2 py-1.5 text-sm',
@@ -28,10 +20,10 @@ const classes = cva('rounded-md w-full active:scale-95', {
   },
 });
 
-export type NPWDButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type ButtonProps2 = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof classes>;
 
-export const NPWDButton: React.FC<NPWDButtonProps> = ({
+export const NPWDButton: React.FC<ButtonProps2> = ({
   children,
   size,
   variant,

@@ -33,7 +33,8 @@
     "game": "pnpm --filter @npwd/game",
     "database": "pnpm --filter @npwd/database",
     "logger": "pnpm --filter @npwd/logger",
-    "npwd-config": "pnpm --filter @npwd/config"
+    "npwd-config": "pnpm --filter @npwd/config",
+    "ui": "pnpm --filter @npwd/ui"
   },
   "husky": {
     "hooks": {

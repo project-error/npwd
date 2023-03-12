@@ -11,3 +11,18 @@ export const usePhoneTheme = () => {
     [settings.theme],
   );
 };
+
+export const usePhoneTheme2 = () => {
+  // tailwind with dark class, save to localstorage
+  const toggleTheme = (theme: 'light' | 'dark') => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('npwd-colorscheme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('npwd-colorscheme', 'light');
+    }
+  };
+
+  return { toggleTheme };
+};

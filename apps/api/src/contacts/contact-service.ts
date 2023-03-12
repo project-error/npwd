@@ -1,8 +1,16 @@
-import { Contact, PLAYER_IDENITIFER } from '../database/data-source';
+import { ContactsDB, _ContactsDB } from '@npwd/database';
+import { Contact } from '@typings/contact';
+import { PLAYER_IDENITIFER } from '../database/data-source';
 
 export class ContactService {
+  private readonly _contactDB: _ContactsDB;
+
+  constructor() {
+    this._contactDB = ContactsDB;
+  }
+
   async getContacts(): Promise<Contact[]> {
-    const contacts = await Contact.findAll();
+    const contacts = await this._contactDB.fetchAllContacts(PLAYER_IDENITIFER);
     if (!contacts || contacts.length == 0) return null;
 
     return contacts;
@@ -12,12 +20,7 @@ export class ContactService {
     console.log('CONTACT', contact);
 
     try {
-      const newContact = await Contact.create({
-        display: contact.display,
-        number: contact.number,
-        avatar: contact.avatar,
-        identifier: PLAYER_IDENITIFER,
-      });
+      const newContact = await this._contactDB.addContact(PLAYER_IDENITIFER, contact);
       return newContact;
     } catch (e) {
       console.error(e);

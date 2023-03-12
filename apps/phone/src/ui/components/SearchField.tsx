@@ -67,18 +67,20 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   placeholder,
 } = DEFAULT_PROPS) => {
   return (
-    <SearchPaper variant="outlined">
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <SearchInputBase
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          inputProps={{ 'aria-label': 'search' }}
-        />
-      </Search>
-    </SearchPaper>
+    <>
+      <SearchPaper>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <SearchInputBase
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+      </SearchPaper>
+    </>
   );
 };

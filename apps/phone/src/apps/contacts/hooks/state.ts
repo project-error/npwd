@@ -11,7 +11,11 @@ export const contacts = atom<Contact[]>({
     key: 'contactsListDefault',
     get: async () => {
       try {
-        const resp = await fetchNui<ServerPromiseResp<Contact[]>>(ContactEvents.GET_CONTACTS);
+        const resp = await fetchNui<ServerPromiseResp<Contact[]>>(
+          ContactEvents.GET_CONTACTS,
+          undefined,
+          buildRespObj(BrowserContactsState),
+        );
 
         console.log(resp);
         return resp.data;

@@ -1,29 +1,10 @@
 import React, { HTMLAttributes } from 'react';
-import { Typography, Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { IApp } from '@os/apps/config/apps';
 import { OverridableStringUnion } from '@mui/types';
 import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
 import { Variant } from '@mui/material/styles/createTypography';
-
-interface IUseStyle {
-  root: any;
-  text: any;
-}
-
-const useStyle = makeStyles(
-  (theme): IUseStyle => ({
-    root: ({ backgroundColor }) => ({
-      width: '100%',
-      textAlign: 'left',
-      backgroundColor: backgroundColor || theme.palette.background.default,
-    }),
-    text: ({ color }) => ({
-      color: color || theme.palette.text.primary,
-    }),
-  }),
-);
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
   app: IApp;
@@ -37,13 +18,13 @@ export const AppTitle: React.FC<AppTitleProps> = ({
   variant = 'h5',
   ...props
 }) => {
-  const classes = useStyle({ color, backgroundColor });
   const [t] = useTranslation();
   return (
-    <Box px={2} pt={2} className={classes.root} {...props}>
-      <Typography className={classes.text} paragraph variant={variant}>
+    // TODO: Support color and backgroundColor
+    <div className="px-4 py-2 pt-4 bg-neutral-100 dark:bg-neutral-900" {...props}>
+      <h3 className="text-4xl font-extrabold text-neutral-900 dark:text-neutral-100">
         {t(nameLocale)}
-      </Typography>
-    </Box>
+      </h3>
+    </div>
   );
 };

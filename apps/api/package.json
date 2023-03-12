@@ -4,20 +4,23 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev1": "cross-env IS_BROWSER_DEV=1 nodemon src/index.ts"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
     "@types/node": "^18.13.0",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@npwd/database": "workspace:^1.0.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mysql2": "^3.1.2",
-    "sequelize": "^6.28.0"
+    "mysql2": "^3.1.2"
   }
 }

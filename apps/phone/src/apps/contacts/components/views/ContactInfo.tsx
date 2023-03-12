@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar as MuiAvatar, Box, Button, Paper } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useQueryParams } from '@common/hooks/useQueryParams';
+import { NPWDButton, NPWDInput as Input } from '@ui/components';
 import { ContactsDatabaseLimits } from '@typings/contact';
-import { TextField } from '@ui/components/Input';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
+import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-react';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -68,9 +68,9 @@ const ContactsInfoPage: React.FC = () => {
 
   const contact = getContact(parseInt(id));
 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [name, setName] = useState(contact?.display ?? '');
+  const [number, setNumber] = useState(contact?.number ?? '');
+  const [avatar, setAvatar] = useState(contact?.avatar ?? '');
   // Set state after checking if null
 
   const [t] = useTranslation();
@@ -112,71 +112,69 @@ const ContactsInfoPage: React.FC = () => {
   }, [addNumber, avatar, avatarParam, nameParam]);
 
   return (
-    <Paper className={classes.root} square>
-      <Button style={{ margin: 10 }} onClick={() => history.goBack()}>
-        <ArrowBackIcon fontSize="large" />
-      </Button>
-      <div className={classes.listContainer}>
-        <MuiAvatar className={classes.avatar} src={avatar} />
-        <TextField
-          autoFocus
-          error={name.length >= ContactsDatabaseLimits.display}
-          className={classes.input}
-          value={name}
-          onChange={handleDisplayChange}
-          label={t('CONTACTS.FORM_NAME')}
-          fullWidth
-          inputProps={{
-            className: classes.inputProps,
-          }}
-        />
-        <TextField
-          className={classes.input}
-          error={number.length >= ContactsDatabaseLimits.number}
-          value={number}
-          onChange={handleNumberChange}
-          label={t('CONTACTS.FORM_NUMBER')}
-          fullWidth
-          inputProps={{
-            className: classes.inputProps,
-          }}
-        />
-        <TextField
-          error={avatar.length >= ContactsDatabaseLimits.avatar}
-          className={classes.input}
-          label={t('CONTACTS.FORM_AVATAR')}
-          fullWidth
-          value={avatar}
-          onChange={handleAvatarChange}
-          inputProps={{
-            className: classes.inputProps,
-          }}
-        />
-        {/* Display if fetched contact */}
+    <div className="mx-auto h-full w-full">
+      <button
+        onClick={() => history.goBack()}
+        className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
+      >
+        <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
+      </button>
+      <div className="mx-auto w-9/12">
+        <div>
+          <img src={avatar} className="mx-auto h-24 w-24 rounded-full text-center" />
+        </div>
+        <div className="mt-8">
+          <Input
+            placeholder={t('CONTACTS.FORM_NAME')}
+            value={name}
+            onChange={handleDisplayChange}
+          />
+        </div>
+
         {contact && (
-          <>
-            <Box py={1} display="block">
-              <Button color="primary" variant="contained" onClick={handleContactUpdate}>
-                {t('GENERIC.UPDATE')}
-              </Button>
-            </Box>
-            <Box py={1} display="block">
-              <Button variant="contained" color="secondary" onClick={handleContactDelete}>
-                {t('GENERIC.DELETE')}
-              </Button>
-            </Box>
-          </>
+          <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
+            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+              <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
+            </button>
+            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+              <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
+            </button>
+            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+              <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
+            </button>
+            <button
+              onClick={handleContactDelete}
+              className="group flex items-center justify-center rounded-md py-2 dark:bg-red-100 dark:hover:bg-red-200"
+            >
+              <Trash2 className="h-6 w-6 dark:text-red-800" />
+            </button>
+          </div>
         )}
-        {/* Display if no fetched contact */}
-        {!contact && (
-          <Box display="block">
-            <Button color="primary" variant="contained" onClick={handleContactAdd}>
-              {t('CONTACTS.MODAL_BUTTON_ADD')}
-            </Button>
-          </Box>
-        )}
+
+        <div className="mt-8 space-y-4">
+          <div>
+            <label className="text-sm font-medium dark:text-neutral-400">
+              {t('CONTACTS.FORM_NUMBER')}
+            </label>
+            <Input value={number} onChange={handleNumberChange} />
+          </div>
+          <div>
+            <label className="text-sm font-medium dark:text-neutral-400">
+              {t('CONTACTS.FORM_AVATAR')}
+            </label>
+            <Input value={avatar} onChange={handleAvatarChange} />
+          </div>
+        </div>
+
+        <div className="mt-8">
+          {contact ? (
+            <NPWDButton onClick={handleContactUpdate}>{t('GENERIC.UPDATE')}</NPWDButton>
+          ) : (
+            <NPWDButton onClick={handleContactAdd}>{t('GENERIC.ADD')}</NPWDButton>
+          )}
+        </div>
       </div>
-    </Paper>
+    </div>
   );
 };
 

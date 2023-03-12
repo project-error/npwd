@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@typings/*": ["../../typings/*"],
+      "@game/*": ["../../apps/game/*"]
+    },
     "outDir": "./",
     "noImplicitAny": true,
     "module": "commonjs",

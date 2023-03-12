@@ -54,6 +54,14 @@ const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
     i18n.changeLanguage(settings.language.value).catch((e) => console.error(e));
   }, [i18n, settings.language]);
 
+  useEffect(() => {
+    if (settings.theme.value === 'taso-dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [settings.theme.value]);
+
   useConfig();
   useKeyboardService();
   usePhoneService();

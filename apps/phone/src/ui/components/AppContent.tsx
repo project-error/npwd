@@ -3,6 +3,7 @@ import { Backdrop, Paper, BoxProps } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AppContentTypes } from '../interface/InterfaceUI';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { classNames } from '@utils/css';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -31,25 +32,18 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
   const classes = useStyles();
 
   return (
-    <Paper
-      className={classes.wrapper}
-      square
+    <div
+      className="flex flex-col flex-1 bg-neutral-100 dark:bg-neutral-900"
       style={backdrop ? { overflow: 'hidden' } : { overflow: 'auto' }}
     >
       <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop} />
-      <Paper
-        sx={{ flexGrow: 1 }}
-        square
-        elevation={0}
-        className={`${classes.paper} ${props.className}`}
-        style={paperStyle}
-      >
+      <div className={classNames('flex-auto w-full grow', props.className)} style={paperStyle}>
         {!disableSuspenseHandler ? (
           <React.Suspense fallback={<LoadingSpinner />}>{children}</React.Suspense>
         ) : (
           { children }
         )}
-      </Paper>
-    </Paper>
+      </div>
+    </div>
   );
 };
