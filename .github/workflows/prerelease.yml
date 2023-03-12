@@ -1,62 +1,146 @@
-name: Prerelease Publisher
+name: Tagged Release Publisher
 on:
   push:
-    branches:
-      - disable
+    tags:
+      - "pre-*"
 jobs:
-  pre-release-build:
-    name: 'Build & Create Pre-Release'
+  create-tagged-release:
+    name: Build and Create Tagged Release
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Get tag
+        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
+        id: get_tag
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.repository.default_branch }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.29.1
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Run build
+        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
+        
+      - name: Bump manifest version
+        run: node .github/actions/bump-manifest-version.js
+        env:
+          TGT_RELEASE_VERSION: ${{ github.ref_name }}
+
+      - name: Push manifest change
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: fxmanifest.lua
+          push: true
+          author_name: Manifest Bumper
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore: bump manifest version to ${{ github.ref_name }}"
+
+      - name: Update tag ref
+        uses: EndBug/latest-tag@latest
+        with:
+          tag-name: ${{ github.ref_name }}
+
+      #- name: Create Sentry Release (NPWD)
+      #  run: |
+      #    curl -sL https://sentry.io/get-cli/ | bash
+      #    export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+      #    export SENTRY_ORG=project-error
+      #    export SENTRY_PROJECT=npwd
+      #    export SENTRY_URL=https://sentry.projecterror.dev/
+      #    export VERSION=${{ steps.get_tag.outputs.VERSION_TAG }}
+
+      #    sentry-cli releases new "$VERSION"
+      #    sentry-cli releases set-commits "$VERSION" --auto
+      #    sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --ext map --url-prefix '~/resources/html'
+      #    sentry-cli releases finalize "$VERSION"
+
+      #    sentry-cli releases deploys "$VERSION" new -e production
+      - name: Bundle built files
+        run: |
+          mkdir -p ./temp/npwd/dist
+          cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
+          cp -r ./dist/{game,html} ./temp/npwd/dist
+          # Make sure we copy our one lua boy
+          cp ./apps/game/client/cl_controls.lua ./temp/npwd/dist/game/client/cl_controls.lua
+          cd ./temp && zip -r ../npwd.zip ./npwd
+
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        id: auto_release
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: NPWD Pre Release | ${{ steps.get_tag.outputs.VERSION_TAG }}
+          prerelease: true
+          files: npwd.zip
+
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-npwd-packages:
+    name: Build NPWD packages
+    runs-on: ubuntu-latest
+    needs: create-tagged-release
 
     steps:
+      - name: Get tag
+        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
+        id: get_tag
       - name: Checkout source code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           ref: ${{ github.ref }}
-
-      - name: Setup Node and Yarn Cache
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.29.1
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: 'yarn'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
 
-      - name: Get variables
-        id: get_vars
+      # Build all packages
+      - name: Build @npwd/types
         run: |
-          echo "::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
-          echo "::set-output name=DATE::$(date +'%D')"
+          pnpm generate:typings
+          cd ./packages/npwd-types
+          git config user.email "chip@projecterror.dev"
+          git config user.name "itschip"
+          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
 
-      - name: Install Deps
-        run: yarn --frozen-lockfile
-
-      - name: Setup Go
-        uses: actions/setup-go@v2
+      - name: Release @npwd/types
+        uses: JS-DevTools/npm-publish@v1
         with:
-          go-version: '1.18'
-          check-latest: true
+          token: ${{ secrets.NPM_TOKEN }}
+          package: './packages/npwd-types/package.json'
+          access: 'public'
 
-      - name: Run build
-        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} yarn build
-
-      - name: Bundle and Zip files
+      - name: Build @npwd/hooks
         run: |
-          mkdir -p ./temp/npwd/resources
-          cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
-          cp -r ./resources/{dist,html} ./temp/npwd/resources
-          # Make sure we copy our one lua boy
-          mkdir ./temp/npwd/resources/client
-          cp ./resources/client/cl_controls.lua ./temp/npwd/resources/client/cl_controls.lua
-          cd ./temp && zip -r npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip ./npwd
-      - name: Create Release & Changelog
-        uses: "marvinpinto/action-automatic-releases@v1.2.1"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: Pre-Release Build (${{ steps.get_vars.outputs.SHORT_SHA }}) | ${{ steps.get_vars.outputs.DATE }}
-          prerelease: true
-          automatic_release_tag: "unstable"
-          files: ./temp/npwd-pre-${{ steps.get_vars.outputs.SHORT_SHA }}.zip
+          cd ./packages/npwd-hooks
+          pnpm build
+          git config user.email "chip@projecterror.dev"
+          git config user.name "itschip"
+          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
 
-        env:
-          CI: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release @npwd/hooks
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: './packages/npwd-hooks/package.json'
+          access: 'public'
