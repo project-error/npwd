@@ -13,15 +13,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
         with:
-          node-version: '16.x'
-          cache: 'yarn'
+          version: latest
+
       - name: Install dependencies NUI
-        run: yarn --frozen-lockfile
+        run: pnpm i --frozen-lockfile
       - name: Check build status
-        run: yarn build
+        run: pnpm build
         env:
           CI: true
 
@@ -35,15 +35,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
         with:
-          node-version: '16.x'
-          cache: 'yarn'
+          version: latest
+
       - name: Install dependencies NUI
-        run: yarn --frozen-lockfile
+        run: pnpm i --frozen-lockfile
       - name: Check build status
-        run: yarn build
+        run: pnpm build 
         env:
           CI: true
 
