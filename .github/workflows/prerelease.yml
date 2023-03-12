@@ -1,9 +1,11 @@
 name: Nightly release 
+
 on:
   push:
-    - master
-  tags-ignore:
-    - v*
+    branches:
+      - master
+    tags-ignore:
+      - v*
 
 jobs:
   create-nightly-release:
