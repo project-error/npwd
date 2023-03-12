@@ -87,7 +87,7 @@ jobs:
   build-npwd-packages:
     name: Build NPWD packages
     runs-on: ubuntu-latest
-    needs: [create-tagged-release, bump-manifest-version]
+    needs: create-tagged-release
 
     steps:
       - name: Get tag
