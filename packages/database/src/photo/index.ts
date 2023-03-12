@@ -1,4 +1,4 @@
-import { GalleryPhoto } from '../../../typings/photo';
+import { GalleryPhoto } from '@typings/photo';
 import DbInterface from '../db/db_wrapper';
 
 export class _PhotoDB {
@@ -25,6 +25,4 @@ export class _PhotoDB {
   }
 }
 
-const PhotoDB = new _PhotoDB();
-
-export default PhotoDB;
+export const PhotoDB = new _PhotoDB();

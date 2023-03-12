@@ -1,11 +1,11 @@
 import PlayerService from '../players/player.service';
-import { GalleryPhoto } from '../../../typings/photo';
-import PhotoDB, { _PhotoDB } from './photo.db';
+import { GalleryPhoto } from '@typings/photo';
+import { PhotoDB, _PhotoDB } from '@npwd/database';
 import { photoLogger } from './photo.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { config } from '../config';
 import { v4 as uuidv4 } from 'uuid';
-import fetch, { FormData, fileFromSync } from 'node-fetch';
+import { FormData, fileFromSync } from 'node-fetch';
 import * as fs from 'fs';
 import { apiPhotoUpload, webhookPhotoUpload } from '../lib/http-service';
 

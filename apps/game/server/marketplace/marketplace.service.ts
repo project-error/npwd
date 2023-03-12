@@ -1,6 +1,6 @@
 import PlayerService from '../players/player.service';
 import { marketplaceLogger } from './marketplace.utils';
-import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
+import { MarketplaceDB, _MarketplaceDB } from '@npwd/database';
 import {
   MarketplaceResp,
   MarketplaceDeleteDTO,

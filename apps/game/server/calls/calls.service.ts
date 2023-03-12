@@ -7,7 +7,7 @@ import {
   ActiveCall,
   ActiveCallRaw,
 } from '@typings/call';
-import CallsDB, { CallsRepo } from './calls.db';
+import { _CallsRepo, CallsRepo } from '@npwd/database';
 import { v4 as uuidv4 } from 'uuid';
 import PlayerService from '../players/player.service';
 import { callLogger } from './calls.utils';
@@ -17,11 +17,11 @@ import { mainLogger } from '../sv_logger';
 
 class CallsService {
   private callMap: Collection<string, ActiveCallRaw>;
-  private readonly callsDB: CallsRepo;
+  private readonly callsDB: _CallsRepo;
 
   constructor() {
     this.callMap = new Collection();
-    this.callsDB = CallsDB;
+    this.callsDB = CallsRepo;
     callLogger.debug('Call service started');
   }
 

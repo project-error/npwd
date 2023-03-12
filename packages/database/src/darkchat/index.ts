@@ -4,9 +4,9 @@ import {
   ChannelMember,
   ChannelMessageProps,
   UpdateLabelDto,
-} from '../../../typings/darkchat';
+} from '@typings/darkchat';
 import { ResultSetHeader } from 'mysql2';
-import PlayerService from '../players/player.service';
+import PlayerService from '@game/server/players/player.service';
 
 export class _DarkchatDB {
   async getAllChannels(userIdentifier: string): Promise<ChannelItemProps[]> {
@@ -223,5 +223,4 @@ export class _DarkchatDB {
   }
 }
 
-const DarkchatDB = new _DarkchatDB();
-export default DarkchatDB;
+export const DarkchatDB = new _DarkchatDB();

@@ -1,6 +1,6 @@
-import { BeforeDBNote, DeleteNoteDTO, NoteItem } from '../../../typings/notes';
+import { BeforeDBNote, DeleteNoteDTO, NoteItem } from '@typings/notes';
 import PlayerService from '../players/player.service';
-import NotesDB, { _NotesDB } from './notes.db';
+import { NotesDB, _NotesDB } from '@npwd/database';
 import { notesLogger } from './notes.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 

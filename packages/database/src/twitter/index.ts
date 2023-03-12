@@ -1,9 +1,9 @@
-import { NewTweet, Profile, Tweet } from '../../../typings/twitter';
+import { NewTweet, TwitterProfile as Profile, Tweet } from '@typings/twitter';
 import { pool } from '../db/pool';
 import { ResultSetHeader } from 'mysql2';
-import { config } from '../config';
-import { generateProfileName } from '../utils/generateProfileName';
-import { twitterLogger } from './twitter.utils';
+import { config } from '@npwd/config/server';
+import { generateProfileName } from '../../../../apps/game/server/utils/generateProfileName';
+import { twitterLogger } from '../../../../apps/game/server/twitter/twitter.utils';
 import DbInterface from '../db/db_wrapper';
 
 const SELECT_FIELDS = `
@@ -355,6 +355,4 @@ export class _TwitterDB {
   }
 }
 
-const TwitterDB = new _TwitterDB();
-
-export default TwitterDB;
+export const TwitterDB = new _TwitterDB();

@@ -3,7 +3,7 @@ import {
   MarketplaceListing,
   MarketplaceListingBase,
   ReportListingDTO,
-} from '../../../typings/marketplace';
+} from '@typings/marketplace';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
@@ -87,6 +87,4 @@ export class _MarketplaceDB {
   }
 }
 
-const MarketplaceDB = new _MarketplaceDB();
-
-export default MarketplaceDB;
+export const MarketplaceDB = new _MarketplaceDB();

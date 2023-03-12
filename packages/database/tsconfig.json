@@ -3,7 +3,8 @@
     "paths": {
       "*": ["./types/*"],
       "@shared/*": ["../../../shared/*"],
-      "@typings/*": ["../../typings/*"]
+      "@typings/*": ["../../typings/*"],
+      "@game/*": ["../../apps/game/*"]
     },
     "outDir": "./",
     "noImplicitAny": true,

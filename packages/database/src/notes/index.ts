@@ -1,4 +1,4 @@
-import { BeforeDBNote, NoteItem } from '../../../typings/notes';
+import { BeforeDBNote, NoteItem } from '@typings/notes';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
@@ -26,6 +26,4 @@ export class _NotesDB {
   }
 }
 
-const NotesDB = new _NotesDB();
-
-export default NotesDB;
+export const NotesDB = new _NotesDB();

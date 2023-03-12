@@ -1,7 +1,7 @@
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import DbInterface from '../db/db_wrapper';
 
-export class PlayerRepo {
+export class _PlayerRepo {
   async fetchIdentifierFromPhoneNumber(phoneNumber: string): Promise<string | null> {
     const query = `SELECT ${config.database.identifierColumn} FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?`;
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
@@ -17,4 +17,4 @@ export class PlayerRepo {
   }
 }
 
-export default new PlayerRepo();
+export const PlayerRepo = new _PlayerRepo();

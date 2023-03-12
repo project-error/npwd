@@ -1,5 +1,5 @@
 import PlayerService from '../players/player.service';
-import TwitterDB, { _TwitterDB } from './twitter.db';
+import { _TwitterDB, TwitterDB } from '@npwd/database';
 import { NewTweet, Tweet, TwitterEvents, TwitterProfile } from '@typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';

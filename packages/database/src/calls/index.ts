@@ -1,8 +1,8 @@
-import { CallHistoryItem } from '../../../typings/call';
-import { FetchDefaultLimits } from '../utils/ServerConstants';
+import { CallHistoryItem } from '@typings/call';
+import { FetchDefaultLimits } from '@game/server/utils/ServerConstants';
 import DbInterface from '../db/db_wrapper';
 
-export class CallsRepo {
+export class _CallsRepo {
   async saveCall(call: CallHistoryItem): Promise<void> {
     const query =
       'INSERT INTO npwd_calls (identifier, transmitter, receiver, `start`) VALUES (?, ?, ?, ?)';
@@ -35,4 +35,4 @@ export class CallsRepo {
   }
 }
 
-export default new CallsRepo();
+export const CallsRepo = new _CallsRepo();

@@ -4,21 +4,21 @@ import { Player } from './player.class';
 import { PlayerAddData } from './player.interfaces';
 import Collection from '@discordjs/collection';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
-import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
 import { Delay } from '../../utils/fivem';
 import { config } from '../config';
+import { _PlayerRepo, PlayerRepo } from '@npwd/database';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
   private readonly playersByIdentifier: Collection<string, Player>;
-  private readonly playerDB: PlayerRepo;
+  private readonly playerDB: _PlayerRepo;
 
   constructor() {
     this.playersBySource = new Collection<number, Player>();
     this.playersByIdentifier = new Collection<string, Player>();
-    this.playerDB = playerDB;
+    this.playerDB = PlayerRepo;
     playerLogger.debug('Player Service started');
   }
 

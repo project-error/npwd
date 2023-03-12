@@ -1,12 +1,7 @@
 import DbInterface from '../db/db_wrapper';
-import {
-  CreateMessageDTO,
-  Message,
-  MessageConversation,
-  MessagesRequest,
-} from '../../../typings/messages';
+import { CreateMessageDTO, Message, MessageConversation, MessagesRequest } from '@typings/messages';
 import { ResultSetHeader } from 'mysql2';
-import { messagesLogger } from './messages.utils';
+import { messagesLogger } from '../../../../apps/game/server/messages/messages.utils';
 
 const MESSAGES_PER_PAGE = 20;
 
@@ -231,6 +226,4 @@ export class _MessagesDB {
   }
 }
 
-const MessagesDB = new _MessagesDB();
-
-export default MessagesDB;
+export const MessagesDB = new _MessagesDB();

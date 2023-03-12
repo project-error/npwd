@@ -1,4 +1,4 @@
-import DarkchatDB, { _DarkchatDB } from './darkchat.db';
+import { DarkchatDB, _DarkchatDB } from '@npwd/database';
 import {
   ChannelItemProps,
   ChannelMember,
