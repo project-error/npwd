@@ -31,11 +31,6 @@ jobs:
 
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
-        
-      - name: Bump manifest version
-        run: node .github/actions/bump-manifest-version.js
-        env:
-          TGT_RELEASE_VERSION: ${{ github.ref_name }}
 
       - name: Push manifest change
         uses: EndBug/add-and-commit@v8
@@ -87,60 +82,3 @@ jobs:
         env:
           CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  build-npwd-packages:
-    name: Build NPWD packages
-    runs-on: ubuntu-latest
-    needs: create-tagged-release
-
-    steps:
-      - name: Get tag
-        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
-        id: get_tag
-      - name: Checkout source code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7.29.1
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
-
-      # Build all packages
-      - name: Build @npwd/types
-        run: |
-          pnpm generate:typings
-          cd ./packages/npwd-types
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
-      - name: Release @npwd/types
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwd-types/package.json'
-          access: 'public'
-
-      - name: Build @npwd/hooks
-        run: |
-          cd ./packages/npwd-hooks
-          pnpm build
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
-      - name: Release @npwd/hooks
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwd-hooks/package.json'
-          access: 'public'
