@@ -36,11 +36,6 @@ jobs:
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
 
-      - name: Update tag ref
-        uses: EndBug/latest-tag@latest
-        with:
-          tag-name: ${{ github.ref_name }}
-
       #- name: Create Sentry Release (NPWD)
       #  run: |
       #    curl -sL https://sentry.io/get-cli/ | bash
