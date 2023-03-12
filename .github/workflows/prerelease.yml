@@ -1,11 +1,13 @@
-name: Pre Release Publisher
+name: Nightly release 
 on:
   push:
-    tags:
-      - "pre-*"
+    - master
+  tags-ignore:
+    - v*
+
 jobs:
-  create-tagged-release:
-    name: Build and Create Pre Release
+  create-nightly-release:
+    name: Create nightly release 
     runs-on: ubuntu-latest
     
     steps:
@@ -75,7 +77,7 @@ jobs:
         id: auto_release
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: NPWD Pre Release | ${{ steps.get_tag.outputs.VERSION_TAG }}
+          title: NPWD Nightly
           prerelease: true
           automatic_release_tag: "latest"
           files: npwd.zip
