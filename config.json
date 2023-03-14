@@ -29,7 +29,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": ["pefcl"],
+  "apps": ["npwd_advertisments"],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

@@ -8,7 +8,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsup src/index.ts --watch --dts --format esm,cjs"
+    "dev:old": "tsup src/index.ts --watch --dts --format esm,cjs"
   },
   "keywords": [],
   "author": "",

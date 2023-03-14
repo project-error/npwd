@@ -57,10 +57,10 @@ export const InputBase: React.FC<InputBaseProps> = forwardRef((props, ref) => (
 export const classes = cva('rounded-md outline-none w-full', {
   variants: {
     size: {
-      md: 'text-base py-2 px-2',
+      md: 'text-base py-2.5 px-2',
     },
     variant: {
-      primary: 'bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-100',
+      primary: 'bg-gray-200 dark:bg-neutral-800 dark:text-neutral-100',
     },
   },
   defaultVariants: {

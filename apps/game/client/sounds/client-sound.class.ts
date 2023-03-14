@@ -12,6 +12,7 @@ export class Sound {
 
   play() {
     PlaySoundFrontend(this._soundId, this._soundName, this._soundSetName, false);
+    PlaySoundFromEntity(this._soundId, this._soundName, PlayerPedId(), this._soundSetName, true, 0);
   }
 
   stop() {

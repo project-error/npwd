@@ -4,9 +4,10 @@ import { Route } from 'react-router-dom';
 import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
+import { HelpingHand } from 'lucide-react';
 
 const useExternalAppsAction = () => {
-  const loadScript = async (url, scope, module) => {
+  const loadScript = async (url: string) => {
     await new Promise((resolve, reject) => {
       const element = document.createElement('script');
 
@@ -14,42 +15,47 @@ const useExternalAppsAction = () => {
       element.type = 'text/javascript';
       element.async = true;
 
+      document.head.appendChild(element);
+
       element.onload = (): void => {
-        element.parentElement.removeChild(element);
         resolve(true);
       };
+
       element.onerror = (error) => {
         element.parentElement.removeChild(element);
         reject(error);
       };
-
-      document.head.appendChild(element);
     });
   };
 
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
+      const IN_GAME = import.meta.env.PROD;
+
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
-        : 'http://localhost:3002/remoteEntry.js';
+        : 'http://localhost:3002/npwd.config.js';
+
       const scope = appName;
       const module = './config';
+      console.log('Loading script', url);
 
-      await loadScript(url, scope, module);
+      await loadScript(url);
 
-      await __webpack_init_sharing__('default');
+      /*await __webpack_init_sharing__('default');
       const container = window[scope];
 
       await container.init(__webpack_share_scopes__.default);
       const factory = await window[scope].get(module);
       const Module = factory();
 
-      const appConfig = Module.default();
+      const appConfig = Module.default();*/
 
-      const config = appConfig;
+      const config = window[appName];
 
-      config.Component = (props: object) => React.createElement(config.app, props);
+      console.log('Config', config);
+
+      //config.Component = (props: object) => React.createElement(config.app, props);
 
       const Provider = createExternalAppProvider(config);
 
@@ -57,14 +63,13 @@ const useExternalAppsAction = () => {
         return (
           <Route path={config.path}>
             <Provider>
-              <config.Component {...props} />
+              <iframe title="Advert" src="http://localhost:3002" />
             </Provider>
           </Route>
         );
       };
 
-      config.icon = React.createElement(config.icon);
-      config.NotificationIcon = config.notificationIcon;
+      config.icon = <HelpingHand />;
 
       console.debug(`Successfully loaded external app "${appName}"`);
       return config;
