@@ -10,10 +10,10 @@ export const Button: React.FC<ButtonProps> = ({ ...props }) => (
   </MaterialButton>
 );
 
-const classes = cva('rounded-md w-full active:scale-95', {
+const classes = cva('rounded-md w-full font-medium active:scale-95', {
   variants: {
     variant: {
-      primary: ['dark:bg-blue-100 dark:text-blue-800 text-white'],
+      primary: ['dark:bg-blue-100 bg-blue-200 text-blue-800'],
     },
     size: {
       sm: 'px-2 py-1.5 text-sm',

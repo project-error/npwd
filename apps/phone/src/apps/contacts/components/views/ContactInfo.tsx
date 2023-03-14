@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
@@ -22,40 +20,11 @@ interface ContactInfoRouteQuery {
   avatar?: string;
 }
 
-const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    width: '100%',
-  },
-  listContainer: {
-    marginTop: 30,
-    width: '75%',
-    margin: '0 auto',
-    textAlign: 'center',
-  },
-  avatar: {
-    margin: 'auto',
-    height: '125px',
-    width: '124px',
-    marginBottom: 29,
-  },
-  input: {
-    marginBottom: 20,
-    margin: 'auto',
-    textAlign: 'center',
-  },
-  inputProps: {
-    fontSize: 22,
-  },
-});
-
 const ContactsInfoPage: React.FC = () => {
-  const classes = useStyles();
   const history = useHistory();
   const { id } = useParams<ContactInfoRouteParams>();
   const {
     addNumber,
-    // Because this is mispelled absolutely everywhere
     referal: referral,
     avatar: avatarParam,
     name: nameParam,
@@ -71,7 +40,6 @@ const ContactsInfoPage: React.FC = () => {
   const [name, setName] = useState(contact?.display ?? '');
   const [number, setNumber] = useState(contact?.number ?? '');
   const [avatar, setAvatar] = useState(contact?.avatar ?? '');
-  // Set state after checking if null
 
   const [t] = useTranslation();
 
@@ -115,7 +83,7 @@ const ContactsInfoPage: React.FC = () => {
     <div className="mx-auto h-full w-full">
       <button
         onClick={() => history.goBack()}
-        className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
+        className="mt-4 ml-4 rounded-md px-3 py-1 hover:bg-gray-200 hover:dark:bg-neutral-800"
       >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
       </button>
@@ -133,18 +101,18 @@ const ContactsInfoPage: React.FC = () => {
 
         {contact && (
           <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button className="group flex items-center justify-center rounded-md bg-gray-200 py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button className="group flex items-center justify-center rounded-md bg-gray-200 py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button className="group flex items-center justify-center rounded-md bg-gray-200 py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
             <button
               onClick={handleContactDelete}
-              className="group flex items-center justify-center rounded-md py-2 dark:bg-red-100 dark:hover:bg-red-200"
+              className="group flex items-center justify-center rounded-md bg-red-200 py-2 hover:bg-red-300 dark:bg-red-100 dark:hover:bg-red-200"
             >
               <Trash2 className="h-6 w-6 dark:text-red-800" />
             </button>
