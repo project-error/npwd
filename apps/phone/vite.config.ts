@@ -8,6 +8,9 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
+  build: {
+    outDir: '../../dist/html',
+  },
   resolve: {
     alias: {
       '@os': path.resolve(__dirname, './src/os/'),
