@@ -7,6 +7,7 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 let inCameraMode = false;
+let canToggleHUD = false;
 
 function closePhoneTemp() {
   SetNuiFocus(false, false);
@@ -45,12 +46,21 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 
   inCameraMode = true;
 
+  // If hud is not already hidden (by another resource), Hide the HUD
+  if (!IsHudHidden()) {
+    canToggleHUD = true;
+    DisplayHud(false);
+  } else {
+    canToggleHUD = false;
+  }
+
   // We want to emit this event for UI handling in other resources
   // We hide nothing in NPWD by default
   emit(PhotoEvents.NPWD_PHOTO_MODE_STARTED);
 
   while (inCameraMode) {
     await Delay(0);
+    
     // Arrow Up Key, Toggle Front/Back Camera
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;
@@ -94,6 +104,12 @@ const handleTakePicture = async () => {
   emit('npwd:disableControlActions', true);
   inCameraMode = false;
 
+  // If hud is already hidden (by this resource), Show the HUD
+  if (canToggleHUD) {
+    DisplayHud(true);
+    canToggleHUD = false;
+  }
+
   return resp;
 };
 
@@ -106,6 +122,12 @@ const handleCameraExit = async () => {
   CellCamActivate(false, false);
   openPhoneTemp();
   inCameraMode = false;
+
+  // If hud is already hidden (by this resource), Show the HUD
+  if (canToggleHUD) {
+    DisplayHud(true);
+    canToggleHUD = false;
+  }
 };
 
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
