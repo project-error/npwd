@@ -35,11 +35,11 @@
   },
   "twitter": {
     "showNotifications": true,
-    "generateProfileNameFromUsers": false,
+    "generateProfileNameFromUsers": true,
     "allowEditableProfileName": true,
     "allowDeleteTweets": false,
     "allowReportTweets": true,
-    "allowRetweet": true,
+    "allowRetweet": false,
     "characterLimit": 160,
     "newLineLimit": 10,
     "enableAvatars": true,
