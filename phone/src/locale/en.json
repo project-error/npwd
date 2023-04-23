@@ -119,7 +119,8 @@
         "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
         "DELETE_TWEET_FAILED": "Failed to delete tweet",
         "FILTER_FETCH_FAILED": "Failed to get filtered tweets",
-        "ACCOUNT_SUSPENDED": "You have been suspended from Twitter for violating community guidelines or rules."
+        "ACCOUNT_SUSPENDED": "You have been suspended from Twitter for violating community guidelines or rules.",
+        "INVALID_USERNAME": "Usernames must be alphanumeric and cannot be longer than 15 characters."
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",

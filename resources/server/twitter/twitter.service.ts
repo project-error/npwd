@@ -79,6 +79,10 @@ class _TwitterService {
     resp: PromiseEventResp<TwitterProfile>,
   ) {
     try {
+      if (/[^a-zA-Z0-9_]/.test(reqObj.data.profile_name) || reqObj.data.profile_name.length > 15) {
+        return resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.INVALID_USERNAME' });
+      }
+
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.createProfile(identifier, reqObj.data.profile_name);
 
@@ -97,6 +101,10 @@ class _TwitterService {
     resp: PromiseEventResp<TwitterProfile>,
   ) {
     try {
+      if (/[^a-zA-Z0-9_]/.test(reqObj.data.profile_name) || reqObj.data.profile_name.length > 15) {
+        return resp({ status: 'error', errorMsg: 'TWITTER.FEEDBACK.INVALID_USERNAME' });
+      }
+
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const imageUrl = checkAndFilterImage(reqObj.data.avatar_url);
       if (imageUrl == null) {
