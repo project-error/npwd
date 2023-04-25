@@ -42,5 +42,6 @@ end
 
 AddEventHandler('npwd:disableControlActions', function(bool)
     controlsDisabled = bool
+    if not controlsDisabled then return end
     CreateThread(blockActions)
 end)
