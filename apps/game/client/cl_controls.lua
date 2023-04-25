@@ -1,5 +1,4 @@
 local controlsDisabled = false
-local disableKeys
 local DisableControlAction = DisableControlAction
 local EnableControlAction = EnableControlAction
 local Wait = Wait
