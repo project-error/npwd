@@ -16,7 +16,7 @@ export async function generateProfileName(
   const phone_number = clean(player.getPhoneNumber());
 
   if (firstname && lastname) {
-    return `${firstname}${delimiter}${lastname}`;
+    return `${firstname}${delimiter}${lastname}${delimiter}${phone_number}`;
   } else if (firstname) {
     return firstname;
   } else if (lastname) {
