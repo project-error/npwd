@@ -29,20 +29,22 @@ export const TweetContentPrimary = styled(Box)({
   alignItems: 'flex-end',
 });
 
-export const TweetProfile = styled(Box)({
+export const TweetProfile = styled(Box)(({ theme }) => ({
   fontSize: '18px',
   fontWeight: 'bold',
-});
+  color: theme.palette.text.primary
+}));
 
 export const TweetDate = styled(Typography)({
   marginLeft: '10px',
   fontSize: '14px',
 });
 
-export const TweetMessage = styled(Box)({
+export const TweetMessage = styled(Box)(({ theme }) => ({
   fontSize: '18px',
   wordBreak: 'break-all',
-});
+  color: theme.palette.text.secondary
+}));
 
 export const TweetButtonContainer = styled(Box)({
   display: 'flex',
