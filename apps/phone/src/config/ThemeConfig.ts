@@ -34,11 +34,11 @@ export const PhoneThemes: Record<string, ThemeOptions> = {
     palette: {
       mode: 'light',
       primary: {
-        main: '#a6d4fa',
+        main: '#607D8B',
       },
       text: {
         primary: 'rgba(0, 0, 0, 0.9)',
-        secondary: 'rgba(10, 10, 10, 0.9)',
+        secondary: 'rgba(20, 20, 20, 0.9)',
         disabled: 'rgba(20, 20, 20, 0.5)',
       },
     },
