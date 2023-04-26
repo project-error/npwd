@@ -55,7 +55,7 @@ const missingKeyHandler = (
   key: string,
   fallbackValue: string,
 ) => {
-  if (!import.meta.env.DEV) return;
+  if (process.env.NODE_ENV !== 'development') return;
   console.error(
     `!! TRANSLATION KEY NOT FOUND FOR LANGAUGE "${lng}", KEY "${key}". RENDERED ${fallbackValue} INSTEAD"" !!`,
   );

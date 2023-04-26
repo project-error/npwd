@@ -19,10 +19,10 @@ export const SearchContacts: React.FC = () => {
 
   return (
     <div className="w-full py-2 px-4">
-      <div className="flex items-center justify-start space-x-2 rounded-md bg-gray-200 px-2 dark:bg-neutral-800">
+      <div className="flex items-center justify-start bg-neutral-200 dark:bg-neutral-800 rounded-md px-2 space-x-2">
         <Search className="h-5 w-5 dark:text-neutral-400" />
         <input
-          className="w-full bg-transparent py-2 text-base outline-none dark:text-neutral-100 "
+          className="w-full text-base dark:text-neutral-100 py-2 bg-transparent outline-none "
           onChange={(e) => setInputVal(e.target.value)}
           placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
           value={inputVal}
