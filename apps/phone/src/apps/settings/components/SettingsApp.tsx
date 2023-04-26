@@ -72,7 +72,6 @@ export const SettingsApp: React.FC = () => {
     setSettings({ ...settings, [key]: value });
 
     if (key === 'theme') {
-      console.log('it was theme', value);
       if (value.value === 'taso-dark') {
         document.documentElement.classList.add('dark');
       } else {
