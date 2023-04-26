@@ -9,6 +9,7 @@ import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import useStyles from './notes.styles';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
+import {NOTES_APP_PRIMARY_COLOR} from "./notes.theme";
 import { Route } from 'react-router-dom';
 import { useSetModalVisible, useSetSelectedNote } from './hooks/state';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
@@ -50,8 +51,8 @@ export const NotesApp: React.FC = () => {
             <Route path="/notes" component={NoteList} />
           </React.Suspense>
         </AppContent>
-        <Fab className={classes.absolute} onClick={onClickCreate} color="primary">
-          <AddIcon />
+        <Fab className={classes.absolute} onClick={onClickCreate}>
+          <AddIcon style={{ color: NOTES_APP_PRIMARY_COLOR}}/>
         </Fab>
       </AppWrapper>
     </NotesThemeProvider>
