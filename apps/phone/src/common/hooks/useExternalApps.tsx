@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
 
 const useExternalAppsAction = () => {
-  const loadScript = async (url, scope, module) => {
+  const loadScript = async (url: string) => {
     await new Promise((resolve, reject) => {
       const element = document.createElement('script');
 
@@ -14,19 +14,19 @@ const useExternalAppsAction = () => {
       element.type = 'text/javascript';
       element.async = true;
 
+      document.head.appendChild(element);
+
       element.onload = (): void => {
-        element.parentElement.removeChild(element);
         resolve(true);
       };
+
       element.onerror = (error) => {
         element.parentElement.removeChild(element);
         reject(error);
       };
-
-      document.head.appendChild(element);
     });
   };
-
+  
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
       const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
@@ -36,7 +36,7 @@ const useExternalAppsAction = () => {
       const scope = appName;
       const module = './config';
 
-      await loadScript(url, scope, module);
+      await loadScript(url);
 
       await __webpack_init_sharing__('default');
       const container = window[scope];
@@ -48,7 +48,6 @@ const useExternalAppsAction = () => {
       const appConfig = Module.default();
 
       const config = appConfig;
-
       config.Component = (props: object) => React.createElement(config.app, props);
 
       const Provider = createExternalAppProvider(config);

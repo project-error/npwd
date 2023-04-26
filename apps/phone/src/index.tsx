@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import './main.css';
-import PhoneConfig from './config/default.json';
 import { PhoneProviders } from './PhoneProviders';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -16,6 +13,9 @@ import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
 import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
 import './i18n';
+import { RecoilEnv } from 'recoil';
+
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
