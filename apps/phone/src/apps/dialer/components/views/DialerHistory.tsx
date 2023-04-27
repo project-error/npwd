@@ -36,7 +36,7 @@ export const DialerHistory: React.FC = () => {
   const contacts = useContacts();
   const history = useHistory();
   const [t] = useTranslation();
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
 
   const handleCall = (phoneNumber) => {
     initializeCall(phoneNumber);
@@ -52,7 +52,7 @@ export const DialerHistory: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
-          {<Typography style={{ color: phone_theme.palette.text.primary }}>
+          {<Typography style={{ color: phoneTheme.palette.text.primary }}>
             {t('DIALER.NO_HISTORY')}
             </Typography>
           }
@@ -76,14 +76,14 @@ export const DialerHistory: React.FC = () => {
             <ListItemText
               primary={getDisplay(call.receiver)}
               secondary={
-                <Typography style={{ color: phone_theme.palette.text.secondary }}>
+                <Typography style={{ color: phoneTheme.palette.text.secondary }}>
                   {dayjs().to(dayjs.unix(parseInt(call.start)))}
                 </Typography>
               }
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phone_theme.palette.text.primary
+                color: phoneTheme.palette.text.primary
               }}
             />
             <IconButton onClick={() => handleCall(call.receiver)} size="large">
@@ -110,14 +110,14 @@ export const DialerHistory: React.FC = () => {
             <ListItemText
               primary={getDisplay(call.transmitter)}
               secondary={
-                <Typography style={{ color: phone_theme.palette.text.secondary }}>
+                <Typography style={{ color: phoneTheme.palette.text.secondary }}>
                   {dayjs().to(dayjs.unix(parseInt(call.start)))}
                 </Typography>
               }
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phone_theme.palette.text.primary
+                color: phoneTheme.palette.text.primary
               }}
             />
             <IconButton onClick={() => handleCall(call.transmitter)} size="large">

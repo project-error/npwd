@@ -24,7 +24,7 @@ const NewPhotoButton = () => {
   const { takePhoto, deletePhotos } = usePhotoActions();
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
 
   const handleTakePhoto = () => {
     setIsLoading(true);
@@ -64,7 +64,7 @@ const NewPhotoButton = () => {
 
   return (
     <FloatBtn color="primary" onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}>
-      {!isEditing ? <Add style={{color: phone_theme.palette.primary.main}}/> : <Delete style={{color: phone_theme.palette.error.main}}/>}
+      {!isEditing ? <Add style={{color: phoneTheme.palette.primary.main}}/> : <Delete style={{color: phoneTheme.palette.error.main}}/>}
     </FloatBtn>
   );
 };

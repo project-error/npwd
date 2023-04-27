@@ -70,7 +70,7 @@ const MessageGroupItem = ({
     return getContact()?.display || conversationList.filter((p) => p !== participant)[0];
   }, [messageConversation, getContact]);
 
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
 
   return (
     <ListItem
@@ -103,7 +103,7 @@ const MessageGroupItem = ({
           )}
         </Badge>
       </ListItemAvatar>
-      <ListItemText sx={{ overflow: 'hidden', color: phone_theme.palette.text.primary}}>{getLabelOrContact()}</ListItemText>
+      <ListItemText sx={{ overflow: 'hidden', color: phoneTheme.palette.text.primary}}>{getLabelOrContact()}</ListItemText>
     </ListItem>
   );
 };

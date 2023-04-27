@@ -20,7 +20,7 @@ function ProfileEditor() {
   const { profile, noProfileExists } = useProfile();
   const classes = useStyles();
   const [t] = useTranslation();
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
   const [showPreview, setShowPreview] = useState(false);
 
   const toggleSwitch = () => {
@@ -34,7 +34,7 @@ function ProfileEditor() {
       <Box className={classes.switch}>
         <FormControlLabel
           control={<Switch checked={showPreview} onChange={toggleSwitch} />}
-          label={<Typography style={{ color: phone_theme.palette.text.primary }}>{t<string>('MATCH.EDIT_PROFILE_PREVIEW')}</Typography>}
+          label={<Typography style={{ color: phoneTheme.palette.text.primary }}>{t<string>('MATCH.EDIT_PROFILE_PREVIEW')}</Typography>}
         />
       </Box>
       <ProfileForm showPreview={showPreview} profile={profile} />

@@ -53,7 +53,7 @@ export const ListingForm: React.FC = () => {
   const query = useQueryParams();
   const [formState, setFormState] = useForm();
   const { clean } = useWordFilter();
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
 
   const areFieldsFilled = formState.title.trim() !== '' && formState.description.trim() !== '';
 
@@ -137,7 +137,7 @@ export const ListingForm: React.FC = () => {
   return (
     <div className={classes.root}>
       <h1>{
-        <Typography style={{ color: phone_theme.palette.text.primary }}>{t('MARKETPLACE.NEW_LISTING')}</Typography>}
+        <Typography style={{ color: phoneTheme.palette.text.primary }}>{t('MARKETPLACE.NEW_LISTING')}</Typography>}
       </h1>
       <TextField
         className={classes.input}

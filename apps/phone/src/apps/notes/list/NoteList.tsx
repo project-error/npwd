@@ -18,7 +18,7 @@ const NoteList = () => {
   const setModalVisible = useSetModalVisible();
   const query = useQueryParams();
   const history = useHistory();
-  const phone_theme = useTheme();
+  const phoneTheme = useTheme();
 
   const referal = query.referal && decodeURIComponent(query.referal);
 
@@ -36,7 +36,7 @@ const NoteList = () => {
       <List disablePadding>
         {notes.map((note) => (
           <ListItem key={note.id} button divider onClick={() => handleNoteModal(note)}>
-            <ListItemText>{<Typography style={{ color: phone_theme.palette.text.primary }}>{note.title}</Typography>}</ListItemText>
+            <ListItemText>{<Typography style={{ color: phoneTheme.palette.text.primary }}>{note.title}</Typography>}</ListItemText>
           </ListItem>
         ))}
       </List>
@@ -50,7 +50,7 @@ const NoteList = () => {
       flexDirection="column"
       height="100%"
     >
-      <Typography color="inherit" variant="h6" style={{ fontWeight: 300, color: phone_theme.palette.text.primary }}>
+      <Typography color="inherit" variant="h6" style={{ fontWeight: 300, color: phoneTheme.palette.text.primary }}>
         {t('NOTES.FEEDBACK.NO_NOTES')}
       </Typography>
     </Box>
