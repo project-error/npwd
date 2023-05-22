@@ -40,5 +40,9 @@
     "hooks": {
       "pre-commit": "npx run format:staged"
     }
+  },
+  "dependencies": {
+    "definitely-typed": "github:DefinitelyTyped/DefinitelyTyped",
+    "fivem-nui-react-lib": "^2.3.12"
   }
 }

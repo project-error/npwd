@@ -51,8 +51,8 @@ export const newPhoneProp = async () => {
       true,
     ); //-- Attaches the phone to the player.
     propCreated = true;
-
-    const txtVariation = KvpService.getKvpInt(KvpItems.NPWD_FRAME);
+    
+    const txtVariation = KvpService.getKvpString(KvpItems.NPWD_FRAME) || "prop_npwd_default";
     SetObjectTextureVariation(global.phoneProp, txtVariation || 7);
   } else if (propCreated) {
     console.log('prop already created');
