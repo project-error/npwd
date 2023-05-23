@@ -30,7 +30,7 @@ RegisterNuiCB<IPhoneSettings>(SettingEvents.NUI_SETTINGS_UPDATED, (cfg, cb) => {
   KvpService.setKvp(KvpItems.NPWD_NOTIFICATION, cfg.notiSound.value);
   const frameValue: string = cfg.frame.value;
   const frameName = frameValue.substr(0, frameValue.lastIndexOf('.'));
-  KvpService.setKvp(KvpItems.NPWD_FRAME, PHONE_PROPS[frameName]);
+  KvpService.setKvpInt(KvpItems.NPWD_FRAME, PHONE_PROPS[frameName]);
   SetObjectTextureVariation(global.phoneProp, PHONE_PROPS[frameName]);
   cb({});
 });
