@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   rootPopper: {
     width: '100%',
-    maxWidth: 500,
+    maxWidth: '80vh',
     height: 'auto',
     objectFit: 'contain',
   },
