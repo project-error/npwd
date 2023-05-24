@@ -1,7 +1,6 @@
 import { Box, Popper } from '@mui/material';
 import { Image as ImageType } from '@typings/twitter';
 import { PictureResponsive } from '@ui/components';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import Image from './Image';
 
@@ -13,15 +12,6 @@ interface ImageDisplayProps {
   open: string;
   onToggle: (value: string | null) => void;
 }
-
-const useStyles = makeStyles({
-  root: {
-    position: 'fixed!important' as 'fixed',
-    top: '50%!important',
-    left: '50%!important',
-    transform: 'translate(-50%, -50%)!important'
-  },
-});
 
 export const ImageDisplay: React.FC<ImageDisplayProps> = ({
   visible,
@@ -40,8 +30,6 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({
     onToggle(id);
   };
 
-  const styles = useStyles();
-
   return (
     <Box p={1}>
       {images.map((image) => (
@@ -51,7 +39,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({
             link={image.link}
             handleClick={removeImage ? () => removeImage(image.id) : null}
           />
-          <Popper anchorEl={anchorEl} placement="left" open={open === image.id} className={styles.root}>
+          <Popper anchorEl={anchorEl} placement="left" open={open === image.id}>
             <PictureResponsive popper alt="image" src={image.link} />
           </Popper>
         </Box>
