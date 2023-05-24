@@ -131,7 +131,7 @@ class _TwitterService {
     }
   }
 
-  async postDiscord(identifier: string, tweet: NewTweet): Promise<void> {
+  async postDiscord(identifier: string, tweet: NewTweet, images: string[]): Promise<void> {
     try {
       if (this.DISCORDWH && this.DISCORDWH != '') {
         const profile = await this.twitterDB.getProfile(identifier);
@@ -141,7 +141,7 @@ class _TwitterService {
             "title": 'New Tweet',
             "description": tweet.message,
             "image": {
-              "url": tweet.images
+              "url": images[0]
             },
             "footer": {
               "text": profile.profile_name + ' ' + profile.id + ':' + identifier,
@@ -181,7 +181,7 @@ class _TwitterService {
       const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
       emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
       resp({ status: 'ok' });
-      this.postDiscord(identifier, reqObj.data)
+      this.postDiscord(identifier, reqObj.data, images)
     } catch (e) {
       twitterLogger.error(`Create tweet failed, ${e.message}`, {
         source: reqObj.source,
