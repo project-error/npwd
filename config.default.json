@@ -69,7 +69,8 @@
     "enableAvatars": true,
     "enableEmojis": true,
     "enableImages": true,
-    "maxImages": 3
+    "maxImages": 1,
+    "allowNoMessage": false
   },
   "match": {
     "generateProfileNameFromUsers": true,
