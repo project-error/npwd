@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useCall } from '@os/call/hooks/useCall';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { NPWDButton, NPWDInput as Input } from '@ui/components';
 import { ContactsDatabaseLimits } from '@typings/contact';
@@ -65,9 +67,11 @@ const ContactsInfoPage: React.FC = () => {
     referal: '/contacts',
   });
 
-  const { getContact } = useContactActions();
+  const { getContact, findExistingConversation } = useContactActions();
   const { updateContact, addNewContact, deleteContact } = useContactsAPI();
   const { initializeCall } = useCall();
+  const myPhoneNumber = useMyPhoneNumber();
+  const { goToConversation } = useMessages();
 
   const contact = getContact(parseInt(id));
 
@@ -109,6 +113,21 @@ const ContactsInfoPage: React.FC = () => {
     initializeCall(number.toString());
   };
 
+  const handleMessage = () => {
+    const phoneNumber = number.toString();
+    LogDebugEvent({
+      action: 'Routing to Message',
+      level: 1,
+      data: { phoneNumber },
+    });
+    const conversation = findExistingConversation(myPhoneNumber, phoneNumber);
+    if (conversation) {
+      return goToConversation(conversation);
+    }
+
+    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+  };
+
   const handleContactDelete = () => {
     deleteContact({ id: contact.id });
   };
@@ -145,7 +164,7 @@ const ContactsInfoPage: React.FC = () => {
 
         {contact && (
           <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button onClick={handleMessage} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
             <button onClick={startCall} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
