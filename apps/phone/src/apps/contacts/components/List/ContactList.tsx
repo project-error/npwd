@@ -81,7 +81,7 @@ export const ContactList: React.FC = () => {
                         )}
                       >
                         <div className="min-w-0 flex-1">
-                          <Link to={`contacts/${contact.id}`} className="focus:outline-none">
+                          <Link to={`/contacts/${contact.id}`} className="focus:outline-none">
                             {/* Extend touch target to entire panel */}
                             <span className="absolute inset-0" aria-hidden="true" />
                             <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
