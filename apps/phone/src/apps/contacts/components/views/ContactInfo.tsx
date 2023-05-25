@@ -4,11 +4,13 @@ import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
+import { useCall } from '@os/call/hooks/useCall';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { NPWDButton, NPWDInput as Input } from '@ui/components';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-react';
+import LogDebugEvent from '@os/debug/LogDebugEvents';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -65,6 +67,7 @@ const ContactsInfoPage: React.FC = () => {
 
   const { getContact } = useContactActions();
   const { updateContact, addNewContact, deleteContact } = useContactsAPI();
+  const { initializeCall } = useCall();
 
   const contact = getContact(parseInt(id));
 
@@ -95,6 +98,15 @@ const ContactsInfoPage: React.FC = () => {
 
   const handleContactAdd = () => {
     addNewContact({ display: name, number, avatar }, referral);
+  };
+
+  const startCall = () => {
+    LogDebugEvent({
+      action: 'Emitting `Start Call` to Scripts',
+      level: 2,
+      data: true,
+    });
+    initializeCall(number.toString());
   };
 
   const handleContactDelete = () => {
@@ -136,7 +148,7 @@ const ContactsInfoPage: React.FC = () => {
             <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button onClick={startCall} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
             <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
