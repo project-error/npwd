@@ -113,7 +113,7 @@ export class _DarkchatDB {
 
   async joinChannel(channelIdentifier: string, userIdentifier: string, isOwner: boolean): Promise<number> {
     const { id: channelId } = await this.getChannelIdAndLabel(channelIdentifier);
-    console.log("try insert")
+
     const query = `INSERT INTO npwd_darkchat_channel_members (channel_id, user_identifier, is_owner)
                    VALUES (?, ?, ?)`;
 
