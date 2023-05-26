@@ -80,8 +80,12 @@
         "UPDATE_FAILED": "فشل تحديث جهة الاتصال!",
         "UPDATE_SUCCESS": "تم تحديث جهة الاتصال بنجاح!",
         "DELETE_FAILED": "فشل في حذف جهة اتصال!",
-        "DELETE_SUCCESS": "تم حذف جهة الاتصال بنجاح!"
+        "DELETE_SUCCESS": "تم حذف جهة الاتصال بنجاح!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "ابحث عن جهة اتصال...",
       "FORM_NAME": "الاسم",
       "FORM_NUMBER": "رقم الهاتف",

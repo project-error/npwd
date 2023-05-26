@@ -27,6 +27,12 @@ export const contacts = atom<Contact[]>({
   }),
 });
 
+export const showMoneyModal = atom<boolean>({
+  key: 'contactPayModal',
+  default: false,
+});
+
+
 export const filterInput = atom<string>({
   key: 'filterInput',
   default: '',
@@ -55,4 +61,4 @@ export const useContactsValue = () => useRecoilValue(contacts);
 export const useFilteredContacts = () => useRecoilValue(filteredContacts);
 
 export const useContactFilterInput = () => useRecoilState(filterInput);
-export const useSetContactFilterInput = () => useSetRecoilState(filterInput);
+export const useSetContactFilterInput = () => useSetRecoilState(filterInput)

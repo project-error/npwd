@@ -1,3 +1,5 @@
+import { Config } from "prettier";
+
 interface TwitterConfig {
   showNotifications: boolean;
   generateProfileNameFromUsers: boolean;
@@ -36,6 +38,12 @@ interface General {
   toggleCommand: string;
   defaultLanguage: string;
   showId: boolean;
+}
+
+interface Contacts {
+  frameworkPay: boolean;
+  payResource: string;
+  payFunction: string;
 }
 
 interface NotificationConfig {
@@ -129,4 +137,5 @@ export interface ResourceConfig {
   profanityFilter: ProfanityFilter;
   apps: string[];
   voiceMessage: VoiceMessageConfig;
+  contacts: Contacts;
 }

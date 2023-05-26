@@ -75,8 +75,12 @@
         "UPDATE_FAILED": "Falha ao atualizar contacto",
         "UPDATE_SUCCESS": "Contacto atualizado com sucesso!",
         "DELETE_FAILED": "Falha ao apagar contacto!",
-        "DELETE_SUCCESS": "Contacto apagado com sucesso!"
+        "DELETE_SUCCESS": "Contacto apagado com sucesso!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Procurar contactos...",
       "FORM_NAME": "Nome",
       "FORM_NUMBER": "Numero",

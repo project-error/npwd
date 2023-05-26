@@ -83,8 +83,12 @@
         "UPDATE_FAILED": "Yhteystiedon päivittäminen epäonnistui!",
         "UPDATE_SUCCESS": "Yhteystieto päivitetty!",
         "DELETE_FAILED": "Yhteystiedon poistaminen epäonnistui!",
-        "DELETE_SUCCESS": "Yhteystieto poistettu!"
+        "DELETE_SUCCESS": "Yhteystieto poistettu!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Etsi yhteystietoja...",
       "FORM_NAME": "Nimi",
       "FORM_NUMBER": "Puhelinnumero",

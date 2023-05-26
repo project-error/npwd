@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { Contact, ContactEvents, PreDBContact } from '@typings/contact';
+import { Contact, ContactEvents, PreDBContact, ContactPay } from '@typings/contact';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from './useContactActions';
 import { useHistory } from 'react-router-dom';
@@ -12,6 +12,16 @@ export const useContactsAPI = () => {
   const [t] = useTranslation();
   const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
   const history = useHistory();
+
+  const payContact = useCallback(({ number, amount }: ContactPay) => {
+      fetchNui<ServerPromiseResp<ContactPay>>(ContactEvents.PAY_CONTACT, { number, amount }).then((resp) => {
+        if (resp.status !== 'ok') {
+          return addAlert({message: t('CONTACTS.FEEDBACK.PAYMENTFAILED'), type: 'error'});
+        }
+        addAlert({ message: t('CONTACTS.FEEDBACK.PAYMENTSENT'), type: 'success'});
+      });
+    }, [addAlert, t]
+  );
 
   const addNewContact = useCallback(
     ({ display, number, avatar }: PreDBContact, referral: string) => {
@@ -94,5 +104,5 @@ export const useContactsAPI = () => {
     [addAlert, deleteLocalContact, history, t],
   );
 
-  return { addNewContact, updateContact, deleteContact };
+  return { addNewContact, updateContact, deleteContact, payContact };
 };
