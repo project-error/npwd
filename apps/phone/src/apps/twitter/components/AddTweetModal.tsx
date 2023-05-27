@@ -87,8 +87,7 @@ const AddTweetModal = () => {
       }
     }
 
-    if (cleanedMessage.length > 0)
-      if (!isValidMessage(cleanedMessage)) return;
+    if (cleanedMessage.length > 0 && !isValidMessage(cleanedMessage)) return;
 
     const data: NewTweet = {
       message: cleanedMessage,
