@@ -33,7 +33,23 @@ export const newPhoneProp = async () => {
     const [x, y, z] = GetEntityCoords(playerPed, true);
     global.phoneProp = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
-    AttachEntityToEntity(global.phoneProp, playerPed, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, false, 2, true); //-- Attaches the phone to the player.
+    AttachEntityToEntity(
+      global.phoneProp, 
+      playerPed, 
+      boneIndex, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      true, 
+      true, 
+      false, 
+      false, 
+      2, 
+      true
+    ); //-- Attaches the phone to the player.
     propCreated = true;
 
     let txtVariation;
