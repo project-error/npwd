@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Add, Delete } from '@mui/icons-material';
-import { Fab, CircularProgress } from '@mui/material';
+import { Fab, CircularProgress, useTheme, colors } from '@mui/material';
 import { useIsEditing } from '../hooks/state';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
@@ -24,6 +24,7 @@ const NewPhotoButton = () => {
   const { takePhoto, deletePhotos } = usePhotoActions();
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
+  const phoneTheme = useTheme();
 
   const handleTakePhoto = () => {
     setIsLoading(true);
@@ -63,7 +64,7 @@ const NewPhotoButton = () => {
 
   return (
     <FloatBtn color="primary" onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}>
-      {!isEditing ? <Add /> : <Delete />}
+      {!isEditing ? <Add style={{color: phoneTheme.palette.primary.main}}/> : <Delete style={{color: phoneTheme.palette.error.main}}/>}
     </FloatBtn>
   );
 };

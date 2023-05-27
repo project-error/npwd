@@ -61,6 +61,7 @@ const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
       document.documentElement.classList.remove('dark');
     }
   }, [settings.theme.value]);
+
   useConfig();
   useKeyboardService();
   usePhoneService();

@@ -20,6 +20,7 @@ interface SettingItemProps {
   value?: string | object | number | null;
   onClick?: any;
   icon: JSX.Element;
+  theme: any;
 }
 
 export const SettingItem: React.FC<SettingItemProps> = ({
@@ -28,10 +29,11 @@ export const SettingItem: React.FC<SettingItemProps> = ({
   value,
   onClick,
   icon,
+  theme
 }) => (
   <ListItem divider onClick={() => onClick?.(options)} button>
     <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={label} secondary={value ? value : undefined} />
+    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
   </ListItem>
 );
 
@@ -43,6 +45,7 @@ interface SoundItemProps {
   icon: JSX.Element;
   tooltip: string;
   onPreviewClicked: any;
+  theme: any;
 }
 
 export const SoundItem: React.FC<SoundItemProps> = ({
@@ -53,6 +56,7 @@ export const SoundItem: React.FC<SoundItemProps> = ({
   icon,
   tooltip,
   onPreviewClicked,
+  theme
 }) => (
   <ListItem
     divider
@@ -68,7 +72,7 @@ export const SoundItem: React.FC<SoundItemProps> = ({
   >
     <ListItemButton onClick={() => onClick?.(options)}>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={label} secondary={value ? value : undefined} />
+      <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
     </ListItemButton>
   </ListItem>
 );
@@ -78,6 +82,7 @@ interface SettingSliderProps {
   icon: JSX.Element;
   value: number;
   onCommit: (event: React.SyntheticEvent | Event, value: number | number[]) => void;
+  theme: any;
 }
 
 export const SettingItemSlider: React.FC<SettingSliderProps> = ({
@@ -85,10 +90,11 @@ export const SettingItemSlider: React.FC<SettingSliderProps> = ({
   label,
   value,
   onCommit,
+  theme
 }) => (
   <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={label} secondary={`${value}%`} />
+    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
     <ListItemSecondaryAction>
       <Box p={2} width={150}>
         <Slider
@@ -110,6 +116,7 @@ interface SettingSwitchProps {
   onClick: any;
   icon: JSX.Element;
   secondary: string;
+  theme: any;
 }
 
 export const SettingSwitch: React.FC<SettingSwitchProps> = ({
@@ -118,10 +125,11 @@ export const SettingSwitch: React.FC<SettingSwitchProps> = ({
   onClick,
   icon,
   secondary,
+  theme
 }) => (
   <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={label} secondary={secondary} />
+    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{secondary}</Typography>} />
     <ListItemSecondaryAction>
       <Switch color="primary" checked={value} onChange={() => onClick(value)} />
     </ListItemSecondaryAction>
@@ -135,6 +143,7 @@ interface SettingItemIconActionProps {
   labelSecondary: string;
   handleAction: () => void;
   actionLabel: string;
+  theme: any;
 }
 
 export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
@@ -144,11 +153,12 @@ export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
   actionIcon,
   labelSecondary,
   actionLabel,
+  theme
 }) => (
   <>
     <ListItem divider>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={label} secondary={labelSecondary} />
+      <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{labelSecondary}</Typography>} />
       <ListItemSecondaryAction>
         <Tooltip
           arrow

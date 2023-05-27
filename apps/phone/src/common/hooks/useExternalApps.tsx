@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
-import { HelpingHand } from 'lucide-react';
 
 const useExternalAppsAction = () => {
   const loadScript = async (url: string) => {
@@ -27,35 +26,29 @@ const useExternalAppsAction = () => {
       };
     });
   };
-
+  
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = import.meta.env.PROD;
-
+      const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
-        : 'http://localhost:3002/npwd.config.js';
-
+        : 'http://localhost:3002/remoteEntry.js';
       const scope = appName;
       const module = './config';
-      console.log('Loading script', url);
 
       await loadScript(url);
 
-      /*await __webpack_init_sharing__('default');
+      await __webpack_init_sharing__('default');
       const container = window[scope];
 
       await container.init(__webpack_share_scopes__.default);
       const factory = await window[scope].get(module);
       const Module = factory();
 
-      const appConfig = Module.default();*/
+      const appConfig = Module.default();
 
-      const config = window[appName];
-
-      console.log('Config', config);
-
-      //config.Component = (props: object) => React.createElement(config.app, props);
+      const config = appConfig;
+      config.Component = (props: object) => React.createElement(config.app, props);
 
       const Provider = createExternalAppProvider(config);
 
@@ -63,13 +56,14 @@ const useExternalAppsAction = () => {
         return (
           <Route path={config.path}>
             <Provider>
-              <iframe title="Advert" src="http://localhost:3002" />
+              <config.Component {...props} />
             </Provider>
           </Route>
         );
       };
 
-      config.icon = <HelpingHand />;
+      config.icon = React.createElement(config.icon);
+      config.NotificationIcon = config.notificationIcon;
 
       console.debug(`Successfully loaded external app "${appName}"`);
       return config;

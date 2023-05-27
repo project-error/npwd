@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
+import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
@@ -20,6 +21,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 
 declare module '@emotion/react' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface Theme extends MaterialUITheme {}
 }
 

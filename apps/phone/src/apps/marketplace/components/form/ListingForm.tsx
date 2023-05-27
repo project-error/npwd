@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   MarketplaceResp,
@@ -53,6 +53,7 @@ export const ListingForm: React.FC = () => {
   const query = useQueryParams();
   const [formState, setFormState] = useForm();
   const { clean } = useWordFilter();
+  const phoneTheme = useTheme();
 
   const areFieldsFilled = formState.title.trim() !== '' && formState.description.trim() !== '';
 
@@ -135,7 +136,9 @@ export const ListingForm: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <h1>{t('MARKETPLACE.NEW_LISTING')}</h1>
+      <h1>{
+        <Typography style={{ color: phoneTheme.palette.text.primary }}>{t('MARKETPLACE.NEW_LISTING')}</Typography>}
+      </h1>
       <TextField
         className={classes.input}
         value={formState.title}

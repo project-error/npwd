@@ -21,8 +21,9 @@ export const PhoneThemes: Record<string, ThemeOptions> = {
         main: '#a6d4fa',
       },
       text: {
-        secondary: 'rgba(255, 255, 255, 0.7)',
-        disabled: 'rgba(255, 255, 255, 0.5)',
+        primary: 'rgba(255, 255, 255, 0.9)',
+        secondary: 'rgba(200, 200, 200, 0.9)',
+        disabled: 'rgba(200, 200, 200, 0.5)',
       },
     },
   },
@@ -32,6 +33,14 @@ export const PhoneThemes: Record<string, ThemeOptions> = {
     },
     palette: {
       mode: 'light',
+      primary: {
+        main: '#607D8B',
+      },
+      text: {
+        primary: 'rgba(0, 0, 0, 0.9)',
+        secondary: 'rgba(20, 20, 20, 0.9)',
+        disabled: 'rgba(20, 20, 20, 0.5)',
+      },
     },
   },
 };

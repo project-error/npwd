@@ -8,6 +8,7 @@ import { TextField } from '@ui/components/Input';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useNotesAPI } from '../hooks/useNotesAPI';
+import { useTheme } from '@mui/material';
 
 export const NoteModal: React.FC = () => {
   const classes = useStyles();
@@ -17,6 +18,7 @@ export const NoteModal: React.FC = () => {
   const [selectedNote, setSelectedNote] = useSelectedNote();
   const [noteTitle, setNoteTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');
+  const phoneTheme = useTheme();
 
   const history = useHistory();
   const location = useLocation();
@@ -126,17 +128,18 @@ export const NoteModal: React.FC = () => {
               <>
                 <Box display="inline" p={1}>
                   <Button
-                    color="primary"
                     variant="contained"
                     disabled={noteTitle.length <= 0}
                     onClick={handleNewNote}
                   >
+                  {<Typography style={noteTitle.length <= 0 && {color:  phoneTheme.palette.text.disabled} || {color:  phoneTheme.palette.text.primary}}>
                     {t('GENERIC.SAVE')}
+                  </Typography>}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={_handleClose}>
-                    {t('GENERIC.CANCEL')}
+                    {<Typography style={{ color: phoneTheme.palette.text.primary }}>{t('GENERIC.CANCEL')}</Typography>} 
                   </StatusButton>
                 </Box>
               </>
@@ -149,12 +152,14 @@ export const NoteModal: React.FC = () => {
                     onClick={handleUpdateNote}
                     disabled={noteTitle.length <= 0}
                   >
-                    {t('GENERIC.UPDATE')}
+                    {<Typography style={noteTitle.length <= 0 && {color:  phoneTheme.palette.text.disabled} || {color:  phoneTheme.palette.text.primary}}>
+                      {t('GENERIC.UPDATE')}
+                    </Typography>}
                   </Button>
                 </Box>
                 <Box display="inline" p={1}>
                   <StatusButton color="error" variant="contained" onClick={handleDeleteNote}>
-                    {t('GENERIC.DELETE')}
+                      {<Typography style={{ color: phoneTheme.palette.text.primary }}>{t('GENERIC.DELETE')}</Typography>}
                   </StatusButton>
                 </Box>
               </>

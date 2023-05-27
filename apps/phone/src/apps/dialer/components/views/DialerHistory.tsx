@@ -8,7 +8,7 @@ import { ListItem } from '@ui/components/ListItem';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { CallHistoryItem } from '@typings/call';
 import { useTranslation } from 'react-i18next';
-import { Box, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, IconButton, ListItemIcon, ListItemText, useTheme, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -36,6 +36,7 @@ export const DialerHistory: React.FC = () => {
   const contacts = useContacts();
   const history = useHistory();
   const [t] = useTranslation();
+  const phoneTheme = useTheme();
 
   const handleCall = (phoneNumber) => {
     initializeCall(phoneNumber);
@@ -51,7 +52,10 @@ export const DialerHistory: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
-          {t('DIALER.NO_HISTORY')}
+          {<Typography style={{ color: phoneTheme.palette.text.primary }}>
+            {t('DIALER.NO_HISTORY')}
+            </Typography>
+          }
           <span role="img" aria-label="sad">
             😞
           </span>
@@ -72,12 +76,14 @@ export const DialerHistory: React.FC = () => {
             <ListItemText
               primary={getDisplay(call.receiver)}
               secondary={
-                // TODO: Locale changes are pending #168 merge
-                dayjs().to(dayjs.unix(parseInt(call.start)))
+                <Typography style={{ color: phoneTheme.palette.text.secondary }}>
+                  {dayjs().to(dayjs.unix(parseInt(call.start)))}
+                </Typography>
               }
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                color: phoneTheme.palette.text.primary
               }}
             />
             <IconButton onClick={() => handleCall(call.receiver)} size="large">
@@ -104,12 +110,14 @@ export const DialerHistory: React.FC = () => {
             <ListItemText
               primary={getDisplay(call.transmitter)}
               secondary={
-                // TODO: Locale changes are pending #168 merge
-                dayjs().to(dayjs.unix(parseInt(call.start)))
+                <Typography style={{ color: phoneTheme.palette.text.secondary }}>
+                  {dayjs().to(dayjs.unix(parseInt(call.start)))}
+                </Typography>
               }
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                color: phoneTheme.palette.text.primary
               }}
             />
             <IconButton onClick={() => handleCall(call.transmitter)} size="large">

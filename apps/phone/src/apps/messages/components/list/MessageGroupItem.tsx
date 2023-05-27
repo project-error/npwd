@@ -7,6 +7,8 @@ import {
   Avatar as MuiAvatar,
   Badge,
   ListItemIcon,
+  colors,
+  useTheme,
 } from '@mui/material';
 
 import { MessageConversation } from '@typings/messages';
@@ -68,6 +70,8 @@ const MessageGroupItem = ({
     return getContact()?.display || conversationList.filter((p) => p !== participant)[0];
   }, [messageConversation, getContact]);
 
+  const phoneTheme = useTheme();
+
   return (
     <ListItem
       key={messageConversation.id}
@@ -99,7 +103,7 @@ const MessageGroupItem = ({
           )}
         </Badge>
       </ListItemAvatar>
-      <ListItemText sx={{ overflow: 'hidden' }}>{getLabelOrContact()}</ListItemText>
+      <ListItemText sx={{ overflow: 'hidden', color: phoneTheme.palette.text.primary}}>{getLabelOrContact()}</ListItemText>
     </ListItem>
   );
 };

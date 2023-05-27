@@ -29,6 +29,7 @@ import {
   Apps,
 } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/material';
 import { useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
@@ -72,7 +73,6 @@ export const SettingsApp: React.FC = () => {
     setSettings({ ...settings, [key]: value });
 
     if (key === 'theme') {
-      console.log('it was theme', value);
       if (value.value === 'taso-dark') {
         document.documentElement.classList.add('dark');
       } else {
@@ -163,7 +163,7 @@ export const SettingsApp: React.FC = () => {
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   const classes = useStyles();
-
+  const theme = useTheme();
   return (
     <AppWrapper>
       <AppTitle app={settingsApp} />
@@ -197,6 +197,7 @@ export const SettingsApp: React.FC = () => {
             icon={<Phone />}
             actionIcon={<FileCopy />}
             handleAction={handleCopyPhoneNumber}
+            theme={theme}
           />
           <SoundItem
             label={t('SETTINGS.OPTIONS.RINGTONE')}
@@ -208,6 +209,7 @@ export const SettingsApp: React.FC = () => {
             onPreviewClicked={() => {
               fetchNui(SettingEvents.PREVIEW_RINGTONE);
             }}
+            theme={theme}
           />
           <SoundItem
             label={t('SETTINGS.OPTIONS.NOTIFICATION')}
@@ -219,6 +221,7 @@ export const SettingsApp: React.FC = () => {
             onPreviewClicked={() => {
               fetchNui(SettingEvents.PREVIEW_ALERT);
             }}
+            theme={theme}
           />
           <SettingSwitch
             label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
@@ -226,12 +229,14 @@ export const SettingsApp: React.FC = () => {
             icon={<VisibilityOffIcon />}
             value={settings.streamerMode}
             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
+            theme={theme}
           />
           <SettingItemSlider
             label={t('SETTINGS.OPTIONS.CALL_VOLUME')}
             icon={<VolumeUp />}
             value={settings.callVolume}
             onCommit={(_, val) => handleSettingChange('callVolume', val)}
+            theme={theme}
           />
         </SettingsCategory>
         <SettingsCategory title={t('SETTINGS.CATEGORY.APPEARANCE')}>
@@ -241,6 +246,7 @@ export const SettingsApp: React.FC = () => {
             options={languages}
             onClick={openMenu}
             icon={<Book />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.THEME')}
@@ -248,6 +254,7 @@ export const SettingsApp: React.FC = () => {
             options={themes}
             onClick={openMenu}
             icon={<Brush />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.ICONSET')}
@@ -255,6 +262,7 @@ export const SettingsApp: React.FC = () => {
             options={iconSets}
             onClick={openMenu}
             icon={<Apps />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.WALLPAPER')}
@@ -262,6 +270,7 @@ export const SettingsApp: React.FC = () => {
             options={[...wallpapers, customWallpaper]}
             onClick={openMenu}
             icon={<Wallpaper />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.FRAME')}
@@ -269,6 +278,7 @@ export const SettingsApp: React.FC = () => {
             options={frames}
             onClick={openMenu}
             icon={<Smartphone />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.ZOOM')}
@@ -276,6 +286,7 @@ export const SettingsApp: React.FC = () => {
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}
+            theme={theme}
           />
         </SettingsCategory>
         <SettingsCategory title={t('APPS_TWITTER')}>
@@ -285,6 +296,7 @@ export const SettingsApp: React.FC = () => {
             options={twitterNotificationFilters}
             onClick={openMenu}
             icon={<FilterList />}
+            theme={theme}
           />
           <SettingItem
             label={t('SETTINGS.OPTIONS.NOTIFICATION')}
@@ -292,12 +304,14 @@ export const SettingsApp: React.FC = () => {
             options={twitterNotifications}
             onClick={openMenu}
             icon={<LibraryMusic />}
+            theme={theme}
           />
           <SettingItemSlider
             label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
             value={settings.TWITTER_notiSoundVol}
             onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
             icon={<VolumeUp />}
+            theme={theme}
           />
         </SettingsCategory>
         <SettingsCategory title={t('APPS_MARKETPLACE')}>
@@ -307,6 +321,7 @@ export const SettingsApp: React.FC = () => {
             value={settings.MARKETPLACE_notifyNewListing}
             icon={<FilterList />}
             onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
+            theme={theme}
           />
         </SettingsCategory>
         <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
@@ -316,6 +331,7 @@ export const SettingsApp: React.FC = () => {
             icon={<DeleteForever />}
             onClick={openMenu}
             options={resetSettingsOpts}
+            theme={theme}
           />
         </SettingsCategory>
       </AppContent>
