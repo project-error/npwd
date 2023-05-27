@@ -69,7 +69,7 @@ const ContactsInfoPage: React.FC = () => {
     referal: '/contacts',
   });
 
-  const { contactPayModal, setcontactPayModal } = useModal();
+  const { contactPayModal, setContactPayModal } = useModal();
   const { getContact, findExistingConversation } = useContactActions();
   const { updateContact, addNewContact, deleteContact } = useContactsAPI();
   const { initializeCall } = useCall();
@@ -146,7 +146,7 @@ const ContactsInfoPage: React.FC = () => {
         ResourceConfig.contacts && ResourceConfig.contacts.frameworkPay) {
       if (ResourceConfig.contacts && ResourceConfig.contacts.frameworkPay)
       {
-        setcontactPayModal(true);
+        setContactPayModal(true);
       }
     }
   };
@@ -159,7 +159,7 @@ const ContactsInfoPage: React.FC = () => {
 
   return (
     <div className="mx-auto h-full w-full">
-      <SendMoneyModal open={contactPayModal} closeModal={() => setcontactPayModal(false)} openContact={number} />
+      <SendMoneyModal open={contactPayModal} closeModal={() => setContactPayModal(false)} openContact={number} />
       <button onClick={() => history.goBack()} className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800" >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
       </button>
