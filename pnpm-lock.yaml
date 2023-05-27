@@ -3,10 +3,6 @@ lockfileVersion: '6.0'
 importers:
 
   .:
-    dependencies:
-      lodash:
-        specifier: https://github.com/lodash/lodash.git#npm
-        version: github.com/lodash/lodash/c6e281b878b315c7a10d90f9c2af4cdb112d9625
     devDependencies:
       '@commitlint/cli':
         specifier: ^15.0.0
@@ -23,6 +19,9 @@ importers:
       husky:
         specifier: ^7.0.4
         version: 7.0.4
+      lodash:
+        specifier: https://github.com/lodash/lodash.git#npm
+        version: github.com/lodash/lodash/c6e281b878b315c7a10d90f9c2af4cdb112d9625
       prettier:
         specifier: ^2.8.3
         version: 2.8.3
@@ -15063,6 +15062,8 @@ packages:
     resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -16718,4 +16719,4 @@ packages:
     resolution: {tarball: https://codeload.github.com/lodash/lodash/tar.gz/c6e281b878b315c7a10d90f9c2af4cdb112d9625}
     name: lodash
     version: 4.17.21
-    dev: false
+    dev: true
