@@ -1,5 +1,3 @@
-import { Config } from "prettier";
-
 interface TwitterConfig {
   showNotifications: boolean;
   generateProfileNameFromUsers: boolean;
