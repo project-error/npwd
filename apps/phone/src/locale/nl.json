@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "Kon contact niet bijwerken!",
         "UPDATE_SUCCESS": "Contact is succesvol bijgewerkt!",
         "DELETE_FAILED": "Kon contact niet verwijderen!",
-        "DELETE_SUCCESS": "Contact is succesvol verwijderd!"
+        "DELETE_SUCCESS": "Contact is succesvol verwijderd!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Contacten zoeken...",
       "FORM_NAME": "Naam",
       "FORM_NUMBER": "Telefoonnummer",

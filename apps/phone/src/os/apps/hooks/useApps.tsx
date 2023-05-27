@@ -30,7 +30,7 @@ export const useApps = () => {
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
-
+      
       const NotificationIcon = createLazyAppIcon(SvgIcon);
       const Icon = createLazyAppIcon(AppIcon);
 

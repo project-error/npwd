@@ -10,6 +10,11 @@
     "toggleCommand": "phone",
     "defaultLanguage": "en"
   },
+  "contacts": {
+    "frameworkPay": false,
+    "payResource": "my-core-resource",
+    "payFunction": "myCheckerFunction"
+  },
   "profanityFilter": {
     "enabled": false,
     "badWords": ["esx"]

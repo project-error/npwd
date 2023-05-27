@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
+import { useCall } from '@os/call/hooks/useCall';
+import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { NPWDButton, NPWDInput as Input } from '@ui/components';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
+import { SendMoneyModal } from '../../components/modals/SendMoney';
 import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-react';
+import LogDebugEvent from '@os/debug/LogDebugEvents';
+import { useModal } from '@apps/contacts/hooks/useModal';
+import { usePhone } from '@os/phone/hooks/usePhone';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -63,8 +69,12 @@ const ContactsInfoPage: React.FC = () => {
     referal: '/contacts',
   });
 
-  const { getContact } = useContactActions();
+  const { contactPayModal, setContactPayModal } = useModal();
+  const { getContact, findExistingConversation } = useContactActions();
   const { updateContact, addNewContact, deleteContact } = useContactsAPI();
+  const { initializeCall } = useCall();
+  const myPhoneNumber = useMyPhoneNumber();
+  const { goToConversation } = useMessages();
 
   const contact = getContact(parseInt(id));
 
@@ -74,6 +84,8 @@ const ContactsInfoPage: React.FC = () => {
   // Set state after checking if null
 
   const [t] = useTranslation();
+  const { ResourceConfig } = usePhone();
+  if (!ResourceConfig) return null;
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
@@ -97,12 +109,42 @@ const ContactsInfoPage: React.FC = () => {
     addNewContact({ display: name, number, avatar }, referral);
   };
 
+  const startCall = () => {
+    LogDebugEvent({
+      action: 'Emitting `Start Call` to Scripts',
+      level: 2,
+      data: true,
+    });
+    initializeCall(number.toString());
+  };
+
+  const handleMessage = () => {
+    const phoneNumber = number.toString();
+    LogDebugEvent({
+      action: 'Routing to Message',
+      level: 1,
+      data: { phoneNumber },
+    });
+    const conversation = findExistingConversation(myPhoneNumber, phoneNumber);
+    if (conversation) {
+      return goToConversation(conversation);
+    }
+
+    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+  };
+
   const handleContactDelete = () => {
     deleteContact({ id: contact.id });
   };
 
   const handleContactUpdate = () => {
     updateContact({ id: contact.id, number, avatar, display: name });
+  };
+
+  const openpayModal = () => {
+    if (ResourceConfig?.general?.useResourceIntegration && ResourceConfig?.contacts?.frameworkPay) {
+      setContactPayModal(true);
+    }
   };
 
   useEffect(() => {
@@ -113,10 +155,8 @@ const ContactsInfoPage: React.FC = () => {
 
   return (
     <div className="mx-auto h-full w-full">
-      <button
-        onClick={() => history.goBack()}
-        className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
-      >
+      <SendMoneyModal open={contactPayModal} closeModal={() => setContactPayModal(false)} openContact={number} />
+      <button onClick={() => history.goBack()} className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800" >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
       </button>
       <div className="mx-auto w-9/12">
@@ -133,13 +173,13 @@ const ContactsInfoPage: React.FC = () => {
 
         {contact && (
           <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button onClick={handleMessage} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button onClick={startCall} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button onClick={openpayModal} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
             <button

@@ -83,8 +83,12 @@
         "UPDATE_FAILED": "Kontakti uuendamine ebaõnnestus!",
         "UPDATE_SUCCESS": "Kontakt edukalt uuendatud!",
         "DELETE_FAILED": "Kontakti kustutamine nurjus",
-        "DELETE_SUCCESS": "Kontakt edukalt kustutatud!"
+        "DELETE_SUCCESS": "Kontakt edukalt kustutatud!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Otsi kontakte...",
       "FORM_NAME": "Nimi",
       "FORM_NUMBER": "Number",

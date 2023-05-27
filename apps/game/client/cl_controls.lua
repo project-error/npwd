@@ -48,7 +48,6 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-
         local isPauseOpen = IsPauseMenuActive() ~= false
         local isPhoneVisible = exports.npwd:isPhoneVisible()
         -- Handle if the phone is already visible and escape menu is opened

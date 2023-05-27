@@ -37,11 +37,11 @@ import { MatchApp } from '../../../apps/match/components/MatchApp';
 import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 import { IPhoneSettings } from '@typings/settings';
 import { i18n } from 'i18next';
-/*import {
+import {
   DARKCHAT_APP_PRIMARY_COLOR,
   DARKCHAT_APP_TEXT_COLOR,
 } from '../../../apps/darkchat/darkchat.theme';
-import DarkChatApp from '../../../apps/darkchat/DarkChatApp';*/
+import DarkChatApp from '../../../apps/darkchat/DarkChatApp';
 
 export interface IAppConfig {
   id: string;
@@ -92,7 +92,7 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
   },
-  /*{
+  {
     id: 'DARKCHAT',
     nameLocale: 'APPS_DARKCHAT',
     backgroundColor: DARKCHAT_APP_PRIMARY_COLOR,
@@ -101,7 +101,7 @@ export const APPS: IAppConfig[] = [
     Route: () => (
       <AppRoute id="DARKCHAT" path="/darkchat" component={DarkChatApp} emitOnOpen={false} />
     ),
-  },*/
+  },
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',

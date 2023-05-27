@@ -40,5 +40,8 @@
     "hooks": {
       "pre-commit": "npx run format:staged"
     }
+  },
+  "dependencies": {
+    "lodash": "https://github.com/lodash/lodash.git#npm"
   }
 }

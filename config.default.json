@@ -16,6 +16,11 @@
     "defaultLanguage": "en",
     "showId": false
   },
+  "contacts": {
+    "frameworkPay": false,
+    "payResource": "my-core-resource",
+    "payFunction": "myCheckerFunction"
+  },
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
@@ -49,7 +54,8 @@
       "cdn.discordapp.com",
       "media.discordapp.com",
       "upload.wikipedia.org",
-      "i.projecterror.dev"
+      "i.projecterror.dev",
+      "upcdn.io"
     ]
   },
   "profanityFilter": {
@@ -68,7 +74,8 @@
     "enableAvatars": true,
     "enableEmojis": true,
     "enableImages": true,
-    "maxImages": 3
+    "maxImages": 1,
+    "allowNoMessage": false
   },
   "match": {
     "generateProfileNameFromUsers": true,

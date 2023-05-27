@@ -34,26 +34,32 @@ export const newPhoneProp = async () => {
     global.phoneProp = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
     AttachEntityToEntity(
-      global.phoneProp,
-      playerPed,
-      boneIndex,
-      0.0,
-      0.05,
-      0.0,
-      0.0,
-      0.0,
-      -0.0,
-      true,
-      true,
-      false,
-      true,
-      1.0,
-      true,
+      global.phoneProp, 
+      playerPed, 
+      boneIndex, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      0.0, 
+      true, 
+      true, 
+      false, 
+      false, 
+      2, 
+      true
     ); //-- Attaches the phone to the player.
     propCreated = true;
 
-    const txtVariation = KvpService.getKvpInt(KvpItems.NPWD_FRAME);
+    let txtVariation;
+
+    if (hasNPWDProps) {
+      txtVariation = KvpService.getKvpInt(KvpItems.NPWD_FRAME);
+    }
+
     SetObjectTextureVariation(global.phoneProp, txtVariation || 7);
+    
   } else if (propCreated) {
     console.log('prop already created');
   }

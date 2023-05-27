@@ -83,8 +83,12 @@
         "UPDATE_FAILED": "Nepavyko atnaujinti kontakto!",
         "UPDATE_SUCCESS": "Kontaktas sėkmingai atnaujintas!",
         "DELETE_FAILED": "Nepavyko ištrinti kontakto!",
-        "DELETE_SUCCESS": "Kontaktas sėkmingai ištrintas!"
+        "DELETE_SUCCESS": "Kontaktas sėkmingai ištrintas!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Ieškoti kontaktų...",
       "FORM_NAME": "Vardas",
       "FORM_NUMBER": "Numeris",

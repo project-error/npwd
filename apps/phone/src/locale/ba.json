@@ -74,8 +74,12 @@
         "UPDATE_FAILED": "Nismo uspjeli ažurirati kontakt!",
         "UPDATE_SUCCESS": "Uspješno smo ažurirali kontakt!",
         "DELETE_FAILED": "Failed to delete contact!",
-        "DELETE_SUCCESS": "Uspješno smo obirsali kontakt!"
+        "DELETE_SUCCESS": "Uspješno smo obirsali kontakt!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Pretražite kontakte...",
       "FORM_NAME": "Ime",
       "FORM_NUMBER": "Broj",

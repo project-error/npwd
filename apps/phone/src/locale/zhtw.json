@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "更新聯絡人失敗！",
         "UPDATE_SUCCESS": "成功更新聯絡人！",
         "DELETE_FAILED": "刪除聯絡人失敗！",
-        "DELETE_SUCCESS": "成功刪除聯絡人！"
+        "DELETE_SUCCESS": "成功刪除聯絡人！",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "搜尋聯絡人…",
       "FORM_NAME": "姓名",
       "FORM_NUMBER": "電話號碼",

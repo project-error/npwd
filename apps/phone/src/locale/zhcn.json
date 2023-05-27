@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "更新联系人失败！",
         "UPDATE_SUCCESS": "成功更新联系人！",
         "DELETE_FAILED": "删除联系人失败！",
-        "DELETE_SUCCESS": "成功删除联系人！"
+        "DELETE_SUCCESS": "成功删除联系人！",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "搜寻联系人…",
       "FORM_NAME": "姓名",
       "FORM_NUMBER": "电话号码",

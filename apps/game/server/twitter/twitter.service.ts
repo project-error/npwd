@@ -6,12 +6,15 @@ import { reportTweetToDiscord } from '../misc/discord';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { getDefaultProfileNames } from '../players/player.utils';
 import { checkAndFilterImage } from './../utils/imageFiltering';
+import { tweetDiscordPost } from '../lib/http-service';
 
 class _TwitterService {
   private readonly twitterDB: _TwitterDB;
+  private readonly DISCORD_WEBHOOK: string;
 
   constructor() {
     this.twitterDB = TwitterDB;
+    this.DISCORD_WEBHOOK = GetConvar('TWITTER_WEBHOOK', '');
     twitterLogger.debug('Twitter service started');
   }
 
@@ -128,6 +131,32 @@ class _TwitterService {
     }
   }
 
+  async postDiscord(identifier: string, tweet: NewTweet, images: string[]): Promise<void> {
+    try {
+      if (this.DISCORD_WEBHOOK && this.DISCORD_WEBHOOK != '') {
+        const profile = await this.twitterDB.getProfile(identifier);
+        const data = [
+          {
+            "color": '1942002',
+            "title": 'New Tweet',
+            "description": tweet.message,
+            "image": {
+              "url": images[0]
+            },
+            "footer": {
+              "text": profile.profile_name + ' ' + profile.id + ':' + identifier,
+              "icon_url": profile.avatar_url
+            }
+          }
+        ];
+
+        await tweetDiscordPost(this.DISCORD_WEBHOOK, JSON.stringify({username: "Twitter", embeds: data}))
+      }
+    } catch (e) {}
+
+    return
+  }
+
   async handleCreateTweet(
     reqObj: PromiseRequest<Tweet>,
     resp: PromiseEventResp<void>,
@@ -150,9 +179,9 @@ class _TwitterService {
       reqObj.data.images = newImageString;
 
       const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
-
-      resp({ status: 'ok' });
       emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
+      resp({ status: 'ok' });
+      this.postDiscord(identifier, reqObj.data, images)
     } catch (e) {
       twitterLogger.error(`Create tweet failed, ${e.message}`, {
         source: reqObj.source,

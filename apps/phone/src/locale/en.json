@@ -83,8 +83,12 @@
         "UPDATE_FAILED": "Failed to update contact!",
         "UPDATE_SUCCESS": "Successfully updated contact!",
         "DELETE_FAILED": "Failed to delete contact!",
-        "DELETE_SUCCESS": "Successfully deleted contact!"
+        "DELETE_SUCCESS": "Successfully deleted contact!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Search contacts...",
       "FORM_NAME": "Name",
       "FORM_NUMBER": "Number",

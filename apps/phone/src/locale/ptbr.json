@@ -80,8 +80,12 @@
         "UPDATE_FAILED": "Falha ao atualizar o contato!",
         "UPDATE_SUCCESS": "Contato atualizado com sucesso!",
         "DELETE_FAILED": "Falha ao excluir contato!",
-        "DELETE_SUCCESS": "Contato excluído com sucesso!"
+        "DELETE_SUCCESS": "Contato excluído com sucesso!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Pesquisar contatos...",
       "FORM_NAME": "Nome",
       "FORM_NUMBER": "Número",
