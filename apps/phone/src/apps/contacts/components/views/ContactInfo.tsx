@@ -142,12 +142,8 @@ const ContactsInfoPage: React.FC = () => {
   };
 
   const openpayModal = () => {
-    if (ResourceConfig.general && ResourceConfig.general.useResourceIntegration && 
-        ResourceConfig.contacts && ResourceConfig.contacts.frameworkPay) {
-      if (ResourceConfig.contacts && ResourceConfig.contacts.frameworkPay)
-      {
-        setContactPayModal(true);
-      }
+    if (ResourceConfig?.general?.useResourceIntegration && ResourceConfig?.contacts?.frameworkPay) {
+      setContactPayModal(true);
     }
   };
 
