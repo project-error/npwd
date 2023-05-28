@@ -16,7 +16,8 @@
     "rollup": "^2.77.2",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-esbuild": "^4.10.2",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.3",
+    "lodash": "https://github.com/lodash/lodash.git#npm"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -40,5 +41,6 @@
     "hooks": {
       "pre-commit": "npx run format:staged"
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -77,8 +77,12 @@
         "UPDATE_FAILED": "Det gick inte att uppdatera kontakten!",
         "UPDATE_SUCCESS": "Uppdaterat kontakten!",
         "DELETE_FAILED": "Det gick inte att ta bort kontakten!",
-        "DELETE_SUCCESS": "Kontakt borttagen!"
+        "DELETE_SUCCESS": "Kontakt borttagen!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Sök kontakt...",
       "FORM_NAME": "Namn",
       "FORM_NUMBER": "Nummer",

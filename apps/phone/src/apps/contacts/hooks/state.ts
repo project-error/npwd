@@ -27,6 +27,12 @@ export const contacts = atom<Contact[]>({
   }),
 });
 
+export const showMoneyModal = atom<boolean>({
+  key: 'contactPayModal',
+  default: false,
+});
+
+
 export const filterInput = atom<string>({
   key: 'filterInput',
   default: '',

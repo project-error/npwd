@@ -9,7 +9,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const [imageOpen, setImageOpen] = useState<string | null>(null);
 
   return (
-    <>
+    <>  
       {imageOpen && <Backdrop onClick={() => setImageOpen(null)} />}
       <List>
         {tweets.map((tweet) => (

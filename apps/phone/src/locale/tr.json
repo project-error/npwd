@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "Kişi güncellenemedi!",
         "UPDATE_SUCCESS": "Kişi güncellendi!",
         "DELETE_FAILED": "Kişi silinemedi!",
-        "DELETE_SUCCESS": "Kişi silindi!"
+        "DELETE_SUCCESS": "Kişi silindi!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Kişi ara...",
       "FORM_NAME": "İsim",
       "FORM_NUMBER": "Numara",

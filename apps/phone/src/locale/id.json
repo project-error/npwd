@@ -78,8 +78,12 @@
         "UPDATE_FAILED": "Gagal memperbarui kontak!",
         "UPDATE_SUCCESS": "Berhasil memperbarui kontak!",
         "DELETE_FAILED": "Gagal menghapus kontak!",
-        "DELETE_SUCCESS": "Berhasil menghapus kontak!"
+        "DELETE_SUCCESS": "Berhasil menghapus kontak!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Mencari kontak...",
       "FORM_NAME": "Nama",
       "FORM_NUMBER": "No",

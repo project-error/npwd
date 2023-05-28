@@ -48,10 +48,10 @@ export class _DarkchatDB {
     return Promise.all(
       members.map(async (member) => {
         const player = await PlayerService.getPlayerFromIdentifier(member.identifier);
-
+        
         return {
           ...member,
-          phoneNumber: player.getPhoneNumber(),
+          phoneNumber: (player ? player.getPhoneNumber() : ""),
         };
       }),
     );
@@ -111,11 +111,7 @@ export class _DarkchatDB {
     return { id: result[0].id, label: result[0].label };
   }
 
-  async joinChannel(
-    channelIdentifier: string,
-    userIdentifier: string,
-    isOwner: boolean,
-  ): Promise<number> {
+  async joinChannel(channelIdentifier: string, userIdentifier: string, isOwner: boolean): Promise<number> {
     const { id: channelId } = await this.getChannelIdAndLabel(channelIdentifier);
 
     const query = `INSERT INTO npwd_darkchat_channel_members (channel_id, user_identifier, is_owner)

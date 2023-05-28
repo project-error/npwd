@@ -11,6 +11,7 @@ interface TwitterConfig {
   enableEmojis: boolean;
   enableImages: boolean;
   maxImages: number;
+  allowNoMessage: boolean;
 }
 
 interface MatchConfig {
@@ -35,6 +36,12 @@ interface General {
   toggleCommand: string;
   defaultLanguage: string;
   showId: boolean;
+}
+
+interface Contacts {
+  frameworkPay: boolean;
+  payResource: string;
+  payFunction: string;
 }
 
 interface NotificationConfig {
@@ -128,4 +135,5 @@ export interface ResourceConfig {
   profanityFilter: ProfanityFilter;
   apps: string[];
   voiceMessage: VoiceMessageConfig;
+  contacts: Contacts;
 }

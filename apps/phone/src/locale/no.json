@@ -80,8 +80,12 @@
         "UPDATE_FAILED": "Feilet å oppdatere kontakt!",
         "UPDATE_SUCCESS": "Oppdaterte kontakt!",
         "DELETE_FAILED": "Kunne ikke slette kontakt!",
-        "DELETE_SUCCESS": "Slettet kontakt!"
+        "DELETE_SUCCESS": "Slettet kontakt!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Søk kontakter...",
       "FORM_NAME": "Navn",
       "FORM_NUMBER": "Nummer",

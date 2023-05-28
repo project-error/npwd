@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "A kontakt frissítése sikertelen!",
         "UPDATE_SUCCESS": "Kontakt frissítve!",
         "DELETE_FAILED": "Nem sikerült a kontakt törlése!",
-        "DELETE_SUCCESS": "Kontakt törölve!"
+        "DELETE_SUCCESS": "Kontakt törölve!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Kontaktok keresése",
       "FORM_NAME": "Név",
       "FORM_NUMBER": "Szám",

@@ -80,8 +80,12 @@
         "UPDATE_FAILED": "Nepodařilo se aktualizovat kontakt!",
         "UPDATE_SUCCESS": "Kontakt byl aktualizován!",
         "DELETE_FAILED": "Nepodařilo se vymazat kontakt!",
-        "DELETE_SUCCESS": "Kontakt byl vymazán!"
+        "DELETE_SUCCESS": "Kontakt byl vymazán!",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Vyhledat kontakty...",
       "FORM_NAME": "Jméno",
       "FORM_NUMBER": "Číslo",

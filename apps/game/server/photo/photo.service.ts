@@ -59,6 +59,8 @@ class _PhotoService {
 
           if (config.images.type === 'imgur') {
             body = data.replace(/^data:image\/[a-z]+;base64,/, '').trim();
+          } else if (config.images.type === 'upload.io') {
+            body = blob
           } else {
             body.append(config.images.type, blob);
           }

@@ -70,7 +70,7 @@ const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   if (!ResourceConfig) return null;
-  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
+  const { characterLimit, newLineLimit, allowNoMessage } = ResourceConfig.twitter;
 
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
@@ -80,8 +80,8 @@ const AddTweetModal = () => {
   const submitTweet = async () => {
     await promiseTimeout(200);
     const cleanedMessage = clean(message.trim());
-    if (cleanedMessage.length === 0) return;
-    if (!isValidMessage(cleanedMessage)) return;
+    if ((!cleanedMessage && !allowNoMessage) || !images || images.length === 0) return;
+    if (cleanedMessage.length > 0 && !isValidMessage(cleanedMessage)) return;
 
     const data: NewTweet = {
       message: cleanedMessage,

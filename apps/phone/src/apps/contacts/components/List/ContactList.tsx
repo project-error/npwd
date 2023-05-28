@@ -1,51 +1,13 @@
 import React from 'react';
 import { SearchContacts } from './SearchContacts';
 import { Link, useHistory } from 'react-router-dom';
-import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
-import { useCall } from '@os/call/hooks/useCall';
-import { useContactActions } from '../../hooks/useContactActions';
-import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import useMessages from '../../../messages/hooks/useMessages';
-//import { usePhone } from '@os/phone/hooks';
 import { Contact } from '@typings/contact';
 import { classNames } from '@utils/css';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
   const history = useHistory();
-  const { initializeCall } = useCall();
-  const { findExistingConversation } = useContactActions();
-  const myPhoneNumber = useMyPhoneNumber();
-  const { goToConversation } = useMessages();
-  //const { ResourceConfig } = usePhone();
-
-  const openContactInfo = (contactId: number) => {
-    history.push(`/contacts/${contactId}`);
-  };
-
-  const startCall = (number: string) => {
-    LogDebugEvent({
-      action: 'Emitting `Start Call` to Scripts',
-      level: 2,
-      data: true,
-    });
-    initializeCall(number);
-  };
-
-  const handleMessage = (phoneNumber: string) => {
-    LogDebugEvent({
-      action: 'Routing to Message',
-      level: 1,
-      data: { phoneNumber },
-    });
-    const conversation = findExistingConversation(myPhoneNumber, phoneNumber);
-    if (conversation) {
-      return goToConversation(conversation);
-    }
-
-    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
-  };
 
   // FIXME: This should be reduced before being passed to the component
   const groupedContacts = filteredContacts.reduce((r, e) => {
@@ -81,7 +43,7 @@ export const ContactList: React.FC = () => {
                         )}
                       >
                         <div className="min-w-0 flex-1">
-                          <Link to={`contacts/${contact.id}`} className="focus:outline-none">
+                          <Link to={`/contacts/${contact.id}`} className="focus:outline-none">
                             {/* Extend touch target to entire panel */}
                             <span className="absolute inset-0" aria-hidden="true" />
                             <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">

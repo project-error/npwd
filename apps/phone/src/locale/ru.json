@@ -79,8 +79,12 @@
         "UPDATE_FAILED": "Не удалось обновить контакт",
         "UPDATE_SUCCESS": "Контакт успешно обновлен",
         "DELETE_FAILED": "Не удалось удалить контакт",
-        "DELETE_SUCCESS": "Контакт успешно удален"
+        "DELETE_SUCCESS": "Контакт успешно удален",
+        "PAYMENTFAILED": "The payment failed!",
+        "PAYMENTSENT": "The payment sent!"
       },
+      "AMOUNT": "How Much?",
+      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Искать контакты...",
       "FORM_NAME": "Имя",
       "FORM_NUMBER": "Номер",
