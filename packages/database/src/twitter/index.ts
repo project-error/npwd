@@ -27,7 +27,7 @@ const SELECT_FIELDS = `
   TIME_TO_SEC(TIMEDIFF( NOW(), npwd_twitter_tweets.createdAt)) AS seconds_since_tweet
 `;
 
-const TWEETS_PER_PAGE = 25;
+const TWEETS_PER_PAGE = config?.twitter?.resultsLimit || 25;
 
 const formatTweets =
   (profileId: number) =>
