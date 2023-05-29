@@ -7,10 +7,11 @@ import { ServerPromiseResp } from '@typings/common';
 import fetchNui from '@utils/fetchNui';
 import { processTweet } from '@apps/twitter/utils/tweets';
 import { usePhone } from '@os/phone/hooks';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const { ResourceConfig } = usePhone();
-
+  const { addAlert } = useSnackbar();
   const TWEET_LIMIT_PER_PAGE  = ResourceConfig?.twitter?.resultsLimit || 25;
   const [imageOpen, setImageOpen] = useState<string | null>(null);
   const [tweetsData, setTweetsData] = useState(tweets);
@@ -25,7 +26,10 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
     const pageId = page + 1
     fetchNui<ServerPromiseResp<GetTweet[]>>(TwitterEvents.FETCH_TWEETS, {pageId}).then((resp) => {
       if (resp.status !== 'ok') {
-        console.log(resp.errorMsg || '')
+        addAlert({
+          message: resp.errorMsg,
+          type: 'error',
+        });
       } else {
         const newTweets = resp.data?.map(processTweet)
         if (newTweets.length < TWEET_LIMIT_PER_PAGE) {
@@ -42,7 +46,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
       }, 350);
 
     });
-  }, [setTweetsData])
+  }, [addAlert, setTweetsData])
 
   const Footer = () => {
     if (hasNextPage) {
