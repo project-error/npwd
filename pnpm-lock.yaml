@@ -183,6 +183,9 @@ importers:
       esbuild:
         specifier: ^0.15.15
         version: 0.15.15
+      esbuild-plugin-copy:
+        specifier: ^2.1.1
+        version: 2.1.1(esbuild@0.15.15)
       eslint:
         specifier: ^7.32.0
         version: 7.32.0
@@ -7581,6 +7584,18 @@ packages:
     os: [openbsd]
     requiresBuild: true
     optional: true
+
+  /esbuild-plugin-copy@2.1.1(esbuild@0.15.15):
+    resolution: {integrity: sha512-Bk66jpevTcV8KMFzZI1P7MZKZ+uDcrZm2G2egZ2jNIvVnivDpodZI+/KnpL3Jnap0PBdIHU7HwFGB8r+vV5CVw==}
+    peerDependencies:
+      esbuild: '>= 0.14.0'
+    dependencies:
+      chalk: 4.1.2
+      chokidar: 3.5.3
+      esbuild: 0.15.15
+      fs-extra: 10.1.0
+      globby: 11.1.0
+    dev: true
 
   /esbuild-sunos-64@0.15.15:
     resolution: {integrity: sha512-jOPBudffG4HN8yJXcK9rib/ZTFoTA5pvIKbRrt3IKAGMq1EpBi4xoVoSRrq/0d4OgZLaQbmkHp8RO9eZIn5atA==}

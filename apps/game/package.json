@@ -48,6 +48,7 @@
     "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.3",
     "esbuild": "^0.15.15",
+    "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^7.32.0",
     "jest": "^26.5.3",
     "remove-files-webpack-plugin": "^1.4.3",
