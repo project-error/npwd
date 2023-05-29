@@ -297,6 +297,9 @@ importers:
       react-uuid:
         specifier: ^1.0.3
         version: 1.0.3
+      react-virtuoso:
+        specifier: ^4.3.8
+        version: 4.3.8(react-dom@17.0.2)(react@17.0.2)
       recoil:
         specifier: ^0.7.7
         version: 0.7.7(react-dom@17.0.2)(react@17.0.2)
@@ -13736,6 +13739,17 @@ packages:
   /react-uuid@1.0.3:
     resolution: {integrity: sha512-cw6Rr6JphvsdK4xHPGBjKD7XSH6Y6i4NJFWUO3OiDd7NLcR8xVeQ3CfeKm7h+S5tpZZVfbH3Tkrz/ydsIiV8pA==}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    dev: false
+
+  /react-virtuoso@4.3.8(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-hoZj8Dl1R9fYqtUwA5LjCii1djO4ZNtoYkYsR52ZjdJzdXh2hec1IQ2O+1MZNjLTb4v8ff3hbt34StiHTVDdlg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16 || >=17 || >= 18'
+      react-dom: '>=16 || >=17 || >= 18'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
     dev: false
 
   /react@17.0.2:

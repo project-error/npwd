@@ -12,6 +12,7 @@ interface TwitterConfig {
   enableImages: boolean;
   maxImages: number;
   allowNoMessage: boolean;
+  resultsLimit: number;
 }
 
 interface MatchConfig {

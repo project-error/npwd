@@ -179,9 +179,11 @@ const ContactsInfoPage: React.FC = () => {
             <button onClick={startCall} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
+            { (ResourceConfig?.general?.useResourceIntegration && ResourceConfig?.contacts?.frameworkPay) &&
             <button onClick={openpayModal} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
               <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
+            }
             <button
               onClick={handleContactDelete}
               className="group flex items-center justify-center rounded-md py-2 dark:bg-red-100 dark:hover:bg-red-200"
