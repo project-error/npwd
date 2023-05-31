@@ -36,7 +36,7 @@ custom framework.
 
 For further details on this system, please refer to our installation [documentation](https://projecterror.dev/docs/npwd/start/installation).
 
-You will also need [screenshot-basic](https://github.com/citizenfx/screenshot-basic).
+You will also need [screenshot-basic](https://github.com/project-error/screenshot-basic).
 
 ## Technical Stack and Development
 
@@ -56,8 +56,7 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Like, reply, retweet, report and delete your own Tweets.
   - Send emojis and images directly from the phone's gallery, or from an external url. _Gifs too!_
   - NPWD features discord logging so all reported tweets will be sent to the configured webhook.
-  - Discord logging for posted tweets with configured webhook
-  - Infinite scrolling of twitter feed
+  - Log tweets directly to discord with configured webhook.
 - [Matchmaker](https://i.imgur.com/46XtZ06.jpeg)
   - Like tinder but without all the bots. Swipe right into romance or rejection.
   - As of v1.0, there is no filter for sexual preference.
@@ -79,7 +78,7 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Add a phone number to your contacts for easier access.
   - Supports up to 19 characters for phone number by default and easily changed within the
   - Gif support for avatar.
-  - Quickly call/text or send money (using the configuration)
+  - Quickly call, text, and with additional configuration send money.
 - [Notes](https://i.imgur.com/0Hvvlah.png)
   - Something you want to remember in game? Make a note!
 - [Calculator](https://user-images.githubusercontent.com/55056068/147531020-b7527a69-0b0e-4e81-83c7-58ad836eab23.png)
