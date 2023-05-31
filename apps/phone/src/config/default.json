@@ -1,5 +1,5 @@
 {
-  "cellProvider": "NBRP",
+  "cellProvider": "AT&T",
   "defaultLanguage": "en",
   "wallpapers": [
     {
@@ -15,8 +15,12 @@
       "value": "waves.jpg"
     },
     {
-      "label": "NBRP",
-      "value": "nbrp.png"
+      "label": "Project Error",
+      "value": "projecterror.jpg"
+    },
+    {
+      "label": "NPWD 2020",
+      "value": "npwd2020.png"
     },
     {
       "label": "Default",
@@ -209,8 +213,8 @@
       }
     },
     "wallpaper": {
-      "label": "NBRP",
-      "value": "nbrp.jpg"
+      "label": "Minimal",
+      "value": "minimal.jpg"
     },
     "customWallpaper": "",
     "frame": {
@@ -222,8 +226,8 @@
       "value": "taso-dark"
     },
     "zoom": {
-      "label": "70%",
-      "value": 0.7
+      "label": "90%",
+      "value": 0.9
     },
     "streamerMode": false,
     "ringtone": {
@@ -247,11 +251,11 @@
     "MARKETPLACE_notifyNewListing": true
   },
   "appSettings": {
-    "browserHomePage": "https://nbrp.city"
+    "browserHomePage": "https://docs.projecterror.dev"
   },
   "iconSet": [
     {
-      "label": "Flat Icons",
+      "label": "NPWD Icons",
       "value": {
         "custom": true,
         "name": "npwd_icons"
