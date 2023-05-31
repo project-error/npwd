@@ -21,24 +21,27 @@ export const useMessagesService = () => {
   const { getMessageConversationById, goToConversation } = useMessages();
   const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
-  const addNotification = (message: string, convoName: string, convoId: number) => {
-    const group = getMessageConversationById(convoId);
+  const addNotification = useCallback(
+    (message: string, convoName: string, convoId: number) => {
+      const group = getMessageConversationById(convoId);
 
-    enqueueNotification({
-      appId: 'MESSAGES',
-      notisId: 'npwd:messages:messageBroadcast',
-      content: message,
-      onClick: () => goToConversation(group),
-      secondaryTitle: getDisplayByNumber(convoName) ?? convoName,
-      path: `/messages/conversations/${activeMessageConversation.id}`,
-    });
-  };
+      enqueueNotification({
+        appId: 'MESSAGES',
+        notisId: 'npwd:messages:messageBroadcast',
+        content: message,
+        onClick: () => goToConversation(group),
+        secondaryTitle: getDisplayByNumber(convoName) ?? convoName,
+        path: `/messages/conversations/${activeMessageConversation.id}`,
+      });
+    },
+    [enqueueNotification],
+  );
 
   const handleMessageBroadcast = ({ conversationName, conversation_id, message }) => {
     if (visibility && pathname.includes(`/messages/conversations/${conversation_id}`)) {
       return;
     }
-
+    
     setMessageReadState(conversation_id, 1);
     // Set the current unread count to 1, when they click it will be removed
     //
