@@ -56,6 +56,8 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Like, reply, retweet, report and delete your own Tweets.
   - Send emojis and images directly from the phone's gallery, or from an external url. _Gifs too!_
   - NPWD features discord logging so all reported tweets will be sent to the configured webhook.
+  - Discord logging for posted tweets with configured webhook
+  - Infinite scrolling of twitter feed
 - [Matchmaker](https://i.imgur.com/46XtZ06.jpeg)
   - Like tinder but without all the bots. Swipe right into romance or rejection.
   - As of v1.0, there is no filter for sexual preference.
@@ -66,6 +68,7 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Features calling/messaging icons so no need to provide your number.
 - [Text Messaging](https://i.imgur.com/9vFHqhW.png)
   - Send a message or an image taken straight from the phones Gallery.
+  - Group messages
 - [Calling](https://i.imgur.com/7T0JbQl.png)
   - Call anyone from anywhere.
 - [Camera](https://i.imgur.com/Fk6wQkg.png)
@@ -76,6 +79,7 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Add a phone number to your contacts for easier access.
   - Supports up to 19 characters for phone number by default and easily changed within the
   - Gif support for avatar.
+  - Quickly call/text or send money (using the configuration)
 - [Notes](https://i.imgur.com/0Hvvlah.png)
   - Something you want to remember in game? Make a note!
 - [Calculator](https://user-images.githubusercontent.com/55056068/147531020-b7527a69-0b0e-4e81-83c7-58ad836eab23.png)
