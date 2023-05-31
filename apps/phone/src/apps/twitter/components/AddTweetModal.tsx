@@ -80,7 +80,7 @@ const AddTweetModal = () => {
   const submitTweet = async () => {
     await promiseTimeout(200);
     const cleanedMessage = clean(message.trim());
-    if ((!cleanedMessage && !allowNoMessage) || !images || images.length === 0) return;
+    if ((!cleanedMessage && !allowNoMessage) || (!cleanedMessage && (!images || images.length === 0))) return;
     if (cleanedMessage.length > 0 && !isValidMessage(cleanedMessage)) return;
 
     const data: NewTweet = {
