@@ -8,13 +8,14 @@ import fetchNui from '@utils/fetchNui';
 import { processTweet } from '@apps/twitter/utils/tweets';
 import { usePhone } from '@os/phone/hooks';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useTweetsState } from '@apps/twitter/hooks/state';
 
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const TWEET_LIMIT_PER_PAGE  = ResourceConfig?.twitter?.resultsLimit || 25;
   const [imageOpen, setImageOpen] = useState<string | null>(null);
-  const [tweetsData, setTweetsData] = useState(tweets);
+  const [tweetsData, setTweetsData] = useTweetsState();
   const [hasNextPage, setHasNextPage] = useState(tweetsData.length == TWEET_LIMIT_PER_PAGE ? true : false);
   const [page, setPage] = useState(0);
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);

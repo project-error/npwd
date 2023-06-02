@@ -250,8 +250,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(react@17.0.2)
       fivem-nui-react-lib:
-        specifier: ^2.3.12
-        version: 2.3.12(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.3.13
+        version: 2.3.13(react-dom@17.0.2)(react@17.0.2)
       history:
         specifier: ^5.3.0
         version: 5.3.0
@@ -8523,8 +8523,8 @@ packages:
       - supports-color
     dev: true
 
-  /fivem-nui-react-lib@2.3.12(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-Bns0K+oxTug07AbxjkClHZ8ndrGOiKe8/jcZCRDUmCJgw8cCHhFsyXdjt0t+S5CNxk9YKwFzMUfFZkn6lk8BsA==}
+  /fivem-nui-react-lib@2.3.13(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-+pkx6ZwHMaFIFiaa4Yq/8T8yjKzfGz1806kiYDN+Eapnw7eu8LjSNVAl4PVk5eJIIMxaf97TGbB3duUTB3GoNg==}
     peerDependencies:
       react: ^17.0.2
       react-dom: ^17.0.2
