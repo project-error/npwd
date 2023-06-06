@@ -31,7 +31,7 @@ export const newPhoneProp = async () => {
 
     const playerPed = PlayerPedId();
     const [x, y, z] = GetEntityCoords(playerPed, true);
-    global.phoneProp = CreateObject(GetHashKey(phoneModel), x, y, z true, true, true);
+    global.phoneProp = CreateObject(GetHashKey(phoneModel), x, y, z, true, true, true);
     const boneIndex = GetPedBoneIndex(playerPed, 28422);
     AttachEntityToEntity(
       global.phoneProp,
