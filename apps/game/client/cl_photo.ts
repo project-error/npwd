@@ -8,6 +8,7 @@ import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 let inCameraMode = false;
 let canToggleHUD = false;
+let canToggleRadar = false;
 
 function closePhoneTemp() {
   SetNuiFocus(false, false);
@@ -46,12 +47,20 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 
   inCameraMode = true;
 
-  // If hud is not already hidden (by another resource), Hide the HUD
+  // If hud is not already hidden (by another resource), Hide the hud
   if (!IsHudHidden()) {
     canToggleHUD = true;
     DisplayHud(false);
   } else {
     canToggleHUD = false;
+  }
+  
+  // If radar is not already hidden (by another resource), Hide the radar
+  if (!IsRadarHidden()) {
+    canToggleRadar = true;
+    DisplayRadar(false);
+  } else {
+    canToggleRadar = false;
   }
 
   // We want to emit this event for UI handling in other resources
@@ -104,10 +113,16 @@ const handleTakePicture = async () => {
   emit('npwd:disableControlActions', true);
   inCameraMode = false;
 
-  // If hud is already hidden (by this resource), Show the HUD
+  // If hud is already hidden (by this resource), Show the hud
   if (canToggleHUD) {
     DisplayHud(true);
     canToggleHUD = false;
+  }
+  
+  // If radar is already hidden (by this resource), Show the radar
+  if (canToggleRadar) {
+    DisplayRadar(true);
+    canToggleRadar = false;
   }
 
   return resp;
@@ -123,10 +138,16 @@ const handleCameraExit = async () => {
   openPhoneTemp();
   inCameraMode = false;
 
-  // If hud is already hidden (by this resource), Show the HUD
+  // If hud is already hidden (by this resource), Show the hud
   if (canToggleHUD) {
     DisplayHud(true);
     canToggleHUD = false;
+  }
+  
+  // If radar is already hidden (by this resource), Show the radar
+  if (canToggleRadar) {
+    DisplayRadar(true);
+    canToggleRadar = false;
   }
 };
 
