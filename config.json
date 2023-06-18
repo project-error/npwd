@@ -23,10 +23,10 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://api.imgur.com/3/image",
-    "type": "imgur",
+    "url": "https://mdt.noire.cloud/uploadimage",
+    "type": "",
     "imageEncoding": "jpg",
-    "contentType": "multipart/form-data",
+    "contentType": "application/json",
     "useContentType": true,
     "authorizationHeader": "Authorization",
     "authorizationPrefix": "Client-ID",

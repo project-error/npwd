@@ -53,22 +53,21 @@ class _PhotoService {
           const _data = Buffer.from(data.replace(`data:${type};base64`, ''), 'base64');
           fs.writeFileSync(filePath, _data);
 
-          let body: string | FormData = new FormData();
+          let body: string;
           const blob = fileFromSync(filePath, type);
 
           if (config.images.type === 'imgur') {
             body = data.replace(/^data:image\/[a-z]+;base64,/, '').trim();
           } else {
-            body.append(config.images.type, blob);
+            // body.append(config.images.type, blob);
+            body = data.replace(/^data:image\/[a-z]+;base64,/, '').trim();
+            body = JSON.stringify({ image: body });
           }
 
           let returnData = await fetch(config.images.url, {
             method: 'POST',
             body,
             headers: {
-              [config.images.useAuthorization &&
-              config.images
-                .authorizationHeader]: `${config.images.authorizationPrefix} ${this.TOKEN}`,
               [config.images.useContentType && 'Content-Type']: config.images.contentType,
             },
           }).then(async (result) => {
@@ -86,10 +85,14 @@ class _PhotoService {
           fs.rmSync(filePath);
           if (!returnData) return; // Already caught
 
-          for (const index of config.images.returnedDataIndexes) returnData = returnData[index];
+          // for (const index of config.images.returnedDataIndexes) returnData = returnData[index];
+          returnData = returnData['url'];
 
           const identifier = PlayerService.getIdentifier(reqObj.source);
-          const photo = await this.photoDB.uploadPhoto(identifier, returnData);
+          const photo = await this.photoDB.uploadPhoto(
+            identifier,
+            'https://mdt.noire.cloud/images/' + returnData,
+          );
 
           resp({ status: 'ok', data: photo });
         },
