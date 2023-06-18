@@ -33,6 +33,23 @@
     "useAuthorization": true,
     "returnedDataIndexes": ["data", "link"]
   },
+  "imageSafety": {
+    "filterUnsafeImageUrls": true,
+    "embedUnsafeImages": false,
+    "embedUrl": "https://i.example.com/embed",
+    "safeImageUrls": [
+      "noire.cloud",
+      "i.imgur.com",
+      "i.file.glass",
+      "dropbox.com",
+      "c.tenor.com",
+      "discord.com",
+      "cdn.discordapp.com",
+      "media.discordapp.com",
+      "upload.wikipedia.org",
+      "i.projecterror.dev"
+    ]
+  },
   "twitter": {
     "showNotifications": true,
     "generateProfileNameFromUsers": true,
