@@ -240,9 +240,9 @@ class _PlayerService {
    * @param src - Source of player being unloaded
    **/
   async handleUnloadPlayerEvent(src: number) {
-    await this.clearPlayerData(src);
+    await this.clearPlayerData.bind(this, src);
 
-    this.deletePlayerFromMaps(src);
+    this.deletePlayerFromMaps.bind(this, src);
     emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
     playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
   }
