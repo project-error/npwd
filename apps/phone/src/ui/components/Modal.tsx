@@ -1,9 +1,9 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import makeStyles from '@mui/styles/makeStyles';
-import { Button, Paper } from '@mui/material';
+import { Button, Paper, useTheme } from '@mui/material';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: '24px',
     zIndex: 10,
@@ -30,8 +30,9 @@ const useStyles = makeStyles({
     right: 0,
     top: 0,
     width: '10%',
+    color: theme.palette.text.primary,
   },
-});
+}));
 
 interface ModalProps {
   visible?: boolean;
@@ -39,7 +40,8 @@ interface ModalProps {
 }
 
 export const Modal: React.FC<ModalProps> = ({ children, visible, handleClose }) => {
-  const classes = useStyles();
+  const phoneTheme = useTheme();
+  const classes = useStyles(phoneTheme);
 
   const showHideClassName = visible ? classes.displayBlock : classes.displayNone;
 
