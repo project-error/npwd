@@ -42,6 +42,7 @@ export const useMatchService = () => {
       path: '/match',
       keepOpen: false,
       duration: 3000,
+      playSound: true,
     });
     addMatchedAccount();
   };

@@ -43,6 +43,7 @@ export const useTwitterService = () => {
         notisId: 'npwd:tweetBroadcast',
         secondaryTitle: data.profile_name,
         path: '/twitter',
+        playSound: true,
       });
     },
     [enqueueNotification],
