@@ -7,7 +7,8 @@ import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { NPWDButton, NPWDInput as Input } from '@ui/components';
+import { NPWDButton } from '@ui/components';
+import { InputBase } from '@ui/components/Input';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { SendMoneyModal } from '../../components/modals/SendMoney';
@@ -53,6 +54,13 @@ const useStyles = makeStyles({
   inputProps: {
     fontSize: 22,
   },
+  button: {
+    color: "#000000",
+    backgroundColor: "#838383",
+    '&:hover': {
+      backgroundColor: "#6a6a6a",
+    }
+  }
 });
 
 const ContactsInfoPage: React.FC = () => {
@@ -164,10 +172,14 @@ const ContactsInfoPage: React.FC = () => {
           <img src={avatar} className="mx-auto h-24 w-24 rounded-full text-center" />
         </div>
         <div className="mt-8">
-          <Input
-            placeholder={t('CONTACTS.FORM_NAME')}
+          <div className="text-sm font-medium dark:text-neutral-400">
+            {t('CONTACTS.FORM_NAME')}
+          </div>
+          <InputBase
             value={name}
             onChange={handleDisplayChange}
+            fullWidth
+            sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }}
           />
         </div>
 
@@ -195,24 +207,24 @@ const ContactsInfoPage: React.FC = () => {
 
         <div className="mt-8 space-y-4">
           <div>
-            <label className="text-sm font-medium dark:text-neutral-400">
+            <div className="text-sm font-medium dark:text-neutral-400">
               {t('CONTACTS.FORM_NUMBER')}
-            </label>
-            <Input value={number} onChange={handleNumberChange} />
+            </div>
+            <InputBase value={number} onChange={handleNumberChange} fullWidth sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }} />
           </div>
           <div>
-            <label className="text-sm font-medium dark:text-neutral-400">
+            <div className="text-sm font-medium dark:text-neutral-400">
               {t('CONTACTS.FORM_AVATAR')}
-            </label>
-            <Input value={avatar} onChange={handleAvatarChange} />
+            </div>
+            <InputBase value={avatar} onChange={handleAvatarChange} fullWidth sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }} />
           </div>
         </div>
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate}>{t('GENERIC.UPDATE')}</NPWDButton>
+            <NPWDButton onClick={handleContactUpdate} className={classes.button}>{t('GENERIC.UPDATE')}</NPWDButton>
           ) : (
-            <NPWDButton onClick={handleContactAdd}>{t('GENERIC.ADD')}</NPWDButton>
+            <NPWDButton onClick={handleContactAdd} className={classes.button}>{t('GENERIC.ADD')}</NPWDButton>
           )}
         </div>
       </div>
