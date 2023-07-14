@@ -216,6 +216,7 @@ class _TwitterService {
       const identifier = PlayerService.getIdentifier(reqObj.source);
       const profile = await this.twitterDB.getOrCreateProfile(identifier);
       const likeExists = await this.twitterDB.doesLikeExist(profile.id, reqObj.data.tweetId);
+      const likedByProfileName = profile.profile_name;
 
       if (likeExists) {
         await this.twitterDB.deleteLike(profile.id, reqObj.data.tweetId);
@@ -224,6 +225,7 @@ class _TwitterService {
       }
 
       resp({ status: 'ok' });
+      emitNet(TwitterEvents.TWEET_LIKED_BROADCAST, -1, reqObj.data.tweetId, !likeExists, likedByProfileName);
     } catch (e) {
       twitterLogger.error(`Like failed, ${e.message}`, {
         source: reqObj.source,

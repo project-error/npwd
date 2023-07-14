@@ -83,4 +83,5 @@ export enum TwitterEvents {
   TOGGLE_LIKE = 'npwd:toggleLike',
   RETWEET = 'npwd:retweet',
   REPORT = 'npwd:reportTweet',
+  TWEET_LIKED_BROADCAST = 'npwd:tweetLikedBroadcast',
 }
