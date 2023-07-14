@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 40,
     textAlign: 'center',
   },
+  button: {
+    color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    }
+  },
 }));
 
 export default useStyles;
