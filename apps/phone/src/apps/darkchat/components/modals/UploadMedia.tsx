@@ -74,8 +74,8 @@ export const UploadMediaModal = () => {
           {t('DARKCHAT.MEDIA_GALLERY')}
         </Button>
         <Button
-          variant="contained"
-          color="primary"
+          variant="text"
+          color="secondary"
           startIcon={<SendIcon />}
           onClick={handleSendImage}
         >

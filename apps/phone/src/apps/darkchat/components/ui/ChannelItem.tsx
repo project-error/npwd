@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, ListItemAvatar, ListItemText } from '@mui/material';
+import { Avatar, ListItemAvatar, ListItemText, useTheme } from '@mui/material';
 import { ChannelItemProps } from '@typings/darkchat';
 import { ListItem } from '@ui/components/ListItem';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { useSetActiveDarkchatState } from '../../state/state';
 export const ChannelItem: React.FC<ChannelItemProps> = (item) => {
   const history = useHistory();
   const setActiveConversation = useSetActiveDarkchatState();
+  const phoneTheme = useTheme();
 
   const handleGoToConversation = () => {
     setActiveConversation(item);
@@ -19,7 +20,7 @@ export const ChannelItem: React.FC<ChannelItemProps> = (item) => {
       <ListItemAvatar>
         <Avatar alt="dark dark chat" />
       </ListItemAvatar>
-      <ListItemText primary={item.label ?? item.identifier} />
+      <ListItemText primary={item.label ?? item.identifier} style={{ color: phoneTheme.palette.text.primary }} />
     </ListItem>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '@ui/components/Modal';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@ui/components/Input';
 import { Button } from '@ui/components/Button';
@@ -11,10 +12,21 @@ interface NewChannelModalProps {
   closeModal: () => void;
 }
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    }
+  }
+}));
+
 export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeModal }) => {
   const [channelValue, setChannelValue] = useState<string>('');
   const [t] = useTranslation();
   const { addChannel } = useDarkchatAPI();
+  const phoneTheme = useTheme();
+  const classes = useStyles(phoneTheme);
 
   const handleJoinChannel = () => {
     addChannel({ channelIdentifier: channelValue });
@@ -35,7 +47,11 @@ export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeMod
         />
       </Box>
 
-      <Button variant="contained" onClick={handleJoinChannel}>
+      <Button
+        variant="contained"
+        className={classes.button}
+        onClick={handleJoinChannel}
+      >
         {t('DARKCHAT.JOIN_BUTTON')}
       </Button>
     </Modal>
