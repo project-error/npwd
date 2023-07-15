@@ -18,6 +18,7 @@ export const useMarketplaceService = () => {
         notisId: 'npwd:marketplace:newListingBroadcast',
         content: resp.listing.description,
         secondaryTitle: t('MARKETPLACE.NEW_LISTING'),
+        playSound: true,
       });
     },
     [addListing, enqueueNotification],

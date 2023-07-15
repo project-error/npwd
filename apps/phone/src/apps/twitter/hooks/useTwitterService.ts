@@ -54,6 +54,7 @@ export const useTwitterService = () => {
         content: `@${likedByProfileName} liked your tweet!`,
         notisId: 'npwd:tweetBroadcast',
         path: '/twitter',
+        playSound: true,
       });
     },
     [enqueueNotification],

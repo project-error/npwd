@@ -32,6 +32,7 @@ export const useMessagesService = () => {
         onClick: () => goToConversation(group),
         secondaryTitle: getDisplayByNumber(convoName) ?? convoName,
         path: `/messages/conversations/${activeMessageConversation.id}`,
+        playSound: true,
       });
     },
     [enqueueNotification],

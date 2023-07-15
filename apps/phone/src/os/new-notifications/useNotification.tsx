@@ -1,7 +1,9 @@
 import { useSnackbar } from 'notistack';
-import { useRecoilCallback } from 'recoil';
-import { useApps } from '../apps/hooks/useApps';
 import uuid from 'react-uuid';
+import { useRecoilCallback } from 'recoil';
+import { AlertEvents } from '@typings/alerts';
+import fetchNui from '@utils/fetchNui';
+import { useApps } from '../apps/hooks/useApps';
 
 import {
   notifications,
@@ -10,6 +12,18 @@ import {
   unreadNotificationIds,
   unreadNotifications,
 } from './state';
+
+interface INotificationOptions {
+  appId: string,
+  content: string,
+  secondaryTitle: string,
+  notisId: string,
+  path: string,
+  keepOpen?: boolean,
+  onClick?: () => any,
+  duration?: number,
+  playSound?: boolean,
+}
 
 interface NotificationProps {
   enqueueNotification: (options: any) => void;
@@ -35,7 +49,8 @@ export const useNotification = (): NotificationProps => {
         keepOpen = false,
         onClick,
         duration,
-      }: any) => {
+        playSound,
+      }: INotificationOptions) => {
         const app = getApp(appId);
 
         const curNotis = await snapshot.getPromise(allNotificationIds);
@@ -86,9 +101,13 @@ export const useNotification = (): NotificationProps => {
           secondaryTitle,
           path,
           app,
-          autoHideDuration: 3000 || duration,
+          autoHideDuration: duration || 3000,
           disableWindowBlurListener: true,
         });
+
+        if (playSound) {
+          fetchNui(AlertEvents.PLAY_ALERT);
+        }
       },
   );
 
