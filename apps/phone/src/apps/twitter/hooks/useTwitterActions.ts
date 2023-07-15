@@ -11,6 +11,7 @@ interface TwitterActionProps {
   deleteTweet: (tweetId: number) => void;
   updateLocalProfile: (profile: UpdateProfileProps) => void;
   localToggleLike: (tweetId: number) => void;
+  updateTweetLikes: (tweetId: number, isAddLike: boolean) => void;
 }
 
 const getIsTweetsLoading = (snapshot: Snapshot) =>
@@ -70,6 +71,7 @@ export const useTwitterActions = (): TwitterActionProps => {
     [setTweets],
   );
 
+  // Toggles the isLiked field
   const localToggleLike = useCallback(
     (tweetId: number) => {
       setTweets((curVal) =>
@@ -78,7 +80,6 @@ export const useTwitterActions = (): TwitterActionProps => {
             return {
               ...tweet,
               isLiked: tweet.isLiked ? false : true,
-              likes: tweet.isLiked ? tweet.likes - 1 : tweet.likes + 1,
             };
           }
           return tweet;
@@ -88,6 +89,23 @@ export const useTwitterActions = (): TwitterActionProps => {
     [setTweets],
   );
 
+  // Updates the tweet likes count, adds or subtracts depending on isAddLike
+  const updateTweetLikes = useCallback((tweetId: number, isAddLike: boolean) => {
+    setTweets((curVal) =>
+      [...curVal].map((tweet) => {
+        if (tweet.id === tweetId) {
+          return {
+            ...tweet,
+            likes: isAddLike ? tweet.likes + 1 : tweet.likes - 1,
+          };
+        }
+        return tweet;
+      }),
+    );
+  },
+  [setTweets],
+  );
+
   return {
     updateTweets,
     updateFilteredTweets,
@@ -95,5 +113,6 @@ export const useTwitterActions = (): TwitterActionProps => {
     deleteTweet,
     updateLocalProfile,
     localToggleLike,
+    updateTweetLikes,
   };
 };
