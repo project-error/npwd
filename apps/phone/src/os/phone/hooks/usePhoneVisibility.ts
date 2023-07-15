@@ -3,6 +3,7 @@ import { activeNotificationIds } from '@os/new-notifications/state';
 import { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import { isEnvBrowser } from '../../../utils/misc';
 import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
@@ -23,7 +24,7 @@ export const usePhoneVisibility = () => {
   }, [hasNotis, activeNotifications, visibility]);
 
   const bottom = useMemo(() => {
-    if (!visibility) {
+    if (!visibility && !isEnvBrowser()) {
       return `${-750 * zoom.value}px`;
     }
     return '0px';
@@ -31,6 +32,6 @@ export const usePhoneVisibility = () => {
 
   return {
     bottom,
-    visibility: notifVisibility || visibility,
+    visibility: notifVisibility || visibility || isEnvBrowser(),
   };
 };
