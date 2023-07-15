@@ -7,7 +7,7 @@ import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { NPWDButton } from '@ui/components';
+import { NPWDButton, NPWDInput } from '@ui/components';
 import { InputBase } from '@ui/components/Input';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
@@ -55,12 +55,12 @@ const useStyles = makeStyles({
     fontSize: 22,
   },
   button: {
-    color: "#000000",
-    backgroundColor: "#838383",
+    color: '#000000',
+    backgroundColor: '#838383',
     '&:hover': {
-      backgroundColor: "#6a6a6a",
-    }
-  }
+      backgroundColor: '#6a6a6a',
+    },
+  },
 });
 
 const ContactsInfoPage: React.FC = () => {
@@ -93,7 +93,6 @@ const ContactsInfoPage: React.FC = () => {
 
   const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
-  if (!ResourceConfig) return null;
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
@@ -161,10 +160,19 @@ const ContactsInfoPage: React.FC = () => {
     if (nameParam) setName(nameParam);
   }, [addNumber, avatar, avatarParam, nameParam]);
 
+  if (!ResourceConfig) return null;
+
   return (
     <div className="mx-auto h-full w-full">
-      <SendMoneyModal open={contactPayModal} closeModal={() => setContactPayModal(false)} openContact={number} />
-      <button onClick={() => history.goBack()} className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800" >
+      <SendMoneyModal
+        open={contactPayModal}
+        closeModal={() => setContactPayModal(false)}
+        openContact={number}
+      />
+      <button
+        onClick={() => history.goBack()}
+        className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
+      >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
       </button>
       <div className="mx-auto w-9/12">
@@ -172,30 +180,33 @@ const ContactsInfoPage: React.FC = () => {
           <img src={avatar} className="mx-auto h-24 w-24 rounded-full text-center" />
         </div>
         <div className="mt-8">
-          <div className="text-sm font-medium dark:text-neutral-400">
-            {t('CONTACTS.FORM_NAME')}
-          </div>
-          <InputBase
-            value={name}
-            onChange={handleDisplayChange}
-            fullWidth
-            sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }}
-          />
+          <div className="text-sm font-medium dark:text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
+          <NPWDInput value={name} onChange={handleDisplayChange} />
         </div>
 
         {contact && (
           <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
-            <button onClick={handleMessage} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button
+              onClick={handleMessage}
+              className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            >
               <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            <button onClick={startCall} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+            <button
+              onClick={startCall}
+              className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+            >
               <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
             </button>
-            { (ResourceConfig?.general?.useResourceIntegration && ResourceConfig?.contacts?.frameworkPay) &&
-            <button onClick={openpayModal} className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700">
-              <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
-            </button>
-            }
+            {ResourceConfig?.general?.useResourceIntegration &&
+              ResourceConfig?.contacts?.frameworkPay && (
+                <button
+                  onClick={openpayModal}
+                  className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+                >
+                  <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
+                </button>
+              )}
             <button
               onClick={handleContactDelete}
               className="group flex items-center justify-center rounded-md py-2 dark:bg-red-100 dark:hover:bg-red-200"
@@ -210,21 +221,25 @@ const ContactsInfoPage: React.FC = () => {
             <div className="text-sm font-medium dark:text-neutral-400">
               {t('CONTACTS.FORM_NUMBER')}
             </div>
-            <InputBase value={number} onChange={handleNumberChange} fullWidth sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }} />
+            <NPWDInput value={number} onChange={handleNumberChange} />
           </div>
           <div>
             <div className="text-sm font-medium dark:text-neutral-400">
               {t('CONTACTS.FORM_AVATAR')}
             </div>
-            <InputBase value={avatar} onChange={handleAvatarChange} fullWidth sx={{ backgroundColor: "#363636ad", padding: "8px", borderRadius: "5px" }} />
+            <NPWDInput value={avatar} onChange={handleAvatarChange} />
           </div>
         </div>
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate} className={classes.button}>{t('GENERIC.UPDATE')}</NPWDButton>
+            <NPWDButton onClick={handleContactUpdate} className={classes.button}>
+              {t('GENERIC.UPDATE')}
+            </NPWDButton>
           ) : (
-            <NPWDButton onClick={handleContactAdd} className={classes.button}>{t('GENERIC.ADD')}</NPWDButton>
+            <NPWDButton onClick={handleContactAdd} className={classes.button}>
+              {t('GENERIC.ADD')}
+            </NPWDButton>
           )}
         </div>
       </div>
