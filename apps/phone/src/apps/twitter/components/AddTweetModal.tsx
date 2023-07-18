@@ -76,12 +76,19 @@ const AddTweetModal = () => {
     if (message.length > characterLimit) return false;
     if (getNewLineCount(message) < newLineLimit) return true;
   };
+  
+  const isEmptyMessage = () => {
+    const cleanedMessage = clean(message.trim());
+    if ((cleanedMessage && cleanedMessage.length > 0 && isValidMessage(cleanedMessage)) || (images && images.length > 0)){
+      return false;
+    }
+    return true;
+  }
 
   const submitTweet = async () => {
     await promiseTimeout(200);
     const cleanedMessage = clean(message.trim());
-    if ((!cleanedMessage && !allowNoMessage) || (!cleanedMessage && (!images || images.length === 0))) return;
-    if (cleanedMessage.length > 0 && !isValidMessage(cleanedMessage)) return;
+    if (isEmptyMessage()) return;
 
     const data: NewTweet = {
       message: cleanedMessage,
