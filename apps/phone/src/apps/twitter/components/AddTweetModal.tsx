@@ -70,7 +70,7 @@ const AddTweetModal = () => {
   const handleMessageChange = useCallback((message) => setMessage(message), [setMessage]);
 
   if (!ResourceConfig) return null;
-  const { characterLimit, newLineLimit, allowNoMessage } = ResourceConfig.twitter;
+  const { characterLimit, newLineLimit } = ResourceConfig.twitter;
 
   const isValidMessage = (message) => {
     if (message.length > characterLimit) return false;
