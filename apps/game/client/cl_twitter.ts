@@ -24,3 +24,7 @@ onNet(TwitterEvents.TWEET_LIKED_BROADCAST, (
 ) => {
   sendTwitterMessage(TwitterEvents.TWEET_LIKED_BROADCAST, {tweetId, isAddLike, likedByProfileName});
 });
+
+onNet(TwitterEvents.DELETE_TWEET_BROADCAST, (tweetId: number) => {
+  sendTwitterMessage(TwitterEvents.DELETE_TWEET_BROADCAST, tweetId);
+});

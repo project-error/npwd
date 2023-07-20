@@ -57,7 +57,6 @@ export const ShowMore = ({ id, isReported, isMine }) => {
         });
       }
 
-      deleteTweet(id);
       handleClose();
     });
   };

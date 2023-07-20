@@ -199,6 +199,7 @@ class _TwitterService {
       await this.twitterDB.deleteTweet(identifier, reqObj.data.tweetId);
 
       resp({ status: 'ok' });
+      emitNet(TwitterEvents.DELETE_TWEET_BROADCAST, -1, reqObj.data.tweetId);
     } catch (e) {
       twitterLogger.error(`Delete tweet failed, ${e.message}`, {
         source: reqObj.source,

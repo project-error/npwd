@@ -80,6 +80,7 @@ export enum TwitterEvents {
   CREATE_TWEET = 'npwd:createTweet',
   CREATE_TWEET_BROADCAST = 'createTweetBroadcast',
   DELETE_TWEET = 'npwd:deleteTweet',
+  DELETE_TWEET_BROADCAST = 'npwd:deleteTweetBroadcast',
   TOGGLE_LIKE = 'npwd:toggleLike',
   RETWEET = 'npwd:retweet',
   REPORT = 'npwd:reportTweet',
