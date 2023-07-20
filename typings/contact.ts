@@ -45,6 +45,8 @@ export enum ContactEvents {
   DELETE_CONTACT = 'npwd:deleteContact',
   // Used to fill in information through an export event
   ADD_CONTACT_EXPORT = 'npwd:addContactExport',
+  GIVE_CONTACT_DETAILS = 'npwd:GiveContactDetails', // Make sure to update your radial menu to use this event
+  RECEIVE_CONTACT_DETAILS = 'npwd:ReceiveContactDetails',
 }
 
 export interface AddContactExportData {
