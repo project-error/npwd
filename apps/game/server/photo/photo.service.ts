@@ -73,6 +73,9 @@ class _PhotoService {
               const identifier = PlayerService.getIdentifier(reqObj.source);
               const photo = await this.photoDB.uploadPhoto(identifier, res);
 
+              // File is uploaded, so its safe to remove
+              fs.rmSync(filePath);
+
               return resp({ status: 'ok', data: photo });
             } catch (err) {
               photoLogger.error(`Failed to upload photo`, {
