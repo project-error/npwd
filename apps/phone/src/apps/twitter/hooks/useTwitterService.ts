@@ -19,7 +19,7 @@ import { useLocation } from 'react-router-dom';
  */
 
 export const useTwitterService = () => {
-  const { addTweet, updateTweetLikes } = useTwitterActions();
+  const { addTweet, updateTweetLikes, deleteTweet } = useTwitterActions();
   const [tweets, setTweets] = useTweetsState();
   const { enqueueNotification } = useNotification();
   const { pathname } = useLocation();
@@ -99,7 +99,12 @@ export const useTwitterService = () => {
     }
   }, [addLikedTweetNotification, updateTweetLikes, tweets]);
 
+  const handleDeleteTweetBroadcast = useCallback((tweetId: number) => {
+    deleteTweet(tweetId);
+  }, [deleteTweet]);
+
   useNuiEvent(APP_TWITTER, TwitterEvents.FETCH_TWEETS_FILTERED, _setFilteredTweets);
   useNuiEvent(APP_TWITTER, TwitterEvents.CREATE_TWEET_BROADCAST, handleTweetBroadcast);
   useNuiEvent(APP_TWITTER, TwitterEvents.TWEET_LIKED_BROADCAST, handleTweetLikedBroadcast);
+  useNuiEvent(APP_TWITTER, TwitterEvents.DELETE_TWEET_BROADCAST, handleDeleteTweetBroadcast);
 };
