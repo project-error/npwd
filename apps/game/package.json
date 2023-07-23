@@ -38,7 +38,7 @@
     "@sentry/node": "^6.15.0",
     "@sentry/tracing": "^6.15.0",
     "@sentry/webpack-plugin": "^1.18.3",
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^29.5.3",
     "@types/md5": "^2.2.1",
     "@types/node": "^14.17.34",
     "@types/uuid": "^8.3.3",
