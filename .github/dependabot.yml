@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "pnpm"
+    directory: "/apps/phone"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "pnpm"
+    directory: "/apps/game"
+    schedule:
+      interval: "weekly"
