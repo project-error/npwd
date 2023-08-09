@@ -1,4 +1,4 @@
-import { OnMessageExportCtx } from '../../../../typings/messages';
+import { OnMessageExportCtx } from '@typings/messages';
 
 const exp = global.exports;
 
