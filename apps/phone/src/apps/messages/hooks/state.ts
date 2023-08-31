@@ -51,11 +51,10 @@ export const messageState = {
 
       return messageConversations.filter((messageConversation) => {
         for (const contact of contactsValue) {
-          if (
-            searchRegex.test(contact.display) &&
-            messageConversation.conversationList.includes(contact.number)
-          )
-            return true;
+          if (messageConversation.conversationList.includes(contact.number)) {
+            if (searchRegex.test(contact.display) || searchRegex.test(contact.number))
+              return true;
+          }
         }
 
         return searchRegex.test(messageConversation.label);
