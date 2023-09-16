@@ -3,7 +3,7 @@ import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
@@ -16,16 +16,16 @@ const CameraApp: React.FC = () => {
     <AppWrapper id="camera-app">
       <AppTitle app={camera} />
       <AppContent>
-        <Switch>
+        <Routes>
           <React.Suspense fallback={<LoadingSpinner />}>
-            <Route path="/camera" exact component={GalleryGrid} />
-            <Route path="/camera/image" exact component={GalleryModal} />
+            <Route path="/camera" element={<GalleryGrid />} />
+            <Route path="/camera/image" element={<GalleryModal />} />
           </React.Suspense>
-        </Switch>
+        </Routes>
       </AppContent>
-      <Route exact path="/camera">
+      {/*<Route path="/camera">
         <NewPhotoButton />
-      </Route>
+      </Route>*/}
     </AppWrapper>
   );
 };

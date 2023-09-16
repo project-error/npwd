@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useCall } from '@os/call/hooks/useCall';
@@ -48,7 +48,7 @@ const validKeys = [
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
 export const useKeyboardService = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { closePhone } = usePhone();
   const { call } = useCall();
 
@@ -109,23 +109,26 @@ export const useKeyboardService = () => {
         // Dont do anything if we are typing something, or if we're in a call :)
         return;
       }
-      history.goBack();
+      navigate(-1);
     },
-    [history, call],
+    [navigate, call],
   );
 
-  const closePhoneHandler = (event) => {
-    if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
-      event.target.blur();
-    }
-    closePhone();
-  };
+  const closePhoneHandler = useCallback(
+    (event) => {
+      if (['input', 'textarea'].includes(event.target.nodeName.toLowerCase())) {
+        event.target.blur();
+      }
+      closePhone();
+    },
+    [closePhone],
+  );
 
   useEffect(
     function registerDefaultHandlers() {
       handlers.current.set('Escape', closePhoneHandler);
       handlers.current.set('Backspace', backspaceHandler);
     },
-    [setEscape, setBackspace, history, backspaceHandler, closePhone],
+    [setEscape, setBackspace, closePhoneHandler, backspaceHandler, closePhone],
   );
 };

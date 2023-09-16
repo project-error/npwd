@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
 import { MessageConversation } from '@typings/messages';
 import { messageState, useSetConversationId } from './state';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IUseMessages {
   conversations?: MessageConversation[];
@@ -14,7 +14,7 @@ interface IUseMessages {
 }
 
 const useMessages = (): IUseMessages => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { state: conversationLoading, contents } = useRecoilValueLoadable(
     messageState.messageCoversations,
@@ -49,12 +49,12 @@ const useMessages = (): IUseMessages => {
 
   const goToConversation = useCallback(
     (messageConversation: MessageConversation) => {
-      if (!messageConversation?.id || !history) return;
+      if (!messageConversation?.id || !navigate) return;
       setCurrentConversationId(messageConversation.id);
 
-      history.push(`/messages/conversations/${messageConversation.id.toString()}`);
+      navigate(`/messages/conversations/${messageConversation.id.toString()}`);
     },
-    [setCurrentConversationId, history],
+    [setCurrentConversationId, navigate],
   );
 
   return {

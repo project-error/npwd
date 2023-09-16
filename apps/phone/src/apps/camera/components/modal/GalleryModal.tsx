@@ -4,7 +4,7 @@ import { Button, Paper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShareIcon from '@mui/icons-material/Share';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
@@ -18,7 +18,7 @@ export const GalleryModal = () => {
   const [shareOpen, setShareOpen] = useState(null);
 
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = useQueryParams();
   const { deletePhoto } = usePhotoActions();
   const { addAlert } = useSnackbar();
@@ -32,7 +32,7 @@ export const GalleryModal = () => {
   );
 
   const _handleClose = () => {
-    history.push(referal);
+    navigate(referal);
   };
 
   const handleDeletePhoto = () => {
@@ -45,7 +45,7 @@ export const GalleryModal = () => {
 
       deletePhoto(meta.image);
 
-      history.goBack();
+      navigate(-1);
     });
   };
 

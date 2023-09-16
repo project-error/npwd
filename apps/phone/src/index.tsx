@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import './main.css';
 import { PhoneProviders } from './PhoneProviders';
@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
-import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
   attachWindowDebug();
 }
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <HashRouter>
     <NuiProvider resource="npwd">
       <React.Suspense fallback={null}>
@@ -42,5 +41,4 @@ ReactDOM.render(
       </React.Suspense>
     </NuiProvider>
   </HashRouter>,
-  document.getElementById('root'),
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Checkbox, IconButton } from '@mui/material';
 import useStyles from './grid.styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
@@ -10,7 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export const GalleryGrid = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const history = ();
   const query = useQueryParams();
   const photos = usePhotosValue();
   const [isEditing, setIsEditing] = useIsEditing();

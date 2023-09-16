@@ -9,7 +9,7 @@ import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { CallHistoryItem } from '@typings/call';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton, ListItemIcon, ListItemText, useTheme, Typography } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import dayjs from 'dayjs';
@@ -34,7 +34,7 @@ export const DialerHistory: React.FC = () => {
   const calls = useDialHistory();
   const classes = useStyles();
   const contacts = useContacts();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const phoneTheme = useTheme();
 
@@ -52,8 +52,9 @@ export const DialerHistory: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
-          {<Typography style={{ color: phoneTheme.palette.text.primary }}>
-            {t('DIALER.NO_HISTORY')}
+          {
+            <Typography style={{ color: phoneTheme.palette.text.primary }}>
+              {t('DIALER.NO_HISTORY')}
             </Typography>
           }
           <span role="img" aria-label="sad">
@@ -83,7 +84,7 @@ export const DialerHistory: React.FC = () => {
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phoneTheme.palette.text.primary
+                color: phoneTheme.palette.text.primary,
               }}
             />
             <IconButton onClick={() => handleCall(call.receiver)} size="large">
@@ -93,7 +94,7 @@ export const DialerHistory: React.FC = () => {
             {getDisplay(call.receiver) === call.receiver && (
               <IconButton
                 onClick={() =>
-                  history.push(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)
+                  navigate(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)
                 }
                 size="large"
               >
@@ -117,7 +118,7 @@ export const DialerHistory: React.FC = () => {
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phoneTheme.palette.text.primary
+                color: phoneTheme.palette.text.primary,
               }}
             />
             <IconButton onClick={() => handleCall(call.transmitter)} size="large">
@@ -127,7 +128,7 @@ export const DialerHistory: React.FC = () => {
             {getDisplay(call.transmitter) === call.transmitter && (
               <IconButton
                 onClick={() =>
-                  history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
+                  navigate(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)
                 }
                 size="large"
               >

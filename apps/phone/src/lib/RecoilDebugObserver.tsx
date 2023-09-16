@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { useRecoilSnapshot } from 'recoil';
 import defaultConfig from './../config/default.json';
 
-export const RecoilDebugObserver: React.FC = ({ children }) => {
+type RecoilDebugObserverProps = {
+  children: React.ReactNode;
+};
+
+export const RecoilDebugObserver: React.FC<RecoilDebugObserverProps> = ({ children }) => {
   const snapshot = useRecoilSnapshot();
 
   useEffect(() => {

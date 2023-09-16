@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { NPWDButton, NPWDInput } from '@ui/components';
-import { InputBase } from '@ui/components/Input';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { SendMoneyModal } from '../../components/modals/SendMoney';
@@ -17,10 +16,10 @@ import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useModal } from '@apps/contacts/hooks/useModal';
 import { usePhone } from '@os/phone/hooks/usePhone';
 
-interface ContactInfoRouteParams {
+type ContactInfoRouteParams = {
   mode: string;
   id: string;
-}
+};
 
 interface ContactInfoRouteQuery {
   addNumber?: string;
@@ -65,7 +64,7 @@ const useStyles = makeStyles({
 
 const ContactsInfoPage: React.FC = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<ContactInfoRouteParams>();
   const {
     addNumber,
@@ -137,7 +136,7 @@ const ContactsInfoPage: React.FC = () => {
       return goToConversation(conversation);
     }
 
-    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+    navigate(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 
   const handleContactDelete = () => {
@@ -170,7 +169,7 @@ const ContactsInfoPage: React.FC = () => {
         openContact={number}
       />
       <button
-        onClick={() => history.goBack()}
+        onClick={() => navigate(-1)}
         className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
       >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />

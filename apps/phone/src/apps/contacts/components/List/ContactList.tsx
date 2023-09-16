@@ -1,13 +1,12 @@
 import React from 'react';
 import { SearchContacts } from './SearchContacts';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFilteredContacts } from '../../hooks/state';
 import { Contact } from '@typings/contact';
 import { classNames } from '@utils/css';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
-  const history = useHistory();
 
   // FIXME: This should be reduced before being passed to the component
   const groupedContacts = filteredContacts.reduce((r, e) => {

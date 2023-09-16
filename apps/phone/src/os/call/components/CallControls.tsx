@@ -6,7 +6,7 @@ import { useCallModal } from '../hooks/useCallModal';
 import { StatusIconButton } from '@ui/components/StatusIconButton';
 import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MutedIcon from '@mui/icons-material/VolumeOff';
 import UnmutedIcon from '@mui/icons-material/VolumeUp';
 
@@ -27,14 +27,14 @@ const useStyles = makeStyles({
 
 export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setModal } = useCallModal();
   const { call, endCall, acceptCall, rejectCall, muteCall } = useCall();
   const [muted, setMuted] = useState(false);
 
   const handleAcceptCall = (e) => {
     e.stopPropagation();
-    history.push('/call');
+    navigate('/call');
     acceptCall();
   };
 

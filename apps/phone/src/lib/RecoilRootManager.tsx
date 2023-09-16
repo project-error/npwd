@@ -10,7 +10,11 @@ import RecoilCacheReset from './RecoilCacheReset';
 // a refresh
 // This is liable to memory leaky behavior in extreme cases.
 
-export const RecoilRootManager: React.FC = ({ children }) => {
+type RecoilRootManagerProps = {
+  children: React.ReactNode;
+};
+
+export const RecoilRootManager: React.FC<RecoilRootManagerProps> = ({ children }) => {
   const [charState, setCharState] = useState(0);
 
   useNuiEvent('PHONE', PhoneEvents.UNLOAD_CHARACTER, () => {

@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment, SetStateAction, useEffect } from 'react';
 import './Phone.css';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { CallModal } from '@os/call/components/CallModal';
 import { HomeApp } from './apps/home/components/Home';
 import { NotificationBar } from '@os/new-notifications/components/NotificationBar';
@@ -44,9 +44,9 @@ interface PhoneProps {
 const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   const { i18n } = useTranslation();
 
-  const { apps } = useApps();
+  //const { apps } = useApps();
   const [settings] = useSettings();
-  const theme = useTheme();
+  //const theme = useTheme();
 
   // Set language from local storage
   // This will only trigger on first mount & settings changes
@@ -69,20 +69,23 @@ const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
   useNotificationListener();
   useSystemNotificationListener();
   useNotificationBarListener();
-  useTwitterService();
-  useMatchService();
-  useMarketplaceService();
-  useMessagesService();
-  useContactsListener();
-  useNoteListener();
+  //useTwitterService();
+  //useMatchService();
+  //useMarketplaceService();
+  //useMessagesService();
+  //useContactsListener();
+  //useNoteListener();
   useCallService();
   useDialService();
-  useDarkchatService();
+  //useDarkchatService();
   useInvalidSettingsHandler();
 
-  const externalApps = useExternalApps();
+  // const externalApps = useExternalApps();
+  //
 
   const { modal: callModal } = useCallModal();
+
+  console.log('HELLO');
 
   return (
     <div>
@@ -91,19 +94,19 @@ const Phone: React.FC<PhoneProps> = ({ notiRefCB }) => {
         <PhoneWrapper>
           <NotificationBar />
           <div className="PhoneAppContainer" id="notificationAppContainer" ref={notiRefCB}>
-            <>
-              <Route exact path="/" component={HomeApp} />
-              {callModal && <Route exact path="/call" component={CallModal} />}
-              {apps.map((App) => (
+            <Routes>
+              <Route path="/" element={<HomeApp />} />
+              {/*callModal && <Route path="/call" element={<CallModal />} />*/}
+              {/*apps.map((App) => (
                 <Fragment key={App.id}>{!App.isDisabled && <App.Route key={App.id} />}</Fragment>
-              ))}
+              ))*/}
 
-              {externalApps.map((App) => (
+              {/*externalApps.map((App) => (
                 <Fragment key={App.id}>
                   <App.Route settings={settings} i18n={i18n} theme={theme} />
                 </Fragment>
-              ))}
-            </>
+              ))*/}
+            </Routes>
             <NotificationAlert />
             <PhoneSnackbar />
           </div>

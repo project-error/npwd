@@ -4,7 +4,7 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppContent } from '@ui/components/AppContent';
 import { DialerHistory } from './views/DialerHistory';
 import { useApp } from '@os/apps/hooks/useApps';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
 import { ContactList } from '../../contacts/components/List/ContactList';
@@ -18,19 +18,19 @@ export const DialerApp: React.FC = () => {
       <AppWrapper>
         <AppTitle app={dialer} />
         <AppContent>
-          <Switch>
+          <Routes>
             <Route path="/phone/dial">
               <DialPage />
             </Route>
-            <Route exact path="/phone">
+            <Route path="/phone">
               <React.Suspense fallback={<LoadingSpinner />}>
                 <DialerHistory />
               </React.Suspense>
             </Route>
             <React.Suspense fallback={<LoadingSpinner />}>
-              <Route path="/phone/contacts" component={ContactList} />
+              <Route path="/phone/contacts" element={<ContactList />} />
             </React.Suspense>
-          </Switch>
+          </Routes>
         </AppContent>
         <DialerNavBar />
       </AppWrapper>

@@ -1,35 +1,41 @@
 import React from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
-//import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { ChevronLeft, Circle, LayoutGrid } from 'lucide-react';
 
 export const Navigation: React.FC = () => {
-  const history = useHistory();
-  const { isExact } = useRouteMatch('/');
+  const navigate = useNavigate();
+
+  const {
+    pattern: { end: isExact },
+  } = useMatch({
+    path: '/',
+    caseSensitive: false,
+    end: true,
+  });
+
   const { closePhone } = usePhone();
-  //const { setBarUncollapsed } = useNotifications();
 
   const handleGoBackInHistory = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const handleGoToMenu = () => {
     if (isExact) return;
-    history.push('/');
+    navigate('/');
   };
 
   return (
-    <div className="bg-neutral-100 dark:bg-neutral-900 w-full h-14 px-12">
-      <div className="flex justify-between items-center h-full">
+    <div className="h-14 w-full bg-neutral-100 px-12 dark:bg-neutral-900">
+      <div className="flex h-full items-center justify-between">
         <button onClick={handleGoToMenu}>
-          <LayoutGrid className="text-neutral-400 hover:dark:text-neutral-100 h-6 w-6 hover:text-neutral-900 " />
+          <LayoutGrid className="h-6 w-6 text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-100 " />
         </button>
         <button onClick={closePhone}>
-          <Circle className="text-neutral-400 hover:dark:text-neutral-100 h-6 w-6 hover:text-neutral-900 " />
+          <Circle className="h-6 w-6 text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-100 " />
         </button>
         <button onClick={handleGoBackInHistory}>
-          <ChevronLeft className="text-neutral-400 hover:dark:text-neutral-100 hover:text-neutral-900 h-6 w-6" />
+          <ChevronLeft className="h-6 w-6 text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-100" />
         </button>
       </div>
     </div>

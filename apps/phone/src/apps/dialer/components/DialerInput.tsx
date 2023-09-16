@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputBase } from '@ui/components/Input';
 import { useCall } from '@os/call/hooks/useCall';
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DialerInput: React.FC = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const { initializeCall } = useCall();
 
@@ -43,7 +43,7 @@ export const DialerInput: React.FC = () => {
   };
 
   const handleNewContact = (number: string) => {
-    history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`);
+    navigate(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`);
   };
 
   return (

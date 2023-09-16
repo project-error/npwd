@@ -3,7 +3,7 @@ import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListContainer';
 import { NavigationBar } from './navigation/NavigationBar';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ListingFormContainer } from './form/ListingFormContainer';
 import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
@@ -20,10 +20,10 @@ export const MarketplaceApp: React.FC = () => {
         <AppTitle app={marketplaceApp} />
         <AppContent>
           <WordFilterProvider>
-            <Switch>
-              <Route path="/marketplace" exact component={MarketplaceListContainer} />
-              <Route path="/marketplace/new" component={ListingFormContainer} />
-            </Switch>
+            <Routes>
+              <Route path="/marketplace" element={<MarketplaceListContainer />} />
+              <Route path="/marketplace/new" element={<ListingFormContainer />} />
+            </Routes>
           </WordFilterProvider>
         </AppContent>
         <NavigationBar />

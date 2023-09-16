@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
 
 import useStyles from './modal.styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GalleryPhoto } from '@typings/photo';
 import { useTranslation } from 'react-i18next';
 
@@ -16,12 +16,12 @@ interface IShareModalProps {
 
 export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
 
   const handleCopyImage = () => {
     setClipboard(meta.image);
-    history.push(referal);
+    navigate(referal);
   };
 
   return (

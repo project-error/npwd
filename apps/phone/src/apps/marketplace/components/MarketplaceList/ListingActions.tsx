@@ -8,7 +8,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import ChatIcon from '@mui/icons-material/Chat';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import fetchNui from '../../../../utils/fetchNui';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
@@ -26,7 +26,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   const classes = useStyles();
   const myNumber = useMyPhoneNumber();
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { initializeCall } = useCall();
   const { addAlert } = useSnackbar();
 

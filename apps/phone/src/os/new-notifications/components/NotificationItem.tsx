@@ -4,7 +4,7 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useRecoilValue } from 'recoil';
 import { notifications, useSetNavbarUncollapsed } from '@os/new-notifications/state';
 import { useNotification } from '@os/new-notifications/useNotification';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface NotificationItemProps {
   id: string;
@@ -15,13 +15,13 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ id, key }) =
   const { appId, content, path } = useRecoilValue(notifications(id));
   const { markAsRead } = useNotification();
   const { icon } = useApp(appId);
-  const history = useHistory();
+  const navigate = useNavigate();
   const closeBar = useSetNavbarUncollapsed();
 
   const handleOnClose = () => {
     markAsRead(id);
     closeBar(false); // set's to be to collapsed - wording is weird
-    history.push(path);
+    navigate(path);
   };
 
   return (
