@@ -11,7 +11,6 @@ interface TwitterConfig {
   enableEmojis: boolean;
   enableImages: boolean;
   maxImages: number;
-  allowNoMessage: boolean;
   resultsLimit: number;
 }
 
