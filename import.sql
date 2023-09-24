@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
     `profile_name` varchar(90) NOT NULL,
     `identifier`   varchar(48) NOT NULL COLLATE 'utf8mb4_general_ci',
 #   Default Profile avatar can be set here
-    `avatar_url`   varchar(255)         DEFAULT 'https://i.file.glass/QrEvq.png',
+    `avatar_url`   varchar(255)         DEFAULT 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png',
     `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
