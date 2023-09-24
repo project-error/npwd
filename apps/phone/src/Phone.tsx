@@ -22,7 +22,7 @@ import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';
 import { PhoneEvents } from '@typings/phone';
 import PhoneWrapper from './PhoneWrapper';
-import DefaultConfig from '../../../config.json';
+import DefaultConfig from '../../../config.default.json';
 import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
