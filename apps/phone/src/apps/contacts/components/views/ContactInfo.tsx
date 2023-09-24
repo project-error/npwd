@@ -8,7 +8,6 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { NPWDButton, NPWDInput } from '@ui/components';
-import { InputBase } from '@ui/components/Input';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { SendMoneyModal } from '../../components/modals/SendMoney';
@@ -88,7 +87,9 @@ const ContactsInfoPage: React.FC = () => {
 
   const [name, setName] = useState(contact?.display ?? '');
   const [number, setNumber] = useState(contact?.number ?? '');
-  const [avatar, setAvatar] = useState(contact?.avatar ?? '');
+  const [avatar, setAvatar] = useState(
+    contact?.avatar ?? 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png',
+  );
   // Set state after checking if null
 
   const [t] = useTranslation();
@@ -177,7 +178,11 @@ const ContactsInfoPage: React.FC = () => {
       </button>
       <div className="mx-auto w-9/12">
         <div>
-          <img src={avatar} className="mx-auto h-24 w-24 rounded-full text-center" />
+          <img
+            src={avatar}
+            className="mx-auto h-24 w-24 rounded-full text-center"
+            alt="contact avatar"
+          />
         </div>
         <div className="mt-8">
           <div className="text-sm font-medium dark:text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
