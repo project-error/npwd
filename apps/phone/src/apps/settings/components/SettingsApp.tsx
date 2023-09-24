@@ -27,6 +27,7 @@ import {
   Book,
   DeleteForever,
   Apps,
+  PersonOff,
 } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material';
@@ -41,7 +42,6 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useCustomWallpaperModal } from '../state/customWallpaper.state';
 import fetchNui from '@utils/fetchNui';
 import { SettingEvents } from '@typings/settings';
-import { useCustomEvent } from '@os/events/useCustomEvents';
 
 const useStyles = makeStyles({
   backgroundModal: {
@@ -63,7 +63,6 @@ export const SettingsApp: React.FC = () => {
   const [settings, setSettings] = useSettings();
   const [t] = useTranslation();
   const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
-  const dispatchEvent = useCustomEvent('themeChanged', {});
 
   const { addAlert } = useSnackbar();
 
@@ -78,7 +77,6 @@ export const SettingsApp: React.FC = () => {
       } else {
         document.documentElement.classList.remove('dark');
       }
-      //dispatchEvent(value);
     }
   };
 
@@ -229,6 +227,14 @@ export const SettingsApp: React.FC = () => {
             icon={<VisibilityOffIcon />}
             value={settings.streamerMode}
             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
+            theme={theme}
+          />
+          <SettingSwitch
+            label={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.TITLE')}
+            secondary={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.DESCRIPTION')}
+            icon={<PersonOff />}
+            value={settings.anonymousMode}
+            onClick={(curr) => handleSettingChange('anonymousMode', !curr)}
             theme={theme}
           />
           <SettingItemSlider

@@ -6,6 +6,8 @@
 # ALTER TABLE npwd_messages ADD COLUMN `is_embed` tinyint(4) NOT NULL DEFAULT 0;
 # ALTER TABLE npwd_messages ADD COLUMN `embed` varchar(512) NOT NULL DEFAULT '';
 
+# ALTER TABLE npwd_calls ADD COLUMN `isAnonymous` tinyint(4) NOT NULL DEFAULT 0;
+
 #match voice messages update
 # ALTER TABLE npwd_match_profiles ADD COLUMN `voiceMessage` varchar(512) DEFAULT NULL;
 
@@ -182,6 +184,7 @@ CREATE TABLE IF NOT EXISTS `npwd_calls`
     `transmitter` varchar(255) NOT NULL,
     `receiver`    varchar(255) NOT NULL,
     `is_accepted` tinyint(4)   DEFAULT 0,
+    `isAnonymous` tinyint(4)   NOT NULL DEFAULT 0,
     `start`       varchar(255) DEFAULT NULL,
     end           varchar(255) DEFAULT NULL,
     PRIMARY KEY (id),

@@ -11,7 +11,11 @@ const CallContactContainer = () => {
   const { getDisplayByNumber, getPictureByNumber } = useContactActions();
 
   const getDisplayOrNumber = () =>
-    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    call.isTransmitter
+      ? getDisplayByNumber(call?.receiver)
+      : !call.isTransmitter && call.isAnonymous
+      ? 'Anonymous'
+      : getDisplayByNumber(call?.transmitter);
 
   return (
     <Box display="flex" alignItems="center">
@@ -29,6 +33,8 @@ const CallContactContainer = () => {
         src={
           call.isTransmitter
             ? getPictureByNumber(call.receiver)
+            : !call.isTransmitter && call.isAnonymous
+            ? 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png'
             : getPictureByNumber(call?.transmitter)
         }
       />

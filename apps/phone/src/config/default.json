@@ -230,6 +230,7 @@
       "value": 0.9
     },
     "streamerMode": false,
+    "anonymousMode": false,
     "ringtone": {
       "label": "iFruit",
       "value": "PHONE_GENERIC_RING_01"

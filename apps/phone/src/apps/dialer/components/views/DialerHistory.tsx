@@ -52,8 +52,9 @@ export const DialerHistory: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" paddingTop={35}>
         <p>
-          {<Typography style={{ color: phoneTheme.palette.text.primary }}>
-            {t('DIALER.NO_HISTORY')}
+          {
+            <Typography style={{ color: phoneTheme.palette.text.primary }}>
+              {t('DIALER.NO_HISTORY')}
             </Typography>
           }
           <span role="img" aria-label="sad">
@@ -83,7 +84,7 @@ export const DialerHistory: React.FC = () => {
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phoneTheme.palette.text.primary
+                color: phoneTheme.palette.text.primary,
               }}
             />
             <IconButton onClick={() => handleCall(call.receiver)} size="large">
@@ -108,7 +109,7 @@ export const DialerHistory: React.FC = () => {
             </ListItemIcon>
 
             <ListItemText
-              primary={getDisplay(call.transmitter)}
+              primary={call.isAnonymous ? 'Anonymous' : getDisplay(call.transmitter)}
               secondary={
                 <Typography style={{ color: phoneTheme.palette.text.secondary }}>
                   {dayjs().to(dayjs.unix(parseInt(call.start)))}
@@ -117,14 +118,19 @@ export const DialerHistory: React.FC = () => {
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                color: phoneTheme.palette.text.primary
+                color: phoneTheme.palette.text.primary,
               }}
             />
-            <IconButton onClick={() => handleCall(call.transmitter)} size="large">
+
+            <IconButton
+              onClick={() => handleCall(call.transmitter)}
+              size="large"
+              disabled={call.isAnonymous}
+            >
               <PhoneIcon />
             </IconButton>
 
-            {getDisplay(call.transmitter) === call.transmitter && (
+            {!call.isAnonymous && getDisplay(call.transmitter) === call.transmitter && (
               <IconButton
                 onClick={() =>
                   history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)

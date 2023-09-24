@@ -5,6 +5,7 @@ import fetchNui from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { ServerPromiseResp } from '@typings/common';
+import { useSettingsValue } from '@apps/settings/hooks/useSettings';
 
 interface CallHook {
   call: ActiveCall;
@@ -22,23 +23,28 @@ export const useCall = (): CallHook => {
   const [call, setCall] = useCurrentCall();
   const myPhoneNumber = useMyPhoneNumber();
   //const [t] = useTranslation();
+  const { anonymousMode } = useSettingsValue();
 
-  const initializeCall = useCallback((number) => {
-    // We allow calling of ourselves in development
-    /*if (process.env.NODE_ENV !== 'development' && myPhoneNumber === number) {
+  const initializeCall = useCallback(
+    (number: string) => {
+      // We allow calling of ourselves in development
+      /*if (process.env.NODE_ENV !== 'development' && myPhoneNumber === number) {
         return addAlert({ message: t('CALLS.FEEDBACK.ERROR_MYSELF'), type: 'error' });
       }*/
 
-    fetchNui<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, {
-      receiverNumber: number,
-    }).then((resp) => {
-      if (resp.status !== 'ok') {
-        //          addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
-        console.error(resp.errorMsg);
-        return;
-      }
-    });
-  }, []);
+      fetchNui<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, {
+        receiverNumber: number,
+        isAnonymous: anonymousMode,
+      }).then((resp) => {
+        if (resp.status !== 'ok') {
+          //          addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
+          console.error(resp.errorMsg);
+          return;
+        }
+      });
+    },
+    [anonymousMode],
+  );
 
   const acceptCall = useCallback(() => {
     fetchNui(CallEvents.ACCEPT_CALL, {

@@ -28,6 +28,7 @@ export interface IPhoneSettings {
   theme: SettingOption;
   zoom: SettingOption;
   streamerMode: boolean;
+  anonymousMode: boolean;
   ringtone: SettingOption;
   callVolume: number;
   notiSound: SettingOption;

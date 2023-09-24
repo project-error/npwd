@@ -48,6 +48,10 @@
           "TITLE": "Streamer mode",
           "DESCRIPTION": "Hide images before they are shown"
         },
+        "ANONYMOUS_MODE": {
+          "TITLE": "Anonymous mode",
+          "DESCRIPTION": "Hide your phone number from other players"
+        },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Custom Wallpaper",
           "DIALOG_CONTENT": "Set a custom wallpaper by entering the URL of the image below!",

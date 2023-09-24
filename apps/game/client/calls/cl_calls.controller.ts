@@ -43,9 +43,10 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
 // Will trigger whenever somebody initializes a call to any number
 RegisterNuiCB<InitializeCallDTO>(CallEvents.INITIALIZE_CALL, initializeCallHandler);
 
-onNetTyped<StartCallEventData>(CallEvents.START_CALL, async (data) => {
-  const { transmitter, isTransmitter, receiver, isUnavailable } = data;
-  callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
+onNetTyped<StartCallEventData>(CallEvents.START_CALL, async (data: ActiveCall) => {
+  // TODO: add isAnonymous to the call for the client that is being called
+  const { transmitter, isTransmitter, receiver, isUnavailable, isAnonymous } = data;
+  callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable, isAnonymous);
 });
 
 RegisterNuiCB<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, (data, cb) => {

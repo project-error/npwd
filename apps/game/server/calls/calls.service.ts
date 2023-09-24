@@ -53,6 +53,7 @@ class CallsService {
       receiver: reqObj.data.receiverNumber,
       is_accepted: false,
       start: startCallTimeUnix.toString(),
+      isAnonymous: reqObj.data.isAnonymous,
     };
 
     // If not online we immediately let the caller know that is an invalid
@@ -106,6 +107,7 @@ class CallsService {
       receiverSource: receivingPlayer.source,
       start: startCallTimeUnix.toString(),
       is_accepted: false,
+      isAnonymous: reqObj.data.isAnonymous,
     };
 
     // Now we can add the call to our memory map
@@ -141,6 +143,7 @@ class CallsService {
         transmitter: transmitterNumber,
         receiver: reqObj.data.receiverNumber,
         isTransmitter: false,
+        isAnonymous: reqObj.data.isAnonymous,
       },
       receivingPlayer.source,
     );
@@ -165,6 +168,7 @@ class CallsService {
         transmitter: transmitterNumber,
         receiver: targetCallItem.receiver,
         isTransmitter: false,
+        isAnonymous: targetCallItem.isAnonymous,
         channelId,
       },
       targetCallItem.receiverSource,

@@ -54,7 +54,7 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   } else {
     canToggleHUD = false;
   }
-  
+
   // If radar is not already hidden (by another resource), Hide the radar
   if (!IsRadarHidden()) {
     canToggleRadar = true;
@@ -69,7 +69,7 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 
   while (inCameraMode) {
     await Delay(0);
-    
+
     // Arrow Up Key, Toggle Front/Back Camera
     if (IsControlJustPressed(1, 27)) {
       frontCam = !frontCam;
@@ -118,7 +118,7 @@ const handleTakePicture = async () => {
     DisplayHud(true);
     canToggleHUD = false;
   }
-  
+
   // If radar is already hidden (by this resource), Show the radar
   if (canToggleRadar) {
     DisplayRadar(true);
@@ -143,7 +143,7 @@ const handleCameraExit = async () => {
     DisplayHud(true);
     canToggleHUD = false;
   }
-  
+
   // If radar is already hidden (by this resource), Show the radar
   if (canToggleRadar) {
     DisplayRadar(true);

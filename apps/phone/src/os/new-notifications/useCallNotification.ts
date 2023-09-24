@@ -33,7 +33,7 @@ export const useCallNotification = () => {
         onExited: () => {
           setCurrenCall(null);
         },
-        transmitter: contactDisplay(dto.transmitter),
+        transmitter: dto.isAnonymous ? 'Anonymous' : contactDisplay(dto.transmitter),
         receiver: contactDisplay(dto.receiver),
         key: 'npwd:callNotification',
       });

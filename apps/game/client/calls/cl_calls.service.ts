@@ -82,6 +82,7 @@ export class CallService {
     receiver: string,
     isTransmitter: boolean,
     isUnavailable: boolean,
+    isAnonymous: boolean,
   ) {
     // If we're already in a call we want to automatically reject
     if (this.isInCall() || !(await checkHasPhone()) || this.currentPendingCall)
@@ -113,6 +114,7 @@ export class CallService {
       isTransmitter: isTransmitter,
       accepted: false,
       isUnavailable: isUnavailable,
+      isAnonymous: isAnonymous,
     });
   }
 

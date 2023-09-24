@@ -5,11 +5,12 @@ import DbInterface from '../db/db_wrapper';
 export class _CallsRepo {
   async saveCall(call: CallHistoryItem): Promise<void> {
     const query =
-      'INSERT INTO npwd_calls (identifier, transmitter, receiver, `start`) VALUES (?, ?, ?, ?)';
+      'INSERT INTO npwd_calls (identifier, transmitter, receiver, isAnonymous, `start`) VALUES (?, ?, ?, ?, ?)';
     await DbInterface._rawExec(query, [
       call.identifier,
       call.transmitter,
       call.receiver,
+      call.isAnonymous,
       call.start,
     ]);
   }
