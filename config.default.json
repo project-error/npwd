@@ -30,13 +30,12 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://api.projecterror.dev/image",
-    "type": "pe_image",
+    "url": "https://api.fivemanage.com/api/image",
+    "type": "image",
     "imageEncoding": "webp",
     "contentType": "multipart/form-data",
     "useContentType": false,
-    "useWebhook": false,
-    "authorizationHeader": "PE-Secret",
+    "authorizationHeader": "Authorization",
     "authorizationPrefix": "",
     "useAuthorization": true,
     "returnedDataIndexes": ["url"]
@@ -57,7 +56,8 @@
       "upload.wikipedia.org",
       "i.projecterror.dev",
       "upcdn.io",
-      "i.fivemanage.com"
+      "i.fivemanage.com",
+      "api.fivemanage.com"
     ]
   },
   "profanityFilter": {
@@ -96,8 +96,8 @@
   "apps": [],
   "voiceMessage": {
     "enabled": false,
-    "authorizationHeader": "PE-Secret",
-    "url": "",
+    "authorizationHeader": "Authorization",
+    "url": "https://api.fivemange/api/audio",
     "returnedDataIndexes": ["url"]
   }
 }
