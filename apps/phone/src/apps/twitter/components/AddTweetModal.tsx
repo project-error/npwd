@@ -76,14 +76,17 @@ const AddTweetModal = () => {
     if (message.length > characterLimit) return false;
     if (getNewLineCount(message) < newLineLimit) return true;
   };
-  
+
   const isEmptyMessage = () => {
     const cleanedMessage = clean(message.trim());
-    if ((cleanedMessage && cleanedMessage.length > 0 && isValidMessage(cleanedMessage)) || (images && images.length > 0)){
+    if (
+      (cleanedMessage && cleanedMessage.length > 0 && isValidMessage(cleanedMessage)) ||
+      (images && images.length > 0)
+    ) {
       return false;
     }
     return true;
-  }
+  };
 
   const submitTweet = async () => {
     await promiseTimeout(200);
@@ -131,7 +134,7 @@ const AddTweetModal = () => {
     setShowImagePrompt(false);
     setLink('');
   };
-  const removeImage = (id) => setImages(images.filter((image) => id !== image.id));
+  const removeImage = (id: string) => setImages(images.filter((image) => id !== image.id));
 
   const toggleShowImagePrompt = () => {
     setShowEmoji(false); // clear the emoji so we can switch between emoji/images
@@ -147,7 +150,7 @@ const AddTweetModal = () => {
 
   // this is when a user clicks on an emoji icon itself (i.e. a smiley face)
   // not the emoji icon on the UI
-  const handleSelectEmoji = (emojiObject, e) => {
+  const handleSelectEmoji = (emojiObject) => {
     setMessage(message.concat(emojiObject.native));
   };
 

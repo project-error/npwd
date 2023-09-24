@@ -9,6 +9,7 @@ export interface AppContentTypes {
 }
 
 export interface AppWrapperTypes {
+  children: React.ReactNode;
   id?: string;
   style?: CSSProperties;
   handleClickAway?: (...args: any[]) => void;

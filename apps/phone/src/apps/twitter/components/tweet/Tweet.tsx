@@ -95,9 +95,7 @@ export const Tweet: React.FC<TweetProps> = ({ tweet, imageOpen, setImageOpen }) 
               __html: sanitizedMessage,
             }}
           />
-          {enableImages && (
-            <ImageDisplay visible images={images} open={imageOpen} onToggle={setImageOpen} />
-          )}
+          {enableImages && <ImageDisplay visible images={images} />}
           <TweetButtonContainer>
             <ReplyButton profile_name={profile_name} />
             <LikeButton likes={likes} tweetId={id} isLiked={isLiked} />

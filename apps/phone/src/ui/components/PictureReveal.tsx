@@ -13,7 +13,7 @@ const useStyles = makeStyles<Theme, { covered: boolean }>((theme) => ({
   },
 }));
 
-export const PictureReveal: React.FC = ({ children }) => {
+export const PictureReveal: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [settings] = useSettings();
   const [covered, setCovered] = useState<boolean>(false);
   const [ready, setReady] = useState<boolean>(false);

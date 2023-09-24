@@ -13,10 +13,11 @@ import { useTweetsState } from '@apps/twitter/hooks/state';
 export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
-  const TWEET_LIMIT_PER_PAGE  = ResourceConfig?.twitter?.resultsLimit || 25;
-  const [imageOpen, setImageOpen] = useState<string | null>(null);
+  const TWEET_LIMIT_PER_PAGE = ResourceConfig?.twitter?.resultsLimit || 25;
   const [tweetsData, setTweetsData] = useTweetsState();
-  const [hasNextPage, setHasNextPage] = useState(tweetsData.length == TWEET_LIMIT_PER_PAGE ? true : false);
+  const [hasNextPage, setHasNextPage] = useState(
+    tweetsData.length === TWEET_LIMIT_PER_PAGE ? true : false,
+  );
   const [page, setPage] = useState(0);
   const [isNextPageLoading, setIsNextPageLoading] = useState(false);
 
@@ -24,60 +25,62 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
     if (isNextPageLoading || !hasNextPage) return;
     setIsNextPageLoading(true);
 
-    const pageId = page + 1
-    fetchNui<ServerPromiseResp<GetTweet[]>>(TwitterEvents.FETCH_TWEETS, {pageId}).then((resp) => {
+    const pageId = page + 1;
+    fetchNui<ServerPromiseResp<GetTweet[]>>(TwitterEvents.FETCH_TWEETS, { pageId }).then((resp) => {
       if (resp.status !== 'ok') {
         addAlert({
           message: resp.errorMsg,
           type: 'error',
         });
       } else {
-        const newTweets = resp.data?.map(processTweet)
+        const newTweets = resp.data?.map(processTweet);
         if (newTweets.length < TWEET_LIMIT_PER_PAGE) {
           setHasNextPage(false);
         }
-        setTweetsData([...tweetsData, ...newTweets])
+        setTweetsData([...tweetsData, ...newTweets]);
         setPage(pageId);
       }
 
       //Maybe a better way to do this?
       //Prevents the "250" rate limit if someone is scrolling too fast
-      return setTimeout(() => { 
+      return setTimeout(() => {
         setIsNextPageLoading(false);
       }, 350);
-
     });
-  }, [addAlert, setTweetsData])
+  }, [addAlert, setTweetsData]);
 
   const Footer = () => {
     if (hasNextPage) {
       return (
-        <div style={{padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD'}}>
+        <div
+          style={{ padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD' }}
+        >
           Loading Tweets...
         </div>
       );
     } else {
       return (
-        <div style={{padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD'}}>
+        <div
+          style={{ padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD' }}
+        >
           Nothing More To Load!
         </div>
       );
     }
-  }
+  };
 
   return (
     <>
-    {imageOpen && <Backdrop onClick={() => setImageOpen(null)} />}
-    <Virtuoso
-      style={{height: '100%'}}
-      data={tweetsData}
-      endReached={handleNewPageLoad}
-      overscan={6}
-      itemContent={(index, tweet) => {
-        return <Tweet key={tweet.id} tweet={tweet} imageOpen={imageOpen} setImageOpen={setImageOpen} />
-      }}
-      components={{ Footer }}
-    />
+      <Virtuoso
+        style={{ height: '100%' }}
+        data={tweetsData}
+        endReached={handleNewPageLoad}
+        overscan={6}
+        itemContent={(_, tweet) => {
+          return <Tweet key={tweet.id} tweet={tweet} />;
+        }}
+        components={{ Footer }}
+      />
     </>
   );
 }

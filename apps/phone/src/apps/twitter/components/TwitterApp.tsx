@@ -34,7 +34,7 @@ const TwitterApp = () => {
   const promptProfileName = !profile || !profile.profile_name || !profile.profile_name.trim();
 
   const openModal = () => setModalVisible(true);
-  const handlePageChange = (e, page) => setActivePage(page);
+  const handlePageChange = (_, page) => setActivePage(page);
   const showTweetButton =
     !promptProfileName && activePage === 0 && location.pathname === '/twitter';
 

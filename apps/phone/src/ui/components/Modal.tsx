@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ModalProps {
+  children: React.ReactNode;
   visible?: boolean;
   handleClose?: () => void;
 }
