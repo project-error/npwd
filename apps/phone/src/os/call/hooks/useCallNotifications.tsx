@@ -56,7 +56,9 @@ export const useCallNotifications = () => {
         content: (
           <CallNotification>
             {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
-              transmitter: contactDisplay(call.transmitter) || call.transmitter,
+              transmitter: call.isAnonymous
+                ? 'Anonymous'
+                : contactDisplay(call.transmitter) || call.transmitter,
             })}
           </CallNotification>
         ),
