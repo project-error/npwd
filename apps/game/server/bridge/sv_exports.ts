@@ -6,6 +6,7 @@ import { playerLogger } from '../players/player.utils';
 import PlayerService from '../players/player.service';
 import { PhoneEvents } from '@typings/phone';
 import { Player } from '../players/player.class';
+import callsService from '../calls/calls.service';
 
 const exp = global.exports;
 
@@ -87,3 +88,12 @@ exp('getPlayerData', async (locator: PlayerDataExportArgs): Promise<ExportedPlay
     source: player.source,
   };
 });
+
+exp('isPlayerBusy', (src: number): boolean => {
+  return PlayerService.isBusy(src);
+});
+
+
+exp("isPhoneNumberBusy", (phoneNumber: string) => {
+  return callsService.isPhoneNumberInCall(phoneNumber);
+})

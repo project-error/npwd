@@ -16,7 +16,7 @@ import { emitNetTyped } from '../utils/miscUtils';
 import { mainLogger } from '../sv_logger';
 
 class CallsService {
-  private callMap: Collection<string, ActiveCallRaw>;
+  public callMap: Collection<string, ActiveCallRaw>;
   private readonly callsDB: _CallsRepo;
 
   constructor() {
@@ -29,6 +29,20 @@ class CallsService {
     this.callMap.set(transmitterNumber, callObj);
     callLogger.debug(`Call obj set with key ${transmitterNumber}, value:`);
     callLogger.debug(callObj);
+  }
+
+  isPlayerInCall(source: number): boolean {
+    const phoneNunber = PlayerService.getPlayer(source).getPhoneNumber();
+
+    return this.isPhoneNumberInCall(phoneNunber);
+  }
+
+  isPhoneNumberInCall(phoneNumber: string): boolean {
+    const calls = this.callMap.find((call) => {
+      return call.transmitter === phoneNumber || call.receiver === phoneNumber;
+    });
+
+    return !!calls;
   }
 
   async handleInitializeCall(

@@ -1,4 +1,4 @@
-import { OnCallExportCtx } from '../../../../typings/call';
+import { OnCallExportCtx } from '@typings/call';
 
 const exp = global.exports;
 

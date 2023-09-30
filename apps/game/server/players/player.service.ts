@@ -6,6 +6,7 @@ import Collection from '@discordjs/collection';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
+import CallsService from '../calls/calls.service';
 import { Delay } from '../../utils/fivem';
 import { config } from '../config';
 import { _PlayerRepo, PlayerRepo } from '@npwd/database';
@@ -14,11 +15,13 @@ class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
   private readonly playersByIdentifier: Collection<string, Player>;
   private readonly playerDB: _PlayerRepo;
+  private readonly callService: typeof CallsService;
 
   constructor() {
     this.playersBySource = new Collection<number, Player>();
     this.playersByIdentifier = new Collection<string, Player>();
     this.playerDB = PlayerRepo;
+    this.callService = CallsService;
     playerLogger.debug('Player Service started');
   }
 
@@ -71,6 +74,10 @@ class _PlayerService {
       return null;
     }
     return player;
+  }
+
+  isBusy(source: number): boolean {
+    return this.callService.isPlayerInCall(source);
   }
 
   /**
