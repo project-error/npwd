@@ -41,8 +41,8 @@ onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, async (r
               message,
             });
           },
-          forward: (receiverNumber) => {
-            CallService.handleInitializeCall({ ...reqObj, data: { receiverNumber } }, resp)
+          forward: (receiverNumber: string, isAnonymous = false) => {
+            CallService.handleInitializeCall({ ...reqObj, data: { receiverNumber, isAnonymous } }, resp)
               .catch((e) => {
                 resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
                 callLogger.error(`Error occured handling init call: ${e.message}`);

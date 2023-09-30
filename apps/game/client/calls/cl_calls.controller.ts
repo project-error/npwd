@@ -30,9 +30,9 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
     if (serverRes.status !== 'ok') {
       return cb?.(serverRes);
     }
-    const { transmitter, isTransmitter, receiver, isUnavailable } = serverRes.data;
+    const { transmitter, isTransmitter, receiver, isUnavailable, isAnonymous } = serverRes.data;
     // Start the process of giving NUI feedback by opening NUI modal
-    callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
+    callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable, isAnonymous);
     cb?.(serverRes);
   } catch (e) {
     console.error(e);

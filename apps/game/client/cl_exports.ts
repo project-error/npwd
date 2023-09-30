@@ -54,10 +54,10 @@ exps('setPhoneDisabled', (bool: boolean | number) => {
 exps('isPhoneDisabled', () => global.isPhoneDisabled);
 
 // Takes in a number to start the call with
-exps('startPhoneCall', (number: string) => {
+exps('startPhoneCall', (number: string, isAnonymous = false) => {
   verifyExportArgType('startPhoneCall', number, ['string']);
 
-  initializeCallHandler({ receiverNumber: number });
+  initializeCallHandler({ receiverNumber: number, isAnonymous });
 });
 
 // Will automatically open the contacts app start the new contact process
