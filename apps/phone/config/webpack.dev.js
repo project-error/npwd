@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const deps = require('../package.json').dependencies;
 
 module.exports = () => ({
   entry: './src/bootstrap.ts',
@@ -47,6 +49,25 @@ module.exports = () => ({
     ],
   },
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'layout',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './ui': './src/ui/components/index',
+      },
+      remotes: {},
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom'],
+        },
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
