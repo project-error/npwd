@@ -14,6 +14,9 @@ node_modules
 build
 dist
 
+
+.turbo
+
 # Error Logs
 npm-debug.log*
 yarn-debug.log*

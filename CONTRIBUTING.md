@@ -56,7 +56,7 @@ People _love_ thorough bug reports. I'm not even kidding.
 These guidelines have also been adapted from [Facebook's Guidelines](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)
 
 - 2 spaces for indentation rather than tabs
-- Run `yarn format` for unification of styling across the project.
+- Run `pnpm format` for unification of styling across the project.
 
 ## License
 

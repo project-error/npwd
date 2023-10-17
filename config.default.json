@@ -4,12 +4,22 @@
     "exportResource": "my-core-resource",
     "exportFunction": "myCheckerFunction"
   },
+  "customPhoneNumber": {
+    "enabled": false,
+    "exportResource": "number-generator-resource",
+    "exportFunction": "generateNumber"
+  },
   "general": {
     "useResourceIntegration": false,
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en",
     "showId": false
+  },
+  "contacts": {
+    "frameworkPay": false,
+    "payResource": "my-core-resource",
+    "payFunction": "myCheckerFunction"
   },
   "database": {
     "useIdentifierPrefix": false,
@@ -20,12 +30,12 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://api.projecterror.dev/image",
-    "type": "pe_image",
+    "url": "https://api.fivemanage.com/api/image",
+    "type": "image",
     "imageEncoding": "webp",
     "contentType": "multipart/form-data",
     "useContentType": false,
-    "authorizationHeader": "PE-Secret",
+    "authorizationHeader": "Authorization",
     "authorizationPrefix": "",
     "useAuthorization": true,
     "returnedDataIndexes": ["url"]
@@ -42,8 +52,12 @@
       "discord.com",
       "cdn.discordapp.com",
       "media.discordapp.com",
+      "media.discordapp.net",
       "upload.wikipedia.org",
-      "i.projecterror.dev"
+      "i.projecterror.dev",
+      "upcdn.io",
+      "i.fivemanage.com",
+      "api.fivemanage.com"
     ]
   },
   "profanityFilter": {
@@ -62,7 +76,8 @@
     "enableAvatars": true,
     "enableEmojis": true,
     "enableImages": true,
-    "maxImages": 3
+    "maxImages": 1,
+    "resultsLimit": 25
   },
   "match": {
     "generateProfileNameFromUsers": true,
@@ -76,11 +91,13 @@
     "enabled": true,
     "sentryEnabled": true
   },
+  "defaultContacts": [],
+  "disabledApps": [],
   "apps": [],
   "voiceMessage": {
     "enabled": false,
-    "authorizationHeader": "PE-Secret",
-    "url": "",
+    "authorizationHeader": "Authorization",
+    "url": "https://api.fivemange/api/audio",
     "returnedDataIndexes": ["url"]
   }
 }

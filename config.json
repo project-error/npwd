@@ -10,6 +10,11 @@
     "toggleCommand": "phone",
     "defaultLanguage": "en"
   },
+  "contacts": {
+    "frameworkPay": false,
+    "payResource": "my-core-resource",
+    "payFunction": "myCheckerFunction"
+  },
   "profanityFilter": {
     "enabled": false,
     "badWords": ["esx"]
@@ -84,8 +89,8 @@
       "number": 911
     }
   ],
-  "disabledApps": ["BROWSER"],
   "apps": ["pefcl", "npwd_services", "npwd_taxi", "npwd_jobs"],
+  "disabledApps": [],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

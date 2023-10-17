@@ -1,0 +1,8 @@
+{
+  "name": "@npwd/types",
+  "version": "1.6.1",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "author": "Project Error",
+  "license": "MIT"
+}

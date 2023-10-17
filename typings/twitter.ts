@@ -28,6 +28,27 @@ export interface Tweet extends NewTweet {
   updatedAt: string;
 }
 
+export interface GetTweet extends NewTweet {
+  profile_name: string;
+  profile_id: number;
+  id: number;
+  identifier: string;
+  isMine: boolean;
+  isLiked: boolean;
+  isReported: boolean;
+  avatar_url: string;
+  isRetweet: number | boolean;
+  likes: number;
+  isRetweetedByPlayer?: boolean;
+  retweetIdentifier: string;
+  retweetId: string;
+  seconds_since_tweet: number;
+  retweetProfileName: string;
+  retweetAvatarUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Image {
   id: string;
   link: string;
@@ -63,7 +84,9 @@ export enum TwitterEvents {
   CREATE_TWEET = 'npwd:createTweet',
   CREATE_TWEET_BROADCAST = 'createTweetBroadcast',
   DELETE_TWEET = 'npwd:deleteTweet',
+  DELETE_TWEET_BROADCAST = 'npwd:deleteTweetBroadcast',
   TOGGLE_LIKE = 'npwd:toggleLike',
   RETWEET = 'npwd:retweet',
   REPORT = 'npwd:reportTweet',
+  TWEET_LIKED_BROADCAST = 'npwd:tweetLikedBroadcast',
 }

@@ -12,6 +12,7 @@ interface TwitterConfig {
   enableImages: boolean;
   maxImages: number;
   badWords: string[];
+  resultsLimit: number;
 }
 
 interface MatchConfig {
@@ -36,6 +37,12 @@ interface General {
   toggleCommand: string;
   defaultLanguage: string;
   showId: boolean;
+}
+
+interface Contacts {
+  frameworkPay: boolean;
+  payResource: string;
+  payFunction: string;
 }
 
 interface NotificationConfig {
@@ -69,6 +76,7 @@ interface ImageConfig {
   imageEncoding: 'png' | 'jpg' | 'webp';
   contentType: string;
   useContentType: boolean;
+  useWebhook: boolean;
   authorizationHeader: string;
   authorizationPrefix: string;
   useAuthorization: boolean;
@@ -76,6 +84,12 @@ interface ImageConfig {
 }
 
 interface PhoneAsItemConfig {
+  enabled: boolean;
+  exportResource: string;
+  exportFunction: string;
+}
+
+interface CustomNumberConfig {
   enabled: boolean;
   exportResource: string;
   exportFunction: string;
@@ -95,21 +109,32 @@ interface VoiceMessageConfig {
   returnedDataIndexes: Array<any>;
 }
 
+export interface DefaultContact {
+  id: number;
+  display: string;
+  number: string;
+  avatar?: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
   PhoneAsItem: PhoneAsItemConfig;
+  customPhoneNumber: CustomNumberConfig;
   RunRate: number;
   twitter: TwitterConfig;
   match: MatchConfig;
   marketplace: MarketplaceConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
+  defaultContacts: DefaultContact[];
   general: General;
   debug: Debug;
   images: ImageConfig;
   imageSafety: ImageSafety;
+  disabledApps: string[];
   profanityFilter: ProfanityFilter;
   apps: string[];
   voiceMessage: VoiceMessageConfig;
+  contacts: Contacts;
 }

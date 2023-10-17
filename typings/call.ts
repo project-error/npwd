@@ -6,11 +6,12 @@ export interface ActiveCall {
   channelId?: number;
   isUnavailable?: boolean;
   start?: string;
-  identifier?: string;
+  isAnonymous?: boolean;
 }
 
 export interface InitializeCallDTO {
   receiverNumber: string;
+  isAnonymous: boolean;
 }
 
 export interface StartCallEventData {
@@ -44,6 +45,7 @@ export interface ActiveCallRaw {
   receiverSource: number;
   start: string;
   is_accepted: boolean;
+  isAnonymous: boolean;
 }
 
 export interface CallHistoryItem {
@@ -56,6 +58,7 @@ export interface CallHistoryItem {
   start: string;
   end?: number;
   is_accepted: boolean;
+  isAnonymous?: boolean;
 }
 
 export enum CallRejectReasons {
