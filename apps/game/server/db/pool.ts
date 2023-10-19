@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise';
 import { CONNECTION_STRING, parseSemiColonFormat } from './db_utils';
 import { mainLogger } from '../sv_logger';
+import { parseUri } from './parseUri';
 
 // we require set mysql_connection_string  to be set in the config
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
@@ -22,9 +23,7 @@ if (mysqlConnectionString === 'none') {
  */
 export function generateConnectionPool() {
   try {
-    const config = mysqlConnectionString.includes('mysql://')
-      ? { uri: mysqlConnectionString }
-      : parseSemiColonFormat(mysqlConnectionString);
+    const config = parseUri(mysqlConnectionString);
 
     return mysql.createPool({
       connectTimeout: 60000,
