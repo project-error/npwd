@@ -13,7 +13,7 @@ export const parseUri = (connectionUri: string) => {
       port: parseInt(parsedUrl.port),
       database: parsedUrl.pathname.slice(1),
       user: parsedUrl.username,
-      password: parsedUrl.password,
+      password: decodeURIComponent(parsedUrl.password),
     };
     parsedUrl.searchParams.forEach((value: string, key: keyof NPWDConnectionOptions) => {
       try {
