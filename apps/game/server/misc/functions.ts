@@ -1,5 +1,5 @@
 import { config } from '../server';
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '@npwd/database';
 import { generateUniquePhoneNumber } from './generateUniquePhoneNumber';
 import { playerLogger } from '../players/player.utils';
 import { ResultSetHeader } from 'mysql2';

@@ -24,6 +24,19 @@ export const parseUri = (connectionUri: string) => {
         (options as Record<typeof key, any>)[key] = value;
       }
     });
+
+    if (!options.password || !options.user || !options.database) {
+      const regex = new RegExp('^(?:([^:/?#.]+):)?(?://(?:([^/?]*):([^/?]*)@)?([[A-Za-z0-9_.]+]*)(?::([0-9]+))?)?(?:\\\\?([^#]*))?$', '')
+      const specialCharactersRegex = regex.exec(connectionUri);
+      if (specialCharactersRegex) {
+        options.user = specialCharactersRegex[2] || void 0;
+        options.password = specialCharactersRegex[3] || void 0;
+        options.host = specialCharactersRegex[4];
+        options.port = parseInt(specialCharactersRegex[5]);
+        options.database = specialCharactersRegex[6].replace(/^\/+/, "");
+      }
+    }
+
     return options;
   }  
   

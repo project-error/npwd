@@ -1,5 +1,5 @@
 import { config } from '@npwd/config/server';
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '../db';
 
 export class _PlayerRepo {
   async fetchIdentifierFromPhoneNumber(phoneNumber: string): Promise<string | null> {

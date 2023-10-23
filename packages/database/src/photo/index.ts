@@ -1,5 +1,5 @@
 import { GalleryPhoto } from '@typings/photo';
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '../db';
 
 export class _PhotoDB {
   async uploadPhoto(identifier: string, image: string): Promise<GalleryPhoto> {

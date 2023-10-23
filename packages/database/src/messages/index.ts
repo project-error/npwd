@@ -1,4 +1,4 @@
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '../db';
 import { CreateMessageDTO, Message, MessageConversation, MessagesRequest } from '@typings/messages';
 import { ResultSetHeader } from 'mysql2';
 import { messagesLogger } from '../../../../apps/game/server/messages/messages.utils';

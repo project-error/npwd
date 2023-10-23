@@ -5,7 +5,7 @@ import {
   ReportListingDTO,
 } from '@typings/marketplace';
 import { ResultSetHeader } from 'mysql2';
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '../db';
 
 export class _MarketplaceDB {
   async addListing(

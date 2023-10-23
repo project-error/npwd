@@ -72,6 +72,4 @@ class _DbInterface {
     return <T>castRes;
   }
 }
-const DbInterface = new _DbInterface();
-
-export default DbInterface;
+export const DbInterface = new _DbInterface();
