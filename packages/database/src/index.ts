@@ -8,5 +8,4 @@ export * from './match/index';
 export * from './marketplace/index';
 export * from './darkchat/index';
 export * from './calls/index';
-
-export { pool } from './db/pool';
+export * from './db/index'

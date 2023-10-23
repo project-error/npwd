@@ -1,4 +1,4 @@
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '../db';
 import {
   ChannelItemProps,
   ChannelMember,

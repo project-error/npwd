@@ -1,5 +1,5 @@
 import { config } from '../server';
-import DbInterface from '../db/db_wrapper';
+import { DbInterface } from '@npwd/database';
 import { playerLogger } from '../players/player.utils';
 
 const exp = global.exports;

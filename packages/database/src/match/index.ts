@@ -1,10 +1,9 @@
 import { Like, Match, NewProfile, Profile } from '@typings/match';
-import { pool } from '../db/pool';
+import { DbInterface, pool } from '../db';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '@npwd/config/server';
 import { generateProfileName } from '@game/server/utils/generateProfileName';
 import { matchLogger } from '@game/server/match/match.utils';
-import DbInterface from '../db/db_wrapper';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
 const MATCHES_PER_PAGE = 20;

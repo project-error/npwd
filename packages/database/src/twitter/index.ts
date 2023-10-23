@@ -1,10 +1,9 @@
 import { NewTweet, TwitterProfile as Profile, Tweet } from '@typings/twitter';
-import { pool } from '../db/pool';
+import { DbInterface, pool } from '../db';
 import { ResultSetHeader } from 'mysql2';
 import { config } from '@npwd/config/server';
 import { generateProfileName } from '../../../../apps/game/server/utils/generateProfileName';
 import { twitterLogger } from '../../../../apps/game/server/twitter/twitter.utils';
-import DbInterface from '../db/db_wrapper';
 
 const SELECT_FIELDS = `
   npwd_twitter_tweets.id,
