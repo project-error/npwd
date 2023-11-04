@@ -1,0 +1,32 @@
+name: Nightly release 
+
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+  deployments: write
+  pull-requests: read
+  
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-nightly-release:
+    name: Create Nightly relesae
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Get tag
+        uses: project-error/get-tag@v1.0
+        with:
+          environment: "dev"
+          prerelease: true
+        id: get_tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Output releas tag
+        run: echo "New release tag ${{ steps.get_tag.outputs.release_tag }}"

@@ -1,8 +1,7 @@
 name: Tagged Release Publisher
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+
 jobs:
   create-tagged-release:
     name: Build and Create Tagged Release

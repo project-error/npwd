@@ -1,11 +1,7 @@
 name: Nightly release 
 
 on:
-  push:
-    branches:
-      - master
-    tags-ignore:
-      - v*
+  workflow_dispatch:
 
 jobs:
   create-nightly-release:
@@ -16,8 +12,12 @@ jobs:
       - name: Get tag
         run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
         id: get_tag
+
+      - name: Get new tag
+        id: get_new_tag
+
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.repository.default_branch }}
