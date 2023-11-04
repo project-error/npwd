@@ -20,11 +20,7 @@ function LogDebugEvent(event: DebugEvent) {
   const logLevel = event.level || 1;
   const name = event.action || 'Undefined action';
 
-  if (
-    process.env.NODE_ENV === 'development' &&
-    config.debug.printDebugLogs &&
-    logLevel >= config.debug.logLevel
-  ) {
+  if (import.meta.env.DEV && config.debug.printDebugLogs && logLevel >= config.debug.logLevel) {
     console.group(`${name} | Level: ${logLevel}`);
     console.dir(event.data);
     console.groupEnd();

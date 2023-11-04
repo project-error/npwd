@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { Theme as MaterialUITheme } from '@mui/material';
-import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { NuiProvider } from 'fivem-nui-react-lib';
 import { RecoilRootManager } from './lib/RecoilRootManager';
@@ -26,7 +25,7 @@ declare module '@emotion/react' {
 }
 
 // window.mockNuiEvent is restricted to development env only
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
   attachWindowDebug();
 }
 

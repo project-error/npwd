@@ -28,7 +28,7 @@ export interface DebugEvent<P = any> {
  * ])
  **/
 const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 3000) => {
-  if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_IN_GAME) {
+  if (import.meta.env.DEV && !import.meta.env.REACT_APP_IN_GAME) {
     for (const event of events) {
       console.log('EVENT', event);
       setTimeout(() => {
