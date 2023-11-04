@@ -15,3 +15,9 @@ export const fetchConfig = async (): Promise<ResourceConfig> => {
 
   return deepMergeObjects({}, defaultConfig, config);
 };
+
+export enum EnvMode {
+  GAME = 'game',
+  DEV = 'dev',
+  PROD = 'production',
+}

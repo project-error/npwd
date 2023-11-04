@@ -11,6 +11,8 @@ import {
   __federation_method_unwrapDefault,
   // @ts-ignore - This is Vite federation magic
 } from '__federation__';
+import { EnvMode } from '@utils/config';
+import { NuiProvider } from 'fivem-nui-react-lib';
 
 const useExternalAppsAction = () => {
   const loadScript = async (url: string) => {
@@ -36,7 +38,7 @@ const useExternalAppsAction = () => {
 
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = import.meta.env.PROD || import.meta.env.REACT_APP_IN_GAME;
+      const IN_GAME = import.meta.env.PROD || import.meta.env.MODE === EnvMode.GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
         : 'http://localhost:4173/assets/remoteEntry.js';
@@ -57,7 +59,7 @@ const useExternalAppsAction = () => {
 
       const appConfig = m();
       const config = appConfig;
-      config.Component = (props: object) => React.createElement(config.app, props);
+      config.Component = (props: object) => React.createElement(config.app);
 
       const Provider = createExternalAppProvider(config);
 

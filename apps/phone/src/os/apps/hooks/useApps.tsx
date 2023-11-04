@@ -20,12 +20,12 @@ export const useApps = () => {
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
       const SvgIcon = React.lazy<SvgIconComponent>(() =>
-        import(`../icons/${curIconSet.name}/svg/${app.id}`).catch(
+        import(`../icons/${curIconSet.name}/svg/${app.id}.tsx`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
       const AppIcon = React.lazy<SvgIconComponent>(() =>
-        import(`../icons/${curIconSet.name}/app/${app.id}`).catch(
+        import(`../icons/${curIconSet.name}/app/${app.id}.tsx`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );

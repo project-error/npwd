@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-
+import topLevelAwait from 'vite-plugin-top-level-await';
 import federation from '@originjs/vite-plugin-federation';
 
 // https://vitejs.dev/config/
@@ -10,7 +10,13 @@ export default defineConfig({
     react(),
     federation({
       remotes: { dummyRemote: 'dummyRemote.js' },
-      shared: ['react', 'react-dom', '@emotion/react', 'react-router-dom'],
+      shared: ['react', 'react-dom', '@emotion/react', 'react-router-dom', 'fivem-nui-react-lib'],
+    }),
+    topLevelAwait({
+      // The export name of top-level await promise for each chunk module
+      promiseExportName: '__tla',
+      // The function to generate import names of top-level await promise in each chunk module
+      promiseImportName: (i) => `__tla_${i}`,
     }),
   ],
   server: {
@@ -29,5 +35,10 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
+  },
+  base: './',
+  build: {
+    emptyOutDir: true,
+    outDir: '../../dist/html',
   },
 });

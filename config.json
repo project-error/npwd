@@ -34,7 +34,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": ["mockapp"],
+  "apps": [],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",
