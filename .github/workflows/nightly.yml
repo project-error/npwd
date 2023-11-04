@@ -6,7 +6,6 @@ permissions:
   actions: write
   deployments: write
   pull-requests: read
-  
 
 on:
   push:
@@ -15,18 +14,103 @@ on:
 
 jobs:
   create-nightly-release:
-    name: Create Nightly relesae
+    name: Create Nightly release 
     runs-on: ubuntu-latest
-  
+    
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Get tag
-        uses: project-error/get-tag@v1.0
+        uses: project-error/get-tag@v1.2
         with:
           environment: "dev"
           prerelease: true
         id: get_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Output releas tag
-        run: echo "New release tag ${{ steps.get_tag.outputs.release_tag }}"
+
+
+      - name: Bump manifest version
+        run: node .github/actions/bump-manifest-version.js
+        env:
+          TGT_RELEASE_VERSION: ${{ steps.get_tag.outputs.release_tag }}
+
+      - name: Push manifest change
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: fxmanifest.lua
+          push: true
+          author_name: Manifest Bumper
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore: bump manifest version to nightly ${{ steps.get_tag.outputs.release_tag }}"
+
+
+      # super hacky 
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+    
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.29.1
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Run build
+        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.release_tag }} pnpm build
+
+      #- name: Create Sentry Release (NPWD)
+      #  run: |
+      #    curl -sL https://sentry.io/get-cli/ | bash
+      #    export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+      #    export SENTRY_ORG=project-error
+      #    export SENTRY_PROJECT=npwd
+      #    export SENTRY_URL=https://sentry.projecterror.dev/
+      #    export VERSION=${{ steps.get_tag.outputs.VERSION_TAG }}
+
+      #    sentry-cli releases new "$VERSION"
+      #    sentry-cli releases set-commits "$VERSION" --auto
+      #    sentry-cli releases files "$VERSION" upload-sourcemaps resources/html --ext map --url-prefix '~/resources/html'
+      #    sentry-cli releases finalize "$VERSION"
+
+      #    sentry-cli releases deploys "$VERSION" new -e production
+      - name: Bundle built files
+        run: |
+          mkdir -p ./temp/npwd/dist
+          cp ./{LICENSE,README.md,config.json,import.sql,fxmanifest.lua} ./temp/npwd/
+          cp -r ./dist/{game,html} ./temp/npwd/dist
+          cd ./temp && zip -r ../npwd.zip ./npwd
+
+      - name: Create Release
+        uses: "project-error/release-action@v2.1"
+        id: auto_release
+        with:
+          environment: "dev"
+          title: NPWD Nightly ${{ steps.get_tag.outputs.release_tag }}
+          prerelease: true
+          automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
+          files: npwd.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        run: |
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          -H "Content-Type: application/octet-stream" \
+          "https://uploads.github.com/repos/project-error/npwd/releases/${{ steps.auto_release.outputs.release_id }}/assets?name=npwd.zip" \
+          --data-binary "@npwd.zip"
+
