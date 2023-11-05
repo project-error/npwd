@@ -92,7 +92,7 @@ jobs:
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
-        uses: "project-error/release-action@v1.8"
+        uses: "project-error/release-action@v2.0"
         id: auto_release
         with:
           environment: "dev"
@@ -102,3 +102,11 @@ jobs:
           files: npwd.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: gregoranders/nodejs-upload-asset@v0.0.21
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.auto_release.outputs.release_id }}
+          path: npwd.zip
