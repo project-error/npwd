@@ -36,7 +36,7 @@ jobs:
       - name: Bump manifest version
         run: node .github/actions/bump-manifest-version.js
         env:
-          TGT_RELEASE_VERSION: "${{ steps.get_tag.outputs.release_tag }}"
+          TGT_RELEASE_VERSION: ${{ steps.get_tag.outputs.release_tag }}
 
       - name: Push manifest change
         uses: EndBug/add-and-commit@v8
