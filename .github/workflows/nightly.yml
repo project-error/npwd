@@ -92,7 +92,7 @@ jobs:
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
-        uses: "project-error/release-action@v1.7"
+        uses: "project-error/release-action@v1.8"
         id: auto_release
         with:
           environment: "dev"
