@@ -92,11 +92,12 @@ jobs:
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        uses: "project-error/release-action@v1.4"
         id: auto_release
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           title: NPWD Nightly ${{ steps.get_tag.outputs.release_tag }}
           prerelease: true
           automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
           files: npwd.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

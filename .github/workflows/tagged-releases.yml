@@ -1,4 +1,5 @@
 name: Tagged Release Publisher
+
 on:
   workflow_dispatch:
 
@@ -8,14 +9,41 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Get tag
-        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
-        id: get_tag
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Get tag
+        uses: project-error/get-tag@v1.0
+        with:
+          environment: "dev"
+          prerelease: true
+        id: get_tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Bump manifest version
+        run: node .github/actions/bump-manifest-version.js
+        env:
+          TGT_RELEASE_VERSION: ${{ steps.get_tag.outputs.release_tag }}
+
+      - name: Push manifest change
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: fxmanifest.lua
+          push: true
+          author_name: Manifest Bumper
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore: bump manifest version to nightly ${{ steps.get_tag.outputs.release_tag }}"
+
+      # super hacky 
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.2
         with:
@@ -30,25 +58,6 @@ jobs:
 
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
-        
-      - name: Bump manifest version
-        run: node .github/actions/bump-manifest-version.js
-        env:
-          TGT_RELEASE_VERSION: ${{ github.ref_name }}
-
-      - name: Push manifest change
-        uses: EndBug/add-and-commit@v8
-        with:
-          add: fxmanifest.lua
-          push: true
-          author_name: Manifest Bumper
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: "chore: bump manifest version to ${{ github.ref_name }}"
-
-      - name: Update tag ref
-        uses: EndBug/latest-tag@latest
-        with:
-          tag-name: ${{ github.ref_name }}
 
       #- name: Create Sentry Release (NPWD)
       #  run: |
@@ -77,8 +86,9 @@ jobs:
         id: auto_release
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: NPWD Release | ${{ steps.get_tag.outputs.VERSION_TAG }}
+          title: NPWD Release ${{ steps.get_tag.outputs.release_tag }}
           prerelease: false
+          automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
           files: npwd.zip
 
         env:
