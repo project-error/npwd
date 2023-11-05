@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get tag
-        uses: project-error/get-tag@v1.0
+        uses: project-error/get-tag@v1.2
         with:
           environment: "dev"
           prerelease: true
@@ -95,6 +95,7 @@ jobs:
         uses: "project-error/release-action@v1.4"
         id: auto_release
         with:
+          environment: "dev"
           title: NPWD Nightly ${{ steps.get_tag.outputs.release_tag }}
           prerelease: true
           automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
