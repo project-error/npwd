@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Get tag
         uses: project-error/get-tag@v1.0
         with:
@@ -26,6 +31,7 @@ jobs:
         id: get_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Bump manifest version
         run: node .github/actions/bump-manifest-version.js
