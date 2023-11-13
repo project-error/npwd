@@ -2,6 +2,7 @@
 import { ConnectionOptions } from 'mysql2';
 interface NPWDConnectionOptions extends ConnectionOptions {
   driver: string;
+  username?: string
 }
 
 export const parseUri = (connectionUri: string) => {
@@ -21,11 +22,14 @@ export const parseUri = (connectionUri: string) => {
         (options as Record<typeof key, any>)[key] = JSON.parse(value);
       } catch (err) {
         // Otherwise assume it is a plain string
-        (options as Record<typeof key, any>)[key] = value;
+        // convert 'username' to user to match driver type
+        if(key === 'username') options['user'] = value;
+        else (options as Record<typeof key, any>)[key] = value;
       }
     });
 
-    if (!options.password || !options.user || !options.database) {
+    // we only want this if we miss both password & user or database
+    if (!options.password && !options.user || !options.database) {
       const regex = new RegExp('^(?:([^:/?#.]+):)?(?://(?:([^/?]*):([^/?]*)@)?([[A-Za-z0-9_.]+]*)(?::([0-9]+))?)?(?:\\\\?([^#]*))?$', '')
       const specialCharactersRegex = regex.exec(connectionUri);
       if (specialCharactersRegex) {
@@ -36,6 +40,9 @@ export const parseUri = (connectionUri: string) => {
         options.database = specialCharactersRegex[6].replace(/^\/+/, "");
       }
     }
+
+    // we need to delete any empty keys, the driver really hates empty strings in the options.
+    for(let key in options) !(options as Record<typeof key, any>)[key] && delete (options as Record<typeof key, any>)[key] 
 
     return options;
   }  
