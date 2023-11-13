@@ -1,4 +1,4 @@
-import { MessagesDB, _MessagesDB } from '@npwd/database';
+import { MessagesDB, _MessagesDB } from './messages.database';
 import {
   createGroupHashID,
   getIdentifiersFromParticipants,

@@ -1,6 +1,6 @@
 import { Contact, PreDBContact } from '@typings/contact';
 import { ResultSetHeader } from 'mysql2';
-import { DbInterface } from '../db';
+import { DbInterface } from '@npwd/database';
 
 export class _ContactsDB {
   async fetchAllContacts(identifier: string): Promise<Contact[]> {

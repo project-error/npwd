@@ -1,5 +1,5 @@
 import { formatMatches, formatProfile, matchLogger } from './match.utils';
-import { MatchDB, _MatchDB } from '@npwd/database';
+import { MatchDB, _MatchDB } from './match.database';
 import {
   FormattedMatch,
   FormattedProfile,

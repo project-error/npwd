@@ -9,7 +9,7 @@ import MarketplaceService from '../marketplace/marketplace.service';
 import CallsService from '../calls/calls.service';
 import { Delay } from '../../utils/fivem';
 import { config } from '../config';
-import { _PlayerRepo, PlayerRepo } from '@npwd/database';
+import { _PlayerRepo, PlayerRepo } from './player.database';
 
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;

@@ -1,5 +1,5 @@
 import PlayerService from '../players/player.service';
-import { _TwitterDB, TwitterDB } from '@npwd/database';
+import { _TwitterDB, TwitterDB } from './twitter.database';
 import { NewTweet, Tweet, TwitterEvents, TwitterProfile } from '@typings/twitter';
 import { twitterLogger } from './twitter.utils';
 import { reportTweetToDiscord } from '../misc/discord';
@@ -137,24 +137,31 @@ class _TwitterService {
         const profile = await this.twitterDB.getProfile(identifier);
         const data = [
           {
-            "color": '1942002',
-            "title": 'New Tweet',
-            "description": tweet.message,
-            "image": {
-              "url": images[0]
+            color: '1942002',
+            title: 'New Tweet',
+            description: tweet.message,
+            image: {
+              url: images[0],
             },
-            "footer": {
-              "text": profile.profile_name + ' ' + profile.id + ':' + identifier,
-              "icon_url": profile.avatar_url
-            }
-          }
+            footer: {
+              text: profile.profile_name + ' ' + profile.id + ':' + identifier,
+              icon_url: profile.avatar_url,
+            },
+          },
         ];
 
-        await tweetDiscordPost(this.DISCORD_WEBHOOK, JSON.stringify({username: "Twitter", embeds: data}))
+        await tweetDiscordPost(
+          this.DISCORD_WEBHOOK,
+          JSON.stringify({ username: 'Twitter', embeds: data }),
+        );
       }
-    } catch (e) {}
+    } catch (e) {
+      twitterLogger.error(`Discord post failed, ${e.message}`, {
+        source: identifier,
+      });
+    }
 
-    return
+    return;
   }
 
   async handleCreateTweet(
@@ -181,7 +188,7 @@ class _TwitterService {
       const createdTweet = await this.twitterDB.createTweet(identifier, reqObj.data);
       emitNet(TwitterEvents.CREATE_TWEET_BROADCAST, -1, createdTweet);
       resp({ status: 'ok' });
-      this.postDiscord(identifier, reqObj.data, images)
+      this.postDiscord(identifier, reqObj.data, images);
     } catch (e) {
       twitterLogger.error(`Create tweet failed, ${e.message}`, {
         source: reqObj.source,
@@ -226,7 +233,13 @@ class _TwitterService {
       }
 
       resp({ status: 'ok' });
-      emitNet(TwitterEvents.TWEET_LIKED_BROADCAST, -1, reqObj.data.tweetId, !likeExists, likedByProfileName);
+      emitNet(
+        TwitterEvents.TWEET_LIKED_BROADCAST,
+        -1,
+        reqObj.data.tweetId,
+        !likeExists,
+        likedByProfileName,
+      );
     } catch (e) {
       twitterLogger.error(`Like failed, ${e.message}`, {
         source: reqObj.source,

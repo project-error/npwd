@@ -1,6 +1,6 @@
 import { BeforeDBNote, NoteItem } from '@typings/notes';
 import { ResultSetHeader } from 'mysql2';
-import { DbInterface } from '../db';
+import { DbInterface } from '@npwd/database';
 
 export class _NotesDB {
   async addNote(identifier: string, note: BeforeDBNote): Promise<number> {

@@ -1,6 +1,6 @@
 import PlayerService from '../players/player.service';
 import { GalleryPhoto } from '@typings/photo';
-import { PhotoDB, _PhotoDB } from '@npwd/database';
+import { PhotoDB, _PhotoDB } from './photo.database';
 import { photoLogger } from './photo.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { config } from '../config';
@@ -60,7 +60,7 @@ class _PhotoService {
           if (config.images.type === 'imgur') {
             body = data.replace(/^data:image\/[a-z]+;base64,/, '').trim();
           } else if (config.images.type === 'upload.io') {
-            body = blob
+            body = blob;
           } else {
             body.append(config.images.type, blob);
           }
