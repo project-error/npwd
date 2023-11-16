@@ -10,7 +10,7 @@ export class _CallsRepo {
       call.identifier,
       call.transmitter,
       call.receiver,
-      call.isAnonymous,
+      call.isAnonymous ?? false,
       call.start,
     ]);
   }
