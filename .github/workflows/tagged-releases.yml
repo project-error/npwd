@@ -25,7 +25,7 @@ jobs:
         uses: project-error/get-tag@v1.0
         with:
           environment: "prod"
-          prerelease: true
+          prerelease: false
         id: get_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
         with:
           environment: "prod"
           title: NPWD ${{ steps.get_tag.outputs.release_tag }}
-          prerelease: true
+          prerelease: false
           automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
           files: npwd.zip
         env:
