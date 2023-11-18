@@ -1,5 +1,12 @@
 name: Tagged Release Publisher
 
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+  deployments: write
+  pull-requests: read
+
 on:
   workflow_dispatch:
 
@@ -17,7 +24,7 @@ jobs:
       - name: Get tag
         uses: project-error/get-tag@v1.0
         with:
-          environment: "dev"
+          environment: "prod"
           prerelease: true
         id: get_tag
         env:
@@ -82,72 +89,24 @@ jobs:
           cd ./temp && zip -r ../npwd.zip ./npwd
 
       - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        uses: "project-error/release-action@v2.1"
         id: auto_release
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: NPWD Release ${{ steps.get_tag.outputs.release_tag }}
-          prerelease: false
+          environment: "prod"
+          title: NPWD ${{ steps.get_tag.outputs.release_tag }}
+          prerelease: true
           automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
           files: npwd.zip
-
         env:
-          CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-npwd-packages:
-    name: Build NPWD packages
-    runs-on: ubuntu-latest
-    needs: create-tagged-release
-
-    steps:
-      - name: Get tag
-        run: echo ::set-output name=VERSION_TAG::${GITHUB_REF/refs\/tags\//}
-        id: get_tag
-      - name: Checkout source code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7.29.1
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
-
-      # Build all packages
-      - name: Build @npwd/types
+      - name: Upload artifacts
         run: |
-          pnpm generate:typings
-          cd ./packages/npwd-types
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
-      - name: Release @npwd/types
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwd-types/package.json'
-          access: 'public'
-
-      - name: Build @npwd/hooks
-        run: |
-          cd ./packages/npwd-hooks
-          pnpm build
-          git config user.email "chip@projecterror.dev"
-          git config user.name "itschip"
-          pnpm version --new-version ${{ steps.get_tag.outputs.VERSION_TAG }}
-
-      - name: Release @npwd/hooks
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: './packages/npwd-hooks/package.json'
-          access: 'public'
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          -H "Content-Type: application/octet-stream" \
+          "https://uploads.github.com/repos/project-error/npwd/releases/${{ steps.auto_release.outputs.release_id }}/assets?name=npwd.zip" \
+          --data-binary "@npwd.zip"
