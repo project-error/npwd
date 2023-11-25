@@ -34,7 +34,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": ["pefcl"],
+  "apps": [],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

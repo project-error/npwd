@@ -1,8 +1,9 @@
 const { build } = require('esbuild');
+const { copy } = require('esbuild-plugin-copy');
 
 build({
   entryPoints: ['server/server.ts'],
-  outfile: 'dist/server/server.js',
+  outfile: '../../dist/game/server/server.js',
   bundle: true,
   loader: {
     '.ts': 'ts',
@@ -25,7 +26,7 @@ build({
 
 build({
   entryPoints: ['client/client.ts'],
-  outfile: 'dist/client/client.js',
+  outfile: '../../dist/game/client/client.js',
   bundle: true,
   loader: {
     '.ts': 'ts',
@@ -40,6 +41,16 @@ build({
   write: true,
   platform: 'browser',
   target: 'es2016',
+  plugins: [
+    copy({
+      resolveFrom: 'cwd',
+      verbose: true,
+      assets: {
+        from: ['client/cl_controls.lua'],
+        to: ['../../dist/game/client/cl_controls.lua'],
+      },
+    }),
+  ],
 })
   .then(() => {
     console.log('Client built successfully');

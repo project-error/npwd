@@ -184,7 +184,7 @@ export const APPS: IAppConfig[] = [
 ];
 
 // Example app only in dev
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
   APPS.push({
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',

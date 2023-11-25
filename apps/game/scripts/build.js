@@ -29,13 +29,15 @@ build({
   write: true,
   platform: 'browser',
   target: 'es2016',
+  minify: true,
   plugins: [
     copy({
       resolveFrom: 'cwd',
       verbose: true,
+      copyOnStart: true,
       assets: {
         from: ['client/cl_controls.lua'],
-        to: ['../../dist/game/client/cl_controls.lua'],
+        to: ['../../dist/game/client/'],
       },
     }),
   ],

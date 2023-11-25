@@ -5,6 +5,15 @@ import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvi
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { phoneState } from '@os/phone/hooks/state';
 
+import {
+  __federation_method_getRemote,
+  __federation_method_setRemote,
+  __federation_method_unwrapDefault,
+  // @ts-ignore - This is Vite federation magic
+} from '__federation__';
+import { EnvMode } from '@utils/config';
+import { NuiProvider } from 'fivem-nui-react-lib';
+
 const useExternalAppsAction = () => {
   const loadScript = async (url: string) => {
     await new Promise((resolve, reject) => {
@@ -26,29 +35,31 @@ const useExternalAppsAction = () => {
       };
     });
   };
-  
+
   const generateAppConfig = async (appName: string): Promise<IApp> => {
     try {
-      const IN_GAME = process.env.NODE_ENV === 'production' || process.env.REACT_APP_IN_GAME;
+      const IN_GAME = import.meta.env.PROD || import.meta.env.MODE === EnvMode.GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
-        : 'http://localhost:3002/remoteEntry.js';
+        : 'http://localhost:4173/assets/remoteEntry.js';
       const scope = appName;
-      const module = './config';
 
       await loadScript(url);
 
-      await __webpack_init_sharing__('default');
-      const container = window[scope];
+      console.log('Loaded external app', appName);
 
-      await container.init(__webpack_share_scopes__.default);
-      const factory = await window[scope].get(module);
-      const Module = factory();
+      __federation_method_setRemote(scope, {
+        url: () => Promise.resolve(url),
+        format: 'esm',
+        from: 'vite',
+      });
 
-      const appConfig = Module.default();
+      const mWrapper = await __federation_method_getRemote(scope, './config');
+      const m = await __federation_method_unwrapDefault(mWrapper);
 
+      const appConfig = m();
       const config = appConfig;
-      config.Component = (props: object) => React.createElement(config.app, props);
+      config.Component = (props: object) => React.createElement(config.app);
 
       const Provider = createExternalAppProvider(config);
 
