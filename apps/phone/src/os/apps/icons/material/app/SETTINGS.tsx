@@ -1,6 +1,6 @@
 import React from 'react';
-import { Settings } from '@mui/icons-material';
+import { Settings } from 'lucide-react';
 
-const SettingsIcon: React.FC = () => <Settings fontSize="large" />;
+const SettingsIcon: React.FC = () => <Settings size={30} />;
 
 export default SettingsIcon;

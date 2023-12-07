@@ -1,6 +1,6 @@
 import React from 'react';
-import { CalculatorIcon } from '../../../../../apps/calculator/components/CalculatorIcon';
+import { Calculator as LCalc } from 'lucide-react';
 
-const Calculator: React.FC = () => <CalculatorIcon fontSize="large" />;
+const Calculator: React.FC = () =><LCalc size={30} />;
 
 export default Calculator;

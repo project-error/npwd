@@ -1,6 +1,6 @@
 import React from 'react';
-import { Message } from '@mui/icons-material';
+import { MessageSquare } from 'lucide-react';
 
-const MessagesIcon: React.FC = () => <Message fontSize="large" />;
+const MessagesIcon: React.FC = () => <MessageSquare size={30} />;
 
 export default MessagesIcon;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Phone } from '@mui/icons-material';
+import { Phone } from 'lucide-react';
 
-const DialerIcon: React.FC = () => <Phone fontSize="large" />;
+const DialerIcon: React.FC = () => <Phone size={30} />;
 
 export default DialerIcon;

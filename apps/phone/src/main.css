@@ -1,26 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('non.geist');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif;
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  font-family: 'Geist Variable', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 code {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist Variable', sans-serif;
 }
 
 a,
 a:visited,
 a:hover,
 a:active {
-  text-decoration: none;
+    text-decoration: none;
 }

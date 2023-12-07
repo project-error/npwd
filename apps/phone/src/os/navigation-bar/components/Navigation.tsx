@@ -1,14 +1,12 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
-//import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { ChevronLeft, Circle, LayoutGrid } from 'lucide-react';
 
 export const Navigation: React.FC = () => {
   const history = useHistory();
   const { isExact } = useRouteMatch('/');
   const { closePhone } = usePhone();
-  //const { setBarUncollapsed } = useNotifications();
 
   const handleGoBackInHistory = () => {
     history.goBack();

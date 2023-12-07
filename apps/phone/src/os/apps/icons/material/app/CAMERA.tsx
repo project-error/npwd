@@ -1,6 +1,6 @@
 import React from 'react';
-import { CameraAlt } from '@mui/icons-material';
+import { Camera as LCamera } from 'lucide-react';
 
-const Camera: React.FC = () => <CameraAlt fontSize="large" />;
+const Camera: React.FC = () => <LCamera size={30} />;
 
 export default Camera;

@@ -1,5 +1,5 @@
-import { Language } from '@mui/icons-material';
+import { ChromeIcon } from 'lucide-react';
 
-const BrowserIcon = () => <Language fontSize="large" />;
+const BrowserIcon = () => <ChromeIcon size={30}/>;
 
 export default BrowserIcon;

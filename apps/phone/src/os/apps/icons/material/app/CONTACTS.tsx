@@ -1,6 +1,6 @@
 import React from 'react';
-import { Contacts } from '@mui/icons-material';
+import { BookUser } from 'lucide-react';
 
-const ContactIcon: React.FC = () => <Contacts fontSize="large" />;
+const ContactIcon: React.FC = () => <BookUser size={30} />;
 
 export default ContactIcon;

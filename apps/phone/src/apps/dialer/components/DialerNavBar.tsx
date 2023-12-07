@@ -7,6 +7,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 import HistoryIcon from '@mui/icons-material/History';
 import { useTranslation } from 'react-i18next';
+import { Contact, History, Phone } from 'lucide-react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -31,26 +32,23 @@ const DialerNavBar: React.FC = () => {
   return (
     <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
       <BottomNavigationAction
-        label={t('DIALER.NAVBAR_HISTORY')}
         value="/phone"
         component={NavLink}
-        icon={<HistoryIcon />}
+        icon={<History />}
         to="/phone"
       />
       <BottomNavigationAction
-        label={t('DIALER.NAVBAR_DIAL')}
         value="/phone/dial"
         color="secondary"
         component={NavLink}
-        icon={<PhoneIcon />}
+        icon={<Phone />}
         to="/phone/dial"
       />
       <BottomNavigationAction
-        label={t('DIALER.NAVBAR_CONTACTS')}
         value="/phone/contacts"
         color="secondary"
         component={NavLink}
-        icon={<PersonIcon />}
+        icon={<Contact />}
         to="/phone/contacts"
       />
     </BottomNavigation>

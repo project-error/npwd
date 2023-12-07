@@ -1,6 +1,6 @@
 import React from 'react';
-import { Favorite } from '@mui/icons-material';
+import { HeartHandshake } from 'lucide-react';
 
-const MatchIcon: React.FC = () => <Favorite fontSize="large" />;
+const MatchIcon: React.FC = () => <HeartHandshake size={30} />
 
 export default MatchIcon;

@@ -269,8 +269,11 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       lucide-react:
-        specifier: ^0.125.0
-        version: 0.125.0(react@17.0.2)
+        specifier: ^0.294.0
+        version: 0.294.0(react@17.0.2)
+      non.geist:
+        specifier: ^1.0.1
+        version: 1.0.1
       notistack:
         specifier: 3.0.0-alpha.7
         version: 3.0.0-alpha.7(csstype@3.1.2)(react-dom@17.0.2)(react@17.0.2)
@@ -12904,8 +12907,8 @@ packages:
     resolution: {integrity: sha512-Pn9cox5CsMYngeDbmChANltQl+5pi6XmTrraMSzhPmMBbmgcxmqWry0U3PGapCU1yB4/LqCcom7qhHZiF/jGfQ==}
     dev: true
 
-  /lucide-react@0.125.0(react@17.0.2):
-    resolution: {integrity: sha512-tadphtB6TPytEitR9vX75hqu9PQT/uz5RcvXMq976nC190eukAM9+cHMgBxfvfEGDXwIhIT9aFxTUGdAjxw9uQ==}
+  /lucide-react@0.294.0(react@17.0.2):
+    resolution: {integrity: sha512-V7o0/VECSGbLHn3/1O67FUgBwWB+hmzshrgDVRJQhMh8uj5D3HBuIvhuAmQTtlupILSplwIZg5FTc4tTKMA2SA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -13471,6 +13474,10 @@ packages:
       touch: 3.1.0
       undefsafe: 2.0.5
     dev: true
+
+  /non.geist@1.0.1:
+    resolution: {integrity: sha512-ZSwOVXxDpqGVxNLFjXW7Hf6PjDsQMLPWLc2K6qzRWiTRgeEzzVjF4hEdBy5+nSWHQRryfQuEKjdvle3OJ6gbiQ==}
+    dev: false
 
   /nopt@1.0.10:
     resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
