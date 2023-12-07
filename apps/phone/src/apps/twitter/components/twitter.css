@@ -1,38 +1,38 @@
 /* 00acee is "twitter blue" and we want to use that to override
 some of the Material UI primary theme settings */
 
-/* override buttons on the tweet modal */
+ override buttons on the tweet modal
 #twitter-app .MuiButton-containedPrimary {
-  background: #00acee !important;
+  background: #ff5455 !important;
 }
 
 /* override the bottom navigation active color */
 #twitter-app .Mui-selected {
-  color: #00acee !important;
+  color: #ff5455 !important;
 }
 /* override the FAB (action buttons) background when selected */
 #twitter-app .MuiFab-primary {
-  background: #00acee !important;
+  background: #ff5455 !important;
 }
 
 /* override the labels on text fields */
 #twitter-app .MuiInputLabel-formControl.Mui-focused {
-  color: #00acee !important;
+  color: #ff5455 !important;
 }
 
 /* override the underlines of text fields */
 #twitter-app .Mui-focused:after {
-  border-bottom-color: #00acee !important;
+  border-bottom-color: #ff5455 !important;
 }
 
 /* override circular progress on the likes button */
 #twitter-app .MuiCircularProgress-colorPrimary {
-  color: #00acee !important;
+  color: #ff5455 !important;
 }
 
 /* override circular progress on the report button */
 #twitter-report-progress {
-  color: #00acee !important;
+  color: #ff5455 !important;
 }
 
 /*

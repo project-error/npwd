@@ -1,46 +1,46 @@
 import React from 'react';
 import { blue, common, grey, purple } from '@mui/material/colors';
-import { DialerApp } from '../../../apps/dialer/components/DialerApp';
-import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
-import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
-import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
-import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
-import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
-import { NotesApp } from '../../../apps/notes/NotesApp';
-import CameraApp from '../../../apps/camera/components/CameraApp';
+import { DialerApp } from '@apps/dialer/components/DialerApp';
+import { ContactsApp } from '@apps/contacts/components/ContactsApp';
+import { CalculatorApp } from '@apps/calculator/components/CalculatorApp';
+import { SettingsApp } from '@apps/settings/components/SettingsApp';
+import { MessagesApp } from '@apps/messages/components/MessagesApp';
+import { ExampleAppWrapper } from '@apps/example/components/ExampleAppWrapper';
+import { MarketplaceApp } from '@apps/marketplace/components/MarketplaceApp';
+import { NotesApp } from '@apps/notes/NotesApp';
+import CameraApp from '@apps/camera/components/CameraApp';
 import { AppRoute } from '../components/AppRoute';
 
 import {
   MESSAGES_APP_PRIMARY_COLOR,
   MESSAGES_APP_TEXT_COLOR,
-} from '../../../apps/messages/messages.theme';
+} from '@apps/messages/messages.theme';
 import {
   CONTACTS_APP_PRIMARY_COLOR,
   CONTACTS_APP_TEXT_COLOR,
-} from '../../../apps/contacts/contacts.theme';
+} from '@apps/contacts/contacts.theme';
 import {
   MARKETPLACE_APP_PRIMARY_COLOR,
   MARKETPLACE_APP_ICON_COLOR,
-} from '../../../apps/marketplace/marketplace.theme';
-import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
-import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
+} from '@apps/marketplace/marketplace.theme';
+import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '@apps/notes/notes.theme';
+import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '@apps/dialer/dialer.theme';
 import {
   TWITTER_APP_PRIMARY_COLOR,
   TWITTER_APP_TEXT_COLOR,
-} from '../../../apps/twitter/twitter.theme';
-import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
+} from '@apps/twitter/twitter.theme';
+import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '@apps/match/match.theme';
 import { SvgIconProps, Theme } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
-import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
-import { MatchApp } from '../../../apps/match/components/MatchApp';
-import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
+import { BrowserApp } from '@apps/browser/components/BrowserApp';
+import { MatchApp } from '@apps/match/components/MatchApp';
+import LifeInvaderContainer from '@apps/twitter/components/LifeInvaderContainer';
 import { IPhoneSettings } from '@typings/settings';
 import { i18n } from 'i18next';
 import {
   DARKCHAT_APP_PRIMARY_COLOR,
   DARKCHAT_APP_TEXT_COLOR,
-} from '../../../apps/darkchat/darkchat.theme';
+} from '@apps/darkchat/darkchat.theme';
 import DarkChatApp from '../../../apps/darkchat/DarkChatApp';
 
 export interface IAppConfig {
@@ -147,7 +147,7 @@ export const APPS: IAppConfig[] = [
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
     Route: () => (
-      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
+      <AppRoute id="TWITTER" path="/twitter" component={LifeInvaderContainer} emitOnOpen={false} />
     ),
   },
   {

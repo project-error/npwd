@@ -9,6 +9,7 @@ export const getConfig = (): ResourceConfig => {
   return deepMergeObjects({}, defaultConfig, config);
 };
 
+
 export const config = (() => {
   const config = getConfig();
 

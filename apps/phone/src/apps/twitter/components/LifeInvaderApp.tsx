@@ -1,12 +1,12 @@
+
 import { memo, useState } from 'react';
 import { Route, useLocation } from 'react-router-dom';
-import { Tweet as ITweet } from '@typings/twitter';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
 import AddTweetModal from './AddTweetModal';
 import TweetButton from './buttons/TweetButton';
-import TwitterTitle from './TwitterTitle';
+import { LifeInvaderTitle } from './LifeInvaderTitle';
 import BottomNavigation from './BottomNavigation';
 import TwitterProfile from './profile/Profile';
 import TwitterSearch from './TwitterSearch';
@@ -15,15 +15,13 @@ import './twitter.css';
 import 'emoji-mart/css/emoji-mart.css';
 import { useProfile } from '../hooks/useProfile';
 import ProfilePrompt from './profile/ProfilePrompt';
-import InjectDebugData from '../../../os/debug/InjectDebugData';
 import { TwitterThemeProvider } from '../providers/TwitterThemeProvider';
-import { TwitterEvents } from '@typings/twitter';
 import { useSetRecoilState } from 'recoil';
 import { twitterState } from '../hooks/state';
 import ModalBackground from './ModalBackground';
-import { WordFilterProvider } from '../../../os/wordfilter/providers/WordFilterProvider';
+import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
 
-const TwitterApp = () => {
+const LifeInvaderApp = () => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
@@ -45,7 +43,7 @@ const TwitterApp = () => {
           <AddTweetModal />
         </WordFilterProvider>
         <ModalBackground />
-        <TwitterTitle />
+        <LifeInvaderTitle />
         <AppContent>
           {promptProfileName ? (
             <ProfilePrompt />
@@ -65,7 +63,7 @@ const TwitterApp = () => {
     </TwitterThemeProvider>
   );
 };
-export default memo(TwitterApp);
+export default memo(LifeInvaderApp);
 
 /*InjectDebugData<any>(
   [

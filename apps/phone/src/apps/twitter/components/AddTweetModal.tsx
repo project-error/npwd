@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
@@ -16,11 +16,11 @@ import { NewTweet, TwitterEvents } from '@typings/twitter';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
-import { promiseTimeout } from '../../../utils/promiseTimeout';
+import { promiseTimeout } from '@utils/promiseTimeout';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { toggleKeys } from '../../../ui/components/Input';
+import { toggleKeys } from '@ui/components';
 import { Box, styled } from '@mui/material';
-import { useWordFilter } from '../../../os/wordfilter/hooks/useWordFilter';
+import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
 
 const ButtonsContainer = styled(Box)({
   paddingBottom: '8px',
