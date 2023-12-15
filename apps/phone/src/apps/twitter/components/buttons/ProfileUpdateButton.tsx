@@ -1,5 +1,3 @@
-import React from 'react';
-
 import UpdateButton from '@ui/components/UpdateButton';
 
 interface IProps {
