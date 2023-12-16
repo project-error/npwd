@@ -41,7 +41,7 @@ const useExternalAppsAction = () => {
       const IN_GAME = import.meta.env.PROD || import.meta.env.MODE === EnvMode.GAME;
       const url = IN_GAME
         ? `https://cfx-nui-${appName}/web/dist/remoteEntry.js`
-        : 'http://localhost:4173/assets/remoteEntry.js';
+        : 'http://localhost:4173/remoteEntry.js';
       const scope = appName;
 
       await loadScript(url);

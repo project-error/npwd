@@ -16,6 +16,7 @@
     "@mui/styles": "^5.13.2",
     "@npwd/ui": "workspace:^1.0.0",
     "class-variance-authority": "^0.4.0",
+    "clsx": "^2.0.0",
     "dayjs": "^1.11.7",
     "emoji-mart": "^3.0.1",
     "fivem-nui-react-lib": "^2.3.13",

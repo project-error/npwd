@@ -5,7 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": false,
+    "useResourceIntegration": true,
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en"
@@ -21,20 +21,20 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-    "playerTable": "users",
-    "identifierColumn": "identifier",
+    "playerTable": "players",
+    "identifierColumn": "citizenid",
     "identifierType": "license",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
   "debug": {
-    "level": "error",
+    "level": "silly",
     "enabled": true,
     "sentryEnabled": true
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": [],
+  "apps": ["npwd_qb_garage"],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

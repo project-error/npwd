@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {HTMLAttributes, useEffect, useState} from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-rea
 import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useModal } from '@apps/contacts/hooks/useModal';
 import { usePhone } from '@os/phone/hooks/usePhone';
+import {cn} from "@utils/css";
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -184,65 +185,51 @@ const ContactsInfoPage: React.FC = () => {
             alt="contact avatar"
           />
         </div>
-        <div className="mt-8">
-          <div className="text-sm font-medium dark:text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
-          <NPWDInput value={name} onChange={handleDisplayChange} />
+        <div className="mt-8 space-y-2">
+          <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
+          <NPWDInput value={name} onChange={handleDisplayChange} className="focus:ring-2 focus:ring-blue-500" />
         </div>
 
         {contact && (
-          <div className="mt-4 grid w-full grid-cols-4 gap-x-4">
-            <button
-              onClick={handleMessage}
-              className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            >
-              <MessageCircle className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
-            </button>
-            <button
-              onClick={startCall}
-              className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-            >
-              <Phone className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
-            </button>
-            {ResourceConfig?.general?.useResourceIntegration &&
-              ResourceConfig?.contacts?.frameworkPay && (
-                <button
-                  onClick={openpayModal}
-                  className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-                >
-                  <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
-                </button>
-              )}
-            <button
-              onClick={handleContactDelete}
-              className="group flex items-center justify-center rounded-md py-2 dark:bg-red-100 dark:hover:bg-red-200"
-            >
-              <Trash2 className="h-6 w-6 dark:text-red-800" />
-            </button>
-          </div>
+            <div className="mt-4 w-full flex items-center justify-between">
+              <ContactAction onClick={startCall} Icon={Phone} className="bg-blue-500 text-white hover:bg-blue-600 border-blue-500 dark:text-white dark:bg-blue-500 hover:dark:bg-blue-600"/>
+              <ContactAction onClick={handleMessage} Icon={MessageCircle} />
+
+              {ResourceConfig?.general?.useResourceIntegration &&
+                  ResourceConfig?.contacts?.frameworkPay && (
+                      <button
+                          onClick={openpayModal}
+                          className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+                      >
+                        <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100"/>
+                      </button>
+                  )}
+              <ContactAction onClick={handleContactDelete} Icon={Trash2} />
+            </div>
         )}
 
         <div className="mt-8 space-y-4">
-          <div>
-            <div className="text-sm font-medium dark:text-neutral-400">
+          <div className="space-y-2">
+            <div className="text-sm font-medium text-neutral-400">
               {t('CONTACTS.FORM_NUMBER')}
             </div>
-            <NPWDInput value={number} onChange={handleNumberChange} />
+            <NPWDInput value={number} onChange={handleNumberChange} className="focus:ring-2 focus:ring-blue-500"/>
           </div>
-          <div>
-            <div className="text-sm font-medium dark:text-neutral-400">
+          <div className="space-y-2">
+            <div className="text-sm font-medium text-neutral-400">
               {t('CONTACTS.FORM_AVATAR')}
             </div>
-            <NPWDInput value={avatar} onChange={handleAvatarChange} />
+            <NPWDInput value={avatar} onChange={handleAvatarChange} className="focus:ring-2 focus:ring-blue-500 outline-none" />
           </div>
         </div>
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate} className={classes.button}>
+            <NPWDButton onClick={handleContactUpdate} className={classes.button} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
               {t('GENERIC.UPDATE')}
             </NPWDButton>
           ) : (
-            <NPWDButton onClick={handleContactAdd} className="bg-blue-500 hover:bg-blue-600">
+            <NPWDButton onClick={handleContactAdd} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
               {t('GENERIC.ADD')}
             </NPWDButton>
           )}
@@ -251,5 +238,20 @@ const ContactsInfoPage: React.FC = () => {
     </div>
   );
 };
+
+interface ContactActionProps extends HTMLAttributes<HTMLButtonElement> {
+  onClick: () => void;
+  Icon: React.Component
+}
+export const ContactAction: React.FC<ContactActionProps> = ({ Icon, onClick, ...props }) => {
+  return (
+      <button
+          onClick={onClick}
+          className={cn("group text-neutral-900 dark:text-white flex items-center justify-center p-2.5 rounded-full bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700", props.className)}
+      >
+        <Icon className="h-6 w-6"/>
+      </button>
+  )
+}
 
 export default ContactsInfoPage;

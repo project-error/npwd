@@ -6,6 +6,7 @@ import fetchNui from '@utils/fetchNui';
 import { cva, VariantProps } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 import { Search } from "lucide-react";
+import {cn} from "@utils/css";
 
 export const toggleKeys = (keepGameFocus: boolean) =>
   fetchNui(
@@ -75,7 +76,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantPr
 export const NPWDInput: React.FC<InputProps> = ({ size, variant, className, ...props }) => {
   return <input
 	  {...props}
-	  className={twMerge(classes({ size, variant, className }))}
+	  className={cn(classes({ size, variant, className }))}
 	  onMouseUp={(e) => {
 		  toggleKeys(false);
 		  if (props.onMouseUp) {
@@ -93,7 +94,7 @@ export const NPWDInput: React.FC<InputProps> = ({ size, variant, className, ...p
 
 export const NPWDSearchInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {
 	return (
-		<div className="flex items-center justify-start bg-neutral-200 dark:bg-neutral-800 rounded-md px-2 space-x-2 border dark:border-neutral-700 border-neutral-300">
+		<div className="flex items-center justify-start bg-neutral-200 dark:bg-neutral-800 rounded-md px-2 space-x-2 border dark:border-neutral-700">
 			<Search className="h-5 w-5 dark:text-neutral-400"/>
 			<input
 				{...props}
