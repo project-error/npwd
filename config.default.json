@@ -93,7 +93,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": ["npwd_qb_garage"],
+  "apps": [],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "Authorization",
