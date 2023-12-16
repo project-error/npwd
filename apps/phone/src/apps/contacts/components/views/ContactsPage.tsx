@@ -14,9 +14,9 @@ export const ContactPage: React.FC = () => {
       <AppTitle app={contacts} />
       <button
         onClick={() => history.push('/contacts/-1')}
-        className="absolute right-5 top-5 rounded-md bg-blue-100 p-2 hover:bg-blue-200"
+        className="absolute right-5 top-5 rounded-md bg-blue-500 p-2 hover:bg-blue-600"
       >
-        <Plus className="h-5 w-5 text-blue-800" />
+        <Plus className="h-5 w-5 text-white" />
       </button>
       <div className="mt-6">
         <ContactList />

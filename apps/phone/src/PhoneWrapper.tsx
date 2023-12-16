@@ -5,7 +5,11 @@ import { Slide } from '@mui/material';
 import { useWallpaper } from './apps/settings/hooks/useWallpaper';
 import { useLocation } from 'react-router-dom';
 
-const PhoneWrapper: React.FC = ({ children }) => {
+interface PhoneWrapperProps {
+  children: React.ReactNode;
+}
+
+const PhoneWrapper: React.FC<PhoneWrapperProps> = ({ children }) => {
   const [settings] = useSettings();
   const { bottom, visibility } = usePhoneVisibility();
   const wallpaper = useWallpaper();

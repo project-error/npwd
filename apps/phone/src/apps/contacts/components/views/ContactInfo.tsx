@@ -242,7 +242,7 @@ const ContactsInfoPage: React.FC = () => {
               {t('GENERIC.UPDATE')}
             </NPWDButton>
           ) : (
-            <NPWDButton onClick={handleContactAdd} className={classes.button}>
+            <NPWDButton onClick={handleContactAdd} className="bg-blue-500 hover:bg-blue-600">
               {t('GENERIC.ADD')}
             </NPWDButton>
           )}

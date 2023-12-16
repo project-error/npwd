@@ -2,7 +2,7 @@ import React from 'react';
 import { darken, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { green } from '@mui/material/colors';
-import { Avatar, Badge, Button, Zoom } from '@mui/material';
+import { Badge, Button, Zoom } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { Tooltip } from './Tooltip';
@@ -17,9 +17,17 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
     '&:hover': {
       backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
     },
-    backgroundColor: ({ backgroundColor }) => backgroundColor,
+    background: ({ backgroundColor }) => {
+      console.log('backgroundColor', backgroundColor);
+
+      return `linear-gradient(45deg, ${backgroundColor} 30%, ${darken(backgroundColor, 0.2)} 90%)`;
+    },
     color: ({ color }) => color,
     boxShadow: theme.shadows[2],
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 14,
     width: theme.spacing(8),
     height: theme.spacing(8),
     fontSize: theme.typography.h4.fontSize,
@@ -77,7 +85,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
           {Icon ? (
             <Icon className={classes.icon} fontSize="large" />
           ) : (
-            <Avatar className={classes.avatar}>{icon || t(nameLocale)}</Avatar>
+            <div className={classes.avatar}>{icon || t(nameLocale)}</div>
           )}
         </Badge>
       </Button>
