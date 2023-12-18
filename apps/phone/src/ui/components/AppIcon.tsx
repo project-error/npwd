@@ -18,8 +18,6 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
       backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
     },
     background: ({ backgroundColor }) => {
-      console.log('backgroundColor', backgroundColor);
-
       return `linear-gradient(45deg, ${backgroundColor} 30%, ${darken(backgroundColor, 0.2)} 90%)`;
     },
     color: ({ color }) => color,
