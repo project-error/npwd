@@ -29,6 +29,8 @@ import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
 import { useNotification } from '../useNotification';
+import {BatteryFull, SignalMedium} from "lucide-react";
+import {cn} from "@utils/css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -134,12 +136,8 @@ export const NotificationBar = () => {
 
   return (
     <>
-      <Grid
-        className={classes.root}
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        wrap="nowrap"
+      <div
+        className={cn(classes.root, "flex items-center justify-between flex-nowrap")}
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
         }}
@@ -159,20 +157,15 @@ export const NotificationBar = () => {
             </Typography>
           </Grid>
         )}
-        <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
-          <Grid item>
-            <SignalIcon fontSize="small" />
-          </Grid>
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {Default.cellProvider}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Battery90Icon style={{ transform: 'rotate(90deg)', display: 'block' }} />
-          </Grid>
-        </Grid>
-      </Grid>
+        <div className="flex items-center justify-end">
+          <div>
+            <SignalMedium />
+          </div>
+          <div className="mt-1.5 text-green-300">
+            <BatteryFull />
+          </div>
+        </div>
+      </div>
       <Slide direction="down" in={barCollapsed} mountOnEnter unmountOnExit>
         <Paper square className={classes.drawer}>
           <Box py={1}>
