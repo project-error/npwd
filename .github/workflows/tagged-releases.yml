@@ -44,7 +44,7 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: "chore: bump manifest version to ${{ steps.get_tag.outputs.release_tag }}"
 
-      - name: Checkout source cod
+      - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -63,12 +63,6 @@ jobs:
 
       - name: Run build
         run: REACT_APP_VERSION=${{ steps.get_tag.outputs.VERSION_TAG }} pnpm build
-        
-
-      - name: Update tag ref
-        uses: EndBug/latest-tag@latest
-        with:
-          tag-name: ${{ github.ref_name }}
 
       #- name: Create Sentry Release (NPWD)
       #  run: |
