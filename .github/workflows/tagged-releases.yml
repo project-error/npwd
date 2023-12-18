@@ -28,7 +28,7 @@ jobs:
           prerelease: false
         id: get_tag
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump manifest version
         run: node .github/actions/bump-manifest-version.js
