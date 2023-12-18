@@ -1,11 +1,12 @@
 import { AppWrapper } from '@ui/components';
 import { styled } from '@mui/material/styles';
-import React, { Reducer, useReducer, useRef } from 'react';
+import React, {Reducer, useEffect, useReducer, useRef} from 'react';
 import { AppContent } from '@ui/components/AppContent';
 import { Box } from '@mui/material';
 import { BrowserURLBar } from './BrowserURLBar';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
+import {useConfig, usePhone} from "@os/phone/hooks";
 
 const PREFIX = 'BrowserApp';
 
@@ -59,9 +60,11 @@ const browserReducer: Reducer<BrowserState, ReducerAction> = (state, action) => 
 
 export const BrowserApp: React.FC = () => {
   const [{ appSettings }] = usePhoneConfig();
+  const { ResourceConfig } = usePhone();
+
   const [browserState, dispatch] = useReducer(browserReducer, {
-    browserUrl: appSettings.browserHomePage,
-    browserHistory: [appSettings.browserHomePage],
+    browserUrl: ResourceConfig.browser.homepageUrl ?? "",
+    browserHistory: [ResourceConfig.browser.homepageUrl ?? ""],
   });
 
   const { browserHistory, browserUrl } = browserState;
@@ -89,6 +92,12 @@ export const BrowserApp: React.FC = () => {
     await promiseTimeout(100);
     dispatch({ payload: strCopy, type: ReducerActionsType.SET_URL });
   };
+
+  useEffect(() => {
+    if (ResourceConfig.browser.homepageUrl) {
+      _setBrowserUrl(ResourceConfig.browser.homepageUrl)
+    }
+  }, [ResourceConfig.browser.homepageUrl]);
 
   return (
     <StyledAppWrapper id="browser">

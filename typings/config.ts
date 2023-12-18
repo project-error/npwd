@@ -115,6 +115,10 @@ export interface DefaultContact {
   avatar?: string;
 }
 
+export interface BrowserConfig {
+  homepageUrl: string;
+}
+
 export interface ResourceConfig {
   database: DatabaseConfig;
   Locale: string;
@@ -128,6 +132,7 @@ export interface ResourceConfig {
   notificationPosition: NotificationConfig;
   defaultContacts: DefaultContact[];
   general: General;
+  browser: BrowserConfig;
   debug: Debug;
   images: ImageConfig;
   imageSafety: ImageSafety;

@@ -86,6 +86,9 @@
   "marketplace": {
     "persistListings": false
   },
+  "browser": {
+    "homepageUrl": "https://docs.projecterror.dev"
+  },
   "debug": {
     "level": "error",
     "enabled": true,
