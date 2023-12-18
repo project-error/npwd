@@ -2,7 +2,7 @@ fx_version("cerulean")
 game("gta5")
 description("js runtime monkaW")
 authors({ "itschip", "erik-sn", "TasoOneAsia", "kidz", "RockySouthpaw", "SamShanks", "c-wide", "mojito" })
-version("2.4.0-beta.3")
+version("3.0.0")
 client_scripts({
 	"dist/game/client/client.js",
 	"dist/game/client/*.lua",
