@@ -25,4 +25,16 @@ export const BrowserContactsState: Contact[] = [
     number: '444-4444',
     avatar: "https://i.imgur.com/OYrNHO4.jpeg"
   },
+  {
+    id: 5,
+    display: 'Avarian',
+    number: '444-4444',
+    avatar: "https://i.imgur.com/OYrNHO4.jpeg"
+  },
+  {
+    id: 6,
+    display: 'Avarian',
+    number: '444-4444',
+    avatar: "https://i.imgur.com/OYrNHO4.jpeg"
+  },
 ];

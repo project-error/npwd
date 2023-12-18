@@ -26,7 +26,7 @@ export const ContactList: React.FC = () => {
     return (
         <div>
             <SearchContacts/>
-            <div className="mt-4 px-4">
+            <div className="mt-4 px-4 h-[500px] overflow-y-auto">
                 <nav className="overflow-y-auto" aria-label="Directory">
                     {Object.keys(groupedContacts)
                         .sort()
@@ -59,7 +59,9 @@ const ContactItem = (contact: Contact) => {
     const myPhoneNumber = useMyPhoneNumber();
     const history = useHistory();
 
-    const startCall = () => {
+    const startCall = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         LogDebugEvent({
             action: 'Emitting `Start Call` to Scripts',
             level: 2,
@@ -68,7 +70,10 @@ const ContactItem = (contact: Contact) => {
         initializeCall(contact.number.toString());
     };
 
-    const handleMessage = () => {
+    const handleMessage = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
         const phoneNumber = contact.number.toString();
         LogDebugEvent({
             action: 'Routing to Message',
@@ -111,11 +116,11 @@ const ContactItem = (contact: Contact) => {
                         </div>
                         <div className="space-x-3">
                             <button onClick={startCall}
-                                    className="text-green-500 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-800 rounded-full p-2 dark:hover:bg-neutral-700">
+                                    className="text-green-500 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-800 rounded-full p-3 dark:hover:bg-neutral-700">
                                 <Phone size={20}/>
                             </button>
                             <button onClick={handleMessage}
-                                    className="text-blue-400 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-800 rounded-full p-2 dark:hover:bg-neutral-700">
+                                    className="text-blue-400 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-800 rounded-full p-3 dark:hover:bg-neutral-700">
                                 <MessageSquare size={20}/>
                             </button>
                         </div>
