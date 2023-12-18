@@ -20,6 +20,8 @@ import { useSetRecoilState } from 'recoil';
 import { twitterState } from '../hooks/state';
 import ModalBackground from './ModalBackground';
 import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
+import InjectDebugData from "@os/debug/InjectDebugData";
+import {TwitterEvents} from "@typings/twitter";
 
 const LifeInvaderApp = () => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
@@ -65,7 +67,7 @@ const LifeInvaderApp = () => {
 };
 export default memo(LifeInvaderApp);
 
-/*InjectDebugData<any>(
+InjectDebugData<any>(
   [
     {
       app: 'TWITTER',
@@ -94,4 +96,4 @@ export default memo(LifeInvaderApp);
     },
   ],
   4000,
-);*/
+);
