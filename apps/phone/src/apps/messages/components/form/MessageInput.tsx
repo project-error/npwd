@@ -4,15 +4,17 @@ import { Paper, Box, Button, ButtonGroup } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import IosShareIcon from '@mui/icons-material/IosShare';
-import { TextField } from '@ui/components/Input';
+import { NPWDInput, NPWDTextarea, TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
 import { useConfig } from '@os/phone/hooks';
+import { Image, Mic, SendHorizonal, SendHorizontal } from 'lucide-react';
 
 interface IProps {
   onAddImageClick(): void;
+
   onVoiceClick: () => void;
   messageConversation: MessageConversation | undefined;
   messageGroupName: string | undefined;
@@ -43,8 +45,10 @@ const MessageInput = ({
     }
   };
 
-  const handleKeyPress = async (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = async (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      event.stopPropagation();
       await handleSubmit();
     }
   };
@@ -56,38 +60,38 @@ const MessageInput = ({
   if (!messageConversation.id) return null;
 
   return (
-    <Paper
-      variant="outlined"
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-    >
-      <Box pt={1} pl={1} pb={1} flexGrow={1}>
-        <TextField
-          onKeyPress={handleKeyPress}
-          multiline
-          maxRows={4}
-          aria-multiline="true"
-          inputProps={{ style: { fontSize: '1.3em' } }}
+    <div className="px-2">
+      <div className="flex items-center space-x-2 rounded-md px-2 dark:bg-neutral-800">
+        <button
+          onClick={onAddImageClick}
+          className="h-14 dark:text-white hover:dark:text-green-500"
+        >
+          <Image size={24} />
+        </button>
+        <NPWDTextarea
+          rows={1}
+          className="resize-none"
+          onKeyDown={handleKeyPress}
           value={message}
           onChange={handleChange}
           placeholder={t('MESSAGES.NEW_MESSAGE')}
         />
-      </Box>
-      <Box pr={1}>
-        <ButtonGroup size="small">
+        <div className="flex items-center space-x-2">
           {voiceEnabled && (
-            <Button size="small" onClick={onVoiceClick}>
-              <MicIcon />
-            </Button>
+            <button onClick={onVoiceClick} className="hover:text-green-500">
+              <Mic size={24} />
+            </button>
           )}
-          <Button size="small" onClick={onAddImageClick}>
-            <IosShareIcon />
-          </Button>
-          <Button size="small" onClick={handleSubmit}>
-            <SendIcon />
-          </Button>
-        </ButtonGroup>
-      </Box>
-    </Paper>
+
+          <button
+            onClick={handleSubmit}
+            className="rounded-lg bg-green-600 p-2 text-white hover:bg-green-700"
+          >
+            <SendHorizontal size={24} />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

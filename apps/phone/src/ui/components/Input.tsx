@@ -73,6 +73,23 @@ export const classes = cva('rounded-md outline-none w-full', {
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantProps<typeof classes>;
 
+export const textareaClasses = cva('rounded-md outline-none w-full', {
+    variants: {
+        size: {
+            md: 'text-base py-2 px-2',
+        },
+        variant: {
+            primary: 'bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-100',
+        },
+    },
+    defaultVariants: {
+        size: 'md',
+        variant: 'primary',
+    },
+});
+
+export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & VariantProps<typeof textareaClasses>
+
 export const NPWDInput: React.FC<InputProps> = ({ size, variant, className, ...props }) => {
   return <input
 	  {...props}
@@ -90,6 +107,25 @@ export const NPWDInput: React.FC<InputProps> = ({ size, variant, className, ...p
 		  }
 	  }}
   />;
+};
+
+export const NPWDTextarea: React.FC<TextareaProps> = ({ size, variant, className, ...props }) => {
+    return <textarea
+        {...props}
+        className={cn(classes({ size, variant, className }))}
+        onMouseUp={(e) => {
+            toggleKeys(false);
+            if (props.onMouseUp) {
+                props.onMouseUp(e);
+            }
+        }}
+        onBlur={(e) => {
+            toggleKeys(true);
+            if (props.onBlur) {
+                props.onBlur(e);
+            }
+        }}
+    />;
 };
 
 export const NPWDSearchInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {

@@ -225,7 +225,7 @@ const ContactsInfoPage: React.FC = () => {
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate} className={classes.button} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
+            <NPWDButton onClick={handleContactUpdate} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
               {t('GENERIC.UPDATE')}
             </NPWDButton>
           ) : (

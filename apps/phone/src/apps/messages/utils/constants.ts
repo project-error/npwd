@@ -26,7 +26,7 @@ const MockConversationMessages: Message[] = [
   {
     id: 2,
     author: '215-8139',
-    message: 'Dude, when is this rewrite done?????',
+    message: 'Dude',
     createdAt: 16234242422,
   },
   {

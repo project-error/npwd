@@ -215,7 +215,7 @@ const AudioEmbed = ({
           )}
         </Box>
         {isMine && (
-          <IconButton color="primary" onClick={openMenu}>
+          <IconButton color="white" onClick={openMenu}>
             <MoreVertIcon />
           </IconButton>
         )}

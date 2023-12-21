@@ -87,7 +87,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceE
               id="scrollableDiv"
               style={{
                 overflow: 'auto',
-                maxHeight: 554,
+                maxHeight: 620,
                 display: 'flex',
                 flexDirection: 'column-reverse',
               }}

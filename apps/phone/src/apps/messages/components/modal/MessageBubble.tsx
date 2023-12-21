@@ -12,6 +12,8 @@ import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import dayjs from 'dayjs';
+import { MoreHorizontal, MoreVertical } from 'lucide-react';
+import { cn } from '@utils/css';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
@@ -20,11 +22,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 16px',
     height: 'auto',
     width: 'auto',
-    minWidth: '50%',
-    maxWidth: '80%',
-    background: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
-    borderRadius: '20px',
+    minWidth: '90%',
+    maxWidth: '90%',
+    borderRadius: '8px',
     textOverflow: 'ellipsis',
   },
   sms: {
@@ -32,12 +32,10 @@ const useStyles = makeStyles((theme) => ({
     padding: '6px 12px',
     width: 'auto',
     marginLeft: 5,
-    minWidth: '50%',
-    maxWidth: '80%',
+    minWidth: '90%',
+    maxWidth: '90%',
     height: 'auto',
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
-    borderRadius: '15px',
+    borderRadius: '8px',
     textOverflow: 'ellipsis',
   },
   myAudioSms: {
@@ -46,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
     width: 'auto',
     minWidth: '60%',
     maxWidth: '100%',
-    background: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
+
     borderRadius: '12px',
     textOverflow: 'ellipsis',
   },
@@ -57,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 5,
     minWidth: '60%',
     maxWidth: '80%',
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
+
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
@@ -103,7 +99,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const isMessageImage = isImage(message.message);
   if (message.is_embed && parsedEmbed.type === 'audio') {
     return (
-      <>
+      <div>
         <Box
           display="flex"
           ml={1}
@@ -111,7 +107,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           justifyContent={isMine ? 'flex-end' : 'flex-start'}
           mt={1}
         >
-          <Paper className={isMine ? classes.myAudioSms : classes.audioSms} variant="outlined">
+          <Paper
+            className={cn(
+              isMine ? classes.myAudioSms : classes.audioSms,
+              isMine ? 'bg-green-600' : 'bg-neutral-800',
+            )}
+            variant="outlined"
+          >
             <MessageEmbed
               type={parsedEmbed.type}
               embed={parsedEmbed}
@@ -124,13 +126,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 {getContact()?.display ?? message.author}
               </Typography>
             )}
-            <Typography ml={2} fontSize={12}>
-              {dayjs.unix(message.createdAt).fromNow()}
-            </Typography>
+            <p className="mb-1 pl-2 text-xs">{dayjs.unix(message.createdAt).fromNow()}</p>
           </Paper>
         </Box>
         <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
-      </>
+      </div>
     );
   }
 
@@ -138,51 +138,54 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
   return (
     <>
-      <Box
-        display="flex"
-        ml={1}
-        alignItems="stretch"
-        justifyContent={isMine ? 'flex-end' : 'flex-start'}
-        mt={1}
-      >
+      <div className={cn('flex w-full flex-row space-x-2 py-2 px-4', isMine ? 'justify-end items-start' : '')}>
         {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
-        <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-          {message.is_embed ? (
-            <>
-              <MessageEmbed
-                type={parsedEmbed.type}
-                embed={parsedEmbed}
-                isMine={isMine}
-                message={message.message}
-                openMenu={openMenu}
-              />
-            </>
-          ) : (
-            <StyledMessage>
-              {isMessageImage ? (
-                <PictureReveal>
-                  <PictureResponsive src={message.message} alt="message multimedia" />
-                </PictureReveal>
-              ) : (
-                <>{message.message}</>
+        {showVertIcon && (
+          <button onClick={openMenu} className='dark:text-white text-neutral-400'>
+            <MoreVertical size={18} />
+          </button>
+        )}
+        <div className="">
+          <div
+            className={cn(
+              'mb-1 flex items-center rounded-md px-2 py-2',
+              isMine ? 'float-right bg-green-600' : 'float-left bg-neutral-200 dark:bg-neutral-800',
+            )}
+          >
+            {message.is_embed ? (
+              <>
+                <MessageEmbed
+                  type={parsedEmbed.type}
+                  embed={parsedEmbed}
+                  isMine={isMine}
+                  message={message.message}
+                  openMenu={openMenu}
+                />
+              </>
+            ) : (
+              <div className="">
+                {isMessageImage ? (
+                  <PictureReveal>
+                    <PictureResponsive src={message.message} alt="message multimedia" />
+                  </PictureReveal>
+                ) : (
+                  <p className={cn("text-sm text-neutral-900", isMine ? "text-white" : "dark:text-white")}>{message.message}</p>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="">
+            <div>
+              {!isMine && (
+                <p className="text-xs font-medium">{getContact()?.display ?? message.author}</p>
               )}
-              {showVertIcon && (
-                <IconButton color="primary" onClick={openMenu}>
-                  <MoreVertIcon />
-                </IconButton>
-              )}
-            </StyledMessage>
-          )}
-          {!isMine && (
-            <Typography fontWeight="bold" fontSize={14} color="#ddd">
-              {getContact()?.display ?? message.author}
-            </Typography>
-          )}
-          <Typography mt={2} fontSize={12}>
-            {dayjs.unix(message.createdAt).fromNow()}
-          </Typography>
-        </Paper>
-      </Box>
+            </div>
+            <div className="">
+              <p className="text-xs text-neutral-400">{dayjs.unix(message.createdAt).fromNow()}</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <MessageBubbleMenu
         message={message}
         isImage={isMessageImage}

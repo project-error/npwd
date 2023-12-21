@@ -19,7 +19,6 @@ interface NewMessageGroupButtonProps {
 }
 
 export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ onClick }) => {
-  const classes = useStyles();
   const checkedConversations = useCheckedConversationsValue();
   const [isEditing, setIsEditing] = useIsEditing();
   const { deleteConversation } = useMessageAPI();
@@ -30,8 +29,8 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
   };
 
   return (
-    <Fab
-      className={classes.root}
+    <button
+      className="absolute bottom-10 right-5 flex items-center justify-center rounded-md p-2 bg-green-500 text-white hover:bg-green-600"
       color="primary"
       onClick={!isEditing ? onClick : handleDeleteConversations}
       onMouseUp={() => {
@@ -39,7 +38,7 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
       }}
     >
       {!isEditing ? <Add /> : <Delete />}
-    </Fab>
+    </button>
   );
 };
 

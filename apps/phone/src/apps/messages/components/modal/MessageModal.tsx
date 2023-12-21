@@ -22,13 +22,12 @@ import { useMessagesState } from '../../hooks/state';
 import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
-import { Call } from '@mui/icons-material';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import GroupDetailsModal from './GroupDetailsModal';
 import Backdrop from '@ui/components/Backdrop';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { usePhone } from '@os/phone/hooks';
-import { log } from 'console';
+import { Phone, ArrowLeft } from 'lucide-react';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -43,7 +42,6 @@ const useStyles = makeStyles({
   },
   groupdisplay: {
     width: '300px',
-    paddingTop: '8px',
     fontSize: '24px',
     whiteSpace: 'nowrap',
     overflowX: 'hidden',
@@ -51,7 +49,6 @@ const useStyles = makeStyles({
   },
   largeGroupDisplay: {
     width: '300px',
-    paddingTop: '8px',
     fontSize: '20px',
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
@@ -161,33 +158,22 @@ export const MessageModal = () => {
   const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (
     <Slide direction="left" in={!!activeMessageConversation}>
-      <Paper
-        sx={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexGrow: 1,
-          overflowY: 'hidden',
-          flexDirection: 'column',
-        }}
+      <div
+        className='w-full flex grow flex-col'
       >
-        <GroupDetailsModal
-          open={isGroupModalOpen}
-          onClose={closeGroupModal}
-          conversationList={activeMessageConversation.conversationList}
-          addContact={handleAddContact}
-        />
         {isGroupModalOpen && <Backdrop />}
         <Box
           display="flex"
+          paddingX={1}
           justifyContent="space-between"
+          alignItems="center"
           component={Paper}
           sx={{ borderRadius: 0 }}
         >
-          <Button onClick={closeModal}>
-            <ArrowBackIcon fontSize="large" />
-          </Button>
-          <Typography variant="h5" className={headerClass}>
+          <button onClick={closeModal} className="rounded-full mb-1 p-2 hover:bg-neutral-100 hover:dark:bg-neutral-800">
+            <ArrowLeft size={26} />
+          </button>
+          <Typography sx={{ paddingLeft: 2 }} variant="h5" className={headerClass}>
             {header}
           </Typography>
           {!activeMessageConversation.isGroupChat && (
@@ -196,9 +182,12 @@ export const MessageModal = () => {
               title={`${t('GENERIC.CALL')} ${targetNumber}`}
               placement="bottom"
             >
-              <IconButton onClick={() => initializeCall(targetNumber)}>
-                <Call fontSize="medium" />
-              </IconButton>
+              <button
+                onClick={() => initializeCall(targetNumber)}
+                className="rounded-full p-3 hover:bg-neutral-100 hover:dark:bg-neutral-800"
+              >
+                <Phone size={18} />
+              </button>
             </Tooltip>
           )}
           {activeMessageConversation.isGroupChat ? (
@@ -220,7 +209,13 @@ export const MessageModal = () => {
         ) : (
           <MessageSkeletonList />
         )}
-      </Paper>
+        <GroupDetailsModal
+          open={isGroupModalOpen}
+          onClose={closeGroupModal}
+          conversationList={activeMessageConversation.conversationList}
+          addContact={handleAddContact}
+        />
+      </div>
     </Slide>
   );
 };

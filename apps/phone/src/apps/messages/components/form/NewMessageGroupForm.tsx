@@ -112,22 +112,20 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           />
         </Box>
       )}
-      <Box px={2} py={3}>
-        <Button
+      <div className='py-2 px-3 space-y-2'>
+        <button
+          className='bg-green-600 w-full rounded-md py-2 text-sm font-medium disabled:bg-gray-500/50 disabled:text-gray-500 hover:bg-green-700'
           onClick={handleSubmit}
           disabled={disableSubmit}
           variant="contained"
-          fullWidth
-          sx={{ mb: 1 }}
-          color="primary"
           type="submit"
         >
           {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
-        </Button>
-        <Button onClick={handleCancel} variant="contained" fullWidth color="error">
+        </button>
+        <button onClick={handleCancel} variant="contained" className='bg-red-700 w-full text-sm font-medium py-2 rounded-md hover:bg-red-800'>
           {t('GENERIC_CANCEL')}
-        </Button>
-      </Box>
+        </button>
+      </div>
     </Box>
   );
 };

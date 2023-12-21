@@ -1,7 +1,7 @@
 import { amber, common } from '@mui/material/colors';
 import { ThemeOptions } from '@mui/material';
 
-export const MESSAGES_APP_PRIMARY_COLOR = amber[800];
+export const MESSAGES_APP_PRIMARY_COLOR = "#22c55e";
 export const MESSAGES_APP_TEXT_COLOR = common.white;
 
 const theme: ThemeOptions = {
