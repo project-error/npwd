@@ -18,14 +18,14 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
       backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
     },
     background: ({ backgroundColor }) => {
-      return `linear-gradient(45deg, ${backgroundColor} 30%, ${darken(backgroundColor, 0.2)} 90%)`;
+      return `linear-gradient(45deg, ${darken(backgroundColor, 0.2)} 20%, ${backgroundColor} 90%)`;
     },
     color: ({ color }) => color,
     boxShadow: theme.shadows[2],
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 14,
+    borderRadius: 18,
     width: theme.spacing(8),
     height: theme.spacing(8),
     fontSize: theme.typography.h4.fontSize,
@@ -66,27 +66,18 @@ export const AppIcon: React.FC<AppIconProps> = ({
   });
 
   return (
-    <Tooltip
-      arrow
-      key={id}
-      title={t(nameLocale)}
-      placement="top"
-      classes={{ tooltip: classes.tooltip }}
-      TransitionComponent={Zoom}
-    >
-      <Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
-        <Badge
-          color="error"
-          badgeContent={notification?.badge}
-          invisible={!notification || notification.badge < 2}
-        >
-          {Icon ? (
-            <Icon className={classes.icon} fontSize="large" />
-          ) : (
-            <div className={classes.avatar}>{icon || t(nameLocale)}</div>
-          )}
-        </Badge>
-      </Button>
-    </Tooltip>
+    <Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
+      <Badge
+        color="error"
+        badgeContent={notification?.badge}
+        invisible={!notification || notification.badge < 2}
+      >
+        {Icon ? (
+          <Icon className={classes.icon} fontSize="large" />
+        ) : (
+          <div className={classes.avatar}>{icon || t(nameLocale)}</div>
+        )}
+      </Badge>
+    </Button>
   );
 };
