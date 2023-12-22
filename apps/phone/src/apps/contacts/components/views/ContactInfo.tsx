@@ -1,4 +1,4 @@
-import React, {HTMLAttributes, useEffect, useState} from 'react';
+import React, { HTMLAttributes, useEffect, useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -7,7 +7,8 @@ import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { NPWDButton, NPWDInput } from '@ui/components';
+import { NPWDInput } from '@ui/components';
+import { NPWDButton } from '@npwd/keyos';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { SendMoneyModal } from '../../components/modals/SendMoney';
@@ -15,7 +16,7 @@ import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-rea
 import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useModal } from '@apps/contacts/hooks/useModal';
 import { usePhone } from '@os/phone/hooks/usePhone';
-import {cn} from "@utils/css";
+import { cn } from '@utils/css';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -187,49 +188,67 @@ const ContactsInfoPage: React.FC = () => {
         </div>
         <div className="mt-8 space-y-2">
           <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
-          <NPWDInput value={name} onChange={handleDisplayChange} className="focus:ring-2 focus:ring-blue-500" />
+          <NPWDInput
+            value={name}
+            onChange={handleDisplayChange}
+            className="focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         {contact && (
-            <div className="mt-4 w-full flex items-center justify-between">
-              <ContactAction onClick={startCall} Icon={Phone} className="bg-blue-500 text-white hover:bg-blue-600 border-blue-500 dark:text-white dark:bg-blue-500 hover:dark:bg-blue-600"/>
-              <ContactAction onClick={handleMessage} Icon={MessageCircle} />
+          <div className="mt-4 flex w-full items-center justify-between">
+            <ContactAction
+              onClick={startCall}
+              Icon={Phone}
+              className="border-blue-500 bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-500 dark:text-white hover:dark:bg-blue-600"
+            />
+            <ContactAction onClick={handleMessage} Icon={MessageCircle} />
 
-              {ResourceConfig?.general?.useResourceIntegration &&
-                  ResourceConfig?.contacts?.frameworkPay && (
-                      <button
-                          onClick={openpayModal}
-                          className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-                      >
-                        <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100"/>
-                      </button>
-                  )}
-              <ContactAction onClick={handleContactDelete} Icon={Trash2} />
-            </div>
+            {ResourceConfig?.general?.useResourceIntegration &&
+              ResourceConfig?.contacts?.frameworkPay && (
+                <button
+                  onClick={openpayModal}
+                  className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+                >
+                  <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
+                </button>
+              )}
+            <ContactAction onClick={handleContactDelete} Icon={Trash2} />
+          </div>
         )}
 
         <div className="mt-8 space-y-4">
           <div className="space-y-2">
-            <div className="text-sm font-medium text-neutral-400">
-              {t('CONTACTS.FORM_NUMBER')}
-            </div>
-            <NPWDInput value={number} onChange={handleNumberChange} className="focus:ring-2 focus:ring-blue-500"/>
+            <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NUMBER')}</div>
+            <NPWDInput
+              value={number}
+              onChange={handleNumberChange}
+              className="focus:ring-2 focus:ring-blue-500"
+            />
           </div>
           <div className="space-y-2">
-            <div className="text-sm font-medium text-neutral-400">
-              {t('CONTACTS.FORM_AVATAR')}
-            </div>
-            <NPWDInput value={avatar} onChange={handleAvatarChange} className="focus:ring-2 focus:ring-blue-500 outline-none" />
+            <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_AVATAR')}</div>
+            <NPWDInput
+              value={avatar}
+              onChange={handleAvatarChange}
+              className="outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
         </div>
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
+            <NPWDButton
+              onClick={handleContactUpdate}
+              className="w-full"
+            >
               {t('GENERIC.UPDATE')}
             </NPWDButton>
           ) : (
-            <NPWDButton onClick={handleContactAdd} className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-500 hover:dark:bg-blue-600 dark:text-white">
+            <NPWDButton
+              onClick={handleContactAdd}
+              className="w-full"
+            >
               {t('GENERIC.ADD')}
             </NPWDButton>
           )}
@@ -241,17 +260,20 @@ const ContactsInfoPage: React.FC = () => {
 
 interface ContactActionProps extends HTMLAttributes<HTMLButtonElement> {
   onClick: () => void;
-  Icon: React.Component
+  Icon: React.Component;
 }
 export const ContactAction: React.FC<ContactActionProps> = ({ Icon, onClick, ...props }) => {
   return (
-      <button
-          onClick={onClick}
-          className={cn("group text-neutral-900 dark:text-white flex items-center justify-center p-2.5 rounded-full bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700", props.className)}
-      >
-        <Icon className="h-6 w-6"/>
-      </button>
-  )
-}
+    <button
+      onClick={onClick}
+      className={cn(
+        'group flex items-center justify-center rounded-full bg-neutral-200 p-2.5 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700',
+        props.className,
+      )}
+    >
+      <Icon className="h-6 w-6" />
+    </button>
+  );
+};
 
 export default ContactsInfoPage;

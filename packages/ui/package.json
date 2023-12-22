@@ -1,14 +1,13 @@
 {
-  "name": "@npwd/ui",
+  "name": "@npwd/keyos",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Key OS is the OS UI library for NPWD",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsup src/index.ts --watch --dts --format esm,cjs"
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react"
   },
   "keywords": [],
   "author": "",
@@ -17,13 +16,16 @@
     "@headlessui/react": "^1.7.13",
     "@types/node": "^18.15.0",
     "@types/react": "^18.2.6",
-    "class-variance-authority": "^0.4.0",
+    "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.2.4",
     "react": "^17.0.2",
-    "tailwind-merge": "^1.10.0",
-    "tailwindcss": "^3.2.7",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.4.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.10.0"
   }
 }

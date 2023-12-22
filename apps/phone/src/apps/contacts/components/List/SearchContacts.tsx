@@ -19,7 +19,7 @@ export const SearchContacts: React.FC = () => {
     }, [debouncedVal, setFilterVal]);
 
     return (
-        <div className="w-full py-2 px-4">
+        <div className="w-full py-2">
             <div className="flex items-center justify-start bg-neutral-200 dark:bg-neutral-800 rounded-md px-2 space-x-2 border dark:border-neutral-700">
                 <Search className="h-5 w-5 dark:text-neutral-400"/>
                 <NPWDInput

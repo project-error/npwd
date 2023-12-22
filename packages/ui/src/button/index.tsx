@@ -1,29 +1,31 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { cn } from '../utils';
 
-const classes = cva('rounded-md w-full', {
+const classes = cva('rounded text-white dark:text-white inline-flex items-center justify-center whitespace-nowrap font-medium transition', {
   variants: {
     variant: {
-      primary: ['bg-blue-800 text-white'],
+      primary: ['bg-blue-500'],
+      ghost: ['bg-transparent hover:bg-neutral-200 hover:dark:bg-neutral-800'],
     },
     size: {
       sm: 'px-2 py-1.5 text-sm',
-      md: 'px-2 py-2 text-base',
+      md: 'h-10 px-4 py-2 text-base',
       lg: 'px-4 py-2',
+      icon: 'h-10 w-10'
     },
   },
-  compoundVariants: [{ size: 'sm', variant: 'primary' }],
   defaultVariants: {
     size: 'md',
     variant: 'primary',
   },
 });
 
-export type ButtonProps2 = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof classes>;
 
-export const NPWDButton: React.FC<ButtonProps2> = ({
+export const NPWDButton: React.FC<ButtonProps> = ({
   children,
   size,
   variant,
@@ -31,7 +33,7 @@ export const NPWDButton: React.FC<ButtonProps2> = ({
   ...props
 }) => {
   return (
-    <button {...props} className={twMerge(classes({ size, variant, className }))}>
+    <button {...props} className={cn(classes({ size, variant, className }))}>
       {children}
     </button>
   );
