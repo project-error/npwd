@@ -19,6 +19,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["./**/*", "../../shared/*"],
+  "include": ["./**/*", "../../shared/*", "../../bridge/*"],
   "exclude": ["**/node_modules", "**/__tests__/*"]
 }

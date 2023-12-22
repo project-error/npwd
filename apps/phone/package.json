@@ -87,7 +87,7 @@
   "scripts": {
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "dev": "vite --mode dev",
-    "dev:game": "BROWSER=none build:watch",
+    "dev:game": "vite build --watch --mode game",
     "build": "vite build --mode game",
     "build:watch": "vite build --watch --mode game"
   },

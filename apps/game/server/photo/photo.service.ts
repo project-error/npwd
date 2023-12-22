@@ -3,7 +3,7 @@ import { GalleryPhoto } from '@typings/photo';
 import { PhotoDB, _PhotoDB } from './photo.database';
 import { photoLogger } from './photo.utils';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { v4 as uuidv4 } from 'uuid';
 import { FormData, fileFromSync } from 'node-fetch';
 import * as fs from 'fs';

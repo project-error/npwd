@@ -8,7 +8,7 @@ import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
 import CallsService from '../calls/calls.service';
 import { Delay } from '../../utils/fivem';
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { _PlayerRepo, PlayerRepo } from './player.database';
 
 class _PlayerService {

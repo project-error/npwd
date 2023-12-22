@@ -1,5 +1,5 @@
 import fetch, { FormData } from 'node-fetch';
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { Player } from '../players/player.class';
 
 export async function tweetDiscordPost(url: string, body: string): Promise<any> {

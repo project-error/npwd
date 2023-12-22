@@ -115,6 +115,7 @@ exps('sendUIMessage', (action: { type: string; payload: unknown }) => {
 exps('createNotification', (dto: CreateNotificationDTO) => {
   verifyExportArgType('createSystemNotification', dto, ['object']);
   verifyExportArgType('createSystemNotification', dto.notisId, ['string']);
+
   sendMessage('PHONE', NotificationEvents.CREATE_NOTIFICATION, dto);
 });
 
@@ -122,10 +123,10 @@ exps('createSystemNotification', (dto: SystemNotificationDTO) => {
   verifyExportArgType('createSystemNotification', dto, ['object']);
   verifyExportArgType('createSystemNotification', dto.uniqId, ['string']);
 
-  const actionSet = dto.onConfirm || dto.onCancel;
+  const actionSet = dto?.onConfirm || dto?.onCancel;
 
   if (dto.controls && !dto.keepOpen)
-    return console.log('Notification must be set to keepOpen in order to use notifcation actions');
+    return console.log('Notification must be set to keeOpen in order to use notifcation actions');
 
   if (!dto.controls && actionSet)
     return console.log('Controls must be set to true in order to use notifcation actions');

@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { AudioRequest, AudioResponse } from '../../../typings/audio';
 import { audioLogger } from './audio.utils';

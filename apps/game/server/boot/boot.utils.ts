@@ -1,5 +1,4 @@
 import { mainLogger } from '../sv_logger';
-import { config } from '../config';
 
 export const bootLogger = mainLogger.child({
   module: 'boot',
@@ -14,9 +13,6 @@ export const fatalDbError = (reason: string) => {
       '==============================================^0',
   );
 };
-
-const { identifierColumn, phoneNumberColumn } = config.database;
-export const requiredDbColumns = [identifierColumn, phoneNumberColumn];
 
 export const frameworkDependencies = {
   ['es_extended']: ['esx-npwd'],

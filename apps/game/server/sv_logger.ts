@@ -1,4 +1,4 @@
-import { config } from './config';
+import { config } from '@npwd/config/server';
 import path from 'path';
 import { createLogger, transports, format } from 'winston';
 

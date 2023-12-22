@@ -1,5 +1,5 @@
 import { mainLogger } from '../sv_logger';
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { CONNECTION_STRING, DbInterface, parseUri } from '@npwd/database';
 
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');

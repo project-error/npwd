@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact, ContactPay } from '@typings/contact';
 import PlayerService from '../players/player.service';
 import ContactService from './contacts.service';

@@ -1,16 +1,19 @@
 import './config';
 
 import { RewriteFrames } from '@sentry/integrations';
-//import { config as resourceConfig } from './config';
 import { config as resourceConfig } from '@npwd/config/server';
 
 export const config = resourceConfig;
 import { registerCommands } from './commands/registerCommands';
 
+
+console.log(config);
+
 // Setup controllers
 //
 //import './db/pool';
 import '@npwd/database/src/db/pool';
+import './bridge/framework-strategy';
 
 import './boot/boot.controller';
 import './players/player.controller';

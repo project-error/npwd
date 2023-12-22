@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 
 export const checkAndFilterImage = (imageUrl: string): string | null => {
   const image = imageUrl.trim();

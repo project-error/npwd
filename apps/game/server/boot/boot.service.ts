@@ -1,7 +1,7 @@
 import BootDb, { _BootDb } from './boot.db';
 import { bootLogger, fatalDbError } from './boot.utils';
-import { config } from '../config';
-import { frameworkDependencies, requiredDbColumns } from './boot.utils';
+import { config } from '@npwd/config/server';
+import { frameworkDependencies } from './boot.utils';
 
 export class _BootService {
   private readonly bootDb: _BootDb;
@@ -16,7 +16,6 @@ export class _BootService {
    */
   async handleResourceStarting(): Promise<void> {
     await this.validateDatabaseSchema();
-    this.performConfigChecks();
   }
 
   /**
@@ -35,6 +34,9 @@ export class _BootService {
 
     const columnData = await this.bootDb.getPlayerTableColumns();
 
+    const { identifierColumn, phoneNumberColumn } = config.database;
+    const requiredDbColumns = [identifierColumn, phoneNumberColumn];
+
     if (!requiredDbColumns.every((elem) => columnData.includes(elem))) {
       const missingColumns = requiredDbColumns.filter((elem) => !columnData.includes(elem));
 
@@ -44,14 +46,6 @@ export class _BootService {
     bootLogger.debug('Database schema successfully validated');
   }
 
-  /**
-   * Performs various checks related to the config.json file.
-   */
-  performConfigChecks(): void {
-    if (config.general.useResourceIntegration) {
-      this.checkFrameworkDependencies();
-    }
-  }
 
   /**
    * Check if various framework wrappers are started if applicable.

@@ -1,6 +1,6 @@
 import { generateUniquePhoneNumber } from '../misc/generateUniquePhoneNumber';
 import { bridgeLogger } from './bridge.utils';
-import { config } from '../config';
+import { config } from '@npwd/config/server';
 import { ExportedPlayerData, PlayerAddData } from '../players/player.interfaces';
 import { playerLogger } from '../players/player.utils';
 import PlayerService from '../players/player.service';
