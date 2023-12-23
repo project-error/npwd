@@ -19,4 +19,13 @@ export const MockHistoryData: CallHistoryItem[] = [
     start: '1615939850',
     end: null,
   },
+  {
+    id: 2,
+    identifier: 'b8080a50-ad30-4ee9-84cb-00688e2bf163',
+    transmitter: '111-1134',
+    receiver: '704-1549',
+    is_accepted: false,
+    start: '1615939850',
+    end: null,
+  },
 ];
