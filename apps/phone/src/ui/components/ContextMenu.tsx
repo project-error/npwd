@@ -1,21 +1,8 @@
 import React from 'react';
-import { ListItemIcon, ListItemText, Slide, Paper } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { List } from './List';
-import { ListItem } from './ListItem';
+import { Slide } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    borderTop: '1px solid',
-    borderColor: theme.palette.primary.main,
-    width: '100%',
-    minHeight: '10%',
-    maxHeight: '100%',
-    zIndex: 2,
-    overflow: 'auto',
-  },
-}));
+import { ListItem, List } from '@npwd/keyos';
+import { X } from 'lucide-react';
 
 export interface IContextMenuOption {
   onClick(e, option): void;
@@ -30,21 +17,16 @@ interface ContextMenuProps {
   open: boolean;
   onClose: () => void;
   options: Array<IContextMenuOption>;
+  settingLabel: string;
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
-  const classes = useStyles();
-  const [t] = useTranslation();
-
-  const _options = onClose
-    ? [
-        ...options,
-        {
-          label: t('GENERIC.CLOSE'),
-          onClick: onClose,
-        } as IContextMenuOption,
-      ]
-    : options;
+export const ContextMenu: React.FC<ContextMenuProps> = ({
+  open,
+  onClose,
+  options,
+  settingLabel,
+}) => {
+  const _options = options;
 
   return (
     <Slide
@@ -54,10 +36,26 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
       mountOnEnter
       unmountOnExit
     >
-      <Paper square className={classes.root}>
-        <List disablePadding>
+      <div className="min-h-10%] z-[9999] max-h-full w-full overflow-auto rounded-t-2xl border-t border-neutral-800 bg-neutral-900 p-2 text-white shadow-lg">
+        <div className="flex items-center justify-between px-2">
+          <p className="text-base font-medium">{settingLabel}</p>
+          <button onClick={onClose}>
+            <X size={24} />
+          </button>
+        </div>
+        <List>
           {_options.map((option) => (
             <ListItem
+              primaryText={option.label}
+              secondaryText={option.description}
+              button
+              selected={option.selected}
+              onClick={(e) => {
+                option.onClick(e, option);
+                onClose();
+              }}
+            />
+            /*  <ListItem
               selected={option.selected}
               key={option.key || option.label}
               button
@@ -68,10 +66,10 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
             >
               {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
               <ListItemText primary={option.label} secondary={option.description} />
-            </ListItem>
+            </ListItem> */
           ))}
         </List>
-      </Paper>
+      </div>
     </Slide>
   );
 };

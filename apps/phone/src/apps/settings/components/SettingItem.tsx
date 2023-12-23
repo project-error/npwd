@@ -3,16 +3,15 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  ListItemButton,
   ListItemSecondaryAction,
   Box,
   Slider,
   IconButton,
   Typography,
-  Switch,
 } from '@mui/material';
 import { Tooltip } from '@ui/components/Tooltip';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { NPWDButton, ListItem as NPWDListItem, SwitchRoot, SwitchThumb } from '@npwd/keyos';
 
 interface SettingItemProps {
   options?: any;
@@ -29,12 +28,15 @@ export const SettingItem: React.FC<SettingItemProps> = ({
   value,
   onClick,
   icon,
-  theme
+  theme,
 }) => (
-  <ListItem divider onClick={() => onClick?.(options)} button>
-    <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
-  </ListItem>
+  <NPWDListItem
+    onClick={() => onClick?.(options, label)}
+    button
+    startElement={icon}
+    primaryText={label}
+    secondaryText={value ? value.toString() : null}
+  />
 );
 
 interface SoundItemProps {
@@ -56,25 +58,25 @@ export const SoundItem: React.FC<SoundItemProps> = ({
   icon,
   tooltip,
   onPreviewClicked,
-  theme
 }) => (
-  <ListItem
-    divider
+  <NPWDListItem
     button
-    secondaryAction={
-      <Tooltip title={tooltip}>
-        <IconButton onClick={() => onPreviewClicked()}>
+    onClick={() => onClick?.(options, label)}
+    primaryText={label} 
+    secondaryText={value ? value.toString() : undefined}
+    startElement={icon}
+    endElement={
+      <Tooltip title={tooltip} placement='left' arrow>
+        <NPWDButton size="icon" variant='ghost' className='rounded-full' onClick={(e) => {
+          e.stopPropagation();
+          onPreviewClicked?.(options, label);
+        }}>
           <PlayCircleIcon />
-        </IconButton>
+        </NPWDButton>
       </Tooltip>
     }
-    disablePadding
   >
-    <ListItemButton onClick={() => onClick?.(options)}>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
-    </ListItemButton>
-  </ListItem>
+  </NPWDListItem>
 );
 
 interface SettingSliderProps {
@@ -90,11 +92,18 @@ export const SettingItemSlider: React.FC<SettingSliderProps> = ({
   label,
   value,
   onCommit,
-  theme
+  theme,
 }) => (
   <ListItem divider>
     <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{value ? value : undefined}</Typography>} />
+    <ListItemText
+      primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>}
+      secondary={
+        <Typography style={{ color: theme.palette.text.secondary }}>
+          {value ? value : undefined}
+        </Typography>
+      }
+    />
     <ListItemSecondaryAction>
       <Box p={2} width={150}>
         <Slider
@@ -125,15 +134,17 @@ export const SettingSwitch: React.FC<SettingSwitchProps> = ({
   onClick,
   icon,
   secondary,
-  theme
 }) => (
-  <ListItem divider>
-    <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{secondary}</Typography>} />
-    <ListItemSecondaryAction>
-      <Switch color="primary" checked={value} onChange={() => onClick(value)} />
-    </ListItemSecondaryAction>
-  </ListItem>
+  <NPWDListItem
+    startElement={icon}
+    primaryText={label}
+    secondaryText={secondary}
+    endElement={
+      <SwitchRoot checked={value} onCheckedChange={() => onClick(value)}>
+        <SwitchThumb />
+      </SwitchRoot>
+    }
+  />
 );
 
 interface SettingItemIconActionProps {
@@ -153,23 +164,24 @@ export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
   actionIcon,
   labelSecondary,
   actionLabel,
-  theme
+  theme,
 }) => (
   <>
-    <ListItem divider>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>} secondary={<Typography style={{ color: theme.palette.text.secondary }}>{labelSecondary}</Typography>} />
-      <ListItemSecondaryAction>
+    <NPWDListItem
+      startElement={icon}
+      primaryText={label}
+      secondaryText={labelSecondary}
+      endElement={
         <Tooltip
           arrow
           title={<Typography variant="body2">{actionLabel}</Typography>}
-          placement="top-end"
+          placement="left"
         >
-          <IconButton edge="end" onClick={handleAction} size="large">
+          <NPWDButton onClick={handleAction} size="icon" variant="ghost" className="rounded-full">
             {actionIcon}
-          </IconButton>
+          </NPWDButton>
         </Tooltip>
-      </ListItemSecondaryAction>
-    </ListItem>
+      }
+    />
   </>
 );

@@ -28,18 +28,20 @@ export const MapSettingItem =
 export const useContextMenu = (_options?: IContextMenuOption[]): UseContextMenu => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(_options || []);
+  const [label, setLabel] = useState('' as string);
 
   const onClose = () => setOpen(false);
 
-  const onOpen = (opts) => {
+  const onOpen = (opts, label) => {
     setOptions(opts);
+    setLabel(label);
     setOpen(true);
   };
 
   return [
     onOpen,
     onClose,
-    () => <ContextMenu open={open} onClose={onClose} options={options} />,
+    () => <ContextMenu open={open} onClose={onClose} options={options} settingLabel={label} />,
     open,
   ];
 };

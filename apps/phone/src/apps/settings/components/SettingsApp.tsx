@@ -13,22 +13,23 @@ import {
   SoundItem,
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+import { FileCopy } from '@mui/icons-material';
 import {
-  FilterList,
-  Brush,
+  BookA,
+  EyeOff,
+  FileMusic,
+  LayoutGrid,
   Wallpaper,
+  Palette,
   Phone,
+  ShieldOff,
+  Volume2,
   Smartphone,
   ZoomIn,
-  LibraryMusic,
-  VolumeUp,
-  FileCopy,
-  Book,
-  DeleteForever,
-  Apps,
-  PersonOff,
-} from '@mui/icons-material';
+  ListFilter,
+  Eraser,
+} from 'lucide-react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material';
 import { useResetSettings, useSettings } from '../hooks/useSettings';
@@ -164,7 +165,6 @@ export const SettingsApp: React.FC = () => {
   const theme = useTheme();
   return (
     <AppWrapper>
-      <AppTitle app={settingsApp} />
       {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
       <div className={customWallpaperState ? classes.backgroundModal : undefined} />
@@ -185,161 +185,163 @@ export const SettingsApp: React.FC = () => {
           height: 'auto',
         }}
       >
-        <SettingsCategory title={t('SETTINGS.CATEGORY.PHONE')}>
-          <SettingItemIconAction
-            label={t('SETTINGS.PHONE_NUMBER')}
-            labelSecondary={myNumber}
-            actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
-              content: 'number',
-            })}
-            icon={<Phone />}
-            actionIcon={<FileCopy />}
-            handleAction={handleCopyPhoneNumber}
-            theme={theme}
-          />
-          <SoundItem
-            label={t('SETTINGS.OPTIONS.RINGTONE')}
-            value={settings.ringtone.label}
-            options={ringtones}
-            onClick={openMenu}
-            icon={<LibraryMusic />}
-            tooltip={t('SETTINGS.PREVIEW_SOUND')}
-            onPreviewClicked={() => {
-              fetchNui(SettingEvents.PREVIEW_RINGTONE);
-            }}
-            theme={theme}
-          />
-          <SoundItem
-            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
-            value={settings.notiSound.label}
-            options={notifications}
-            onClick={openMenu}
-            icon={<LibraryMusic />}
-            tooltip={t('SETTINGS.PREVIEW_SOUND')}
-            onPreviewClicked={() => {
-              fetchNui(SettingEvents.PREVIEW_ALERT);
-            }}
-            theme={theme}
-          />
-          <SettingSwitch
-            label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
-            secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
-            icon={<VisibilityOffIcon />}
-            value={settings.streamerMode}
-            onClick={(curr) => handleSettingChange('streamerMode', !curr)}
-            theme={theme}
-          />
-          <SettingSwitch
-            label={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.TITLE')}
-            secondary={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.DESCRIPTION')}
-            icon={<PersonOff />}
-            value={settings.anonymousMode}
-            onClick={(curr) => handleSettingChange('anonymousMode', !curr)}
-            theme={theme}
-          />
-          <SettingItemSlider
-            label={t('SETTINGS.OPTIONS.CALL_VOLUME')}
-            icon={<VolumeUp />}
-            value={settings.callVolume}
-            onCommit={(_, val) => handleSettingChange('callVolume', val)}
-            theme={theme}
-          />
-        </SettingsCategory>
-        <SettingsCategory title={t('SETTINGS.CATEGORY.APPEARANCE')}>
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.LANGUAGE')}
-            value={settings.language.label}
-            options={languages}
-            onClick={openMenu}
-            icon={<Book />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.THEME')}
-            value={settings.theme.label}
-            options={themes}
-            onClick={openMenu}
-            icon={<Brush />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.ICONSET')}
-            value={settings.iconSet.label}
-            options={iconSets}
-            onClick={openMenu}
-            icon={<Apps />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.WALLPAPER')}
-            value={settings.wallpaper.label}
-            options={[...wallpapers, customWallpaper]}
-            onClick={openMenu}
-            icon={<Wallpaper />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.FRAME')}
-            value={settings.frame.label}
-            options={frames}
-            onClick={openMenu}
-            icon={<Smartphone />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.ZOOM')}
-            value={settings.zoom.label}
-            options={zoomOptions}
-            onClick={openMenu}
-            icon={<ZoomIn />}
-            theme={theme}
-          />
-        </SettingsCategory>
-        <SettingsCategory title={t('APPS_TWITTER')}>
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.NOTIFICATION_FILTER')}
-            value={settings.TWITTER_notiFilter.label}
-            options={twitterNotificationFilters}
-            onClick={openMenu}
-            icon={<FilterList />}
-            theme={theme}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
-            value={settings.TWITTER_notiSound.label}
-            options={twitterNotifications}
-            onClick={openMenu}
-            icon={<LibraryMusic />}
-            theme={theme}
-          />
-          <SettingItemSlider
-            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
-            value={settings.TWITTER_notiSoundVol}
-            onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
-            icon={<VolumeUp />}
-            theme={theme}
-          />
-        </SettingsCategory>
-        <SettingsCategory title={t('APPS_MARKETPLACE')}>
-          <SettingSwitch
-            label={t('SETTINGS.MARKETPLACE.NOTIFICATION')}
-            secondary={t('SETTINGS.MARKETPLACE.NOTIFY_NEW_LISTING')}
-            value={settings.MARKETPLACE_notifyNewListing}
-            icon={<FilterList />}
-            onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
-            theme={theme}
-          />
-        </SettingsCategory>
-        <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
-            value={t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}
-            icon={<DeleteForever />}
-            onClick={openMenu}
-            options={resetSettingsOpts}
-            theme={theme}
-          />
-        </SettingsCategory>
+        <div className='py-4'>
+          <SettingsCategory title={t('SETTINGS.CATEGORY.PHONE')}>
+            <SettingItemIconAction
+              label={t('SETTINGS.PHONE_NUMBER')}
+              labelSecondary={myNumber}
+              actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
+                content: 'number',
+              })}
+              icon={<Phone />}
+              actionIcon={<FileCopy />}
+              handleAction={handleCopyPhoneNumber}
+              theme={theme}
+            />
+            <SoundItem
+              label={t('SETTINGS.OPTIONS.RINGTONE')}
+              value={settings.ringtone.label}
+              options={ringtones}
+              onClick={openMenu}
+              icon={<FileMusic />}
+              tooltip={t('SETTINGS.PREVIEW_SOUND')}
+              onPreviewClicked={() => {
+                fetchNui(SettingEvents.PREVIEW_RINGTONE);
+              }}
+              theme={theme}
+            />
+            <SoundItem
+              label={t('SETTINGS.OPTIONS.NOTIFICATION')}
+              value={settings.notiSound.label}
+              options={notifications}
+              onClick={openMenu}
+              icon={<FileMusic />}
+              tooltip={t('SETTINGS.PREVIEW_SOUND')}
+              onPreviewClicked={() => {
+                fetchNui(SettingEvents.PREVIEW_ALERT);
+              }}
+              theme={theme}
+            />
+            <SettingSwitch
+              label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
+              secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
+              icon={<EyeOff />}
+              value={settings.streamerMode}
+              onClick={(curr) => handleSettingChange('streamerMode', !curr)}
+              theme={theme}
+            />
+            <SettingSwitch
+              label={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.TITLE')}
+              secondary={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.DESCRIPTION')}
+              icon={<ShieldOff />}
+              value={settings.anonymousMode}
+              onClick={(curr) => handleSettingChange('anonymousMode', !curr)}
+              theme={theme}
+            />
+            <SettingItemSlider
+              label={t('SETTINGS.OPTIONS.CALL_VOLUME')}
+              icon={<Volume2 />}
+              value={settings.callVolume}
+              onCommit={(_, val) => handleSettingChange('callVolume', val)}
+              theme={theme}
+            />
+          </SettingsCategory>
+          <SettingsCategory title={t('SETTINGS.CATEGORY.APPEARANCE')}>
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.LANGUAGE')}
+              value={settings.language.label}
+              options={languages}
+              onClick={openMenu}
+              icon={<BookA />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.THEME')}
+              value={settings.theme.label}
+              options={themes}
+              onClick={openMenu}
+              icon={<Palette />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.ICONSET')}
+              value={settings.iconSet.label}
+              options={iconSets}
+              onClick={openMenu}
+              icon={<LayoutGrid />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.WALLPAPER')}
+              value={settings.wallpaper.label}
+              options={[...wallpapers, customWallpaper]}
+              onClick={openMenu}
+              icon={<Wallpaper />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.FRAME')}
+              value={settings.frame.label}
+              options={frames}
+              onClick={openMenu}
+              icon={<Smartphone />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.ZOOM')}
+              value={settings.zoom.label}
+              options={zoomOptions}
+              onClick={openMenu}
+              icon={<ZoomIn />}
+              theme={theme}
+            />
+          </SettingsCategory>
+          <SettingsCategory title={t('APPS_TWITTER')}>
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.NOTIFICATION_FILTER')}
+              value={settings.TWITTER_notiFilter.label}
+              options={twitterNotificationFilters}
+              onClick={openMenu}
+              icon={<ListFilter />}
+              theme={theme}
+            />
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.NOTIFICATION')}
+              value={settings.TWITTER_notiSound.label}
+              options={twitterNotifications}
+              onClick={openMenu}
+              icon={<FileMusic />}
+              theme={theme}
+            />
+            <SettingItemSlider
+              label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
+              value={settings.TWITTER_notiSoundVol}
+              onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
+              icon={<Volume2 />}
+              theme={theme}
+            />
+          </SettingsCategory>
+          <SettingsCategory title={t('APPS_MARKETPLACE')}>
+            <SettingSwitch
+              label={t('SETTINGS.MARKETPLACE.NOTIFICATION')}
+              secondary={t('SETTINGS.MARKETPLACE.NOTIFY_NEW_LISTING')}
+              value={settings.MARKETPLACE_notifyNewListing}
+              icon={<ListFilter />}
+              onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
+              theme={theme}
+            />
+          </SettingsCategory>
+          <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
+            <SettingItem
+              label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
+              value={t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}
+              icon={<Eraser />}
+              onClick={openMenu}
+              options={resetSettingsOpts}
+              theme={theme}
+            />
+          </SettingsCategory>
+        </div>
       </AppContent>
       <ContextMenu />
     </AppWrapper>

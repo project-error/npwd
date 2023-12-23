@@ -1,6 +1,7 @@
-import { List, ListSubheader } from '@mui/material';
+import { ListSubheader } from '@mui/material';
 import React from 'react';
 import { ListProps } from '@mui/material/List';
+import { List } from '@npwd/keyos';
 
 const SubHeaderComp: React.FC<{ text: string }> = ({ text }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -17,7 +18,10 @@ export const SettingsCategory: React.FC<SettingsCategoryProps> = ({
   title,
   ...otherProps
 }) => (
-  <List subheader={<SubHeaderComp text={title} />} {...otherProps} disablePadding>
-    {children}
-  </List>
+  <div className='px-4'>
+    <div>
+      <p className='text-white font-medium text-base'>{title}</p>
+    </div>
+    <List {...otherProps}>{children}</List>
+  </div>
 );
