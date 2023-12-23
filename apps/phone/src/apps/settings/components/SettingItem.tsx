@@ -11,7 +11,13 @@ import {
 } from '@mui/material';
 import { Tooltip } from '@ui/components/Tooltip';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import { NPWDButton, ListItem as NPWDListItem, SwitchRoot, SwitchThumb } from '@npwd/keyos';
+import {
+  NPWDButton,
+  ListItem as NPWDListItem,
+  SwitchRoot,
+  SwitchThumb,
+  SliderRoot,
+} from '@npwd/keyos';
 
 interface SettingItemProps {
   options?: any;
@@ -62,28 +68,32 @@ export const SoundItem: React.FC<SoundItemProps> = ({
   <NPWDListItem
     button
     onClick={() => onClick?.(options, label)}
-    primaryText={label} 
+    primaryText={label}
     secondaryText={value ? value.toString() : undefined}
     startElement={icon}
     endElement={
-      <Tooltip title={tooltip} placement='left' arrow>
-        <NPWDButton size="icon" variant='ghost' className='rounded-full' onClick={(e) => {
-          e.stopPropagation();
-          onPreviewClicked?.(options, label);
-        }}>
+      <Tooltip title={tooltip} placement="left" arrow>
+        <NPWDButton
+          size="icon"
+          variant="ghost"
+          className="rounded-full"
+          onClick={(e) => {
+            e.stopPropagation();
+            onPreviewClicked?.(options, label);
+          }}
+        >
           <PlayCircleIcon />
         </NPWDButton>
       </Tooltip>
     }
-  >
-  </NPWDListItem>
+  ></NPWDListItem>
 );
 
 interface SettingSliderProps {
   label: string;
   icon: JSX.Element;
   value: number;
-  onCommit: (event: React.SyntheticEvent | Event, value: number | number[]) => void;
+  onCommit: (value: number | number[]) => void;
   theme: any;
 }
 
@@ -94,29 +104,22 @@ export const SettingItemSlider: React.FC<SettingSliderProps> = ({
   onCommit,
   theme,
 }) => (
-  <ListItem divider>
-    <ListItemIcon>{icon}</ListItemIcon>
-    <ListItemText
-      primary={<Typography style={{ color: theme.palette.text.primary }}>{label}</Typography>}
-      secondary={
-        <Typography style={{ color: theme.palette.text.secondary }}>
-          {value ? value : undefined}
-        </Typography>
-      }
-    />
-    <ListItemSecondaryAction>
-      <Box p={2} width={150}>
-        <Slider
+  <NPWDListItem
+    startElement={icon}
+    primaryText={label}
+    secondaryText={value ? value.toString() : undefined}
+    endElement={
+      <div>
+        <SliderRoot
           key={`slider-${value}`}
-          defaultValue={value}
+          defaultValue={[value]}
           min={0}
           max={100}
-          valueLabelDisplay="auto"
-          onChangeCommitted={onCommit}
+          onValueCommit={(val) => onCommit(val[0])}
         />
-      </Box>
-    </ListItemSecondaryAction>
-  </ListItem>
+      </div>
+    }
+  />
 );
 
 interface SettingSwitchProps {

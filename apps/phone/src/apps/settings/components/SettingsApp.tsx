@@ -185,7 +185,7 @@ export const SettingsApp: React.FC = () => {
           height: 'auto',
         }}
       >
-        <div className='py-4'>
+        <div className="py-4">
           <SettingsCategory title={t('SETTINGS.CATEGORY.PHONE')}>
             <SettingItemIconAction
               label={t('SETTINGS.PHONE_NUMBER')}
@@ -242,7 +242,7 @@ export const SettingsApp: React.FC = () => {
               label={t('SETTINGS.OPTIONS.CALL_VOLUME')}
               icon={<Volume2 />}
               value={settings.callVolume}
-              onCommit={(_, val) => handleSettingChange('callVolume', val)}
+              onCommit={(val) => handleSettingChange('callVolume', val)}
               theme={theme}
             />
           </SettingsCategory>
@@ -316,7 +316,7 @@ export const SettingsApp: React.FC = () => {
             <SettingItemSlider
               label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
               value={settings.TWITTER_notiSoundVol}
-              onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
+              onCommit={(val) => handleSettingChange('TWITTER_notiSoundVol', val)}
               icon={<Volume2 />}
               theme={theme}
             />
