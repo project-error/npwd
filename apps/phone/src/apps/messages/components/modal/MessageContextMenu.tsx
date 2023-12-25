@@ -16,6 +16,7 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import useMessages from '../../hooks/useMessages';
 import { Location } from '@typings/messages';
 import { MessageNoteModal } from './MessageNoteModal';
+import { BookImage, BookUser, MapPinned, StickyNote } from 'lucide-react';
 
 interface MessageCtxMenuProps {
   isOpen: boolean;
@@ -47,7 +48,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
     () => [
       {
         label: t('MESSAGES.MEDIA_OPTION'),
-        icon: <PhotoLibraryIcon />,
+        icon: <BookImage />,
         onClick: () =>
           history.push(
             `/camera?${qs.stringify({
@@ -57,12 +58,12 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
       },
       {
         label: t('MESSAGES.CONTACT_OPTION'),
-        icon: <ContactPageIcon />,
+        icon: <BookUser />,
         onClick: () => setContactModalOpen(true),
       },
       {
         label: t('MESSAGES.NOTE_OPTION'),
-        icon: <TextSnippetIcon />,
+        icon: <StickyNote />,
         onClick: () =>
           history.push(
             `/notes?${qs.stringify({
@@ -72,7 +73,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
       },
       {
         label: t('MESSAGES.LOCATION_OPTION'),
-        icon: <PinDrop />,
+        icon: <MapPinned />,
         onClick: () => {
           fetchNui<{ data: Location }>(MessageEvents.GET_MESSAGE_LOCATION).then(({ data }) => {
             sendEmbedMessage({

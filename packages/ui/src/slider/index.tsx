@@ -10,11 +10,11 @@ export const SliderRoot: React.FC<Slider.SliderProps> = ({ ...props }) => {
       step={1}
       {...props}
     >
-      <Slider.Track className="bg-blackA7 relative h-[3px] grow rounded-full">
-        <Slider.Range className="absolute h-full rounded-full bg-white" />
+      <Slider.Track className="relative h-[3px] grow rounded-full dark:bg-neutral-700">
+        <Slider.Range className="absolute h-full rounded-full dark:bg-neutral-50" />
       </Slider.Track>
       <Slider.Thumb
-        className="shadow-blackA4 hover:bg-violet3 focus:shadow-blackA5 block h-5 w-5 rounded-[10px] bg-white shadow-[0_2px_10px] focus:shadow-[0_0_0_5px] focus:outline-none"
+        className="hover:bg-violet3 block h-5 w-5 rounded-[10px] bg-white shadow-[0_2px_10px] shadow-black focus:shadow-[0_0_0_5px] focus:shadow-black focus:outline-none"
         aria-label="Volume"
       />
     </Slider.Root>

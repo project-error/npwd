@@ -58,7 +58,6 @@ const useStyles = makeStyles({
 });
 
 export const SettingsApp: React.FC = () => {
-  const settingsApp = useApp('SETTINGS');
   const [config] = usePhoneConfig();
   const myNumber = useMyPhoneNumber();
   const [settings, setSettings] = useSettings();

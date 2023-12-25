@@ -46,6 +46,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         <List>
           {_options.map((option) => (
             <ListItem
+              startElement={option.icon}
               primaryText={option.label}
               secondaryText={option.description}
               button

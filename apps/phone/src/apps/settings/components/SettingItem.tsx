@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  Box,
-  Slider,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import { Tooltip } from '@ui/components/Tooltip';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import {
