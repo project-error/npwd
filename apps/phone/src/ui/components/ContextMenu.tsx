@@ -1,6 +1,5 @@
 import React from 'react';
 import { Slide } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { ListItem, List } from '@npwd/keyos';
 import { X } from 'lucide-react';
 
@@ -36,10 +35,10 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       mountOnEnter
       unmountOnExit
     >
-      <div className="min-h-10%] z-[9999] max-h-full w-full overflow-auto rounded-t-2xl border-t border-neutral-800 bg-neutral-900 p-2 text-white shadow-lg">
+      <div className="min-h-10%] z-[9999] max-h-full w-full overflow-auto rounded-t-2xl border-t border-neutral-800 bg-neutral-100 dark:bg-neutral-900 p-2 text-white">
         <div className="flex items-center justify-between px-2">
-          <p className="text-base font-medium">{settingLabel}</p>
-          <button onClick={onClose}>
+          <p className="text-base font-medium text-neutral-900 dark:text-neutral-50">{settingLabel}</p>
+          <button onClick={onClose} className="dark:text-neutral-50 text-neutral-900">
             <X size={24} />
           </button>
         </div>
