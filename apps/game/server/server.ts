@@ -6,9 +6,7 @@ import { config as resourceConfig } from '@npwd/config/server';
 export const config = resourceConfig;
 import { registerCommands } from './commands/registerCommands';
 
-
-console.log(config);
-
+// This is ugly as fuck and we need to import things in a order that makes sense
 // Setup controllers
 //
 //import './db/pool';

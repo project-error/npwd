@@ -9,10 +9,9 @@ import {
   __federation_method_getRemote,
   __federation_method_setRemote,
   __federation_method_unwrapDefault,
-  // @ts-ignore - This is Vite federation magic
+  // @ts-ignore - This is virtual modules from the vite plugin. I guess they forgot to add defs.
 } from '__federation__';
 import { EnvMode } from '@utils/config';
-import { NuiProvider } from 'fivem-nui-react-lib';
 
 const useExternalAppsAction = () => {
   const loadScript = async (url: string) => {
@@ -59,7 +58,7 @@ const useExternalAppsAction = () => {
 
       const appConfig = m();
       const config = appConfig;
-      config.Component = (props: object) => React.createElement(config.app);
+      config.Component = (props: object) => React.createElement(config.app, props);
 
       const Provider = createExternalAppProvider(config);
 

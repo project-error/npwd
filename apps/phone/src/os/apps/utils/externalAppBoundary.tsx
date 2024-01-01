@@ -39,6 +39,7 @@ const Container = styled.div<{ background: string; color: string }>`
 `;
 
 interface ExternalAppBoundaryProps {
+  children: React.ReactNode;
   color: string;
   background: string;
   t: TFunction;

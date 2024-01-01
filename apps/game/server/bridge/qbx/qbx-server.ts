@@ -30,9 +30,9 @@ export class QBXFramework implements Strategy {
       });
     });
 
-    on("QBCore:Server:OnPlayerUnload", async () => {
+    on('QBCore:Server:OnPlayerUnload', async () => {
       await PlayerService.handleUnloadPlayerEvent(global.source);
-    })
+    });
   }
 
   onStart(): void {
