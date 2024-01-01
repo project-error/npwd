@@ -262,14 +262,6 @@ export const SettingsApp: React.FC = () => {
               theme={theme}
             />
             <SettingItem
-              label={t('SETTINGS.OPTIONS.ICONSET')}
-              value={settings.iconSet.label}
-              options={iconSets}
-              onClick={openMenu}
-              Icon={LayoutGrid}
-              theme={theme}
-            />
-            <SettingItem
               label={t('SETTINGS.OPTIONS.WALLPAPER')}
               value={settings.wallpaper.label}
               options={[...wallpapers, customWallpaper]}
