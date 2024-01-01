@@ -4,7 +4,7 @@ import React from 'react';
 export const SwitchRoot: React.FC<Switch.SwitchProps> = ({ children, ...props }) => {
   return (
     <Switch.Root
-      className="relative h-[25px] w-[42px] cursor-default rounded-full outline-none dark:bg-neutral-700 data-[state=checked]:dark:bg-white"
+      className="relative h-[25px] w-[42px] cursor-default rounded-full outline-none bg-neutral-400 dark:bg-neutral-700 data-[state=checked]:bg-neutral-900 data-[state=checked]:dark:bg-white"
       id="airplane-mode"
       {...props}
     >
