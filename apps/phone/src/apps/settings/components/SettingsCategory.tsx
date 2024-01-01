@@ -20,7 +20,7 @@ export const SettingsCategory: React.FC<SettingsCategoryProps> = ({
 }) => (
   <div className='px-4'>
     <div>
-      <p className='text-white font-medium text-base'>{title}</p>
+      <p className='text-neutral-900 dark:text-white font-medium text-base'>{title}</p>
     </div>
     <List {...otherProps}>{children}</List>
   </div>

@@ -39,7 +39,6 @@ import { IContextMenuOption } from '@ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
 import { SettingsCategory } from './SettingsCategory';
 import { IconSetObject } from '@typings/settings';
-import { useApp } from '@os/apps/hooks/useApps';
 import { useCustomWallpaperModal } from '../state/customWallpaper.state';
 import fetchNui from '@utils/fetchNui';
 import { SettingEvents } from '@typings/settings';
@@ -192,7 +191,7 @@ export const SettingsApp: React.FC = () => {
               actionLabel={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {
                 content: 'number',
               })}
-              icon={<Phone />}
+              Icon={Phone}
               actionIcon={<FileCopy />}
               handleAction={handleCopyPhoneNumber}
               theme={theme}
@@ -202,7 +201,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.ringtone.label}
               options={ringtones}
               onClick={openMenu}
-              icon={<FileMusic />}
+              Icon={FileMusic}
               tooltip={t('SETTINGS.PREVIEW_SOUND')}
               onPreviewClicked={() => {
                 fetchNui(SettingEvents.PREVIEW_RINGTONE);
@@ -214,7 +213,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.notiSound.label}
               options={notifications}
               onClick={openMenu}
-              icon={<FileMusic />}
+              Icon={FileMusic}
               tooltip={t('SETTINGS.PREVIEW_SOUND')}
               onPreviewClicked={() => {
                 fetchNui(SettingEvents.PREVIEW_ALERT);
@@ -251,7 +250,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.language.label}
               options={languages}
               onClick={openMenu}
-              icon={<BookA />}
+              Icon={BookA}
               theme={theme}
             />
             <SettingItem
@@ -259,7 +258,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.theme.label}
               options={themes}
               onClick={openMenu}
-              icon={<Palette />}
+              Icon={Palette}
               theme={theme}
             />
             <SettingItem
@@ -267,7 +266,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.iconSet.label}
               options={iconSets}
               onClick={openMenu}
-              icon={<LayoutGrid />}
+              Icon={LayoutGrid}
               theme={theme}
             />
             <SettingItem
@@ -275,7 +274,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.wallpaper.label}
               options={[...wallpapers, customWallpaper]}
               onClick={openMenu}
-              icon={<Wallpaper />}
+              Icon={Wallpaper}
               theme={theme}
             />
             <SettingItem
@@ -283,7 +282,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.frame.label}
               options={frames}
               onClick={openMenu}
-              icon={<Smartphone />}
+              Icon={Smartphone}
               theme={theme}
             />
             <SettingItem
@@ -291,7 +290,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.zoom.label}
               options={zoomOptions}
               onClick={openMenu}
-              icon={<ZoomIn />}
+              Icon={ZoomIn}
               theme={theme}
             />
           </SettingsCategory>
@@ -301,7 +300,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.TWITTER_notiFilter.label}
               options={twitterNotificationFilters}
               onClick={openMenu}
-              icon={<ListFilter />}
+              Icon={ListFilter}
               theme={theme}
             />
             <SettingItem
@@ -309,7 +308,7 @@ export const SettingsApp: React.FC = () => {
               value={settings.TWITTER_notiSound.label}
               options={twitterNotifications}
               onClick={openMenu}
-              icon={<FileMusic />}
+              Icon={FileMusic}
               theme={theme}
             />
             <SettingItemSlider
@@ -334,7 +333,7 @@ export const SettingsApp: React.FC = () => {
             <SettingItem
               label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
               value={t('SETTINGS.OPTIONS.RESET_SETTINGS_DESC')}
-              icon={<Eraser />}
+              Icon={Eraser}
               onClick={openMenu}
               options={resetSettingsOpts}
               theme={theme}
