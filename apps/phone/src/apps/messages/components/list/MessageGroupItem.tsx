@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import {
-  ListItem,
   ListItemText,
   Checkbox,
   ListItemAvatar,
@@ -15,6 +14,7 @@ import { MessageConversation } from '@typings/messages';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useContacts } from '../../../contacts/hooks/state';
 import { Contact } from '@typings/contact';
+import { ListItem } from '@npwd/keyos';
 
 interface IProps {
   messageConversation: MessageConversation;
@@ -70,16 +70,43 @@ const MessageGroupItem = ({
     return getContact()?.display || conversationList.filter((p) => p !== participant)[0];
   }, [messageConversation, getContact]);
 
-  const phoneTheme = useTheme();
-
   return (
     <ListItem
       key={messageConversation.id}
-      onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
-      divider
       button
+      onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
+      primaryText={getLabelOrContact()}
+      startElement={
+        <div className="flex items-center px-2">
+          {isEditing && (
+            <Checkbox
+              checked={checked.indexOf(messageConversation.id) !== -1}
+              edge="start"
+              disableRipple
+            />
+          )}
+          <div>
+            {messageConversation.isGroupChat ? (
+              <MuiAvatar alt={messageConversation.label} />
+            ) : (
+              <img
+                alt={getContact()?.display ?? ''}
+                src={getContact()?.avatar}
+                className="h-8 w-8 rounded-full"
+              />
+            )}
+          </div>
+        </div>
+      }
+      endElement={
+        <div>
+          <span className="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20">
+            {messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'}
+          </span>
+        </div>
+      }
     >
-      {isEditing && (
+      {/* isEditing && (
         <ListItemIcon>
           <Checkbox
             checked={checked.indexOf(messageConversation.id) !== -1}
@@ -103,7 +130,7 @@ const MessageGroupItem = ({
           )}
         </Badge>
       </ListItemAvatar>
-      <ListItemText sx={{ overflow: 'hidden', color: phoneTheme.palette.text.primary}}>{getLabelOrContact()}</ListItemText>
+          <ListItemText sx={{ overflow: 'hidden', color: phoneTheme.palette.text.primary}}>{getLabelOrContact()}</ListItemText> */}
     </ListItem>
   );
 };

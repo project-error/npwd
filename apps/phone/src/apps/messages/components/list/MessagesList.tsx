@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, IconButton, List} from '@mui/material';
+import {Box, IconButton} from '@mui/material';
 import {MessageConversation} from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
 import {Search} from "lucide-react";
 import {NPWDInput} from "@ui/components";
+import { List } from '@npwd/keyos';
 
 const MessagesList = (): any => {
     const [isEditing, setIsEditing] = useIsEditing();
@@ -80,7 +81,7 @@ const MessagesList = (): any => {
                     <Search className="h-5 w-5 dark:text-neutral-400"/>
                     <NPWDInput
                         className="group-focus:ring-2"
-                        onChange={(e) => setInputVal(e.target.value)}
+                        onChange={(e) => setInputVal(e.currentTarget.value)}
                         placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
                         value={inputVal}
                     />
