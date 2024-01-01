@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get tag
-        uses: project-error/get-tag@v1.2
+        uses: project-error/get-tag@v1.3
         with:
           environment: "dev"
           prerelease: true
