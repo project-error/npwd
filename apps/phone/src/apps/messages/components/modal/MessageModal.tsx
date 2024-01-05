@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Slide,
   Paper,
@@ -7,9 +7,7 @@ import {
   Box,
   CircularProgress,
   Tooltip,
-  IconButton,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import useMessages from '../../hooks/useMessages';
@@ -28,6 +26,10 @@ import Backdrop from '@ui/components/Backdrop';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { usePhone } from '@os/phone/hooks';
 import { Phone, ArrowLeft } from 'lucide-react';
+import MessageInput from '../form/MessageInput';
+import AudioContextMenu from './AudioContextMenu';
+import MessageContextMenu from './MessageContextMenu';
+import { useQueryParams } from '@common/hooks/useQueryParams';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -72,6 +74,12 @@ export const MessageModal = () => {
 
   const [isLoaded, setLoaded] = useState(false);
   const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [contextMenuOpen, setContextMenuOpen] = useState(false);
+  const [audioContextMenuOpen, setAudioContextMenuOpen] = useState(false);
+
+  const query = useQueryParams();
+  const referalImage = query?.image || null;
+  const referalNote = query?.note || null;
 
   const { ResourceConfig } = usePhone();
 
@@ -158,9 +166,7 @@ export const MessageModal = () => {
   const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (
     <Slide direction="left" in={!!activeMessageConversation}>
-      <div
-        className='w-full flex grow flex-col'
-      >
+      <div className="space-between flex h-full w-full flex-col">
         {isGroupModalOpen && <Backdrop />}
         <Box
           display="flex"
@@ -170,7 +176,10 @@ export const MessageModal = () => {
           component={Paper}
           sx={{ borderRadius: 0 }}
         >
-          <button onClick={closeModal} className="rounded-full mb-1 p-2 hover:bg-neutral-100 hover:dark:bg-neutral-800">
+          <button
+            onClick={closeModal}
+            className="mb-1 rounded-full p-2 hover:bg-neutral-100 hover:dark:bg-neutral-800"
+          >
             <ArrowLeft size={26} />
           </button>
           <Typography sx={{ paddingLeft: 2 }} variant="h5" className={headerClass}>
@@ -200,15 +209,40 @@ export const MessageModal = () => {
             </Button>
           ) : !activeMessageConversation.isGroupChat && doesContactExist ? null : null}
         </Box>
-        {isLoaded && activeMessageConversation && ResourceConfig ? (
-          <Conversation
-            isVoiceEnabled={ResourceConfig.voiceMessage.enabled}
-            messages={messages}
-            activeMessageGroup={activeMessageConversation}
+        <div className="h-full">
+          {isLoaded && activeMessageConversation && ResourceConfig ? (
+            <Conversation
+              isVoiceEnabled={ResourceConfig.voiceMessage.enabled}
+              messages={messages}
+              activeMessageGroup={activeMessageConversation}
+            />
+          ) : (
+            <MessageSkeletonList />
+          )}
+        </div>
+        <div>
+          <div>
+            {audioContextMenuOpen ? (
+              <AudioContextMenu onClose={() => setAudioContextMenuOpen(false)} />
+            ) : (
+              <MessageInput
+                messageGroupName={activeMessageConversation.participant}
+                messageConversation={activeMessageConversation}
+                onAddImageClick={() => setContextMenuOpen(true)}
+                onVoiceClick={() => setAudioContextMenuOpen(true)}
+                voiceEnabled={ResourceConfig.voiceMessage.enabled}
+              />
+            )}
+          </div>
+          <MessageContextMenu
+            messageGroup={activeMessageConversation}
+            isOpen={contextMenuOpen}
+            onClose={() => setContextMenuOpen(false)}
+            image={referalImage}
+            note={referalNote}
           />
-        ) : (
-          <MessageSkeletonList />
-        )}
+        </div>
+
         <GroupDetailsModal
           open={isGroupModalOpen}
           onClose={closeGroupModal}

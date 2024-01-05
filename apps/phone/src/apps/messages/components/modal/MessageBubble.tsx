@@ -14,37 +14,34 @@ import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import dayjs from 'dayjs';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { cn } from '@utils/css';
+import { calendarPickerSkeletonClasses } from '@mui/lab';
 
 const useStyles = makeStyles((theme) => ({
   mySms: {
-    float: 'right',
     margin: theme.spacing(1),
-    padding: '6px 16px',
+    padding: '6px',
     height: 'auto',
     width: 'auto',
-    minWidth: '90%',
-    maxWidth: '90%',
+    float: 'left',
     borderRadius: '8px',
     textOverflow: 'ellipsis',
   },
   sms: {
-    float: 'left',
-    padding: '6px 12px',
+    padding: '6px',
     width: 'auto',
-    marginLeft: 5,
-    minWidth: '90%',
-    maxWidth: '90%',
+    float: 'left',
+    minWidth: 'auto',
+    maxWidth: 'auto',
     height: 'auto',
     borderRadius: '8px',
     textOverflow: 'ellipsis',
   },
   myAudioSms: {
-    float: 'right',
+    float: 'left',
     margin: theme.spacing(1),
-    width: 'auto',
+    padding: '6px',
     minWidth: '60%',
-    maxWidth: '100%',
-
+    maxWidth: '80%',
     borderRadius: '12px',
     textOverflow: 'ellipsis',
   },
@@ -54,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 5,
     minWidth: '60%',
     maxWidth: '80%',
-
     borderRadius: '15px',
     textOverflow: 'ellipsis',
   },
@@ -100,13 +96,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   if (message.is_embed && parsedEmbed.type === 'audio') {
     return (
       <div>
-        <Box
-          display="flex"
-          ml={1}
-          alignItems="stretch"
-          justifyContent={isMine ? 'flex-end' : 'flex-start'}
-          mt={1}
-        >
+        <Box display="flex" ml={1} alignItems="stretch" mt={1}>
           <Paper
             className={cn(
               isMine ? classes.myAudioSms : classes.audioSms,
@@ -138,52 +128,63 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
   return (
     <>
-      <div className={cn('flex w-full flex-row space-x-2 py-2 px-4', isMine ? 'justify-end items-start' : '')}>
-        {!isMine ? <Avatar src={getContact()?.avatar} /> : null}
-        {showVertIcon && (
-          <button onClick={openMenu} className='dark:text-white text-neutral-400'>
-            <MoreVertical size={18} />
-          </button>
-        )}
-        <div className="">
-          <div
-            className={cn(
-              'mb-1 flex items-center rounded-md px-2 py-2',
-              isMine ? 'float-right bg-green-600' : 'float-left bg-neutral-200 dark:bg-neutral-800',
-            )}
-          >
-            {message.is_embed ? (
-              <>
-                <MessageEmbed
-                  type={parsedEmbed.type}
-                  embed={parsedEmbed}
-                  isMine={isMine}
-                  message={message.message}
-                  openMenu={openMenu}
-                />
-              </>
-            ) : (
-              <div className="">
-                {isMessageImage ? (
-                  <PictureReveal>
-                    <PictureResponsive src={message.message} alt="message multimedia" />
-                  </PictureReveal>
-                ) : (
-                  <p className={cn("text-sm text-neutral-900", isMine ? "text-white" : "dark:text-white")}>{message.message}</p>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="">
+      <div className="mb-2 px-2 py-2">
+        <div className="flex items-center">
+          <div className={cn('flex flex-col space-x-2')}>
             <div>
               {!isMine && (
-                <p className="text-xs font-medium">{getContact()?.display ?? message.author}</p>
+                <p className="px-2 text-xs font-medium text-neutral-400 dark:text-white">
+                  {getContact()?.display ?? message.author}
+                </p>
               )}
             </div>
-            <div className="">
-              <p className="text-xs text-neutral-400">{dayjs.unix(message.createdAt).fromNow()}</p>
+            <div
+              className={cn(
+                'flex items-center rounded-md px-2 py-2',
+                isMine ? 'bg-green-600' : 'bg-neutral-200 dark:bg-neutral-800',
+              )}
+            >
+              {message.is_embed ? (
+                <>
+                  <MessageEmbed
+                    type={parsedEmbed.type}
+                    embed={parsedEmbed}
+                    isMine={isMine}
+                    message={message.message}
+                    openMenu={openMenu}
+                  />
+                </>
+              ) : (
+                <div>
+                  {isMessageImage ? (
+                    <PictureReveal>
+                      <PictureResponsive src={message.message} alt="message multimedia" />
+                    </PictureReveal>
+                  ) : (
+                    <p
+                      className={cn(
+                        'text-sm text-neutral-900',
+                        isMine ? 'text-white' : 'dark:text-white',
+                      )}
+                    >
+                      {message.message}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
+          <div>
+            {showVertIcon && (
+              <button onClick={openMenu} className="text-neutral-400 dark:text-white">
+                <MoreVertical size={18} />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="px-2">
+          <p className="text-xs text-neutral-400">{dayjs.unix(message.createdAt).fromNow()}</p>
         </div>
       </div>
       <MessageBubbleMenu
