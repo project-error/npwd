@@ -33,6 +33,8 @@ export class QBCoreFramework implements Strategy {
     on("QBCore:Server:OnPlayerUnload", async () => {
       await PlayerService.handleUnloadPlayerEvent(global.source);
     })
+
+    mainLogger.info('QBCore bridge initialized');
   }
 
   onStart(): void {

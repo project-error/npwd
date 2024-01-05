@@ -33,6 +33,8 @@ export class ESXFramework implements Strategy {
     on("esx:playerLogout", async () => {
       await PlayerService.handleUnloadPlayerEvent(global.source);
     }) 
+
+    mainLogger.info('ESX bridge initialized');
   }
 
   onStart(): void {
