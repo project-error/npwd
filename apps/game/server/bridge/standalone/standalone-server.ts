@@ -11,6 +11,6 @@ export class Standalone implements Strategy {
   }
 
   onStart(): void {
-   return;
+    return;
   }
 }

@@ -1,6 +1,8 @@
+import { mainLogger } from '../sv_logger';
 import { ESXFramework } from './esx/esx-server';
 import { QBCoreFramework } from './qb/qbcore-server';
 import { QBXFramework } from './qbx/qbx-server';
+import { Standalone } from './standalone/standalone-server';
 
 export interface Strategy {
   onStart(): void;
@@ -22,10 +24,10 @@ export class FrameworkStrategy {
         this.strategy = new ESXFramework();
         break;
       case 'standalone':
-        this.strategy = null;
+        this.strategy = new Standalone();
         break;
       default:
-        this.strategy = null;
+        this.strategy = new Standalone();
         break;
     }
   }
@@ -39,7 +41,11 @@ export class FrameworkStrategy {
   }
 }
 
-const framework = GetConvar('npwd:framework', 'standalone') as 'qbcore' | 'qbx' | 'esx' | 'standalone';
+const framework = GetConvar('npwd:framework', 'standalone') as
+  | 'qbcore'
+  | 'qbx'
+  | 'esx'
+  | 'standalone';
 
 const strategy = new FrameworkStrategy(framework);
 
