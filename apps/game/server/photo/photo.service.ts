@@ -78,7 +78,7 @@ class _PhotoService {
 
               return resp({ status: 'ok', data: photo });
             } catch (err) {
-              photoLogger.error(`Failed to upload photo`, {
+              photoLogger.error(`Failed to upload photo: Error: ${err}. Message: ${err.message}`, {
                 source: reqObj.source,
               });
               return resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
