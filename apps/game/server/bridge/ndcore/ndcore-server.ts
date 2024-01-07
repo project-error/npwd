@@ -16,7 +16,7 @@ type NDPlayer = {
     fullname: string;
     dob: string;
     gender: string;
-    phoneNumber: string;
+    phonenumber: string;
     cash: number;
     bank: number;
     groups: unknown;
@@ -36,16 +36,16 @@ export class NDCoreFramework implements Strategy {
     mainLogger.info('Loading NDCore bridge....');
 
     config.general.useResourceIntegration = true;
-    config.database.identifierColumn = 'citizenid';
-    config.database.phoneNumberColumn = 'phone_number';
-    config.database.playerTable = 'players';
+    config.database.identifierColumn = 'charid';
+    config.database.phoneNumberColumn = 'phonenumber';
+    config.database.playerTable = 'nd_characters';
     config.database.identifierType = 'license';
   }
 
   init(): void {
     on('ND:characterLoaded', async (player: NDPlayer) => {
-      const playerIdent = player.identifier
-      const phoneNumber = player.phoneNumber ?? "" // TODO: tell andy to add a phone number column in this player table or atleast write a sql query
+      const playerIdent = player.id
+      const phoneNumber = player.phonenumber
       const playerSrc = player.source;
 
       await PlayerService.handleNewPlayerEvent({
@@ -73,8 +73,8 @@ export class NDCoreFramework implements Strategy {
         for (const player of onlinePlayers) {
           await PlayerService.handleNewPlayerEvent({
             source: player.source,
-            identifier: player.identifier,
-            phoneNumber: player.phoneNumber,
+            identifier: player.id,
+            phoneNumber: player.phonenumber,
             firstname: player.firstname,
             lastname: player.lastname,
           });
