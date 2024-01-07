@@ -66,7 +66,7 @@ export class NDCoreFramework implements Strategy {
 
   onStart(): void {
     on('onServerResourceStart', async (resource: string) => {
-      const NDCore = global.exports['ND-Core'].GetCoreObject();
+      const NDCore = global.exports['ND_Core'];
 
       if (resource === GetCurrentResourceName()) {
         const onlinePlayers = NDCore.getPlayers() as NDPlayer[];
