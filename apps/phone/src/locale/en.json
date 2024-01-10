@@ -104,7 +104,8 @@
         "CURRENT_CALL_TITLE": "Current Phone Call",
         "INCOMING_CALL_TITLE": "Incoming Phone Call",
         "CURRENT_CALL_WITH": "In call with {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} is calling you!",
+        "CALLING": "Calling {{ transmitter }}..."
       },
       "INPUT_PLACEHOLDER": "Enter a number",
       "NAVBAR_HISTORY": "History",
