@@ -17,6 +17,7 @@ import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useModal } from '@apps/contacts/hooks/useModal';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { cn } from '@utils/css';
+import { initials } from '@utils/misc';
 
 interface ContactInfoRouteParams {
   mode: string;
@@ -161,7 +162,7 @@ const ContactsInfoPage: React.FC = () => {
     if (addNumber) setNumber(addNumber);
     if (avatarParam) setAvatar(avatarParam);
     if (nameParam) setName(nameParam);
-  }, [addNumber, avatar, avatarParam, nameParam]);
+  }, [addNumber, avatarParam, nameParam]);
 
   if (!ResourceConfig) return null;
 
@@ -174,17 +175,25 @@ const ContactsInfoPage: React.FC = () => {
       />
       <button
         onClick={() => history.goBack()}
-        className="mt-4 ml-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
+        className="ml-4 mt-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
       >
         <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
       </button>
       <div className="mx-auto w-9/12">
         <div>
-          <img
-            src={avatar}
-            className="mx-auto h-24 w-24 rounded-full text-center"
-            alt="contact avatar"
-          />
+          {avatar && avatar.length > 0 ? (
+            <img
+              src={avatar}
+              className="mx-auto h-24 w-24 rounded-full text-center"
+              alt={'avatar'}
+            />
+          ) : (
+            <div className="rounded-full-600 mx-auto h-24 w-24 text-center">
+              <span className="text-5xl text-gray-600 dark:text-gray-300">
+                {initials(contact.display)}
+              </span>
+            </div>
+          )}
         </div>
         <div className="mt-8 space-y-2">
           <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
@@ -238,17 +247,11 @@ const ContactsInfoPage: React.FC = () => {
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton
-              onClick={handleContactUpdate}
-              className="w-full"
-            >
+            <NPWDButton onClick={handleContactUpdate} className="w-full">
               {t('GENERIC.UPDATE')}
             </NPWDButton>
           ) : (
-            <NPWDButton
-              onClick={handleContactAdd}
-              className="w-full"
-            >
+            <NPWDButton onClick={handleContactAdd} className="w-full">
               {t('GENERIC.ADD')}
             </NPWDButton>
           )}

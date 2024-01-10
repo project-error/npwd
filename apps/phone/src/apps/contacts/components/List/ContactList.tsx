@@ -11,6 +11,7 @@ import { useContactActions } from '@apps/contacts/hooks/useContactActions';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { Phone, MessageSquare, Plus } from 'lucide-react';
 import { List, ListItem, NPWDButton } from '@npwd/keyos';
+import { initials } from '@utils/misc';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
@@ -47,7 +48,7 @@ export const ContactList: React.FC = () => {
             .sort()
             .map((letter) => (
               <div key={letter} className="relative">
-                <div className="sticky top-0 z-10 rounded-xl border-t border-b border-gray-200 bg-neutral-50 px-6 py-1 text-sm font-medium text-gray-500 dark:border-none dark:bg-neutral-800">
+                <div className="sticky top-0 z-10 rounded-xl border-b border-t border-gray-200 bg-neutral-50 px-6 py-1 text-sm font-medium text-gray-500 dark:border-none dark:bg-neutral-800">
                   <h3>{letter}</h3>
                 </div>
                 <List>
@@ -107,7 +108,19 @@ const ContactItem = (contact: Contact) => {
           className="flex items-center justify-between focus:outline-none"
         >
           <div className="flex items-center space-x-2">
-            <img className="inline-block h-10 w-10 rounded-full" src={contact.avatar} alt="" />
+            {contact.avatar && contact.avatar.length > 0 ? (
+              <img
+                src={contact.avatar}
+                className="inline-block h-10 w-10 rounded-full"
+                alt={'avatar'}
+              />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full">
+                <span className="text-gray-600 dark:text-gray-300">
+                  {initials(contact.display)}
+                </span>
+              </div>
+            )}
             <div>
               <p className="text-base font-medium text-neutral-900 dark:text-neutral-100">
                 {contact.display}
