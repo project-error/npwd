@@ -173,6 +173,11 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   },
 );
 
+// If you want to remove controls from a external application this is the way to do it.
+on(PhoneEvents.SET_GAME_FOCUS, (keepGameFocus: boolean) => {
+  if (global.isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
+});
+
 /* * * * * * * * * * * * *
  *
  *  PhoneAsItem Export Checker
