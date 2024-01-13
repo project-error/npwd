@@ -4,11 +4,16 @@ import { DbInterface } from '@npwd/database';
 import { config } from '@npwd/config/server';
 
 export class _ContactsDB {
+  private readonly defaultContacts: Contact[] = config.defaultContacts.map((contact) => ({
+    id: `${contact.display}:${contact.number}`,
+    ...contact,
+  }));
+
   async fetchAllContacts(identifier: string): Promise<Contact[]> {
     const query = 'SELECT * FROM npwd_phone_contacts WHERE identifier = ? ORDER BY display ASC';
     const [results] = await DbInterface._rawExec(query, [identifier]);
 
-    return config.defaultContacts.concat(<Contact[]>results);
+    return this.defaultContacts.concat(<Contact[]>results);
   }
 
   async addContact(
