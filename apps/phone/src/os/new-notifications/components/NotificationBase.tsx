@@ -45,6 +45,18 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
     markAsRead(props.id.toString());
   };
 
+  if (!app) {
+    console.error('App was not found. Could not render notification.');
+    console.error(
+      'If you are using an external app, make sure it is started before NPWD and that you pass the correct app id to the notification.',
+    );
+    return null;
+  }
+
+  if (!app.NotificationIcon) {
+    console.warn('App does not have a notification icon');
+  }
+
   return (
     <StyledSnackbar onClick={handleNotisClick} ref={ref} style={{ minWidth: '370px' }}>
       <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7}>
@@ -56,7 +68,7 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
           justifyContent="center"
           alignItems="center"
         >
-          <app.NotificationIcon fontSize="inherit" />
+          {app.NotificationIcon && <app.NotificationIcon fontSize="inherit" />}
         </Box>
         <Box color="#bfbfbf" fontWeight={400} paddingLeft={1} flexGrow={1} fontSize={16}>
           {t(app.nameLocale)}
