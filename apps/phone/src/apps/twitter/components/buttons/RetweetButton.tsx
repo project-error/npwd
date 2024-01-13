@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CircularProgress, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { Repeat } from '@mui/icons-material';
 import { TwitterEvents } from '@typings/twitter';
 import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { NPWDButton } from '@npwd/keyos';
+import { Repeat } from 'lucide-react';
 
 interface IProps {
   tweetId: number;
@@ -14,18 +14,12 @@ interface IProps {
   isRetweet: boolean | number;
 }
 
-const useStyles = makeStyles((theme) => ({
-  iconFilled: {
-    color: theme.palette.primary.main,
-  },
-}));
 
 const LOADING_TIME = 1250;
 
 export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
   const [retweeted, setRetweeted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const classes = useStyles();
   const { t } = useTranslation();
   const { addAlert } = useSnackbar();
 
@@ -65,13 +59,11 @@ export const RetweetButton = ({ tweetId, isRetweet, retweetId }: IProps) => {
     );
   }
 
-  const className = retweeted ? classes.iconFilled : '';
-
   return (
-    <Button onClick={handleClick}>
-      <Repeat className={className} />
-    </Button>
-  );
+    <NPWDButton onClick={handleClick} size='sm' variant='ghost'>
+      <Repeat size={20} className='text-sky-400' />
+    </NPWDButton>
+  )
 };
 
 export default RetweetButton;

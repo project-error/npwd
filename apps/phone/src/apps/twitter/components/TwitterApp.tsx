@@ -6,7 +6,7 @@ import { AppContent } from '@ui/components/AppContent';
 import TweetListContainer from './tweet/TweetListContainer';
 import AddTweetModal from './AddTweetModal';
 import TweetButton from './buttons/TweetButton';
-import { LifeInvaderTitle } from './LifeInvaderTitle';
+import { LifeInvaderTitle } from './TwitterTitle';
 import BottomNavigation from './BottomNavigation';
 import TwitterProfile from './profile/Profile';
 import TwitterSearch from './TwitterSearch';
@@ -23,7 +23,7 @@ import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider'
 import InjectDebugData from "@os/debug/InjectDebugData";
 import {TwitterEvents} from "@typings/twitter";
 
-const LifeInvaderApp = () => {
+const TwitterApp = () => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
   const [activePage, setActivePage] = useState(0);
   const { profile } = useProfile();
@@ -65,7 +65,7 @@ const LifeInvaderApp = () => {
     </TwitterThemeProvider>
   );
 };
-export default memo(LifeInvaderApp);
+export default memo(TwitterApp);
 
 InjectDebugData<any>(
   [

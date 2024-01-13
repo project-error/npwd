@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import Tweet from './Tweet';
 import { Virtuoso } from 'react-virtuoso';
 import { FormattedTweet, GetTweet, TwitterEvents } from '@typings/twitter';
-import Backdrop from '@ui/components/Backdrop';
+
 import { ServerPromiseResp } from '@typings/common';
 import fetchNui from '@utils/fetchNui';
 import { processTweet } from '@apps/twitter/utils/tweets';
@@ -70,7 +70,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
   };
 
   return (
-    <>
+    <ul className='h-full divide-y divide-blue-200'>
       <Virtuoso
         style={{ height: '100%' }}
         data={tweetsData}
@@ -81,7 +81,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
         }}
         components={{ Footer }}
       />
-    </>
+    </ul>
   );
 }
 

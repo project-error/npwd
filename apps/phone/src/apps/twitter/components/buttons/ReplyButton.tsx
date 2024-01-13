@@ -1,9 +1,8 @@
-import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { Button } from '@mui/material';
-import ReplyIcon from '@mui/icons-material/Reply';
 import { toggleKeys } from '@ui/components';
 import { twitterState } from '../../hooks/state';
+import { NPWDButton } from '@npwd/keyos';
+import { Reply } from 'lucide-react';
 
 export const ReplyButton = ({ profile_name }) => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
@@ -15,14 +14,16 @@ export const ReplyButton = ({ profile_name }) => {
   };
 
   return (
-    <Button
+    <NPWDButton
+      size="sm"
+      variant="ghost"
       onClick={handleClick}
       onMouseUp={() => {
         toggleKeys(false);
       }}
     >
-      <ReplyIcon />
-    </Button>
+      <Reply size={20} className='text-sky-400' />
+    </NPWDButton>
   );
 };
 

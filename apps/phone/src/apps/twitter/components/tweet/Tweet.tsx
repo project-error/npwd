@@ -14,14 +14,10 @@ import { usePhone } from '@os/phone/hooks/usePhone';
 import Retweet from './Retweet';
 import ShowMore from './ShowMore';
 import {
-  TweetButtonContainer,
   TweetContent,
   TweetContentPrimary,
   TweetDate,
-  TweetItem,
   TweetItemContainer,
-  TweetMessage,
-  TweetProfile,
 } from './Tweet.styles';
 
 interface TweetProps {
@@ -73,7 +69,7 @@ export const Tweet: React.FC<TweetProps> = ({ tweet, imageOpen, setImageOpen }) 
   const avatarUrl = isRetweet ? retweetAvatarUrl : avatar_url;
 
   return (
-    <TweetItem divider>
+    <li className="flex w-full flex-col flex-nowrap overflow-x-hidden px-2 pt-6 border-b border-neutral-200 dark:border-neutral-800 pb-3">
       {isRetweet && <Retweet profileName={profile_name} />}
       <TweetItemContainer>
         {enableAvatars && (
@@ -85,28 +81,29 @@ export const Tweet: React.FC<TweetProps> = ({ tweet, imageOpen, setImageOpen }) 
         )}
         <TweetContent>
           <TweetContentPrimary>
-            <TweetProfile>{formattedProfileName}</TweetProfile>
+            <p className='text-sky-400 text-base font-bold'>{formattedProfileName}</p>
             <TweetDate variant="body2" color="textSecondary">
               {secondsToHumanReadable(t, seconds_since_tweet)}
             </TweetDate>
           </TweetContentPrimary>
-          <TweetMessage
+          <p
+            className="text-sm text-neutral-900 dark:text-white"
             dangerouslySetInnerHTML={{
               __html: sanitizedMessage,
             }}
           />
           {enableImages && <ImageDisplay visible images={images} />}
-          <TweetButtonContainer>
+          <div className='flex flex-nowrap flex-row justify-between w-full mt-4'>
             <ReplyButton profile_name={profile_name} />
             <LikeButton likes={likes} tweetId={id} isLiked={isLiked} />
             {ResourceConfig.twitter.allowRetweet && !isMine && (
               <RetweetButton tweetId={id} retweetId={retweetId} isRetweet={isRetweet} />
             )}
             <ShowMore isMine={isMine} isReported={isReported} id={id} />
-          </TweetButtonContainer>
+          </div>
         </TweetContent>
       </TweetItemContainer>
-    </TweetItem>
+    </li>
   );
 };
 

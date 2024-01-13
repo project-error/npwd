@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuItem } from '@mui/material';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import { Menu, MenuItem } from '@mui/material';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import ReportButton from '../buttons/ReportButton';
 import { TwitterEvents } from '@typings/twitter';
@@ -10,6 +9,8 @@ import { ServerPromiseResp } from '@typings/common';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { styled } from '@mui/styles';
+import { NPWDButton } from '@npwd/keyos';
+import { MoreVertical } from 'lucide-react';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -70,14 +71,16 @@ export const ShowMore = ({ id, isReported, isMine }) => {
 
   return (
     <>
-      <Button
+      <NPWDButton
         aria-controls="simple-menu"
         aria-haspopup="true"
+        size="sm"
+        variant="ghost"
         onClick={_handleClick}
         style={{ marginRight: 15 }}
       >
-        <MoreIcon />
-      </Button>
+        <MoreVertical size={20} className="text-sky-400" />
+      </NPWDButton>
       <StyledMenu
         id="simple-menu"
         anchorEl={anchorEl}
