@@ -2,13 +2,18 @@ import { useCallback } from 'react';
 import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 
 import { useNuiEvent } from 'fivem-nui-react-lib';
-import { APP_TWITTER } from '../utils/constants';
+import { APP_TWITTER, SETTING_MENTIONS } from '../utils/constants';
 import { twitterState, useTweetsState } from './state';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 import { useNotification } from '@os/new-notifications/useNotification';
 import { useLocation } from 'react-router-dom';
+import { useSettings } from '@apps/settings/hooks/useSettings';
+
+function isMentioned(profileName: string, message: string) {
+  return message.toLowerCase().includes(profileName.toLowerCase());
+}
 
 /**
  * Service to handle all NUI <> client interactions. We take
@@ -23,6 +28,7 @@ export const useTwitterService = () => {
   const [tweets, setTweets] = useTweetsState();
   const { enqueueNotification } = useNotification();
   const { pathname } = useLocation();
+  const [settings] = useSettings();
 
   const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
     twitterState.profile,
@@ -64,18 +70,25 @@ export const useTwitterService = () => {
       if (profileLoading !== 'hasValue') return;
       if (!profileContent) return;
 
+      const currentProfileName = profileContent?.profile_name;
+      const profileMentioned = isMentioned(currentProfileName, tweet.message);
+
       if (tweets.length >= 50) {
         setTweets((curT) => curT.slice(0, -1));
       }
+      
+      const processedTweet = processBroadcastedTweet(tweet, profileContent);
+      addTweet(processedTweet);
+
+      // if the player only wants notifications on tweets they are
+      // mentioned in
+      if (settings.TWITTER_notiFilter.value === SETTING_MENTIONS && !profileMentioned) return;
 
       if (!pathname.includes('/twitter')) {
         addNotification(tweet);
       }
-
-      const processedTweet = processBroadcastedTweet(tweet, profileContent);
-      addTweet(processedTweet);
     },
-    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length, pathname],
+    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length, pathname, settings.TWITTER_notiFilter.value],
   );
 
   const handleTweetLikedBroadcast = useCallback((
