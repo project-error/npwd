@@ -3,12 +3,9 @@ name: Test Suite
 on: [push, pull_request]
 
 jobs:
-  nui_preformatting_tests:
-    name: Tests for NUI
+  nui__and_game_scripts:
+    name: Tests for NUI and Game scripts
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/phone
  
     steps:
       - name: Checkout
@@ -18,36 +15,12 @@ jobs:
         with:
           version: latest
 
-      - name: Install dependencies NUI
+      - name: Install dependencis
         run: pnpm i --frozen-lockfile
       - name: Check build status
         run: pnpm build
         env:
           CI: true
-
-  game_scripts_test:
-    name: Tests for Game Scripts
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/game
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: latest
-
-      - name: Install dependencies NUI
-        run: pnpm i --frozen-lockfile
-      - name: Check build status
-        run: pnpm build 
-        env:
-          CI: true
-
 
   lint:
     name: Lint Lua scripts
