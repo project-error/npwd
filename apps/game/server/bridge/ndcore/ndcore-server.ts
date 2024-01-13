@@ -45,7 +45,7 @@ export class NDCoreFramework implements Strategy {
   init(): void {
     on('ND:characterLoaded', async (player: NDPlayer) => {
       const playerIdent = player.id
-      const phoneNumber = player.phonenumber
+      const phoneNumber = player.phonenumber ?? ""
       const playerSrc = player.source;
 
       await PlayerService.handleNewPlayerEvent({
