@@ -13,7 +13,7 @@ export interface PreDBContact {
 }
 
 export interface Contact extends PreDBContact {
-  id: number;
+  id: number | string;
 }
 
 export interface ContactPay {
