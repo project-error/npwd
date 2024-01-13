@@ -10,7 +10,7 @@ export class _BootDb {
    * @returns Boolean - If the player table exists.
    **/
   async doesPlayerTableExist(): Promise<boolean> {
-    console.log("CONFIG DB PLAYERTABLE", config.database.playerTable)
+    console.log('CONFIG DB PLAYERTABLE', config.database.playerTable);
 
     const tableSchema = parseUri(mysqlConnectionString).database;
 
@@ -30,7 +30,7 @@ export class _BootDb {
    * @returns Array<string> - String array of column names.
    **/
   async getPlayerTableColumns(): Promise<string[]> {
-    console.log("CONFIG DB PLAYERTABLE 2", config.database.playerTable)
+    console.log('CONFIG DB PLAYERTABLE 2', config.database.playerTable);
     const query = `SHOW COLUMNS IN ${config.database.playerTable}`;
     const [results] = await DbInterface._rawExec(query, []);
 
