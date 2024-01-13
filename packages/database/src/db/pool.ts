@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { CONNECTION_STRING, parseSemiColonFormat } from './db_utils';
+import { CONNECTION_STRING } from './db_utils';
 import { mainLogger } from '@npwd/logger/server';
 import { parseUri2 } from './parseUri';
 
