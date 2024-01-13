@@ -22,6 +22,12 @@ export const useNotificationListener = () => {
   const createNotification = (data: CreateNotificationDTO) => {
     const app = getApp(data.appId);
 
+    if (!app) {
+      console.error(`Failed to create notification. The app with id ${data.appId} was not found!`);
+      console.error(`Make sure you pass the correct appId when creating a notification.`);
+      return;
+    }
+
     enqueueNotification({
       appId: app.id,
       content: data.content,
