@@ -109,7 +109,6 @@ interface VoiceMessageConfig {
 }
 
 export interface DefaultContact {
-  id: string;
   display: string;
   number: string;
   avatar?: string;
