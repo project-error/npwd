@@ -1,4 +1,4 @@
-import { CONNECTION_STRING, DbInterface, parseUri } from '@npwd/database';
+import { CONNECTION_STRING, DbInterface, parseUri2 } from '@npwd/database';
 import { config } from '@npwd/config/server';
 
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
@@ -12,7 +12,7 @@ export class _BootDb {
   async doesPlayerTableExist(): Promise<boolean> {
     console.log('CONFIG DB PLAYERTABLE', config.database.playerTable);
 
-    const tableSchema = parseUri(mysqlConnectionString).database;
+    const tableSchema = parseUri2(mysqlConnectionString).database;
 
     const tblsh = `Tables_in_${tableSchema}`;
     const query = 'SHOW TABLES WHERE ' + `\`${tblsh}\`` + 'LIKE ?';

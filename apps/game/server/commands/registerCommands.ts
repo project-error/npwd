@@ -1,6 +1,6 @@
 import { mainLogger } from '../sv_logger';
 import { config } from '@npwd/config/server';
-import { CONNECTION_STRING, DbInterface, parseUri } from '@npwd/database';
+import { CONNECTION_STRING, DbInterface, parseUri2 } from '@npwd/database';
 
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 
@@ -8,7 +8,7 @@ const npwdDebugDumpCommand = async (src: number): Promise<void> => {
   // We require this be called from the server console.
   if (src !== 0) return;
 
-  const tableSchema = parseUri(mysqlConnectionString).database;
+  const tableSchema = parseUri2(mysqlConnectionString).database;
 
   if (config.debug.level === 'error') {
     console.log('SET DEBUG LEVEL TO INFO/SILLY TO SEE LOGS');
