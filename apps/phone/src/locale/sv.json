@@ -20,7 +20,7 @@
         "INCOMING": "Inkommande samtal"
       },
       "FEEDBACK": {
-        "ERROR_MYSELF": "Du kan inte ringa ditt egna telefon nummer!",
+        "ERROR_MYSELF": "Du kan inte ringa ditt egna telefonnummer!",
         "ERROR": "Ett fel uppstod när det här samtalet slutfördes"
       }
     },
@@ -29,20 +29,21 @@
     },
     "SETTINGS": {
       "PHONE_NUMBER": "Telefonnummer",
+      "PREVIEW_SOUND": "Spela upp",
       "CATEGORY": {
         "APPEARANCE": "Utseende",
         "PHONE": "Telefon",
         "ACTIONS": "Allmänt"
       },
       "OPTIONS": {
-        "ICONSET": "Ikon Set",
+        "ICONSET": "Ikonset",
         "THEME": "Tema",
         "LANGUAGE": "Språk",
         "FRAME": "Ram",
         "ZOOM": "Zoom",
         "WALLPAPER": "Bakgrundsbild",
         "RESET_SETTINGS": "Återställ inställningar",
-        "RESET_SETTINGS_DESC": "Detta kommer att rensa dina lokala data",
+        "RESET_SETTINGS_DESC": "Detta kommer att rensa dina inställningar",
         "STREAMER_MODE": {
           "TITLE": "Streamerläge",
           "DESCRIPTION": "Göm bilder innan de visas"
@@ -50,43 +51,44 @@
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Anpassad bakgrundsbild",
           "DIALOG_CONTENT": "Ställ in en anpassad bakgrund genom att ange webbadressen till bilden nedan!",
-          "DIALOG_PLACEHOLDER": "Bild URL",
+          "DIALOG_PLACEHOLDER": "Bildlänk",
           "DIALOG_ERROR": "Ogiltig bild eller länk"
         },
+        "CALL_VOLUME": "Samtalsvolym",
         "RINGTONE": "Ringsignal",
-        "RINGTONE_VOLUME": "Ringsignal Volym",
+        "RINGTONE_VOLUME": "Ringsignalsvolym",
         "NOTIFICATION": "Notifikation",
-        "NOTIFICATION_VOLUME": "Notifikation Volym",
-        "NOTIFICATION_FILTER": "Notifikation Filtrering"
+        "NOTIFICATION_VOLUME": "Notifikationsvolym",
+        "NOTIFICATION_FILTER": "Notifikationsfiltrering"
       },
       "MESSAGES": {
         "INVALID_SETTINGS": "Felaktiga inställningar! Vänligen återställ i appen Inställningar.",
-        "SETTINGS_RESET": "Inställningarna har återställts!!"
+        "SETTINGS_RESET": "Inställningarna har återställts!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notifikationer",
+        "NOTIFY_NEW_LISTING": "Notifikation för nya annonseringar"
       }
     },
     "CAMERA": {
       "SHARE_DESTINATION": "Vart vill du dela din bild?",
-      "COPY_IMAGE": "Kopiera bildens url här:",
-      "FAILED_TO_DELETE": "Bilden kunde inte tasbort :(",
-      "FAILED_TO_TAKE_PHOTO": "Bilden kunde inte sparas :("
+      "COPY_IMAGE": "Kopiera bildlänk",
+      "FAILED_TO_DELETE": "Bilden kunde inte tas bort.",
+      "FAILED_TO_TAKE_PHOTO": "Bilden kunde inte sparas."
     },
     "CONTACTS": {
       "FEEDBACK": {
         "ADD_FAILED": "Det gick inte att skapa kontakten!",
-        "ADD_SUCCESS": "Skapat ny kontakt!",
-        "UPDATE_FAILED": "Det gick inte att uppdatera kontakten!",
-        "UPDATE_SUCCESS": "Uppdaterat kontakten!",
+        "ADD_SUCCESS": "Kontakten skapades!",
+        "UPDATE_FAILED": "Det gick inte att uppdatera kontakten.",
+        "UPDATE_SUCCESS": "Kontakten sparades!",
         "DELETE_FAILED": "Det gick inte att ta bort kontakten!",
-        "DELETE_SUCCESS": "Kontakt borttagen!",
-        "PAYMENTFAILED": "The payment failed!",
-        "PAYMENTSENT": "The payment sent!"
+        "DELETE_SUCCESS": "Kontakten togs bort!"
       },
-      "AMOUNT": "How Much?",
-      "SENDMONEY": "Send Money",
       "PLACEHOLDER_SEARCH_CONTACTS": "Sök kontakt...",
       "FORM_NAME": "Namn",
       "FORM_NUMBER": "Nummer",
-      "FORM_AVATAR": "Avatar URL",
+      "FORM_AVATAR": "Bildlänk",
       "MODAL_BUTTON_ADD": "Lägg till kontakt"
     },
     "DIALER": {
@@ -94,28 +96,29 @@
         "CURRENT_CALL_TITLE": "Aktuellt telefonsamtal",
         "INCOMING_CALL_TITLE": "Inkommande samtal",
         "CURRENT_CALL_WITH": "I samtal med {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} ringer dig!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} ringer dig!",
+        "CALLING": "Ringer {{ transmitter }}..."
       },
       "INPUT_PLACEHOLDER": "Ange ett nummer",
-      "NAVBAR_HISTORY": "Historik",
+      "NAVBAR_HISTORY": "Senaste",
       "NAVBAR_DIAL": "Knappsats",
       "NAVBAR_CONTACTS": "Kontakter",
-      "NO_HISTORY": "Du har ingen samtals historik"
+      "NO_HISTORY": "Du har ingen samtalshistorik"
     },
     "TWITTER": {
       "FEEDBACK": {
-        "CREATE_PROFILE_SUCCESS": "Har skapat din profil",
-        "CREATE_PROFILE_FAILURE": "Det gick inte skapa en profil",
-        "EDIT_PROFILE_SUCCESS": "Du har uppdaterat din profil",
-        "EDIT_PROFILE_FAILURE": "Det gick inte uppdatera din profil",
-        "CREATE_FAILED": "Det gick inte skicka din tweet!",
+        "CREATE_PROFILE_SUCCESS": "Profilen skapades",
+        "CREATE_PROFILE_FAILURE": "Det gick inte skapa profilen",
+        "EDIT_PROFILE_SUCCESS": "Du uppdaterade din profil",
+        "EDIT_PROFILE_FAILURE": "Det gick inte uppdatera profilen",
+        "CREATE_FAILED": "Det gick inte att skicka din tweet!",
         "RETWEET_FAILED": "Det gick inte att retweeta den här tweeten",
         "RETWEET_EXISTS": "Du har redan retweetat den här tweeten!",
         "LIKE_TWEET_FAILED": "Det gick inte att gilla tweeten",
         "REPORT_TWEET_SUCCESS": "Du har rapporterat en tweet",
-        "REPORT_TWEET_FAILED": "Det gick inte rapportera tweeten",
+        "REPORT_TWEET_FAILED": "Det gick inte att rapportera tweeten",
         "FETCH_TWEETS_FAILED": "Det gick inte att hämta tweets",
-        "DELETE_TWEET_FAILED": "Det gick inte tabort tweeten"
+        "DELETE_TWEET_FAILED": "Det gick inte ta bort tweeten"
       },
       "MESSAGES": {
         "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetade något!",
@@ -127,18 +130,15 @@
       "REPORTED": " Rapporterad",
       "REPORT": "Rapportera",
       "IMAGE_PLACEHOLDER": "Infoga länk till bild / GIF",
-      "EDIT_DEFAULT_PROFILE_NAME": "Välj profil namn",
-      "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "EDIT_DEFAULT_PROFILE_NAME": "Välj profilnamn",
+      "EDIT_PROFILE_AVATAR": "Profilbildslänk",
       "AVATAR_CHOOSE_IMAGE": "Välj en bild",
-      "EDIT_PROFILE_NAME": "Profil namn",
-      "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Plats",
-      "EDIT_PROFILE_JOB": "Jobb",
+      "EDIT_PROFILE_NAME": "Profilnamn",
       "RETWEETED": "Retweetad",
       "TWEET_MESSAGE_CHAR_LIMIT": "Meddelandet överskrider teckengränsen",
       "TWEET_MESSAGE_NEW_LINE_LIMIT": "Meddelandet är över den nya radgränsen",
       "TWEET_MESSAGE_PLACEHOLDER": "Vad gör du just nu?",
-      "SEARCH_TWEETS_PLACEHOLDER": "Sök på profil namn eller meddelande",
+      "SEARCH_TWEETS_PLACEHOLDER": "Sök på profilnamn eller meddelande",
       "SEARCH_TWEETS": "Sök efter tweets",
       "TIME_JUST_NOW": "Just nu",
       "TIME_MINUTES": "m",
@@ -147,8 +147,9 @@
     },
     "MATCH": {
       "MESSAGES": {
-        "PROFILE_MATCHED_AT": "Du matchade med: {{ matchedAt }}",
-        "PROFILE_LAST_ACTIVE": "Last Active: {{ lastActive }}",
+        "PROFILE_MATCHED_AT": "Ni matchade den {{ matchedAt }}",
+        "NEW_MATCH": "Ny matchning!",
+        "PROFILE_LAST_ACTIVE": "Senast inloggad den {{ lastActive }}",
         "LIKED": "GILLA",
         "NOPE": "NOPE"
       },
@@ -163,8 +164,9 @@
         "NEW_LIKE_FOUND": "Ny matchning hittad!"
       },
       "PROFILE_CONFIGURATION": "Appen är felaktigt konfigurerad - kan inte skapa profil. Kontakta en administratör.",
-      "EDIT_PROFILE_IMAGE": "Bild URL",
-      "EDIT_PROFILE_NAME": "Profil namn",
+      "EDIT_PROFILE_IMAGE": "Profilbildslänk",
+      "EDIT_PROFILE_CHOOSE_IMAGE": "Välj bild",
+      "EDIT_PROFILE_NAME": "Profilnamn",
       "EDIT_PROFILE_BIO": "Bio",
       "EDIT_PROFILE_LOCATION": "Plats",
       "EDIT_PROFILE_JOB": "Jobb",
@@ -224,11 +226,21 @@
       "SEARCH_PLACEHOLDER": "Sök meddelande...",
       "DELETE_CONVERSATION": "Ta bort konverstationen",
       "NEW_MESSAGE": "Meddelande...",
-      "NEW_MESSAGE_GROUP": "Telefon nummer...",
-      "GROUP_CHAT_LABEL": "Gruppchattetikett...",
-      "MEDIA_OPTION": "Kamera / Galleri",
+      "NEW_MESSAGE_GROUP": "Telefonnummer...",
+      "SHARE_IMAGE_TITLE": "Vill du dela denna bild?",
+      "SHARE_NOTE_TITLE": "Vill du dela denna anteckning?",
+      "SHARE_CONTACT_TITLE": "Vill du dela denna kontakt?",
+      "GROUP_CHAT_LABEL": "Gruppchattsetikett...",
+      "MEDIA_OPTION": "Dela en bild",
+      "CONTACT_OPTION": "Dela en kontakt",
+      "NOTE_OPTION": "Dela en anteckning",
+      "CHOOSE_CONTACT": "Välj kontakt",
+      "LOCATION_OPTION": "Dela din position",
+      "LOCATION_MESSAGE": "Position delad",
+      "LOCATION_TOOLTIP": "Sätt in i GPS",
+      "NOTE_TOOLTIP": "Visa anteckning",
       "NEW_MESSAGE_GROUP_SUBMIT": "Skicka",
-      "INPUT_NAME_OR_NUMBER": "Sök kontakter eller skriv nummer och tryck enter",
+      "INPUT_NAME_OR_NUMBER": "Kontaktnamn eller nummer",
       "ACTIONS_TITLE": "Allmänt",
       "ME": "Jag"
     },
@@ -288,6 +300,7 @@
       "TITLE": "Titel",
       "SEND": "Skicka",
       "CONTENT": "Innehåll",
+      "SHARE": "Dela",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
     },
@@ -304,7 +317,7 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Blocket",
     "APPS_CAMERA": "Kamera",
-    "APPS_MATCH": "Matchmaker",
+    "APPS_MATCH": "Findr",
     "APPS_CALCULATOR_COPIED": "Resultatet kopierades till urklipp!",
     "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Tryck för att visa",

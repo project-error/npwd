@@ -15,6 +15,7 @@ import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useContacts } from '../../../contacts/hooks/state';
 import { Contact } from '@typings/contact';
 import { ListItem } from '@npwd/keyos';
+import { initials } from '@utils/misc';
 
 interface IProps {
   messageConversation: MessageConversation;
@@ -88,12 +89,18 @@ const MessageGroupItem = ({
           <div>
             {messageConversation.isGroupChat ? (
               <MuiAvatar alt={messageConversation.label} />
-            ) : (
+            ) : getContact()?.avatar && getContact()?.avatar.length > 0 ? (
               <img
-                alt={getContact()?.display ?? ''}
                 src={getContact()?.avatar}
-                className="h-8 w-8 rounded-full"
+                className="inline-block h-10 w-10 rounded-full"
+                alt={'avatar'}
               />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full">
+                <span className="text-gray-600 dark:text-gray-300">
+                  {initials(getContact()?.display)}
+                </span>
+              </div>
             )}
           </div>
         </div>

@@ -15,3 +15,19 @@ export const buildRespObj = (
   status,
   errorMsg,
 });
+
+export const initials = (fullName: string) => {
+  // Create a array from fullName
+  if (!fullName) return 'X';
+
+  const arrName = fullName.split(' ');
+
+  // Select the first letter of the name
+  const iniName = fullName.charAt(0);
+
+  // Select the first letter of the lastname
+  const iniLname = arrName[arrName.length - 1].charAt(0);
+
+  // Return the initials
+  return `${iniName}${arrName.length > 1 ? iniLname : ''}`;
+};

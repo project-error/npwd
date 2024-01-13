@@ -8,6 +8,8 @@ import React, { forwardRef, useMemo } from 'react';
 import { useCurrentCallValue } from '@os/call/hooks/state';
 import { useCall } from '@os/call/hooks/useCall';
 import useTimer from '@os/call/hooks/useTimer';
+import { useTranslation } from 'react-i18next';
+import { useContactActions } from '@apps/contacts/hooks/useContactActions';
 
 const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
   padding: '14px 16px',
@@ -36,13 +38,24 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
     const call = useCurrentCallValue();
     const { minutes, seconds, startTimer, resetTimer } = useTimer();
 
+    const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+
+    const { t } = useTranslation();
+
     const RECEIVER_TEXT = useMemo(
-      () => (call?.is_accepted ? receiver : `Calling ${receiver}`),
+      () =>
+        call?.is_accepted
+          ? receiver
+          : `${t('DIALER.MESSAGES.CALLING', {
+              transmitter: receiver,
+            })}`,
       [call.is_accepted, receiver],
     );
 
     const handleAcceptCall = () => {
       acceptCall();
+
+      resetTimer();
       startTimer();
     };
 
@@ -59,11 +72,17 @@ export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationB
       return null;
     }
 
+    const getDisplayAvatar = () => {
+      return call.isTransmitter
+        ? getPictureByNumber(call.receiver)
+        : getPictureByNumber(call?.transmitter);
+    };
+
     return (
       <StyledSnackbar ref={ref} style={{ minWidth: '370px' }}>
         <Box display="flex" alignItems="center" gap={1} color="white" mb={0.7}>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar src="" alt="Transmitter" />
+            <Avatar src={getDisplayAvatar()} alt="Transmitter" />
           </Box>
           <Box>
             {call?.isTransmitter ? (
