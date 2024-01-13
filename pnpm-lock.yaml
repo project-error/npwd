@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -18805,7 +18809,3 @@ packages:
     name: lodash
     version: 4.17.21
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
