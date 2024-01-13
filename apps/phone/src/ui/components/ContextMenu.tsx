@@ -35,27 +35,30 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       mountOnEnter
       unmountOnExit
     >
-      <div className="min-h-10%] z-[9999] max-h-full w-full overflow-auto rounded-t-2xl border-t border-neutral-800 bg-neutral-100 dark:bg-neutral-900 p-2 text-white">
+      <div className="z-[9999] max-h-[70%] max-h-full min-h-[10%] w-full overflow-hidden rounded-t-2xl border-t border-neutral-800 bg-neutral-100 p-2 text-white dark:bg-neutral-900">
         <div className="flex items-center justify-between px-2">
-          <p className="text-base font-medium text-neutral-900 dark:text-neutral-50">{settingLabel}</p>
-          <button onClick={onClose} className="dark:text-neutral-50 text-neutral-900">
+          <p className="text-base font-medium text-neutral-900 dark:text-neutral-50">
+            {settingLabel}
+          </p>
+          <button onClick={onClose} className="text-neutral-900 dark:text-neutral-50">
             <X size={24} />
           </button>
         </div>
-        <List>
-          {_options.map((option) => (
-            <ListItem
-              startElement={option.icon}
-              primaryText={option.label}
-              secondaryText={option.description}
-              button
-              selected={option.selected}
-              onClick={(e) => {
-                option.onClick(e, option);
-                onClose();
-              }}
-            />
-            /*  <ListItem
+        <div className="overflow-auto max-h-[500px] pb-4">
+          <List>
+            {_options.map((option) => (
+              <ListItem
+                startElement={option.icon}
+                primaryText={option.label}
+                secondaryText={option.description}
+                button
+                selected={option.selected}
+                onClick={(e) => {
+                  option.onClick(e, option);
+                  onClose();
+                }}
+              />
+              /*  <ListItem
               selected={option.selected}
               key={option.key || option.label}
               button
@@ -67,8 +70,9 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
               {option.icon && <ListItemIcon>{option.icon}</ListItemIcon>}
               <ListItemText primary={option.label} secondary={option.description} />
             </ListItem> */
-          ))}
-        </List>
+            ))}
+          </List>
+        </div>
       </div>
     </Slide>
   );

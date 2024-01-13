@@ -15,7 +15,9 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
   },
   avatar: {
     '&:hover': {
-      backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
+      background: ({ backgroundColor }) => {
+        return `linear-gradient(45deg, ${darken(backgroundColor, 0.25)} 10%, ${backgroundColor} 90%)`;
+      },
     },
     background: ({ backgroundColor }) => {
       return `linear-gradient(45deg, ${darken(backgroundColor, 0.2)} 20%, ${backgroundColor} 90%)`;
@@ -66,7 +68,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
   });
 
   return (
-    <Button disableTouchRipple disableRipple disableFocusRipple className={classes.root}>
+    <button className={classes.root}>
       <Badge
         color="error"
         badgeContent={notification?.badge}
@@ -78,6 +80,6 @@ export const AppIcon: React.FC<AppIconProps> = ({
           <div className={classes.avatar}>{icon || t(nameLocale)}</div>
         )}
       </Badge>
-    </Button>
+    </button>
   );
 };

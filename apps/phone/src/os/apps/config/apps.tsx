@@ -34,7 +34,7 @@ import { SvgIconProps, Theme } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '@apps/browser/components/BrowserApp';
 import { MatchApp } from '@apps/match/components/MatchApp';
-import LifeInvaderContainer from '@apps/twitter/components/LifeInvaderContainer';
+import LifeInvaderContainer from '@apps/twitter/components/TwitterContainer';
 import { IPhoneSettings } from '@typings/settings';
 import { i18n } from 'i18next';
 import {
