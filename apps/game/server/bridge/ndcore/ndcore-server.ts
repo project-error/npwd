@@ -45,13 +45,16 @@ export class NDCoreFramework implements Strategy {
   init(): void {
     on('ND:characterLoaded', async (player: NDPlayer) => {
       const playerIdent = player.id
-      const phoneNumber = player.phonenumber ?? ""
+      const phoneNumber = player?.phonenumber;
+
+      mainLogger.debug(`ND Core Player Phone number: ${player?.phonenumber.toString() ?? 'no phone number found'}`)
+
       const playerSrc = player.source;
 
       await PlayerService.handleNewPlayerEvent({
         identifier: playerIdent,
         source: playerSrc,
-        phoneNumber: phoneNumber.toString(),
+        phoneNumber: phoneNumber ?? null,
         firstname: player.firstname,
         lastname: player.lastname,
       });
@@ -71,10 +74,13 @@ export class NDCoreFramework implements Strategy {
       if (resource === GetCurrentResourceName()) {
         const onlinePlayers = NDCore.getPlayers() as NDPlayer[];
         for (const player of onlinePlayers) {
+
+          const phoneNumber = player?.phonenumber;
+
           await PlayerService.handleNewPlayerEvent({
             source: player.source,
             identifier: player.id,
-            phoneNumber: player.phonenumber,
+            phoneNumber: phoneNumber ?? null,
             firstname: player.firstname,
             lastname: player.lastname,
           });
