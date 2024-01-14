@@ -47,7 +47,7 @@ export class NDCoreFramework implements Strategy {
       const playerIdent = player.id
       const phoneNumber = player?.phonenumber;
 
-      mainLogger.debug(`ND Core Player Phone number: ${player?.phonenumber.toString() ?? 'no phone number found'}`)
+      mainLogger.debug(`ND Core Player Phone number: ${player?.phonenumber ?? 'no phone number found'}`)
 
       const playerSrc = player.source;
 
