@@ -1,15 +1,5 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, styled } from '@mui/material';
-import { StatusButton } from '@ui/components/StatusButton';
-
-const ButtonsContainer = styled(Box)({
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  justifyContent: 'flex-end',
-  alignItems: 'justify-content',
-  marginRight: '15px',
-});
+import { NPWDButton } from '@npwd/keyos';
 
 export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPrimaryClick }) => {
   const [t] = useTranslation();
@@ -19,21 +9,16 @@ export const ControlButtons = ({ showImagePrompt, showEmoji, onCloseClick, onPri
   const showCloseButton = showImagePrompt || showEmoji;
 
   return (
-    <ButtonsContainer>
-      <Button variant="contained" color="primary" onClick={onPrimaryClick}>
+    <div className="flex flex-row items-center justify-end space-x-2">
+      <NPWDButton variant="primary" size="sm" onClick={onPrimaryClick} className="bg-sky-500">
         {primaryButtonText}
-      </Button>
+      </NPWDButton>
       {showCloseButton && (
-        <StatusButton
-          style={{ marginLeft: '8px' }}
-          variant="contained"
-          color="error"
-          onClick={onCloseClick}
-        >
+        <NPWDButton className="bg-red-500" variant="primary" size="sm" onClick={onCloseClick}>
           {t('GENERIC.CLOSE')}
-        </StatusButton>
+        </NPWDButton>
       )}
-    </ButtonsContainer>
+    </div>
   );
 };
 

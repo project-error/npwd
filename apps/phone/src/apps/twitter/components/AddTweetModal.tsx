@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Modal from '../../../ui/components/Modal';
+import Modal, { Modal2 } from '../../../ui/components/Modal';
 import { IMAGE_DELIMITER } from '../utils/images';
 import { isImageValid } from '@common/utils/isImageValid';
 import { useModal } from '../hooks/useModal';
@@ -21,6 +21,7 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { toggleKeys } from '@ui/components';
 import { Box, styled } from '@mui/material';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
+import { NPWDButton } from '@npwd/keyos';
 
 const ButtonsContainer = styled(Box)({
   paddingBottom: '8px',
@@ -155,6 +156,38 @@ const AddTweetModal = () => {
   };
 
   if (!ResourceConfig) return null;
+
+  return (
+    <Modal2 visible={modalVisible} handleClose={_handleClose}>
+      <TweetMessage
+        modalVisible={modalVisible}
+        onEnter={submitTweet}
+        message={message}
+        handleChange={handleMessageChange}
+      />
+      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleImageChange} />
+      <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
+      <ImageDisplay
+        visible={!showEmoji && images.length > 0}
+        images={images}
+        removeImage={removeImage}
+      />
+      <ButtonsContainer>
+        <IconButtons
+          onImageClick={
+            images.length < ResourceConfig.twitter.maxImages ? toggleShowImagePrompt : null
+          }
+          onEmojiClick={toggleShowEmoji}
+        />
+        <ControlButtons
+          showImagePrompt={showImagePrompt}
+          showEmoji={showEmoji}
+          onPrimaryClick={showImagePrompt ? addImage : submitTweet}
+          onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
+        />
+      </ButtonsContainer>
+    </Modal2>
+  );
 
   return (
     <Modal visible={modalVisible} handleClose={_handleClose}>

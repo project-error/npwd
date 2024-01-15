@@ -1,7 +1,8 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import makeStyles from '@mui/styles/makeStyles';
-import { Button, Paper, useTheme } from '@mui/material';
+import { Button, Dialog, DialogContent, Paper, useTheme } from '@mui/material';
+import * as DialogRadix from '@radix-ui/react-dialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,19 @@ export const Modal: React.FC<ModalProps> = ({ children, visible, handleClose }) 
         {children}
       </Paper>
     </div>
+  );
+};
+
+export const Modal2 = ({ children, visible, handleClose }) => {
+  return (
+    <DialogRadix.Root open={visible} onOpenChange={handleClose}>
+      <DialogRadix.Portal container={document.getElementById('phone')}>
+        <DialogRadix.Overlay className="fixed inset-0" />
+        <DialogRadix.Content className="absolute left-[50%] top-[30%] max-h-[100vh] w-[80vw] max-w-[350px] translate-x-[-50%] translate-y-[-50%]  rounded-[6px] bg-neutral-800 p-[25px]">
+          {children}
+        </DialogRadix.Content>
+      </DialogRadix.Portal>
+    </DialogRadix.Root>
   );
 };
 

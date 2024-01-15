@@ -1,4 +1,3 @@
-
 import { memo, useState } from 'react';
 import { Route, useLocation } from 'react-router-dom';
 import { AppWrapper } from '@ui/components';
@@ -20,8 +19,8 @@ import { useSetRecoilState } from 'recoil';
 import { twitterState } from '../hooks/state';
 import ModalBackground from './ModalBackground';
 import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
-import InjectDebugData from "@os/debug/InjectDebugData";
-import {TwitterEvents} from "@typings/twitter";
+import InjectDebugData from '@os/debug/InjectDebugData';
+import { TwitterEvents } from '@typings/twitter';
 
 const TwitterApp = () => {
   const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
@@ -44,7 +43,6 @@ const TwitterApp = () => {
         <WordFilterProvider>
           <AddTweetModal />
         </WordFilterProvider>
-        <ModalBackground />
         <LifeInvaderTitle />
         <AppContent>
           {promptProfileName ? (

@@ -59,7 +59,8 @@ export const MockTweets: Tweet[] = [
     avatar_url: '',
     id: 112,
     images: 'https://i.projecterror.dev/K45dbT6vsaKtxVMW4F66VZ.webp',
-    message: "Exploring the wonders of our world 🌍 and beyond 🚀! From the depths of the ocean to the mysteries of space, there's so much to discover. Let's cherish our planet, promote science and education, and work together for a sustainable future. #DiscoverEarth #ScienceForAll 🌱🔭",
+    message:
+      "Exploring the wonders of our world 🌍 and beyond 🚀! From the depths of the ocean to the mysteries of space, there's so much to discover. Let's cherish our planet, promote science and education, and work together for a sustainable future. #DiscoverEarth #ScienceForAll 🌱🔭",
     createdAt: '2021-12-01 00:42:03',
     updatedAt: '2021-12-01 00:42:03',
     identifier: 'sdfjsadfafjadfjas',

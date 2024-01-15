@@ -15,6 +15,7 @@
     "@mui/material": "^5.13.2",
     "@mui/styles": "^5.13.2",
     "@npwd/keyos": "workspace:^1.0.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "class-variance-authority": "^0.4.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.7",
