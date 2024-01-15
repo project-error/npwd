@@ -27,6 +27,7 @@ onNetPromise<InitializeCallDTO, ActiveCall>(CallEvents.INITIALIZE_CALL, async (r
     try {
       await new Promise<void>((resolve, reject) => {
         funcRef({
+          receiverNumber: reqObj.data.receiverNumber,
           incomingCaller,
           next: () => {
             resolve();
