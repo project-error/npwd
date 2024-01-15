@@ -15,6 +15,7 @@ import { useQueryParams } from '@common/hooks/useQueryParams';
 import qs from 'qs';
 import { Box, Button, styled } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
+import { ImagePlus } from 'lucide-react';
 
 const ProfileRoot = styled(Box)({
   position: 'relative',
@@ -39,7 +40,9 @@ export function Profile() {
   // Annoyingling adding conditionals above this line to not render
   // when profile === null results in a react error that different
   // amounts of hooks are rendering
-  const [avatarUrl, handleAvatarChange] = useState(profile.avatar_url || '');
+  const [avatarUrl, handleAvatarChange] = useState(
+    profile.avatar_url || 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png',
+  );
   const [name, handleNameChange] = useState(profile.profile_name || '');
 
   const handleChooseImage = useCallback(() => {
@@ -85,17 +88,24 @@ export function Profile() {
 
   return (
     <ProfileRoot>
-      {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
+      {enableAvatars && (
+        <div className="reletive flex">
+          <div
+            className="group relative flex w-auto rounded-full bg-black"
+            onClick={handleChooseImage}
+          >
+            <img
+              src={avatarUrl}
+              className="h-20 w-20 cursor-pointer rounded-full object-cover object-center hover:opacity-75"
+              alt="profileimage"
+            />
+            <div className="pointer-events-none absolute left-[50%] top-[50%] flex hidden translate-x-[-50%] translate-y-[-50%] transform items-center justify-center group-hover:block">
+              <ImagePlus size={24} className="text-white" />
+            </div>
+          </div>
+        </div>
+      )}
       <Box height={8} />
-
-      <Box display="flex" alignItems="center">
-        <div>
-          <ImageIcon />
-        </div>
-        <div>
-          <Button onClick={handleChooseImage}>{t('TWITTER.AVATAR_CHOOSE_IMAGE')}</Button>
-        </div>
-      </Box>
 
       <ProfileField
         label={t('TWITTER.EDIT_PROFILE_AVATAR')}

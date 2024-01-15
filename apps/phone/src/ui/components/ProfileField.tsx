@@ -1,16 +1,5 @@
-import React, { forwardRef } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { TextField } from './Input';
-
-const useStyles = makeStyles({
-  formContainer: {
-    width: '100%',
-    marginTop: '8px',
-  },
-  textField: {
-    width: '100%',
-  },
-});
+import { forwardRef } from 'react';
+import { NPWDInput } from './Input';
 
 interface ProfileFieldProps {
   label: string;
@@ -22,23 +11,17 @@ interface ProfileFieldProps {
 }
 
 const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
-  ({ label, value, handleChange, allowChange, multiline, maxLength }, ref) => {
-    const classes = useStyles();
+  ({ label, value, handleChange, allowChange }, ref) => {
     const _handleChange = (e) => handleChange(e.target.value);
 
     return (
-      <div className={classes.formContainer}>
-        <TextField
-          className={classes.textField}
-          label={label}
+      <div className="mt-[8px] w-full">
+        <label className="text-sm font-medium text-neutral-400">{label}</label>
+        <NPWDInput
+          className="border border-neutral-700 focus:ring-2 focus:ring-sky-500"
           value={value}
           onChange={_handleChange}
           disabled={!allowChange}
-          inputProps={{
-            maxLength: maxLength,
-          }}
-          multiline={multiline}
-          inputRef={ref}
         />
       </div>
     );
