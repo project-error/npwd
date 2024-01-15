@@ -63,7 +63,7 @@ export const Modal2 = ({ children, visible, handleClose }) => {
   return (
     <DialogRadix.Root open={visible} onOpenChange={handleClose}>
       <DialogRadix.Portal container={document.getElementById('phone')}>
-        <DialogRadix.Overlay className="fixed inset-0" />
+        <DialogRadix.Overlay className="bg-black/50 fixed inset-0 absolute inset-0" />
         <DialogRadix.Content className="absolute left-[50%] top-[30%] max-h-[100vh] w-[80vw] max-w-[350px] translate-x-[-50%] translate-y-[-50%]  rounded-[6px] bg-neutral-800 p-[25px]">
           {children}
         </DialogRadix.Content>

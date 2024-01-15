@@ -21,7 +21,6 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { toggleKeys } from '@ui/components';
 import { Box, styled } from '@mui/material';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
-import { NPWDButton } from '@npwd/keyos';
 
 const ButtonsContainer = styled(Box)({
   paddingBottom: '8px',
@@ -187,38 +186,6 @@ const AddTweetModal = () => {
         />
       </ButtonsContainer>
     </Modal2>
-  );
-
-  return (
-    <Modal visible={modalVisible} handleClose={_handleClose}>
-      <TweetMessage
-        modalVisible={modalVisible}
-        onEnter={submitTweet}
-        message={message}
-        handleChange={handleMessageChange}
-      />
-      <ImagePrompt visible={showImagePrompt} value={link} handleChange={handleImageChange} />
-      <EmojiSelect visible={showEmoji} onEmojiClick={handleSelectEmoji} />
-      <ImageDisplay
-        visible={!showEmoji && images.length > 0}
-        images={images}
-        removeImage={removeImage}
-      />
-      <ButtonsContainer>
-        <IconButtons
-          onImageClick={
-            images.length < ResourceConfig.twitter.maxImages ? toggleShowImagePrompt : null
-          }
-          onEmojiClick={toggleShowEmoji}
-        />
-        <ControlButtons
-          showImagePrompt={showImagePrompt}
-          showEmoji={showEmoji}
-          onPrimaryClick={showImagePrompt ? addImage : submitTweet}
-          onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
-        />
-      </ButtonsContainer>
-    </Modal>
   );
 };
 

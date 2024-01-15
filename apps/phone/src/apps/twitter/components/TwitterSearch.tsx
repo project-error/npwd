@@ -1,27 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TweetList from './tweet/TweetList';
 import SearchButton from './buttons/SearchButton';
-import { TextField } from '@ui/components/Input';
+import { NPWDInput } from '@ui/components/Input';
 import fetchNui from '@utils/fetchNui';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useFilteredTweets } from '../hooks/state';
 import { processTweet } from '../utils/tweets';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { Box, styled } from '@mui/material';
-
-const SearchRoot = styled(Box)({
-  width: '100%',
-});
-
-const SearchContainer = styled(Box)({
-  padding: '15px',
-});
-
-const SearchField = styled(TextField)({
-  width: '100%',
-});
+import { Search } from 'lucide-react';
 
 function TwitterSearch() {
   const [t] = useTranslation();
@@ -55,19 +43,20 @@ function TwitterSearch() {
 
   return (
     <>
-      <SearchRoot>
-        <SearchContainer>
-          <SearchField
-            placeholder={t('TWITTER.SEARCH_TWEETS_PLACEHOLDER')}
-            label={t('TWITTER.SEARCH_TWEETS')}
-            value={searchValue}
-            onChange={handleChange}
-            size="medium"
-            inputRef={(input) => input && input.focus()}
-          />
-        </SearchContainer>
+      <div className='w-full'>
+        <div className='p-[15px]'>
+          <div className="flex items-center justify-start space-x-2 rounded-md border bg-neutral-200 px-2 dark:border-neutral-700 dark:bg-neutral-800">
+            <Search className="h-5 w-5 dark:text-neutral-400" />
+            <NPWDInput
+              className="group-focus:ring-2 text-sm"
+              onChange={handleChange}
+              placeholder={t('TWITTER.SEARCH_TWEETS_PLACEHOLDER')}
+              value={searchValue}
+            />
+          </div>
+        </div>
         {filteredTweets.length > 0 && <TweetList tweets={tweets} />}
-      </SearchRoot>
+      </div>
       <SearchButton handleClick={handleSubmit} />
     </>
   );

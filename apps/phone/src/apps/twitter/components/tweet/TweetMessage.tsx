@@ -14,7 +14,7 @@ const MessageInput = styled(TextField)({
 });
 
 export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
-  const textFieldInputRef = useRef(null);
+  const textFieldInputRef = useRef<HTMLTextAreaElement>(null);
   const { ResourceConfig } = usePhone();
   const [t] = useTranslation();
 
@@ -52,6 +52,8 @@ export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) =
     <NPWDTextarea
       value={message}
       onChange={(e) => handleChange(e.currentTarget.value)}
+      ref={textFieldInputRef}
+      placeholder={t('TWITTER.TWEET_MESSAGE_PLACEHOLDER')}
       className="min-h-20 w-full resize-none rounded-md border border-neutral-600 bg-neutral-700 p-2 text-base text-white outline-none focus:ring-2 focus:ring-sky-400"
     />
   );

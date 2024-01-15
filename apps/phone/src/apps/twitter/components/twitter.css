@@ -3,36 +3,36 @@ some of the Material UI primary theme settings */
 
  override buttons on the tweet modal
 #twitter-app .MuiButton-containedPrimary {
-  background: #ff5455 !important;
+  background: #0ea5e9 !important;
 }
 
 /* override the bottom navigation active color */
 #twitter-app .Mui-selected {
-  color: #ff5455 !important;
+  color: #0ea5e9 !important;
 }
 /* override the FAB (action buttons) background when selected */
 #twitter-app .MuiFab-primary {
-  background: #ff5455 !important;
+  background: #0ea5e9 !important;
 }
 
 /* override the labels on text fields */
 #twitter-app .MuiInputLabel-formControl.Mui-focused {
-  color: #ff5455 !important;
+  color: #0ea5e9 !important;
 }
 
 /* override the underlines of text fields */
 #twitter-app .Mui-focused:after {
-  border-bottom-color: #ff5455 !important;
+  border-bottom-color: #0ea5e9 !important;
 }
 
 /* override circular progress on the likes button */
 #twitter-app .MuiCircularProgress-colorPrimary {
-  color: #ff5455 !important;
+  color: #0ea5e9 !important;
 }
 
 /* override circular progress on the report button */
 #twitter-report-progress {
-  color: #ff5455 !important;
+  color: #0ea5e9!important;
 }
 
 /*
