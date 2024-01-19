@@ -20,7 +20,7 @@
     "badWords": ["esx"]
   },
   "debug": {
-    "level": "silly",
+    "level": "error",
     "enabled": true,
     "sentryEnabled": true
   },
@@ -29,7 +29,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": ["npwd_qb_mail", "npwd_qb_garage"],
+  "apps": [],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",
