@@ -30,12 +30,12 @@ interface Debug {
 }
 
 interface General {
-  useDashNumber: boolean;
   useResourceIntegration: boolean;
   toggleKey: string;
   toggleCommand: string;
   defaultLanguage: string;
   showId: boolean;
+  phoneNumberFormat: string;
 }
 
 interface Contacts {

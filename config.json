@@ -14,7 +14,8 @@
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en",
-    "showId": false
+    "showId": false,
+    "phoneNumberFormat": "/(\\d{3})(\\d{3})(\\d{4})/"
   },
   "contacts": {
     "frameworkPay": false,
