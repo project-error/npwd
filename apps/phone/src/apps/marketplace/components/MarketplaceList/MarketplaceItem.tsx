@@ -1,6 +1,5 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Typography, Paper } from '@mui/material';
 import { ListItem } from '@ui/components/ListItem';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { MarketplaceListing } from '@typings/marketplace';
@@ -48,15 +47,15 @@ export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...lis
 
   return (
     <ListItem className={classes.root}>
-      <div className={classes.content}>
-        <Paper variant="outlined" className={classes.paper}>
+      <div className="flex w-full flex-col">
+        <div className="mb-4 flex h-auto flex-col overflow-auto rounded border dark:border-neutral-800 dark:bg-neutral-900">
           <div style={{ margin: 10 }}>
-            <Typography style={{ margin: 5 }} variant="h5">
+            <h2 style={{ margin: 5 }} className="text-sm dark:text-neutral-50">
               {listing.name}
-            </Typography>
-            <Typography variant="h5" style={{ padding: 5 }}>
+            </h2>
+            <p style={{ padding: 5 }} className="text-base font-medium text-neutral-400">
               {listing.title}
-            </Typography>
+            </p>
           </div>
 
           {listing.url ? (
@@ -64,19 +63,19 @@ export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...lis
               <PictureResponsive src={listing.url} alt={`${listing.name}`} />
             </PictureReveal>
           ) : (
-            <Typography style={{ margin: 10 }}>
+            <p className="p-4 text-sm dark:text-red-400">
               {t('MARKETPLACE.NO_IMAGE')}
               <span role="img" aria-label="emoji">
-                🙁
+                :(
               </span>
-            </Typography>
+            </p>
           )}
 
-          <Typography variant="body1" className={classes.listingContent}>
+          <p className="max-w-full break-words p-4 text-sm dark:text-neutral-50">
             {listing.description}
-          </Typography>
+          </p>
           <ListingActions {...listing} />
-        </Paper>
+        </div>
       </div>
     </ListItem>
   );

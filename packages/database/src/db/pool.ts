@@ -38,8 +38,13 @@ export function generateConnectionPool() {
           }, {});
 
     return mysql.createPool({
-      connectTimeout: 60000,
       ...config,
+      connectTimeout: 60000,
+      host: config.host,
+      database: config.database,
+      port: parseInt(config.port as string, 10),
+      user: config.user,
+      password: config.password,
     });
   } catch (e) {
     mainLogger.error(`SQL Connection Pool Error: ${e.message}`, {
