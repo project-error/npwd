@@ -29,7 +29,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": [],
+  "apps": ["npwd_qb_mail", "npwd_qb_garage"],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "PE-Secret",

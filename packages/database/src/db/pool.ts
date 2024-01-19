@@ -23,6 +23,8 @@ if (mysqlConnectionString === 'none') {
  */
 export function generateConnectionPool() {
   try {
+    console.log('mysqlConnectionString', mysqlConnectionString)
+
     const config = mysqlConnectionString.includes('mysql://')
       ? parseUri2(mysqlConnectionString)
       : mysqlConnectionString
@@ -36,6 +38,8 @@ export function generateConnectionPool() {
             if (key) connectionInfo[key] = value;
             return connectionInfo;
           }, {});
+
+    console.log("db config", config);
 
     return mysql.createPool({
       ...config,
@@ -53,6 +57,24 @@ export function generateConnectionPool() {
   }
 }
 
+
+export const getDbConfig = () => {
+  const config = mysqlConnectionString.includes('mysql://')
+      ? parseUri2(mysqlConnectionString)
+      : mysqlConnectionString
+          .replace(/(?:host(?:name)|ip|server|data\s?source|addr(?:ess)?)=/gi, 'host=')
+          .replace(/(?:user\s?(?:id|name)?|uid)=/gi, 'user=')
+          .replace(/(?:pwd|pass)=/gi, 'password=')
+          .replace(/(?:db)=/gi, 'database=')
+          .split(';')
+          .reduce<Record<string, string>>((connectionInfo, parameter) => {
+            const [key, value] = parameter.split('=');
+            if (key) connectionInfo[key] = value;
+            return connectionInfo;
+          }, {});
+
+  return config;
+}
 export const pool = generateConnectionPool();
 
 export async function withTransaction(queries: Promise<any>[]): Promise<any[]> {
