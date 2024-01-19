@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './locale/en.json';
 import es from './locale/es.json';
+import da from './locale/da.json';
 import de from './locale/de.json';
 import fr from './locale/fr.json';
 import ba from './locale/ba.json';
@@ -32,6 +33,7 @@ export const resources = {
   ba,
   no,
   sv,
+  da,
   de,
   tr,
   lt,
