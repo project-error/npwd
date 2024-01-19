@@ -102,7 +102,7 @@
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "Authorization",
-    "url": "https://api.fivemange/api/audio",
+    "url": "https://api.fivemanage/api/audio",
     "returnedDataIndexes": ["url"]
   }
 }
