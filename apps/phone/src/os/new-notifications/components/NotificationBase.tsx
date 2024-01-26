@@ -77,7 +77,9 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
           <Typography color="#bfbfbf">{secondaryTitle}</Typography>
         </Box>
       </Box>
-      <StyledMessage>{message}</StyledMessage>
+      <StyledMessage>
+        <Typography>{message}</Typography>
+      </StyledMessage>
     </StyledSnackbar>
   );
 });
