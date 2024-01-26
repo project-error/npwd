@@ -18,11 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Get tag
         uses: project-error/get-tag@v1.3
         with:
@@ -53,6 +48,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: ${{ steps.commit_manifest.outputs.commit_sha }}
 
       - name: Install pnpm
