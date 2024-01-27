@@ -53,6 +53,7 @@ jobs:
   create-nightly-release:
     name: Create Nightly release
     runs-on: ubuntu-latest
+    needs: [bump_manifest]
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
