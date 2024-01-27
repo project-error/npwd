@@ -35,7 +35,9 @@
     "database": "pnpm --filter @npwd/database",
     "logger": "pnpm --filter @npwd/logger",
     "npwd-config": "pnpm --filter @npwd/config",
-    "ui": "pnpm --filter @npwd/keyos"
+    "ui": "pnpm --filter @npwd/keyos",
+    "query": "pnpm --filter @core/query",
+    "router": "pnpm --filter @core/router"
   },
   "husky": {
     "hooks": {

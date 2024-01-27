@@ -20,11 +20,11 @@ on('onResourceStart', async (resName) => {
   } catch {
     console.log(
       '^1==============================================\n\n' +
-        '!!! NPWD WAS UNABLE TO LOCATE BUILT FILES AND WAS UNABLE TO START !!!\n\n' +
-        'This error is most likely caused by downloading the source code instead of the release\n\n' +
-        'Find the latest NPWD release here: \n\n' +
-        'https://github.com/project-error/npwd/releases/latest/download/npwd.zip\n\n' +
-        '==============================================^0',
+      '!!! NPWD WAS UNABLE TO LOCATE BUILT FILES AND WAS UNABLE TO START !!!\n\n' +
+      'This error is most likely caused by downloading the source code instead of the release\n\n' +
+      'Find the latest NPWD release here: \n\n' +
+      'https://github.com/project-error/npwd/releases/latest/download/npwd.zip\n\n' +
+      '==============================================^0',
     );
   }
 });
