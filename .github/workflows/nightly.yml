@@ -17,7 +17,7 @@ jobs:
     name: Bump manifest version
     runs-on: ubuntu-latest
     outputs:
-      release_tag: {{ steps.get_tag.outputs.release_tag }}
+      release_tag: ${{ steps.get_tag.outputs.release_tag }}
 
     steps:
       - name: Checkout source code
