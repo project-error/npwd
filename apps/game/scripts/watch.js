@@ -45,6 +45,7 @@ build({
     copy({
       resolveFrom: 'cwd',
       verbose: true,
+      copyOnStart: true,
       assets: {
         from: ['client/cl_controls.lua'],
         to: ['../../dist/game/client/cl_controls.lua'],

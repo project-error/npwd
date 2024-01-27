@@ -1,4 +1,5 @@
 const { build } = require('esbuild');
+
 const { copy } = require('esbuild-plugin-copy');
 
 build({
