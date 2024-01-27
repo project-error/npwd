@@ -13,9 +13,11 @@ on:
       - master
 
 jobs:
-  create-nightly-release:
-    name: Create Nightly release
+  bump_manifest:
+    name: Bump manifest version
     runs-on: ubuntu-latest
+    outputs:
+      release_tag: {{ steps.get_tag.outputs.release_tag }}
 
     steps:
       - name: Checkout source code
@@ -48,13 +50,14 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: "chore: bump manifest version to nightly ${{ steps.get_tag.outputs.release_tag }}"
 
-
-      # super hacky
+  create-nightly-release:
+    name: Create Nightly release
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ steps.commit_manifest.outputs.commit_sha }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.2
@@ -69,7 +72,7 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Run build
-        run: REACT_APP_VERSION=${{ steps.get_tag.outputs.release_tag }} pnpm build
+        run: REACT_APP_VERSION=${{ needs.bump_manifest.outputs.release_tag }} pnpm build
 
       #- name: Create Sentry Release (NPWD)
       #  run: |
@@ -98,9 +101,9 @@ jobs:
         id: auto_release
         with:
           environment: "dev"
-          title: NPWD Nightly ${{ steps.get_tag.outputs.release_tag }}
+          title: NPWD Nightly ${{ needs.bump_manifest.outputs.release_tag }}
           prerelease: true
-          automatic_release_tag: ${{ steps.get_tag.outputs.release_tag }}
+          automatic_release_tag: ${{ needs.bump_manifest.outputs.release_tag }}
           files: npwd.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
