@@ -1,30 +1,19 @@
-import styled from '@emotion/styled';
 import CallEnd from '@mui/icons-material/CallEnd';
-import Call from '@mui/icons-material/Call';
-import { Avatar, Box, IconButton, Typography } from '@mui/material';
-import { green, red } from '@mui/material/colors';
-import { SnackbarContent, CustomContentProps } from 'notistack';
-import React, { forwardRef, useMemo } from 'react';
-import { useCurrentCallValue } from '@os/call/hooks/state';
-import { useCall } from '@os/call/hooks/useCall';
+import {Avatar} from '@mui/material';
+import {SnackbarContent, CustomContentProps} from 'notistack';
+import React, {forwardRef, useMemo} from 'react';
+import {useCurrentCallValue} from '@os/call/hooks/state';
+import {useCall} from '@os/call/hooks/useCall';
 import useTimer from '@os/call/hooks/useTimer';
-import { useTranslation } from 'react-i18next';
-import { useContactActions } from '@apps/contacts/hooks/useContactActions';
-
-const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
-  padding: '14px 16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  background: theme.palette.background.paper,
-  borderRadius: '12px !important',
-  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-}));
+import {useTranslation} from 'react-i18next';
+import {useContactActions} from '@apps/contacts/hooks/useContactActions';
+import {NPWDButton} from "@npwd/keyos";
+import {Phone} from "lucide-react";
 
 interface CallNotificationBaseProps extends CustomContentProps {
-  title: string;
-  transmitter: string;
-  receiver: string;
+    title: string;
+    transmitter: string;
+    receiver: string;
 }
 
 export type CallNotificationBaseComponent = React.FC<CallNotificationBaseProps>;
@@ -32,90 +21,94 @@ export type CallNotificationBaseComponent = React.FC<CallNotificationBaseProps>;
 const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 
 export const CallNotificationBase = forwardRef<HTMLDivElement, CallNotificationBaseProps>(
-  (props, ref) => {
-    const { endCall, acceptCall, rejectCall } = useCall();
-    const { transmitter, receiver } = props;
-    const call = useCurrentCallValue();
-    const { minutes, seconds, startTimer, resetTimer } = useTimer();
+    (props, ref) => {
+        const {endCall, acceptCall, rejectCall} = useCall();
+        const {transmitter, receiver} = props;
+        const call = useCurrentCallValue();
+        const {minutes, seconds, startTimer, resetTimer} = useTimer();
 
-    const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+        const {getPictureByNumber} = useContactActions();
 
-    const { t } = useTranslation();
+        const {t} = useTranslation();
 
-    const RECEIVER_TEXT = useMemo(
-      () =>
-        call?.is_accepted
-          ? receiver
-          : `${t('DIALER.MESSAGES.CALLING', {
-              transmitter: receiver,
-            })}`,
-      [call.is_accepted, receiver],
-    );
+        const RECEIVER_TEXT = useMemo(
+            () =>
+                call?.is_accepted
+                    ? receiver
+                    : `${t('DIALER.MESSAGES.CALLING', {
+                        transmitter: receiver,
+                    })}`,
+            [call.is_accepted, receiver],
+        );
 
-    const handleAcceptCall = () => {
-      acceptCall();
+        const handleAcceptCall = () => {
+            acceptCall();
 
-      resetTimer();
-      startTimer();
-    };
+            resetTimer();
+            startTimer();
+        };
 
-    const handleEndOrRejectCall = () => {
-      if (!call.is_accepted && !call.isTransmitter) {
-        rejectCall();
-      } else {
-        endCall();
-      }
-      resetTimer();
-    };
+        const handleEndOrRejectCall = () => {
+            if (!call.is_accepted && !call.isTransmitter) {
+                rejectCall();
+            } else {
+                endCall();
+            }
+            resetTimer();
+        };
 
-    if (!call) {
-      return null;
-    }
+        if (!call) {
+            return null;
+        }
 
-    const getDisplayAvatar = () => {
-      return call.isTransmitter
-        ? getPictureByNumber(call.receiver)
-        : getPictureByNumber(call?.transmitter);
-    };
+        const getDisplayAvatar = () => {
+            return call.isTransmitter
+                ? getPictureByNumber(call.receiver)
+                : getPictureByNumber(call?.transmitter);
+        };
 
-    return (
-      <StyledSnackbar ref={ref} style={{ minWidth: '370px' }}>
-        <Box display="flex" alignItems="center" gap={1} color="white" mb={0.7}>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar src={getDisplayAvatar()} alt="Transmitter" />
-          </Box>
-          <Box>
-            {call?.isTransmitter ? (
-              <Typography color="#bfbfbf">{RECEIVER_TEXT}</Typography>
-            ) : (
-              <Typography color="#bfbfbf">{transmitter}</Typography>
-            )}
-          </Box>
-        </Box>
-        <Box display="flex" gap={1}>
-          {call?.is_accepted && (
-            <Typography color="#bfbfbf">
-              {`${formatTime(minutes)}:${formatTime(seconds)}`}
-            </Typography>
-          )}
-          {!call?.isTransmitter && !call?.is_accepted && (
-            <IconButton
-              onClick={handleAcceptCall}
-              size="small"
-              sx={{ backgroundColor: green[500] }}
+        return (
+            <SnackbarContent
+                ref={ref}
+                style={{minWidth: '370px'}}
+                className="bg-neutral-50 dark:bg-neutral-900 py-3.5 px-4 w-auto flex items-center justify-between rounded-md shadow-md border-2 border-neutral-200 dark:border-neutral-800"
             >
-              <Call sx={{ fontSize: 18 }} />
-            </IconButton>
-          )}
-          <IconButton
-            onClick={handleEndOrRejectCall}
-            size="small"
-            sx={{ backgroundColor: red[500] }}
-          >
-            <CallEnd sx={{ fontSize: 18 }} />
-          </IconButton>
-        </Box>
-      </StyledSnackbar>
-    );
-  },
+                <div className="flex items-center text-neutral-900 dark:text-neutral-50 space-x-2">
+                    <div className="flex justify-center items-center">
+                        <Avatar src={getDisplayAvatar()} alt="Transmitter"/>
+                    </div>
+                    <div>
+                        {call?.isTransmitter ? (
+                            <p className="text-sm text-neutral-900 dark:text-neutral-50">{RECEIVER_TEXT}</p>
+                        ) : (
+                            <p className="text-sm text-neutral-900 dark:text-neutral-50">{transmitter}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="flex space-x-4">
+                    {call?.is_accepted && (
+                        <p className="text-sm text-neutral-900 dark:text-neutral-50">
+                            {`${formatTime(minutes)}:${formatTime(seconds)}`}
+                        </p>
+                    )}
+                    {!call?.isTransmitter && !call?.is_accepted && (
+                        <NPWDButton
+                            onClick={handleAcceptCall}
+                            size="icon"
+                            className="rounded-full bg-green-600 hover:bg-green-700"
+                        >
+                            <Phone size={18}/>
+                        </NPWDButton>
+                    )}
+                    <NPWDButton
+                        onClick={handleEndOrRejectCall}
+                        size="icon"
+                        className="rounded-full bg-red-600 hover:bg-red-700"
+                    >
+                        <CallEnd sx={{fontSize: 18}}/>
+                    </NPWDButton>
+                </div>
+            </SnackbarContent>
+        );
+    },
 );

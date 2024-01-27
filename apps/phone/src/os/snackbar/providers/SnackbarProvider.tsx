@@ -3,7 +3,10 @@ import { IAlert } from '../hooks/useSnackbar';
 
 export const SnackbarContext = createContext(null);
 
-const SnackbarProvider: React.FC = ({ children }) => {
+interface SnackbarProviderProps {
+    children: React.ReactNode;
+}
+const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [alert, setAlert] = useState<IAlert>(null);
 

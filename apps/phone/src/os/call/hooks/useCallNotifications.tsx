@@ -5,8 +5,8 @@ import { ActiveCall } from '@typings/call';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { CallNotification } from '../components/CallNotification';
-import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
-import { useContacts } from '../../../apps/contacts/hooks/state';
+import { useContactActions } from '@apps/contacts/hooks/useContactActions';
+import { useContacts } from '@apps/contacts/hooks/state';
 
 const NOTIFICATION_ID = 'call:current';
 

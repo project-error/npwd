@@ -8,6 +8,7 @@ import DialerNavBar from './DialerNavBar';
 import { ContactList } from '../../contacts/components/List/ContactList';
 import { DialerThemeProvider } from '../providers/DialerThemeProvider';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import InjectDebugData from "@os/debug/InjectDebugData";
 
 export const DialerApp: React.FC = () => {
   return (

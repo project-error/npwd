@@ -85,7 +85,7 @@ InjectDebugData<any>(
         retweetIdentifier: '',
         avatar_url: '',
         id: 116,
-        message: 'Go is better!',
+        message: 'Go is better! Here is why: Go is a statically typed, compiled language in the tradition of C, with memory safety, garbage collection, structural typing, and CSP-style concurrency. The compiler, tools, and source code are all free and open source.',
         createdAt: '2021-12-01 00:42:03',
         updatedAt: '2021-12-01 00:42:03',
         identifier: '',

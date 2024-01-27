@@ -11,7 +11,11 @@ const StyledControls = styled(Box)(({ theme }) => ({
   right: '0',
 }));
 
-export const CallNotification: React.FC = ({ children }) => (
+interface CallNotificationProps {
+    children: React.ReactNode;
+}
+
+export const CallNotification: React.FC<CallNotificationProps> = ({ children }) => (
   <Box paddingBottom="48px">
     <Box>{children}</Box>
     <StyledControls>
