@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import Modal from '../../../../ui/components/Modal';
+import { Modal2 } from '../../../../ui/components/Modal';
 import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
@@ -9,6 +9,7 @@ import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import { useNotesValue } from '@apps/notes/hooks/state';
 import { NoteItem } from '@typings/notes';
+import { NPWDButton } from '@npwd/keyos';
 
 interface IProps {
   messageGroup: MessageConversation | undefined;
@@ -38,7 +39,7 @@ export const MessageNoteModal = ({
   const { activeMessageConversation } = useMessages();
 
   const sendNoteMessage = useCallback(
-    (note) => {
+    (note: NoteItem) => {
       sendEmbedMessage({
         conversationId: messageGroup.id,
         conversationList: activeMessageConversation.conversationList,
@@ -52,7 +53,7 @@ export const MessageNoteModal = ({
   );
 
   const sendFromQueryParam = useCallback(
-    (note) => {
+    (note: NoteItem) => {
       sendNoteMessage(note);
       removeQueryParamImage();
     },
@@ -67,25 +68,27 @@ export const MessageNoteModal = ({
 
   return (
     <>
-      <Modal visible={notePreview} handleClose={removeQueryParamImage}>
-        <Box py={1}>
-          <Typography paragraph>{t('MESSAGES.SHARE_NOTE_TITLE')}</Typography>
+      <Modal2 visible={notePreview} handleClose={removeQueryParamImage}>
+        <div className="space-y-4 py-1">
+          <p className="text-sm font-medium text-neutral-900 dark:text-neutral-50">
+            {t('MESSAGES.SHARE_NOTE_TITLE')}
+          </p>
 
-          <Typography>{notePreview?.title}</Typography>
-          <Typography sx={{ marginBottom: 2 }}>
+          <p className="text-base font-medium text-neutral-900 dark:text-neutral-50">
+            {notePreview?.title}
+          </p>
+          <p className="mb-2 text-sm text-neutral-400">
             {notePreview?.content.substring(0, 25) + ' ...'}
-          </Typography>
+          </p>
 
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
+          <NPWDButton
+            className="w-full bg-green-600"
             onClick={() => sendFromQueryParam(notePreview)}
           >
             {t('GENERIC.SHARE')}
-          </Button>
-        </Box>
-      </Modal>
+          </NPWDButton>
+        </div>
+      </Modal2>
     </>
   );
 };

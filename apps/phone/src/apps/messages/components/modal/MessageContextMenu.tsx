@@ -1,15 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import PinDrop from '@mui/icons-material/PinDrop';
 import { ContextMenu, IContextMenuOption } from '@ui/components/ContextMenu';
 import qs from 'qs';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
-import Backdrop from '@ui/components/Backdrop';
 import { MessageConversation, MessageEvents } from '@typings/messages';
 import fetchNui from '../../../../utils/fetchNui';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
@@ -41,8 +36,6 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
   const { sendEmbedMessage } = useMessageAPI();
   const { activeMessageConversation } = useMessages();
-
-  const modalsVisible = imagePreview || contactModalOpen || notePreview;
 
   const menuOptions: IContextMenuOption[] = useMemo(
     () => [
@@ -93,7 +86,6 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   return (
     <>
       <ContextMenu open={isOpen} onClose={onClose} options={menuOptions} />
-      {modalsVisible ? <Backdrop /> : undefined}
       <MessageImageModal
         image={image}
         imagePreview={imagePreview}
@@ -101,22 +93,19 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         messageGroup={messageGroup}
         onClose={onClose}
       />
-      {
-        <MessageNoteModal
-          noteId={note}
-          notePreview={notePreview}
-          setNotePreview={setNotePreview}
-          messageGroup={messageGroup}
-          onClose={onClose}
-        />
-      }
-      {
-        <MessageContactModal
-          messageGroup={messageGroup}
-          isVisible={contactModalOpen}
-          onClose={() => setContactModalOpen(false)}
-        />
-      }
+      <MessageNoteModal
+        noteId={note}
+        notePreview={notePreview}
+        setNotePreview={setNotePreview}
+        messageGroup={messageGroup}
+        onClose={onClose}
+      />
+
+      <MessageContactModal
+        messageGroup={messageGroup}
+        isVisible={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+      />
     </>
   );
 };

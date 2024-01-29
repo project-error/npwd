@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import Modal from '@ui/components/Modal';
-import { Autocomplete, Box, Button, Typography } from '@mui/material';
+import { Modal2 } from '@ui/components/Modal';
+import { Autocomplete } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useContactsValue } from '../../../contacts/hooks/state';
 import { TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
+import { NPWDButton } from '@npwd/keyos';
 
 interface MessageContactModalProps {
   isVisible: boolean;
@@ -37,28 +38,29 @@ const MessageContactModal: React.FC<MessageContactModalProps> = ({
   };
 
   return (
-    <Modal visible={isVisible} handleClose={onClose}>
-      <Box py={1}>
-        <Typography paragraph>{t('MESSAGES.SHARE_CONTACT_TITLE')}</Typography>
-      </Box>
-      <Box pb={2}>
+    <Modal2 visible={isVisible} handleClose={onClose}>
+      <div className="py-1">
+        <p className="text-sm text-neutral-900 dark:text-neutral-50">
+          {t('MESSAGES.SHARE_CONTACT_TITLE')}
+        </p>
+      </div>
+      <div className="pb-2">
         <Autocomplete
           renderInput={(params) => <TextField {...params} label="Choose contact" />}
           getOptionLabel={(contact) => contact.display}
           options={contacts}
-          onChange={(e, val) => setSelectContact(val)}
+          onChange={(_, val) => setSelectContact(val)}
         />
-      </Box>
-      <Button
+      </div>
+      <NPWDButton
         disabled={!selectedContact}
-        fullWidth
-        variant="contained"
-        color="primary"
+        size="sm"
+        className="w-full bg-green-600 disabled:bg-gray-500/30 disabled:text-gray-500"
         onClick={handleSendEmbedMessage}
       >
         {t('GENERIC.SHARE')}
-      </Button>
-    </Modal>
+      </NPWDButton>
+    </Modal2>
   );
 };
 

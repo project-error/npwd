@@ -11,6 +11,9 @@ export default defineConfig({
     federation({
       remotes: { dummyRemote: 'dummyRemote.js' },
       shared: ['react', 'react-dom', '@emotion/react', 'react-router-dom', 'fivem-nui-react-lib'],
+      exposes: {
+        './Input': './src/ui/components/Input.tsx',
+      },
     }),
     topLevelAwait({
       // The export name of top-level await promise for each chunk module
