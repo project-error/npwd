@@ -3,7 +3,5 @@ import { AppRouter } from './example';
 
 const client = createClient<AppRouter>();
 
-client.giveMoney.emitNet({
-  amount: 100,
-  playerId: 1,
-});
+client.player.giveMoney.emit({ playerId: 1, amount: 100 });
+client.player.giveMoney.emitNet({ playerId: 1, amount: 100 });

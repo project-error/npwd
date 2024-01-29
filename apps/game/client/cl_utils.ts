@@ -88,6 +88,7 @@ export const RegisterNuiProxy = (event: string) => {
     if (!global.isPlayerLoaded) await playerLoaded();
     try {
       const res = await ClUtils.emitNetPromise(event, data);
+
       cb(res);
     } catch (e) {
       console.error('Error encountered while listening to resp. Error:', e);

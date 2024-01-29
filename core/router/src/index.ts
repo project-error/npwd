@@ -3,6 +3,8 @@ type FunctionWithEmit<T extends RouterFunction> = {
   emit: T;
   emitNet: T;
 };
+type NestedRouter = Record<string, FunctionWithEmit<RouterFunction>>;
+type RouterFunctions = Record<string, FunctionWithEmit<RouterFunction> | NestedRouter>;
 
 function createdFunctionWithEmit<T extends RouterFunction>(fn: T): FunctionWithEmit<T> {
   return {
@@ -23,11 +25,23 @@ function eventProcedure<T extends RouterFunction>(event: string, callback: T): F
   return createdFunctionWithEmit(callback);
 }
 
-type RouterFunctions = Record<string, FunctionWithEmit<RouterFunction>>;
-
 function createRouter() {
   return function <T extends RouterFunctions>(routes: T): T {
-    return routes;
+    // Implementation to handle both individual route functions and nested routers
+    const processedRoutes: Partial<RouterFunctions> = {};
+
+    for (const key in routes) {
+      const route = routes[key];
+      if (typeof route === 'function' || 'emit' in route || 'emitNet' in route) {
+        // If it's a function or a wrapped function, add it directly
+        processedRoutes[key] = route;
+      } else {
+        // If it's a nested router, merge its routes
+        Object.assign(processedRoutes, route);
+      }
+    }
+
+    return processedRoutes as T;
   };
 }
 
@@ -43,7 +57,7 @@ class RouterBuilder {
 export const initRouter = new RouterBuilder();
 
 export function createClient<
-  T extends Record<string, FunctionWithEmit<(...args: any[]) => Promise<any>>>,
+  T extends Record<string, FunctionWithEmit<(...args: any[]) => Promise<any>> | NestedRouter>,
 >(): T {
   return {} as T;
 }

@@ -10,10 +10,14 @@ type PlayerData = {
   amount: number;
 };
 
-const appRouter = router({
+const playerRouter = router({
   giveMoney: eventProcedure('giveMoney', async (data: PlayerData) => {
     console.log('Giving money to player: ', data.playerId, data.amount);
   }),
+});
+
+const appRouter = router({
+  player: playerRouter,
 });
 
 export type AppRouter = typeof appRouter;

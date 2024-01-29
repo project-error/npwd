@@ -97,7 +97,7 @@
   },
   "defaultContacts": [],
   "disabledApps": [],
-  "apps": [],
+  "apps": ["mockapp"],
   "voiceMessage": {
     "enabled": false,
     "authorizationHeader": "Authorization",
