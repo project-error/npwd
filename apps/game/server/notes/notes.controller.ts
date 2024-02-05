@@ -2,16 +2,6 @@ import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '@typings/not
 import NotesService from './notes.service';
 import { notesLogger } from './notes.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
-import { eventProcedure, router } from '../router-server';
-
-export const notesRouter = router({
-  addNote: eventProcedure(NotesEvents.ADD_NOTE, async (reqObj, resp) => {
-    NotesService.handleAddNote(reqObj, resp).catch((e) => {
-      notesLogger.error(`Error occured in add note event (${reqObj.source}), Error:  ${e.message}`);
-      resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
-    });
-  }),
-});
 
 onNetPromise<BeforeDBNote, NoteItem>(NotesEvents.ADD_NOTE, (reqObj, resp) => {
   NotesService.handleAddNote(reqObj, resp).catch((e) => {
