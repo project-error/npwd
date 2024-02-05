@@ -4,31 +4,30 @@ import { mainLogger } from '../../sv_logger';
 import { Strategy } from '../framework-strategy';
 
 type NDPlayer = {
-    id: number;
-    source: number;
-    identifier: string;
-    nickname: string;
-    user: string;
-    roles: unknown;
-    name: string;
-    firstname: string;
-    lastname: string;
-    fullname: string;
-    dob: string;
-    gender: string;
-    phonenumber: string;
-    cash: number;
-    bank: number;
-    groups: unknown;
-    job: string;
-    jobInfo: unknown;
-    label: string;
-    rankName: string;
-    rank: number;
-    metadata: unknown;
-    inventory: unknown;
+  id: number;
+  source: number;
+  identifier: string;
+  nickname: string;
+  user: string;
+  roles: unknown;
+  name: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  dob: string;
+  gender: string;
+  phonenumber: string;
+  cash: number;
+  bank: number;
+  groups: unknown;
+  job: string;
+  jobInfo: unknown;
+  label: string;
+  rankName: string;
+  rank: number;
+  metadata: unknown;
+  inventory: unknown;
 };
-
 
 // and this phone was supposed to be a 100% standalone my ass
 export class NDCoreFramework implements Strategy {
@@ -44,15 +43,17 @@ export class NDCoreFramework implements Strategy {
 
   init(): void {
     on('ND:characterLoaded', async (player: NDPlayer) => {
-      const playerIdent = player.id
+      const playerIdent = player.id;
       const phoneNumber = player?.phonenumber;
 
-      mainLogger.debug(`ND Core Player Phone number: ${player?.phonenumber ?? 'no phone number found'}`)
+      mainLogger.debug(
+        `ND Core Player Phone number: ${player?.phonenumber ?? 'no phone number found'}`,
+      );
 
       const playerSrc = player.source;
 
       await PlayerService.handleNewPlayerEvent({
-        identifier: playerIdent,
+        identifier: playerIdent.toString(),
         source: playerSrc,
         phoneNumber: phoneNumber ?? null,
         firstname: player.firstname,
@@ -60,9 +61,9 @@ export class NDCoreFramework implements Strategy {
       });
     });
 
-    on("ND:characterUnloaded", async (source: number) => {
+    on('ND:characterUnloaded', async (source: number) => {
       await PlayerService.handleUnloadPlayerEvent(source);
-    })
+    });
 
     mainLogger.info('NDCore bridge initialized');
   }
@@ -74,12 +75,11 @@ export class NDCoreFramework implements Strategy {
       if (resource === GetCurrentResourceName()) {
         const onlinePlayers = NDCore.getPlayers() as NDPlayer[];
         for (const player of onlinePlayers) {
-
           const phoneNumber = player?.phonenumber;
 
           await PlayerService.handleNewPlayerEvent({
             source: player.source,
-            identifier: player.id,
+            identifier: player.id.toString(),
             phoneNumber: phoneNumber ?? null,
             firstname: player.firstname,
             lastname: player.lastname,
