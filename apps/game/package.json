@@ -14,7 +14,6 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "@core/router": "workspace:^",
     "@discordjs/collection": "^0.2.4",
     "@npwd/config": "workspace:*",
     "@npwd/database": "workspace:*",
