@@ -86,9 +86,6 @@ importers:
 
   apps/game:
     dependencies:
-      '@core/router':
-        specifier: workspace:^
-        version: link:../../core/router
       '@discordjs/collection':
         specifier: ^0.2.4
         version: 0.2.4
