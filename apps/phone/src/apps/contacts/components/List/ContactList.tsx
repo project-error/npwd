@@ -1,9 +1,8 @@
 import React from 'react';
 import { SearchContacts } from './SearchContacts';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useFilteredContacts } from '../../hooks/state';
 import { Contact } from '@typings/contact';
-import { classNames } from '@utils/css';
 import { useCall } from '@os/call/hooks/useCall';
 import useMessages from '@apps/messages/hooks/useMessages';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
@@ -12,6 +11,7 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { Phone, MessageSquare, Plus } from 'lucide-react';
 import { List, ListItem, NPWDButton } from '@npwd/keyos';
 import { initials } from '@utils/misc';
+import { useQueryParams } from '@common/hooks/useQueryParams';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
@@ -64,7 +64,14 @@ export const ContactList: React.FC = () => {
   );
 };
 
-const ContactItem = (contact: Contact) => {
+interface ContactItemProps extends Contact {
+  onClick?: () => void;
+}
+
+const ContactItem = ({ number, avatar, id, display }: ContactItemProps) => {
+  const query = useQueryParams<{ referal: string }>();
+  const { referal } = query;
+
   const { initializeCall } = useCall();
   const { goToConversation } = useMessages();
   const { findExistingConversation } = useContactActions();
@@ -79,14 +86,14 @@ const ContactItem = (contact: Contact) => {
       level: 2,
       data: true,
     });
-    initializeCall(contact.number.toString());
+    initializeCall(number.toString());
   };
 
   const handleMessage = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const phoneNumber = contact.number.toString();
+    const phoneNumber = number.toString();
     LogDebugEvent({
       action: 'Routing to Message',
       level: 1,
@@ -104,28 +111,26 @@ const ContactItem = (contact: Contact) => {
     <ListItem>
       <div className="min-w-0 flex-1">
         <Link
-          to={`/contacts/${contact.id}`}
+          to={
+            referal
+              ? `${referal}?contact=${encodeURIComponent(JSON.stringify({ number, id, display }))}`
+              : `/contacts/${id}`
+          }
           className="flex items-center justify-between focus:outline-none"
         >
           <div className="flex items-center space-x-2">
-            {contact.avatar && contact.avatar.length > 0 ? (
-              <img
-                src={contact.avatar}
-                className="inline-block h-10 w-10 rounded-full"
-                alt={'avatar'}
-              />
+            {avatar && avatar.length > 0 ? (
+              <img src={avatar} className="inline-block h-10 w-10 rounded-full" alt={'avatar'} />
             ) : (
               <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                <span className="text-gray-600 dark:text-gray-300">
-                  {initials(contact.display)}
-                </span>
+                <span className="text-gray-600 dark:text-gray-300">{initials(display)}</span>
               </div>
             )}
             <div>
               <p className="text-base font-medium text-neutral-900 dark:text-neutral-100">
-                {contact.display}
+                {display}
               </p>
-              <p className="text-sm text-neutral-400">{contact.number}</p>
+              <p className="text-sm text-neutral-400">{number}</p>
             </div>
           </div>
           <div className="space-x-3">
