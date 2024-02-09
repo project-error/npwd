@@ -75,11 +75,11 @@
         "UPDATE_SUCCESS": "Zaktualizowano kontakt!",
         "DELETE_FAILED": "Nie udało się usunąć kontaktu!",
         "DELETE_SUCCESS": "Usunięto kontakt!",
-        "PAYMENTFAILED": "The payment failed!",
-        "PAYMENTSENT": "The payment sent!"
+        "PAYMENTFAILED": "Płatność nie powiodła się!",
+        "PAYMENTSENT": "Płatność wysłana!"
       },
-      "AMOUNT": "How Much?",
-      "SENDMONEY": "Send Money",
+      "AMOUNT": "Ile?",
+      "SENDMONEY": "Wyślij pieniądze",
       "PLACEHOLDER_SEARCH_CONTACTS": "Wyszukaj kontakt...",
       "FORM_NAME": "Nazwa",
       "FORM_NUMBER": "Numer",
