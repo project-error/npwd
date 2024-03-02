@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
@@ -17,7 +17,7 @@ export const useApps = () => {
   const externalApps = useRecoilValue(phoneState.extApps);
   const { ResourceConfig } = usePhone();
 
-  const apps: IApp[] = useMemo(() => {
+  const defaultApps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
       const SvgIcon = React.lazy<SvgIconComponent>(() =>
         import(`../icons/${curIconSet.name}/svg/${app.id}.tsx`).catch(
@@ -58,6 +58,8 @@ export const useApps = () => {
     });
   }, [icons, curIconSet, theme]);
 
+  const [apps, setApps] = useState<IApp[]>(defaultApps);
+
   const allApps = useMemo(() => [...apps, ...externalApps], [apps, externalApps]);
   const getApp = useCallback(
     (id: string): IApp => {
@@ -67,7 +69,7 @@ export const useApps = () => {
   );
 
   const filteredApps = apps.filter((app) => !ResourceConfig?.disabledApps.includes(app.id));
-  return { apps: filteredApps, getApp };
+  return { apps: filteredApps, getApp, setApps };
 };
 
 export const useApp = (id: string): IApp => {

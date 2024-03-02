@@ -12,7 +12,7 @@ interface GridMenuProps {
 
 export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, xs }) => {
   return (
-    <Grid container alignItems="center" direction="row">
+    <div className="grid grid-cols-4 gap-y-4">
       {items &&
         items.length &&
         items.map((item) => (
@@ -28,6 +28,6 @@ export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, 
             )}
           </Fragment>
         ))}
-    </Grid>
+    </div>
   );
 };

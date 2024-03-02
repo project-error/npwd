@@ -11,7 +11,6 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
   root: {
     padding: 0,
     background: 'transparent',
-    marginTop: theme.spacing(3),
   },
   avatar: {
     '&:hover': {
@@ -68,7 +67,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
   });
 
   return (
-    <button className={classes.root}>
+    <button className="p-0 bg-transparent">
       <Badge
         color="error"
         badgeContent={notification?.badge}
