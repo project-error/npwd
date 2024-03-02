@@ -45,11 +45,6 @@ export class NDCoreFramework implements Strategy {
     on('ND:characterLoaded', async (player: NDPlayer) => {
       const playerIdent = player.id;
       const phoneNumber = player?.phonenumber;
-
-      mainLogger.debug(
-        `ND Core Player Phone number: ${player?.phonenumber ?? 'no phone number found'}`,
-      );
-
       const playerSrc = player.source;
 
       await PlayerService.handleNewPlayerEvent({
