@@ -1,5 +1,5 @@
 import { IApp } from '@os/apps/config/apps';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -35,7 +35,7 @@ const useExternalAppsAction = () => {
     });
   };
 
-  const generateAppConfig = async (appName: string): Promise<IApp> => {
+  const generateAppConfig = useCallback(async (appName: string): Promise<IApp> => {
     try {
       const IN_GAME = import.meta.env.PROD || import.meta.env.MODE === EnvMode.GAME;
       const url = IN_GAME
@@ -85,52 +85,42 @@ const useExternalAppsAction = () => {
 
       return null;
     }
-  };
+  }, []);
 
-  const getConfigs = async (externalApps: string[] = []) => {
-    const configs = await Promise.all(
-      externalApps.map(async (appName) => {
-        const app = await generateAppConfig(appName);
-        if (!app) return null;
-        return app;
-      }),
-    );
+  const getConfigs = useCallback(
+    async (externalApps: string[], existingApps: any[]) => {
+      const appAlreadyLoaded = (appName: string) => {
+        return existingApps.some((app) => app.id === appName);
+      };
 
-    return configs;
-  };
+      const configs = await Promise.all(
+        externalApps.map(async (appName) => {
+          if (appAlreadyLoaded(appName)) return null;
+
+          const app = await generateAppConfig(appName);
+          if (!app) return null;
+          return app;
+        }),
+      );
+
+      return configs;
+    },
+    [generateAppConfig],
+  );
 
   return {
     getConfigs,
   };
 };
 
-interface ReloadEvent {
-  type: 'RELOAD';
-  payload: 'string';
-}
-
 export const useExternalApps = () => {
   const [apps, setApps] = useRecoilState(phoneState.extApps);
   const { getConfigs } = useExternalAppsAction();
   const config = useRecoilValue(phoneState.resourceConfig);
 
-  const handleReloadApp = (message: MessageEvent<ReloadEvent>) => {
-    const { data } = message;
-    if (data.type === 'RELOAD') {
-      getConfigs(config.apps).then(setApps);
-    }
-  };
-
   useEffect(() => {
-    window.addEventListener('message', handleReloadApp);
-    return () => {
-      window.removeEventListener('message', handleReloadApp);
-    };
-  }, []);
-
-  useEffect(() => {
-    getConfigs(config?.apps).then(setApps);
-  }, [config]);
+    getConfigs(config?.apps, apps).then(setApps);
+  }, [config, setApps, getConfigs]);
 
   return apps.filter((app) => app);
 };
