@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_gallery`
 
 CREATE TABLE `npwd_darkchat_channels` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`channel_identifier` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`channel_identifier` VARCHAR(191) NOT NULL COLLATE 'utf8mb4_general_ci',
 	`label` VARCHAR(255) NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `darkchat_channels_channel_identifier_uindex` (`channel_identifier`) USING BTREE
