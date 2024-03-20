@@ -50,7 +50,7 @@
           "DIALOG_PLACEHOLDER": "Kép URL",
           "DIALOG_ERROR": "Hibás kép/fájltípus"
         },
-        "CALL_VOLUME": "Call Volume",
+        "CALL_VOLUME": "Hívás hangerő",
         "RINGTONE": "Csengőhang",
         "RINGTONE_VOLUME": "Csengés hangerő",
         "NOTIFICATION": "Értesítés",
@@ -83,8 +83,8 @@
         "PAYMENTFAILED": "The payment failed!",
         "PAYMENTSENT": "The payment sent!"
       },
-      "AMOUNT": "How Much?",
-      "SENDMONEY": "Send Money",
+      "AMOUNT": "Mennyi?",
+      "SENDMONEY": "Pénz küldése",
       "PLACEHOLDER_SEARCH_CONTACTS": "Kontaktok keresése",
       "FORM_NAME": "Név",
       "FORM_NUMBER": "Szám",
