@@ -3,6 +3,7 @@ import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact, ContactPay } fr
 import PlayerService from '../players/player.service';
 import ContactService from './contacts.service';
 import { contactsLogger } from './contacts.utils';
+import { getSource } from '../utils/miscUtils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 const exps = global.exports;
 
@@ -60,3 +61,12 @@ onNetPromise<ContactDeleteDTO, void>(ContactEvents.DELETE_CONTACT, (reqObj, resp
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });
+
+onNet(ContactEvents.GIVE_CONTACT_DETAILS, (targetPlayerId: number) => {
+  const src = getSource();
+  const sendingPlayer = PlayerService.getPlayer(src);
+  const sendingPlayerNumber = sendingPlayer.getPhoneNumber();
+  const sendingPlayerName = sendingPlayer.getName();
+
+  emitNet(ContactEvents.RECEIVE_CONTACT_DETAILS, targetPlayerId, sendingPlayerNumber, sendingPlayerName);
+})
