@@ -45,6 +45,7 @@ export enum ContactEvents {
   DELETE_CONTACT = 'npwd:deleteContact',
   // Used to fill in information through an export event
   ADD_CONTACT_EXPORT = 'npwd:addContactExport',
+  LOCAL_SHARE = 'npwd:localShareContact'
 }
 
 export interface AddContactExportData {

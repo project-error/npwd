@@ -4,6 +4,7 @@ import PlayerService from '../players/player.service';
 import ContactService from './contacts.service';
 import { contactsLogger } from './contacts.utils';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
+import { distanceBetweenCoords } from "../utils/miscUtils";
 const exps = global.exports;
 
 onNetPromise<ContactPay, Contact>(ContactEvents.PAY_CONTACT, (reqObj, resp) => {
@@ -60,3 +61,9 @@ onNetPromise<ContactDeleteDTO, void>(ContactEvents.DELETE_CONTACT, (reqObj, resp
     resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
   });
 });
+
+onNetPromise(ContactEvents.LOCAL_SHARE, (reqObj, resp) => {
+  ContactService.handleLocalShare(reqObj, resp).catch((e) => {
+    resp({status: 'error', errorMsg: 'INTERNAL_ERROR'})
+  })
+})

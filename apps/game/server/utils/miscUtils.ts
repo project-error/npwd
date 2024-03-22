@@ -18,3 +18,13 @@ export const emitNetTyped = <T = any>(eventName: string, data: T, src?: number) 
 
   emitNet(eventName, data);
 };
+
+export const distanceBetweenCoords = (coords1: number[], coords2: number[]): number => {
+  const [x1,y1] = coords1
+  const [x2, y2] = coords2
+
+  return Math.sqrt(
+    Math.pow((x2-x1), 2) +
+    Math.pow((y2-y1), 2)
+  )
+}

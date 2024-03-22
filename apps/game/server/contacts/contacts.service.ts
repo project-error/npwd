@@ -4,6 +4,8 @@ import { Contact, ContactDeleteDTO, ContactResp, PreDBContact } from '@typings/c
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { checkAndFilterImage } from './../utils/imageFiltering';
 import { _ContactsDB, ContactsDB } from './contacts.database';
+import { distanceBetweenCoords } from "../utils/miscUtils";
+import { generateProfileName } from "../utils/generateProfileName";
 
 class _ContactService {
   private readonly contactsDB: _ContactsDB;
@@ -75,6 +77,29 @@ class _ContactService {
       resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
       contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.message}`);
     }
+  }
+
+  async handleLocalShare(
+    reqObj: PromiseRequest,
+    resp: PromiseEventResp<void>
+  ): Promise<void> {
+    const source = reqObj.source.toString()
+    const sourceCoords = GetEntityCoords(GetPlayerPed(source))
+
+    const player = PlayerService.getPlayer(reqObj.source)
+    const name = player.getName()
+    const number = player.getPhoneNumber()
+
+    getPlayers()?.forEach(src => {
+      if (src === source) return;
+
+      const dist = distanceBetweenCoords(sourceCoords, GetEntityCoords(GetPlayerPed(src)))
+      if (dist <=3 ){
+        emitNet('npwd:contacts:receiveContact', src, {name, number})
+      }
+    })
+
+    resp({status: "ok"})
   }
 }
 
