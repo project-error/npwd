@@ -6,16 +6,11 @@ import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
-import { useRecoilValue } from 'recoil';
-import { phoneState } from '@os/phone/hooks/state';
-import { usePhone } from '@os/phone/hooks';
 
 export const useApps = () => {
   const { icons } = useNotifications();
   const theme = useTheme();
   const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
-  const externalApps = useRecoilValue(phoneState.extApps);
-  const { ResourceConfig } = usePhone();
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
@@ -52,13 +47,12 @@ export const useApps = () => {
         notification: icons.find((i) => i.key === app.id),
         NotificationIcon,
         notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
-        icon: <Icon />,
         isDisabled: app.disable,
       };
     });
   }, [icons, curIconSet, theme]);
 
-  const allApps = useMemo(() => [...apps, ...externalApps], [apps, externalApps]);
+  const allApps = useMemo(() => [...apps], [apps]);
   const getApp = useCallback(
     (id: string): IApp => {
       return allApps.find((a) => a.id === id) || null;
@@ -66,8 +60,8 @@ export const useApps = () => {
     [allApps],
   );
 
-  const filteredApps = apps.filter((app) => !ResourceConfig?.disabledApps.includes(app.id));
-  return { apps: filteredApps, getApp };
+  //const filteredApps = apps.filter((app) => !ResourceConfig?.disabledApps.includes(app.id));
+  return { apps, getApp };
 };
 
 export const useApp = (id: string): IApp => {

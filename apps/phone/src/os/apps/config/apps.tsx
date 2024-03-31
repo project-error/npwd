@@ -42,6 +42,19 @@ import {
   DARKCHAT_APP_TEXT_COLOR,
 } from '@apps/darkchat/darkchat.theme';
 import DarkChatApp from '../../../apps/darkchat/DarkChatApp';
+import DialerAppIcon from '../icons/material/app/DIALER';
+import BrowserIcon from '../icons/material/app/BROWSER';
+import MessagesIcon from '../icons/material/app/MESSAGES';
+import DarkchatIcon from '../icons/material/app/DARKCHAT';
+import ContactIcon from '../icons/material/app/CONTACTS';
+import Calculator from '../icons/material/app/CALCULATOR';
+import SettingsIcon from '../icons/material/app/SETTINGS';
+import MatchIcon from '../icons/material/app/MATCH';
+import TwitterIcon from '../icons/material/app/TWITTER';
+import MarketplaceIcon from '../icons/material/app/MARKETPLACE';
+import NotesIcon from '../icons/material/app/NOTES';
+import Camera from '../icons/material/app/CAMERA';
+import ExampleIcon from '../icons/material/app/EXAMPLE';
 
 export interface IAppConfig {
   id: string;
@@ -51,6 +64,7 @@ export interface IAppConfig {
   path: string;
   disable?: boolean;
   Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n; theme?: Theme }>;
+  icon: JSX.Element;
 }
 
 export type IApp = IAppConfig & {
@@ -68,6 +82,7 @@ export const APPS: IAppConfig[] = [
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
     backgroundColor: DIALER_APP_PRIMARY_COLOR,
+    icon: <DialerAppIcon />,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
@@ -77,6 +92,7 @@ export const APPS: IAppConfig[] = [
     nameLocale: 'BROWSER.NAME',
     backgroundColor: blue['300'],
     path: '/browser',
+    icon: <BrowserIcon />,
     color: common.white,
     Route: () => (
       <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
@@ -85,6 +101,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
+    icon: <MessagesIcon />,
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
@@ -95,6 +112,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'DARKCHAT',
     nameLocale: 'APPS_DARKCHAT',
+    icon: <DarkchatIcon />,
     backgroundColor: DARKCHAT_APP_PRIMARY_COLOR,
     color: DARKCHAT_APP_TEXT_COLOR,
     path: '/darkchat',
@@ -106,6 +124,7 @@ export const APPS: IAppConfig[] = [
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
     backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
+    icon: <ContactIcon />,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
     Route: () => (
@@ -115,6 +134,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
+    icon: <Calculator />,
     backgroundColor: purple[500],
     color: grey[50],
     path: '/calculator',
@@ -125,6 +145,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
+    icon: <SettingsIcon />,
     backgroundColor: '#383838',
     color: grey[50],
     path: '/settings',
@@ -135,6 +156,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MATCH',
     nameLocale: 'APPS_MATCH',
+    icon: <MatchIcon />,
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
@@ -143,6 +165,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'TWITTER',
     nameLocale: 'APPS_TWITTER',
+    icon: <TwitterIcon />,
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
@@ -153,6 +176,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
+    icon: <MarketplaceIcon />,
     backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
     color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
@@ -168,6 +192,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'NOTES',
     nameLocale: 'APPS_NOTES',
+    icon: <NotesIcon />,
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
@@ -176,6 +201,7 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CAMERA',
     nameLocale: 'APPS_CAMERA',
+    icon: <Camera />,
     backgroundColor: grey['A400'],
     color: common.white,
     path: '/camera',
@@ -188,6 +214,7 @@ if (import.meta.env.DEV) {
   APPS.push({
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',
+    icon: <ExampleIcon />,
     backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
