@@ -48,6 +48,10 @@
           "TITLE": "Streamer'io rėžimas",
           "DESCRIPTION": "Slepia nuotraukas prieš jas parodant"
         },
+        "ANONYMOUS_MODE": {
+          "TITLE": "Anoniminis režimas",
+          "DESCRIPTION": "Paslepia tavo telefono numerį nuo kitų žaidėjų"
+        },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Pasirinktas Fonas",
           "DIALOG_CONTENT": "Nustatyti foną pagal norimą nuotraukos nuoroda žemiau!",
@@ -84,11 +88,11 @@
         "UPDATE_SUCCESS": "Kontaktas sėkmingai atnaujintas!",
         "DELETE_FAILED": "Nepavyko ištrinti kontakto!",
         "DELETE_SUCCESS": "Kontaktas sėkmingai ištrintas!",
-        "PAYMENTFAILED": "The payment failed!",
-        "PAYMENTSENT": "The payment sent!"
+        "PAYMENTFAILED": "Apmokėjimas nepavyko!",
+        "PAYMENTSENT": "Apmokėjimas išsiųstas!"
       },
-      "AMOUNT": "How Much?",
-      "SENDMONEY": "Send Money",
+      "AMOUNT": "Kiek?",
+      "SENDMONEY": "Siųsti Pinigus",
       "PLACEHOLDER_SEARCH_CONTACTS": "Ieškoti kontaktų...",
       "FORM_NAME": "Vardas",
       "FORM_NUMBER": "Numeris",
@@ -100,7 +104,8 @@
         "CURRENT_CALL_TITLE": "Dabartinis Telefono Skambutis",
         "INCOMING_CALL_TITLE": "Ateinantis Telefono Skambutis",
         "CURRENT_CALL_WITH": "Skambutyje su {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} tau skambina!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} tau skambina!",
+        "CALLING": "Skambinama {{ transmitter }}..."
       },
       "INPUT_PLACEHOLDER": "Įvesk numerį",
       "NAVBAR_HISTORY": "Istorija",
@@ -155,6 +160,7 @@
     "MATCH": {
       "MESSAGES": {
         "PROFILE_MATCHED_AT": "Sutampa: {{ matchedAt }}",
+        "NEW_MATCH": "Naujas sutapimas!",
         "PROFILE_LAST_ACTIVE": "Paskutinis Aktyvumas: {{ lastActive }}",
         "LIKED": "PATINKA",
         "NOPE": "NEPATINKA"
@@ -176,6 +182,7 @@
       "EDIT_PROFILE_LOCATION": "Vieta",
       "EDIT_PROFILE_JOB": "Darbas",
       "EDIT_PROFILE_TAGS": "Žymos",
+      "EDIT_VOICE_MESSAGE": "Balso Žinutė",
       "EDIT_PROFILE_PREVIEW": "Peržiūrėti",
       "LIKE": "Patinka",
       "DISLIKE": "Nepatinka"
@@ -312,6 +319,7 @@
     },
     "COMING_SOON": "Greitu metu...",
     "INITIALIZING": "Inicijuojama",
+    "APPS_SYSTEM": "Sistema",
     "APPS_DIALER": "Telefonas",
     "APPS_CONTACTS": "Kontaktai",
     "APPS_MESSAGES": "Žinutės",
