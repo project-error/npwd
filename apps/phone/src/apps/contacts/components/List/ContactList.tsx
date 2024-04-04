@@ -116,7 +116,7 @@ const SelfContact = ({number, avatar}: {number: string, avatar:string}) => {
             )}
             <div>
               <p className="text-base font-medium text-neutral-900 dark:text-neutral-100">
-                My Number
+                {t('CONTACTS.MY_NUMBER')}
               </p>
               <p className="text-sm text-neutral-400">{number}</p>
             </div>
@@ -130,7 +130,7 @@ const SelfContact = ({number, avatar}: {number: string, avatar:string}) => {
                 <Clipboard size={20} />
               </button>
             </Tooltip>
-            <Tooltip title={"Nearby Share"} >
+            <Tooltip title={t('CONTACTS.NEARBY_SHARE')} >
               <button
                 onClick={shareLocal}
                 className="rounded-full bg-neutral-100 p-3 text-neutral-300 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-700"

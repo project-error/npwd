@@ -48,6 +48,10 @@
           "TITLE": "Streamerläge",
           "DESCRIPTION": "Göm bilder innan de visas"
         },
+        "ANONYMOUS_MODE": {
+          "TITLE": "Anonymt läge",
+          "DESCRIPTION": "Dölj ditt telefonnummer från andra spelare"
+        },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Anpassad bakgrundsbild",
           "DIALOG_CONTENT": "Ställ in en anpassad bakgrund genom att ange webbadressen till bilden nedan!",
@@ -77,14 +81,20 @@
       "FAILED_TO_TAKE_PHOTO": "Bilden kunde inte sparas."
     },
     "CONTACTS": {
+      "MY_NUMBER": "Mitt telefonnummer",
+      "NEARBY_SHARE": "Dela nära",
       "FEEDBACK": {
         "ADD_FAILED": "Det gick inte att skapa kontakten!",
         "ADD_SUCCESS": "Kontakten skapades!",
         "UPDATE_FAILED": "Det gick inte att uppdatera kontakten.",
         "UPDATE_SUCCESS": "Kontakten sparades!",
         "DELETE_FAILED": "Det gick inte att ta bort kontakten!",
-        "DELETE_SUCCESS": "Kontakten togs bort!"
+        "DELETE_SUCCESS": "Kontakten togs bort!",
+        "PAYMENTFAILED": "Betalningen misslyckades!",
+        "PAYMENTSENT": "Betalningen genomfördes!"
       },
+      "AMOUNT": "Summa?",
+      "SENDMONEY": "Skicka pengar",
       "PLACEHOLDER_SEARCH_CONTACTS": "Sök kontakt...",
       "FORM_NAME": "Namn",
       "FORM_NUMBER": "Nummer",
@@ -108,25 +118,26 @@
     "TWITTER": {
       "FEEDBACK": {
         "CREATE_PROFILE_SUCCESS": "Profilen skapades",
-        "CREATE_PROFILE_FAILURE": "Det gick inte skapa profilen",
+        "CREATE_PROFILE_FAILURE": "Det gick inte att skapa profilen",
         "EDIT_PROFILE_SUCCESS": "Du uppdaterade din profil",
         "EDIT_PROFILE_FAILURE": "Det gick inte uppdatera profilen",
-        "CREATE_FAILED": "Det gick inte att skicka din tweet!",
-        "RETWEET_FAILED": "Det gick inte att retweeta den här tweeten",
-        "RETWEET_EXISTS": "Du har redan retweetat den här tweeten!",
-        "LIKE_TWEET_FAILED": "Det gick inte att gilla tweeten",
-        "REPORT_TWEET_SUCCESS": "Du har rapporterat en tweet",
-        "REPORT_TWEET_FAILED": "Det gick inte att rapportera tweeten",
-        "FETCH_TWEETS_FAILED": "Det gick inte att hämta tweets",
-        "DELETE_TWEET_FAILED": "Det gick inte ta bort tweeten"
+        "CREATE_FAILED": "Det gick inte att skicka ditt inlägg!",
+        "RETWEET_FAILED": "Det gick inte att återpublicera det här inlägget",
+        "RETWEET_EXISTS": "Du har redan återpublicerat det här inlägget!",
+        "LIKE_TWEET_FAILED": "Det gick inte att gilla inlägget",
+        "REPORT_TWEET_SUCCESS": "Du har rapporterat ett inlägg",
+        "REPORT_TWEET_FAILED": "Det gick inte att rapportera inlägget",
+        "FETCH_TWEETS_FAILED": "Det gick inte att hämta inlägg",
+        "DELETE_TWEET_FAILED": "Det gick inte att ta bort inlägget",
+        "FILTER_FETCH_FAILED": "Det fick inte att filtrera inlägg"
       },
       "MESSAGES": {
-        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweetade något!",
-        "NEW_BROADCAST": "Ny tweet från @{{ profile_name }}!",
-        "UNREAD_MESSAGES": "Du har {{ count }} nya tweets att läsa!"
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} återpublicerade något!",
+        "NEW_BROADCAST": "Nytt inlägg från @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Du har {{ count }} nya inlägg att läsa!"
       },
       "SUBMIT_IMAGE": "Lägg till bild",
-      "TWEET": "Tweet",
+      "TWEET": "Inlägg",
       "REPORTED": " Rapporterad",
       "REPORT": "Rapportera",
       "IMAGE_PLACEHOLDER": "Infoga länk till bild / GIF",
@@ -134,12 +145,15 @@
       "EDIT_PROFILE_AVATAR": "Profilbildslänk",
       "AVATAR_CHOOSE_IMAGE": "Välj en bild",
       "EDIT_PROFILE_NAME": "Profilnamn",
-      "RETWEETED": "Retweetad",
+      "EDIT_PROFILE_BIO": "Bio",
+      "EDIT_PROFILE_LOCATION": "Plats",
+      "EDIT_PROFILE_JOB": "Jobb",
+      "RETWEETED": "Återpublicera",
       "TWEET_MESSAGE_CHAR_LIMIT": "Meddelandet överskrider teckengränsen",
       "TWEET_MESSAGE_NEW_LINE_LIMIT": "Meddelandet är över den nya radgränsen",
       "TWEET_MESSAGE_PLACEHOLDER": "Vad gör du just nu?",
-      "SEARCH_TWEETS_PLACEHOLDER": "Sök på profilnamn eller meddelande",
-      "SEARCH_TWEETS": "Sök efter tweets",
+      "SEARCH_TWEETS_PLACEHOLDER": "Sök på profilnamn eller inlägg",
+      "SEARCH_TWEETS": "Sök efter inlägg",
       "TIME_JUST_NOW": "Just nu",
       "TIME_MINUTES": "m",
       "TIME_HOURS": "h",
@@ -298,14 +312,17 @@
       "CLOSE": "Stäng",
       "CANCEL": "Avbryt",
       "TITLE": "Titel",
-      "SEND": "Skicka",
       "CONTENT": "Innehåll",
       "SHARE": "Dela",
+      "ADD": "Lägg till",
+      "SEND": "Skicka",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!",
+      ""
     },
     "COMING_SOON": "Kommer snart...",
     "INITIALIZING": "Initierar",
+    "APPS_SYSTEM": "System",
     "APPS_DIALER": "Telefon",
     "APPS_CONTACTS": "Kontakter",
     "APPS_MESSAGES": "Meddelanden",
@@ -314,8 +331,8 @@
     "APPS_BANK": "WhoDis Bank",
     "APPS_NOTES": "Anteckningar",
     "APPS_EXAMPLE": "Exempel app",
-    "APPS_TWITTER": "Twitter",
-    "APPS_MARKETPLACE": "Blocket",
+    "APPS_TWITTER": "Life Invader",
+    "APPS_MARKETPLACE": "Marknadsplatsen",
     "APPS_CAMERA": "Kamera",
     "APPS_MATCH": "Findr",
     "APPS_CALCULATOR_COPIED": "Resultatet kopierades till urklipp!",
@@ -336,6 +353,9 @@
     "GENERIC_TITLE": "Titel",
     "GENERIC_CONTENT": "Innehåll",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!",
+    "GENERIC_DB_ERROR": "Förfrågan om att skapa/uppdatera misslyckades.",
+    "GENERIC_INVALID_IMAGE_HOST": "Bild hosten du försöker använda är inte tillåten utav servern.",
+    "ERROR_RATE_LIMITED": "Du behöver vänta innan du kan göra det igen."
   }
 }
