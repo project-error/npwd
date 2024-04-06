@@ -317,8 +317,7 @@
       "ADD": "Lägg till",
       "SEND": "Skicka",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiera {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!",
-      ""
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopierade {{content}} till urklipp!"
     },
     "COMING_SOON": "Kommer snart...",
     "INITIALIZING": "Initierar",
