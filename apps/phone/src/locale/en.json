@@ -81,6 +81,8 @@
       "FAILED_TO_TAKE_PHOTO": "Photo could not be saved :("
     },
     "CONTACTS": {
+      "MY_NUMBER": "My number",
+      "NEARBY_SHARE": "Nearby Share",
       "FEEDBACK": {
         "ADD_FAILED": "Failed to created contact!",
         "ADD_SUCCESS": "Successfully created contact!",
