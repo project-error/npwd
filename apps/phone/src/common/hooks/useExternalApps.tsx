@@ -88,18 +88,14 @@ const useExternalAppsAction = () => {
   }, []);
 
   const getConfigs = useCallback(
-    async (externalApps: string[], existingApps: any[]) => {
+    async (externalApps: string[], existingApps: IApp[]) => {
       const appAlreadyLoaded = (appName: string) => {
-        return existingApps.some((app) => app.id === appName);
+        return existingApps.find((app) => app.id === appName);
       };
 
       const configs = await Promise.all(
         externalApps.map(async (appName) => {
-          if (appAlreadyLoaded(appName)) return null;
-
-          const app = await generateAppConfig(appName);
-          if (!app) return null;
-          return app;
+          return appAlreadyLoaded(appName) ?? await generateAppConfig(appName);
         }),
       );
 
