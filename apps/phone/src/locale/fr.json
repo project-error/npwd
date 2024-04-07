@@ -77,6 +77,8 @@
       "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :("
     },
     "CONTACTS": {
+      "MY_NUMBER": "Mon numéro",
+      "NEARBY_SHARE": "Partage à proximité",
       "FEEDBACK": {
         "ADD_FAILED": "Erreur de création du contact!",
         "ADD_SUCCESS": "Contact créé avec succès!",
