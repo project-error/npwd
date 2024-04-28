@@ -1,8 +1,8 @@
 import React from 'react';
-import { Twitter } from 'lucide-react';
+import { Bird } from 'lucide-react';
 
 const TwitterIcon: React.FC = () => (
-    <Twitter size={16} />
+    <Bird size={16} />
 )
 
 export default TwitterIcon;
