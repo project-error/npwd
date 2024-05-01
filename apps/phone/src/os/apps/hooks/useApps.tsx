@@ -6,11 +6,13 @@ import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
+import { usePhone } from '@os/phone/hooks';
 
 export const useApps = () => {
   const { icons } = useNotifications();
   const theme = useTheme();
   const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
+  const { ResourceConfig } = usePhone();
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
@@ -38,7 +40,7 @@ export const useApps = () => {
             <NotificationIcon htmlColor={theme.palette.text.primary} fontSize="small" />
           ),
           icon: <Icon />,
-          isDisabled: app.disable,
+          isDisabled: !!ResourceConfig?.disabledApps.find((a) => a === app.id),
         };
       }
 
@@ -47,10 +49,10 @@ export const useApps = () => {
         notification: icons.find((i) => i.key === app.id),
         NotificationIcon,
         notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
-        isDisabled: app.disable,
+        isDisabled: !!ResourceConfig?.disabledApps.find((a) => a === app.id),
       };
     });
-  }, [icons, curIconSet, theme]);
+  }, [icons, curIconSet, theme, ResourceConfig]);
 
   const allApps = useMemo(() => [...apps], [apps]);
   const getApp = useCallback(
