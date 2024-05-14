@@ -7,7 +7,7 @@ import { config } from '@npwd/config/server';
 import { v4 as uuidv4 } from 'uuid';
 import { FormData, fileFromSync } from 'node-fetch';
 import * as fs from 'fs';
-import { apiPhotoUpload, webhookPhotoUpload } from '../lib/http-service';
+import { apiPhotoUpload, r2PhotoUpload, webhookPhotoUpload } from '../lib/http-service';
 
 const exp = global.exports;
 const path = GetResourcePath('npwd') + '/uploads';
@@ -51,6 +51,7 @@ class _PhotoService {
 
           const filePath = `${path}/screenshot-${uuidv4()}.${config.images.imageEncoding}`;
 
+          // use this in r2
           const _data = Buffer.from(data.replace(`data:${type};base64`, ''), 'base64');
           fs.writeFileSync(filePath, _data);
 
@@ -86,6 +87,28 @@ class _PhotoService {
           }
 
           let returnData;
+
+          if (config.images.type == 'r2') {
+            await r2PhotoUpload(_data, this.TOKEN)
+              .then(async (result) => {
+                returnData = result;
+              })
+              .catch((err) => {
+                photoLogger.error(
+                  `Failed to upload photo, status code: ${err.statusCode}: ${err.errorText}`,
+                  {
+                    source: reqObj.source,
+                  },
+                );
+                return resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+              });
+
+            fs.rmSync(filePath);
+            const identifier = PlayerService.getIdentifier(reqObj.source);
+            const photo = await this.photoDB.uploadPhoto(identifier, returnData);
+            return resp({ status: 'ok', data: photo });
+          }
+          
           await apiPhotoUpload(body, this.TOKEN)
             .then((result) => {
               returnData = result;

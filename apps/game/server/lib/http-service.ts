@@ -1,6 +1,8 @@
 import fetch, { FormData } from 'node-fetch';
 import { config } from '@npwd/config/server';
 import { Player } from '../players/player.class';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { uuidv4 } from '../../utils/fivem';
 
 export async function tweetDiscordPost(url: string, body: string): Promise<any> {
   return new Promise((resolve, reject) =>
@@ -11,15 +13,38 @@ export async function tweetDiscordPost(url: string, body: string): Promise<any> 
         ['Content-Type']: 'application/json',
       },
     })
-    .then(async (res) => {
-      const response: any = await res.json();
-      resolve(response);
-    })
-    .catch((err) => {
-      reject(err);
-    })
+      .then(async (res) => {
+        const response: any = await res.json();
+        resolve(response);
+      })
+      .catch((err) => {
+        reject(err);
+      }),
   );
 }
+
+export async function r2PhotoUpload(body: string | FormData, token: string): Promise<any> {
+  return new Promise(async (resolve, reject) => {
+    const client = new S3Client({
+      region: "auto",
+      endpoint: config.images.r2.endpoint,
+      credentials: {
+          accessKeyId: config.images.r2.credentials.accessKeyId,
+          secretAccessKey: config.images.r2.credentials.secretAccessKey
+      }
+    });
+    const key = `${uuidv4()}.${config.images.imageEncoding}`;
+    const command = new PutObjectCommand({
+      Bucket: config.images.r2.bucketName,
+      Key: key,
+      Body: body,
+      ContentType: "image/" + config.images.imageEncoding
+    });
+    const response = await client.send(command);
+    resolve(`${config.images.url}${key}`); 
+  });
+}
+
 
 export async function apiPhotoUpload(body: string | FormData, token: string): Promise<any> {
   return new Promise((resolve, reject) =>
