@@ -26,7 +26,7 @@ jobs:
         with:
           environment: "prod"
           prerelease: false
-          automaticReleaseTag: true
+          automatic_release_tag: true
         id: get_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
