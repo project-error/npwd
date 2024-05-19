@@ -17,7 +17,7 @@
     "@discordjs/collection": "^0.2.4",
     "@npwd/config": "workspace:*",
     "@npwd/database": "workspace:*",
-    "@project-error/pe-utils": "^0.1.6",
+    "@project-error/pe-utils": "^0.3.0",
     "axios": "^0.21.4",
     "dayjs": "^1.11.7",
     "formdata-node": "^5.0.0",
