@@ -106,7 +106,8 @@
         "CURRENT_CALL_TITLE": "Appel en cours",
         "INCOMING_CALL_TITLE": "Appel entrant",
         "CURRENT_CALL_WITH": "En appel avec {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vous appelle!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vous appelle!",
+        "CALLING": "Appelle {{ transmitter }}..."
       },
       "INPUT_PLACEHOLDER": "Entrer un numéro",
       "NAVBAR_HISTORY": "Historique",
@@ -161,6 +162,7 @@
     "MATCH": {
       "MESSAGES": {
         "PROFILE_MATCHED_AT": "Matché: {{ matchedAt }}",
+        "NEW_MATCH": "Nouveau match!",
         "PROFILE_LAST_ACTIVE": "Dernière activité: {{ lastActive }}",
         "LIKED": "LIKE",
         "NOPE": "NOPE"
@@ -182,6 +184,7 @@
       "EDIT_PROFILE_LOCATION": "Localisation",
       "EDIT_PROFILE_JOB": "Job",
       "EDIT_PROFILE_TAGS": "Tags",
+      "EDIT_VOICE_MESSAGE": "Message Vocal",
       "EDIT_PROFILE_PREVIEW": "Voir l'aperçu",
       "LIKE": "Like",
       "DISLIKE": "Dislike"
@@ -239,18 +242,46 @@
       "NEW_MESSAGE": "Message...",
       "NEW_MESSAGE_GROUP": "Numéros de téléphone...",
       "SHARE_IMAGE_TITLE": "Voulez-vous partager cette image?",
+      "SHARE_NOTE_TITLE": "Voulez-vous partager cette note?",
       "SHARE_CONTACT_TITLE": "Voulez-vous partager ce contact?",
       "GROUP_CHAT_LABEL": "Nom du groupe...",
       "MEDIA_OPTION": "Caméra / Galerie",
       "CONTACT_OPTION": "Partager contact",
       "CONTACT_SHARED": "Contact partagé",
+      "NOTE_OPTION": "Partager Note",
       "LOCATION_OPTION": "Partager localisation",
       "LOCATION_MESSAGE": "Localisation partagée",
       "LOCATION_TOOLTIP": "Définir point GPS",
+      "NOTE_TOOLTIP": "Voir Note",
       "NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
       "INPUT_NAME_OR_NUMBER": "Rechercher des contacts ou tapez un numéro et appuyez sur Entrée",
       "ACTIONS_TITLE": "Actions",
       "ME": "Moi"
+    },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Échec: récupération des messages",
+        "JOIN_CHANNEL_FAILED": "Échec: rejoindre le channel",
+        "LEAVE_CHANNEL_FAILED": "Échec: quitter le channel",
+        "SEND_MESSAGE_FAILED": "Échec: envoyer le message",
+        "UPDATE_LABEL_FAILED": "Échec: mettre a jour le nom du channel",
+        "TRANSFER_OWNERSHIP_FAILED": "Échec: mettre a jour le propriétaire",
+        "FETCH_MEMBERS_FAILED": "Échec: récuperer les membres",
+        "DELETE_CHANNEL_FAILED": "Échec: suppression de la chaîne"
+      },
+      "TYPE_TO_CONFIRM": "Ecrivez \"{{ identifier }}\" pour confirmer.",
+      "LEAVE": "Quitter",
+      "NEW_CHANNEL_TITLE": "Rejoindre channel avec l'ID",
+      "DELETE_CHANNEL_TITLE": "Supprimer channel",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "ID Channel",
+      "JOIN_BUTTON": "Rejoindre channel",
+      "TRANSFER_OWNERSHIP": "Transferer propriétaire",
+      "MESSAGE_PLACEHOLDER": "Envoyer un message",
+      "MEDIA_PLACEHOLDER": "URL Image",
+      "MEDIA_UPLOAD": "Upload Image",
+      "MEDIA_GALLERY": "CHOISIR IMAGE",
+      "MEMBERS": "Membres",
+      "DANGER_ZONE": "Zone Dangereuse"
     },
     "RELATIVE_TIME": {
       "future": "dans %s",
@@ -284,11 +315,13 @@
       "CONTENT": "Contenu",
       "SHARE": "Partager",
       "ADD": "Ajouter",
+      "SEND": "Envoyer",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
       "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
     },
     "COMING_SOON": "Coming soon...",
     "INITIALIZING": "Initialisation",
+    "APPS_SYSTEM": "Système",
     "APPS_DIALER": "Téléphone",
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",
@@ -302,6 +335,7 @@
     "APPS_CAMERA": "Caméra",
     "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Résultat copié dans le presse-papier!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
     "GENERIC_LOADING": "Chargement...",
     "GENERIC_WAIT": "Veuillez patienter...",
