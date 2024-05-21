@@ -48,6 +48,10 @@
           "TITLE": "Mode streamer",
           "DESCRIPTION": "Masquer les images avant qu'elles ne soient montrées"
         },
+        "ANONYMOUS_MODE": {
+          "TITLE": "Mode anonyme",
+          "DESCRIPTION": "Cache votre numéro de téléphone aux autres utilisateurs"
+        },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",
           "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
