@@ -39,7 +39,14 @@
     "authorizationHeader": "Authorization",
     "authorizationPrefix": "",
     "useAuthorization": true,
-    "returnedDataIndexes": ["url"]
+    "returnedDataIndexes": ["url"],
+    "r2": {
+      "bucketName": "",
+      "endpoint" : "",
+      "credentials": {
+        "accessKeyId": "",
+        "secretAccessKey": ""
+      }
   },
   "imageSafety": {
     "filterUnsafeImageUrls": true,

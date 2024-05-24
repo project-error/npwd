@@ -80,6 +80,18 @@ interface ImageConfig {
   authorizationPrefix: string;
   useAuthorization: boolean;
   returnedDataIndexes: Array<any>;
+  r2: R2Config;
+}
+
+interface R2Config {
+  bucketName: string;
+  endpoint: string;
+  credentials: R2Credentials;
+}
+
+interface R2Credentials {
+  accessKeyId: string;
+  secretAccessKey: string;
 }
 
 interface PhoneAsItemConfig {
