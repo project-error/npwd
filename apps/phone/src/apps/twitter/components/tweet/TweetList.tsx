@@ -55,7 +55,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
         <div
           style={{ padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD' }}
         >
-          {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
+          {t('LOADING_TWEETS')}
         </div>
       );
     } else {
@@ -63,7 +63,7 @@ export function TweetList({ tweets }: { tweets: FormattedTweet[] }) {
         <div
           style={{ padding: '2rem', display: 'flex', justifyContent: 'center', color: '#64A5FD' }}
         >
-          {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
+          {t('NOTHING_TO_LOAD')}
         </div>
       );
     }
