@@ -1,8 +1,8 @@
 {
   "PhoneAsItem": {
-    "enabled": false,
-    "exportResource": "my-core-resource",
-    "exportFunction": "myCheckerFunction"
+    "enabled": true,
+    "exportResource": "qb-npwd",
+    "exportFunction": "HasPhone"
   },
   "customPhoneNumber": {
     "enabled": false,
@@ -10,7 +10,7 @@
     "exportFunction": "generateNumber"
   },
   "general": {
-    "useResourceIntegration": false,
+    "useResourceIntegration": true,
     "toggleKey": "f1",
     "toggleCommand": "phone",
     "defaultLanguage": "en",
@@ -24,16 +24,21 @@
   },
   "database": {
     "useIdentifierPrefix": false,
+<<<<<<< Updated upstream
+    "playerTable": "players",
+    "identifierColumn": "license",
+=======
     "playerTable": "users",
     "identifierColumn": "identifier",
+>>>>>>> Stashed changes
     "identifierType": "license",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://api.fivemanage.com/api/image",
-    "type": "image",
-    "imageEncoding": "webp",
+    "url": "https://pub-294dd7d5e3a04662a67535920a50bc34.r2.dev/",
+    "type": "r2",
+    "imageEncoding": "png",
     "contentType": "multipart/form-data",
     "useContentType": false,
     "authorizationHeader": "Authorization",
@@ -46,6 +51,7 @@
     "embedUnsafeImages": false,
     "embedUrl": "https://i.example.com/embed",
     "safeImageUrls": [
+      "https://pub-294dd7d5e3a04662a67535920a50bc34.r2.dev",
       "i.imgur.com",
       "i.file.glass",
       "dropbox.com",
