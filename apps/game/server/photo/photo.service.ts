@@ -48,8 +48,9 @@ class _PhotoService {
               type = 'image/webp';
               break;
           }
+          const key = `screenshot-${uuidv4()}.${config.images.imageEncoding}`
 
-          const filePath = `${path}/screenshot-${uuidv4()}.${config.images.imageEncoding}`;
+          const filePath = `${path}/${key}`;
 
           const _data = Buffer.from(data.replace(`data:${type};base64`, ''), 'base64');
           fs.writeFileSync(filePath, _data);
@@ -63,6 +64,29 @@ class _PhotoService {
             body = blob;
           } else {
             body.append(config.images.type, blob);
+          }
+
+          // r2 upload photo
+          if (config.images.type === 'r2') {
+            try {
+              // upload to r2
+              await exports['r2'].uploadObject(_data.buffer, key, config.images.contentType, GetConvar("bucketname", "false"));
+
+              const player = PlayerService.getPlayer(reqObj.source);
+
+              const identifier = PlayerService.getIdentifier(reqObj.source);
+              const photo = await this.photoDB.uploadPhoto(identifier, config.images.url + key);
+
+              // File is uploaded, so its safe to remove
+              fs.rmSync(filePath);
+
+              return resp({ status: 'ok', data: photo });
+            } catch (err) {
+              photoLogger.error(`Failed to upload photo: Error: ${err}. Message: ${err.message}`, {
+                source: reqObj.source,
+              });
+              return resp({ status: 'error', errorMsg: 'GENERIC_DB_ERROR' });
+            }
           }
 
           if (config.images.useWebhook) {
