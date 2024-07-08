@@ -24,13 +24,8 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-<<<<<<< Updated upstream
-    "playerTable": "players",
-    "identifierColumn": "license",
-=======
     "playerTable": "users",
     "identifierColumn": "identifier",
->>>>>>> Stashed changes
     "identifierType": "license",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
