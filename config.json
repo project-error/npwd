@@ -31,7 +31,7 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://pub-294dd7d5e3a04662a67535920a50bc34.r2.dev/",
+    "url": "https://pub-5d8fb6adba7145ecb343d908a829b99e.r2.dev/",
     "type": "r2",
     "imageEncoding": "png",
     "contentType": "image/png",
@@ -46,7 +46,7 @@
     "embedUnsafeImages": false,
     "embedUrl": "https://i.example.com/embed",
     "safeImageUrls": [
-      "https://pub-294dd7d5e3a04662a67535920a50bc34.r2.dev",
+      "https://pub-5d8fb6adba7145ecb343d908a829b99e.r2.dev",
       "i.imgur.com",
       "i.file.glass",
       "dropbox.com",
