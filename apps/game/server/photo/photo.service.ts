@@ -71,7 +71,7 @@ class _PhotoService {
             try {
               // upload to r2
               console.log('uploading photo');
-              exports['r2']
+              await exports['r2']
                 .uploadObject(_data.buffer, key, type, GetConvar('bucketname', 'false'))
                 .then(() => {
                   console.log('photo has been uploaded sucessfuly');
