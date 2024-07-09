@@ -34,7 +34,7 @@
     "url": "https://pub-294dd7d5e3a04662a67535920a50bc34.r2.dev/",
     "type": "r2",
     "imageEncoding": "png",
-    "contentType": "multipart/form-data",
+    "contentType": "image/png",
     "useContentType": false,
     "authorizationHeader": "Authorization",
     "authorizationPrefix": "",

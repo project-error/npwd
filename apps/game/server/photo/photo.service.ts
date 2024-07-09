@@ -48,7 +48,7 @@ class _PhotoService {
               type = 'image/webp';
               break;
           }
-          const key = `screenshot-${uuidv4()}.${config.images.imageEncoding}`
+          const key = `screenshot-${uuidv4()}.${config.images.imageEncoding}`;
 
           const filePath = `${path}/${key}`;
 
@@ -70,12 +70,20 @@ class _PhotoService {
           if (config.images.type === 'r2') {
             try {
               // upload to r2
-              await exports['r2'].uploadObject(_data.buffer, key, config.images.contentType, GetConvar("bucketname", "false"));
+              console.log('uploading photo');
+              exports['r2']
+                .uploadObject(_data.buffer, key, type, GetConvar('bucketname', 'false'))
+                .then(() => {
+                  console.log('photo has been uploaded sucessfuly');
+                });
 
               const player = PlayerService.getPlayer(reqObj.source);
 
               const identifier = PlayerService.getIdentifier(reqObj.source);
-              const photo = await this.photoDB.uploadPhoto(identifier, config.images.url + key);
+              console.log('photoDB uploading...');
+              const photo = await this.photoDB.uploadPhoto(identifier, config.images.url + key).then(() => {
+                console.log('photoDB has been uploaded!');
+              });
 
               // File is uploaded, so its safe to remove
               fs.rmSync(filePath);
