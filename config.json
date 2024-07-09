@@ -24,8 +24,8 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-    "playerTable": "users",
-    "identifierColumn": "identifier",
+    "playerTable": "players",
+    "identifierColumn": "license",
     "identifierType": "license",
     "profileQueries": true,
     "phoneNumberColumn": "phone_number"
@@ -46,7 +46,7 @@
     "embedUnsafeImages": false,
     "embedUrl": "https://i.example.com/embed",
     "safeImageUrls": [
-      "https://pub-5d8fb6adba7145ecb343d908a829b99e.r2.dev",
+      "pub-5d8fb6adba7145ecb343d908a829b99e.r2.dev",
       "i.imgur.com",
       "i.file.glass",
       "dropbox.com",
