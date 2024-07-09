@@ -171,6 +171,8 @@ class _PhotoService {
   ): Promise<void> {
     try {
       const identifier = PlayerService.getIdentifier(reqObj.source);
+      const galeryPhoto = reqObj.data;
+      console.log(`id: ${galeryPhoto.id} image: ${galeryPhoto.image}`);
       await this.photoDB.deletePhoto(reqObj.data, identifier);
 
       resp({ status: 'ok' });
