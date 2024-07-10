@@ -27,8 +27,6 @@ class _PhotoService {
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
     try {
-      //log
-      console.log('handleUploadPhoto log');
       exp['screenshot-basic'].requestClientScreenshot(
         reqObj.source,
         {
@@ -69,28 +67,20 @@ class _PhotoService {
           }
 
           // r2 upload photo
-          //log
-          console.log('pre check');
           if (config.images.type === 'r2') {
-            console.log('try..');
             try {
               // upload to r2
-              console.log('uploading photo');
-              await exports['r2']
-                .uploadObject(_data.buffer, key, type, GetConvar('bucketname', 'false'))
-                .then(() => {
-                  console.log('photo has been uploaded sucessfuly');
-                });
+              await exports['r2'].uploadObject(
+                _data.buffer,
+                key,
+                type,
+                GetConvar('bucketname', 'false'),
+              );
 
               const player = PlayerService.getPlayer(reqObj.source);
-
               const identifier = PlayerService.getIdentifier(reqObj.source);
-              console.log('photoDB uploading...');
-              const photo = await this.photoDB
-                .uploadPhoto(identifier, config.images.url + key)
-                .then(() => {
-                  console.log('photoDB has been uploaded!');
-                });
+
+              const photo = await this.photoDB.uploadPhoto(identifier, config.images.url + key);
 
               // File is uploaded, so its safe to remove
               fs.rmSync(filePath);
@@ -181,14 +171,10 @@ class _PhotoService {
       const galeryPhoto = reqObj.data;
 
       const key = galeryPhoto.image.includes('r2.dev/')
-      ? galeryPhoto.image.split('r2.dev/')[1]
-      : galeryPhoto.image;
-
-      //log
-      console.log(`id: ${galeryPhoto.id} image: ${galeryPhoto.image}`);
+        ? galeryPhoto.image.split('r2.dev/')[1]
+        : galeryPhoto.image;
+ 
       exports['r2'].deleteObject(key, GetConvar('bucketname', 'false')).then(() => {
-        //log
-        console.log(`Foto deletada do r2: ${key}`);
       });
       await this.photoDB.deletePhoto(reqObj.data, identifier);
 
@@ -209,22 +195,14 @@ class _PhotoService {
     const photoIds = reqObj.data;
     try {
       for (const photo of photoIds) {
-        //log
-        console.log('get photos by identifier ');
         this.photoDB.getPhotosByIdentifier(identifier).then((result) => {
-          //log
-          console.log('fotos obtidas. iniciando loop...');
           for (const galeryPhoto of result) {
             const key = galeryPhoto.image.includes('r2.dev/')
               ? galeryPhoto.image.split('r2.dev/')[1]
               : galeryPhoto.image;
 
-            //log
-            console.log(`id: ${galeryPhoto.id} key: ${key}`);
 
             exports['r2'].deleteObject(key, GetConvar('bucketname', 'false')).then(() => {
-              //log
-              console.log(`Foto deletada do r2: ${galeryPhoto.image}`);
             });
           }
         });
