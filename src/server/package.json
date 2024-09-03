@@ -1,0 +1,16 @@
+{
+  "name": "@npwd/server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "tsx index.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  },
+  "dependencies": {
+    "@citizenfx/server": "2.0.9655-1"
+  }
+}
