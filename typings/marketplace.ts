@@ -1,54 +1,54 @@
 export interface MarketplaceListing extends MarketplaceListingBase {
-  id: number;
-  identifier?: string;
-  username: string;
-  name: string;
-  number: string;
+	id: number;
+	identifier?: string;
+	username: string;
+	name: string;
+	number: string;
 }
 
 export interface MarketplaceListingBase {
-  title: string;
-  url: string;
-  description: string;
+	title: string;
+	url: string;
+	description: string;
 }
 
 export enum MarketplaceDatabaseLimits {
-  title = 255,
-  description = 255,
-  url = 255,
+	title = 255,
+	description = 255,
+	url = 255,
 }
 
 export enum MarketplaceResp {
-  CREATE_FAILED = 'MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED',
-  DUPLICATE = 'MARKETPLACE.FEEDBACK.DUPLICATE_LISTING',
-  INVALID_IMAGE_HOST = 'GENERIC_INVALID_IMAGE_HOST',
+	CREATE_FAILED = "MARKETPLACE.FEEDBACK.CREATE_LISTING_FAILED",
+	DUPLICATE = "MARKETPLACE.FEEDBACK.DUPLICATE_LISTING",
+	INVALID_IMAGE_HOST = "GENERIC_INVALID_IMAGE_HOST",
 }
 
 export enum MarketplaceEvents {
-  ADD_LISTING = 'npwd:addListing',
-  FETCH_LISTING = 'npwd:fetchAllListings',
-  DELETE_LISTING = 'npwd:marketplaceDeleteListing',
-  DELETE_LISTINGS_ON_DROP = 'npwd:marketplaceDeleteListingsOnDrop',
-  REPORT_LISTING = 'npwd:reportListing',
-  BROADCAST_ADD = 'npwd:sendMarketplaceBroadcastAdd',
-  BROADCAST_DELETE = 'npwd:sendMarketplaceBroadcastDelete',
+	ADD_LISTING = "npwd:addListing",
+	FETCH_LISTING = "npwd:fetchAllListings",
+	DELETE_LISTING = "npwd:marketplaceDeleteListing",
+	DELETE_LISTINGS_ON_DROP = "npwd:marketplaceDeleteListingsOnDrop",
+	REPORT_LISTING = "npwd:reportListing",
+	BROADCAST_ADD = "npwd:sendMarketplaceBroadcastAdd",
+	BROADCAST_DELETE = "npwd:sendMarketplaceBroadcastDelete",
 }
 
 export interface MarketplaceBroadcastAddDTO {
-  listing: MarketplaceListing;
+	listing: MarketplaceListing;
 }
 
 export interface MarketplaceDeleteDTO {
-  id: number;
+	id: number;
 }
 
 export interface MarketplaceReportDTO {
-  id: number;
+	id: number;
 }
 
 export type ReportListingDTO = {
-  id: number;
-  title: string;
-  description: string;
-  url: string;
+	id: number;
+	title: string;
+	description: string;
+	url: string;
 };

@@ -36,6 +36,10 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     addConversation(dto);
   };
 
+  const hello = () => {
+    console.log('hello');
+  };
+
   useEffect(() => {
     if (phoneNumber) {
       const contact = getContactByNumber(phoneNumber) || {
@@ -112,9 +116,9 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
           />
         </Box>
       )}
-      <div className='py-2 px-3 space-y-2'>
+      <div className="space-y-2 px-3 py-2">
         <button
-          className='bg-green-600 w-full rounded-md py-2 text-sm font-medium disabled:bg-gray-500/50 disabled:text-gray-500 hover:bg-green-700'
+          className="w-full rounded-md bg-green-600 py-2 text-sm font-medium hover:bg-green-700 disabled:bg-gray-500/50 disabled:text-gray-500"
           onClick={handleSubmit}
           disabled={disableSubmit}
           variant="contained"
@@ -122,7 +126,11 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         >
           {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
         </button>
-        <button onClick={handleCancel} variant="contained" className='bg-red-700 w-full text-sm font-medium py-2 rounded-md hover:bg-red-800'>
+        <button
+          onClick={handleCancel}
+          variant="contained"
+          className="w-full rounded-md bg-red-700 py-2 text-sm font-medium hover:bg-red-800"
+        >
           {t('GENERIC_CANCEL')}
         </button>
       </div>

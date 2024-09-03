@@ -27,16 +27,13 @@ function eventProcedure<T extends RouterFunction>(event: string, callback: T): F
 
 function createRouter() {
   return function <T extends RouterFunctions>(routes: T): T {
-    // Implementation to handle both individual route functions and nested routers
     const processedRoutes: Partial<RouterFunctions> = {};
 
     for (const key in routes) {
       const route = routes[key];
-      if (typeof route === 'function' || 'emit' in route || 'emitNet' in route) {
-        // If it's a function or a wrapped function, add it directly
+      if (typeof route === 'function') {
         processedRoutes[key] = route;
       } else {
-        // If it's a nested router, merge its routes
         Object.assign(processedRoutes, route);
       }
     }
