@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "tsx index.ts"
+    "dev:game": "tsx index.ts"
   },
   "devDependencies": {
     "tsx": "^4.19.0"
