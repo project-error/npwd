@@ -154,6 +154,8 @@
       "TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
       "SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
       "SEARCH_TWEETS": "Search for posts",
+      "LOADING_TWEETS": "Loading tweets...",
+      "NOTHING_TO_LOAD": "Nothing more to load!",
       "TIME_JUST_NOW": "Just now",
       "TIME_MINUTES": "m",
       "TIME_HOURS": "h",
