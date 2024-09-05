@@ -14,7 +14,7 @@ export function netEventController<TResponse>(
 		const eventId = uniqueId();
 		const listenName = `${event}:${eventId}`;
 
-		emitNet("removeEventListener", listenName, ...args);
+		emitNet(event, listenName, ...args);
 
 		const eventListener = (data: TResponse) => {
 			removeEventListener(listenName, eventListener);
