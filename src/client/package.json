@@ -1,17 +1,17 @@
 {
-  "name": "@npwd/client",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "node index.js",
-    "dev:game": "tsx index.ts"
-  },
-  "devDependencies": {
-    "tsx": "^4.19.0"
-  },
-  "dependencies": {
-    "@citizenfx/client": "^2.0.4170-1",
-    "@types/node": "^22.5.2"
-  }
+	"name": "@npwd/client",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "node index.js",
+		"dev:game": "tsx index.ts"
+	},
+	"devDependencies": {
+		"tsx": "^4.19.0"
+	},
+	"dependencies": {
+		"@citizenfx/client": "^2.0.4170-1",
+		"@types/node": "^22.5.2"
+	}
 }
