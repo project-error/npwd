@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@citizenfx/client": "^2.0.4170-1",
-		"@types/node": "^22.5.2"
+		"@types/node": "^22.5.2",
+		"nanoid": "^5.0.7"
 	}
 }
