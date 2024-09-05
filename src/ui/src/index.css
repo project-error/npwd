@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  background-color: black;
+}
+
+#root {
+  --geist-foreground: #ffffff;
+  --geist-background: #000000;
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-3: #999999;
+  --accents-4: #888888;
+  --accents-5: #666666;
+  --accents-6: #444444;
+  --accents-7: #333333;
+  --accents-8: #111111;
+  --accents-9: #000000;
+
+  --geist-cyan: #79ffe1;
+  --geist-purple: #f81ce5;
+  --geist-violet: #7928ca;
+  --geist-alert: #ff0080;
+  --geist-selection: #79ffe1;
+  --geist-link-color: #0070f3;
+  --geist-marketing-gray: #f0f0f0;
+  --geist-marketing-dark: #111111;
+  --geist-code: #f81ce5;
+  --geist-secondary: #333333;
+  --geist-secondary-light: #000000;
+  --geist-secondary-lighter: #000000;
+  --geist-secondary-lightest: #000000;
+  --geist-border: #eaeaea;
+  --geist-error: #ff0080;
+  --geist-error-light: #ff6699;
+  --geist-error-lighter: #ff99bb;
+  --geist-error-lightest: #ffccdd;
+  --geist-success: #0070f3;
+  --geist-success-light: #3291ff;
+  --geist-success-lighter: #80b8ff;
+  --geist-success-lightest: #d2eaff;
+  --geist-warning: #f5a623;
+  --geist-warning-light: #f7b955;
+  --geist-warning-lighter: #f9d88c;
+  --geist-warning-lightest: #fcf0d2;
+  --geist-shadow: rgba(0, 0, 0, 0.12);
+  --geist-shadow-light: rgba(0, 0, 0, 0.1);
+  --geist-shadow-lighter: rgba(0, 0, 0, 0.1);
+}

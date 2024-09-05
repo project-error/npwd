@@ -1,7 +1,12 @@
-import { initDB } from "./database/knex";
+import { initDB } from './database/knex';
 
 function bootstrap() {
-	initDB();
+    initDB();
 }
 
-bootstrap();
+/**
+ * Just to avoid crashing when running dev in root for now
+ */
+if (typeof RegisterCommand !== 'undefined') {
+    bootstrap();
+}
