@@ -1,5 +1,19 @@
 {
-  "compilerOptions": {
-    "types": ["@citizenfx/server"]
-  }
+	"compilerOptions": {
+		"outDir": "./",
+		"noImplicitAny": true,
+		"module": "commonjs",
+		"target": "ES2022",
+		"allowJs": false,
+		"lib": ["es2022"],
+		"types": ["@citizenfx/server", "@types/node"],
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
+	},
+	"include": ["./**/*"],
+	"exclude": ["**/node_modules"]
 }

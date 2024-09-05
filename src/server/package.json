@@ -1,16 +1,19 @@
 {
-  "name": "@npwd/server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "tsx index.ts"
-  },
-  "devDependencies": {
-    "tsx": "^4.19.0"
-  },
-  "dependencies": {
-    "@citizenfx/server": "2.0.9655-1"
-  }
+	"name": "@npwd/server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "tsx index.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^22.5.2",
+		"tsx": "^4.19.0"
+	},
+	"dependencies": {
+		"@citizenfx/server": "2.0.9655-1",
+		"knex": "^3.1.0",
+		"mysql2": "^3.11.0"
+	}
 }

@@ -1,1 +1,7 @@
-console.log("Server started.");
+import { initDB } from "./database/knex";
+
+function bootstrap() {
+	initDB();
+}
+
+bootstrap();
