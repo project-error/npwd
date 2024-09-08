@@ -1,10 +1,12 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Frame } from './Frame';
 
 import { useEffect } from 'react';
 import { setTheme } from './utils/theme';
+import { Footer } from './components/Main/Footer';
+import { Header } from './components/Main/Header';
 
-const lightTheme = {
+export const lightTheme = {
   textColor: {
     primary: '#000',
     secondary: '#222',
@@ -15,7 +17,7 @@ const lightTheme = {
   },
 };
 
-const darkTheme = {
+export const darkTheme = {
   textColor: {
     primary: '#fff',
     secondary: '#ddd',
@@ -27,36 +29,22 @@ const darkTheme = {
 };
 
 function App() {
-  const toggleTheme = () => {
-    const rootElement = document.getElementById('root')!;
-    const currentTheme =
-      rootElement.style.getPropertyValue('--bg-primary') === lightTheme.backgroundColor.primary
-        ? darkTheme
-        : lightTheme;
-
-    setTheme(currentTheme);
-  };
-
   useEffect(() => {
-    setTheme(lightTheme);
+    localStorage.getItem('theme') === JSON.stringify(darkTheme)
+      ? setTheme(darkTheme)
+      : setTheme(lightTheme);
   }, []);
 
   return (
     <Frame>
-      <main className="flex flex-col gap-2 flex-1">
-        <header className="h-8 bg-slate-400 text-secondary px-6 flex gap-4">
-          (This is the header)
-        </header>
+      <main className="flex flex-col flex-1 overflow-hidden">
+        <Header />
 
-        <Outlet />
+        <section className="w-full overflow-auto h-full flex-1 flex flex-col">
+          <Outlet />
+        </section>
 
-        <button className="border p-4 rounded-lg m-8" onClick={toggleTheme}>
-          toggle theme
-        </button>
-
-        <footer className="h-8 bg-slate-400 text-secondary px-6 flex gap-4 items-center mt-auto">
-          <Link to="/home">Home</Link>
-        </footer>
+        <Footer />
       </main>
     </Frame>
   );

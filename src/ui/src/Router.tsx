@@ -1,7 +1,12 @@
 import { createHashRouter, Link } from 'react-router-dom';
 import { HomeView } from './views/Home';
-import { ContactsApp } from './apps/contacts';
+import { ContactsView } from './Apps/Calls/Contacts';
 import App from './App';
+import { CallsApp } from './Apps/Calls';
+import { ContactView } from './Apps/Calls/Contacts/Contact';
+import { Call } from './Apps/Calls/Call';
+import { KeypadView } from './Apps/Calls/Keypad';
+import { LatestView } from './Apps/Calls/Latest';
 
 export const router = createHashRouter([
   {
@@ -16,8 +21,30 @@ export const router = createHashRouter([
         path: 'apps',
         children: [
           {
-            path: 'contacts',
-            element: <ContactsApp />,
+            path: 'calls',
+            element: <CallsApp />,
+            children: [
+              {
+                path: 'call/:phoneNumber',
+                element: <Call />,
+              },
+              {
+                path: 'keypad',
+                element: <KeypadView />,
+              },
+              {
+                path: 'contacts',
+                element: <ContactsView />,
+              },
+              {
+                path: 'contacts/:contactId',
+                element: <ContactView />,
+              },
+              {
+                path: 'latest',
+                element: <LatestView />,
+              },
+            ],
           },
         ],
       },

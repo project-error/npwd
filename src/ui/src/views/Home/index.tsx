@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 /** List of apps */
 const apps = [
   {
+    id: 'calls',
+    name: 'Calls',
+    logo: '📞',
+  },
+  {
     id: 'contacts',
     name: 'Contacts',
-    logo: '📞',
+    logo: '📇',
   },
   {
     id: 'messages',

@@ -15,4 +15,5 @@ export const setTheme = (theme: Theme) => {
   rootElement.style.setProperty('--bg-secondary', theme.backgroundColor.secondary);
   rootElement.style.setProperty('--text-primary', theme.textColor.primary);
   rootElement.style.setProperty('--text-secondary', theme.textColor.secondary);
+  localStorage.setItem('theme', JSON.stringify(theme));
 };
