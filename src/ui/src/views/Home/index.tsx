@@ -8,9 +8,9 @@ const apps = [
     logo: '📞',
   },
   {
-    id: 'contacts',
-    name: 'Contacts',
-    logo: '📇',
+    id: 'casino',
+    name: 'Casino',
+    logo: '🎰',
   },
   {
     id: 'messages',
@@ -31,16 +31,6 @@ const apps = [
     id: 'camera',
     name: 'Camera',
     logo: '📸',
-  },
-  {
-    id: 'weather',
-    name: 'Weather',
-    logo: '🌤️',
-  },
-  {
-    id: 'maps',
-    name: 'Maps',
-    logo: '🗺️',
   },
   {
     id: 'clock',

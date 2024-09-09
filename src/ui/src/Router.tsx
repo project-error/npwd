@@ -7,6 +7,7 @@ import { ContactView } from './Apps/Calls/Contacts/Contact';
 import { Call } from './Apps/Calls/Call';
 import { KeypadView } from './Apps/Calls/Keypad';
 import { LatestView } from './Apps/Calls/Latest';
+import { CasinoApp } from './Apps/Casino';
 
 export const router = createHashRouter([
   {
@@ -45,6 +46,10 @@ export const router = createHashRouter([
                 element: <LatestView />,
               },
             ],
+          },
+          {
+            path: 'casino',
+            element: <CasinoApp />,
           },
         ],
       },
