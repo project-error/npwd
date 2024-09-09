@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { setTheme } from './utils/theme';
 import { Footer } from './components/Main/Footer';
 import { Header } from './components/Main/Header';
+import { useNuiEvent } from 'react-fivem-hooks';
 
 export const lightTheme = {
   textColor: {
@@ -34,6 +35,15 @@ function App() {
       ? setTheme(darkTheme)
       : setTheme(lightTheme);
   }, []);
+
+  const { data: isOpen } = useNuiEvent<boolean>({
+    event: 'SET_PHONE_OPEN',
+    defaultValue: false,
+  });
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <Frame>

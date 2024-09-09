@@ -18,5 +18,5 @@ echo "Moving $name to destination $destination"
 source="./dist"
 
 # Move source to destination
-cp -r $source "$destination/$name"
+cp -Tr $source "$destination/$name"
 
