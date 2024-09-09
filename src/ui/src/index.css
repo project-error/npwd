@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spinAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.spin {
+  animation: spinAnimation 1s ease-in-out;
+}
+
 #root {
   --geist-foreground: #ffffff;
   --geist-background: #000000;
