@@ -1,19 +1,23 @@
 {
-	"name": "@npwd/server",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
-	"scripts": {
-		"start": "node index.js",
-		"dev": "tsx index.ts"
-	},
-	"devDependencies": {
-		"@types/node": "^22.5.2",
-		"tsx": "^4.19.0"
-	},
-	"dependencies": {
-		"@citizenfx/server": "2.0.9655-1",
-		"knex": "^3.1.0",
-		"mysql2": "^3.11.0"
-	}
+  "name": "@npwd/server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "tsx watch --env-file=.env index.ts",
+    "build": "node esbuild.config.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.2",
+    "tsx": "^4.19.0"
+  },
+  "dependencies": {
+    "@citizenfx/server": "2.0.9655-1",
+    "fivem-router": "^1.0.12",
+    "knex": "^3.1.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.0",
+    "tsup": "^8.2.4"
+  }
 }

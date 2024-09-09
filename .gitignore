@@ -2,6 +2,7 @@
 .idea
 
 .docker
+.env
 
 npwd_temp
 

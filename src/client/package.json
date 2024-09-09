@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "node index.js",
-		"dev:game": "tsx index.ts"
+		"dev:game": "tsx index.ts",
+		"build": "tsup index.ts"
 	},
 	"devDependencies": {
 		"tsx": "^4.19.0"
@@ -13,6 +14,7 @@
 	"dependencies": {
 		"@citizenfx/client": "^2.0.4170-1",
 		"@types/node": "^22.5.2",
-		"nanoid": "^5.0.7"
+		"nanoid": "^5.0.7",
+		"tsup": "^8.2.4"
 	}
 }

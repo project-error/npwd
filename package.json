@@ -39,6 +39,8 @@
 		"npwd-config": "pnpm --filter @npwd/config",
 		"ui": "pnpm --filter @npwd/keyos",
 		"query": "pnpm --filter @core/query",
+		"bundle": "sh scripts/bundle.sh",
+		"move": "sh scripts/move.sh",
 		"router": "pnpm --filter @core/router"
 	},
 	"husky": {

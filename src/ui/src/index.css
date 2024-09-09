@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background-color: black;
-}
-
 #root {
   --geist-foreground: #ffffff;
   --geist-background: #000000;
