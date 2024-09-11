@@ -6,6 +6,7 @@ import { setTheme } from './utils/theme';
 import { Footer } from './components/Main/Footer';
 import { Header } from './components/Main/Header';
 import { useNuiEvent } from 'react-fivem-hooks';
+import { isEnvBrowser } from './utils/game';
 
 export const lightTheme = {
   textColor: {
@@ -38,7 +39,7 @@ function App() {
 
   const { data: isOpen } = useNuiEvent<boolean>({
     event: 'SET_PHONE_OPEN',
-    defaultValue: false,
+    defaultValue: isEnvBrowser(),
   });
 
   if (!isOpen) {
