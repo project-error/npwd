@@ -1,9 +1,15 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { useLatestPath } from '../../hooks/useLatestPath';
+import { useActiveCall } from '../../api/hooks/useActiveCall';
+import { setCallChannel } from '../../api/calls';
+import { useCurrentDevice } from '../../api/hooks/useCurrentDevice';
 
 export const CallsApp = () => {
+  const navigate = useNavigate();
+  const [call] = useActiveCall();
+  const currentDevice = useCurrentDevice();
+
   useEffect(() => {
     document.title = 'Calls';
   }, []);
@@ -15,7 +21,18 @@ export const CallsApp = () => {
    * This is a common pattern in mobile apps, where the user is redirected to
    * the last visited screen when they return to the app.
    */
-  useLatestPath('/apps/calls');
+  // useLatestPath('/apps/calls');
+
+  useEffect(() => {
+    if (call) {
+      if (call.accepted_at) {
+        setCallChannel(call.id);
+      }
+      navigate('/apps/calls/call');
+    } else {
+      setCallChannel(0);
+    }
+  }, [call]);
 
   return (
     <div className="flex flex-col gap-2 flex-1 h-full overflow-hidden">

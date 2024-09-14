@@ -1,4 +1,6 @@
-import { SimCard, InsertSimCard } from '../database/schemas/SimCard';
+import { PhoneNumberAlreadyRegisteredError } from '../../shared/Errors';
+import { SimCard } from '../../shared/Types';
+import { InsertSimCard } from '../database/schemas/SimCard';
 import SimCardRepository from '../repositories/SimCardRepository';
 
 class SimCardService {
@@ -17,7 +19,13 @@ class SimCardService {
   }
 
   public async createSimCard(simCard: InsertSimCard): Promise<SimCard> {
-    return this.simCardRepository.createSimCard(simCard);
+    try {
+      return await this.simCardRepository.createSimCard(simCard);
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new PhoneNumberAlreadyRegisteredError();
+      }
+    }
   }
 
   public async updateSimCard(simCard: SimCard): Promise<SimCard> {

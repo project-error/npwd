@@ -7,12 +7,12 @@ export const useLatestPath = (rootPath: string) => {
   const resolvedPath = useResolvedPath(location.pathname);
   const lsKey = `lastVisited${rootPath}Path`;
 
-  console.log('resolvedPath', resolvedPath);
-  console.log('rootPath', rootPath);
-
   useEffect(() => {
-    if (resolvedPath.pathname.startsWith(rootPath) && resolvedPath.pathname !== rootPath) {
-      console.log('saving last visited path', resolvedPath.pathname);
+    if (!resolvedPath.pathname.startsWith(rootPath)) {
+      return;
+    }
+
+    if (resolvedPath.pathname !== rootPath) {
       localStorage.setItem(lsKey, resolvedPath.pathname);
     }
   }, [resolvedPath]);

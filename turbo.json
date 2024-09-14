@@ -10,6 +10,9 @@
     },
     "dev:game": {
       "cache": false
+    },
+    "build:game": {
+      "cache": false
     }
   }
 }

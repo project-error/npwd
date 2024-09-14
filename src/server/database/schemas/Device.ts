@@ -1,19 +1,17 @@
+import { Device, SimCard } from '../../../shared/Types';
 import { DBInstance } from '../knex';
-import { createDbTable } from '../utils';
+import { createDbTable, DATABASE_PREFIX } from '../utils';
 
-export interface Device {
-  id: number;
-  sim_card_id: string;
-  created_at: Date;
-  updated_at: Date;
-}
+export interface DeviceWithSimCard extends Device, SimCard {}
 
-export type InsertDevice = Pick<Device, 'sim_card_id'>;
+export type InsertDevice = Pick<Device, 'sim_card_id' | 'identifier'>;
 
 export const createDevicesTable = () => {
-  createDbTable('devices', (table) => {
+  createDbTable('device', (table) => {
     table.increments('id').primary();
-    table.string('sim_card_id').nullable();
+    // Generate random string for the identifier
+    table.string('identifier').notNullable().unique().defaultTo(DBInstance.fn.uuid());
+    table.integer('sim_card_id').unsigned().references('id').inTable(`${DATABASE_PREFIX}sim_card`);
     table.dateTime('created_at').notNullable().defaultTo(DBInstance.fn.now());
     table.dateTime('updated_at').notNullable().defaultTo(DBInstance.fn.now());
   });

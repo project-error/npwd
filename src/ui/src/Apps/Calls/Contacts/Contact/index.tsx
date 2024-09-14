@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import { contacts } from '..';
+// import { contacts } from '..';
 import { Link } from 'react-router-dom';
 import { TopNavigation } from '../../../../components/Navigation/TopNavigation';
 
@@ -9,7 +9,10 @@ export const ContactView = () => {
   if (!contactId) {
     return null;
   }
-  const contact = contacts.find((contact) => contact.id === contactId);
+  const contact = {
+    name: 'John Doe',
+    phoneNumbers: ['123-456-7890'],
+  };
 
   if (!contact) {
     return null;

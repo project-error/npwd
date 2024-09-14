@@ -1,2 +1,1 @@
-export const isEnvBrowser = (): boolean =>
-  !(window as unknown as { invokeNative: CallableFunction }).invokeNative;
+export const isEnvBrowser = (): boolean => !('invokeNative' in window);

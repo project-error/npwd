@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "downlevelIteration": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "ES2015"],
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -15,5 +15,5 @@
     "noFallthroughCasesInSwitch": true,
     "jsx": "preserve"
   },
-  "include": ["src"]
+  "include": ["src", "../shared"]
 }

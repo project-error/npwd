@@ -1,4 +1,5 @@
-import { Device, InsertDevice } from '../database/schemas/Device';
+import { Device } from '../../shared/Types';
+import { InsertDevice } from '../database/schemas/Device';
 import DeviceRepository from '../repositories/DeviceRepository';
 
 class DeviceService {
@@ -10,6 +11,10 @@ class DeviceService {
 
   public async getDevices(): Promise<Device[]> {
     return this.deviceRepository.getDevices();
+  }
+
+  public async getDeviceBySid(simCardId: number): Promise<Device | null> {
+    return this.deviceRepository.getDeviceBySid(simCardId);
   }
 
   public async getDeviceById(deviceId: number): Promise<Device | null> {

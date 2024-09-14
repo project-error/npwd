@@ -1,6 +1,6 @@
 import knex from 'knex';
 import { getConnectionOptions } from './utils';
-import { createCallsTable } from './schemas/call';
+import { createCallsTable } from './schemas/Call';
 import { createDevicesTable } from './schemas/Device';
 import { createSimCardsTable } from './schemas/SimCard';
 

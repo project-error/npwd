@@ -3,21 +3,21 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PropsWithChildren } from 'react';
 import { NuiProvider } from 'react-fivem-hooks';
 
-export const Providers = ({ children }: PropsWithChildren) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        retry: false,
-      },
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      retry: false,
     },
-    queryCache: new QueryCache({
-      onError: (error) => {
-        console.error(error);
-      },
-    }),
-  });
+  },
+  queryCache: new QueryCache({
+    onError: (error) => {
+      console.error(error);
+    },
+  }),
+});
 
+export const Providers = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       <NuiProvider>

@@ -26,6 +26,10 @@ export const router = createHashRouter([
             element: <CallsApp />,
             children: [
               {
+                path: 'call',
+                element: <Call />,
+              },
+              {
                 path: 'call/:phoneNumber',
                 element: <Call />,
               },

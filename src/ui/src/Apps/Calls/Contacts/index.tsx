@@ -2,73 +2,39 @@
 
 import { Link } from 'react-router-dom';
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
-
-export const contacts = [
-  {
-    id: '1',
-    name: 'Alice Doe',
-    phoneNumbers: ['+1234567890'],
-  },
-  {
-    id: '2',
-    name: 'Bob Doe',
-    phoneNumbers: ['+1234567891', '+1234567892'],
-  },
-  {
-    id: '3',
-    name: 'Charlie Doe',
-    phoneNumbers: ['+1234567893', '+1234567894', '+1234567895'],
-  },
-  {
-    id: '4',
-    name: 'David Doe',
-    phoneNumbers: ['+1234567896'],
-  },
-  {
-    id: '5',
-    name: 'Eve Doe',
-    phoneNumbers: ['+1234567897', '+1234567898'],
-  },
-  {
-    id: '6',
-    name: 'Frank Doe',
-    phoneNumbers: ['+1234567899'],
-  },
-  {
-    id: '7',
-    name: 'Grace Doe',
-    phoneNumbers: ['+1234567800', '+1234567801', '+1234567802'],
-  },
-  {
-    id: '8',
-    name: 'Harry Doe',
-    phoneNumbers: ['+1234567803'],
-  },
-  {
-    id: '9',
-    name: 'Isabel Doe',
-    phoneNumbers: ['+1234567804', '+1234567805'],
-  },
-  {
-    id: '10',
-    name: 'Jack Doe',
-    phoneNumbers: ['+1234567806'],
-  },
-];
+import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
+import { getDevices } from '../../../api/device';
+import { useQuery } from '@tanstack/react-query';
 
 export const ContactsView = () => {
+  const device = useCurrentDevice();
+  const { data: { payload } = {} } = useQuery({
+    queryKey: ['devices'],
+    queryFn: getDevices,
+  });
+
+  const filteredPayload =
+    payload?.filter((contact) => contact.phone_number !== device?.phone_number) ?? [];
+
   return (
     <main className="flex flex-col">
       <TopNavigation title="Contacts" />
 
+      {device && (
+        <div className="pt-2 px-4 flex flex-col">
+          <span>Your phone number</span>
+          <span className="font-semibold">{device.phone_number}</span>
+        </div>
+      )}
+
       <ul className="flex flex-col gap-2 p-4">
-        {contacts.map((contact) => (
+        {filteredPayload.map((contact) => (
           <Link
             key={contact.id}
             className="bg-secondary p-4"
-            to={`/apps/calls/contacts/${contact.id}`}
+            to={`/apps/calls/call/${contact.phone_number}`}
           >
-            <li className="text-xl font-bold rounded-lg bg-secondary">{contact.name}</li>
+            <li className="text-xl font-bold rounded-lg bg-secondary">{contact.phone_number}</li>
           </Link>
         ))}
       </ul>

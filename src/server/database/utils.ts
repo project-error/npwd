@@ -77,13 +77,13 @@ export function getConnectionOptions(): ConnectionOptions {
   };
 }
 
-export const DATABASE_PREFIX = 'tmp_phone';
+export const DATABASE_PREFIX = 'tmp_phone_';
 export const createDbTable = async (
   _tableName: string,
   callback: (table: knex.Knex.CreateTableBuilder) => void,
   dropIfExists = process.env.DROP_TABLE_BEFORE_CREATING === 'true',
 ) => {
-  const tableName = `${DATABASE_PREFIX}_${_tableName}`;
+  const tableName = `${DATABASE_PREFIX}${_tableName}`;
   const tableExists = await DBInstance.schema.hasTable(tableName);
 
   if (tableExists) {
