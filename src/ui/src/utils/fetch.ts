@@ -36,8 +36,8 @@ export const instance = axios.create({
   baseURL: isEnvBrowser() ? 'http://localhost:3001' : `https://${getResourceName()}`,
   headers: {
     'Content-Type': 'application/json',
-    'x-source': id,
-    'x-device-id': id,
+    'x-source': id || 1,
+    'x-device-id': id || 1,
   },
 });
 

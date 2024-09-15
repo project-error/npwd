@@ -11,6 +11,8 @@ import { closePhone } from './api/phone';
 import { useBroadcastEvent } from './hooks/useBroadcastEvent';
 import { queryClient } from './Providers';
 import { useCurrentDevice } from './api/hooks/useCurrentDevice';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useKeys } from './hooks/useKeys';
 
 export const lightTheme = {
   textColor: {
@@ -37,6 +39,10 @@ export const darkTheme = {
 function App() {
   const navigate = useNavigate();
   const currentDevice = useCurrentDevice();
+  const y = useMotionValue(0);
+
+  const opacity = useTransform(y, [-200, -50, 0], [0, 1, 1]);
+  const scale = useTransform(y, [-200, -50, 0], [0.8, 1, 1]);
 
   useEffect(() => {
     localStorage.getItem('theme') === JSON.stringify(darkTheme)
@@ -50,19 +56,6 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        closePhone();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => {
-      window.removeEventListener('keydown', handleEscape);
-    };
-  }, []);
-
   const { data: isOpen } = useNuiEvent<boolean>({
     event: 'SET_PHONE_OPEN',
     defaultValue: isEnvBrowser(),
@@ -73,6 +66,11 @@ function App() {
     if (data) {
       navigate('/apps/calls/call');
     }
+  });
+
+  useKeys({
+    Escape: closePhone,
+    Backspace: () => navigate(-1),
   });
 
   /**
@@ -92,15 +90,20 @@ function App() {
 
   return (
     <Frame>
-      <main className="flex flex-col flex-1 overflow-hidden">
+      <motion.div className="flex flex-col flex-1 overflow-hidden">
         <Header />
 
-        <section className="w-full overflow-auto h-full flex-1 flex flex-col">
+        <motion.div
+          className="w-full overflow-auto h-full flex-1 flex flex-col"
+          style={{ scale, opacity }}
+          initial={{ y: -200 }}
+          animate={{ y: 0 }}
+        >
           <Outlet />
-        </section>
+        </motion.div>
 
-        <Footer />
-      </main>
+        <Footer y={y} />
+      </motion.div>
     </Frame>
   );
 }

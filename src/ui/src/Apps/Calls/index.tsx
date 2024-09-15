@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useActiveCall } from '../../api/hooks/useActiveCall';
 import { setCallChannel } from '../../api/calls';
 import { useCurrentDevice } from '../../api/hooks/useCurrentDevice';
+import { useLatestPath } from '../../hooks/useLatestPath';
 
 export const CallsApp = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const CallsApp = () => {
    * This is a common pattern in mobile apps, where the user is redirected to
    * the last visited screen when they return to the app.
    */
-  // useLatestPath('/apps/calls');
+  useLatestPath('/apps/calls');
 
   useEffect(() => {
     if (call) {

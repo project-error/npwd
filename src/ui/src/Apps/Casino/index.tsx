@@ -4,7 +4,7 @@ import { TopNavigation } from '../../components/Navigation/TopNavigation';
 /**
  * Add jackpot icon, and bar to the symbols array
  */
-const symbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '⭐', '🔔', '🎰', '🍀'];
+const symbols = ['⭐', '🎰', '🍀'];
 
 const getRandomSymbol = () => symbols[Math.floor(Math.random() * symbols.length)];
 

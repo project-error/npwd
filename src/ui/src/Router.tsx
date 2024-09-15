@@ -8,6 +8,7 @@ import { Call } from './Apps/Calls/Call';
 import { KeypadView } from './Apps/Calls/Keypad';
 import { LatestView } from './Apps/Calls/Latest';
 import { CasinoApp } from './Apps/Casino';
+import { SettingsApp } from './Apps/Settings/SettingsApp';
 
 export const router = createHashRouter([
   {
@@ -55,27 +56,33 @@ export const router = createHashRouter([
             path: 'casino',
             element: <CasinoApp />,
           },
+          {
+            path: 'settings',
+            element: <SettingsApp />,
+          },
         ],
       },
     ],
   },
   {
-    path: 'about',
-    element: <div>About</div>,
-  },
-  {
     path: '*',
-    element: (
-      <div className="p-8 text-primary h-full w-full bg-black text-slate-50 flex flex-col gap-8">
-        <span>Not Found</span>
-        <span>🤷</span>
+    element: <App />,
+    children: [
+      {
+        path: '*',
+        element: (
+          <div className="p-8 text-primary h-full w-full flex flex-col gap-8">
+            <span>Not Found</span>
+            <span>🤷</span>
 
-        <Link to="/">
-          <button className="border px-4 py-2 rounded-sm">
-            <span>Go Home</span>
-          </button>
-        </Link>
-      </div>
-    ),
+            <Link to="/home">
+              <button className="border px-4 py-2 rounded-sm">
+                <span>Go Home</span>
+              </button>
+            </Link>
+          </div>
+        ),
+      },
+    ],
   },
 ]);

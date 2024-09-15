@@ -6,21 +6,9 @@ import {
   NUI_CALLBACK_REGISTER_NAME,
   SERVER_EVENT_LISTENER,
 } from '../shared/network';
-import AnimationService from './animations';
-
-interface Exports {
-  'pma-voice': {
-    setCallChannel: (channel: number) => void;
-  };
-}
+import PhoneService from './services/PhoneService';
 
 let activeDeviceId = GetPlayerServerId(PlayerId());
-const _exports = global.exports as Exports;
-const pmaExports = {
-  setCallChannel: (channel: number) => {
-    _exports['pma-voice'].setCallChannel(channel);
-  },
-};
 
 const client = new Client({
   debug: true,
@@ -51,25 +39,12 @@ const client = new Client({
 });
 
 client.add('/close-phone', async () => {
-  isPhoneOpenState = false;
-  global.SendNUIMessage({ type: 'SET_PHONE_OPEN', payload: false });
-  SetNuiFocus(false, false);
-  AnimationService.closePhone();
+  PhoneService.close();
   return { ok: true };
 });
 
 client.add('/calls/set-channel', async (data: { channel: number }) => {
-  pmaExports.setCallChannel(data.channel);
-  if (data.channel === 0) {
-    AnimationService.endCall();
-  } else {
-    AnimationService.onCall();
-  }
-});
-
-client.add('/end-call', async () => {
-  pmaExports.setCallChannel(0);
-  AnimationService.endCall();
+  PhoneService.setChannel(data.channel);
 });
 
 /** Server listener */
@@ -77,26 +52,7 @@ onNet(BROADCAST_EVENT_LISTENER, (data: { data: unknown; event: string }) => {
   global.SendNUIMessage({ type: NUI_BROADCAST_EVENT, payload: data });
 });
 
-let isPhoneOpenState = false;
-
-RegisterCommand(
-  'npwd-toggle-phone',
-  () => {
-    if (isPhoneOpenState) {
-      isPhoneOpenState = false;
-      global.SendNUIMessage({ type: 'SET_PHONE_OPEN', payload: false });
-      SetNuiFocus(false, false);
-      AnimationService.closePhone();
-    } else {
-      isPhoneOpenState = true;
-      global.SendNUIMessage({ type: 'SET_PHONE_OPEN', payload: true });
-      SetNuiFocus(true, true);
-      AnimationService.openPhone();
-    }
-  },
-  false,
-);
-
+RegisterCommand('npwd-toggle-phone', () => PhoneService.togglePhone(), false);
 RegisterKeyMapping('npwd-toggle-phone', 'Open Phone', 'keyboard', 'M');
 
 RegisterCommand(

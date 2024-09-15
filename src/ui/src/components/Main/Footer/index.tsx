@@ -1,25 +1,43 @@
-import { Link } from 'react-router-dom';
-import { setTheme } from '../../../utils/theme';
-import { darkTheme, lightTheme } from '../../../App';
+import { motion, MotionConfigProps, MotionValue, PanInfo, useTransform } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router';
 
-export const Footer = () => {
-  const toggleTheme = () => {
-    const rootElement = document.getElementById('root')!;
-    const currentTheme =
-      rootElement.style.getPropertyValue('--bg-primary') === lightTheme.backgroundColor.primary
-        ? darkTheme
-        : lightTheme;
+interface FooterProps extends MotionConfigProps {
+  y: MotionValue<number>;
+}
+export const Footer = ({ y, scale, ...props }: FooterProps) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-    setTheme(currentTheme);
+  const opacity = useTransform(y, [-100, 0, 25, 75], [0, 1, 1, 0]);
+
+  const handleDragEnd = (event: any, panInfo: PanInfo) => {
+    if (panInfo.offset.y < -100) {
+      navigate('/home');
+    }
   };
 
-  return (
-    <footer className="h-8 bg-secondary text-secondary px-6 flex gap-4 items-center mt-auto">
-      <Link to="/home">Home</Link>
+  if (pathname === '/home') {
+    return null;
+  }
 
-      <button onClick={toggleTheme} className="rounded-lg bg-primary px-2">
-        toggle theme
-      </button>
+  return (
+    <footer>
+      <motion.div
+        className="h-8 px-6 flex gap-4 items-center mt-auto"
+        drag="y"
+        dragTransition={{ bounceStiffness: 200, bounceDamping: 15 }}
+        dragConstraints={{ top: 0, bottom: 0 }}
+        animate={{ y: 0 }}
+        initial={{ y: 50 }}
+        dragElastic={0.4}
+        whileDrag={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onDragEnd={handleDragEnd}
+        style={{ y, opacity }}
+        {...props}
+      >
+        <div className="h-1.5 bg-secondary rounded-full w-4/12 m-auto my-3" />
+      </motion.div>
     </footer>
   );
 };
