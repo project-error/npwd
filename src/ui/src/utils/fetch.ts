@@ -34,6 +34,7 @@ const getResourceName = () => {
 export const instance = axios.create({
   method: 'POST',
   baseURL: isEnvBrowser() ? 'http://localhost:3001' : `https://${getResourceName()}`,
+  data: {},
   headers: {
     'Content-Type': 'application/json',
     'x-source': id || 1,
@@ -43,13 +44,13 @@ export const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   if (isEnvBrowser()) {
-    return config;
+    return { ...config, data: config.data || {} };
   }
 
   config.data = {
     ...config.data,
     path: config.url,
-    data: config.data,
+    data: config.data || {},
   };
 
   config.url = `/${NUI_CALLBACK_REGISTER_NAME}`;

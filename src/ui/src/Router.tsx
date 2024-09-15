@@ -9,6 +9,8 @@ import { KeypadView } from './Apps/Calls/Keypad';
 import { LatestView } from './Apps/Calls/Latest';
 import { CasinoApp } from './Apps/Casino';
 import { SettingsApp } from './Apps/Settings/SettingsApp';
+import { MessagesApp } from './Apps/Calls/Messages';
+import { Conversation } from './Apps/Calls/Messages/Conversation';
 
 export const router = createHashRouter([
   {
@@ -55,6 +57,18 @@ export const router = createHashRouter([
           {
             path: 'casino',
             element: <CasinoApp />,
+          },
+          {
+            path: 'messages',
+            element: <MessagesApp />,
+          },
+          {
+            path: 'conversation',
+            element: <Conversation />,
+          },
+          {
+            path: 'conversation/:phoneNumber',
+            element: <Conversation />,
           },
           {
             path: 'settings',

@@ -35,3 +35,22 @@ export interface Call extends Record<string, unknown> {
   missed_at?: Date;
   acknowledged_at?: Date;
 }
+
+export interface Message {
+  id: number;
+  sender_id: number;
+  receiver_id: number;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface MessageWithPhoneNumbers extends Message {
+  sender_phone_number: string;
+  receiver_phone_number: string;
+}
+
+export interface Conversation {
+  sender: string;
+  receiver: string;
+}

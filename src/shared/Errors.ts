@@ -53,11 +53,23 @@ export class DeviceNotFoundError extends BaseError {
   }
 }
 
+export class MessageNotFoundError extends BaseError {
+  code = 404;
+  error_code = 'MESSAGE_NOT_FOUND' as const;
+
+  constructor() {
+    super('Message not found');
+  }
+}
+
 export class SimcardNotFoundError extends BaseError {
   code = 404;
-  declare error_code: 'CALLER_SIM_CARD_NOT_FOUND' | 'RECEIVER_SIM_CARD_NOT_FOUND';
+  declare error_code:
+    | 'CALLER_SIM_CARD_NOT_FOUND'
+    | 'RECEIVER_SIM_CARD_NOT_FOUND'
+    | 'SENDER_SIM_CARD_NOT_FOUND';
 
-  constructor(type: 'CALLER' | 'RECEIVER') {
+  constructor(type: 'CALLER' | 'RECEIVER' | 'SENDER') {
     super(`Sim card for ${type} not found`);
     this.error_code = `${type}_SIM_CARD_NOT_FOUND`;
   }
@@ -65,9 +77,12 @@ export class SimcardNotFoundError extends BaseError {
 
 export class SimCardNotActiveError extends BaseError {
   code = 400;
-  declare error_code: 'CALLER_SIM_CARD_NOT_ACTIVE' | 'RECEIVER_SIM_CARD_NOT_ACTIVE';
+  declare error_code:
+    | 'CALLER_SIM_CARD_NOT_ACTIVE'
+    | 'RECEIVER_SIM_CARD_NOT_ACTIVE'
+    | 'SENDER_SIM_CARD_NOT_ACTIVE';
 
-  constructor(type: 'CALLER' | 'RECEIVER') {
+  constructor(type: 'CALLER' | 'RECEIVER' | 'SENDER') {
     super(`Sim card for ${type} is not active`);
     this.error_code = `${type}_SIM_CARD_NOT_ACTIVE` as const;
   }

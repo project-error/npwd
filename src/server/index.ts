@@ -14,6 +14,8 @@ import {
 } from '../shared/network';
 import { parseObjectToIsoString } from './utils/date';
 import { emitMiddleware } from './middlewares/emitMiddleware';
+import { messagesRouter } from './router/messages';
+import { conversationsRouter } from './router/conversations';
 
 function bootstrap() {
   initDB();
@@ -40,6 +42,8 @@ function bootstrap() {
   app.use(activeCallRouter.routes());
   app.use(callsRouter.routes());
   app.use(devicesRouter.routes());
+  app.use(messagesRouter.routes());
+  app.use(conversationsRouter.routes());
 
   app.use(router.routes());
 

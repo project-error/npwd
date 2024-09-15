@@ -24,6 +24,10 @@
   animation: spinAnimation 1s ease-in-out;
 }
 
+textarea {
+  resize: none;
+}
+
 #root {
   --geist-foreground: #ffffff;
   --geist-background: #000000;

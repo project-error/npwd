@@ -3,6 +3,9 @@ import { getConnectionOptions } from './utils';
 import { createCallsTable } from './schemas/Call';
 import { createDevicesTable } from './schemas/Device';
 import { createSimCardsTable } from './schemas/SimCard';
+import { createMessageTable } from './schemas/Message';
+import { createReadReceiptTable } from './schemas/ReadReceipt';
+import { createConversationTable } from './schemas/Conversation';
 
 export let DBInstance: knex.Knex;
 
@@ -37,4 +40,7 @@ export function initDB() {
   createCallsTable();
   createDevicesTable();
   createSimCardsTable();
+  createMessageTable();
+  createConversationTable();
+  createReadReceiptTable();
 }

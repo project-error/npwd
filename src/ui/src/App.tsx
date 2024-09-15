@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Frame } from './Frame';
 
 import { useEffect } from 'react';
-import { setTheme } from './utils/theme';
+import { setTheme, Theme } from './utils/theme';
 import { Footer } from './components/Main/Footer';
 import { Header } from './components/Main/Header';
 import { useNuiEvent } from 'react-fivem-hooks';
@@ -14,7 +14,8 @@ import { useCurrentDevice } from './api/hooks/useCurrentDevice';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useKeys } from './hooks/useKeys';
 
-export const lightTheme = {
+export const lightTheme: Theme = {
+  type: 'light',
   textColor: {
     primary: '#000',
     secondary: '#222',
@@ -25,7 +26,8 @@ export const lightTheme = {
   },
 };
 
-export const darkTheme = {
+export const darkTheme: Theme = {
+  type: 'dark',
   textColor: {
     primary: '#fff',
     secondary: '#ddd',
@@ -69,8 +71,10 @@ function App() {
   });
 
   useKeys({
-    Escape: closePhone,
-    Backspace: () => navigate(-1),
+    Escape: () => {
+      closePhone();
+      navigate(-1);
+    },
   });
 
   /**
