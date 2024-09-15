@@ -1,14 +1,17 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate, useResolvedPath } from 'react-router';
 
-export const useLatestPath = (rootPath: string) => {
+export const useLatestPath = (rootPath: string, ignorePaths: string[] = []) => {
   const location = useLocation();
   const navigate = useNavigate();
   const resolvedPath = useResolvedPath(location.pathname);
   const lsKey = `lastVisited${rootPath}Path`;
 
   useEffect(() => {
-    if (!resolvedPath.pathname.startsWith(rootPath)) {
+    if (
+      !resolvedPath.pathname.startsWith(rootPath) ||
+      ignorePaths.includes(resolvedPath.pathname)
+    ) {
       return;
     }
 

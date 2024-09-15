@@ -54,3 +54,11 @@ export interface Conversation {
   sender: string;
   receiver: string;
 }
+
+export interface Contact {
+  id: number;
+  name: string;
+  phone_number: string;
+  sim_card_id: number;
+  created_at: Date;
+}

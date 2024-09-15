@@ -6,6 +6,7 @@ import { createSimCardsTable } from './schemas/SimCard';
 import { createMessageTable } from './schemas/Message';
 import { createReadReceiptTable } from './schemas/ReadReceipt';
 import { createConversationTable } from './schemas/Conversation';
+import { createContactsTable } from './schemas/Contact';
 
 export let DBInstance: knex.Knex;
 
@@ -43,4 +44,5 @@ export function initDB() {
   createMessageTable();
   createConversationTable();
   createReadReceiptTable();
+  createContactsTable();
 }

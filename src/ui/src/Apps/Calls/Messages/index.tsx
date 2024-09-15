@@ -1,24 +1,25 @@
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { Link } from 'react-router-dom';
 import { useConversations } from '../../../api/hooks/useConversations';
+import { useContacts } from '@/api/hooks/useContacts';
 
 export const MessagesApp = () => {
+  const [contacts] = useContacts();
   const conversations = useConversations();
-
-  // TODO: Implement contacts here
-  // const contacts = useContacts();
 
   return (
     <div>
       <TopNavigation title="Messages" />
 
       <ul className="flex flex-col gap-1 p-4">
-        {conversations.map((conversation) => {
+        {conversations.map((phoneNumber) => {
+          const contact = contacts.find((contact) => contact.phone_number === phoneNumber);
+
           return (
-            <Link to={`/apps/conversation/${conversation}`}>
-              <li key={conversation} className="p-6 bg-secondary rounded-lg">
-                <p className="">Contact label</p>
-                <p className="font-bold">{conversation}</p>
+            <Link to={`/apps/conversation/${phoneNumber}`} key={phoneNumber}>
+              <li className="p-6 bg-secondary rounded-lg">
+                <p className="font-bold">{contact?.name || phoneNumber}</p>
+                {contact?.name && <p className="text-sm text-gray-500">{phoneNumber}</p>}
               </li>
             </Link>
           );

@@ -5,6 +5,8 @@ const tbCalls = `${DATABASE_PREFIX}calls`;
 const tbDevices = `${DATABASE_PREFIX}devices`;
 const tbSimCards = `${DATABASE_PREFIX}sim_cards`;
 
+export type TableName = typeof tbCalls | typeof tbDevices | typeof tbSimCards;
+
 declare module 'knex/types/tables' {
   interface Tables {
     [tbCalls]: Call;

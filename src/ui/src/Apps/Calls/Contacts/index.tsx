@@ -1,24 +1,22 @@
-/** Create 10 contacts with varying number of phone numbers, 1-3, where one is most common and 3 is least common.*/
-
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
-import { getDevices } from '../../../api/device';
-import { useQuery } from '@tanstack/react-query';
+import { useContacts } from '../../../api/hooks/useContacts';
 
 export const ContactsView = () => {
   const device = useCurrentDevice();
-  const { data: { payload } = {} } = useQuery({
-    queryKey: ['devices'],
-    queryFn: getDevices,
-  });
-
-  const filteredPayload =
-    payload?.filter((contact) => contact.phone_number !== device?.phone_number) ?? [];
+  const [contacts] = useContacts();
 
   return (
     <main className="flex flex-col">
-      <TopNavigation title="Contacts" />
+      <TopNavigation
+        title="Contacts"
+        right={
+          <Link to="/apps/calls/contacts/new">
+            <button>New</button>
+          </Link>
+        }
+      />
 
       {device && (
         <div className="pt-2 px-4 flex flex-col">
@@ -28,16 +26,25 @@ export const ContactsView = () => {
       )}
 
       <ul className="flex flex-col gap-2 p-4">
-        {filteredPayload.map((contact) => (
+        {contacts.map((contact) => (
           <Link
             key={contact.id}
             className="bg-secondary p-4"
             to={`/apps/calls/call/${contact.phone_number}`}
           >
-            <li className="text-xl font-bold rounded-lg bg-secondary">{contact.phone_number}</li>
+            <li className="text-xl font-bold rounded-lg bg-secondary">{contact.name}</li>
           </Link>
         ))}
       </ul>
+
+      {contacts.length === 0 && (
+        <div className="flex flex-col items-center justify-center h-full">
+          <span className="text-xl font-semibold">No contacts</span>
+          <span className="text-lg text-gray-500">Create a new contact to get started</span>
+        </div>
+      )}
+
+      <Outlet />
     </main>
   );
 };

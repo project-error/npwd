@@ -16,6 +16,7 @@ import { parseObjectToIsoString } from './utils/date';
 import { emitMiddleware } from './middlewares/emitMiddleware';
 import { messagesRouter } from './router/messages';
 import { conversationsRouter } from './router/conversations';
+import { contactsRouter } from './router/contacts';
 
 function bootstrap() {
   initDB();
@@ -44,6 +45,7 @@ function bootstrap() {
   app.use(devicesRouter.routes());
   app.use(messagesRouter.routes());
   app.use(conversationsRouter.routes());
+  app.use(contactsRouter.routes());
 
   app.use(router.routes());
 

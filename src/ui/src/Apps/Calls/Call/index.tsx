@@ -1,19 +1,26 @@
+import { handleClientError } from '@/utils/errors';
+import { useState } from 'react';
 import { useParams } from 'react-router';
-import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
 import { useActiveCall } from '../../../api/hooks/useActiveCall';
+import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
+import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { useEffectOnce } from '../../../hooks/useEffectOnce';
 import { instance } from '../../../utils/fetch';
-import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 
 export const Call = () => {
   const device = useCurrentDevice();
   const [call, invalidate, refetch] = useActiveCall();
   const params = useParams<{ phoneNumber: string }>();
   const { phoneNumber } = params;
+  const [error, setError] = useState<string | null>(null);
 
   const handleCreateCall = async () => {
-    await instance.post('/calls/call', { phoneNumber });
-    invalidate();
+    try {
+      const response = await instance.post('/calls/call', { phoneNumber });
+      invalidate();
+    } catch (error) {
+      setError(handleClientError(error));
+    }
   };
 
   const handleEndCall = async () => {
@@ -41,6 +48,8 @@ export const Call = () => {
       <div className="p-4">
         <h1>Active Call</h1>
         <p>No active call found.</p>
+
+        {error && <p>{error}</p>}
 
         <button onClick={refetch} className="p-4 border rounded-lg">
           Refetch active call

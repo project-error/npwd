@@ -11,6 +11,7 @@ import { CasinoApp } from './Apps/Casino';
 import { SettingsApp } from './Apps/Settings/SettingsApp';
 import { MessagesApp } from './Apps/Calls/Messages';
 import { Conversation } from './Apps/Calls/Messages/Conversation';
+import { NewContactView } from './Apps/Calls/Contacts/New';
 
 export const router = createHashRouter([
   {
@@ -43,6 +44,12 @@ export const router = createHashRouter([
               {
                 path: 'contacts',
                 element: <ContactsView />,
+                children: [
+                  {
+                    path: 'new',
+                    element: <NewContactView />,
+                  },
+                ],
               },
               {
                 path: 'contacts/:contactId',

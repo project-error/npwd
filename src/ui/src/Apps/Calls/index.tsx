@@ -22,7 +22,7 @@ export const CallsApp = () => {
    * This is a common pattern in mobile apps, where the user is redirected to
    * the last visited screen when they return to the app.
    */
-  useLatestPath('/apps/calls');
+  useLatestPath('/apps/calls', ['/apps/calls/call']);
 
   useEffect(() => {
     if (call) {

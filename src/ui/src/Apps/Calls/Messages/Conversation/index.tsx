@@ -6,7 +6,7 @@ import { instance } from '../../../../utils/fetch';
 import { useCurrentDevice } from '../../../../api/hooks/useCurrentDevice';
 import { clsx } from 'clsx';
 import { queryClient } from '../../../../Providers';
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useConversationMessages } from '../../../../api/hooks/useConversation';
 import { Send, UserCheck } from 'react-feather';
 import { useThemeType } from '../../../../hooks/useTheme';
@@ -71,12 +71,12 @@ export const Conversation = () => {
   /** Scroll to bottom initially. */
   useEffect(() => {
     const messagesList = messageListRef.current;
-    if (!messagesList) {
+    if (!messagesList || messages.length === 0) {
       return;
     }
 
     messagesList.scrollTo(0, messagesList.scrollHeight);
-  }, []);
+  }, [messages.length]);
 
   const themeType = useThemeType();
   const bgColor = themeType === 'dark' ? 'bg-cyan-800' : 'bg-cyan-100';
@@ -105,7 +105,7 @@ export const Conversation = () => {
           const luxonDate = DateTime.fromISO(message.created_at);
 
           return (
-            <>
+            <Fragment key={message.id}>
               {shouldDisplayDate && (
                 <div className="flex gap-1 m-auto text-xs my-4">
                   <span className="font-medium">Today</span>
@@ -114,20 +114,19 @@ export const Conversation = () => {
               )}
 
               <li
-                key={message.id}
                 className={clsx(
-                  'p-4 bg-secondary rounded-lg max-w-[80%] shadow-sm text-ellipsis flex-1 overflow-clip break-words',
+                  'p-4 rounded-lg max-w-[80%] shadow-sm text-ellipsis flex-1 overflow-clip break-words',
                   {
                     'self-end': message.sender_id === device?.sim_card_id,
                     'self-start': message.receiver_id === device?.sim_card_id,
                   },
-                  message.sender_id === device?.sim_card_id && bgColor,
+                  message.sender_id === device?.sim_card_id ? bgColor : 'bg-secondary',
                   !shouldDisplayDate && isPreviousMessageDifferentSender && 'mt-2',
                 )}
               >
                 {message.content}
               </li>
-            </>
+            </Fragment>
           );
         })}
       </ul>

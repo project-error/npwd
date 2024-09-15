@@ -1,6 +1,7 @@
 import knex from 'knex';
 import { ConnectionOptions } from 'mysql2';
 import { DBInstance } from './knex';
+import { TableName } from './types';
 
 function parseUri(connectionString: string) {
   const splitMatchGroups = connectionString.match(
@@ -99,3 +100,5 @@ export const createDbTable = async (
   console.log(`Creating table "${tableName}"`);
   return DBInstance.schema.createTable(tableName, callback);
 };
+
+export const table = (tableName: TableName) => DBInstance(tableName);

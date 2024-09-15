@@ -13,7 +13,11 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "noFallthroughCasesInSwitch": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src", "../shared"]
 }

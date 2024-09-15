@@ -16,6 +16,24 @@ export class CallNotFoundError extends BaseError {
   }
 }
 
+export class ContactAlreadyExistsError extends BaseError {
+  code = 400;
+  error_code = 'CONTACT_ALREADY_EXISTS' as const;
+
+  constructor() {
+    super('Contact already exists');
+  }
+}
+
+export class ContactNotFoundError extends BaseError {
+  code = 404;
+  error_code = 'CONTACT_NOT_FOUND' as const;
+
+  constructor() {
+    super('Contact not found');
+  }
+}
+
 export class PendingCallNotFoundError extends BaseError {
   code = 404;
   error_code = 'PENDING_CALL_NOT_FOUND' as const;
@@ -137,6 +155,10 @@ export type ErrorCodes =
   | CallNotFoundError
   | CallAlreadyAcceptedError
   | CallHasEndedError
+  | ContactAlreadyExistsError
+  | ContactNotFoundError
+  | PendingCallNotFoundError
+  | MessageNotFoundError
   | DeviceNotFoundError
   | SimcardNotFoundError
   | SimCardNotActiveError

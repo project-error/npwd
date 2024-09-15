@@ -13,6 +13,7 @@ import { queryClient } from './Providers';
 import { useCurrentDevice } from './api/hooks/useCurrentDevice';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useKeys } from './hooks/useKeys';
+import { useThemeType } from './hooks/useTheme';
 
 export const lightTheme: Theme = {
   type: 'light',
@@ -46,10 +47,14 @@ function App() {
   const opacity = useTransform(y, [-200, -50, 0], [0, 1, 1]);
   const scale = useTransform(y, [-200, -50, 0], [0.8, 1, 1]);
 
+  const currentThemeType = useThemeType();
+
   useEffect(() => {
-    localStorage.getItem('theme') === JSON.stringify(darkTheme)
-      ? setTheme(darkTheme)
-      : setTheme(lightTheme);
+    if (currentThemeType === 'dark') {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
 
     localStorage.setItem('is-loaded', 'true');
 
