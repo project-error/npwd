@@ -19,8 +19,7 @@ export const NewContactView = () => {
     <Drawer modal open onClose={handleBack}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle>Create a new contact</DrawerTitle>
         </DrawerHeader>
 
         <NewContactForm onContactCreated={handleBack} />

@@ -16,22 +16,22 @@ const contactIdSchema = z.object({
   contactId: z.coerce.number(),
 });
 
-contactsRouter.add('/:contactId', async (ctx, next) => {
-  try {
-    const { contactId } = contactIdSchema.parse(ctx.params);
-    const contact = await ContactService.getContactById(ctx, contactId);
+// contactsRouter.add('/:contactId', async (ctx, next) => {
+//   try {
+//     const { contactId } = contactIdSchema.parse(ctx.params);
+//     const contact = await ContactService.getContactById(ctx, contactId);
 
-    ctx.status = 200;
-    ctx.body = {
-      ok: true,
-      payload: contact,
-    };
-  } catch (error) {
-    handleError(error, ctx);
-  }
+//     ctx.status = 200;
+//     ctx.body = {
+//       ok: true,
+//       payload: contact,
+//     };
+//   } catch (error) {
+//     handleError(error, ctx);
+//   }
 
-  await next();
-});
+//   await next();
+// });
 
 contactsRouter.add('/add', async (ctx, next) => {
   try {

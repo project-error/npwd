@@ -36,7 +36,7 @@ export interface Call extends Record<string, unknown> {
   acknowledged_at?: Date;
 }
 
-export interface Message {
+export interface Message extends Record<string, unknown> {
   id: number;
   sender_id: number;
   receiver_id: number;

@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { instance } from '../../utils/fetch';
 import { Message } from '../../../../shared/Types';
 import { StringifyDates } from '../../../../shared/TypeUtils';
+import { useBroadcastEvent } from '@/hooks/useBroadcastEvent';
+import { queryClient } from '@/Providers';
 
 export const useConversationMessages = (phoneNumber?: string) => {
   const { data } = useQuery({
@@ -16,6 +18,13 @@ export const useConversationMessages = (phoneNumber?: string) => {
       );
       return data;
     },
+  });
+
+  useBroadcastEvent('message:new-message', (data) => {
+    console.log('new message', { data });
+    queryClient.invalidateQueries({
+      queryKey: ['conversation', phoneNumber],
+    });
   });
 
   return data?.payload || [];

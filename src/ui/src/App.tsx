@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Frame } from './Frame';
 
 import { useEffect } from 'react';
@@ -14,6 +14,7 @@ import { useCurrentDevice } from './api/hooks/useCurrentDevice';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useKeys } from './hooks/useKeys';
 import { useThemeType } from './hooks/useTheme';
+import { Message } from '../../shared/Types';
 
 export const lightTheme: Theme = {
   type: 'light',
@@ -40,6 +41,7 @@ export const darkTheme: Theme = {
 };
 
 function App() {
+  const location = useLocation();
   const navigate = useNavigate();
   const currentDevice = useCurrentDevice();
   const y = useMotionValue(0);
@@ -81,6 +83,12 @@ function App() {
       navigate(-1);
     },
   });
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/home');
+    }
+  }, [location.pathname]);
 
   /**
    * If there is no device, we should not render anything.

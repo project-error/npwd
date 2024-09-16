@@ -22,9 +22,9 @@ export const setTheme = (theme: Theme) => {
    * Set class on body.
    */
   if (theme.type === 'dark') {
-    document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
   } else {
-    document.body.classList.remove('dark');
+    document.documentElement.classList.remove('dark');
   }
 
   localStorage.setItem('theme', JSON.stringify(theme));

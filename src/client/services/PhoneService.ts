@@ -43,7 +43,7 @@ class PhoneService {
     this.state = 'open';
     global.SendNUIMessage({ type: 'SET_PHONE_OPEN', payload: true });
     SetNuiFocus(true, true);
-    SetNuiFocusKeepInput(true);
+    // SetNuiFocusKeepInput(true);
     await this.animate.openPhone();
   }
 

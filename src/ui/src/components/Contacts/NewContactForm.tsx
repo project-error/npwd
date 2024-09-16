@@ -63,7 +63,9 @@ export const NewContactForm = ({ onContactCreated }: NewContactFormProps) => {
 
       {error && <div className="text-red-500">{error}</div>}
 
-      <Button type="submit">Create new contact</Button>
+      <Button type="submit" variant="outline">
+        Create
+      </Button>
     </form>
   );
 };

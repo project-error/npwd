@@ -13,7 +13,7 @@ import { MessagesApp } from './Apps/Calls/Messages';
 import { Conversation } from './Apps/Calls/Messages/Conversation';
 import { NewContactView } from './Apps/Calls/Contacts/New';
 
-export const router = createHashRouter([
+export const routes = [
   {
     path: '/',
     element: <App />,
@@ -106,4 +106,4 @@ export const router = createHashRouter([
       },
     ],
   },
-]);
+];

@@ -1,16 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
 import { TopNavigation } from '../../../../components/Navigation/TopNavigation';
 import { useNavigate, useParams } from 'react-router';
-import { Message } from '../../../../../../shared/Types';
 import { instance } from '../../../../utils/fetch';
 import { useCurrentDevice } from '../../../../api/hooks/useCurrentDevice';
 import { clsx } from 'clsx';
 import { queryClient } from '../../../../Providers';
 import { Fragment, useEffect, useRef } from 'react';
 import { useConversationMessages } from '../../../../api/hooks/useConversation';
-import { Send, UserCheck } from 'react-feather';
-import { useThemeType } from '../../../../hooks/useTheme';
+import { Send } from 'react-feather';
 import { DateTime } from 'luxon';
+import { AlignVerticalSpaceAround } from 'lucide-react';
 
 export const Conversation = () => {
   const navigate = useNavigate();
@@ -78,13 +76,10 @@ export const Conversation = () => {
     messagesList.scrollTo(0, messagesList.scrollHeight);
   }, [messages.length]);
 
-  const themeType = useThemeType();
-  const bgColor = themeType === 'dark' ? 'bg-cyan-800' : 'bg-cyan-100';
-
   return (
     <div className="flex flex-col h-full">
       <TopNavigation
-        title={phoneNumber}
+        title={<AlignVerticalSpaceAround />}
         left={
           <button onClick={() => navigate(-1)} className="text-primary">
             Back
@@ -115,12 +110,14 @@ export const Conversation = () => {
 
               <li
                 className={clsx(
-                  'p-4 rounded-lg max-w-[80%] shadow-sm text-ellipsis flex-1 overflow-clip break-words',
+                  'p-4 rounded-lg max-w-[80%] shadow-sm text-ellipsis flex-1 break-words',
                   {
                     'self-end': message.sender_id === device?.sim_card_id,
                     'self-start': message.receiver_id === device?.sim_card_id,
                   },
-                  message.sender_id === device?.sim_card_id ? bgColor : 'bg-secondary',
+                  message.sender_id === device?.sim_card_id
+                    ? 'dark:bg-cyan-800 bg-cyan-100'
+                    : 'bg-secondary',
                   !shouldDisplayDate && isPreviousMessageDifferentSender && 'mt-2',
                 )}
               >
@@ -141,7 +138,7 @@ export const Conversation = () => {
             ref={textAreaRef}
             autoFocus
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && e.ctrlKey) {
+              if (e.key === 'Enter' && !e.shiftKey) {
                 formRef.current?.requestSubmit();
               }
             }}
