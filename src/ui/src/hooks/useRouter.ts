@@ -1,10 +1,15 @@
-import { RouterContext } from '@/RouterContext';
+import { RouterContext } from '@/contexts/RouterContext';
 import { useContext } from 'react';
-import { RouteObject } from 'react-router';
 
-export const useSetRoutes = () => {
+export const useRoutes = () => {
   const { setRoutes, routes } = useContext(RouterContext);
-  return (callback: (previousRoutes: RouteObject[]) => RouteObject[]) => {
-    setRoutes(callback(routes));
+
+  if (!routes?.length) {
+    throw new Error('No routes provided to RouterProvider');
+  }
+
+  return {
+    routes,
+    setRoutes,
   };
 };

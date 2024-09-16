@@ -1,6 +1,7 @@
-import { createContext, PropsWithChildren, useState } from 'react';
-import { RouteObject, RouteProps } from 'react-router';
+import { createContext, PropsWithChildren, useMemo, useState } from 'react';
+import { RouteObject } from 'react-router';
 import { createHashRouter, RouterProvider as ReactRouterProvider } from 'react-router-dom';
+import { useRoutes } from '@/hooks/useRouter';
 
 export const RouterContext = createContext<{
   routes: RouteObject[];
@@ -14,7 +15,7 @@ interface RouterProviderProps extends PropsWithChildren {
   initialRoutes?: RouteObject[];
 }
 
-export const RouterProvider = ({ initialRoutes = [] }: RouterProviderProps) => {
+export const RouterProvider = ({ initialRoutes = [], children }: RouterProviderProps) => {
   const [routes, setRoutes] = useState(initialRoutes);
 
   if (!routes?.length) {
@@ -22,8 +23,18 @@ export const RouterProvider = ({ initialRoutes = [] }: RouterProviderProps) => {
   }
 
   return (
-    <RouterContext.Provider value={{ routes, setRoutes }}>
-      <ReactRouterProvider router={createHashRouter(routes)} />
+    <RouterContext.Provider
+      value={{
+        routes,
+        setRoutes,
+      }}
+    >
+      {children}
     </RouterContext.Provider>
   );
+};
+
+export const InnerRouterProvider = () => {
+  const { routes } = useRoutes();
+  return <ReactRouterProvider router={createHashRouter(routes)} />;
 };

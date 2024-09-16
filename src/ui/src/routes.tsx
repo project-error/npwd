@@ -12,6 +12,7 @@ import { SettingsApp } from './Apps/Settings/SettingsApp';
 import { MessagesApp } from './Apps/Calls/Messages';
 import { Conversation } from './Apps/Calls/Messages/Conversation';
 import { NewContactView } from './Apps/Calls/Contacts/New';
+import { NotFound } from './views/NotFound';
 
 export const routes = [
   {
@@ -91,18 +92,7 @@ export const routes = [
     children: [
       {
         path: '*',
-        element: (
-          <div className="p-8 text-primary h-full w-full flex flex-col gap-8">
-            <span>Not Found</span>
-            <span>🤷</span>
-
-            <Link to="/home">
-              <button className="border px-4 py-2 rounded-sm">
-                <span>Go Home</span>
-              </button>
-            </Link>
-          </div>
-        ),
+        element: <NotFound />,
       },
     ],
   },

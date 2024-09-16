@@ -1,68 +1,16 @@
-import { useExternalApps } from '@/hooks/useExternalApps';
-import { createElement, useRef, useState } from 'react';
-import { Link, Router } from 'react-router-dom';
-
-/** List of apps */
-const apps = [
-  {
-    id: 'calls',
-    name: 'Calls',
-    Icon: '📞',
-  },
-  {
-    id: 'casino',
-    name: 'Casino',
-    Icon: '🎰',
-  },
-  {
-    id: 'messages',
-    name: 'Messages',
-    Icon: '💬',
-  },
-  {
-    id: 'email',
-    name: 'Email',
-    Icon: '📧',
-  },
-  {
-    id: 'photos',
-    name: 'Photos',
-    Icon: '📷',
-  },
-  {
-    id: 'camera',
-    name: 'Camera',
-    Icon: '📸',
-  },
-  {
-    id: 'clock',
-    name: 'Clock',
-    Icon: '⏰',
-  },
-  {
-    id: 'calendar',
-    name: 'Calendar',
-    Icon: '📅',
-  },
-  {
-    id: 'notes',
-    name: 'Notes',
-    Icon: '📝',
-  },
-  {
-    id: 'settings',
-    name: 'Settings',
-    Icon: '⚙️',
-  },
-];
+import { useApps } from '@/contexts/AppsContext/useApps';
+import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useCurrentDevice } from '@/api/hooks/useCurrentDevice';
+import { usePrevious } from '@/hooks/usePrevious';
 
 export const HomeView = () => {
   const [isEditing, setIsEditing] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const apps = useApps();
 
-  const externalApps = useExternalApps();
-
-  console.log({ externalApps });
+  const prevAppLen = usePrevious(apps.length);
 
   /**
    * Check if user is holding long click
@@ -84,8 +32,11 @@ export const HomeView = () => {
     }
   };
 
-  const FirstExternalApp = externalApps[0];
-  const Component = FirstExternalApp?.Component;
+  if (!apps.length) {
+    return null;
+  }
+
+  console.log(apps.map((app) => app.id));
 
   return (
     <main
@@ -94,8 +45,57 @@ export const HomeView = () => {
       onMouseUp={handleMouseUp}
     >
       {isEditing && <span onClick={() => setIsEditing(false)}>Editing ..</span>}
+
       <div className="grid grid-cols-4 gap-4">
-        {apps.map((app) => (
+        {apps.map((app, index) => (
+          <motion.div
+            key={app.id}
+            animate={prevAppLen === 0 ? 'animation' : 'exists'}
+            initial={
+              prevAppLen === 0 && {
+                scale: 0,
+                opacity: 0,
+              }
+            }
+            variants={{
+              animation: {
+                scale: 1,
+                opacity: 1,
+                transition: {
+                  delay: index * 0.1,
+                },
+              },
+              exists: {
+                scale: 1,
+                opacity: 1,
+              },
+            }}
+            whileHover={{
+              scale: 1.1,
+            }}
+            drag={isEditing}
+          >
+            <Link key={app.id} to={`/apps/${app.path.replace('/', '')}`} draggable={!isEditing}>
+              <div className="flex items-center gap-4 p-2 bg-secondary text-secondary rounded-lg w-full h-16 text-4xl">
+                {app.Icon}
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+
+        <div className="col-span-2 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
+          Widget example
+        </div>
+
+        <div className="col-span-2 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
+          Widget example
+        </div>
+
+        <div className="col-span-4 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
+          Widget example
+        </div>
+
+        {/* {apps.map((app) => (
           <Link to={`/apps/${app.id}`} key={app.id}>
             <div className="flex items-center gap-4 p-2 bg-secondary text-secondary rounded-lg w-16 h-16 text-4xl">
               {app.Icon}
@@ -111,7 +111,7 @@ export const HomeView = () => {
               </div>
             </Link>
           ) : null,
-        )}
+        )} */}
       </div>
     </main>
   );

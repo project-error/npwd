@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router';
 interface FooterProps extends MotionConfigProps {
   y: MotionValue<number>;
 }
-export const Footer = ({ y, scale, ...props }: FooterProps) => {
+export const Footer = ({ y, ...props }: FooterProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -21,7 +21,7 @@ export const Footer = ({ y, scale, ...props }: FooterProps) => {
   }
 
   return (
-    <footer>
+    <footer className="absolute bottom-0 w-full">
       <motion.div
         className="h-8 px-6 flex gap-4 items-center mt-auto"
         drag="y"

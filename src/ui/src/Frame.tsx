@@ -7,7 +7,7 @@ export const Frame = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={clsx(
-        'w-[390px] h-[844px] text-primary flex flex-col shadow-2xl rounded-[40px] overflow-hidden',
+        'w-[390px] h-[844px] text-primary flex flex-col shadow-2xl rounded-[40px] overflow-hidden relative',
         isGame && 'fixed bottom-0 right-0 scale-90',
       )}
     >

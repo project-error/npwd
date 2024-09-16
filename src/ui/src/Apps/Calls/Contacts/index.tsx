@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useSearchParams } from 'react-router-dom';
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
 import { useContacts } from '../../../api/hooks/useContacts';
@@ -6,6 +6,9 @@ import { useContacts } from '../../../api/hooks/useContacts';
 export const ContactsView = () => {
   const device = useCurrentDevice();
   const [contacts] = useContacts();
+
+  const [searchParams] = useSearchParams();
+  const referal = searchParams.get('referal');
 
   return (
     <main className="flex flex-col">
@@ -30,7 +33,11 @@ export const ContactsView = () => {
           <Link
             key={contact.id}
             className="bg-secondary p-4"
-            to={`/apps/calls/call/${contact.phone_number}`}
+            to={
+              referal
+                ? `${referal}?data=${encodeURIComponent(JSON.stringify(contact))}`
+                : `/apps/calls/call/${contact.phone_number}`
+            }
           >
             <li className="text-xl font-bold rounded-lg bg-secondary">{contact.name}</li>
           </Link>

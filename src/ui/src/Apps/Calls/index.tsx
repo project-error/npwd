@@ -41,7 +41,7 @@ export const CallsApp = () => {
         <Outlet />
       </section>
 
-      <div className="flex gap-2 justify-between mt-auto border-t p-4">
+      <div className="flex gap-2 justify-between mt-auto border-t p-4 mb-4">
         <Link to="/apps/calls/latest" className="p-4 bg-secondary rounded-lg">
           Latest
         </Link>
