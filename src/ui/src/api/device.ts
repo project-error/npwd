@@ -20,9 +20,9 @@ export const getMyCalls = async () => {
 export const getActiveCall = async () => {
   try {
     const response = await instance.post<{ payload: StringifyDates<Call> }>('/calls/active', {});
-    console.log('Response from getActiveCall:', response);
     return response.data;
   } catch (error) {
+    console.error('Error from getActiveCall:', error);
     return { payload: null };
   }
 };

@@ -22,10 +22,11 @@ export const useExternalApps = (): {
 
       remoteApps.forEach((app) => {
         if (!app?.routes || !routes.length) return;
-        setHasLoaded(true);
         setRoutes(mergeAppIntoRoutes(routes, app));
         setApps((prevApps) => [...prevApps, app]);
       });
+
+      setHasLoaded(true);
     };
 
     init();

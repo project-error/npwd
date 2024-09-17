@@ -1,12 +1,10 @@
-import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Notifications } from '../Notifications';
 
 export const Header = () => {
-  const { pathname } = useLocation();
-
   return (
     <header className="h-8 bg-secondary text-secondary px-6 flex gap-4">
-      ({pathname}) <Link to="/home">Home</Link>
+      <span>22:03</span>
+      <Notifications />
     </header>
   );
 };

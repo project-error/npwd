@@ -22,8 +22,10 @@ export const setTheme = (theme: Theme) => {
    * Set class on body.
    */
   if (theme.type === 'dark') {
+    localStorage.setItem('theme-type', 'dark');
     document.documentElement.classList.add('dark');
   } else {
+    localStorage.setItem('theme-type', 'light');
     document.documentElement.classList.remove('dark');
   }
 

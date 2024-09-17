@@ -1,11 +1,5 @@
 import { NewContactForm } from '@/components/Contacts/NewContactForm';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { useNavigate } from 'react-router-dom';
 
 export const NewContactView = () => {

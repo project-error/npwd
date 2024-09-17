@@ -1,20 +1,20 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Frame } from './Frame';
 
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect } from 'react';
-import { setTheme, Theme } from './utils/theme';
+import { useNuiEvent } from 'react-fivem-hooks';
+import { useCurrentDevice } from './api/hooks/useCurrentDevice';
+import { closePhone } from './api/phone';
 import { Footer } from './components/Main/Footer';
 import { Header } from './components/Main/Header';
-import { useNuiEvent } from 'react-fivem-hooks';
-import { isEnvBrowser } from './utils/game';
-import { closePhone } from './api/phone';
 import { useBroadcastEvent } from './hooks/useBroadcastEvent';
-import { queryClient } from './Providers';
-import { useCurrentDevice } from './api/hooks/useCurrentDevice';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useKeys } from './hooks/useKeys';
 import { useThemeType } from './hooks/useTheme';
-import { Message } from '../../shared/Types';
+import { queryClient } from './Providers';
+import { isEnvBrowser } from './utils/game';
+import { setTheme, Theme } from './utils/theme';
+import { useKeys } from './hooks/useKeys';
+import { useDisableNavigation } from './contexts/NavigationContext';
 
 export const lightTheme: Theme = {
   type: 'light',
@@ -45,10 +45,11 @@ function App() {
   const navigate = useNavigate();
   const currentDevice = useCurrentDevice();
   const y = useMotionValue(0);
+  const isNavigationDisabled = useDisableNavigation();
 
   const opacity = useTransform(y, [-200, -50, 0], [0, 1, 1]);
   const scale = useTransform(y, [-200, -50, 0], [0.8, 1, 1]);
-
+  const borderRadius = useTransform(y, [-150, -40, 0], [40, 0, 0]);
   const currentThemeType = useThemeType();
 
   useEffect(() => {
@@ -79,6 +80,7 @@ function App() {
 
   useKeys({
     Escape: () => {
+      if (isNavigationDisabled) return;
       closePhone();
       navigate(-1);
     },
@@ -112,7 +114,7 @@ function App() {
 
         <motion.div
           className="w-full overflow-auto h-full flex-1 flex flex-col"
-          style={{ scale, opacity }}
+          style={{ scale, opacity, borderRadius }}
           initial={{ y: -200 }}
           animate={{ y: 0 }}
         >

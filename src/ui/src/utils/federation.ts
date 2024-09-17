@@ -3,7 +3,7 @@ import {
   __federation_method_getRemote,
   __federation_method_setRemote,
   __federation_method_unwrapDefault,
-  // @ts-ignore - This is virtual modules from the vite plugin. I guess they forgot to add defs.
+  // @ts-expect-error - This is virtual modules from the vite plugin. I guess they forgot to add defs.
 } from '__federation__';
 import { createElement, ReactNode } from 'react';
 import { RouteObject } from 'react-router';

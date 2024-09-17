@@ -3,13 +3,11 @@ import { Outlet, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useActiveCall } from '../../api/hooks/useActiveCall';
 import { setCallChannel } from '../../api/calls';
-import { useCurrentDevice } from '../../api/hooks/useCurrentDevice';
 import { useLatestPath } from '../../hooks/useLatestPath';
 
 export const CallsApp = () => {
   const navigate = useNavigate();
   const [call] = useActiveCall();
-  const currentDevice = useCurrentDevice();
 
   useEffect(() => {
     document.title = 'Calls';

@@ -1,9 +1,9 @@
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { PropsWithChildren } from 'react';
 import { NuiProvider } from 'react-fivem-hooks';
 import { InnerRouterProvider, RouterProvider } from './contexts/RouterContext';
 import { routes } from './routes';
 import { AppsProvider } from './contexts/AppsContext';
+import { NavigationProvider } from './contexts/NavigationContext';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,11 +23,13 @@ export const Providers = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <NuiProvider>
-        <RouterProvider initialRoutes={routes}>
-          <AppsProvider>
-            <InnerRouterProvider />
-          </AppsProvider>
-        </RouterProvider>
+        <NavigationProvider>
+          <RouterProvider initialRoutes={routes}>
+            <AppsProvider>
+              <InnerRouterProvider />
+            </AppsProvider>
+          </RouterProvider>
+        </NavigationProvider>
       </NuiProvider>
     </QueryClientProvider>
   );

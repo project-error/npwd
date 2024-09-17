@@ -1,4 +1,3 @@
-import { createHashRouter, Link } from 'react-router-dom';
 import { HomeView } from './views/Home';
 import { ContactsView } from './Apps/Calls/Contacts';
 import App from './App';

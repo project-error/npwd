@@ -1,17 +1,23 @@
 import { Link } from 'react-router-dom';
-import { setTheme } from '../../utils/theme';
+
 import { darkTheme, lightTheme } from '../../App';
+import { useEffect, useState } from 'react';
+import { setTheme } from '@/utils/theme';
 
 export const SettingsApp = () => {
-  const toggleTheme = () => {
-    const rootElement = document.getElementById('root')!;
-    const currentTheme =
-      rootElement.style.getPropertyValue('--bg-primary') === lightTheme.backgroundColor.primary
-        ? darkTheme
-        : lightTheme;
+  const [themeState, setThemeState] = useState(() => {
+    return localStorage.getItem('theme-type') === 'dark' ? darkTheme : lightTheme;
+  });
 
-    setTheme(currentTheme);
+  const toggleTheme = () => {
+    const otherTheme = themeState.type === lightTheme.type ? darkTheme : lightTheme;
+    console.log('toggle theme', otherTheme, themeState);
+    setThemeState(otherTheme);
   };
+
+  useEffect(() => {
+    setTheme(themeState);
+  }, [themeState]);
 
   return (
     <div className="p-8 h-full w-full bg-primary text-primary flex flex-col gap-8">

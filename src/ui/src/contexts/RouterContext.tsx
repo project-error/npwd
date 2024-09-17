@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useMemo, useState } from 'react';
+import { createContext, PropsWithChildren, useState } from 'react';
 import { RouteObject } from 'react-router';
 import { createHashRouter, RouterProvider as ReactRouterProvider } from 'react-router-dom';
 import { useRoutes } from '@/hooks/useRouter';

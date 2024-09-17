@@ -16,7 +16,7 @@ export const useActiveCall = (): [ActiveCallResult, (setEmpty?: boolean) => void
     staleTime: 0,
   });
 
-  const invalidate = async (setEmpty = true) => {
+  const invalidate = async () => {
     await queryClient.invalidateQueries({
       queryKey: ['active-call'],
       refetchType: 'all',

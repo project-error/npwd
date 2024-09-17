@@ -2,8 +2,8 @@ import { useApps } from '@/contexts/AppsContext/useApps';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useCurrentDevice } from '@/api/hooks/useCurrentDevice';
 import { usePrevious } from '@/hooks/usePrevious';
+import { Button } from '@/components/ui/button';
 
 export const HomeView = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,9 +16,7 @@ export const HomeView = () => {
    * Check if user is holding long click
    */
   const handleMouseDown = () => {
-    console.log('mouse down');
     timeoutRef.current = setTimeout(() => {
-      console.log('editing mode');
       setIsEditing(true);
     }, 1000);
   };
@@ -35,8 +33,6 @@ export const HomeView = () => {
   if (!apps.length) {
     return null;
   }
-
-  console.log(apps.map((app) => app.id));
 
   return (
     <main
@@ -71,7 +67,7 @@ export const HomeView = () => {
               },
             }}
             whileHover={{
-              scale: 1.1,
+              scale: 0.9,
             }}
             drag={isEditing}
           >
@@ -88,11 +84,11 @@ export const HomeView = () => {
         </div>
 
         <div className="col-span-2 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
-          Widget example
+          <Button>Add</Button>
         </div>
 
         <div className="col-span-4 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
-          Widget example
+          <Button>Add notification</Button>
         </div>
 
         {/* {apps.map((app) => (

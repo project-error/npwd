@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 
-export const useKeys = (keys: Record<string, () => void>) => {
+export const useKeys = (keys: Record<string, (event: KeyboardEvent) => void>) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const callback = keys[e.key];
-      if (callback) {
-        e.preventDefault();
-        callback();
-      }
+      callback?.(e);
     };
 
     window.addEventListener('keydown', handleKeyDown);

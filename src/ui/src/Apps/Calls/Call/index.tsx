@@ -16,7 +16,7 @@ export const Call = () => {
 
   const handleCreateCall = async () => {
     try {
-      const response = await instance.post('/calls/call', { phoneNumber });
+      await instance.post('/calls/call', { phoneNumber });
       invalidate();
     } catch (error) {
       setError(handleClientError(error));

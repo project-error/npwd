@@ -1,3 +1,4 @@
+import { FooterLine } from '@/components/FooterLine';
 import { motion, MotionConfigProps, MotionValue, PanInfo, useTransform } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -10,7 +11,7 @@ export const Footer = ({ y, ...props }: FooterProps) => {
 
   const opacity = useTransform(y, [-100, 0, 25, 75], [0, 1, 1, 0]);
 
-  const handleDragEnd = (event: any, panInfo: PanInfo) => {
+  const handleDragEnd = (_: unknown, panInfo: PanInfo) => {
     if (panInfo.offset.y < -100) {
       navigate('/home');
     }
@@ -23,7 +24,7 @@ export const Footer = ({ y, ...props }: FooterProps) => {
   return (
     <footer className="absolute bottom-0 w-full">
       <motion.div
-        className="h-8 px-6 flex gap-4 items-center mt-auto"
+        className="h-8 px-6 flex gap-4 items-center mt-auto justify-center"
         drag="y"
         dragTransition={{ bounceStiffness: 200, bounceDamping: 15 }}
         dragConstraints={{ top: 0, bottom: 0 }}
@@ -36,7 +37,7 @@ export const Footer = ({ y, ...props }: FooterProps) => {
         style={{ y, opacity }}
         {...props}
       >
-        <div className="h-1.5 bg-secondary rounded-full w-4/12 m-auto my-3" />
+        <FooterLine />
       </motion.div>
     </footer>
   );
