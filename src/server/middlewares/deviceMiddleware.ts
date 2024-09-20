@@ -20,8 +20,6 @@ export const getDeviceIdentifierBySource = (src: number) => {
   const playerLicense =
     playerLicenses.find((license) => license.startsWith('license:')) || playerLicenses[0];
 
-  console.log({ playerLicense, playerLicenses });
-
   if (framework === 'standalone' && isDevelopmentMode) {
     return `${src}:${playerLicense}`;
   }

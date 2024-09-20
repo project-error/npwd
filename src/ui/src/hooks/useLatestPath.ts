@@ -22,6 +22,11 @@ export const useLatestPath = (rootPath: string, ignorePaths: string[] = []) => {
 
   useEffect(() => {
     const lastVisitedPath = localStorage.getItem(lsKey);
+
+    if (ignorePaths.includes(resolvedPath.pathname)) {
+      return;
+    }
+
     if (lastVisitedPath && lastVisitedPath !== location.pathname) {
       navigate(lastVisitedPath, {
         replace: true,
