@@ -44,7 +44,7 @@ devicesRouter.add('/register', async (ctx, next) => {
 
     const device = await DeviceService.createDevice({
       sim_card_id: simCard.id,
-      identifier: ctx.deviceIdentifier,
+      identifier: ctx.device.identifier,
     });
 
     console.log('current-device:updated', device);

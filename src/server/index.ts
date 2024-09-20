@@ -22,7 +22,7 @@ function bootstrap() {
   initDB();
 
   const app = new App({
-    debug: false,
+    debug: true,
     listeners: {
       server: SERVER_EVENT_LISTENER,
       client: CLIENT_EVENT_LISTENER,

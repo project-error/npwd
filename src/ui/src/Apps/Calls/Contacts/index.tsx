@@ -6,10 +6,14 @@ import { Button } from '@/components/ui/button';
 
 export const ContactsView = () => {
   const device = useCurrentDevice();
-  const [contacts] = useContacts();
+  const [contacts, , isLoading] = useContacts();
 
   const [searchParams] = useSearchParams();
   const referal = searchParams.get('referal');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className="flex flex-col">

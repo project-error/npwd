@@ -1,5 +1,4 @@
 import { RouterContext } from 'fivem-router';
-import { InsertMessage } from '../database/schemas/Message';
 import MessageRepository from '../repositories/MessageRepository';
 import SimCardRepository from '../repositories/SimCardRepository';
 import {

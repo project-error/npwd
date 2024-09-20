@@ -23,7 +23,7 @@ export const queryClient = new QueryClient({
 export const Providers = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <NuiProvider>
+      <NuiProvider debug>
         <NotificationsProvider>
           <NavigationProvider>
             <RouterProvider initialRoutes={routes}>

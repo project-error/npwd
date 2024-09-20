@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '../../Providers';
 import { getActiveCall } from '../device';
 import { useBroadcastEvent } from '../../hooks/useBroadcastEvent';
-import { Call } from '../../../../shared/Types';
+import { CallWithPhoneNumbers } from '../../../../shared/Types';
 import { useNotifications } from '@/contexts/NotificationContext/useNotifications';
 import { useCurrentDevice } from './useCurrentDevice';
 
@@ -27,17 +27,25 @@ export const useActiveCall = (): [ActiveCallResult, (setEmpty?: boolean) => void
     });
   };
 
-  useBroadcastEvent<Call>('active-call:updated', (data) => {
+  useBroadcastEvent<CallWithPhoneNumbers>('active-call:updated', (data) => {
     console.log('active-call:updated', data);
-    console.log('Setting active call to:', data);
 
-    if (!data?.ended_at && !data?.declined_at && currentDevice?.sim_card_id === data?.receiver_id) {
+    if (!data) {
+      return;
+    }
+
+    if (
+      !data?.ended_at &&
+      !data?.declined_at &&
+      !data?.accepted_at &&
+      currentDevice?.sim_card_id === data?.receiver_id
+    ) {
       add({
         type: 'call',
         appId: 'calls',
-        title: 'Incoming Call',
+        title: data?.caller_phone_number || 'Anonymous',
         path: '/apps/calls/call',
-        description: `Incoming call from ${data?.caller_id}`,
+        description: `Incoming call ..`,
       });
     }
 

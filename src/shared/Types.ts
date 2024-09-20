@@ -36,6 +36,11 @@ export interface Call extends Record<string, unknown> {
   acknowledged_at?: Date;
 }
 
+export interface CallWithPhoneNumbers extends Call {
+  caller_phone_number: string;
+  receiver_phone_number: string;
+}
+
 export interface Message extends Record<string, unknown> {
   id: number;
   sender_id: number;
@@ -43,6 +48,13 @@ export interface Message extends Record<string, unknown> {
   content: string;
   created_at: Date;
   updated_at: Date;
+}
+
+export type InsertMessage = Pick<Message, 'receiver_id' | 'sender_id' | 'content'>;
+
+export interface MessageWithPhoneNumbers extends Message {
+  sender_phone_number: string;
+  receiver_phone_number: string;
 }
 
 export interface MessageWithPhoneNumbers extends Message {

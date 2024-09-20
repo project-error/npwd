@@ -1,4 +1,4 @@
-import { Call, DeviceWithSimCard } from '../../../shared/Types';
+import { Call, CallWithPhoneNumbers, DeviceWithSimCard } from '../../../shared/Types';
 import { StringifyDates } from '../../../shared/TypeUtils';
 import { instance } from '../utils/fetch';
 
@@ -19,7 +19,10 @@ export const getMyCalls = async () => {
 
 export const getActiveCall = async () => {
   try {
-    const response = await instance.post<{ payload: StringifyDates<Call> }>('/calls/active', {});
+    const response = await instance.post<{ payload: StringifyDates<CallWithPhoneNumbers> }>(
+      '/calls/active',
+      {},
+    );
     return response.data;
   } catch (error) {
     console.error('Error from getActiveCall:', error);

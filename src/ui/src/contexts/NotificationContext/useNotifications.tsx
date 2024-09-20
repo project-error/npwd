@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import { Notification, NotificationsContext } from '.';
 import { DEFAULT_NOTIFICATION_TIMEOUT } from '@/constants';
+import { useLocation } from 'react-router';
 
 export const useNotifications = () => {
+  const { pathname } = useLocation();
   const context = useContext(NotificationsContext);
 
   if (context === undefined) {
@@ -14,6 +16,13 @@ export const useNotifications = () => {
       timeout?: number;
     },
   ) => {
+    /**
+     * If the notification is for the current path, don't show it.
+     */
+    if (notification.path === pathname) {
+      return;
+    }
+
     context.setNotifications((prev) => [
       ...prev,
       {

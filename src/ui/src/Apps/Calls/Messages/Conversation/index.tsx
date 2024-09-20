@@ -8,7 +8,7 @@ import { Fragment, useEffect, useRef } from 'react';
 import { useConversationMessages } from '../../../../api/hooks/useConversation';
 import { Send } from 'react-feather';
 import { DateTime } from 'luxon';
-import { AlignVerticalSpaceAround } from 'lucide-react';
+import { useContactPhoneNumber } from '@/api/hooks/useContactPhoneNumber';
 
 export const Conversation = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ export const Conversation = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const device = useCurrentDevice();
   const { phoneNumber } = useParams<{ phoneNumber: string }>();
+  const contact = useContactPhoneNumber(phoneNumber);
 
   const messages = useConversationMessages(phoneNumber);
 
@@ -79,7 +80,7 @@ export const Conversation = () => {
   return (
     <div className="flex flex-col h-full">
       <TopNavigation
-        title={<AlignVerticalSpaceAround />}
+        title={contact?.name || phoneNumber}
         left={
           <button onClick={() => navigate(-1)} className="text-primary">
             Back
@@ -128,7 +129,7 @@ export const Conversation = () => {
         })}
       </ul>
 
-      <section className="pt-4 mt-auto shadow-lg">
+      <section className="pt-4 pb-10 mt-auto shadow-lg">
         <form
           onSubmit={onSubmit}
           className="p-4 flex gap-2 mt-auto bg-secondary mx-4 rounded-lg items-center"

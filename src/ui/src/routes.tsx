@@ -13,6 +13,7 @@ import { Conversation } from './Apps/Calls/Messages/Conversation';
 import { NewContactView } from './Apps/Calls/Contacts/New';
 import { NotFound } from './views/NotFound';
 import { EditContactView } from './Apps/Calls/Contacts/Contact/Edit';
+import { NewMessageView } from './Apps/Calls/Messages/New';
 
 export const routes = [
   {
@@ -75,6 +76,12 @@ export const routes = [
           {
             path: 'messages',
             element: <MessagesApp />,
+            children: [
+              {
+                path: 'new',
+                element: <NewMessageView />,
+              },
+            ],
           },
           {
             path: 'conversation',

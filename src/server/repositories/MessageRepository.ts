@@ -1,6 +1,5 @@
-import { Message, MessageWithPhoneNumbers } from '../../shared/Types';
+import { InsertMessage, Message, MessageWithPhoneNumbers } from '../../shared/Types';
 import { DBInstance } from '../database/knex';
-import { InsertMessage } from '../database/schemas/Message';
 
 const tableName = 'tmp_phone_message';
 
@@ -46,9 +45,19 @@ class MessageRepository {
       .orderBy('created_at', 'asc');
   }
 
-  public async createMessage(message: InsertMessage): Promise<Message> {
+  public async createMessage(message: InsertMessage): Promise<MessageWithPhoneNumbers> {
     const [newId] = await DBInstance(tableName).insert(message);
-    return await DBInstance(tableName).select('*').where('id', newId).first();
+    return await DBInstance(tableName)
+      .select('*')
+      .where(`${tableName}.id`, newId)
+      .leftJoin('tmp_phone_sim_card as sender', 'sender.id', 'tmp_phone_message.sender_id')
+      .leftJoin('tmp_phone_sim_card as receiver', 'receiver.id', 'tmp_phone_message.receiver_id')
+      .select(
+        'tmp_phone_message.*',
+        'sender.phone_number as sender_phone_number',
+        'receiver.phone_number as receiver_phone_number',
+      )
+      .first();
   }
 
   public async updateMessage(message: Message): Promise<Message> {

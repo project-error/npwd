@@ -1,8 +1,5 @@
 import { createDbTable, DATABASE_PREFIX } from '../utils';
 import { DBInstance } from '../knex';
-import { Message } from '../../../shared/Types';
-
-export type InsertMessage = Pick<Message, 'receiver_id' | 'sender_id' | 'content'>;
 
 export const createMessageTable = () => {
   createDbTable('message', (table) => {

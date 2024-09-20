@@ -1,7 +1,8 @@
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useConversations } from '../../../api/hooks/useConversations';
 import { useContacts } from '@/api/hooks/useContacts';
+import { Button } from '@/components/ui/button';
 
 export const MessagesApp = () => {
   const [contacts] = useContacts();
@@ -9,7 +10,14 @@ export const MessagesApp = () => {
 
   return (
     <div>
-      <TopNavigation title="Messages" />
+      <TopNavigation
+        title="Messages"
+        right={
+          <Link to="/apps/messages/new">
+            <Button>New</Button>
+          </Link>
+        }
+      />
 
       <ul className="flex flex-col gap-1 p-4">
         {conversations.map((phoneNumber) => {
@@ -25,6 +33,8 @@ export const MessagesApp = () => {
           );
         })}
       </ul>
+
+      <Outlet />
     </div>
   );
 };

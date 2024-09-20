@@ -29,7 +29,7 @@ export const NotificationsPopupList = () => {
   };
 
   return (
-    <div className="absolute top-8 left-0 right-0 z-10 w-full flex flex-col gap-2 p-4">
+    <div className="absolute top-8 left-0 right-0 z-10 w-full flex flex-col gap-2 px-4 mt-4">
       <AnimatePresence>
         {latestNotifications.map((notification, index) => (
           <span key={notification.id}>
