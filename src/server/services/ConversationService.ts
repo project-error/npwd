@@ -36,16 +36,6 @@ class ConversationService {
   }
 
   async getConversation(ctx: RouterContext, phoneNumber: string) {
-    const device = await this.deviceRepository.getDeviceById(ctx.device.id);
-
-    if (!device) {
-      throw new SimcardNotFoundError('SENDER');
-    }
-
-    if (!device.sim_card_id) {
-      throw new SimcardNotFoundError('SENDER');
-    }
-
     const receiverSimcard = await this.simCardRepository.getSimCardByPhoneNumber(phoneNumber);
 
     if (!receiverSimcard) {
@@ -56,7 +46,7 @@ class ConversationService {
       throw new SimCardNotActiveError('RECEIVER');
     }
 
-    return await this.messageRepository.getConversation(device.sim_card_id, receiverSimcard.id);
+    return await this.messageRepository.getConversation(ctx.device.sim_card_id, receiverSimcard.id);
   }
 }
 

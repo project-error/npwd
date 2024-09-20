@@ -26,7 +26,6 @@ conversationsRouter.add('/:phoneNumber', async (ctx, next) => {
     const { phoneNumber } = z.object({ phoneNumber: z.string().min(2).max(15) }).parse(ctx.params);
 
     const messages = await ConversationService.getConversation(ctx, phoneNumber);
-    console.log(messages);
 
     ctx.body = {
       ok: true,

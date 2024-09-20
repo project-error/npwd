@@ -47,6 +47,15 @@ client.add('/calls/set-channel', async (data: { channel: number }) => {
   PhoneService.setChannel(data.channel);
 });
 
+RegisterCommand(
+  'select-device',
+  async (_: unknown, args: string[]) => {
+    const deviceId = parseInt(args[0], 10);
+    client.post('/select-device', { deviceId });
+  },
+  false,
+);
+
 /** Server listener */
 onNet(BROADCAST_EVENT_LISTENER, (data: { data: unknown; event: string }) => {
   global.SendNUIMessage({ type: NUI_BROADCAST_EVENT, payload: data });

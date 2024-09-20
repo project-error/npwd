@@ -71,6 +71,15 @@ export class DeviceNotFoundError extends BaseError {
   }
 }
 
+export class DeviceIdentifierNotFound extends BaseError {
+  code = 404;
+  error_code = 'DEVICE_IDENTIFIER_NOT_FOUND' as const;
+
+  constructor() {
+    super(`Device identifier was not found`);
+  }
+}
+
 export class MessageNotFoundError extends BaseError {
   code = 404;
   error_code = 'MESSAGE_NOT_FOUND' as const;

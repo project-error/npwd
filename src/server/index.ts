@@ -17,6 +17,7 @@ import { emitMiddleware } from './middlewares/emitMiddleware';
 import { messagesRouter } from './router/messages';
 import { conversationsRouter } from './router/conversations';
 import { contactsRouter } from './router/contacts';
+import { selectDeviceMiddleware } from './middlewares/selectDeviceMiddleware';
 
 function bootstrap() {
   initDB();
@@ -34,6 +35,7 @@ function bootstrap() {
 
   app.use(emitMiddleware);
   app.use(sourceMiddleware);
+  app.use(selectDeviceMiddleware);
   app.use(deviceMiddleware);
   app.use(parseBodyMiddleware);
 

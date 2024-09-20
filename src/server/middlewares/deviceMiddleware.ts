@@ -2,6 +2,9 @@ import { RouterContext } from 'fivem-router';
 import z from 'zod';
 import { DeviceWithSimCard } from '../../shared/Types';
 import DeviceRepository from '../repositories/DeviceRepository';
+import PlayerService from '../services/PlayerService';
+import { handleError } from '../utils/errors';
+import { DeviceNotFoundError } from '../../shared/Errors';
 
 declare module 'fivem-router' {
   interface RouterContext {
@@ -48,25 +51,14 @@ try {
 }
 
 export const deviceMiddleware = async (ctx: RouterContext, next: () => Promise<void>) => {
-  const { data: headerDeviceId } = z.coerce
-    .number()
-    .safeParse(ctx.request?.headers?.['x-device-id']);
-
-  let deviceIdentifier = !headerDeviceId ? getDeviceIdentifierBySource(ctx.source) : '';
-
-  if (!deviceIdentifier && !headerDeviceId) {
-    ctx.throw(401, 'Device ID not found. Are you calling this from the server?');
-    return next();
-  }
+  const deviceIdentifier = PlayerService.getDevice(ctx.source);
 
   try {
-    let device;
-
-    if (headerDeviceId) {
-      device = await DeviceRepository.getDeviceById(headerDeviceId);
-    } else {
-      device = await DeviceRepository.getDeviceByIdentifier(deviceIdentifier);
+    if (!deviceIdentifier) {
+      throw new DeviceNotFoundError('CALLER');
     }
+
+    const device = await DeviceRepository.getDeviceByIdentifier(deviceIdentifier);
 
     if (!device && ctx.url === '/devices/register') {
       console.log('Device not found, registering new device');
@@ -75,14 +67,13 @@ export const deviceMiddleware = async (ctx: RouterContext, next: () => Promise<v
     }
 
     if (!device) {
-      ctx.throw(401, 'Device not found');
-      return next();
+      throw new DeviceNotFoundError('CALLER');
     }
 
     ctx.device = device;
-  } catch (error) {
-    ctx.throw(401, 'Device not found');
-  }
 
-  await next();
+    await next();
+  } catch (error) {
+    handleError(error, ctx);
+  }
 };
