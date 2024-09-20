@@ -4,6 +4,7 @@ import { InnerRouterProvider, RouterProvider } from './contexts/RouterContext';
 import { routes } from './routes';
 import { AppsProvider } from './contexts/AppsContext';
 import { NavigationProvider } from './contexts/NavigationContext';
+import { NotificationsProvider } from './contexts/NotificationContext';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,13 +24,15 @@ export const Providers = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <NuiProvider>
-        <NavigationProvider>
-          <RouterProvider initialRoutes={routes}>
-            <AppsProvider>
-              <InnerRouterProvider />
-            </AppsProvider>
-          </RouterProvider>
-        </NavigationProvider>
+        <NotificationsProvider>
+          <NavigationProvider>
+            <RouterProvider initialRoutes={routes}>
+              <AppsProvider>
+                <InnerRouterProvider />
+              </AppsProvider>
+            </RouterProvider>
+          </NavigationProvider>
+        </NotificationsProvider>
       </NuiProvider>
     </QueryClientProvider>
   );

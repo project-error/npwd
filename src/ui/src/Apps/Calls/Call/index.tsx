@@ -6,11 +6,14 @@ import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { useEffectOnce } from '../../../hooks/useEffectOnce';
 import { instance } from '../../../utils/fetch';
+import { useSearchParams } from 'react-router-dom';
 
 export const Call = () => {
   const device = useCurrentDevice();
   const [call, invalidate, refetch] = useActiveCall();
+  const [searchParams] = useSearchParams();
   const params = useParams<{ phoneNumber: string }>();
+  const action = searchParams.get('action');
   const { phoneNumber } = params;
   const [error, setError] = useState<string | null>(null);
 
@@ -41,6 +44,12 @@ export const Call = () => {
   useEffectOnce(() => {
     if (!phoneNumber || call) return;
     handleCreateCall();
+  });
+
+  useEffectOnce(() => {
+    if (action === 'accept') {
+      handleAcceptCall();
+    }
   });
 
   if (!call) {

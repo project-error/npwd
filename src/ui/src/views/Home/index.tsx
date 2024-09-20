@@ -4,8 +4,48 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { usePrevious } from '@/hooks/usePrevious';
 import { Button } from '@/components/ui/button';
+import { useNotifications } from '@/contexts/NotificationContext/useNotifications';
+
+/**
+ * Convert above notifications to a list of only the props
+ */
+const _notifications = [
+  {
+    title: 'Example One',
+    description: 'This is an example description',
+    appId: 'calls',
+    overline: 'Time sensitive',
+    path: '/apps/calls',
+  },
+  {
+    title: 'Example Two',
+    description:
+      'This is another description that can become quite long and wrap around, but how long can it go? Three rows is probably enough.',
+    appId: 'settings',
+    path: '/apps/settings',
+  },
+  {
+    title: 'Example Three',
+    description: 'This is another description',
+    appId: 'settings',
+    path: '/apps/settings',
+  },
+  {
+    title: 'Jackpot!',
+    description: 'You have won a million dollars!',
+    appId: 'casino',
+    path: '/apps/casino',
+  },
+  {
+    title: 'New transaction',
+    description: 'John Doe just sent $325.00',
+    appId: 'SEND_APP',
+    path: '/apps/casino',
+  },
+];
 
 export const HomeView = () => {
+  const { add } = useNotifications();
   const [isEditing, setIsEditing] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const apps = useApps();
@@ -28,6 +68,11 @@ export const HomeView = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
+  };
+
+  const handleCreateNotification = () => {
+    const notification = _notifications[Math.floor(Math.random() * _notifications.length)];
+    add(notification);
   };
 
   if (!apps.length) {
@@ -88,7 +133,7 @@ export const HomeView = () => {
         </div>
 
         <div className="col-span-4 row-span-2 bg-secondary flex flex-1 rounded-lg w-full p-4 min-h-32">
-          <Button>Add notification</Button>
+          <Button onClick={handleCreateNotification}>Add notification</Button>
         </div>
 
         {/* {apps.map((app) => (

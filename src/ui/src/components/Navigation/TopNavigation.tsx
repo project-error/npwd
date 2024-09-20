@@ -29,10 +29,10 @@ export const TopNavigation = ({ title, left, right }: TopNavigationProps) => {
   }, []);
 
   return (
-    <nav className="grid grid-cols-3 items-center gap-2 p-4">
+    <nav className="grid grid-cols-6 items-center gap-2 p-4">
       <div className="text-left">{left}</div>
       {typeof title === 'string' ? (
-        <h1 className="text-xl font-bold text-center">{title}</h1>
+        <h1 className="text-xl font-bold text-center col-span-4">{title}</h1>
       ) : (
         title
       )}

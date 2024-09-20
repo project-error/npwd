@@ -109,7 +109,7 @@ function App() {
 
   return (
     <Frame>
-      <motion.div className="flex flex-col flex-1 overflow-hidden">
+      <motion.div className="flex flex-col flex-1 overflow-hidden bg-primary text-primary">
         <Header />
 
         <motion.div

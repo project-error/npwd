@@ -3,8 +3,8 @@ import { getContacts } from '../contacts';
 import { queryClient } from '../../Providers';
 import { Contact } from '../../../../shared/Types';
 
-export const useContacts = (): [Contact[], () => void] => {
-  const { data } = useQuery({
+export const useContacts = (): [Contact[], () => void, boolean] => {
+  const { data, isLoading } = useQuery({
     queryKey: ['contacts'],
     queryFn: getContacts,
   });
@@ -15,5 +15,5 @@ export const useContacts = (): [Contact[], () => void] => {
     });
   };
 
-  return [data?.payload || [], invalidate];
+  return [data?.payload || [], invalidate, isLoading];
 };
