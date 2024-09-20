@@ -12,6 +12,7 @@ import { MessagesApp } from './Apps/Calls/Messages';
 import { Conversation } from './Apps/Calls/Messages/Conversation';
 import { NewContactView } from './Apps/Calls/Contacts/New';
 import { NotFound } from './views/NotFound';
+import { EditContactView } from './Apps/Calls/Contacts/Contact/Edit';
 
 export const routes = [
   {
@@ -54,6 +55,12 @@ export const routes = [
               {
                 path: 'contacts/:contactId',
                 element: <ContactView />,
+                children: [
+                  {
+                    path: 'edit',
+                    element: <EditContactView />,
+                  },
+                ],
               },
               {
                 path: 'latest',

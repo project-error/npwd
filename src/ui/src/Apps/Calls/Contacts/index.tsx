@@ -2,6 +2,7 @@ import { Link, Outlet, useSearchParams } from 'react-router-dom';
 import { TopNavigation } from '../../../components/Navigation/TopNavigation';
 import { useCurrentDevice } from '../../../api/hooks/useCurrentDevice';
 import { useContacts } from '../../../api/hooks/useContacts';
+import { Button } from '@/components/ui/button';
 
 export const ContactsView = () => {
   const device = useCurrentDevice();
@@ -16,7 +17,7 @@ export const ContactsView = () => {
         title="Contacts"
         right={
           <Link to="/apps/calls/contacts/new">
-            <button>New</button>
+            <Button variant="ghost">New</Button>
           </Link>
         }
       />
@@ -36,10 +37,13 @@ export const ContactsView = () => {
             to={
               referal
                 ? `${referal}?data=${encodeURIComponent(JSON.stringify(contact))}`
-                : `/apps/calls/call/${contact.phone_number}`
+                : `/apps/calls/contacts/${contact.id}`
             }
           >
-            <li className="text-xl font-bold rounded-lg bg-secondary">{contact.name}</li>
+            <li className="rounded-lg bg-secondary flex flex-col">
+              <span className="text-xl font-bold ">{contact.name}</span>
+              <span className="text-sm text-secondary">{contact.phone_number}</span>
+            </li>
           </Link>
         ))}
       </ul>

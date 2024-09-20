@@ -1,4 +1,4 @@
-import { createContact } from '@/api/contacts';
+import { updateContact } from '@/api/contacts';
 import { queryClient } from '@/Providers';
 import { Contact } from '../../../../shared/Types';
 import { useState } from 'react';
@@ -7,9 +7,11 @@ import { Button } from '../ui/button';
 import { Input } from '../Input';
 
 interface NewContactFormProps {
-  onContactCreated: () => void;
+  contact?: Contact;
+  onContactUpdated: () => void;
 }
-export const NewContactForm = ({ onContactCreated }: NewContactFormProps) => {
+
+export const EditContactForm = ({ onContactUpdated, contact }: NewContactFormProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,13 +22,18 @@ export const NewContactForm = ({ onContactCreated }: NewContactFormProps) => {
     const name = formData.get('name') as string;
     const phoneNumber = formData.get('phone_number') as string;
 
-    if (!name || !phoneNumber) {
+    if (!name || !phoneNumber || !contact) {
       return;
     }
 
     try {
-      const { payload } = await createContact(name, phoneNumber);
-      onContactCreated();
+      const { payload } = await updateContact({
+        ...contact,
+        name,
+        phone_number: phoneNumber,
+      });
+
+      onContactUpdated();
 
       /**
        * Update the cache with the new contact.
@@ -34,7 +41,13 @@ export const NewContactForm = ({ onContactCreated }: NewContactFormProps) => {
       queryClient.setQueryData(['contacts'], (contacts: { payload: Contact[] }) => {
         return {
           ...contacts,
-          payload: [payload, ...contacts.payload],
+          payload: contacts.payload.map((contact) => {
+            if (contact.phone_number === phoneNumber) {
+              return payload;
+            }
+
+            return contact;
+          }),
         };
       });
     } catch (error) {
@@ -43,19 +56,23 @@ export const NewContactForm = ({ onContactCreated }: NewContactFormProps) => {
     }
   };
 
+  if (!contact) {
+    return null;
+  }
+
   return (
     <form
       className="flex flex-col gap-2 p-4"
       onSubmit={handleSubmit}
       onFocus={() => setError(null)}
     >
-      <Input name="name" placeholder="Name" />
-      <Input name="phone_number" placeholder="Phone number" />
+      <Input name="name" placeholder="Name" defaultValue={contact.name} />
+      <Input name="phone_number" placeholder="Phone number" defaultValue={contact.phone_number} />
 
       {error && <div className="text-red-500">{error}</div>}
 
       <Button type="submit" variant="outline" className="text-primary">
-        Create
+        Update contact
       </Button>
     </form>
   );

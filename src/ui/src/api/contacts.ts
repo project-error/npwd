@@ -10,3 +10,9 @@ export const createContact = async (name: string, phoneNumber: string) => {
     .post<{ payload: Contact }>('/contacts/add', { name, phoneNumber })
     .then((res) => res.data);
 };
+
+export const updateContact = async (contact: Contact) => {
+  return await instance
+    .post<{ payload: Contact }>(`/contacts/${contact.id}/edit`, contact)
+    .then((res) => res.data);
+};

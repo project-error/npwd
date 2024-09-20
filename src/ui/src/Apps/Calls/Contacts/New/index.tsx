@@ -13,7 +13,7 @@ export const NewContactView = () => {
     <Drawer modal open onClose={handleBack}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Create a new contact</DrawerTitle>
+          <DrawerTitle className="text-primary">Create a new contact</DrawerTitle>
         </DrawerHeader>
 
         <NewContactForm onContactCreated={handleBack} />
