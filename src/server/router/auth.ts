@@ -4,7 +4,7 @@ import DeviceService from '../services/DeviceService';
 import PlayerService from '../services/PlayerService';
 import SimCardService from '../services/SimCardService';
 import { handleError } from '../utils/errors';
-import BroadcastService from '../services/BroadcastService';
+import { InsertNotification } from '../../shared/Types';
 
 export const authRouter = new Router({
   prefix: '/auth',
@@ -82,9 +82,24 @@ authRouter.add('/source-by-device', async (ctx) => {
   }
 });
 
+// export const emitTo = (source: number, event: string, data: unknown) => {
+//   if (!isRunningInGame()) return;
+//   emitNet(event, source, data);
+// };
+
 authRouter.add('/debug', async (ctx, next) => {
   try {
     const authorized = await PlayerService.authorizeDevice(ctx.source, 'debug');
+    const authNotification: InsertNotification = {
+      title: 'Auth Notification',
+      description: `You are ${authorized ? 'authorized' : 'not authorized'} to debug`,
+      appId: 'settings',
+      path: '/home',
+    };
+
+    console.log('Emitting: npwd:add-notification', ctx.source, authNotification);
+    emitNet('npwd:add-notification', ctx.source, JSON.stringify(authNotification));
+
     console.log('Authorized', authorized);
 
     ctx.status = 200;

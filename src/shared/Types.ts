@@ -79,3 +79,24 @@ export interface Contact {
   sim_card_id: number;
   created_at: Date;
 }
+
+export interface Notification {
+  id: string;
+  path: string;
+  type: 'call' | 'generic';
+  title: string;
+  timeout: number;
+  description: string;
+  created_at: string;
+
+  appId?: string;
+  overline?: string;
+  dismissable?: boolean;
+}
+
+export type InsertNotification = Omit<Notification, 'id' | 'created_at' | 'timeout' | 'type'> & {
+  type?: Notification['type'];
+  timeout?: Notification['timeout'];
+  created_at?: Notification['created_at'];
+  dismissable?: Notification['dismissable'];
+};

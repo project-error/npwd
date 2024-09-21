@@ -18,6 +18,7 @@ import { messagesRouter } from './router/messages';
 import { conversationsRouter } from './router/conversations';
 import { contactsRouter } from './router/contacts';
 import { authRouter } from './router/auth';
+import './exports/Notifications';
 
 function bootstrap() {
   initDB();

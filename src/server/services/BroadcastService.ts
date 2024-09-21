@@ -1,6 +1,7 @@
 import { RouterContext } from 'fivem-router';
 import PlayerService from './PlayerService';
 import { parseObjectToIsoString } from '../utils/date';
+import { InsertNotification } from '../../shared/Types';
 
 interface EmitToNuiParams {
   ctx: RouterContext;
@@ -15,6 +16,10 @@ interface EmitToNuisParams extends Omit<EmitToNuiParams, 'sid'> {
 
 class BroadcastService {
   constructor() {}
+
+  private emitNet(event: string, source: number, data: string) {
+    emitNet(event, source, data);
+  }
 
   private async getSourceFromSid(sid: number) {
     return await PlayerService.getSourceFromSid(sid);
@@ -40,6 +45,10 @@ class BroadcastService {
       }
       ctx.emitToNui(src, event, parseObjectToIsoString(data));
     }
+  }
+
+  public async createNotification(source: number, notification: InsertNotification) {
+    this.emitNet('npwd:create-notification', source, JSON.stringify(notification));
   }
 }
 

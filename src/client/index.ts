@@ -7,6 +7,7 @@ import {
   SERVER_EVENT_LISTENER,
 } from '../shared/network';
 import PhoneService from './services/PhoneService';
+import { InsertNotification } from '../shared/Types';
 
 const client = new Client({
   debug: true,
@@ -49,6 +50,10 @@ RegisterCommand(
 /** Server listener */
 onNet(BROADCAST_EVENT_LISTENER, (data: { data: unknown; event: string }) => {
   global.SendNUIMessage({ type: NUI_BROADCAST_EVENT, payload: data });
+});
+
+onNet('npwd:create-notification', (data: InsertNotification) => {
+  global.SendNUIMessage({ type: 'ADD_NOTIFICATION', payload: data });
 });
 
 RegisterCommand('npwd-toggle-phone', () => PhoneService.togglePhone(), false);

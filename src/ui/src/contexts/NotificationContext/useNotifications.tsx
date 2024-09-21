@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { Notification, NotificationsContext } from '.';
+import { NotificationsContext } from '.';
 import { DEFAULT_NOTIFICATION_TIMEOUT } from '@/constants';
 import { useLocation } from 'react-router';
+import { InsertNotification } from '../../../../shared/Types';
 
 export const useNotifications = () => {
   const { pathname } = useLocation();
@@ -11,11 +12,7 @@ export const useNotifications = () => {
     throw new Error('useNotifications must be used within a NotificationsProvider');
   }
 
-  const handleCreateNotification = (
-    notification: Omit<Notification, 'id' | 'created_at' | 'timeout'> & {
-      timeout?: number;
-    },
-  ) => {
+  const handleCreateNotification = (notification: InsertNotification) => {
     /**
      * If the notification is for the current path, don't show it.
      */
@@ -28,6 +25,7 @@ export const useNotifications = () => {
       {
         id: Math.random().toString(36).substring(7),
         ...notification,
+        type: notification.type || 'generic',
         timeout: notification.timeout || DEFAULT_NOTIFICATION_TIMEOUT,
         created_at: new Date().toISOString(),
       },
