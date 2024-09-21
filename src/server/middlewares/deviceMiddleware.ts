@@ -13,6 +13,7 @@ declare module 'fivem-router' {
 
 export const deviceMiddleware = async (ctx: RouterContext, next: () => Promise<void>) => {
   const deviceIdentifier = PlayerRepository.getDevice(ctx.source);
+  console.log('deviceMiddleware: deviceIdentifier', deviceIdentifier);
 
   try {
     if (!deviceIdentifier) {
@@ -20,7 +21,7 @@ export const deviceMiddleware = async (ctx: RouterContext, next: () => Promise<v
     }
 
     const device = await DeviceRepository.getDeviceByIdentifier(deviceIdentifier);
-
+    console.log('deviceMiddleware: device', device);
     if (!device) {
       throw new DeviceNotFoundError();
     }

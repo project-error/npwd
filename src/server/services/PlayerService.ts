@@ -17,7 +17,7 @@ class PlayerService {
 
   deviceMap: Map<number, string> = new Map();
 
-  public async authorizeDevice(src: number, deviceIdentifier: string) {
+  public async authorizeDevice(src: number, deviceIdentifier: string): Promise<boolean> {
     return await AuthRepository.authorizeDevice(src, deviceIdentifier);
   }
 

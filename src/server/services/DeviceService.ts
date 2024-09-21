@@ -22,6 +22,10 @@ class DeviceService {
     return this.deviceRepository.getDeviceById(deviceId);
   }
 
+  public async getDeviceByIdentifier(deviceIdentifier: string): Promise<Device | null> {
+    return this.deviceRepository.getDeviceByIdentifier(deviceIdentifier);
+  }
+
   public async createDevice(device: InsertDevice): Promise<Device> {
     try {
       return await this.deviceRepository.createDevice(device);

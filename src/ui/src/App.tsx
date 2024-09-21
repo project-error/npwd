@@ -58,20 +58,6 @@ function App() {
   const currentThemeType = useThemeType();
 
   useEffect(() => {
-    const handleMessage = (event) => {
-      console.log('----------');
-      console.log('message received');
-      console.log(event);
-      console.log('----------');
-    };
-
-    window.addEventListener('message', handleMessage);
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
-
-  useEffect(() => {
     if (currentThemeType === 'dark') {
       setTheme(darkTheme);
     } else {

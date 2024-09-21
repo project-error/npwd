@@ -1,3 +1,4 @@
+import { set } from 'zod';
 import { ResourceConfig, getServerConfig } from '../utils/config';
 const _exports = global.exports;
 
@@ -11,9 +12,18 @@ const validateFramework = (framework: unknown): framework is Framework => {
   return frameworks.includes(framework as Framework);
 };
 
+const getConvarFramework = (): string | undefined => {
+  try {
+    return GetConvar('npwd:framework', '');
+  } catch (error) {
+    console.error('Failed to get framework from GetConvar');
+    console.error(error);
+  }
+};
+
 const getFramework = () => {
   const config = getServerConfig();
-  const convarFramework = GetConvar('npwd:framework', undefined);
+  const convarFramework = getConvarFramework();
   const framework = convarFramework || config.framework;
 
   if (convarFramework) {
@@ -36,7 +46,13 @@ class AuthRepository {
 
   constructor() {
     this.config = getServerConfig();
-    this.framework = getFramework();
+    try {
+      this.framework = getFramework();
+    } catch (error) {
+      console.error('Failed to get framework');
+      console.error(error);
+      this.framework = 'standalone';
+    }
 
     console.log(`Using framework: ${this.framework}`);
 
@@ -45,7 +61,7 @@ class AuthRepository {
     }
   }
 
-  private async authorizeStandalone(src: number, deviceIdentifier: string) {
+  private async authorizeStandalone(src: number, deviceIdentifier: string): Promise<boolean> {
     /**
      * Development outside FiveM.
      */
@@ -89,6 +105,10 @@ class AuthRepository {
 
     for (const exportName of frameworkExports) {
       if (!configExports[exportName]) {
+        console.log(
+          `The resource "${resource}" was found, but it's missing the export "${exportName}"`,
+        );
+
         throw new Error(
           `Missing export "${exportName}" export in the "config.json" for the custom framework.`,
         );
@@ -100,13 +120,18 @@ class AuthRepository {
     }
 
     for (const exportName of frameworkExports) {
-      if (!_exports[resource][exportName]) {
-        throw new Error(`Missing export "${exportName}" in the resource "${resource}"`);
+      try {
+        console.log(`Checking export "${exportName}" in the resource "${resource}"`);
+        typeof _exports[resource][exportName] === 'function';
+      } catch (error) {
+        throw new Error(
+          `The resource "${resource}" was found, but it's missing the export "${exportName}"`,
+        );
       }
     }
   }
 
-  private async authorizeCustom(src: number, deviceIdentifier: string) {
+  private async authorizeCustom(src: number, deviceIdentifier: string): Promise<boolean> {
     await this.validateFrameworkIntegration();
     const { resource } = this.config.frameworkIntegration ?? {};
 
@@ -115,10 +140,11 @@ class AuthRepository {
       throw new Error('Missing authorization function');
     }
 
+    console.log('Calling custom authorization function');
     return await authorizationFunction(src, deviceIdentifier);
   }
 
-  public async authorizeDevice(src: number, deviceIdentifier: string) {
+  public async authorizeDevice(src: number, deviceIdentifier: string): Promise<boolean> {
     if (this.framework === 'standalone') {
       return await this.authorizeStandalone(src, deviceIdentifier);
     }

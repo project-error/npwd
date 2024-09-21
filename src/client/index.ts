@@ -8,33 +8,12 @@ import {
 } from '../shared/network';
 import PhoneService from './services/PhoneService';
 
-let activeDeviceId = GetPlayerServerId(PlayerId());
-
 const client = new Client({
   debug: true,
   listeners: {
     nui: NUI_CALLBACK_REGISTER_NAME,
     server: SERVER_EVENT_LISTENER,
     client: CLIENT_EVENT_LISTENER,
-  },
-  interceptors: {
-    request: ({ data, ...payload }) => {
-      console.log('Request interceptor:', {
-        ...payload,
-        data: {
-          ...(typeof data === 'object' ? data : {}),
-          deviceId: activeDeviceId,
-        },
-      });
-
-      return {
-        ...payload,
-        data: {
-          ...(typeof data === 'object' ? data : {}),
-          deviceId: activeDeviceId,
-        },
-      };
-    },
   },
 });
 
@@ -50,8 +29,19 @@ client.add('/calls/set-channel', async (data: { channel: number }) => {
 RegisterCommand(
   'select-device',
   async (_: unknown, args: string[]) => {
-    const deviceId = parseInt(args[0], 10);
-    client.post('/select-device', { deviceId });
+    const [deviceIdentifier] = args;
+    const res = await client.post('/auth/select-device', { deviceIdentifier });
+
+    console.log('select-device', res);
+  },
+  false,
+);
+
+RegisterCommand(
+  'debug-auth',
+  async () => {
+    const res = await client.post('/auth/debug');
+    console.log('debug-auth', res);
   },
   false,
 );

@@ -16,5 +16,10 @@ export const useCurrentDevice = () => {
     queryClient.setQueryData(['current-device'], { payload: data });
   });
 
+  useBroadcastEvent<Device>('current-device:set', (data) => {
+    console.log('current-device:set', data);
+    queryClient.setQueryData(['current-device'], { payload: data });
+  });
+
   return data?.payload || null;
 };

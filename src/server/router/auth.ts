@@ -4,6 +4,7 @@ import DeviceService from '../services/DeviceService';
 import PlayerService from '../services/PlayerService';
 import SimCardService from '../services/SimCardService';
 import { handleError } from '../utils/errors';
+import BroadcastService from '../services/BroadcastService';
 
 export const authRouter = new Router({
   prefix: '/auth',
@@ -17,6 +18,11 @@ authRouter.add('/select-device', async (ctx) => {
   try {
     const { deviceIdentifier } = selectDeviceSchema.parse(ctx.request.body);
     await PlayerService.selectDevice(ctx.source, deviceIdentifier);
+
+    /** Get device from DB */
+    const device = await DeviceService.getDeviceByIdentifier(deviceIdentifier);
+    ctx.emitToNui(ctx.source, 'current-device:set', device);
+
     ctx.status = 200;
     ctx.body = {
       ok: true,
@@ -71,6 +77,24 @@ authRouter.add('/source-by-device', async (ctx) => {
       ok: true,
       payload: source,
     };
+  } catch (error) {
+    handleError(error, ctx);
+  }
+});
+
+authRouter.add('/debug', async (ctx, next) => {
+  try {
+    const authorized = await PlayerService.authorizeDevice(ctx.source, 'debug');
+    console.log('Authorized', authorized);
+
+    ctx.status = 200;
+    ctx.body = {
+      ok: true,
+      message: 'Debugging devices',
+      payload: authorized,
+    };
+
+    return next();
   } catch (error) {
     handleError(error, ctx);
   }
