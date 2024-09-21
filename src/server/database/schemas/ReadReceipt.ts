@@ -1,7 +1,7 @@
 import { createDbTable, DATABASE_PREFIX } from '../utils';
 
-export const createReadReceiptTable = () => {
-  createDbTable('read_receipt', (table) => {
+export const createReadReceiptTable = async () => {
+  await createDbTable('read_receipt', (table) => {
     table.increments('id').primary();
     table
       .integer('message_id')

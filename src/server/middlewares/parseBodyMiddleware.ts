@@ -1,3 +1,5 @@
+import { handleError } from '../utils/errors';
+
 export const parseBodyMiddleware = async (ctx, next) => {
   if (ctx.request.body) {
     await next();
@@ -8,6 +10,6 @@ export const parseBodyMiddleware = async (ctx, next) => {
     ctx.request.body = await body.value;
     await next();
   } catch (error) {
-    ctx.throw(400, 'Invalid body');
+    handleError(error, ctx);
   }
 };

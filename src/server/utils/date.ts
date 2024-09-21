@@ -1,4 +1,4 @@
-export const parseObjectToIsoString = (obj: Record<string, unknown>) => {
+export const parseObjectToIsoString = (obj: unknown) => {
   if (!obj || typeof obj !== 'object') {
     return obj;
   }

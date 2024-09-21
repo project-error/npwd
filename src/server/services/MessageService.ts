@@ -9,9 +9,8 @@ import {
 } from '../../shared/Errors';
 import DeviceRepository from '../repositories/DeviceRepository';
 import { Message } from '../../shared/Types';
-import { getPlayerSrcBySid } from '../utils/player';
-import { parseObjectToIsoString } from '../utils/date';
 import { handleError } from '../utils/errors';
+import BroadcastService from './BroadcastService';
 
 class MessageService {
   private readonly messageRepository: typeof MessageRepository;
@@ -66,11 +65,12 @@ class MessageService {
 
   public async broadcastNewMessage(ctx: RouterContext, message: Message): Promise<void> {
     try {
-      const callerSrc = await getPlayerSrcBySid(message.sender_id);
-      const receiverSrc = await getPlayerSrcBySid(message.receiver_id);
-
-      ctx.emitToNui(callerSrc, 'message:new-message', parseObjectToIsoString(message));
-      ctx.emitToNui(receiverSrc, 'message:new-message', parseObjectToIsoString(message));
+      BroadcastService.emitToNuis({
+        ctx,
+        data: message,
+        event: 'message:new-message',
+        sidList: [message.sender_id, message.receiver_id],
+      });
     } catch (error) {
       console.error('Failed to broadcast call update', error);
       handleError(error, ctx);

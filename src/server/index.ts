@@ -17,7 +17,7 @@ import { emitMiddleware } from './middlewares/emitMiddleware';
 import { messagesRouter } from './router/messages';
 import { conversationsRouter } from './router/conversations';
 import { contactsRouter } from './router/contacts';
-import { selectDeviceMiddleware } from './middlewares/selectDeviceMiddleware';
+import { authRouter } from './router/auth';
 
 function bootstrap() {
   initDB();
@@ -35,9 +35,10 @@ function bootstrap() {
 
   app.use(emitMiddleware);
   app.use(sourceMiddleware);
-  app.use(selectDeviceMiddleware);
-  app.use(deviceMiddleware);
   app.use(parseBodyMiddleware);
+  app.use(authRouter.routes());
+  // app.use(selectDeviceMiddleware);
+  app.use(deviceMiddleware);
 
   /**
    * Add routers
@@ -51,7 +52,7 @@ function bootstrap() {
 
   app.use(router.routes());
 
-  app.use(async (ctx, next) => {
+  app.use(async (ctx) => {
     ctx.body = parseObjectToIsoString(ctx.body);
   });
 

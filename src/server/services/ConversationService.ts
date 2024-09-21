@@ -3,7 +3,7 @@ import { SimCardNotActiveError, SimcardNotFoundError } from '../../shared/Errors
 import MessageRepository from '../repositories/MessageRepository';
 import SimCardRepository from '../repositories/SimCardRepository';
 import DeviceRepository from '../repositories/DeviceRepository';
-import { Conversation, MessageWithPhoneNumbers } from '../../shared/Types';
+import { MessageWithPhoneNumbers } from '../../shared/Types';
 
 class ConversationService {
   messageRepository: typeof MessageRepository;

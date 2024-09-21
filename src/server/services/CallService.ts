@@ -17,9 +17,8 @@ import {
 } from '../../shared/Errors';
 import DeviceRepository from '../repositories/DeviceRepository';
 import { Call } from '../../shared/Types';
-import { getPlayerSrcBySid } from '../utils/player';
-import { parseObjectToIsoString } from '../utils/date';
 import { handleError } from '../utils/errors';
+import BroadcastService from './BroadcastService';
 
 class CallService {
   private readonly callRepository: typeof CallRepository;
@@ -257,10 +256,6 @@ class CallService {
     return await this.declineCall(ctx, call.id);
   }
 
-  public async getCallByPhoneNumber(phoneNumber: string): Promise<Call | null> {
-    return this.callRepository.getCallByPhoneNumber(phoneNumber);
-  }
-
   public async createCall(call: InsertCall): Promise<Call> {
     return await this.callRepository.createCall(call);
   }
@@ -279,17 +274,13 @@ class CallService {
 
   public async broadcastCallUpdate(ctx: RouterContext, call: Call): Promise<void> {
     try {
-      const callerSrc = await getPlayerSrcBySid(call.caller_id);
-      const receiverSrc = await getPlayerSrcBySid(call.receiver_id);
-
-      if (call.ended_at || call.declined_at) {
-        ctx.emitToNui(callerSrc, 'active-call:updated', null);
-        ctx.emitToNui(receiverSrc, 'active-call:updated', null);
-        return;
-      }
-
-      ctx.emitToNui(callerSrc, 'active-call:updated', parseObjectToIsoString(call));
-      ctx.emitToNui(receiverSrc, 'active-call:updated', parseObjectToIsoString(call));
+      const emitData = call.ended_at || call.declined_at ? null : call;
+      BroadcastService.emitToNuis({
+        ctx,
+        data: emitData,
+        event: 'active-call:updated',
+        sidList: [call.caller_id, call.receiver_id],
+      });
     } catch (error) {
       console.error('Failed to broadcast call update', error);
       handleError(error, ctx);

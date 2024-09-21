@@ -6,8 +6,8 @@ export interface SimCardWithDevice extends SimCard, Device {}
 
 export type InsertSimCard = Pick<SimCard, 'phone_number'>;
 
-export const createSimCardsTable = () => {
-  createDbTable('sim_card', (table) => {
+export const createSimCardsTable = async () => {
+  await createDbTable('sim_card', (table) => {
     table.increments('id').primary();
     table.string('phone_number').notNullable().unique();
     table.boolean('is_active').notNullable().defaultTo(true);

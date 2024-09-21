@@ -2,8 +2,7 @@ import { Router } from 'fivem-router';
 import CallService from '../services/CallService';
 import { z } from 'zod';
 import { handleError } from '../utils/errors';
-import { getPlayerSrcBySid } from '../utils/player';
-import { parseObjectToIsoString } from '../utils/date';
+import BroadcastService from '../services/BroadcastService';
 
 /** add pma exports to global */
 declare global {
@@ -18,9 +17,9 @@ export const callsRouter = new Router({
   prefix: '/calls',
 });
 
-const responseCallSchema = z.object({
-  callId: z.coerce.number(),
-});
+// const responseCallSchema = z.object({
+//   callId: z.coerce.number(),
+// });
 
 // callsRouter.add('/:callId', async (ctx, next) => {
 //   try {
@@ -47,11 +46,12 @@ callsRouter.add('/call', async (ctx, next) => {
     const { phoneNumber } = initiateCallSchema.parse(ctx.request.body);
     const call = await CallService.call(ctx, phoneNumber.toString());
 
-    const callerSrc = await getPlayerSrcBySid(call.caller_id);
-    const receiverSrc = await getPlayerSrcBySid(call.receiver_id);
-
-    ctx.emitToNui(callerSrc, 'active-call:updated', parseObjectToIsoString(call));
-    ctx.emitToNui(receiverSrc, 'active-call:updated', parseObjectToIsoString(call));
+    BroadcastService.emitToNuis({
+      ctx,
+      data: call,
+      event: 'active-call:updated',
+      sidList: [call.caller_id, call.receiver_id],
+    });
 
     ctx.status = 200;
     ctx.body = {
@@ -179,6 +179,7 @@ callsRouter.add('/missed', async (ctx, next) => {
       ok: true,
       payload: calls,
     };
+    await next();
   } catch (error) {
     handleError(error, ctx);
   }

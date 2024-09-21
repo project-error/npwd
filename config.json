@@ -1,3 +1,10 @@
 {
-  "debug": false
+  "debug": false,
+  "framework": "custom",
+  "frameworkIntegration": {
+    "resource": "custom-framework",
+    "exports": {
+      "authorizeDevice": "authorizeDevice"
+    }
+  }
 }

@@ -1,8 +1,8 @@
 import { createDbTable, DATABASE_PREFIX } from '../utils';
 import { DBInstance } from '../knex';
 
-export const createMessageTable = () => {
-  createDbTable('message', (table) => {
+export const createMessageTable = async () => {
+  await createDbTable('message', (table) => {
     table.increments('id').primary();
     table
       .integer('sender_id')

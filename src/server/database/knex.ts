@@ -10,7 +10,7 @@ import { createContactsTable } from './schemas/Contact';
 
 export let DBInstance: knex.Knex;
 
-export function initDB() {
+export async function initDB() {
   const options = getConnectionOptions();
 
   const conn = knex({
@@ -38,11 +38,11 @@ export function initDB() {
       console.error(err);
     });
 
-  createCallsTable();
-  createDevicesTable();
-  createSimCardsTable();
-  createMessageTable();
-  createConversationTable();
-  createReadReceiptTable();
-  createContactsTable();
+  await createSimCardsTable();
+  await createDevicesTable();
+  await createCallsTable();
+  await createMessageTable();
+  await createConversationTable();
+  await createReadReceiptTable();
+  await createContactsTable();
 }

@@ -7,7 +7,7 @@ export const conversationsRouter = new Router({
   prefix: '/conversations',
 });
 
-conversationsRouter.add('/', async (ctx, next) => {
+conversationsRouter.add('/', async (ctx) => {
   /** Return my messages */
   try {
     const conversations = await ConversationService.getMyConversations(ctx);
@@ -21,7 +21,7 @@ conversationsRouter.add('/', async (ctx, next) => {
   }
 });
 
-conversationsRouter.add('/:phoneNumber', async (ctx, next) => {
+conversationsRouter.add('/:phoneNumber', async (ctx) => {
   try {
     const { phoneNumber } = z.object({ phoneNumber: z.string().min(2).max(15) }).parse(ctx.params);
 

@@ -12,14 +12,6 @@ class CallRepository {
     return await DBInstance(tableName).where('id', callId).first();
   }
 
-  public async getCallByPhoneNumber(phoneNumber: string): Promise<Call | null> {
-    return await DBInstance.select('*')
-      .from(tableName)
-      .where('caller_id', '1')
-      .orWhere('receiver_id', '2')
-      .first();
-  }
-
   public async getCallsBySid(sid: number): Promise<Call[]> {
     return await DBInstance(tableName)
       .where('receiver_id', sid)
@@ -85,8 +77,8 @@ class CallRepository {
     return await DBInstance(tableName).where('id', call.id).update(call);
   }
 
-  public async deleteCall(callId: string): Promise<void> {
-    return;
+  public async deleteCall(_callId: string): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }
 

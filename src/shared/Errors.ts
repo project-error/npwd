@@ -34,6 +34,15 @@ export class ContactNotFoundError extends BaseError {
   }
 }
 
+export class DeviceAlreadyRegistered extends BaseError {
+  code = 400;
+  error_code = 'DEVICE_ALREADY_REGISTERED' as const;
+
+  constructor() {
+    super('Device already registered');
+  }
+}
+
 export class PendingCallNotFoundError extends BaseError {
   code = 404;
   error_code = 'PENDING_CALL_NOT_FOUND' as const;
@@ -63,10 +72,13 @@ export class CallHasEndedError extends BaseError {
 
 export class DeviceNotFoundError extends BaseError {
   code = 404;
-  declare error_code: 'CALLER_DEVICE_NOT_FOUND' | 'RECEIVER_DEVICE_NOT_FOUND';
+  declare error_code:
+    | 'CALLER_DEVICE_NOT_FOUND'
+    | 'RECEIVER_DEVICE_NOT_FOUND'
+    | 'GENERIC_DEVICE_NOT_FOUND';
 
-  constructor(type: 'CALLER' | 'RECEIVER') {
-    super(`Device for ${type} not found`);
+  constructor(type: 'CALLER' | 'RECEIVER' | 'GENERIC' = 'GENERIC') {
+    super(type === 'GENERIC' ? 'Device not found' : `Device for type ${type} not found`);
     this.error_code = `${type}_DEVICE_NOT_FOUND`;
   }
 }

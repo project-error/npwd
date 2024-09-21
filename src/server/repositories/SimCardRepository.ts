@@ -1,4 +1,4 @@
-import { SimCard } from '../../shared/Types';
+import { SimCard, SimCardWithDevice } from '../../shared/Types';
 import { DBInstance } from '../database/knex';
 import { InsertSimCard } from '../database/schemas/SimCard';
 
@@ -11,6 +11,15 @@ class SimCardRepository {
 
   public async getSimCardById(simCardId: number): Promise<SimCard | null> {
     return await DBInstance(tableName).where('id', simCardId).first();
+  }
+
+  public async getSimCardWithDeviceById(simCardId: number): Promise<SimCardWithDevice | null> {
+    return await DBInstance(tableName)
+      .where('tmp_phone_sim_card.id', simCardId)
+      .leftJoin('tmp_phone_device', 'tmp_phone_sim_card.id', 'tmp_phone_device.sim_card_id')
+      .select('tmp_phone_sim_card.*', 'tmp_phone_device.id as deviceId')
+      .select('tmp_phone_sim_card.*', 'tmp_phone_device.identifier as deviceIdentifier')
+      .first();
   }
 
   public async getSimCardByPhoneNumber(phoneNumber: string): Promise<

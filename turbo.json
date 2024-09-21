@@ -13,6 +13,9 @@
     },
     "build:game": {
       "cache": false
+    },
+    "lint": {
+      "cache": false
     }
   }
 }

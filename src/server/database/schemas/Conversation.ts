@@ -1,7 +1,7 @@
 import { createDbTable } from '../utils';
 
-export const createConversationTable = () => {
-  createDbTable('conversation', (table) => {
+export const createConversationTable = async () => {
+  await createDbTable('conversation', (table) => {
     table.increments('id').primary();
     table.string('label').notNullable();
     // table.json('messages').notNullable(); // Assuming messages are stored as JSON array of message IDs

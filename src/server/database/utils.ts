@@ -39,7 +39,7 @@ export function getConnectionOptions(): ConnectionOptions {
     process.env.MYSQL_CONNECTION_STRING ?? '',
   );
 
-  const options: Record<string, any> = mysql_connection_string.includes('mysql://')
+  const options: Record<string, unknown> = mysql_connection_string.includes('mysql://')
     ? parseUri(mysql_connection_string)
     : mysql_connection_string
         .replace(/(?:host(?:name)|ip|server|data\s?source|addr(?:ess)?)=/gi, 'host=')
@@ -65,7 +65,7 @@ export function getConnectionOptions(): ConnectionOptions {
     }
   }
 
-  const flags: string[] = options.flags || [];
+  const flags = (options.flags as string[]) || [];
   flags.push(options.database ? 'CONNECT_WITH_DB' : '-CONNECT_WITH_DB');
 
   return {

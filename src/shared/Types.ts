@@ -14,6 +14,11 @@ export interface SimCard {
   updated_at: Date;
 }
 
+export interface SimCardWithDevice extends SimCard {
+  deviceId: number;
+  deviceIdentifier: string;
+}
+
 export interface DeviceWithSimCard extends Device {
   sim_card_id: number;
   sim_card_is_active: boolean;

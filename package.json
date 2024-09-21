@@ -44,7 +44,8 @@
     "query": "pnpm --filter @core/query",
     "bundle": "sh scripts/bundle.sh",
     "move": "sh scripts/move.sh",
-    "router": "pnpm --filter @core/router"
+    "router": "pnpm --filter @core/router",
+    "lint": "turbo run lint"
   },
   "husky": {
     "hooks": {

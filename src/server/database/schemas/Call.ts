@@ -5,8 +5,8 @@ import { Call } from '../../../shared/Types';
 export type InsertCall = Pick<Call, 'caller_id' | 'receiver_id'> &
   Partial<Pick<Call, 'is_anonymous'>>;
 
-export const createCallsTable = () => {
-  createDbTable('call', (table) => {
+export const createCallsTable = async () => {
+  await createDbTable('call', (table) => {
     table.increments('id').primary();
     table.integer('caller_id').unsigned().references('id').inTable(`${DATABASE_PREFIX}sim_card`);
     table.integer('receiver_id').unsigned().references('id').inTable(`${DATABASE_PREFIX}sim_card`);

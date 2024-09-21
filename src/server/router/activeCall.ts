@@ -33,6 +33,10 @@ activeCallRouter.add('/accept', async (ctx, next) => {
       ok: true,
       payload: call,
     };
+
+    console.log('Accepted call', call);
+
+    await next();
   } catch (error) {
     handleError(error, ctx);
   }
@@ -51,6 +55,7 @@ activeCallRouter.add('/decline', async (ctx, next) => {
       ok: true,
       payload: call,
     };
+    await next();
   } catch (error) {
     handleError(error, ctx);
   }
@@ -61,11 +66,14 @@ activeCallRouter.add('/end', async (ctx, next) => {
     const call = await CallService.endActiveCall(ctx);
     await CallService.broadcastCallUpdate(ctx, call);
 
+    console.log('Ended call', call);
+
     ctx.status = 200;
     ctx.body = {
       ok: true,
       payload: call,
     };
+    await next();
   } catch (error) {
     handleError(error, ctx);
   }

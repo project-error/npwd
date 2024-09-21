@@ -1,3 +1,4 @@
+import { DeviceAlreadyRegistered } from '../../shared/Errors';
 import { Device } from '../../shared/Types';
 import { InsertDevice } from '../database/schemas/Device';
 import DeviceRepository from '../repositories/DeviceRepository';
@@ -22,7 +23,17 @@ class DeviceService {
   }
 
   public async createDevice(device: InsertDevice): Promise<Device> {
-    return this.deviceRepository.createDevice(device);
+    try {
+      return await this.deviceRepository.createDevice(device);
+    } catch (error) {
+      /** Check duplicate */
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new DeviceAlreadyRegistered();
+      }
+
+      console.log('Error', error);
+      throw error;
+    }
   }
 
   public async updateDevice(device: Device): Promise<Device> {

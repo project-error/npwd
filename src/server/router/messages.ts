@@ -2,18 +2,21 @@ import { Router } from 'fivem-router';
 import z from 'zod';
 import { handleError } from '../utils/errors';
 import MessageService from '../services/MessageService';
+import PlayerService from '../services/PlayerService';
 
 export const messagesRouter = new Router({
   prefix: '/messages',
 });
 
-messagesRouter.add('/', async (ctx, next) => {
+messagesRouter.add('/', async (ctx) => {
   /** Return my messages */
   try {
     const messages = await MessageService.getMessages(ctx);
+    const source = await PlayerService.getSourceFromSid(ctx.device.sim_card_id);
 
     ctx.body = {
       ok: true,
+      source,
       payload: messages,
     };
   } catch (error) {
