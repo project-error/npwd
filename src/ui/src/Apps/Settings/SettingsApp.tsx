@@ -1,30 +1,49 @@
 import { Link } from 'react-router-dom';
-
-import { darkTheme, lightTheme } from '../../App';
+import { useSettings } from '@/api/hooks/useSettings';
+import { Slider } from '@/components/ui/slider';
 import { useEffect, useState } from 'react';
-import { setTheme } from '@/utils/theme';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export const SettingsApp = () => {
-  const [themeState, setThemeState] = useState(() => {
-    return localStorage.getItem('theme-type') === 'dark' ? darkTheme : lightTheme;
-  });
+  const { settings, update } = useSettings();
+  const [scale, setScale] = useState(settings?.scale || 100);
 
   const toggleTheme = () => {
-    const otherTheme = themeState.type === lightTheme.type ? darkTheme : lightTheme;
-    console.log('toggle theme', otherTheme, themeState);
-    setThemeState(otherTheme);
+    update({
+      theme: settings?.theme === 'dark' ? 'light' : 'dark',
+    });
   };
 
+  const debouncedScale = useDebounce(scale || 100, 450);
+
   useEffect(() => {
-    setTheme(themeState);
-  }, [themeState]);
+    console.log({ debouncedScale });
+    update({
+      scale: debouncedScale,
+    });
+  }, [debouncedScale]);
 
   return (
     <div className="p-8 h-full w-full bg-primary text-primary flex flex-col gap-8">
       <span>Settings</span>
-      <span>⚙️</span>
+      <span className="text-3xl animate-pulse">⚙️</span>
 
       <button onClick={toggleTheme}>toggle theme</button>
+
+      <span>Set phone scale</span>
+      <Slider
+        defaultValue={[scale]}
+        max={100}
+        min={40}
+        step={1}
+        onValueChange={(value) => {
+          // handleUpdateScale(value[0]);
+          setScale(value[0]);
+        }}
+        onChange={(event) => {
+          console.log(event);
+        }}
+      />
 
       <Link to="/home">
         <button className="border px-4 py-2 rounded-sm">

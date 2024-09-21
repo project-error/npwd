@@ -1,7 +1,13 @@
+export interface Settings extends Record<string, unknown> {
+  theme: 'light' | 'dark';
+  scale: number;
+}
+
 export interface Device {
   id: number;
   sim_card_id: number;
   identifier: string;
+  settings: Settings; // JSON
   created_at: Date;
   updated_at: Date;
 }

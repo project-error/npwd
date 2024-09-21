@@ -74,3 +74,23 @@ devicesRouter.add('/current', async (ctx, next) => {
 
   await next();
 });
+
+const updateSettingsSchema = z.object({
+  settings: z.record(z.unknown()),
+});
+
+devicesRouter.add('/update-settings', async (ctx, next) => {
+  try {
+    const { settings } = updateSettingsSchema.parse(ctx.request.body);
+    const device = await DeviceService.updateDeviceSettings(ctx.device.id, settings);
+
+    ctx.body = {
+      ok: true,
+      payload: device,
+    };
+  } catch (error) {
+    handleError(error, ctx);
+  }
+
+  await next();
+});

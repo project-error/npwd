@@ -17,6 +17,7 @@ import { isEnvBrowser } from './utils/game';
 import { setTheme, Theme } from './utils/theme';
 import { useActiveCall } from './api/hooks/useActiveCall';
 import { useMessagesNotifications } from './api/hooks/useMessagesNotifications';
+import { useSyncSettings } from './hooks/useSyncSettings';
 
 export const lightTheme: Theme = {
   type: 'light',
@@ -45,6 +46,7 @@ export const darkTheme: Theme = {
 function App() {
   useActiveCall();
   useMessagesNotifications();
+  useSyncSettings();
 
   const location = useLocation();
   const navigate = useNavigate();

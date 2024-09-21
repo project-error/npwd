@@ -25,7 +25,7 @@ class DeviceRepository {
   }
 
   public async getDeviceById(deviceId: number): Promise<ExtendedDevice> {
-    return await DBInstance(tableName)
+    const result = await DBInstance(tableName)
       .leftJoin('tmp_phone_sim_card', 'tmp_phone_device.sim_card_id', 'tmp_phone_sim_card.id')
       .where('tmp_phone_device.id', deviceId)
       .select(
@@ -35,10 +35,20 @@ class DeviceRepository {
         'tmp_phone_sim_card.id as sim_card_id',
       )
       .first();
+
+    try {
+      if (result) {
+        result.settings = JSON.parse(result.settings);
+      }
+    } catch (error) {
+      console.log('Error parsing settings', error);
+    }
+
+    return result;
   }
 
   public async getDeviceByIdentifier(identifier: string): Promise<ExtendedDevice | null> {
-    return await DBInstance(tableName)
+    const result = await DBInstance(tableName)
       .leftJoin('tmp_phone_sim_card', 'tmp_phone_device.sim_card_id', 'tmp_phone_sim_card.id')
       .where('identifier', identifier)
       .select(
@@ -48,6 +58,16 @@ class DeviceRepository {
         'tmp_phone_sim_card.id as sim_card_id',
       )
       .first();
+
+    try {
+      if (result) {
+        result.settings = JSON.parse(result.settings);
+      }
+    } catch (error) {
+      console.log('Error parsing settings', error);
+    }
+
+    return result;
   }
 
   public async getDeviceBySid(simCardId: number): Promise<Device | null> {
@@ -70,6 +90,16 @@ class DeviceRepository {
 
   public async deleteDevice(deviceId: number): Promise<void> {
     await DBInstance(tableName).where('id', deviceId).delete();
+  }
+
+  public async updateDeviceSettings(
+    deviceId: number,
+    settings: Record<string, unknown>,
+  ): Promise<Device> {
+    await DBInstance(tableName)
+      .where('id', deviceId)
+      .update({ settings: JSON.stringify(settings) });
+    return await this.getDeviceById(deviceId);
   }
 }
 

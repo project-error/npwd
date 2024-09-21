@@ -1,3 +1,5 @@
+import PlayerService from './services/PlayerService';
+
 const isRunningIngame = typeof RegisterCommand !== 'undefined';
 
 if (!isRunningIngame) {
@@ -28,4 +30,9 @@ if (!isRunningIngame) {
       },
     },
   } as unknown as CitizenExports;
+
+  const baseLicense = `license:ef0b12fd95e37572c24c00503c3fd02f3f9b99cb`;
+  PlayerService.selectDevice(1, `1:${baseLicense}`);
+  PlayerService.selectDevice(2, `2:${baseLicense}`);
+  PlayerService.selectDevice(3, `3:${baseLicense}`);
 }

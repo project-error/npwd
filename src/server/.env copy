@@ -1,0 +1,2 @@
+DROP_TABLE_BEFORE_CREATING=false
+MYSQL_CONNECTION_STRING='mysql://root:hejhej123123@172.20.192.1:3307/qbcoreframework_02?charset=utf8mb4'

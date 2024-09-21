@@ -1,4 +1,5 @@
 import { ResourceConfig, getServerConfig } from '../utils/config';
+import { isRunningInGame } from '../utils/game';
 const _exports = global.exports;
 
 const frameworks = ['standalone', 'custom'] as const;
@@ -24,6 +25,10 @@ const getFramework = () => {
   const config = getServerConfig();
   const convarFramework = getConvarFramework();
   const framework = convarFramework || config.framework;
+
+  if (!isRunningInGame()) {
+    return 'standalone';
+  }
 
   if (convarFramework) {
     console.log(`Using framework "${convarFramework}" from GetConvar`);
@@ -65,7 +70,7 @@ class AuthRepository {
      * Development outside FiveM.
      */
     if (typeof RegisterCommand === 'undefined') {
-      return `${src}` === deviceIdentifier;
+      return true;
     }
 
     const playerLicenses = getPlayerIdentifiers(src);

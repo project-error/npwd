@@ -12,6 +12,7 @@ export const createDevicesTable = async () => {
     // Generate random string for the identifier
     table.string('identifier').notNullable().unique().defaultTo(DBInstance.fn.uuid());
     table.integer('sim_card_id').unsigned().references('id').inTable(`${DATABASE_PREFIX}sim_card`);
+    table.jsonb('settings').nullable();
     table.dateTime('created_at').notNullable().defaultTo(DBInstance.fn.now());
     table.dateTime('updated_at').notNullable().defaultTo(DBInstance.fn.now());
   });

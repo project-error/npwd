@@ -47,6 +47,13 @@ class DeviceService {
   public async deleteDevice(deviceId: number): Promise<void> {
     return this.deviceRepository.deleteDevice(deviceId);
   }
+
+  public async updateDeviceSettings(
+    deviceId: number,
+    settings: Record<string, unknown>,
+  ): Promise<Device> {
+    return this.deviceRepository.updateDeviceSettings(deviceId, settings);
+  }
 }
 
 export default new DeviceService(DeviceRepository);

@@ -4,8 +4,8 @@ import { Contact } from '../../../shared/Types';
 
 export type InsertContact = Pick<Contact, 'name' | 'phone_number' | 'sim_card_id'>;
 
-export const createContactsTable = () => {
-  createDbTable('contact', (table) => {
+export const createContactsTable = async () => {
+  await createDbTable('contact', (table) => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('phone_number').notNullable();
