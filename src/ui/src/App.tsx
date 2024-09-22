@@ -86,7 +86,7 @@ function App() {
   });
 
   useKeys({
-    Escape: () => {
+    Backspace: () => {
       if (isNavigationDisabled) return;
       closePhone();
       navigate(-1);

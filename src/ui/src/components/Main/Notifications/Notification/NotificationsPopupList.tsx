@@ -1,7 +1,6 @@
 import { Notification } from '@/contexts/NotificationContext';
 import { useNotifications } from '@/contexts/NotificationContext/useNotifications';
 import { usePrevious } from '@/hooks/usePrevious';
-import { AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { PopupNotification } from './PopupNotification';
 
@@ -30,18 +29,16 @@ export const NotificationsPopupList = () => {
 
   return (
     <div className="absolute top-8 left-0 right-0 z-10 w-full flex flex-col gap-2 px-4 mt-4">
-      <AnimatePresence>
-        {latestNotifications.map((notification, index) => (
-          <span key={notification.id}>
-            <PopupNotification
-              drag={index === 0 ? 'y' : 'x'}
-              notification={notification}
-              onClose={() => handleRemoveFromLatest(notification.id)}
-              onClick={handleClearLatest}
-            />
-          </span>
-        ))}
-      </AnimatePresence>
+      {latestNotifications.map((notification, index) => (
+        <span key={notification.id}>
+          <PopupNotification
+            drag={index === 0 ? 'y' : 'x'}
+            notification={notification}
+            onClose={() => handleRemoveFromLatest(notification.id)}
+            onClick={handleClearLatest}
+          />
+        </span>
+      ))}
     </div>
   );
 };

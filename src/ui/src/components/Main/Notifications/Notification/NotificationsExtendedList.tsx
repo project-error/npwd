@@ -70,7 +70,7 @@ export const NotificationsExtendedList = ({
       }}
       transition={{ duration: 0.5 }}
       className={clsx(
-        'absolute top-0 left-0 right-0 z-10 flex flex-col gap-2 h-full backdrop-blur-xl bg-gray-500 bg-opacity-5',
+        'absolute top-0 left-0 right-0 z-10 flex flex-col gap-2 h-full bg-secondary bg-opacity-60',
       )}
       onDragEnd={handleDragEnd}
     >

@@ -57,11 +57,16 @@ export interface Message extends Record<string, unknown> {
   sender_id: number;
   receiver_id: number;
   content: string;
+  embed_type: 'image' | 'video' | 'audio' | null;
+  embed_content: string | null;
   created_at: Date;
   updated_at: Date;
 }
 
-export type InsertMessage = Pick<Message, 'receiver_id' | 'sender_id' | 'content'>;
+export type InsertMessage = Pick<
+  Message,
+  'receiver_id' | 'sender_id' | 'content' | 'embed_type' | 'embed_content'
+>;
 
 export interface MessageWithPhoneNumbers extends Message {
   sender_phone_number: string;

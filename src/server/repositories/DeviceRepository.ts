@@ -40,9 +40,7 @@ class DeviceRepository {
       if (result) {
         result.settings = JSON.parse(result.settings);
       }
-    } catch (error) {
-      console.log('Error parsing settings', error);
-    }
+    } catch (error) {}
 
     return result;
   }
@@ -63,9 +61,7 @@ class DeviceRepository {
       if (result) {
         result.settings = JSON.parse(result.settings);
       }
-    } catch (error) {
-      console.log('Error parsing settings', error);
-    }
+    } catch (error) {}
 
     return result;
   }

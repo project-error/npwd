@@ -1,8 +1,6 @@
-import PlayerService from './services/PlayerService';
+const isRunningInGame = typeof RegisterCommand !== 'undefined';
 
-const isRunningIngame = typeof RegisterCommand !== 'undefined';
-
-if (!isRunningIngame) {
+if (!isRunningInGame) {
   global.GetConvar = (_: string, defaultValue: string) => {
     return defaultValue;
   };
@@ -31,8 +29,37 @@ if (!isRunningIngame) {
     },
   } as unknown as CitizenExports;
 
-  const baseLicense = `license:ef0b12fd95e37572c24c00503c3fd02f3f9b99cb`;
-  PlayerService.selectDevice(1, `1:${baseLicense}`);
-  PlayerService.selectDevice(2, `2:${baseLicense}`);
-  PlayerService.selectDevice(3, `3:${baseLicense}`);
+  const initDevices = async () => {
+    const PlayerService = require('./services/PlayerService').default;
+    const DeviceService = require('./services/DeviceService').default;
+    const SimCardService = require('./services/SimCardService').default;
+    const baseLicense = `license:ef0b12fd95e37572c24c00503c3fd02f3f9b99cb`;
+
+    /** Check if device exists. otherwise create them */
+    const isDevicesCreated = await DeviceService.getDeviceByIdentifier(`1:${baseLicense}`);
+
+    if (!isDevicesCreated) {
+      console.log('Creating devices');
+
+      for (let i = 1; i <= 3; i++) {
+        console.log(`Creating device ${i}`);
+        const simcard = await SimCardService.createSimCard({
+          phone_number: `${i}${i}${i}`,
+        });
+        await await DeviceService.createDevice({
+          sim_card_id: simcard.id,
+          identifier: `${i}:${baseLicense}`,
+        });
+      }
+    }
+
+    PlayerService.selectDevice(1, `1:${baseLicense}`);
+    PlayerService.selectDevice(2, `2:${baseLicense}`);
+    PlayerService.selectDevice(3, `3:${baseLicense}`);
+  };
+
+  console.log('Initializing devices');
+  setTimeout(() => {
+    initDevices();
+  }, 2500);
 }

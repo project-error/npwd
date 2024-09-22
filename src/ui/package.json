@@ -30,7 +30,7 @@
     "react-router-dom": "^6.26.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.3",
+    "vaul": "^0.9.4",
     "vite-plugin-top-level-await": "^1.4.4"
   },
   "devDependencies": {

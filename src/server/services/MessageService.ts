@@ -8,7 +8,7 @@ import {
   UnauthorizedError,
 } from '../../shared/Errors';
 import DeviceRepository from '../repositories/DeviceRepository';
-import { Message } from '../../shared/Types';
+import { InsertMessage, Message } from '../../shared/Types';
 import { handleError } from '../utils/errors';
 import BroadcastService from './BroadcastService';
 
@@ -27,11 +27,15 @@ class MessageService {
     this.deviceRepository = deviceRepository;
   }
 
-  public async sendMessage(
-    ctx: RouterContext,
-    content: string,
-    receiverPhoneNumber: string,
-  ): Promise<Message> {
+  public async sendMessage(params: {
+    ctx: RouterContext;
+    phoneNumber: string;
+    content: string;
+    embedType: InsertMessage['embed_type'];
+    embedContent: InsertMessage['embed_content'];
+  }): Promise<Message> {
+    const { ctx, phoneNumber, content } = params;
+
     if (!ctx.device.sim_card_id) {
       throw new SimcardNotFoundError('SENDER');
     }
@@ -40,9 +44,7 @@ class MessageService {
       throw new SimCardNotActiveError('SENDER');
     }
 
-    const receiverSimcard = await this.simCardRepository.getSimCardByPhoneNumber(
-      receiverPhoneNumber,
-    );
+    const receiverSimcard = await this.simCardRepository.getSimCardByPhoneNumber(phoneNumber);
 
     if (!receiverSimcard) {
       throw new SimcardNotFoundError('RECEIVER');
@@ -56,6 +58,8 @@ class MessageService {
       sender_id: ctx.device.sim_card_id,
       receiver_id: receiverSimcard.id,
       content,
+      embed_type: params.embedType,
+      embed_content: params.embedContent,
     });
 
     this.broadcastNewMessage(ctx, message);

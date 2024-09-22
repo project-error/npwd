@@ -17,6 +17,8 @@ export const createMessageTable = async () => {
       .references('id')
       .inTable(`${DATABASE_PREFIX}sim_card`);
     table.string('content').notNullable();
+    table.string('embed_type').nullable();
+    table.jsonb('embed_content').nullable();
     table.dateTime('created_at').notNullable().defaultTo(DBInstance.fn.now());
   });
 };

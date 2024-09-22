@@ -31,6 +31,11 @@ export const Notifications = () => {
         updateNotificationState(false);
       }
     },
+    n: () => {
+      console.log('n');
+      updateNotificationState(!isNotificationsOpen);
+      setIsNotificationsOpen(!isNotificationsOpen);
+    },
   });
 
   return (

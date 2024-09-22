@@ -25,16 +25,26 @@ messagesRouter.add('/', async (ctx) => {
 });
 
 const sendMessageSchema = z.object({
+  embedType: z.enum(['image', 'video', 'audio']).nullable(),
+  embedContent: z.string().nullable(),
   content: z.string().min(1).max(255),
   phoneNumber: z.string().min(2).max(15),
 });
 
 messagesRouter.add('/send', async (ctx, next) => {
   try {
-    const { content, phoneNumber } = sendMessageSchema.parse(ctx.request.body);
+    const { content, phoneNumber, embedContent, embedType } = sendMessageSchema.parse(
+      ctx.request.body,
+    );
 
     // Send message to phoneNumber
-    const message = await MessageService.sendMessage(ctx, content, phoneNumber);
+    const message = await MessageService.sendMessage({
+      ctx,
+      content,
+      phoneNumber,
+      embedContent,
+      embedType,
+    });
 
     ctx.body = {
       ok: true,

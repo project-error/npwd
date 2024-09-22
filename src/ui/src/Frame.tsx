@@ -25,6 +25,8 @@ export const Frame = ({ children }: { children: React.ReactNode }) => {
       <div className="bg-primary rounded-[40px] flex-1 flex flex-col overflow-hidden">
         {children}
       </div>
+
+      <div id="drawer-root" />
     </motion.div>
   );
 };

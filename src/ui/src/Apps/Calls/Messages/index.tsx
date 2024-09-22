@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { useConversations } from '../../../api/hooks/useConversations';
 import { useContacts } from '@/api/hooks/useContacts';
 import { Button } from '@/components/ui/button';
+import { AnimatePresence } from 'framer-motion';
 
 export const MessagesApp = () => {
   const [contacts] = useContacts();
@@ -13,7 +14,7 @@ export const MessagesApp = () => {
       <TopNavigation
         title="Messages"
         right={
-          <Link to="/apps/messages/new">
+          <Link to="/apps/messages/new" tabIndex={-1}>
             <Button>New</Button>
           </Link>
         }
@@ -34,7 +35,9 @@ export const MessagesApp = () => {
         })}
       </ul>
 
-      <Outlet />
+      <AnimatePresence initial={false}>
+        <Outlet />
+      </AnimatePresence>
     </div>
   );
 };

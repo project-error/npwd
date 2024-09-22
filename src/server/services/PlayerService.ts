@@ -22,6 +22,7 @@ class PlayerService {
   }
 
   public async selectDevice(src: number, deviceIdentifier: string) {
+    console.log(`Selecting device for ${src}: ${deviceIdentifier}`);
     const isAuthorized = await this.authorizeDevice(src, deviceIdentifier);
 
     if (!isAuthorized) {
