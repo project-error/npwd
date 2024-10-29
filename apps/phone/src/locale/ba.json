@@ -1,9 +1,12 @@
 {
   "translation": {
     "MISC": {
-      "TOP_LEVEL_ERR_TITLE": "Fatalni Error",
-      "TOP_LEVEL_ERR_ACTION": "Ponovno učitaj",
-      "TOP_LEVEL_ERR_MSG": "NPWD je naišao na error od kojega se nije mogao oporaviti. Morat ćete ponovno učitati NUI prozor. Pogreška je prikazana u nastavku za referencu za razvojne programere."
+      "TOP_LEVEL_ERR_TITLE": "Fatalna greška",
+      "TOP_LEVEL_ERR_ACTION": "Ponovno učitajte",
+      "TOP_LEVEL_ERR_MSG": "NPWD je naišao na grešku koju ne može popraviti. Morat ćete ponovno učitati NUI prozor. Greška je prikazana u nastavku za referencu za developere.",
+      "APP_CRASHED_TITLE": "Fatalna aplikacijska greška",
+      "APP_CRASHED_MSG": "Aplikacije je naišla na grešku koju ne može popraviti.",
+      "APP_CRASHED_ACTION": "Ponovo učitajte aplikaciju"
     },
     "NOTIFICATIONS": {
       "NO_UNREAD": "Nema novih notifikacija"
@@ -17,155 +20,172 @@
         "INCOMING": "Dolazni poziv"
       },
       "FEEDBACK": {
-        "ERROR_MYSELF": "Ne možeš zvati sam sebe!",
-        "ERROR": "Došlo je do pogreške prilikom dovršavanja ovog poziva"
+        "ERROR_MYSELF": "Ne možete zvati sami sebe!",
+        "ERROR": "Došlo je do greške prilikom završavanja ovog poziva"
       }
     },
     "BROWSER": {
-      "NAME": "Tražilica"
+      "NAME": "Pretraživač"
     },
     "SETTINGS": {
-      "PHONE_NUMBER": "Broj mobitela",
+      "PHONE_NUMBER": "Broj telefona",
+      "PREVIEW_SOUND": "Pregled zvuka",
       "CATEGORY": {
         "APPEARANCE": "Izgled",
-        "PHONE": "Mobitel",
-        "ACTIONS": "Akcije"
+        "PHONE": "Telefon",
+        "ACTIONS": "Mogućnosti"
       },
       "OPTIONS": {
-        "ICONSET": "Pozadina",
-        "THEME": "Teme",
+        "ICONSET": "Ikone",
+        "THEME": "Tema",
         "LANGUAGE": "Jezik",
         "FRAME": "Okvir",
-        "ZOOM": "Zumiraj",
+        "ZOOM": "Zoom",
         "WALLPAPER": "Pozadina",
-        "RESET_SETTINGS": "Resetiraj Postavke",
-        "RESET_SETTINGS_DESC": "Ovo će izbrisati vaše lokalno pohranjene podatke",
+        "RESET_SETTINGS": "Resetiranje postavki",
+        "RESET_SETTINGS_DESC": "Ovo će obrisati Vaše lokalne izmjene",
         "STREAMER_MODE": {
           "TITLE": "Streamer mod",
-          "DESCRIPTION": "Sakrij slike prije nego što se prikažu"
+          "DESCRIPTION": "Skrivanje slika prije nego što su prikazane"
+        },
+        "ANONYMOUS_MODE": {
+          "TITLE": "Anonimni mod",
+          "DESCRIPTION": "Skrivanje broja telefona od ostalih igrača"
         },
         "CUSTOM_WALLPAPER": {
-          "DIALOG_TITLE": "Custom Pozadina",
-          "DIALOG_CONTENT": "Postavite prilagođenu pozadinu unosom URL-a slike u nastavku!",
+          "DIALOG_TITLE": "Custom pozadina",
+          "DIALOG_CONTENT": "Postavite željenu pozadinu unosom URL-a slike u nastavku!",
           "DIALOG_PLACEHOLDER": "URL Slike",
-          "DIALOG_ERROR": "Invalid link"
+          "DIALOG_ERROR": "Slika ili link nisu validni"
         },
+        "CALL_VOLUME": "Jačina poziva",
         "RINGTONE": "Zvono",
-        "RINGTONE_VOLUME": "Jačina Zvona",
-        "NOTIFICATION": "Notifikacije",
-        "NOTIFICATION_VOLUME": "Jačina Nozifikacija",
-        "NOTIFICATION_FILTER": "Filter Notifikacija"
+        "RINGTONE_VOLUME": "Jačina zvona",
+        "NOTIFICATION": "Notifikacija",
+        "NOTIFICATION_VOLUME": "Glasnoća notifikacije",
+        "NOTIFICATION_FILTER": "Filter notifikacije"
       },
       "MESSAGES": {
-        "INVALID_SETTINGS": "Nevažeće pohranjene postavke! Resetirajte u aplikaciji Postavke.",
+        "INVALID_SETTINGS": "Nevažeće postavke pohranjene! Resetirajte u aplikaciji Postavke.",
         "SETTINGS_RESET": "Postavke su resetirane!"
+      },
+      "MARKETPLACE": {
+        "NOTIFICATION": "Notifikacije",
+        "NOTIFY_NEW_LISTING": "Prikaži notifikacije za nove artikle"
       }
     },
     "CAMERA": {
-      "SHARE_DESTINATION": "Gdje želite podijeliti sliku?",
+      "SHARE_DESTINATION": "Gdje želite podijeliti sliku",
       "COPY_IMAGE": "Ovdje kopirajte URL slike:",
       "FAILED_TO_DELETE": "Fotografija se ne može izbrisati :(",
       "FAILED_TO_TAKE_PHOTO": "Fotografija se ne može spremiti :("
     },
     "CONTACTS": {
+      "MY_NUMBER": "Moj broj",
+      "NEARBY_SHARE": "Dijeljenje u blizini",
       "FEEDBACK": {
-        "ADD_FAILED": "Nismo uspjeli stvoriti novi kontakt!",
-        "ADD_SUCCESS": "Uspješno smo napravili novi kontakt!",
+        "ADD_FAILED": "Nismo uspjeli kreirati novi kontakt!",
+        "ADD_SUCCESS": "Uspješno ste kreirali novi kontakt!",
         "UPDATE_FAILED": "Nismo uspjeli ažurirati kontakt!",
-        "UPDATE_SUCCESS": "Uspješno smo ažurirali kontakt!",
-        "DELETE_FAILED": "Failed to delete contact!",
-        "DELETE_SUCCESS": "Uspješno smo obirsali kontakt!",
-        "PAYMENTFAILED": "The payment failed!",
-        "PAYMENTSENT": "The payment sent!"
+        "UPDATE_SUCCESS": "Uspješno ste ažurirali kontakt!",
+        "DELETE_FAILED": "Greška pri brisanju kontakta!",
+        "DELETE_SUCCESS": "Uspješno ste obrisali kontakt!",
+        "PAYMENTFAILED": "Plaćanje neuspješno!",
+        "PAYMENTSENT": "Uplata je poslana!"
       },
-      "AMOUNT": "How Much?",
-      "SENDMONEY": "Send Money",
-      "PLACEHOLDER_SEARCH_CONTACTS": "Pretražite kontakte...",
+      "AMOUNT": "Koliko?",
+      "SENDMONEY": "Pošalji novac",
+      "PLACEHOLDER_SEARCH_CONTACTS": "Pretraži kontakte...",
       "FORM_NAME": "Ime",
       "FORM_NUMBER": "Broj",
       "FORM_AVATAR": "Avatar URL",
-      "MODAL_BUTTON_ADD": "Dodaj Kontakt"
+      "MODAL_BUTTON_ADD": "Dodaj kontakt"
     },
     "DIALER": {
       "MESSAGES": {
         "CURRENT_CALL_TITLE": "Trenutni telefonski poziv",
         "INCOMING_CALL_TITLE": "Dolazni telefonski poziv",
         "CURRENT_CALL_WITH": "U pozivu sa {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vas zove!"
+        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vas zove!",
+        "CALLING": "Pozivanje {{ transmitter }}..."
       },
       "INPUT_PLACEHOLDER": "Unesite broj",
-      "NAVBAR_HISTORY": "Povijest",
-      "NAVBAR_DIAL": "Birajte",
+      "NAVBAR_HISTORY": "Historija",
+      "NAVBAR_DIAL": "Biranje",
       "NAVBAR_CONTACTS": "Kontakti",
-      "NO_HISTORY": "Nemate povijest poziva"
+      "NO_HISTORY": "Nemate historiju poziva"
     },
     "TWITTER": {
       "FEEDBACK": {
         "CREATE_PROFILE_SUCCESS": "Vaš profil je uspješno napravljen",
-        "CREATE_PROFILE_FAILURE": "Izrada vašeg profila nije uspjela",
+        "CREATE_PROFILE_FAILURE": "Izrada Vašeg profila nije uspjela",
         "EDIT_PROFILE_SUCCESS": "Uspješno ste ažurirali svoj profil",
-        "EDIT_PROFILE_FAILURE": "Ažuriranje vašeg profila nije uspjelo",
-        "CREATE_FAILED": "Slanje vašeg tweeta nije uspjelo",
-        "RETWEET_FAILED": "Ponovno tvitanje ovog tweeta nije uspjelo",
+        "EDIT_PROFILE_FAILURE": "Ažuriranje Vašeg profila nije uspjelo",
+        "CREATE_FAILED": "Slanje Vašeg tweeta nije uspjelo",
+        "RETWEET_FAILED": "Retweetanje ovog tweeta nije uspjelo",
         "RETWEET_EXISTS": "Već ste retweetali ovaj tweet!",
-        "LIKE_TWEET_FAILED": "Likanje tweeta nije uspijelo",
+        "LIKE_TWEET_FAILED": "Likeanje tweeta nije uspijelo",
         "REPORT_TWEET_SUCCESS": "Uspješno prijavljen tweet",
         "REPORT_TWEET_FAILED": "Prijava tweeta nije uspjela",
-        "FETCH_TWEETS_FAILED": "Dohvaćanje tweetova nije uspjelo",
-        "DELETE_TWEET_FAILED": "Brisanje tweeta nije uspjelo"
+        "FETCH_TWEETS_FAILED": "Greška pri prikazivanju tweetova",
+        "DELETE_TWEET_FAILED": "Brisanje tweeta nije uspjelo",
+        "FILTER_FETCH_FAILED": "Neuspjelo prikazivanje filterovanih objava"
       },
       "MESSAGES": {
-        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} je retweetao nekoga!",
-        "NEW_BROADCAST": "Novi tweet od  @{{ profile_name }}!",
-        "UNREAD_MESSAGES": "Imate {{ count }} novi tweetovi na vašem timeline!"
+        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} je repostovao nekoga!",
+        "NEW_BROADCAST": "Nova objava od @{{ profile_name }}!",
+        "UNREAD_MESSAGES": "Postoje {{ count }} nove objave od kako Vas nije bilo!"
       },
-      "SUBMIT_IMAGE": "Dodaj medije",
-      "TWEET": "Tweet",
-      "REPORTED": " Prijavljeno",
+      "SUBMIT_IMAGE": "Dodaj Medije",
+      "TWEET": "Objavi",
+      "REPORTED": " prijavljen",
       "REPORT": "Prijavi",
       "IMAGE_PLACEHOLDER": "URL za vašu sliku ili gif",
       "EDIT_DEFAULT_PROFILE_NAME": "Odaberi ime za profil",
       "EDIT_PROFILE_AVATAR": "Avatar URL",
+      "AVATAR_CHOOSE_IMAGE": "Odaberite sliku",
       "EDIT_PROFILE_NAME": "Ime profila",
       "EDIT_PROFILE_BIO": "Opis",
       "EDIT_PROFILE_LOCATION": "Lokacija",
       "EDIT_PROFILE_JOB": "Posao",
-      "RETWEETED": "Retweeted",
+      "RETWEETED": "Retweet",
       "TWEET_MESSAGE_CHAR_LIMIT": "Poruka premašuje ograničenje broja znakova",
-      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Poruka je iznad ograničenja novog reda",
-      "TWEET_MESSAGE_PLACEHOLDER": "Što se događa?",
+      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Poruka je iznad ograničenja novih redova",
+      "TWEET_MESSAGE_PLACEHOLDER": "Kakvo je stanje u svijetu?",
       "SEARCH_TWEETS_PLACEHOLDER": "Traži po imenu profila ili poruci",
       "SEARCH_TWEETS": "Traži tweetove",
       "TIME_JUST_NOW": "Upravo sada",
       "TIME_MINUTES": "m",
-      "TIME_HOURS": "h",
+      "TIME_HOURS": "s",
       "TIME_DAYS": "d"
     },
     "MATCH": {
       "MESSAGES": {
-        "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
-        "PROFILE_LAST_ACTIVE": "Zadnja Aktivnost: {{ lastActive }}",
+        "PROFILE_MATCHED_AT": "Par: {{ matchedAt }}",
+        "NEW_MATCH": "Novi par!",
+        "PROFILE_LAST_ACTIVE": "Posljednja aktivnost: {{ lastActive }}",
         "LIKED": "LIKE",
-        "NOPE": "NOPE"
+        "NOPE": "NE"
       },
       "FEEDBACK": {
         "UPDATE_PROFILE_FAILED": "Ažuriranje profila nije uspjelo",
         "UPDATE_PROFILE_SUCCEEDED": "Profil je uspješno ažuriran",
-        "MATCHES_ERROR": "Pogreška pri učitavanju matchova",
-        "NO_MATCHES": "Nitša :(",
-        "NO_PROFILES": "Nedavni profili nisu pronađeni",
-        "PROFILES_ERROR": "Pogreška pri učitavanju profila",
-        "SAVE_LIKES_FAILED": "Spremanje sviđanja nije uspjelo",
-        "NEW_LIKE_FOUND": "Ništa nije pronađeno!"
+        "MATCHES_ERROR": "Greška pri učitavanju parova",
+        "NO_MATCHES": "Prazno",
+        "NO_PROFILES": "Novi profili nisu pronađeni",
+        "PROFILES_ERROR": "Greška pri učitavanju profila",
+        "SAVE_LIKES_FAILED": "Spremanje likeova nije uspjelo",
+        "NEW_LIKE_FOUND": "Novi par pronađen!"
       },
-      "PROFILE_CONFIGURATION": "Aplikacija je pogrešno konfigurirana - ne može se stvoriti profil. Javi se Administratorima.",
+      "PROFILE_CONFIGURATION": "Aplikacija je pogrešno konfigurisana - ne može se kreirati profil. Javi se Administraciji.",
       "EDIT_PROFILE_IMAGE": "URL Slike",
       "EDIT_PROFILE_NAME": "Ime Profila",
       "EDIT_PROFILE_BIO": "Opis",
       "EDIT_PROFILE_LOCATION": "Lokacija",
       "EDIT_PROFILE_JOB": "Posao",
-      "EDIT_PROFILE_TAGS": "Tags",
-      "EDIT_PROFILE_PREVIEW": "Prikaži pregled",
+      "EDIT_PROFILE_TAGS": "Tagovi",
+      "EDIT_VOICE_MESSAGE": "Glasovna poruka",
+      "EDIT_PROFILE_PREVIEW": "Pregled",
       "LIKE": "Like",
       "DISLIKE": "Dislike"
     },
@@ -185,19 +205,23 @@
         "REQUIRED_FIELDS": "Sva obavezna polja moraju biti popunjena!",
         "CREATE_LISTING_FAILED": "Izrada novog oglasa nije uspjela",
         "CREATE_LISTING_SUCCESS": "Uspješno kreiran novi oglas",
-        "DELETE_LISTING_FAILED": "Brisanje unosa nije uspjelo",
+        "DELETE_LISTING_FAILED": "Brisanje oglasa nije uspjelo",
         "DUPLICATE_LISTING": "Ne možete objaviti oglas s istim naslovom!",
-        "DELETE_LISTING_SUCCESS": "Uspješno brisanje unosa",
-        "REPORT_LISTING_FAILED": "Ovaj je popis već prijavljen",
-        "REPORT_LISTING_SUCCESS": "Uspješno prijavljen oglas"
+        "DELETE_LISTING_SUCCESS": "Uspješno brisanje oglasa",
+        "REPORT_LISTING_FAILED": "Ovaj je oglas je već prijavljen",
+        "REPORT_LISTING_SUCCESS": "Uspješno ste prijavili oglas"
       },
+      "NEW_LISTING": "Novi oglas",
+      "CHOOSE_IMAGE": "Odaberite sliku",
       "FORM_TITLE": "Naslov",
-      "FORM_IMAGE": "URL Slike",
-      "FORM_DESCRIPTION": "Opis"
+      "POST_LISTING": "Objavi",
+      "FORM_IMAGE": "Slika ili URL",
+      "FORM_DESCRIPTION": "Opis",
+      "NO_IMAGE": "Nije navedena slika"
     },
     "MESSAGES": {
       "MESSAGES": {
-        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Nije bilo moguće pronaći nijedan telefonski broj!",
+        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Nije moguće pronaći nijedan telefonski broj!",
         "UNREAD_MESSAGES": "Imate {{ count }} nepročitanih poruka",
         "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne postoji."
       },
@@ -206,9 +230,9 @@
         "NEW_MESSAGE_FAILED": "Slanje poruke nije uspjelo",
         "INVALID_PHONE_NUMBER": "Nevažeći telefonski broj",
         "MESSAGE_CONVERSATION_DUPLICATE": "Ovaj razgovor već postoji!",
-        "MESSAGE_GROUP_CREATE_FAILED": "Izrada razgovora s porukama nije uspjela",
+        "MESSAGE_GROUP_CREATE_FAILED": "Kreiranje razgovora nije uspjela",
         "MESSAGE_GROUP_CREATE_MINE": "Ne možete dodati sebe!",
-        "FETCHED_MESSAGES_FAILED": "Dohvaćanje poruka nije uspjelo",
+        "FETCHED_MESSAGES_FAILED": "Fetchovanje poruka nije uspjelo",
         "DELETE_MESSAGE": "Obriši poruku",
         "DELETE_MESSAGE_FAILED": "Brisanje poruke nije uspjelo",
         "DELETE_CONVERSATION_FAILED": "Brisanje razgovora nije uspjelo"
@@ -216,28 +240,63 @@
       "SEARCH_PLACEHOLDER": "Pronađi poruku...",
       "DELETE_CONVERSATION": "Obriši razgovor",
       "NEW_MESSAGE": "Poruka...",
-      "NEW_MESSAGE_GROUP": "Broj...",
-      "GROUP_CHAT_LABEL": "Oznaka grupnog chata...",
+      "NEW_MESSAGE_GROUP": "Broj telefona...",
+      "SHARE_IMAGE_TITLE": "Da li želite podjeliti ovu sliku?",
+      "SHARE_NOTE_TITLE": "Da li želite podjeliti ovu bilješku?",
+      "SHARE_CONTACT_TITLE": "Da li želite podjeliti ovaj kontakt?",
+      "GROUP_CHAT_LABEL": "Ime grupe...",
       "MEDIA_OPTION": "Kamera / Galerija",
+      "CONTACT_OPTION": "Podijeli kontakt",
+      "CONTACT_SHARED": "Kontakt podjeljen",
+      "NOTE_OPTION": "Podijeli bilješku",
+      "LOCATION_OPTION": "Podijeli lokaciju",
+      "LOCATION_MESSAGE": "Lokacija podjeljena",
+      "LOCATION_TOOLTIP": "Postavi waypoint",
+      "NOTE_TOOLTIP": "Vidi bilješku",
       "NEW_MESSAGE_GROUP_SUBMIT": "Pošalji",
       "INPUT_NAME_OR_NUMBER": "Pretražite kontakte ili upišite broj i pritisnite enter",
-      "ACTIONS_TITLE": "Akcije",
+      "ACTIONS_TITLE": "Mogućnosti",
       "ME": "Ja"
     },
+    "DARKCHAT": {
+      "FEEDBACK": {
+        "FETCH_MESSAGES_FAILED": "Fetchovanje poruka nije uspjelo",
+        "JOIN_CHANNEL_FAILED": "Pridruživanje kanalu nije uspjelo",
+        "LEAVE_CHANNEL_FAILED": "Napuštanje kanala nije uspjelo",
+        "SEND_MESSAGE_FAILED": "Slanje poruke nije uspjelo",
+        "UPDATE_LABEL_FAILED": "Promjena imena kanala nije uspjela",
+        "TRANSFER_OWNERSHIP_FAILED": "Promjena vlasništva kanala nije uspjela",
+        "FETCH_MEMBERS_FAILED": "Fetchovanje članova nije uspjelo",
+        "DELETE_CHANNEL_FAILED": "Brisanje kanala nije uspjelo"
+      },
+      "TYPE_TO_CONFIRM": "Upišite \"{{ identifier }}\" da potvrdite.",
+      "LEAVE": "Napusti",
+      "NEW_CHANNEL_TITLE": "Pridruži se kanalu preko IDa",
+      "DELETE_CHANNEL_TITLE": "Obriši kanal",
+      "NEW_CHANNEL_INPUT_PLACEHOLDER": "ID Kanala",
+      "JOIN_BUTTON": "Pridruži se kanalu",
+      "TRANSFER_OWNERSHIP": "Promjeni vlasništvo",
+      "MESSAGE_PLACEHOLDER": "Pošalji poruku",
+      "MEDIA_PLACEHOLDER": "URL Slike",
+      "MEDIA_UPLOAD": "Uploadaj sliku",
+      "MEDIA_GALLERY": "ODABERI SLIKU",
+      "MEMBERS": "Članova",
+      "DANGER_ZONE": "Zona opasnosti"
+    },
     "RELATIVE_TIME": {
-      "future": "u %s",
+      "future": "za %s",
       "past": "%s prije",
-      "s": "a par sekuni",
-      "m": "a minuta",
-      "mm": "%d minuta",
-      "h": " prije sat",
-      "hh": "%d sati",
+      "s": "par sekundi",
+      "m": "minuta",
+      "mm": "%d minute",
+      "h": "sat",
+      "hh": "%d sata",
       "d": "dan",
-      "dd": "%d dani",
+      "dd": "%d dana",
       "M": "mjesec",
       "MM": "%d mjeseci",
-      "y": "godinu",
-      "yy": "%d godina"
+      "y": "godina",
+      "yy": "%d godine"
     },
     "GENERIC": {
       "LOADING": "Učitavanje...",
@@ -245,7 +304,7 @@
       "SAVE": "Spremi",
       "EDIT": "Uredi",
       "UPDATE": "Ažuriraj",
-      "REQUIRED": "Zatraži",
+      "REQUIRED": "Obavezno",
       "DELETE": "Obriši",
       "REPORT": "Prijavi",
       "CALL": "Nazovi",
@@ -253,12 +312,16 @@
       "CLOSE": "Zatvori",
       "CANCEL": "Otkaži",
       "TITLE": "Naslov",
-      "CONTENT": "Content",
+      "CONTENT": "Kontent",
+      "SHARE": "Podijeli",
+      "ADD": "Dodaj",
+      "SEND": "Pošalji",
       "WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiraj {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "Kopiran {{content}} u međuspremnik!"
+      "WRITE_TO_CLIPBOARD_MESSAGE": "Tekst {{content}} je kopirano!"
     },
     "COMING_SOON": "Dolazi uskoro...",
     "INITIALIZING": "Inicijalizacija",
+    "APPS_SYSTEM": "System",
     "APPS_DIALER": "Telefon",
     "APPS_CONTACTS": "Kontakti",
     "APPS_MESSAGES": "Poruke",
@@ -266,19 +329,20 @@
     "APPS_SETTINGS": "Postavke",
     "APPS_BANK": "WhoDis Banka",
     "APPS_NOTES": "Bilješke",
-    "APPS_EXAMPLE": "Primjer aplikacije",
+    "APPS_EXAMPLE": "Primjer aplikacija",
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Oglasi",
     "APPS_CAMERA": "Kamera",
-    "APPS_MATCH": "Tinder",
-    "APPS_CALCULATOR_COPIED": "Rezultat je kopiran u međuspremnik!",
+    "APPS_MATCH": "Matchmaker",
+    "APPS_CALCULATOR_COPIED": "Rezultat je kopiran!",
+    "APPS_DARKCHAT": "IRC",
     "GENERIC_CLICK_TO_REVEAL": "Kliknite za otkrivanje",
     "GENERIC_LOADING": "Učitavanje...",
-    "GENERIC_WAIT": "Molim pričekajte...",
+    "GENERIC_WAIT": "Molim sačekajte...",
     "GENERIC_SAVE": "Spremi",
     "GENERIC_EDIT": "Uredi",
     "GENERIC_UPDATE": "Ažuriraj",
-    "GENERIC_REQUIRED": "Zatraži",
+    "GENERIC_REQUIRED": "Potrebno",
     "GENERIC_DELETE": "Obriši",
     "GENERIC_REPORT": "Prijavi",
     "GENERIC_CALL": "Poziv",
@@ -288,6 +352,9 @@
     "GENERIC_TITLE": "Naslov",
     "GENERIC_CONTENT": "Sadržaj",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Kopiraj {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Kopiran {{content}} u međuspremnik!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Tekst {{content}} je kopiran!",
+    "GENERIC_DB_ERROR": "Zahtjev kreiranja/ažuriranja nije uspjeo.",
+    "GENERIC_INVALID_IMAGE_HOST": "Image host koji koristite nije dozvoljen na ovom serveru.",
+    "ERROR_RATE_LIMITED": "Morate sačekati par sekundi prije ponovog pokušaja."
   }
 }
