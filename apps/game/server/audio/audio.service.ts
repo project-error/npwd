@@ -32,7 +32,7 @@ class _AudioService {
     try {
       const form_data = new FormData();
       const blob = fileFromSync(filePath, 'audio/ogg');
-      form_data.append('recording', blob);
+      form_data.append('file', blob);
 
       const res = await fetch(config.voiceMessage.url, {
         method: 'POST',
