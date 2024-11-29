@@ -46,7 +46,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
-    "dotenv-webpack": "^7.0.3",
+    "dotenv-webpack": "^8.0.1",
     "esbuild": "^0.15.15",
     "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^7.32.0",
