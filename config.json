@@ -23,6 +23,7 @@
     "payFunction": "myCheckerFunction"
   },
   "database": {
+    "addToTableWhenMissing": false,
     "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",

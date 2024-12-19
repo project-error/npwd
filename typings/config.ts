@@ -54,6 +54,7 @@ interface BankConfig {
 }
 
 interface DatabaseConfig {
+  addToTableWhenMissing: boolean;
   playerTable: string;
   identifierColumn: string;
   identifierType: string;
