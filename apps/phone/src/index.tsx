@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import './main.css';
 import { PhoneProviders } from './PhoneProviders';
@@ -29,9 +29,10 @@ if (import.meta.env.DEV) {
   attachWindowDebug();
 }
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'))
+root.render(
   <HashRouter>
-    <NuiProvider resource="npwd">
+    {/* <NuiProvider resource="npwd"> */}
       <React.Suspense fallback={null}>
         <RecoilRootManager>
           <RecoilDebugObserver>
@@ -39,7 +40,6 @@ ReactDOM.render(
           </RecoilDebugObserver>
         </RecoilRootManager>
       </React.Suspense>
-    </NuiProvider>
-  </HashRouter>,
-  document.getElementById('root'),
+    {/* </NuiProvider> */}
+  </HashRouter>
 );
