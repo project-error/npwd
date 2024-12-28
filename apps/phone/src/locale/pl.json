@@ -81,6 +81,8 @@
       "FAILED_TO_TAKE_PHOTO": "Zdjęcie nie mogło zostać zapisane"
     },
     "CONTACTS": {
+      "MY_NUMBER": "Mój numer",
+      "NEARBY_SHARE": "Udostępnij pobliskim",
       "FEEDBACK": {
         "ADD_FAILED": "Nie udało się zapisać kontaktu!",
         "ADD_SUCCESS": "Kontakt został pomyślnie zapisany!",
@@ -152,6 +154,8 @@
       "TWEET_MESSAGE_PLACEHOLDER": "Co się dzieje?",
       "SEARCH_TWEETS_PLACEHOLDER": "Wyszukaj według nazwy profilu lub wiadomości",
       "SEARCH_TWEETS": "Wyszukiwanie postów",
+      "LOADING_TWEETS": "Wczytywanie...",
+      "NOTHING_TO_LOAD": "Brak wpisów do wczytania!",
       "TIME_JUST_NOW": "Przed chwilą",
       "TIME_MINUTES": "m",
       "TIME_HOURS": "g",
