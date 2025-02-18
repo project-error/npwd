@@ -1,27 +1,28 @@
-import { Launcher } from "@apps/Launcher";
-import { PhoneFrame } from "@native/components/PhoneFrame";
-import {  createHashRouter } from "react-router";
+import { Launcher } from '@apps/Launcher';
+import { PhoneFrame } from '@native/components/PhoneFrame';
+import { createHashRouter, RouteObject } from 'react-router';
 
-export interface AppRoute {
-    name: string;
-    path: string;
-    Component: React.ComponentType;
+export type AppNavigation = RouteObject & {
+  name: string;
+};
+
+// not sure why we have this right now, but we might add some stuff in here later????
+function createRoutes(navigators: RouteObject[]): RouteObject[] {
+  return navigators;
 }
 
-export const createRouter = (navigators: AppRoute[]) => {
-    return createHashRouter([{
-        path: "/",
-        Component: PhoneFrame,
-        children: [
-            {
-                index: true,
-                Component: Launcher,
-            },
-            ...navigators.map(({ path, Component }) => ({
-                path,
-                Component,
-            })),
-        ]
-    }])
+export function createRouter(navigators: RouteObject[]) {
+  return createHashRouter([
+    {
+      path: '/',
+      Component: PhoneFrame,
+      children: [
+        {
+          index: true,
+          Component: Launcher,
+        },
+        ...createRoutes(navigators),
+      ],
+    },
+  ]);
 }
-

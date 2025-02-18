@@ -189,6 +189,9 @@ importers:
       jotai-devtools:
         specifier: ^0.10.1
         version: 0.10.1(@types/react@19.0.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(redux@5.0.1)
+      lucide-react:
+        specifier: ^0.294.0
+        version: 0.294.0(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0

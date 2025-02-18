@@ -43,6 +43,5 @@
     "hooks": {
       "pre-commit": "npx run format:staged"
     }
-  },
-  "dependencies": {}
+  }
 }

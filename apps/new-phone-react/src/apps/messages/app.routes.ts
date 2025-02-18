@@ -1,8 +1,15 @@
-import { AppRoute } from '@navigation/navigator';
+import { MessagesLayout } from './screens/Layout';
+import { AppNavigation } from '@navigation/navigator';
 import { Messages } from './screens/Messages';
 
 export default {
-    name: 'Messages',
-    path: '/messages',
-    Component: Messages,
-} satisfies AppRoute;
+  name: 'Messaegs',
+  path: '/messages',
+  Component: MessagesLayout,
+  children: [
+    {
+      index: true,
+      Component: Messages,
+    },
+  ],
+} satisfies AppNavigation;
