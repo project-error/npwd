@@ -35,10 +35,10 @@ export async function apiPhotoUpload(body: string | FormData, token: string): Pr
       if (result.status !== 200) {
         const err = await result.text();
         reject({ errorText: err, statusCode: result.status });
-      }
-
-      const res = await result.json();
-      resolve(res);
+      } else {
+        const res = await result.json();
+        resolve(res);
+      };
     }),
   );
 }
