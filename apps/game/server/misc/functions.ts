@@ -22,9 +22,18 @@ export async function findOrGeneratePhoneNumber(identifier: string): Promise<str
 
   playerLogger.debug(`Phone number generated > ${gennedNumber}`);
 
-  const updateQuery = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
+  let dmlQuery: string | undefined = undefined;
+  if (config.database.addToTableWhenMissing && castRes.length === 0) {
+    playerLogger.debug(`Adding player to table`);
+    dmlQuery = `INSERT INTO ${config.database.playerTable} (${config.database.phoneNumberColumn}, ${config.database.identifierColumn}) VALUES (?, ?)`;
+  } else {
+    dmlQuery = `UPDATE ${config.database.playerTable} SET ${config.database.phoneNumberColumn} = ? WHERE ${config.database.identifierColumn} = ?`;
+  }
+
+
+
   // Update profile with new generated number
-  const result = await DbInterface._rawExec(updateQuery, [gennedNumber, identifier]);
+  const result = await DbInterface._rawExec(dmlQuery, [gennedNumber, identifier]);
 
   // Temporary bad typing, need to update dbInterface
   if (!result || !result[0] || !(result[0] as ResultSetHeader).affectedRows) {
