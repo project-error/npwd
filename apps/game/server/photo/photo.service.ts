@@ -26,6 +26,14 @@ class _PhotoService {
     reqObj: PromiseRequest<void>,
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
+    if (!this.TOKEN) {
+      photoLogger.error('Could not find upload token for photos!');
+      photoLogger.error(
+        'For more information: https://projecterror.dev/docs/npwd/start/installation/#setting-up-camera-functionality',
+      );
+      return resp({ status: 'error', errorMsg: 'No upload token found!' });
+    }
+
     try {
       exp['screenshot-basic'].requestClientScreenshot(
         reqObj.source,
@@ -33,7 +41,7 @@ class _PhotoService {
           encoding: config.images.imageEncoding,
           quality: 0.85,
         },
-        async (err: string | boolean, data: string) => {
+        async (_: string | boolean, data: string) => {
           if (!fs.existsSync(path)) fs.mkdirSync(path);
 
           let type: string;
