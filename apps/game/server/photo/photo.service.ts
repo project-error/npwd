@@ -27,7 +27,8 @@ class _PhotoService {
     resp: PromiseEventResp<GalleryPhoto>,
   ): Promise<void> {
     if (!this.TOKEN) {
-      photoLogger.error('Could not find upload token for photos! https://projecterror.dev/docs/npwd/start/installation/#setting-up-camera-functionality');
+      photoLogger.error("Could not find upload token for photos!");
+      photoLogger.error("For more information: https://projecterror.dev/docs/npwd/start/installation/#setting-up-camera-functionality");
       return resp({ status: 'error', errorMsg: 'No upload token found!' });
     }
     try {
