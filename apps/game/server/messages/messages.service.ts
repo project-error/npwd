@@ -64,6 +64,7 @@ class _MessagesService {
         return resp({
           status: 'error',
           errorMsg: 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE',
+          data: { id: await this.messagesDB.getConversationId(conversationList) }
         });
       } else {
         const conversationId = await this.messagesDB.addParticipantToConversation(
