@@ -224,7 +224,7 @@
         "MESSAGE_GROUP_CREATE_FAILED": "Es konnte keine Gruppe erstellt werden",
         "MESSAGE_GROUP_CREATE_MINE": "Sie können nicht sich selbst hinzufügen!",
         "FETCHED_MESSAGES_FAILED": "Nachrichten konnten nicht geladen werden",
-        "DELETE_MESSAGE": "Gelöschte Nachricht",
+        "DELETE_MESSAGE": "Nachricht löschen",
         "DELETE_MESSAGE_FAILED": "Die Nachricht konnte nicht gelöscht werden",
         "DELETE_CONVERSATION_FAILED": "Der Chat konnte nicht gelöscht werden"
       },
