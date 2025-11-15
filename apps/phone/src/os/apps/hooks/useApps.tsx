@@ -6,11 +6,14 @@ import { SvgIconComponent } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
+import { useRecoilValue } from 'recoil';
+import { phoneState } from '@os/phone/hooks/state';
 
 export const useApps = () => {
   const { icons } = useNotifications();
   const theme = useTheme();
   const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
+  const externalApps = useRecoilValue(phoneState.extApps);
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
@@ -52,7 +55,10 @@ export const useApps = () => {
     });
   }, [icons, curIconSet, theme]);
 
-  const allApps = useMemo(() => [...apps], [apps]);
+  const allApps = useMemo(
+    () => [...apps, ...externalApps.filter((app) => app)],
+    [apps, externalApps],
+  );
   const getApp = useCallback(
     (id: string): IApp => {
       return allApps.find((a) => a.id === id) || null;

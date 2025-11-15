@@ -19,7 +19,7 @@ const useExternalAppsAction = () => {
       const element = document.createElement('script');
 
       element.src = url;
-      element.type = 'text/javascript';
+      element.type = 'module';
       element.async = true;
 
       document.head.appendChild(element);
@@ -95,7 +95,7 @@ const useExternalAppsAction = () => {
 
       const configs = await Promise.all(
         externalApps.map(async (appName) => {
-          return appAlreadyLoaded(appName) ?? await generateAppConfig(appName);
+          return appAlreadyLoaded(appName) ?? (await generateAppConfig(appName));
         }),
       );
 

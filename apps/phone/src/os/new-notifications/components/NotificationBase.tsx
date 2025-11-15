@@ -38,8 +38,6 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
         console.warn('App does not have a notification icon');
     }
 
-    console.log("app bg", app.backgroundColor)
-
     return (
         <SnackbarContent
             onClick={handleNotisClick}
