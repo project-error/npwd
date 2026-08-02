@@ -1,13 +1,18 @@
 import React, { Suspense } from 'react';
-import AppsIcon from '@mui/icons-material/Apps';
-import { SvgIconProps } from '@mui/material';
-import { SvgIconComponent } from '@mui/icons-material';
+import { LayoutGrid } from 'lucide-react';
+
+type IconComponentProps = {
+  className?: string;
+  style?: React.CSSProperties;
+};
 
 export const createLazyAppIcon =
-  (Icon: React.LazyExoticComponent<SvgIconComponent>): React.FC<SvgIconProps> =>
-  (props: SvgIconProps) => {
+  (
+    Icon: React.LazyExoticComponent<React.ComponentType<IconComponentProps>>,
+  ): React.FC<IconComponentProps> =>
+  (props: IconComponentProps) => {
     return (
-      <Suspense fallback={<AppsIcon {...props} />}>
+      <Suspense fallback={<LayoutGrid {...props} className={props.className} />}>
         <Icon {...props} />
       </Suspense>
     );

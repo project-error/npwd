@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper, Tooltip } from '@mui/material';
 import { TextField } from '@ui/components/Input';
-import SendIcon from '@mui/icons-material/Send';
-import IosShareIcon from '@mui/icons-material/IosShare';
+import { Send, Share } from 'lucide-react';
+import { NPWDButton } from '@npwd/keyos';
+import { Tooltip } from '@ui/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 import { useActiveDarkchatValue } from '../../state/state';
@@ -36,8 +36,8 @@ const ChannelInput: React.FC = () => {
   };
 
   return (
-    <Paper variant="outlined" sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box pl={3} pt={1} pb={1} flexGrow={1}>
+    <div className="flex items-center rounded-md border border-white/10 bg-keyos-panel">
+      <div className="flex-grow pb-1 pl-3 pt-1">
         <TextField
           style={{ paddingTop: 7, paddingBottom: 7 }}
           inputProps={{
@@ -47,7 +47,6 @@ const ChannelInput: React.FC = () => {
             },
           }}
           placeholder={t('DARKCHAT.MESSAGE_PLACEHOLDER')}
-          variant="standard"
           fullWidth
           value={message}
           maxRows={4}
@@ -55,20 +54,20 @@ const ChannelInput: React.FC = () => {
           onChange={(e) => setMessage(e.currentTarget.value)}
           onKeyPress={handleKeyPress}
         />
-      </Box>
-      <Box>
-        <Button color="secondary" onClick={() => setModalVisible(true)}>
-          <Tooltip title={t('DARKCHAT.MEDIA_UPLOAD')}>
-            <IosShareIcon />
-          </Tooltip>
-        </Button>
-        <Button onClick={handleSendMessage} color="secondary">
-          <Tooltip title={t('GENERIC.SEND')}>
-            <SendIcon />
-          </Tooltip>
-        </Button>
-      </Box>
-    </Paper>
+      </div>
+      <div className="flex items-center">
+        <Tooltip title={t('DARKCHAT.MEDIA_UPLOAD')}>
+          <NPWDButton size="icon" variant="ghost" onClick={() => setModalVisible(true)}>
+            <Share size={20} className="text-[color:var(--keyos-app-accent)]" />
+          </NPWDButton>
+        </Tooltip>
+        <Tooltip title={t('GENERIC.SEND')}>
+          <NPWDButton size="icon" variant="ghost" onClick={handleSendMessage}>
+            <Send size={20} className="text-[color:var(--keyos-app-accent)]" />
+          </NPWDButton>
+        </Tooltip>
+      </div>
+    </div>
   );
 };
 

@@ -1,0 +1,182 @@
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    --keyos-night: #07090c;
+    --keyos-panel: #11141a;
+    --keyos-panel-strong: #1a1f28;
+    --keyos-cream: #f8f2df;
+    --keyos-fg: #f8f2df;
+    --keyos-fg-muted: #9ca3af;
+    --keyos-muted: #9ca3af;
+    --keyos-amber: #f7b731;
+    --keyos-amber-soft: #ffd166;
+
+    --keyos-border-subtle: rgb(255 255 255 / 0.08);
+    --keyos-border-muted: rgb(255 255 255 / 0.12);
+    --keyos-border-shine: rgb(255 255 255 / 0.16);
+    --keyos-surface-overlay: rgb(255 255 255 / 0.04);
+    --keyos-surface-inset: rgb(0 0 0 / 0.22);
+    --keyos-hover: rgb(255 255 255 / 0.05);
+    --keyos-notch: rgb(255 255 255 / 0.2);
+    --keyos-screen-ring: rgb(255 255 255 / 0.06);
+
+    /* Samsung-style frame dimensions */
+    --keyos-frame-bezel-x: 14px;
+    --keyos-frame-bezel-top: 16px;
+    --keyos-frame-bezel-bottom: 14px;
+    --keyos-screen-radius: 38px;
+    --keyos-shell-inset-right: 32px;
+    --keyos-shell-gradient: radial-gradient(circle at 50% 0%, rgb(245 158 11 / 0.14), transparent 42%),
+      linear-gradient(180deg, rgb(17 24 39 / 0.55), rgb(3 5 7 / 0.94));
+    --keyos-shell-sheen: linear-gradient(135deg, rgb(255 255 255 / 0.06), transparent 40%, rgb(245 158 11 / 0.05));
+
+    --keyos-shine-from: rgb(255 255 255 / 0.12);
+    --keyos-shine-mid: rgb(255 255 255 / 0.04);
+    --keyos-shine-edge: rgb(255 255 255 / 0.14);
+
+    --keyos-shadow-panel: 0 1px 2px rgb(0 0 0 / 0.18), 0 8px 24px rgb(0 0 0 / 0.22);
+    --keyos-shadow-pop: 0 2px 4px rgb(0 0 0 / 0.2), 0 10px 22px rgb(0 0 0 / 0.24);
+    --keyos-shadow-glow: 0 2px 12px rgb(247 183 49 / 0.16), 0 0 0 1px rgb(247 183 49 / 0.12);
+    --keyos-shadow-accent: 0 2px 12px rgb(96 165 250 / 0.14), 0 0 0 1px rgb(96 165 250 / 0.1);
+
+    --keyos-app-accent: #cbd5e1;
+    --keyos-app-accent-foreground: #0f172a;
+    --keyos-app-danger: #ef4444;
+    --keyos-app-danger-foreground: #ffffff;
+    --keyos-app-muted: #94a3b8;
+    --keyos-app-surface: #11141a;
+
+    --keyos-on-primary: #1a1f28;
+    --keyos-on-danger: #ffffff;
+    --keyos-on-accent: #0f172a;
+
+    /* Layout & sizing */
+    --keyos-status-bar-height: 32px;
+    --keyos-nav-bar-height: 46px;
+    --keyos-home-indicator-height: 20px;
+    --keyos-dock-height: 64px;
+    --keyos-list-item-min-height: 56px;
+    --keyos-control-height-sm: 32px;
+    --keyos-control-height: 36px;
+    --keyos-control-height-lg: 40px;
+    --keyos-icon-size: 50px;
+    --keyos-icon-size-dock: 46px;
+    --keyos-icon-size-sm: 40px;
+    --keyos-safe-x: 12px;
+
+    /* Radius scale */
+    --keyos-radius-sm: 6px;
+    --keyos-radius-md: 10px;
+    --keyos-radius-lg: 14px;
+    --keyos-radius-xl: 18px;
+    --keyos-radius-2xl: 20px;
+    --keyos-radius-icon: 16px;
+    --keyos-radius-dock: 24px;
+    --keyos-radius-pill: 9999px;
+
+    /* Spacing scale */
+    --keyos-space-xs: 3px;
+    --keyos-space-sm: 6px;
+    --keyos-space-md: 10px;
+    --keyos-space-lg: 12px;
+    --keyos-space-xl: 16px;
+    --keyos-space-2xl: 20px;
+    --keyos-space-3xl: 28px;
+
+    /* Typography scale */
+    --keyos-text-display: 2.875rem;
+    --keyos-text-title: 1.5rem;
+    --keyos-text-headline: 1rem;
+    --keyos-text-body: 0.875rem;
+    --keyos-text-caption: 0.75rem;
+    --keyos-text-micro: 0.625rem;
+
+    /* Frost / blur surfaces */
+    --keyos-blur-frost: 24px;
+    --keyos-frost-bg: rgb(255 255 255 / 0.08);
+    --keyos-frost-border: rgb(255 255 255 / 0.12);
+    --keyos-dock-bg: rgb(255 255 255 / 0.1);
+  }
+
+  :where(.keyos-ui) {
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .keyos-shine-bg {
+    background-image: linear-gradient(
+      180deg,
+      var(--keyos-shine-from) 0%,
+      var(--keyos-shine-mid) 38%,
+      transparent 72%
+    );
+  }
+
+  .keyos-surface-panel {
+    box-shadow: var(--keyos-shadow-panel), inset 0 1px 0 var(--keyos-shine-edge);
+  }
+
+  .keyos-surface-pop {
+    box-shadow: var(--keyos-shadow-pop), inset 0 1px 0 var(--keyos-shine-edge);
+  }
+
+  .keyos-surface-glow {
+    box-shadow: var(--keyos-shadow-glow), inset 0 1px 0 var(--keyos-shine-edge);
+  }
+
+  .keyos-surface-accent {
+    box-shadow: var(--keyos-shadow-accent), inset 0 1px 0 var(--keyos-shine-edge);
+  }
+
+  .keyos-surface-inset {
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.06), inset 0 0 0 1px var(--keyos-border-subtle);
+  }
+
+  .keyos-frost {
+    background: var(--keyos-frost-bg);
+    border: 1px solid var(--keyos-frost-border);
+    backdrop-filter: blur(var(--keyos-blur-frost));
+    -webkit-backdrop-filter: blur(var(--keyos-blur-frost));
+  }
+
+  .keyos-card {
+    border-radius: var(--keyos-radius-lg);
+    border: 1px solid var(--keyos-border-muted);
+    background: var(--keyos-panel);
+    box-shadow: var(--keyos-shadow-panel);
+  }
+
+  .keyos-home-indicator {
+    width: 100px;
+    height: 3px;
+    border-radius: var(--keyos-radius-pill);
+    background: rgb(255 255 255 / 0.45);
+  }
+
+  .keyos-hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .keyos-hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .keyos-safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .keyos-app-icon-label {
+    max-width: calc(var(--keyos-icon-size) + 6px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: var(--keyos-text-micro);
+    font-weight: 500;
+    color: var(--keyos-fg);
+    margin-top: 4px;
+  }
+}

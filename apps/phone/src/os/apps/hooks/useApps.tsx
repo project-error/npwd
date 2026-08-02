@@ -1,25 +1,23 @@
 import React, { useCallback, useMemo } from 'react';
+
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
-import { SvgIconComponent } from '@mui/icons-material';
-import { useTheme } from '@mui/material';
 import { useSettingsValue } from '../../../apps/settings/hooks/useSettings';
 import { IconSetObject } from '@typings/settings';
 
 export const useApps = () => {
   const { icons } = useNotifications();
-  const theme = useTheme();
   const curIconSet = useSettingsValue().iconSet.value as IconSetObject;
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
-      const SvgIcon = React.lazy<SvgIconComponent>(() =>
+      const SvgIcon = React.lazy<React.ComponentType<{ className?: string; style?: React.CSSProperties }>>(() =>
         import(`../icons/${curIconSet.name}/svg/${app.id}.tsx`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
-      const AppIcon = React.lazy<SvgIconComponent>(() =>
+      const AppIcon = React.lazy<React.ComponentType<{ className?: string; style?: React.CSSProperties }>>(() =>
         import(`../icons/${curIconSet.name}/app/${app.id}.tsx`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
@@ -35,7 +33,7 @@ export const useApps = () => {
           NotificationIcon,
           Icon,
           notificationIcon: (
-            <NotificationIcon htmlColor={theme.palette.text.primary} fontSize="small" />
+            <NotificationIcon className="size-4 text-keyos-fg" />
           ),
           icon: <Icon />,
           isDisabled: app.disable,
@@ -46,11 +44,11 @@ export const useApps = () => {
         ...app,
         notification: icons.find((i) => i.key === app.id),
         NotificationIcon,
-        notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
+        notificationIcon: <NotificationIcon style={{ color: app.color }} className="size-4" />,
         isDisabled: app.disable,
       };
     });
-  }, [icons, curIconSet, theme]);
+  }, [icons, curIconSet]);
 
   const allApps = useMemo(() => [...apps], [apps]);
   const getApp = useCallback(
@@ -60,7 +58,6 @@ export const useApps = () => {
     [allApps],
   );
 
-  //const filteredApps = apps.filter((app) => !ResourceConfig?.disabledApps.includes(app.id));
   return { apps, getApp };
 };
 

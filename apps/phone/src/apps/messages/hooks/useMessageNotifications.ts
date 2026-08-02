@@ -1,36 +1,36 @@
 import { useTranslation } from 'react-i18next';
-import { matchPath, useHistory } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import useMessages from './useMessages';
-import { useRecoilValue } from 'recoil';
-import { messageState } from './state';
+import { useActiveMessageConversation } from './state';
 import { MessageConversation } from '@typings/messages';
 import { useContactActions } from '@apps/contacts/hooks/useContactActions';
+import { useEffect } from 'react';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
 export const useMessageNotifications = () => {
   const [t] = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MESSAGES');
   const { getMessageConversationById, goToConversation } = useMessages();
-  const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
+  const activeMessageConversation = useActiveMessageConversation();
   const { getDisplayByNumber } = useContactActions();
 
-  // Remove notifications from groups when opening them
-  history.listen((location) => {
+  // Remove notifications from groups when opening them.
+  useEffect(() => {
     if (
       activeMessageConversation?.id &&
-      matchPath(location.pathname, {
+      matchPath({
         path: `/messages/conversations/${activeMessageConversation.id}`,
-        exact: true,
-      })
+        end: true,
+      }, location.pathname)
     ) {
       removeId(`${NOTIFICATION_ID}:${activeMessageConversation.id}`);
     }
-  });
+  }, [activeMessageConversation?.id, location.pathname, removeId]);
 
   const setNotification = ({ conversationName, conversationId, message }) => {
     let group: MessageConversation = null;

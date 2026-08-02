@@ -1,4 +1,5 @@
-import { RecoilRoot } from 'recoil';
+import React from 'react';
+import { Provider as JotaiProvider } from 'jotai';
 import { useSettingsValue } from '../hooks/useSettings';
 import { renderHook } from '@testing-library/react-hooks';
 import { NPWD_STORAGE_KEY } from '../utils/constants';
@@ -14,7 +15,13 @@ beforeEach(() => {
 
 describe('settingsStateManipulation', () => {
   jest.mock('@utils/fetchNui');
-  const wrapper = ({ children }) => <RecoilRoot>{children}</RecoilRoot>;
+  const wrapper = ({ children }) => (
+    React.createElement(
+      JotaiProvider,
+      null,
+      React.createElement(React.Suspense, { fallback: null }, children),
+    )
+  );
 
   test('settings set with invalid schema should be handled', async () => {
     const invalidSettingSchema = '{"invalid": "schema"}';

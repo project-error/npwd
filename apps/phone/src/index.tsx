@@ -1,45 +1,41 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router';
 import './main.css';
-import { PhoneProviders } from './PhoneProviders';
+import { applyDarkMode } from '@common/hooks/use-color-scheme';
+import { PhoneProviders } from './phone-providers';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
-import { Theme as MaterialUITheme } from '@mui/material';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { NuiProvider } from 'fivem-nui-react-lib';
-import { RecoilRootManager } from './lib/RecoilRootManager';
-import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
 import './i18n';
-import { RecoilEnv } from 'recoil';
+import { AppStateProviders } from '@common/query/app-state-providers';
 
-RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+const NuiProviderComponent = NuiProvider as React.ComponentType<{
+  children: React.ReactNode;
+  resource: string;
+  timeout?: number | false;
+}>;
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
-
-declare module '@emotion/react' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface Theme extends MaterialUITheme {}
-}
 
 // window.mockNuiEvent is restricted to development env only
 if (import.meta.env.DEV) {
   attachWindowDebug();
 }
 
-ReactDOM.render(
+applyDarkMode();
+
+createRoot(document.getElementById('root') as HTMLElement).render(
   <HashRouter>
-    <NuiProvider resource="npwd">
+    <NuiProviderComponent resource="npwd">
       <React.Suspense fallback={null}>
-        <RecoilRootManager>
-          <RecoilDebugObserver>
-            <PhoneProviders />
-          </RecoilDebugObserver>
-        </RecoilRootManager>
+        <AppStateProviders>
+          <PhoneProviders />
+        </AppStateProviders>
       </React.Suspense>
-    </NuiProvider>
+    </NuiProviderComponent>
   </HashRouter>,
-  document.getElementById('root'),
 );

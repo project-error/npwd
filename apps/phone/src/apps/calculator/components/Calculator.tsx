@@ -1,37 +1,16 @@
 import React, { useMemo } from 'react';
 import { useCalculator } from '../hooks/useCalculator';
-import { Grid, Box, Paper, Fab, styled } from '@mui/material';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { Copy } from 'lucide-react';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { CalculatorButton } from './CalculatorButton';
+import { cn } from '@utils/css';
 
 const getFontSize = (length: number) => {
   const currentSize = 5 - length * 0.2;
   return currentSize <= 1.5 ? '1.5rem' : `${currentSize}rem`;
 };
-
-const StyledFab = styled(Fab)({
-  position: 'absolute',
-  top: '16px',
-  left: '16px',
-});
-
-const StyledResultWrapper = styled(Box)<{ length: number }>(({ theme, length }) => ({
-  minHeight: '7rem',
-  fontSize: length < 9 ? theme.typography.h2.fontSize : getFontSize(length),
-  textAlign: 'right',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  position: 'relative',
-}));
-
-const StyledCalcBtn = styled(CalculatorButton)(({ theme }) => ({
-  fontSize: theme.typography.h5.fontSize,
-  padding: theme.spacing(2),
-  color: theme.palette.text.primary,
-}));
 
 export const Calculator: React.FC = () => {
   const {
@@ -57,6 +36,7 @@ export const Calculator: React.FC = () => {
   } = useCalculator();
 
   const { addAlert } = useSnackbar();
+  const [t] = useTranslation();
 
   const resultStr = useMemo(
     () =>
@@ -77,38 +57,44 @@ export const Calculator: React.FC = () => {
     });
   };
 
-  const [t] = useTranslation();
-
   return (
-    <Box display="flex" flexDirection="column">
-      <StyledResultWrapper flexGrow={1} component={Paper} p={2} length={resultStr.length}>
-        <StyledFab size="small" onClick={handleCopyClipboard}>
-          <FileCopyIcon />
-        </StyledFab>
+    <div className="flex flex-col">
+      <div
+        className={cn(
+          'relative min-h-28 flex-1 overflow-hidden text-ellipsis bg-keyos-night p-4 text-right text-keyos-fg',
+        )}
+        style={{ fontSize: resultStr.length < 9 ? '2rem' : getFontSize(resultStr.length) }}
+      >
+        <button
+          type="button"
+          aria-label="Copy result"
+          className="absolute left-4 top-4 flex size-8 items-center justify-center rounded-full bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] shadow-keyos-glow hover:brightness-110"
+          onClick={handleCopyClipboard}
+        >
+          <Copy size={16} />
+        </button>
         {resultStr}
-      </StyledResultWrapper>
-      <Box>
-        <Grid container justifyContent="space-around">
-          <StyledCalcBtn buttonOpts={clear} />
-          <StyledCalcBtn buttonOpts={clearAll} />
-          <StyledCalcBtn buttonOpts={divider} />
-          <StyledCalcBtn buttonOpts={multiplier} />
-          <StyledCalcBtn buttonOpts={seven} />
-          <StyledCalcBtn buttonOpts={eight} />
-          <StyledCalcBtn buttonOpts={nine} />
-          <StyledCalcBtn buttonOpts={substractor} />
-          <StyledCalcBtn buttonOpts={four} />
-          <StyledCalcBtn buttonOpts={five} />
-          <StyledCalcBtn buttonOpts={six} />
-          <StyledCalcBtn buttonOpts={adder} />
-          <StyledCalcBtn buttonOpts={one} />
-          <StyledCalcBtn buttonOpts={two} />
-          <StyledCalcBtn buttonOpts={three} />
-          <StyledCalcBtn buttonOpts={equals} />
-          <StyledCalcBtn buttonOpts={dot} />
-          <StyledCalcBtn buttonOpts={zero} GridProps={{ xs: 9 }} />
-        </Grid>
-      </Box>
-    </Box>
+      </div>
+      <div className="grid grid-cols-4 gap-1">
+        <CalculatorButton buttonOpts={clear} />
+        <CalculatorButton buttonOpts={clearAll} />
+        <CalculatorButton buttonOpts={divider} />
+        <CalculatorButton buttonOpts={multiplier} />
+        <CalculatorButton buttonOpts={seven} />
+        <CalculatorButton buttonOpts={eight} />
+        <CalculatorButton buttonOpts={nine} />
+        <CalculatorButton buttonOpts={substractor} />
+        <CalculatorButton buttonOpts={four} />
+        <CalculatorButton buttonOpts={five} />
+        <CalculatorButton buttonOpts={six} />
+        <CalculatorButton buttonOpts={adder} />
+        <CalculatorButton buttonOpts={one} />
+        <CalculatorButton buttonOpts={two} />
+        <CalculatorButton buttonOpts={three} />
+        <CalculatorButton buttonOpts={equals} />
+        <CalculatorButton buttonOpts={dot} />
+        <CalculatorButton buttonOpts={zero} colSpan={3} />
+      </div>
+    </div>
   );
 };

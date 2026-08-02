@@ -1,15 +1,13 @@
 import React from 'react';
-import { blue, common, grey, purple } from '@mui/material/colors';
-import { DialerApp } from '@apps/dialer/components/DialerApp';
-import { ContactsApp } from '@apps/contacts/components/ContactsApp';
+import { DialerApp } from '@apps/dialer/components/dialer-app';
+import { ContactsApp } from '@apps/contacts/components/contacts-app';
 import { CalculatorApp } from '@apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '@apps/settings/components/SettingsApp';
-import { MessagesApp } from '@apps/messages/components/MessagesApp';
+import { MessagesApp } from '@apps/messages/components/messages-app';
 import { ExampleAppWrapper } from '@apps/example/components/ExampleAppWrapper';
-import { MarketplaceApp } from '@apps/marketplace/components/MarketplaceApp';
-import { NotesApp } from '@apps/notes/NotesApp';
-import CameraApp from '@apps/camera/components/CameraApp';
-import { AppRoute } from '../components/AppRoute';
+import { MarketplaceApp } from '@apps/marketplace/components/marketplace-app';
+import { NotesApp } from '@apps/notes/notes-app';
+import CameraApp from '@apps/camera/components/camera-app';
 
 import {
   MESSAGES_APP_PRIMARY_COLOR,
@@ -30,18 +28,15 @@ import {
   TWITTER_APP_TEXT_COLOR,
 } from '@apps/twitter/twitter.theme';
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '@apps/match/match.theme';
-import { SvgIconProps, Theme } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '@apps/browser/components/BrowserApp';
-import { MatchApp } from '@apps/match/components/MatchApp';
-import LifeInvaderContainer from '@apps/twitter/components/TwitterContainer';
-import { IPhoneSettings } from '@typings/settings';
-import { i18n } from 'i18next';
+import { MatchApp } from '@apps/match/components/match-app';
+import LifeInvaderContainer from '@apps/twitter/components/twitter-container';
 import {
   DARKCHAT_APP_PRIMARY_COLOR,
   DARKCHAT_APP_TEXT_COLOR,
 } from '@apps/darkchat/darkchat.theme';
-import DarkChatApp from '../../../apps/darkchat/DarkChatApp';
+import DarkChatApp from '../../../apps/darkchat/dark-chat-app';
 import DialerAppIcon from '../icons/material/app/DIALER';
 import BrowserIcon from '../icons/material/app/BROWSER';
 import MessagesIcon from '../icons/material/app/MESSAGES';
@@ -56,6 +51,11 @@ import NotesIcon from '../icons/material/app/NOTES';
 import Camera from '../icons/material/app/CAMERA';
 import ExampleIcon from '../icons/material/app/EXAMPLE';
 
+export type IconComponentProps = React.ComponentType<{
+  className?: string;
+  style?: React.CSSProperties;
+}>;
+
 export interface IAppConfig {
   id: string;
   nameLocale: string;
@@ -63,7 +63,8 @@ export interface IAppConfig {
   color: string;
   path: string;
   disable?: boolean;
-  Route: React.FC<{ settings?: IPhoneSettings; i18n?: i18n; theme?: Theme }>;
+  Component: React.ComponentType<any>;
+  emitOnOpen?: boolean;
   icon: JSX.Element;
 }
 
@@ -72,8 +73,8 @@ export type IApp = IAppConfig & {
   icon: JSX.Element;
   isDisabled: boolean;
   notificationIcon: JSX.Element;
-  NotificationIcon: React.FC<SvgIconProps>;
-  Icon?: React.FC<SvgIconProps>;
+  NotificationIcon: IconComponentProps;
+  Icon?: IconComponentProps;
   theme?: any;
 };
 
@@ -85,18 +86,18 @@ export const APPS: IAppConfig[] = [
     icon: <DialerAppIcon />,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
-    Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
+    Component: DialerApp,
+    emitOnOpen: false,
   },
   {
     id: 'BROWSER',
     nameLocale: 'BROWSER.NAME',
-    backgroundColor: blue['300'],
+    backgroundColor: '#64b5f6',
     path: '/browser',
     icon: <BrowserIcon />,
-    color: common.white,
-    Route: () => (
-      <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
-    ),
+    color: '#ffffff',
+    Component: BrowserApp,
+    emitOnOpen: false,
   },
   {
     id: 'MESSAGES',
@@ -105,9 +106,8 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
-    Route: () => (
-      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
-    ),
+    Component: MessagesApp,
+    emitOnOpen: false,
   },
   {
     id: 'DARKCHAT',
@@ -116,9 +116,8 @@ export const APPS: IAppConfig[] = [
     backgroundColor: DARKCHAT_APP_PRIMARY_COLOR,
     color: DARKCHAT_APP_TEXT_COLOR,
     path: '/darkchat',
-    Route: () => (
-      <AppRoute id="DARKCHAT" path="/darkchat" component={DarkChatApp} emitOnOpen={false} />
-    ),
+    Component: DarkChatApp,
+    emitOnOpen: false,
   },
   {
     id: 'CONTACTS',
@@ -127,31 +126,28 @@ export const APPS: IAppConfig[] = [
     icon: <ContactIcon />,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
-    Route: () => (
-      <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false} />
-    ),
+    Component: ContactsApp,
+    emitOnOpen: false,
   },
   {
     id: 'CALCULATOR',
     nameLocale: 'APPS_CALCULATOR',
     icon: <Calculator />,
-    backgroundColor: purple[500],
-    color: grey[50],
+    backgroundColor: '#9c27b0',
+    color: '#fafafa',
     path: '/calculator',
-    Route: () => (
-      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} emitOnOpen={false} />
-    ),
+    Component: CalculatorApp,
+    emitOnOpen: false,
   },
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
     icon: <SettingsIcon />,
     backgroundColor: '#383838',
-    color: grey[50],
+    color: '#fafafa',
     path: '/settings',
-    Route: () => (
-      <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false} />
-    ),
+    Component: SettingsApp,
+    emitOnOpen: false,
   },
   {
     id: 'MATCH',
@@ -160,7 +156,8 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MATCH_APP_PRIMARY_COLOR,
     color: MATCH_APP_TEXT_COLOR,
     path: '/match',
-    Route: () => <AppRoute id="MATCH" path="/match" component={MatchApp} emitOnOpen={false} />,
+    Component: MatchApp,
+    emitOnOpen: false,
   },
   {
     id: 'TWITTER',
@@ -169,9 +166,8 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => (
-      <AppRoute id="TWITTER" path="/twitter" component={LifeInvaderContainer} emitOnOpen={false} />
-    ),
+    Component: LifeInvaderContainer,
+    emitOnOpen: false,
   },
   {
     id: 'MARKETPLACE',
@@ -180,14 +176,8 @@ export const APPS: IAppConfig[] = [
     backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
     color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
-    Route: () => (
-      <AppRoute
-        id="MARKETPLACE"
-        path="/marketplace"
-        component={MarketplaceApp}
-        emitOnOpen={false}
-      />
-    ),
+    Component: MarketplaceApp,
+    emitOnOpen: false,
   },
   {
     id: 'NOTES',
@@ -196,16 +186,18 @@ export const APPS: IAppConfig[] = [
     backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
-    Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={false} />,
+    Component: NotesApp,
+    emitOnOpen: false,
   },
   {
     id: 'CAMERA',
     nameLocale: 'APPS_CAMERA',
     icon: <Camera />,
-    backgroundColor: grey['A400'],
-    color: common.white,
+    backgroundColor: '#bdbdbd',
+    color: '#ffffff',
     path: '/camera',
-    Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={false} />,
+    Component: CameraApp,
+    emitOnOpen: false,
   },
 ];
 
@@ -215,11 +207,10 @@ if (import.meta.env.DEV) {
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',
     icon: <ExampleIcon />,
-    backgroundColor: blue[500],
-    color: blue[50],
+    backgroundColor: '#2196f3',
+    color: '#e3f2fd',
     path: '/example',
-    Route: () => (
-      <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false} />
-    ),
+    Component: ExampleAppWrapper,
+    emitOnOpen: false,
   });
 }

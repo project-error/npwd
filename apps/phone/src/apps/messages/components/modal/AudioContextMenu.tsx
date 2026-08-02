@@ -1,24 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  CircularProgress,
-  IconButton,
-  Paper,
-  Tooltip,
-} from '@mui/material';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import CloseIcon from '@mui/icons-material/Close';
-import StopIcon from '@mui/icons-material/Stop';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import { useRecorder } from '@os/audio/hooks/useRecorder';
-import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import SendIcon from '@mui/icons-material/Send';
 import { useAudioMessageAPI } from '@apps/messages/hooks/useAudioMessageAPI';
+import { Button, Tooltip } from '@npwd/keyos';
+import { Circle, Pause, Play, Send, Square, X } from 'lucide-react';
 
 dayjs.extend(duration);
 
@@ -101,18 +87,16 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
 
   if (isSending) {
     return (
-      <Paper variant="outlined">
-        <Box display="flex" height={50} alignItems="center" justifyContent="center">
-          <CircularProgress size={30} />
-        </Box>
-      </Paper>
+      <div className="flex h-14 items-center justify-center border-t border-white/10 bg-keyos-panel">
+        <div className="size-7 animate-spin rounded-full border-2 border-keyos-muted/30 border-t-[color:var(--keyos-app-accent)]" />
+      </div>
     );
   }
 
   return (
-    <Paper variant="outlined">
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box pl={1}>
+    <div className="border-t border-white/10 bg-keyos-panel px-3 py-2 shadow-keyos-panel">
+      <div className="flex items-center justify-between gap-3">
+        <div>
           {recordedAudio && !recordingState.isRecording ? (
             <InteractButtons play={play} pause={pause} playing={playing} />
           ) : (
@@ -122,35 +106,35 @@ const AudioContextMenu: React.FC<AudioContextMenuProps> = ({ onClose }) => {
               isRecording={recordingState.isRecording}
             />
           )}
-        </Box>
+        </div>
         {!recordedAudio ? (
-          <p>Record voice message</p>
+          <p className="text-sm text-keyos-muted">Record voice message</p>
         ) : recordingState.isRecording ? (
-          <p>Recording...</p>
+          <p className="text-sm text-red-200">Recording...</p>
         ) : recordedAudio && !isNaN(duration) ? (
-          <Box>
-            <p>
+          <div>
+            <p className="text-sm text-keyos-cream">
               {dayjs.duration(currentTime * 1000).format('mm:ss')}
               {duration === Infinity
                 ? null
                 : ` - ${dayjs.duration(Math.trunc(duration) * 1000).format('mm:ss')}`}
             </p>
-          </Box>
+          </div>
         ) : (
-          <p>Click to play voice message</p>
+          <p className="text-sm text-keyos-muted">Click to play voice message</p>
         )}
-        <Box pt={1} pb={1} pr={1}>
+        <div className="flex items-center gap-1">
           {!recordingState.isRecording && recordedAudio && blob && (
-            <IconButton onClick={handleSendRecording} size="small">
-              <SendIcon color="primary" />
-            </IconButton>
+            <Button onClick={handleSendRecording} size="icon" variant="ghost">
+              <Send size={18} />
+            </Button>
           )}
-          <IconButton disabled={recordingState.isRecording} size="small" onClick={onClose}>
-            <CloseIcon color="error" />
-          </IconButton>
-        </Box>
-      </Box>
-    </Paper>
+          <Button disabled={recordingState.isRecording} size="icon" onClick={onClose} variant="ghost">
+            <X size={18} />
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -159,30 +143,26 @@ const RecordingButtons: React.FC<RecordingButtonsProps> = ({
   startRecording,
   stopRecording,
 }) => (
-  <Box>
-    <ButtonGroup>
-      <Tooltip title="Record voice message" placement="right">
-        <IconButton disabled={isRecording} color="error" size="small" onClick={startRecording}>
-          <RadioButtonCheckedIcon />
-        </IconButton>
+  <div className="flex items-center gap-1">
+      <Tooltip title="Record voice message">
+        <Button disabled={isRecording} size="icon" variant="ghost" onClick={startRecording}>
+          <Circle className="text-red-400" size={18} />
+        </Button>
       </Tooltip>
       {isRecording && (
-        <IconButton color="error" size="small" onClick={isRecording && stopRecording}>
-          <StopIcon />
-        </IconButton>
+        <Button size="icon" variant="ghost" onClick={stopRecording}>
+          <Square className="text-red-400" size={18} />
+        </Button>
       )}
-    </ButtonGroup>
-  </Box>
+  </div>
 );
 
 const InteractButtons: React.FC<InteractButtonsProps> = ({ playing, play, pause }) => (
-  <Box>
-    <ButtonGroup>
-      <IconButton size="small">
-        {playing ? <PauseIcon onClick={pause} /> : <PlayArrowIcon onClick={play} />}
-      </IconButton>
-    </ButtonGroup>
-  </Box>
+  <div>
+    <Button size="icon" variant="ghost" onClick={playing ? pause : play}>
+      {playing ? <Pause size={18} /> : <Play size={18} />}
+    </Button>
+  </div>
 );
 
 export default AudioContextMenu;

@@ -1,5 +1,4 @@
-import { useRecoilValue } from 'recoil';
-import { twitterState } from './state';
+import { useTwitterProfileValue } from './state';
 
 interface IProfile {
   profile_name?: string;
@@ -11,7 +10,7 @@ interface IUseProfile {
 }
 
 export const useProfile = (): IUseProfile => {
-  const profile = useRecoilValue(twitterState.profile);
+  const profile = useTwitterProfileValue();
   return {
     profile,
   };

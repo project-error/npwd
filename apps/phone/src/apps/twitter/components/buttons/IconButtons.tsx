@@ -1,20 +1,7 @@
 import React, { memo } from 'react';
-import { Box, Button, styled } from '@mui/material';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import EmojiIcon from '@mui/icons-material/SentimentSatisfied';
+import { Image, Smile } from 'lucide-react';
+import { NPWDButton } from '@npwd/keyos';
 import { usePhone } from '@os/phone/hooks/usePhone';
-
-const ButtonContainer = styled(Box)({
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  justifyContent: 'flex-start',
-  paddingLeft: '5px',
-});
-
-const ButtonWrapper = styled(Button)({
-  background: 'transparent',
-  minWidth: '45px',
-});
 
 export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const { ResourceConfig } = usePhone();
@@ -23,18 +10,18 @@ export const IconButtons = ({ onImageClick, onEmojiClick }) => {
   const { enableImages, enableEmojis } = ResourceConfig.twitter;
 
   return (
-    <ButtonContainer>
+    <div className="flex flex-row flex-nowrap justify-start pl-[5px]">
       {enableImages && (
-        <ButtonWrapper onClick={onImageClick}>
-          <InsertPhotoIcon color="action" />
-        </ButtonWrapper>
+        <NPWDButton size="sm" variant="ghost" onClick={onImageClick}>
+          <Image size={20} className="text-keyos-muted" />
+        </NPWDButton>
       )}
       {enableEmojis && (
-        <ButtonWrapper onClick={onEmojiClick}>
-          <EmojiIcon color="action" />
-        </ButtonWrapper>
+        <NPWDButton size="sm" variant="ghost" onClick={onEmojiClick}>
+          <Smile size={20} className="text-keyos-muted" />
+        </NPWDButton>
       )}
-    </ButtonContainer>
+    </div>
   );
 };
 

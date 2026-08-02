@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { Profile as IProfile, FormattedProfile, MatchEvents } from '@typings/match';
 import ProfileField from '@ui/components/ProfileField';
 import UpdateButton from '@ui/components/UpdateButton';
-import { Box, Card, IconButton, LinearProgress, Stack, Typography } from '@mui/material';
 import Profile from './Profile';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import PageText from '../PageText';
@@ -13,58 +11,45 @@ import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useSetMyProfile } from '../../hooks/state';
 import { Button } from '@ui/components/Button';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import qs from 'qs';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
-import MicIcon from '@mui/icons-material/Mic';
+import { Mic, Play, Pause } from 'lucide-react';
 import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import RecordVoiceMessage from '../RecordVoiceMessage';
 import Backdrop from '@ui/components/Backdrop';
 import { blobToBase64 } from '@utils/seralize';
 import { AudioEvents, AudioRequest, AudioResponse } from '@typings/audio';
-
-const useStyles = makeStyles({
-  root: {
-    position: 'relative',
-    width: '100%',
-    height: 'calc(100% - 40px)',
-    padding: '15px',
-  },
-  card: {
-    position: 'absolute',
-    margin: '15px 15px 25px 15px',
-    height: 'calc(100% - 80px)',
-    width: 'calc(100% - 30px)',
-    overflow: 'hidden',
-  },
-  spacer: {
-    height: '8px',
-  },
-});
+import { NPWDButton } from '@npwd/keyos';
+import { cn } from '@utils/css';
 
 interface IProps {
   profile: FormattedProfile;
   showPreview: boolean;
 }
 
+const AudioProgress = ({ value, indeterminate }: { value: number; indeterminate?: boolean }) => (
+  <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+    <div
+      className={cn(
+        'h-full bg-[color:var(--keyos-app-accent)] transition-all',
+        indeterminate && 'w-1/3 animate-pulse',
+      )}
+      style={indeterminate ? undefined : { width: `${value}%` }}
+    />
+  </div>
+);
+
 export function ProfileForm({ profile, showPreview }: IProps) {
-  const classes = useStyles();
   const [t] = useTranslation();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
   const setMyProfile = useSetMyProfile();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const query = useQueryParams();
 
-  // note that this assumes we are defensively checking
-  // that profile is not null in a parent above this component.
-  // Annoyingling adding conditionals above this line to not render
-  // when profile === null results in a react error that different
-  // amounts of hooks are rendering
   const [image, setImage] = useState(profile?.image || '');
   const [name, setName] = useState(profile?.name || '');
   const [bio, setBio] = useState(profile?.bio || '');
@@ -79,8 +64,8 @@ export function ProfileForm({ profile, showPreview }: IProps) {
     setRecordVoiceMessage((curVal) => !curVal);
   };
 
-  const handleSetVoiceMessage = (voiceMessage: Blob) => {
-    setVoiceMessage(voiceMessage);
+  const handleSetVoiceMessage = (nextVoiceMessage: Blob) => {
+    setVoiceMessage(nextVoiceMessage);
   };
 
   const calculateProgress =
@@ -89,8 +74,8 @@ export function ProfileForm({ profile, showPreview }: IProps) {
       : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
   const handleOpenGallery = useCallback(() => {
-    history.push(`/camera?${qs.stringify({ referal: encodeURIComponent(pathname + search) })}`);
-  }, [history, pathname, search]);
+    navigate(`/camera?${qs.stringify({ referal: encodeURIComponent(pathname + search) })}`);
+  }, [navigate, pathname, search]);
 
   const update: FormattedProfile = {
     ...profile,
@@ -151,8 +136,8 @@ export function ProfileForm({ profile, showPreview }: IProps) {
   useEffect(() => {
     if (!query?.image) return;
     setImage(query.image);
-    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [query, history, setImage, pathname, search]);
+    navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
+  }, [query, navigate, setImage, pathname, search]);
 
   if (!profile && !ResourceConfig.match.allowEditableProfileName) {
     return <PageText text={t('MATCH.PROFILE_CONFIGURATION')} />;
@@ -160,33 +145,33 @@ export function ProfileForm({ profile, showPreview }: IProps) {
 
   if (showPreview) {
     return (
-      <Card raised className={classes.card}>
+      <div className="absolute m-[15px_15px_25px_15px] h-[calc(100%-80px)] w-[calc(100%-30px)] overflow-hidden rounded-xl bg-keyos-panel shadow-lg">
         <Profile profile={update} />
-      </Card>
+      </div>
     );
   }
 
   return (
-    <div className={classes.root}>
+    <div className="relative h-[calc(100%-40px)] w-full p-[15px]">
       <RecordVoiceMessage
         open={recordVoiceMessage}
         closeModal={closeVoiceMessageModal}
         setVoiceMessage={handleSetVoiceMessage}
       />
       {recordVoiceMessage && <Backdrop />}
-      <Box>
+      <div>
         <ProfileField
           label={t('MATCH.EDIT_PROFILE_IMAGE')}
           value={update.image}
           handleChange={setImage}
           allowChange
         />
-        <Box mt={1} mb={2}>
+        <div className="mb-2 mt-1">
           <Button variant="contained" onClick={handleOpenGallery}>
             Choose image
           </Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
       <ProfileField
         label={t('MATCH.EDIT_PROFILE_NAME')}
         value={name}
@@ -215,32 +200,30 @@ export function ProfileForm({ profile, showPreview }: IProps) {
 
       {ResourceConfig && ResourceConfig.voiceMessage && (
         <>
-          <Typography variant="body2" color="textSecondary" component="p" sx={{ marginTop: '8px' }}>
-            {t('MATCH.EDIT_VOICE_MESSAGE')}
-          </Typography>
+          <p className="mt-2 text-sm text-keyos-muted">{t('MATCH.EDIT_VOICE_MESSAGE')}</p>
 
-          <Stack direction="row">
-            <IconButton onClick={() => setRecordVoiceMessage(true)}>
-              <MicIcon />
-            </IconButton>
+          <div className="flex flex-row items-center">
+            <NPWDButton size="icon" variant="ghost" onClick={() => setRecordVoiceMessage(true)}>
+              <Mic size={20} />
+            </NPWDButton>
 
             {profile.voiceMessage && (
-              <Box sx={{ width: '100%' }}>
-                <Box display="flex" alignItems="center">
-                  <IconButton onClick={playing ? pause : play}>
-                    {playing ? <PauseIcon /> : <PlayArrowIcon />}
-                  </IconButton>
-                  <Box sx={{ width: '60%' }}>
+              <div className="w-full">
+                <div className="flex items-center">
+                  <NPWDButton size="icon" variant="ghost" onClick={playing ? pause : play}>
+                    {playing ? <Pause size={20} /> : <Play size={20} />}
+                  </NPWDButton>
+                  <div className="w-[60%]">
                     {!calculateProgress && playing ? (
-                      <LinearProgress />
+                      <AudioProgress value={0} indeterminate />
                     ) : (
-                      <LinearProgress variant="determinate" value={calculateProgress} />
+                      <AudioProgress value={calculateProgress} />
                     )}
-                  </Box>
-                </Box>
-              </Box>
+                  </div>
+                </div>
+              </div>
             )}
-          </Stack>
+          </div>
         </>
       )}
 

@@ -1,12 +1,12 @@
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 import { toggleKeys } from '@ui/components';
 import { twitterState } from '../../hooks/state';
 import { NPWDButton } from '@npwd/keyos';
 import { Reply } from 'lucide-react';
 
 export const ReplyButton = ({ profile_name }) => {
-  const setModalVisible = useSetRecoilState(twitterState.showCreateTweetModal);
-  const setMessage = useSetRecoilState(twitterState.modalMessage);
+  const setModalVisible = useSetAtom(twitterState.showCreateTweetModal);
+  const setMessage = useSetAtom(twitterState.modalMessage);
 
   const handleClick = () => {
     setMessage(`@${profile_name} `);

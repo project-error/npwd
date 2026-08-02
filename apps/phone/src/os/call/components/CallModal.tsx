@@ -4,20 +4,11 @@ import { AppContent } from '@ui/components/AppContent';
 import { useCall } from '../hooks/useCall';
 import { CallTimer } from './CallTimer';
 import { CallControls } from './CallControls';
-import { Box, BoxProps } from '@mui/material';
 import CallContactContainer from './CallContactContainer';
 import RingingText from './RingingText';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { useWallpaper } from '../../../apps/settings/hooks/useWallpaper';
-import { styled } from '@mui/styles';
-
-const StyledBoxRoot: React.FC<BoxProps> = styled(Box)({
-  height: '100%',
-  backdropFilter: 'blur(20px) brightness(0.6)',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-});
+import { cn } from '@utils/css';
 
 export const CallModal: React.FC = () => {
   const { call } = useCall();
@@ -33,13 +24,18 @@ export const CallModal: React.FC = () => {
         }}
       >
         <React.Suspense fallback={<LoadingSpinner />}>
-          <StyledBoxRoot padding={5}>
-            <Box>
+          <div
+            className={cn(
+              'flex h-full flex-col justify-between p-5',
+              'backdrop-blur-[20px] brightness-[0.6]',
+            )}
+          >
+            <div>
               <CallContactContainer />
               {call?.is_accepted ? <CallTimer /> : call?.isTransmitter && <RingingText />}
-            </Box>
+            </div>
             <CallControls />
-          </StyledBoxRoot>
+          </div>
         </React.Suspense>
       </AppContent>
     </AppWrapper>

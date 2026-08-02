@@ -1,19 +1,16 @@
-import { common, yellow } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const NOTES_APP_PRIMARY_COLOR = yellow[800];
-export const NOTES_APP_ICON_COLOR = common.white;
-export const NOTES_APP_TEXT_COLOR = common.white;
+export const NOTES_APP_PRIMARY_COLOR = '#f9a825';
+export const NOTES_APP_ICON_COLOR = '#ffffff';
+export const NOTES_APP_TEXT_COLOR = '#ffffff';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: NOTES_APP_PRIMARY_COLOR,
-      dark: yellow[900],
-      light: yellow[500],
-      contrastText: NOTES_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: NOTES_APP_PRIMARY_COLOR,
+  accentForeground: NOTES_APP_TEXT_COLOR,
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

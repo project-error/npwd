@@ -1,27 +1,30 @@
 import React from 'react';
-import { PhoneProviders } from './PhoneProviders';
+import { PhoneProviders } from './phone-providers';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { NuiProvider } from 'fivem-nui-react-lib';
-import { RecoilRootManager } from './lib/RecoilRootManager';
-import { RecoilDebugObserver } from './lib/RecoilDebugObserver';
+import { AppStateProviders } from '@common/query/app-state-providers';
 
 jest.useFakeTimers();
+
+const NuiProviderComponent = NuiProvider as React.ComponentType<{
+  children: React.ReactNode;
+  resource: string;
+  timeout?: number | false;
+}>;
 
 test('renders Phone', () => {
   jest.mock('@utils/fetchNui');
 
   render(
     <MemoryRouter>
-      <NuiProvider resource="npwd">
+      <NuiProviderComponent resource="npwd">
         <React.Suspense fallback={null}>
-          <RecoilRootManager>
-            <RecoilDebugObserver>
-              <PhoneProviders />
-            </RecoilDebugObserver>
-          </RecoilRootManager>
+          <AppStateProviders>
+            <PhoneProviders />
+          </AppStateProviders>
         </React.Suspense>
-      </NuiProvider>
+      </NuiProviderComponent>
     </MemoryRouter>,
   );
 });

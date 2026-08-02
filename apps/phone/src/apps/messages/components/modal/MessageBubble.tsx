@@ -1,66 +1,14 @@
-import { Avatar, Box, IconButton, Paper, Typography } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { Message } from '@typings/messages';
-import StyledMessage from '../ui/StyledMessage';
-import { PictureResponsive } from '@ui/components/PictureResponsive';
-import { PictureReveal } from '@ui/components/PictureReveal';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import { useSetSelectedMessage } from '../../hooks/state';
 import MessageEmbed from '../ui/MessageEmbed';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import dayjs from 'dayjs';
-import { MoreHorizontal, MoreVertical } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import { cn } from '@utils/css';
-import { calendarPickerSkeletonClasses } from '@mui/lab';
-
-const useStyles = makeStyles((theme) => ({
-  mySms: {
-    margin: theme.spacing(1),
-    padding: '6px',
-    height: 'auto',
-    width: 'auto',
-    float: 'left',
-    borderRadius: '8px',
-    textOverflow: 'ellipsis',
-  },
-  sms: {
-    padding: '6px',
-    width: 'auto',
-    float: 'left',
-    minWidth: 'auto',
-    maxWidth: 'auto',
-    height: 'auto',
-    borderRadius: '8px',
-    textOverflow: 'ellipsis',
-  },
-  myAudioSms: {
-    float: 'left',
-    margin: theme.spacing(1),
-    padding: '6px',
-    minWidth: '60%',
-    maxWidth: '80%',
-    borderRadius: '12px',
-    textOverflow: 'ellipsis',
-  },
-  audioSms: {
-    float: 'left',
-    width: 'auto',
-    marginLeft: 5,
-    minWidth: '60%',
-    maxWidth: '80%',
-    borderRadius: '15px',
-    textOverflow: 'ellipsis',
-  },
-  message: {
-    wordBreak: 'break-word',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-}));
+import { MessageBubble as KeyOSMessageBubble } from '@npwd/keyos';
 
 const isImage = (url) => {
   return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
@@ -71,7 +19,6 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
-  const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
   const { getContactByNumber } = useContactActions();
 
@@ -93,16 +40,17 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   const isMessageImage = isImage(message.message);
+  const author = getContact()?.display ?? message.author;
+  const timestamp = dayjs.unix(message.createdAt).fromNow();
+
   if (message.is_embed && parsedEmbed.type === 'audio') {
     return (
       <div>
-        <Box display="flex" ml={1} alignItems="stretch" mt={1}>
-          <Paper
-            className={cn(
-              isMine ? classes.myAudioSms : classes.audioSms,
-              isMine ? 'bg-green-600' : 'bg-neutral-800',
-            )}
-            variant="outlined"
+        <div className={cn('mt-2 flex px-2', isMine ? 'justify-end' : 'justify-start')}>
+          <KeyOSMessageBubble
+            className="min-w-[60%] max-w-[80%]"
+            from={isMine ? 'player' : 'contact'}
+            meta={timestamp}
           >
             <MessageEmbed
               type={parsedEmbed.type}
@@ -112,13 +60,10 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               openMenu={openMenu}
             />
             {!isMine && (
-              <Typography fontWeight="bold" fontSize={14} color="#ddd">
-                {getContact()?.display ?? message.author}
-              </Typography>
+              <p className="mt-2 text-xs font-bold text-keyos-amber">{author}</p>
             )}
-            <p className="mb-1 pl-2 text-xs">{dayjs.unix(message.createdAt).fromNow()}</p>
-          </Paper>
-        </Box>
+          </KeyOSMessageBubble>
+        </div>
         <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)} />
       </div>
     );
@@ -129,21 +74,16 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   return (
     <>
       <div className="mb-2 px-2 py-2">
-        <div className="flex items-center">
-          <div className={cn('flex flex-col space-x-2')}>
+        <div className={cn('flex items-center gap-2', isMine ? 'justify-end' : 'justify-start')}>
+          <div className={cn('flex min-w-0 flex-col', isMine && 'items-end')}>
             <div>
               {!isMine && (
-                <p className="px-2 text-xs font-medium text-neutral-400 dark:text-white">
-                  {getContact()?.display ?? message.author}
+                <p className="px-2 text-xs font-semibold uppercase tracking-[0.16em] text-keyos-amber/80">
+                  {author}
                 </p>
               )}
             </div>
-            <div
-              className={cn(
-                'flex items-center rounded-md px-2 py-2',
-                isMine ? 'bg-green-600' : 'bg-neutral-200 dark:bg-neutral-800',
-              )}
-            >
+            <KeyOSMessageBubble from={isMine ? 'player' : 'contact'}>
               {message.is_embed ? (
                 <>
                   <MessageEmbed
@@ -157,26 +97,26 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
               ) : (
                 <div>
                   {isMessageImage ? (
-                    <PictureReveal>
-                      <PictureResponsive src={message.message} alt="message multimedia" />
-                    </PictureReveal>
+                    <img
+                      src={message.message}
+                      alt="message multimedia"
+                      className="max-h-64 max-w-full rounded-xl object-cover"
+                    />
                   ) : (
-                    <p
-                      className={cn(
-                        'text-sm text-neutral-900',
-                        isMine ? 'text-white' : 'dark:text-white',
-                      )}
-                    >
+                    <p className="break-words text-sm">
                       {message.message}
                     </p>
                   )}
                 </div>
               )}
-            </div>
+            </KeyOSMessageBubble>
           </div>
           <div>
             {showVertIcon && (
-              <button onClick={openMenu} className="text-neutral-400 dark:text-white">
+              <button
+                onClick={openMenu}
+                className="rounded-full p-1 text-keyos-muted transition hover:bg-white/10 hover:text-keyos-cream"
+              >
                 <MoreVertical size={18} />
               </button>
             )}
@@ -184,7 +124,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         </div>
 
         <div className="px-2">
-          <p className="text-xs text-neutral-400">{dayjs.unix(message.createdAt).fromNow()}</p>
+          <p className={cn('text-xs text-keyos-muted', isMine && 'text-right')}>{timestamp}</p>
         </div>
       </div>
       <MessageBubbleMenu

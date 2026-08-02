@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "*": ["@types/*"],
-      "@os/*": ["./os/*"],
-      "@ui/*": ["./ui/*"],
-      "@apps/*": ["./apps/*"],
-      "@utils/*": ["./utils/*"],
-      "@common/*": ["./common/*"],
-      "@shared/*": ["../../../shared/*"],
-      "@typings/*": ["../../../typings/*"]
+      "*": ["src/@types/*"],
+      "@os/*": ["src/os/*"],
+      "@ui/*": ["src/ui/*"],
+      "@apps/*": ["src/apps/*"],
+      "@utils/*": ["src/utils/*"],
+      "@common/*": ["src/common/*"],
+      "@shared/*": ["../../shared/*"],
+      "@typings/*": ["../../typings/*"]
     }
   }
 }

@@ -2,9 +2,8 @@ import { useNuiEvent } from 'fivem-nui-react-lib';
 import { FormattedProfile, MatchEvents } from '@typings/match';
 import { useCallback } from 'react';
 import { useMatchActions } from './useMatchActions';
-import { useRecoilValueLoadable } from 'recoil';
-import { matchState } from './state';
-import { useLocation } from 'react-router-dom';
+import { useMyProfileValue } from './state';
+import { useLocation } from 'react-router';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useNotification } from '@os/new-notifications/useNotification';
 import { useTranslation } from 'react-i18next';
@@ -25,9 +24,7 @@ export const useMatchService = () => {
 
   const { enqueueNotification } = useNotification();
 
-  const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
-    matchState.myProfile,
-  );
+  const profileContent = useMyProfileValue();
 
   const handleMatchBroadcast = ({ name }) => {
     if (visibility && pathname.includes('/match/')) {
@@ -48,12 +45,11 @@ export const useMatchService = () => {
 
   const handleAccountBroadcast = useCallback(
     (profile: FormattedProfile) => {
-      if (profileLoading !== 'hasValue') return;
       if (!profileContent) return;
 
       addMatchAccount(profile, profileContent);
     },
-    [addMatchAccount, profileContent, profileLoading],
+    [addMatchAccount, profileContent],
   );
 
   useNuiEvent('MATCH', MatchEvents.SAVE_LIKES_BROADCAST, handleMatchBroadcast);

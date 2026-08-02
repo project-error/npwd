@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '@ui/components/Modal';
-import { Box, Typography, useTheme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@ui/components/Input';
 import { Button } from '@ui/components/Button';
@@ -12,32 +10,20 @@ interface NewChannelModalProps {
   closeModal: () => void;
 }
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    color: theme.palette.text.primary,
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    }
-  }
-}));
-
 export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeModal }) => {
   const [channelValue, setChannelValue] = useState<string>('');
   const [t] = useTranslation();
   const { addChannel } = useDarkchatAPI();
-  const phoneTheme = useTheme();
-  const classes = useStyles(phoneTheme);
 
   const handleJoinChannel = () => {
     addChannel({ channelIdentifier: channelValue });
-
     closeModal();
   };
 
   return (
     <Modal visible={open} handleClose={closeModal}>
-      <Typography>{t('DARKCHAT.NEW_CHANNEL_TITLE')}</Typography>
-      <Box mt={3} mb={2}>
+      <p className="text-keyos-cream">{t('DARKCHAT.NEW_CHANNEL_TITLE')}</p>
+      <div className="mb-2 mt-3">
         <TextField
           type="password"
           fullWidth
@@ -45,13 +31,9 @@ export const NewChannelModal: React.FC<NewChannelModalProps> = ({ open, closeMod
           value={channelValue}
           onChange={(e) => setChannelValue(e.currentTarget.value)}
         />
-      </Box>
+      </div>
 
-      <Button
-        variant="contained"
-        className={classes.button}
-        onClick={handleJoinChannel}
-      >
+      <Button variant="contained" className="text-keyos-fg hover:bg-white/10" onClick={handleJoinChannel}>
         {t('DARKCHAT.JOIN_BUTTON')}
       </Button>
     </Modal>

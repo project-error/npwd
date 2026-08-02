@@ -1,11 +1,12 @@
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: '#f23123',
-    },
-  },
+const theme: AppColorTokens = {
+  accent: '#f23123',
+  accentForeground: '#ffffff',
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

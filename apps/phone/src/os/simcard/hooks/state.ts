@@ -1,8 +1,5 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 export const simcardState = {
-  number: atom<string | null>({
-    key: 'simcardNumber',
-    default: '1234567',
-  }),
+  number: atom<string | null>('1234567'),
 };

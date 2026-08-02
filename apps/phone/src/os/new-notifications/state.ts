@@ -1,90 +1,62 @@
-import {
-  atom,
-  atomFamily,
-  selectorFamily,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
-import { NPWDNotification } from '@typings/notifications';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { NPWDNotification, UnreadNotificationBarProps } from '@typings/notifications';
 
-export const notifications = atomFamily<NPWDNotification, string>({
-  key: 'npwd:notifications',
-  default: (id: string) => ({
-    appId: '',
-    key: id,
-    id,
-    content: '',
-    secondaryTitle: '',
-    path: '',
-    onClick: null,
-    keepOpen: false,
-    duration: 0,
-    isRead: false,
-    isActive: false,
-  }),
+const defaultNotification = (id: string): NPWDNotification => ({
+  appId: '',
+  key: id,
+  id,
+  content: '',
+  secondaryTitle: '',
+  path: '',
+  onClick: null,
+  keepOpen: false,
+  duration: 0,
+  isRead: false,
+  isActive: false,
 });
 
-export const activeNotificationIds = atom<string[]>({
-  key: 'npwd:activeNotificationsIds',
-  default: [],
-});
+export const notificationsAtom = atom<Record<string, NPWDNotification>>({});
 
-export const allNotificationIds = atom<string[]>({
-  key: 'npwd:notificationsIds',
-  default: [],
-});
+export const notifications = (id: string) =>
+  atom((get) => get(notificationsAtom)[id] ?? defaultNotification(id));
 
-export const unreadNotificationIds = atom<string[]>({
-  key: 'npwd:unreadNotificationIds',
-  default: [],
-});
+export const activeNotificationIds = atom<string[]>([]);
 
-export const unreadNotifications = atom({
-  key: 'npwd:unreadNotifications',
-  default: [],
-});
+export const allNotificationIds = atom<string[]>([]);
 
-export const barUncollapsed = atom<boolean>({
-  key: 'npwd:barUncollapsed',
-  default: false,
-});
+export const unreadNotificationIds = atom<string[]>([]);
 
-export const notificationsForApp = selectorFamily<NPWDNotification[], string>({
-  key: 'npwd:notificationsForApp',
-  get:
-    (appId: string) =>
-    ({ get }) => {
-      const allNotisIds = get(allNotificationIds);
+export const unreadNotifications = atom<UnreadNotificationBarProps[]>([]);
 
-      return allNotisIds
-        .map((id: string) => get(notifications(id)))
-        .filter((n: NPWDNotification) => n.appId === appId);
-    },
-});
-
-export const unreadNotificationsForApp = selectorFamily<NPWDNotification[], string>({
-  key: 'npwd:unreadNotificationsForApp',
-  get:
-    (appId: string) =>
-    ({ get }) => {
-      const allNotisIds = get(allNotificationIds);
-
-      return allNotisIds
-        .map((id: string) => get(notifications(id)))
-        .filter((n: NPWDNotification) => !n.isRead && n.appId === appId);
-    },
-});
+export const barUncollapsed = atom<boolean>(false);
 
 /* Returns all notification IDs for the specified app ID */
-export const useNotificationsForApp = (appId: string) => useRecoilValue(notificationsForApp(appId));
+export const useNotificationsForApp = (appId: string) => {
+  const allNotisIds = useAtomValue(allNotificationIds);
+  const notificationMap = useAtomValue(notificationsAtom);
+
+  return allNotisIds
+    .map((id: string) => notificationMap[id] ?? defaultNotification(id))
+    .filter((n: NPWDNotification) => n.appId === appId);
+};
 
 /* Returns all unread notification IDs for the specified app ID */
-export const useUnreadNotificationsForApp = (appId: string) =>
-  useRecoilValue(unreadNotificationsForApp(appId));
+export const useUnreadNotificationsForApp = (appId: string) => {
+  const allNotisIds = useAtomValue(allNotificationIds);
+  const notificationMap = useAtomValue(notificationsAtom);
 
-export const useNavbarUncollapsed = () => useRecoilState(barUncollapsed);
-export const useSetNavbarUncollapsed = () => useSetRecoilState(barUncollapsed);
+  return allNotisIds
+    .map((id: string) => notificationMap[id] ?? defaultNotification(id))
+    .filter((n: NPWDNotification) => !n.isRead && n.appId === appId);
+};
 
-export const useUnreadNotificationIds = () => useRecoilValue(unreadNotificationIds);
-export const useUnreadNotifications = () => useRecoilValue(unreadNotifications);
+export const useNavbarUncollapsed = () => useAtom(barUncollapsed);
+export const useSetNavbarUncollapsed = () => useSetAtom(barUncollapsed);
+
+export const useUnreadNotificationIds = () => useAtomValue(unreadNotificationIds);
+export const useUnreadNotifications = () => useAtomValue(unreadNotifications);
+export const useNotificationValue = (id: string) => {
+  const notificationMap = useAtomValue(notificationsAtom);
+  return notificationMap[id] ?? defaultNotification(id);
+};
+export const useActiveNotificationIds = () => useAtomValue(activeNotificationIds);

@@ -1,46 +1,37 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { NoteItem, NotesEvents } from '@typings/notes';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { BrowserNotesData } from '../utils/constants';
+import { useQueryStateValue, useSetQueryState } from '@common/query/query-state';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
 
-const noteItems = atom({
-  key: 'noteItem',
-  default: selector<NoteItem[]>({
-    key: 'defaultNoteItems',
-    get: async () => {
-      try {
-        const resp = await fetchNui<ServerPromiseResp<NoteItem[]>>(NotesEvents.FETCH_ALL_NOTES);
-        LogDebugEvent({ action: 'FetchNotes', data: resp.data });
-        return resp.data;
-      } catch (e) {
-        if (isEnvBrowser()) {
-          return BrowserNotesData;
-        }
-        console.error(e);
-        return [];
-      }
-    },
-  }),
-});
-const selectedNote = atom<Partial<NoteItem> | null>({
-  key: 'selectedNote',
-  default: null,
-});
+const NOTES_QUERY_KEY = ['notes'] as const;
 
-const modalVisibile = atom({
-  key: 'noteModalVisible',
-  default: false,
-});
+const fetchNotes = async () => {
+  try {
+    const notes = await fetchNuiData<NoteItem[]>(NotesEvents.FETCH_ALL_NOTES);
+    LogDebugEvent({ action: 'FetchNotes', data: notes });
+    return notes;
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return BrowserNotesData;
+    }
+    console.error(e);
+    return [];
+  }
+};
 
-export const useSetSelectedNote = () => useSetRecoilState(selectedNote);
-export const useSelectedNoteValue = () => useRecoilValue(selectedNote);
-export const useSelectedNote = () => useRecoilState(selectedNote);
+const selectedNote = atom<Partial<NoteItem> | null>(null);
 
-export const useSetModalVisible = () => useSetRecoilState(modalVisibile);
-export const useModalVisible = () => useRecoilState(modalVisibile);
+const modalVisibile = atom(false);
 
-export const useNotesValue = () => useRecoilValue(noteItems);
-export const useSetNotes = () => useSetRecoilState(noteItems);
+export const useSetSelectedNote = () => useSetAtom(selectedNote);
+export const useSelectedNoteValue = () => useAtomValue(selectedNote);
+export const useSelectedNote = () => useAtom(selectedNote);
+
+export const useSetModalVisible = () => useSetAtom(modalVisibile);
+export const useModalVisible = () => useAtom(modalVisibile);
+
+export const useNotesValue = () => useQueryStateValue<NoteItem[]>(NOTES_QUERY_KEY, fetchNotes, []);
+export const useSetNotes = () => useSetQueryState<NoteItem[]>(NOTES_QUERY_KEY, []);

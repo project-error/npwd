@@ -1,23 +1,12 @@
 import React, { useState } from 'react';
-import { Snackbar, Typography } from '@mui/material';
+import { ToastStack } from '@npwd/keyos';
 import { Alert } from './Alert';
-import makeStyles from '@mui/styles/makeStyles';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    width: 'auto',
-    bottom: 20,
-  },
-});
-// NOTE: Will make this more generic at some point for error handling as well
 const WindowSnackbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [severity, setSeverity] = useState<'info' | 'error' | 'success'>('info');
-
-  const classes = useStyles();
 
   useNuiEvent('PHONE', 'startRestart', () => {
     setMessage('Restarting UI');
@@ -30,12 +19,14 @@ const WindowSnackbar: React.FC = () => {
     setOpen(false);
   };
 
+  if (!open) return null;
+
   return (
-    <Snackbar open={open} onClose={handleClose} className={classes.root}>
-      <Alert severity={severity}>
-        <Typography variant="body1">Phone - {message}</Typography>
+    <ToastStack className="pointer-events-auto bottom-5" position="bottom">
+      <Alert onClose={handleClose} severity={severity}>
+        Phone - {message}
       </Alert>
-    </Snackbar>
+    </ToastStack>
   );
 };
 

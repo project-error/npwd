@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { phoneState } from './state';
 import { isEnvBrowser } from '../../../utils/misc';
 import { useEffect } from 'react';
@@ -7,8 +7,8 @@ import DefaultConfig from '../../../../../../config.default.json';
 import { ResourceConfig } from '@typings/config';
 
 export const useConfig = (): ResourceConfig => {
-  const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
-  const resourceConfigValue = useRecoilValue(phoneState.resourceConfig);
+  const setResourceConfig = useSetAtom(phoneState.resourceConfig);
+  const resourceConfigValue = useAtomValue(phoneState.resourceConfig);
 
   useEffect(() => {
     // @ts-ignore

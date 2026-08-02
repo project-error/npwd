@@ -1,39 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 
 import { LikeorDislikeDraggableElement } from '../utils/drag';
 
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-  },
-  like: {
-    position: 'absolute',
-    zIndex: 20,
-    padding: '5px 15px',
-    top: 100,
-
-    color: 'green',
-    border: '4px solid green',
-    right: 15,
-  },
-  nope: {
-    position: 'absolute',
-    zIndex: 20,
-    padding: '5px 15px',
-    top: 100,
-
-    color: 'red',
-    border: '4px solid red',
-    left: 15,
-  },
-});
-
 interface IProps {
   id: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   onDrag: (deltaX: number) => void;
   onDrop: () => void;
 }
@@ -41,7 +12,6 @@ interface IProps {
 const MAX_ROTATION_DEG = 15;
 
 function Draggable({ id, children, onDrag, onDrop }: IProps) {
-  const classes = useStyles();
   const elementRef = useRef(null);
 
   useEffect(() => {
@@ -51,7 +21,7 @@ function Draggable({ id, children, onDrag, onDrop }: IProps) {
 
   return (
     <div>
-      <div ref={elementRef} key={id} id={id} className={classes.root}>
+      <div ref={elementRef} key={id} id={id} className="absolute h-full w-full">
         {children}
       </div>
     </div>

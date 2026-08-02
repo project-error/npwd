@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { Modal2 } from '../../../../ui/components/Modal';
-import { Box, Typography, Button } from '@mui/material';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
@@ -9,7 +8,7 @@ import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import { useNotesValue } from '@apps/notes/hooks/state';
 import { NoteItem } from '@typings/notes';
-import { NPWDButton } from '@npwd/keyos';
+import { Button } from '@npwd/keyos';
 
 interface IProps {
   messageGroup: MessageConversation | undefined;
@@ -26,7 +25,7 @@ export const MessageNoteModal = ({
   setNotePreview,
   notePreview,
 }: IProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
   const { sendEmbedMessage } = useMessageAPI();
@@ -34,8 +33,8 @@ export const MessageNoteModal = ({
 
   const removeQueryParamImage = useCallback(() => {
     setNotePreview(null);
-    history.replace(deleteQueryFromLocation({ pathname, search }, 'note'));
-  }, [history, pathname, search, setNotePreview]);
+    navigate(deleteQueryFromLocation({ pathname, search }, 'note'), { replace: true });
+  }, [navigate, pathname, search, setNotePreview]);
   const { activeMessageConversation } = useMessages();
 
   const sendNoteMessage = useCallback(
@@ -81,12 +80,12 @@ export const MessageNoteModal = ({
             {notePreview?.content.substring(0, 25) + ' ...'}
           </p>
 
-          <NPWDButton
-            className="w-full bg-green-600"
+          <Button
+            className="w-full bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] hover:brightness-110"
             onClick={() => sendFromQueryParam(notePreview)}
           >
             {t('GENERIC.SHARE')}
-          </NPWDButton>
+          </Button>
         </div>
       </Modal2>
     </>

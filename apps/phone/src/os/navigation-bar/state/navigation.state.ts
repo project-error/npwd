@@ -1,9 +1,6 @@
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 
-const isNavigationDisabled = atom({
-  key: 'isNavigationDisabled',
-  default: false,
-});
+const isNavigationDisabled = atom(false);
 
-export const useSetNavigationDisabled = () => useSetRecoilState(isNavigationDisabled);
-export const useNavigationDisabledValue = () => useRecoilValue(isNavigationDisabled);
+export const useSetNavigationDisabled = () => useSetAtom(isNavigationDisabled);
+export const useNavigationDisabledValue = () => useAtomValue(isNavigationDisabled);

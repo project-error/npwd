@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
-import { Box, Fab, useTheme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Plus } from 'lucide-react';
 import { useChannelsValue } from '../../state/state';
 import { ChannelItem } from '../ui/ChannelItem';
 import { List } from '@ui/components/List';
-import AddIcon from '@mui/icons-material/Add';
 import { NewChannelModal } from '../ui/NewChannelModal';
 import Backdrop from '@ui/components/Backdrop';
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    backgroundColor: theme.palette.action.active,
-    color: theme.palette.background.default,
-    '&:hover': {
-      backgroundColor: theme.palette.text.secondary,
-    },
-  },
-}));
 
 const ChatList: React.FC = () => {
   const channels = useChannelsValue();
   const [modal, setModal] = useState<boolean>(false);
-  const phoneTheme = useTheme();
-  const classes = useStyles(phoneTheme);
 
   const toggleModal = () => {
     setModal((curVal) => !curVal);
   };
 
   return (
-    <Box>
+    <div>
       <NewChannelModal open={modal} closeModal={toggleModal} />
       {modal && <Backdrop />}
       <List>
@@ -37,15 +23,16 @@ const ChatList: React.FC = () => {
           <ChannelItem key={channel.id} {...channel} />
         ))}
       </List>
-      <Box position="absolute" bottom={20} right={20}>
-        <Fab 
-          className={classes.button}
-          onClick={toggleModal} 
+      <div className="absolute bottom-5 right-5">
+        <button
+          type="button"
+          onClick={toggleModal}
+          className="flex size-14 items-center justify-center rounded-full bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] shadow-lg hover:opacity-90"
         >
-          <AddIcon />
-        </Fab>
-      </Box>
-    </Box>
+          <Plus size={24} />
+        </button>
+      </div>
+    </div>
   );
 };
 

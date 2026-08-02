@@ -1,32 +1,21 @@
-import { Box, Button } from '@mui/material';
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { MarketplaceEvents, MarketplaceListing } from '@typings/marketplace';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ReportIcon from '@mui/icons-material/Report';
-import ChatIcon from '@mui/icons-material/Chat';
-import PhoneIcon from '@mui/icons-material/Phone';
+import { MessageSquare, Phone, Trash2, Flag } from 'lucide-react';
+import { MarketplaceListing } from '@typings/marketplace';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import fetchNui from '../../../../utils/fetchNui';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useCall } from '@os/call/hooks/useCall';
 import { Tooltip } from '@ui/components/Tooltip';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  icon: {
-    color: theme.palette.primary.main,
-  },
-}));
+import { Button } from '@ui/components/Button';
+import { MarketplaceEvents } from '@typings/marketplace';
 
 export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
-  const classes = useStyles();
   const myNumber = useMyPhoneNumber();
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { initializeCall } = useCall();
   const { addAlert } = useSnackbar();
 
@@ -71,43 +60,43 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...list
   };
 
   const handleMessage = () => {
-    history.push(`/messages/new?phoneNumber=${listing.number}`);
+    navigate(`/messages/new?phoneNumber=${listing.number}`);
   };
 
   return (
-    <Box justifyContent="space-between" alignItems="center">
-      <div style={{ float: 'left' }}>
+    <div className="flex items-center justify-between">
+      <div className="float-left">
         {listing.number !== myNumber && (
           <>
             <Tooltip title={t('GENERIC.MESSAGE')}>
-              <Button onClick={handleMessage}>
-                <ChatIcon className={classes.icon} />
+              <Button onClick={handleMessage} variant="text">
+                <MessageSquare className="text-[color:var(--keyos-app-accent)]" />
               </Button>
             </Tooltip>
             <Tooltip title={`${t('GENERIC.CALL')}: ${listing.number}`}>
-              <Button onClick={handleCall}>
-                <PhoneIcon className={classes.icon} />
+              <Button onClick={handleCall} variant="text">
+                <Phone className="text-[color:var(--keyos-app-accent)]" />
               </Button>
             </Tooltip>
           </>
         )}
       </div>
 
-      <div style={{ float: 'right' }}>
+      <div className="float-right">
         {listing.number === myNumber ? (
           <Tooltip title={t('GENERIC.DELETE')}>
-            <Button onClick={handleDeleteListing}>
-              <DeleteIcon />
+            <Button onClick={handleDeleteListing} variant="text">
+              <Trash2 />
             </Button>
           </Tooltip>
         ) : (
           <Tooltip title={t('GENERIC.REPORT')}>
-            <Button onClick={handleReportListing}>
-              <ReportIcon />
+            <Button onClick={handleReportListing} variant="text">
+              <Flag />
             </Button>
           </Tooltip>
         )}
       </div>
-    </Box>
+    </div>
   );
 };

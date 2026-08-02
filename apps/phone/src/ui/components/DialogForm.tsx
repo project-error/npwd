@@ -1,35 +1,11 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Button, DialogContent, DialogContentText, DialogTitle, Paper } from '@mui/material';
-import DialogActions from '@mui/material/DialogActions';
-
-const useStyles = makeStyles({
-  root: {
-    paddingLeft: '10px',
-    zIndex: 10,
-    width: '90%',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    position: 'absolute',
-    top: '80px',
-  },
-  displayBlock: {
-    /*Sets modal to center*/
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  displayNone: {
-    display: 'none',
-  },
-});
+import { Button } from '@npwd/keyos';
+import { cn } from '@utils/css';
 
 interface DialogFormProps {
   children: React.ReactNode;
   open: boolean;
-  handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // No idea what those types are
+  handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: string;
   content: string;
@@ -43,27 +19,25 @@ const DialogForm: React.FC<DialogFormProps> = ({
   title,
   content,
 }) => {
-  const classes = useStyles();
-
-  const showHideClassName = open ? classes.displayBlock : classes.displayNone;
+  if (!open) return null;
 
   return (
-    <div className={showHideClassName}>
-      <Paper className={classes.root}>
-        <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{content}</DialogContentText>
+    <div className="absolute top-20 z-10 flex w-[90%] flex-col items-center justify-center pl-2.5">
+      <div className="keyos-shine-bg keyos-surface-panel flex w-full flex-col rounded-2xl border border-[color:var(--keyos-border-subtle)] bg-keyos-panel p-4 text-keyos-cream shadow-keyos-pop">
+        <h2 className="text-lg font-semibold text-keyos-fg" id="form-dialog-title">
+          {title}
+        </h2>
+        <div className="mt-2 flex flex-col gap-3">
+          <p className="text-sm text-keyos-muted">{content}</p>
           {children}
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary" onClick={handleClose}>
+        </div>
+        <div className={cn('mt-4 flex justify-end gap-2')}>
+          <Button onClick={handleClose} variant="ghost">
             Cancel
           </Button>
-          <Button color="primary" onClick={onSubmit}>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Paper>
+          <Button onClick={onSubmit}>Confirm</Button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,4 @@
 import React, { useCallback } from 'react';
-import {
-  ListItemText,
-  Checkbox,
-  ListItemAvatar,
-  Avatar as MuiAvatar,
-  Badge,
-  ListItemIcon,
-  colors,
-  useTheme,
-} from '@mui/material';
 
 import { MessageConversation } from '@typings/messages';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
@@ -16,6 +6,7 @@ import { useContacts } from '../../../contacts/hooks/state';
 import { Contact } from '@typings/contact';
 import { ListItem } from '@npwd/keyos';
 import { initials } from '@utils/misc';
+import { Check, UsersRound } from 'lucide-react';
 
 interface IProps {
   messageConversation: MessageConversation;
@@ -72,72 +63,48 @@ const MessageGroupItem = ({
   }, [messageConversation, getContact]);
 
   return (
-    <ListItem
-      key={messageConversation.id}
-      button
-      onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
-      primaryText={getLabelOrContact()}
-      startElement={
-        <div className="flex items-center px-2">
+    <ListItem key={messageConversation.id} button onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}>
+      <div className="flex w-full items-center gap-3">
+        <div className="flex items-center">
           {isEditing && (
-            <Checkbox
-              checked={checked.indexOf(messageConversation.id) !== -1}
-              edge="start"
-              disableRipple
-            />
+            <span className="mr-3 flex size-6 items-center justify-center rounded-full border border-white/15 bg-black/20">
+              {checked.indexOf(messageConversation.id) !== -1 && (
+                <Check className="size-4 text-[color:var(--keyos-app-accent)]" />
+              )}
+            </span>
           )}
           <div>
             {messageConversation.isGroupChat ? (
-              <MuiAvatar alt={messageConversation.label} />
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--keyos-app-surface)] text-[color:var(--keyos-app-accent)]">
+                <UsersRound size={20} />
+              </div>
             ) : getContact()?.avatar && getContact()?.avatar.length > 0 ? (
               <img
                 src={getContact()?.avatar}
-                className="inline-block h-10 w-10 rounded-full"
+                className="inline-block h-11 w-11 rounded-full border border-white/10 object-cover"
                 alt={'avatar'}
               />
             ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                <span className="text-gray-600 dark:text-gray-300">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--keyos-app-surface)]">
+                <span className="font-semibold text-[color:var(--keyos-app-accent)]">
                   {initials(getContact()?.display)}
                 </span>
               </div>
             )}
           </div>
         </div>
-      }
-      endElement={
-        <div>
-          <span className="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20">
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-keyos-cream">{getLabelOrContact()}</p>
+          <p className="mt-0.5 text-xs text-keyos-muted">
+            {messageConversation.isGroupChat ? 'Group conversation' : 'Tap to open conversation'}
+          </p>
+        </div>
+        {messageConversation.unreadCount > 0 && (
+          <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-[color:var(--keyos-app-accent)] px-2 py-1 text-xs font-bold text-[color:var(--keyos-app-accent-foreground)] shadow-keyos-glow">
             {messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'}
           </span>
-        </div>
-      }
-    >
-      {/* isEditing && (
-        <ListItemIcon>
-          <Checkbox
-            checked={checked.indexOf(messageConversation.id) !== -1}
-            edge="start"
-            disableRipple
-          />
-        </ListItemIcon>
-      )}
-      <ListItemAvatar>
-        <Badge
-          color="error"
-          badgeContent={
-            messageConversation.unreadCount <= 99 ? messageConversation.unreadCount : '99+'
-          }
-          invisible={messageConversation.unreadCount <= 0}
-        >
-          {messageConversation.isGroupChat ? (
-            <MuiAvatar alt={messageConversation.label} />
-          ) : (
-            <MuiAvatar alt={getContact()?.display ?? ''} src={getContact()?.avatar} />
-          )}
-        </Badge>
-      </ListItemAvatar>
-          <ListItemText sx={{ overflow: 'hidden', color: phoneTheme.palette.text.primary}}>{getLabelOrContact()}</ListItemText> */}
+        )}
+      </div>
     </ListItem>
   );
 };

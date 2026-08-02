@@ -5,13 +5,13 @@ import { ServerPromiseResp } from '@typings/common';
 import { Contact, ContactEvents, PreDBContact, ContactPay } from '@typings/contact';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from './useContactActions';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export const useContactsAPI = () => {
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
   const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const payContact = useCallback(({ number, amount }: ContactPay) => {
       fetchNui<ServerPromiseResp<ContactPay>>(ContactEvents.PAY_CONTACT, { number, amount }).then((resp) => {
@@ -43,10 +43,10 @@ export const useContactsAPI = () => {
           message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
           type: 'success',
         });
-        history.replace(referral);
+        navigate(referral, { replace: true });
       });
     },
-    [addAlert, addLocalContact, history, t],
+    [addAlert, addLocalContact, navigate, t],
   );
 
   const updateContact = useCallback(
@@ -76,10 +76,10 @@ export const useContactsAPI = () => {
           type: 'success',
         });
 
-        history.goBack();
+        navigate(-1);
       });
     },
-    [addAlert, history, t, updateLocalContact],
+    [addAlert, navigate, t, updateLocalContact],
   );
 
   const deleteContact = useCallback(
@@ -91,7 +91,7 @@ export const useContactsAPI = () => {
             type: 'error',
           });
         }
-        history.goBack();
+        navigate(-1);
 
         deleteLocalContact(id);
 
@@ -101,7 +101,7 @@ export const useContactsAPI = () => {
         });
       });
     },
-    [addAlert, deleteLocalContact, history, t],
+    [addAlert, deleteLocalContact, navigate, t],
   );
 
   return { addNewContact, updateContact, deleteContact, payContact };

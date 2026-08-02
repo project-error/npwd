@@ -1,5 +1,9 @@
-import { createAppThemeProvider } from '@os/apps/utils/createAppThemeProvider';
+import React from 'react';
+
+import { AppColorScope } from '@npwd/keyos';
 
 import contactsTheme from '../contacts.theme';
 
-export const ContactsThemeProvider = createAppThemeProvider(contactsTheme);
+export const ContactsThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <AppColorScope colors={contactsTheme}>{children}</AppColorScope>;
+};

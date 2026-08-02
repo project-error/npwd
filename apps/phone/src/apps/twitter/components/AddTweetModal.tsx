@@ -19,16 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { promiseTimeout } from '@utils/promiseTimeout';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { toggleKeys } from '@ui/components';
-import { Box, styled } from '@mui/material';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
-
-const ButtonsContainer = styled(Box)({
-  paddingBottom: '8px',
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  justifyContent: 'space-between',
-  flex: '1 0 45px',
-});
 
 interface Image {
   id: string;
@@ -171,7 +162,7 @@ const AddTweetModal = () => {
         images={images}
         removeImage={removeImage}
       />
-      <ButtonsContainer>
+      <div className="flex flex-[1_0_45px] flex-row flex-nowrap justify-between pb-2">
         <IconButtons
           onImageClick={
             images.length < ResourceConfig.twitter.maxImages ? toggleShowImagePrompt : null
@@ -184,7 +175,7 @@ const AddTweetModal = () => {
           onPrimaryClick={showImagePrompt ? addImage : submitTweet}
           onCloseClick={showEmoji ? toggleShowEmoji : toggleShowImagePrompt}
         />
-      </ButtonsContainer>
+      </div>
     </Modal2>
   );
 };

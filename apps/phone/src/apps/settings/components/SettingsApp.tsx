@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppWrapper } from '@ui/components';
-import { AppTitle } from '@ui/components/AppTitle';
 import { AppContent } from '@ui/components/AppContent';
 import { useContextMenu, MapSettingItem, SettingOption } from '@ui/hooks/useContextMenu';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
@@ -14,14 +13,12 @@ import {
 } from './SettingItem';
 import { useTranslation } from 'react-i18next';
 
-import { FileCopy } from '@mui/icons-material';
 import {
   BookA,
+  Copy,
   EyeOff,
   FileMusic,
-  LayoutGrid,
   Wallpaper,
-  Palette,
   Phone,
   ShieldOff,
   Volume2,
@@ -30,31 +27,17 @@ import {
   ListFilter,
   Eraser,
 } from 'lucide-react';
-import makeStyles from '@mui/styles/makeStyles';
-import { useTheme } from '@mui/material';
 import { useResetSettings, useSettings } from '../hooks/useSettings';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { IContextMenuOption } from '@ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
 import { SettingsCategory } from './SettingsCategory';
+import { SettingsThemeProvider } from '../providers/SettingsThemeProvider';
 import { IconSetObject } from '@typings/settings';
 import { useCustomWallpaperModal } from '../state/customWallpaper.state';
 import fetchNui from '@utils/fetchNui';
 import { SettingEvents } from '@typings/settings';
-
-const useStyles = makeStyles({
-  backgroundModal: {
-    background: 'black',
-    opacity: '0.6',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 5,
-  },
-});
 
 export const SettingsApp: React.FC = () => {
   const [config] = usePhoneConfig();
@@ -69,14 +52,6 @@ export const SettingsApp: React.FC = () => {
 
   const handleSettingChange = (key: string | number, value: unknown) => {
     setSettings({ ...settings, [key]: value });
-
-    if (key === 'theme') {
-      if (value.value === 'taso-dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    }
   };
 
   const iconSets = config.iconSet.map(
@@ -92,9 +67,6 @@ export const SettingsApp: React.FC = () => {
   );
   const frames = config.frames.map(
     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
-  );
-  const themes = config.themes.map(
-    MapSettingItem(settings.theme, (val: SettingOption) => handleSettingChange('theme', val)),
   );
   const zoomOptions = config.zoomOptions.map(
     MapSettingItem(settings.zoom, (val: SettingOption) => handleSettingChange('zoom', val)),
@@ -159,13 +131,14 @@ export const SettingsApp: React.FC = () => {
   };
 
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
-  const classes = useStyles();
-  const theme = useTheme();
   return (
+    <SettingsThemeProvider>
     <AppWrapper>
       {/* Used for picking and viewing a custom wallpaper */}
       <WallpaperModal />
-      <div className={customWallpaperState ? classes.backgroundModal : undefined} />
+      {customWallpaperState && (
+        <div className="absolute inset-0 z-[5] bg-black/60" aria-hidden />
+      )}
       {/*
         Sometimes depending on the height of the app, we sometimes want it to fill its parent
         and other times we want it to grow with the content. AppContent implementation currently
@@ -192,9 +165,8 @@ export const SettingsApp: React.FC = () => {
                 content: 'number',
               })}
               Icon={Phone}
-              actionIcon={<FileCopy />}
+              actionIcon={<Copy className="size-4" />}
               handleAction={handleCopyPhoneNumber}
-              theme={theme}
             />
             <SoundItem
               label={t('SETTINGS.OPTIONS.RINGTONE')}
@@ -206,7 +178,6 @@ export const SettingsApp: React.FC = () => {
               onPreviewClicked={() => {
                 fetchNui(SettingEvents.PREVIEW_RINGTONE);
               }}
-              theme={theme}
             />
             <SoundItem
               label={t('SETTINGS.OPTIONS.NOTIFICATION')}
@@ -218,7 +189,6 @@ export const SettingsApp: React.FC = () => {
               onPreviewClicked={() => {
                 fetchNui(SettingEvents.PREVIEW_ALERT);
               }}
-              theme={theme}
             />
             <SettingSwitch
               label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
@@ -226,7 +196,6 @@ export const SettingsApp: React.FC = () => {
               icon={<EyeOff />}
               value={settings.streamerMode}
               onClick={(curr) => handleSettingChange('streamerMode', !curr)}
-              theme={theme}
             />
             <SettingSwitch
               label={t('SETTINGS.OPTIONS.ANONYMOUS_MODE.TITLE')}
@@ -234,14 +203,12 @@ export const SettingsApp: React.FC = () => {
               icon={<ShieldOff />}
               value={settings.anonymousMode}
               onClick={(curr) => handleSettingChange('anonymousMode', !curr)}
-              theme={theme}
             />
             <SettingItemSlider
               label={t('SETTINGS.OPTIONS.CALL_VOLUME')}
               icon={<Volume2 />}
               value={settings.callVolume}
               onCommit={(val) => handleSettingChange('callVolume', val)}
-              theme={theme}
             />
           </SettingsCategory>
           <SettingsCategory title={t('SETTINGS.CATEGORY.APPEARANCE')}>
@@ -251,15 +218,6 @@ export const SettingsApp: React.FC = () => {
               options={languages}
               onClick={openMenu}
               Icon={BookA}
-              theme={theme}
-            />
-            <SettingItem
-              label={t('SETTINGS.OPTIONS.THEME')}
-              value={settings.theme.label}
-              options={themes}
-              onClick={openMenu}
-              Icon={Palette}
-              theme={theme}
             />
             <SettingItem
               label={t('SETTINGS.OPTIONS.WALLPAPER')}
@@ -267,7 +225,6 @@ export const SettingsApp: React.FC = () => {
               options={[...wallpapers, customWallpaper]}
               onClick={openMenu}
               Icon={Wallpaper}
-              theme={theme}
             />
             <SettingItem
               label={t('SETTINGS.OPTIONS.FRAME')}
@@ -275,7 +232,6 @@ export const SettingsApp: React.FC = () => {
               options={frames}
               onClick={openMenu}
               Icon={Smartphone}
-              theme={theme}
             />
             <SettingItem
               label={t('SETTINGS.OPTIONS.ZOOM')}
@@ -283,7 +239,6 @@ export const SettingsApp: React.FC = () => {
               options={zoomOptions}
               onClick={openMenu}
               Icon={ZoomIn}
-              theme={theme}
             />
           </SettingsCategory>
           <SettingsCategory title={t('APPS_TWITTER')}>
@@ -293,7 +248,6 @@ export const SettingsApp: React.FC = () => {
               options={twitterNotificationFilters}
               onClick={openMenu}
               Icon={ListFilter}
-              theme={theme}
             />
             <SettingItem
               label={t('SETTINGS.OPTIONS.NOTIFICATION')}
@@ -301,14 +255,12 @@ export const SettingsApp: React.FC = () => {
               options={twitterNotifications}
               onClick={openMenu}
               Icon={FileMusic}
-              theme={theme}
             />
             <SettingItemSlider
               label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
               value={settings.TWITTER_notiSoundVol}
               onCommit={(val) => handleSettingChange('TWITTER_notiSoundVol', val)}
               icon={<Volume2 />}
-              theme={theme}
             />
           </SettingsCategory>
           <SettingsCategory title={t('APPS_MARKETPLACE')}>
@@ -318,7 +270,6 @@ export const SettingsApp: React.FC = () => {
               value={settings.MARKETPLACE_notifyNewListing}
               icon={<ListFilter />}
               onClick={(curr) => handleSettingChange('MARKETPLACE_notifyNewListing', !curr)}
-              theme={theme}
             />
           </SettingsCategory>
           <SettingsCategory title={t('SETTINGS.CATEGORY.ACTIONS')}>
@@ -328,12 +279,12 @@ export const SettingsApp: React.FC = () => {
               Icon={Eraser}
               onClick={openMenu}
               options={resetSettingsOpts}
-              theme={theme}
             />
           </SettingsCategory>
         </div>
       </AppContent>
       <ContextMenu />
     </AppWrapper>
+    </SettingsThemeProvider>
   );
 };

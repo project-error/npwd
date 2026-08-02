@@ -1,42 +1,7 @@
-import styled from '@emotion/styled';
-import { RefreshOutlined } from '@mui/icons-material';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button } from '@npwd/keyos';
+import { RefreshCw } from 'lucide-react';
 import React from 'react';
 import { TFunction } from 'react-i18next';
-
-const Container = styled.div<{ background: string; color: string }>`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  max-height: 100%;
-
-  background: ${({ background }) => background ?? '#222'};
-  color: ${({ color }) => color ?? '#fff'};
-  background-size: 400% 400%;
-  animation: gradient 8s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  code {
-    color: #f32d2d;
-    padding: 1.5rem;
-    font-size: 0.8rem;
-    background: #00000085;
-    margin-top: auto;
-  }
-`;
 
 interface ExternalAppBoundaryProps {
   children: React.ReactNode;
@@ -58,25 +23,35 @@ export class ExternalAppBoundary extends React.Component<ExternalAppBoundaryProp
   render() {
     if (this.state.hasError) {
       return (
-        <Container background={this.props.background} color={this.props.color}>
-          <Stack alignItems="center" spacing={2} marginTop="15%" textAlign="center">
-            <Box p={4}>
-              <Typography variant="h5">{this.props.t('MISC.APP_CRASHED_TITLE')}</Typography>
-              <Typography variant="caption">{this.props.t('MISC.APP_CRASHED_MSG')}</Typography>
-            </Box>
+        <div
+          className="flex max-h-full flex-1 flex-col items-center justify-center bg-[length:400%_400%] animate-[gradient_8s_ease_infinite] [&_code]:mt-auto [&_code]:bg-black/50 [&_code]:p-6 [&_code]:text-[0.8rem] [&_code]:text-[#f32d2d]"
+          style={{
+            background: this.props.background ?? '#222',
+            color: this.props.color ?? '#fff',
+          }}
+        >
+          <div className="mt-[15%] flex flex-col items-center gap-4 text-center">
+            <div className="p-4">
+              <h5 className="text-[length:var(--keyos-text-title)] font-semibold text-current">
+                {this.props.t('MISC.APP_CRASHED_TITLE')}
+              </h5>
+              <p className="text-[length:var(--keyos-text-caption)] text-current">
+                {this.props.t('MISC.APP_CRASHED_MSG')}
+              </p>
+            </div>
 
             <Button
-              color="inherit"
-              fullWidth
+              className="w-full"
               onClick={() => this.setState({ hasError: false })}
-              startIcon={<RefreshOutlined />}
+              variant="ghost"
             >
+              <RefreshCw className="size-4" />
               {this.props.t('MISC.APP_CRASHED_ACTION')}
             </Button>
-          </Stack>
+          </div>
 
           <code>{this.state.errorMsg}</code>
-        </Container>
+        </div>
       );
     }
 

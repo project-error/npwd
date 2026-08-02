@@ -2,16 +2,7 @@ import React, { useState } from 'react';
 
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { IMG_DEFAULT_AVATAR, IMG_INVALID_AVATAR } from '../utils/constants';
-import { Box, styled } from '@mui/material';
-
-const AvatarWrapper = styled(Box)({
-  width: '100%',
-});
-
-const Image = styled('img')({
-  borderRadius: '50%',
-  objectFit: 'cover',
-});
+import { cn } from '@utils/css';
 
 function Avatar({ avatarUrl, showInvalidImage, height, width }) {
   const [showImageError, setShowImageError] = useState(false);
@@ -23,22 +14,24 @@ function Avatar({ avatarUrl, showInvalidImage, height, width }) {
   if (!ResourceConfig || !ResourceConfig.twitter.enableAvatars) return null;
 
   return (
-    <AvatarWrapper>
+    <div className="w-full">
       {showImageError && (
-        <Image
+        <img
           src={showInvalidImage ? IMG_INVALID_AVATAR : IMG_DEFAULT_AVATAR}
           alt="Invalid avatar"
           style={{ height, width }}
+          className="rounded-full object-cover"
         />
       )}
-      <Image
+      <img
         src={avatarUrl || IMG_DEFAULT_AVATAR}
         alt="Your profile avatar"
         onError={handleImageError}
         onLoad={handleImageLoad}
         style={{ display: showImageError ? 'none' : 'block', height, width }}
+        className={cn('rounded-full object-cover')}
       />
-    </AvatarWrapper>
+    </div>
   );
 }
 

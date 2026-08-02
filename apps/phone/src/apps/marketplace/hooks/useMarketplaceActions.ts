@@ -1,6 +1,6 @@
-import { listingState, useSetListings } from './state';
+import { useCallback } from 'react';
+import { useSetListings } from './state';
 import { MarketplaceListing } from '@typings/marketplace';
-import { useRecoilCallback } from 'recoil';
 
 interface MarketplaceActionValues {
   deleteListing: (ids: number[]) => void;
@@ -10,32 +10,17 @@ interface MarketplaceActionValues {
 export const useMarketplaceActions = (): MarketplaceActionValues => {
   const setListings = useSetListings();
 
-  const deleteListing = useRecoilCallback(
-    ({ snapshot }) =>
-      (ids: number[]) => {
-        const { state, contents } = snapshot.getLoadable(listingState);
-        // Make sure our atom is actually loaded before we attempt a dispatch
-        if (state !== 'hasValue') return;
-        // Tts possible for the init fetch to fail and empty array is passed. In that case
-        // block dispatch
-        if (!contents.length) return;
-
-        setListings((curListings) =>
-          [...curListings].filter((listing) => !ids.includes(listing.id)),
-        );
-      },
-    [],
+  const deleteListing = useCallback(
+    (ids: number[]) => {
+      setListings((curListings) => [...curListings].filter((listing) => !ids.includes(listing.id)));
+    },
+    [setListings],
   );
 
-  const addListing = useRecoilCallback(
-    ({ snapshot }) =>
-      (listing: MarketplaceListing) => {
-        const { state } = snapshot.getLoadable(listingState);
-        // Make sure our atom is actually loaded before we attempt a dispatch
-        if (state !== 'hasValue') return;
-
-        setListings((curListings) => [listing, ...curListings]);
-      },
+  const addListing = useCallback(
+    (listing: MarketplaceListing) => {
+      setListings((curListings) => [listing, ...curListings]);
+    },
     [setListings],
   );
 

@@ -1,31 +1,30 @@
-import { atom, selector, useSetRecoilState } from 'recoil';
 import { CallEvents, CallHistoryItem } from '@typings/call';
-import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { MockHistoryData } from '../utils/constants';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryStateValue, useSetQueryState } from '@common/query/query-state';
 
-export const dialState = {
-  history: atom<CallHistoryItem[]>({
-    key: 'dialHistory',
-    default: selector({
-      key: 'dialHistoryDefault',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<CallHistoryItem[]>>(CallEvents.FETCH_CALLS);
-          LogDebugEvent({ action: CallEvents.FETCH_CALLS, data: resp.data });
-          return resp.data;
-        } catch (e) {
-          if (isEnvBrowser()) {
-            return MockHistoryData;
-          }
-          console.error(e);
-          return [];
-        }
-      },
-    }),
-  }),
+export const DIAL_HISTORY_QUERY_KEY = ['dialer', 'history'] as const;
+
+const fetchHistory = async () => {
+  try {
+    const history = await fetchNuiData<CallHistoryItem[]>(CallEvents.FETCH_CALLS);
+    LogDebugEvent({ action: CallEvents.FETCH_CALLS, data: history });
+    return history;
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return MockHistoryData;
+    }
+    console.error(e);
+    return [];
+  }
 };
 
-export const useSetHistory = () => useSetRecoilState(dialState.history);
+export const dialState = {
+  history: DIAL_HISTORY_QUERY_KEY,
+};
+
+export const useDialHistoryValue = () =>
+  useQueryStateValue<CallHistoryItem[]>(DIAL_HISTORY_QUERY_KEY, fetchHistory, []);
+export const useSetHistory = () => useSetQueryState<CallHistoryItem[]>(DIAL_HISTORY_QUERY_KEY, []);

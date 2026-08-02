@@ -1,31 +1,18 @@
 import React from 'react';
-import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import { Box, styled } from '@mui/material';
-
-const SkeletonRoot = styled(Box)({
-  width: '100%',
-  padding: '15px',
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  marginTop: '3px',
-  marginBottom: '3px',
-});
 
 export default function TweetSkeleton() {
   return (
     <>
-      <SkeletonRoot>
-        <Box>
-          <Skeleton variant="circular" width={60} height={60} />
-        </Box>
-        <Box ml={15} mt={-5}>
-          <Skeleton variant="text" />
-          <Skeleton variant="rectangular" width={250} height={118} />
-        </Box>
-      </SkeletonRoot>
-
-      <Divider />
+      <div className="mb-[3px] mt-[3px] flex w-full flex-row flex-nowrap p-[15px]">
+        <div>
+          <div className="size-[60px] animate-pulse rounded-full bg-white/10" />
+        </div>
+        <div className="-mt-5 ml-[15px]">
+          <div className="mb-2 h-4 w-48 animate-pulse rounded bg-white/10" />
+          <div className="h-[118px] w-[250px] animate-pulse rounded bg-white/10" />
+        </div>
+      </div>
+      <hr className="border-neutral-200 dark:border-neutral-800" />
     </>
   );
 }

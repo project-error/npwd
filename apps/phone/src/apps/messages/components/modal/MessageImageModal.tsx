@@ -1,13 +1,12 @@
 import { useCallback, useEffect } from 'react';
 import { Modal2 } from '../../../../ui/components/Modal';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
-import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
-import { NPWDButton } from '@npwd/keyos';
+import { Button } from '@npwd/keyos';
 
 interface IProps {
   messageGroup: MessageConversation | undefined;
@@ -24,14 +23,14 @@ export const MessageImageModal = ({
   setImagePreview,
   imagePreview,
 }: IProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
   const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {
     setImagePreview(null);
-    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [history, pathname, search, setImagePreview]);
+    navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
+  }, [navigate, pathname, search, setImagePreview]);
   const { activeMessageConversation } = useMessages();
 
   const sendImageMessage = useCallback(
@@ -65,14 +64,18 @@ export const MessageImageModal = ({
       <Modal2 visible={imagePreview} handleClose={removeQueryParamImage}>
         <div className="space-y-4 p-1">
           <p className="text-sm font-medium">{t('MESSAGES.SHARE_IMAGE_TITLE')}</p>
-          <PictureResponsive src={imagePreview} alt="Share gallery image preview" />
-          <NPWDButton
+          <img
+            src={imagePreview}
+            alt="Share gallery image preview"
+            className="max-h-72 w-full rounded-2xl object-cover"
+          />
+          <Button
             onClick={() => sendFromQueryParam(imagePreview)}
-            className="w-full bg-green-600"
+            className="w-full bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] hover:brightness-110"
             size="sm"
           >
             {t('GENERIC.SHARE')}
-          </NPWDButton>
+          </Button>
         </div>
       </Modal2>
     </>

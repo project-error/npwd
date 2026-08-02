@@ -1,28 +1,23 @@
-import { useMemo } from 'react';
-import { createTheme } from '@mui/material';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
-import { PhoneThemes } from '../../../config/ThemeConfig';
-import themeOverrides from '../../../styles/themeOverrides';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const usePhoneTheme = () => {
-  const [settings] = useSettings();
-  return useMemo(
-    () => createTheme(PhoneThemes[settings.theme.value], themeOverrides),
-    [settings.theme],
-  );
+const defaultColors: AppColorTokens = {
+  accent: '#3b82f6',
+  accentForeground: '#ffffff',
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
-export const usePhoneTheme2 = () => {
-  // tailwind with dark class, save to localstorage
-  const toggleTheme = (theme: 'light' | 'dark') => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('npwd-colorscheme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('npwd-colorscheme', 'light');
-    }
+export const usePhoneTheme = (app?: { backgroundColor?: string; color?: string }): AppColorTokens => {
+  if (!app?.backgroundColor) return defaultColors;
+
+  return {
+    ...defaultColors,
+    accent: app.backgroundColor,
+    accentForeground: app.color ?? '#ffffff',
+    surface: '#11141a',
   };
-
-  return { toggleTheme };
 };
+
+export const DARK_THEME_KEY = 'taso-dark';

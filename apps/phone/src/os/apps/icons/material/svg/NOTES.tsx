@@ -1,6 +1,6 @@
 import React from 'react';
-import StickyNote from '../misc/StickyNote';
+import { StickyNote } from 'lucide-react';
 
-const NotesIcon: React.FC = () => <StickyNote fontSize="small" />;
+const NotesIcon: React.FC = () => <StickyNote size={16} />;
 
 export default NotesIcon;

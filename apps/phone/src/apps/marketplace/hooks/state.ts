@@ -1,12 +1,12 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ServerPromiseResp } from '@typings/common';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   MarketplaceEvents,
   MarketplaceListing,
   MarketplaceListingBase,
 } from '@typings/marketplace';
-import fetchNui from '@utils/fetchNui';
 import { isEnvBrowser } from '@utils/misc';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryState, useQueryStateValue, useSetQueryState } from '@common/query/query-state';
 
 const defaultData: MarketplaceListing[] = [
   {
@@ -30,38 +30,31 @@ const defaultData: MarketplaceListing[] = [
   },
 ];
 
-export const listingState = atom<MarketplaceListing[]>({
-  key: 'listings',
-  default: selector({
-    key: 'defaultListings',
-    get: async () => {
-      try {
-        const resp = await fetchNui<ServerPromiseResp<MarketplaceListing[]>>(
-          MarketplaceEvents.FETCH_LISTING,
-        );
-        return resp.data;
-      } catch (e) {
-        if (isEnvBrowser()) return defaultData;
-        console.error(e);
-        return [];
-      }
-    },
-  }),
-});
+export const MARKETPLACE_LISTINGS_QUERY_KEY = ['marketplace', 'listings'] as const;
+
+const fetchListings = async () => {
+  try {
+    return await fetchNuiData<MarketplaceListing[]>(MarketplaceEvents.FETCH_LISTING);
+  } catch (e) {
+    if (isEnvBrowser()) return defaultData;
+    console.error(e);
+    return [];
+  }
+};
 
 export const formState = atom<MarketplaceListingBase>({
-  key: 'form',
-  default: {
-    title: '',
-    description: '',
-    url: '',
-  },
+  title: '',
+  description: '',
+  url: '',
 });
 
-export const useListingValue = () => useRecoilValue(listingState);
-export const useSetListings = () => useSetRecoilState(listingState);
-export const useListings = () => useRecoilState(listingState);
+export const useListingValue = () =>
+  useQueryStateValue<MarketplaceListing[]>(MARKETPLACE_LISTINGS_QUERY_KEY, fetchListings, []);
+export const useSetListings = () =>
+  useSetQueryState<MarketplaceListing[]>(MARKETPLACE_LISTINGS_QUERY_KEY, []);
+export const useListings = () =>
+  useQueryState<MarketplaceListing[]>(MARKETPLACE_LISTINGS_QUERY_KEY, fetchListings, []);
 
-export const useFormValue = () => useRecoilValue(formState);
-export const useSetForm = () => useSetRecoilState(formState);
-export const useForm = () => useRecoilState(formState);
+export const useFormValue = () => useAtomValue(formState);
+export const useSetForm = () => useSetAtom(formState);
+export const useForm = () => useAtom(formState);

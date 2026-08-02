@@ -1,32 +1,7 @@
 import React, { FocusEventHandler, useRef, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, IconButton } from '@mui/material';
-import { Cached, KeyboardArrowLeft } from '@mui/icons-material';
+import { ChevronLeft, RotateCw } from 'lucide-react';
 import { InputBase } from '@ui/components/Input';
-
-const PREFIX = 'BrowserURLBar';
-
-const classes = {
-  urlInput: `${PREFIX}-urlInput`,
-  urlInputFocused: `${PREFIX}-urlInputFocused`,
-  root: `${PREFIX}-root`,
-};
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  [`& .${classes.urlInput}`]: {
-    borderRadius: 18,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    paddingRight: 10,
-    paddingLeft: 10,
-    marginLeft: 5,
-    borderColor: '#787878FF',
-    color: theme.palette.text.disabled,
-    transition: 'color 0.1s ease',
-  },
-
-  [`&.${classes.root}`]: {},
-}));
+import { cn } from '@utils/css';
 
 interface BrowserControlsProps {
   setBrowser: (url: string) => void;
@@ -47,12 +22,12 @@ export const BrowserURLBar: React.FC<BrowserControlsProps> = ({
   const [inputState, setInputState] = useState('');
   const [isFocused, setFocus] = useState(false);
 
-  const handleFocus: FocusEventHandler = (e) => {
+  const handleFocus: FocusEventHandler = () => {
     setInputState(browserUrl);
     setFocus(true);
   };
 
-  const handleFocusOut: FocusEventHandler = (e) => {
+  const handleFocusOut: FocusEventHandler = () => {
     setFocus(false);
     setInputState(browserUrl);
   };
@@ -72,27 +47,39 @@ export const BrowserURLBar: React.FC<BrowserControlsProps> = ({
   const transformedUrl = isFocused ? inputState : styledUrl;
 
   return (
-    <StyledBox display="flex" py={1} className={classes.root} px={1}>
-      <IconButton size="small" onClick={() => reloadPage()}>
-        <Cached />
-      </IconButton>
+    <div className="flex px-2 py-2">
+      <button
+        type="button"
+        aria-label="Reload page"
+        className="rounded-full p-1.5 text-keyos-fg transition-colors hover:bg-white/10"
+        onClick={() => reloadPage()}
+      >
+        <RotateCw size={18} />
+      </button>
       {browserHasHistory && (
-        <IconButton size="small" onClick={() => goBack()}>
-          <KeyboardArrowLeft />
-        </IconButton>
+        <button
+          type="button"
+          aria-label="Go back"
+          className="rounded-full p-1.5 text-keyos-fg transition-colors hover:bg-white/10"
+          onClick={() => goBack()}
+        >
+          <ChevronLeft size={18} />
+        </button>
       )}
       <InputBase
-        className={classes.urlInput}
+        className={cn(
+          'ml-1.5 rounded-[18px] border border-solid border-[#787878] px-2.5 pr-2.5 transition-colors duration-100',
+          isFocused ? 'text-keyos-fg' : 'text-keyos-muted',
+        )}
         ref={inputRef}
         fullWidth
         onChange={handleChange}
         onKeyDown={onEnter}
         value={transformedUrl}
-        classes={{ focused: classes.urlInputFocused }}
         onFocus={handleFocus}
         spellCheck={false}
         onBlur={handleFocusOut}
       />
-    </StyledBox>
+    </div>
   );
 };

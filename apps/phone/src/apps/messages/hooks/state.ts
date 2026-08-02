@@ -1,130 +1,106 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  CreateMessageGroupResult,
-  Message,
-  MessageConversation,
-  MessageEvents,
-} from '@typings/messages';
-import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
+import { useMemo } from 'react';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { CreateMessageGroupResult, Message, MessageConversation, MessageEvents } from '@typings/messages';
+import { buildRespObj, isEnvBrowser } from '@utils/misc';
 import { MockMessageConversations } from '../utils/constants';
-import { contacts } from '../../contacts/hooks/state';
 import { Contact } from '@typings/contact';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryState, useQueryStateValue, useSetQueryState } from '@common/query/query-state';
+import { useContactsValue } from '../../contacts/hooks/state';
 
-const currentGroupId = atom({ key: 'currentGroupId', default: null });
+export const MESSAGE_CONVERSATIONS_QUERY_KEY = ['messages', 'conversations'] as const;
+export const MESSAGES_QUERY_KEY = ['messages', 'active-thread'] as const;
 
-export const messageState = {
-  messageCoversations: atom<MessageConversation[]>({
-    key: 'messageConversations',
-    default: selector({
-      key: 'defaultMessageConversation',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<MessageConversation[]>>(
-            MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
-            undefined,
-            buildRespObj(MockMessageConversations),
-          );
-          return resp.data;
-        } catch (e) {
-          console.error(e);
-          return [];
-        }
-      },
-    }),
-  }),
-  filterValue: atom<string>({
-    key: 'defaultFilterValue',
-    default: '',
-  }),
-  filteredMessageConversations: selector<MessageConversation[]>({
-    key: 'defaultFilteredMessageConversations',
-    get: ({ get }) => {
-      const filterValue: string = get(messageState.filterValue);
-      const messageConversations: MessageConversation[] = get(messageState.messageCoversations);
-      if (!filterValue) return messageConversations;
+const fetchConversations = async () => {
+  try {
+    return await fetchNuiData<MessageConversation[]>(
+      MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+      undefined,
+      buildRespObj(MockMessageConversations),
+    );
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return MockMessageConversations;
+    }
 
-      const searchRegex = new RegExp(filterValue, 'i');
-
-      const contactsValue: Contact[] = get(contacts);
-
-      return messageConversations.filter((messageConversation) => {
-        for (const contact of contactsValue) {
-          if (
-            searchRegex.test(contact.display) &&
-            messageConversation.conversationList.includes(contact.number)
-          )
-            return true;
-        }
-
-        return searchRegex.test(messageConversation.label);
-      });
-    },
-  }),
-  messages: atom<Message[]>({
-    key: 'messages',
-    default: [],
-  }),
-  activeMessageConversation: atom<MessageConversation | null>({
-    key: 'activeMessageGroup',
-    default: null,
-  }),
-  showNewMessageGroup: atom<boolean>({
-    key: 'showNewMessageGroup',
-    default: false,
-  }),
-  createMessageGroupResult: atom<CreateMessageGroupResult>({
-    key: 'createMessageGroupResult',
-    default: null,
-  }),
-  imageModal: atom<boolean>({
-    key: 'useImageModal',
-    default: false,
-  }),
-  unreadMessagesCount: atom<number>({
-    key: 'unreadMessagesCount',
-    default: 0,
-  }),
-  selectedMessage: atom<Message>({
-    key: 'selectedMessage',
-    default: null,
-  }),
-  checkedConversations: atom<number[]>({
-    key: 'checkedConversation',
-    default: [],
-  }),
-  isEditing: atom<boolean>({
-    key: 'messageIsEditing',
-    default: false,
-  }),
+    console.error(e);
+    return [];
+  }
 };
 
-export const useMessageConversationsValue = () => useRecoilValue(messageState.messageCoversations);
-export const useSetMessageConversations = () => useSetRecoilState(messageState.messageCoversations);
-export const useMessageConversations = () => useRecoilState(messageState.messageCoversations);
+const currentGroupId = atom<number | null>(null);
 
-export const useMessagesState = () => useRecoilState(messageState.messages);
-export const useMessagesValue = () => useRecoilValue(messageState.messages);
-export const useSetMessages = () => useSetRecoilState(messageState.messages);
+export const messageState = {
+  messageCoversations: MESSAGE_CONVERSATIONS_QUERY_KEY,
+  filterValue: atom<string>(''),
+  messages: MESSAGES_QUERY_KEY,
+  activeMessageConversation: atom<MessageConversation | null>(null),
+  showNewMessageGroup: atom<boolean>(false),
+  createMessageGroupResult: atom<CreateMessageGroupResult>(null),
+  imageModal: atom<boolean>(false),
+  unreadMessagesCount: atom<number>(0),
+  selectedMessage: atom<Message>(null),
+  checkedConversations: atom<number[]>([]),
+  isEditing: atom<boolean>(false),
+};
+
+export const useMessageConversationsValue = () =>
+  useQueryStateValue<MessageConversation[]>(
+    MESSAGE_CONVERSATIONS_QUERY_KEY,
+    fetchConversations,
+    [],
+  );
+export const useSetMessageConversations = () =>
+  useSetQueryState<MessageConversation[]>(MESSAGE_CONVERSATIONS_QUERY_KEY, []);
+export const useMessageConversations = () =>
+  useQueryState<MessageConversation[]>(MESSAGE_CONVERSATIONS_QUERY_KEY, fetchConversations, []);
+
+export const useMessagesState = () =>
+  useQueryState<Message[]>(MESSAGES_QUERY_KEY, async () => [], []);
+export const useMessagesValue = () => useQueryStateValue<Message[]>(MESSAGES_QUERY_KEY, async () => [], []);
+export const useSetMessages = () => useSetQueryState<Message[]>(MESSAGES_QUERY_KEY, []);
 
 export const useActiveMessageConversation = () =>
-  useRecoilValue(messageState.activeMessageConversation);
+  useAtomValue(messageState.activeMessageConversation);
 
-export const useSetConversationId = () => useSetRecoilState(currentGroupId);
-export const useConversationId = () => useRecoilValue(currentGroupId);
+export const useSetActiveMessageConversation = () =>
+  useSetAtom(messageState.activeMessageConversation);
 
-export const useFilterValueState = () => useRecoilState(messageState.filterValue);
-export const useSetFilterValue = () => useSetRecoilState(messageState.filterValue);
+export const useSetConversationId = () => useSetAtom(currentGroupId);
+export const useConversationId = () => useAtomValue(currentGroupId);
 
-export const useFilteredConversationsValue = () =>
-  useRecoilValue(messageState.filteredMessageConversations);
+export const useFilterValueState = () => useAtom(messageState.filterValue);
+export const useSetFilterValue = () => useSetAtom(messageState.filterValue);
 
-export const useSetSelectedMessage = () => useSetRecoilState(messageState.selectedMessage);
-export const useSelectedMessageValue = () => useRecoilValue(messageState.selectedMessage);
+export const useFilteredConversationsValue = () => {
+  const filterValue = useAtomValue(messageState.filterValue);
+  const messageConversations = useMessageConversationsValue();
+  const contactsValue: Contact[] = useContactsValue();
 
-export const useCheckedConversations = () => useRecoilState(messageState.checkedConversations);
-export const useCheckedConversationsValue = () => useRecoilValue(messageState.checkedConversations);
+  return useMemo(() => {
+    if (!filterValue) return messageConversations;
 
-export const useIsEditing = () => useRecoilState(messageState.isEditing);
-export const useIsEditingValue = () => useRecoilValue(messageState.isEditing);
+    const searchRegex = new RegExp(filterValue, 'i');
+
+    return messageConversations.filter((messageConversation) => {
+      for (const contact of contactsValue) {
+        if (
+          searchRegex.test(contact.display) &&
+          messageConversation.conversationList.includes(contact.number)
+        )
+          return true;
+      }
+
+      return searchRegex.test(messageConversation.label);
+    });
+  }, [contactsValue, filterValue, messageConversations]);
+};
+
+export const useSetSelectedMessage = () => useSetAtom(messageState.selectedMessage);
+export const useSelectedMessageValue = () => useAtomValue(messageState.selectedMessage);
+
+export const useCheckedConversations = () => useAtom(messageState.checkedConversations);
+export const useCheckedConversationsValue = () => useAtomValue(messageState.checkedConversations);
+
+export const useIsEditing = () => useAtom(messageState.isEditing);
+export const useIsEditingValue = () => useAtomValue(messageState.isEditing);

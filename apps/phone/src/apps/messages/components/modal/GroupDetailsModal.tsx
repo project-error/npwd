@@ -1,11 +1,10 @@
 import React from 'react';
 import Modal from '@ui/components/Modal';
-import { Box, Button, Stack, Typography } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { findParticipants } from '../../utils/helpers';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
+import { Button } from '@npwd/keyos';
+import { User, UserPlus } from 'lucide-react';
 
 interface GroupDetailsModalProps {
   open: boolean;
@@ -35,31 +34,29 @@ const GroupDetailsModal: React.FC<GroupDetailsModalProps> = ({
 
   return (
     <Modal visible={open} handleClose={onClose}>
-      <Box>
-        <Stack direction="row" spacing={4}>
-          <Typography fontSize={20}>Details</Typography>
-          {/*<Button size="small">Add participant</Button>*/}
-        </Stack>
-      </Box>
-      {participants.map((participant) => {
-        const contact = findContact(participant);
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-keyos-cream">Details</h2>
+        {participants.map((participant) => {
+          const contact = findContact(participant);
 
-        return (
-          <Box mt={2} key={participant}>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Stack direction="row" spacing={2}>
-                <PersonIcon fontSize="medium" />
-                <Typography fontSize={18}>{contact?.display ?? participant}</Typography>
-              </Stack>
+          return (
+            <div
+              className="flex items-center justify-between rounded-2xl border border-white/10 bg-keyos-panel px-3 py-2"
+              key={participant}
+            >
+              <div className="flex items-center gap-2">
+                <User size={18} />
+                <p className="text-sm font-semibold text-keyos-cream">{contact?.display ?? participant}</p>
+              </div>
               {!contact && (
-                <Button onClick={() => handleAddContact(participant)}>
-                  <PersonAddIcon fontSize="medium" />
+                <Button onClick={() => handleAddContact(participant)} size="icon" variant="ghost">
+                  <UserPlus size={18} />
                 </Button>
               )}
-            </Box>
-          </Box>
-        );
-      })}
+            </div>
+          );
+        })}
+      </div>
     </Modal>
   );
 };

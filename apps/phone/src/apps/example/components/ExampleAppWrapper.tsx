@@ -8,7 +8,7 @@ import { ExampleApp } from './ExampleApp';
 
 // AppContent by default has a React.Suspense which can be used to handle the app as a whole, for
 // when it must resolve the render promise. But, we must make sure that this is is mounted in a component
-// higher in the tree than the Recoil state caller.
+// higher in the tree than the async state caller.
 
 // This is why this wrapper component is needed.
 export const ExampleAppWrapper: React.FC = () => {

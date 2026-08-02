@@ -1,6 +1,6 @@
 import React from 'react';
-import { Help } from '@mui/icons-material';
+import { HelpCircle } from 'lucide-react';
 
-const ExampleIcon: React.FC = () => <Help fontSize="large" />;
+const ExampleIcon: React.FC = () => <HelpCircle size={30} />;
 
 export default ExampleIcon;

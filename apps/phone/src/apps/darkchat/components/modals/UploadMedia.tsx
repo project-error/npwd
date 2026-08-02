@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal } from '@ui/components/Modal';
 import { useModal } from '../../hooks/useModal';
-import { Box, Button, styled, TextField } from '@mui/material';
-import CollectionsIcon from '@mui/icons-material/Collections';
-import SendIcon from '@mui/icons-material/Send';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Image, Send } from 'lucide-react';
+import { TextField } from '@ui/components/Input';
+import { Button } from '@ui/components/Button';
+import { useLocation, useNavigate } from 'react-router';
 import qs from 'qs';
 import { isImageValid } from '../../../../common/utils/isImageValid';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
@@ -12,17 +12,9 @@ import { useActiveDarkchatValue } from '../../state/state';
 import { useMyPhoneNumber } from '../../../../os/simcard/hooks/useMyPhoneNumber';
 import { useTranslation } from 'react-i18next';
 
-const ButtonsContainer = styled(Box)({
-  padding: '8px',
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  justifyContent: 'space-between',
-  flex: '1 0 45px',
-});
-
 export const UploadMediaModal = () => {
   const { modalVisible, setModalVisible, modalMedia, setModalMedia } = useModal();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const { sendMessage } = useDarkchatAPI();
   const { id: channelId } = useActiveDarkchatValue();
@@ -30,7 +22,7 @@ export const UploadMediaModal = () => {
   const [t] = useTranslation();
 
   const handleImageGallery = () => {
-    history.push(
+    navigate(
       `/camera?${qs.stringify({
         referal: encodeURIComponent(pathname + search),
       })}`,
@@ -39,7 +31,6 @@ export const UploadMediaModal = () => {
 
   const handleSendImage = () => {
     const link = modalMedia;
-    // Strip whitespace
     link.replace('/ /g', '');
 
     isImageValid(link)
@@ -60,28 +51,17 @@ export const UploadMediaModal = () => {
     <Modal visible={modalVisible} handleClose={() => setModalVisible(false)}>
       <TextField
         placeholder={t('DARKCHAT.MEDIA_PLACEHOLDER')}
-        variant="standard"
         value={modalMedia}
         onChange={(e) => setModalMedia(e.target.value)}
       />
-      <ButtonsContainer>
-        <Button
-          variant="text"
-          color="secondary"
-          startIcon={<CollectionsIcon />}
-          onClick={handleImageGallery}
-        >
+      <div className="flex flex-[1_0_45px] flex-row flex-nowrap justify-between p-2">
+        <Button variant="text" color="secondary" startIcon={<Image size={18} />} onClick={handleImageGallery}>
           {t('DARKCHAT.MEDIA_GALLERY')}
         </Button>
-        <Button
-          variant="text"
-          color="secondary"
-          startIcon={<SendIcon />}
-          onClick={handleSendImage}
-        >
+        <Button variant="text" color="secondary" startIcon={<Send size={18} />} onClick={handleSendImage}>
           {t('GENERIC.SEND')}
         </Button>
-      </ButtonsContainer>
+      </div>
     </Modal>
   );
 };

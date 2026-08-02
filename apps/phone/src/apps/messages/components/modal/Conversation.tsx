@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { CircularProgress } from '@mui/material';
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import { MessageBubble } from './MessageBubble';
 import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useConversationId, useSetMessages } from '../../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -21,7 +20,7 @@ export const CONVERSATION_ELEMENT_ID = 'message-modal-conversation';
 const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceEnabled }) => {
   const conversationId = useConversationId();
   const { addAlert } = useSnackbar();
-  const history = useHistory();
+  const navigate = useNavigate();
   const setMessages = useSetMessages();
   const [t] = useTranslation();
   const [page, setPage] = useState(1);
@@ -38,7 +37,8 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceE
           type: 'error',
         });
 
-        return history.push('/messages');
+        navigate('/messages');
+        return;
       }
 
       if (resp.data.length === 0) {
@@ -51,26 +51,24 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages, isVoiceE
 
       setMessages((currVal) => [...resp.data, ...currVal]);
     });
-  }, [addAlert, conversationId, setMessages, history, t, page, setPage]);
+  }, [addAlert, conversationId, setMessages, navigate, t, page, setPage]);
 
   return (
-    <div className="h-full">
+    <div className="h-full min-h-0">
       <div
         id="scrollableDiv"
-        style={{
-          overflow: 'auto',
-          maxHeight: 620,
-          display: 'flex',
-          flexDirection: 'column-reverse',
-          flexGrow: 1,
-        }}
+        className="flex h-full max-h-[620px] grow flex-col-reverse overflow-auto px-2 py-3"
       >
         <InfiniteScroll
           next={handleNextPage}
           scrollableTarget="scrollableDiv"
           hasMore={hasMore}
           inverse={true}
-          loader={<CircularProgress />}
+          loader={
+            <div className="flex justify-center py-3">
+              <div className="size-6 animate-spin rounded-full border-2 border-keyos-muted/30 border-t-[color:var(--keyos-app-accent)]" />
+            </div>
+          }
           dataLength={messages.length}
         >
           {messages.map((message) => (

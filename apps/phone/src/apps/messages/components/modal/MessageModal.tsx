@@ -1,67 +1,33 @@
 import { useEffect, useState } from 'react';
-import {
-  Slide,
-  Paper,
-  Typography,
-  Button,
-  Box,
-  CircularProgress,
-  Tooltip,
-} from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import GroupIcon from '@mui/icons-material/Group';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMessagesState } from '../../hooks/state';
-import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
 import { useMessageActions } from '../../hooks/useMessageActions';
 import GroupDetailsModal from './GroupDetailsModal';
-import Backdrop from '@ui/components/Backdrop';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { usePhone } from '@os/phone/hooks';
-import { Phone, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Phone, UserPlus, UsersRound } from 'lucide-react';
 import MessageInput from '../form/MessageInput';
 import AudioContextMenu from './AudioContextMenu';
 import MessageContextMenu from './MessageContextMenu';
 import { useQueryParams } from '@common/hooks/useQueryParams';
+import { Button, Tooltip } from '@npwd/keyos';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
-const useStyles = makeStyles({
-  tooltip: {
-    fontSize: 12,
-  },
-  modalHide: {
-    display: 'none',
-  },
-  groupdisplay: {
-    width: '300px',
-    fontSize: '24px',
-    whiteSpace: 'nowrap',
-    overflowX: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  largeGroupDisplay: {
-    width: '300px',
-    fontSize: '20px',
-    overflowX: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
-
 // abandon all hope ye who enter here
 export const MessageModal = () => {
   const [t] = useTranslation();
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { groupId } = useParams<{ groupId: string }>();
   const { activeMessageConversation, setActiveMessageConversation } = useMessages();
@@ -104,7 +70,7 @@ export const MessageModal = () => {
 
   const closeModal = () => {
     setMessages(null);
-    history.push('/messages');
+    navigate('/messages');
   };
 
   const openGroupModal = () => {
@@ -132,8 +98,8 @@ export const MessageModal = () => {
   // We need to wait for the active conversation to be set.
   if (!activeMessageConversation) {
     return (
-      <div>
-        <CircularProgress />
+      <div className="flex h-full items-center justify-center">
+        <LoadingSpinner />
       </div>
     );
   }
@@ -144,15 +110,15 @@ export const MessageModal = () => {
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
   const headerClass =
-    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
+    header.length > LARGE_HEADER_CHARS ? 'max-w-[230px] text-lg' : 'max-w-[250px] text-xl';
 
   const handleAddContact = (number: string) => {
     const exists = getContactByNumber(number);
     const referal = encodeURIComponent(pathname);
     if (exists) {
-      return history.push(`/contacts/${exists.id}/?referal=${referal}`);
+      return navigate(`/contacts/${exists.id}/?referal=${referal}`);
     }
-    return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
+    return navigate(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
   };
 
   // This only gets used for 1 on 1 conversations
@@ -165,51 +131,40 @@ export const MessageModal = () => {
 
   const doesContactExist = getConversationParticipant(activeMessageConversation.conversationList);
   return (
-    <Slide direction="left" in={!!activeMessageConversation}>
-      <div className="space-between flex h-full w-full flex-col">
-        {isGroupModalOpen && <Backdrop />}
-        <Box
-          display="flex"
-          paddingX={1}
-          justifyContent="space-between"
-          alignItems="center"
-          component={Paper}
-          sx={{ borderRadius: 0 }}
-        >
+      <div className="flex h-full w-full animate-in slide-in-from-right-4 flex-col bg-keyos-night text-keyos-cream">
+        <div className="flex items-center justify-between border-b border-white/10 bg-keyos-night/90 px-2 py-2 backdrop-blur-xl">
           <button
             onClick={closeModal}
-            className="mb-1 rounded-full p-2 hover:bg-neutral-100 hover:dark:bg-neutral-800"
+            className="rounded-full p-2 text-keyos-muted transition hover:bg-white/10 hover:text-keyos-cream"
           >
             <ArrowLeft size={26} />
           </button>
-          <Typography sx={{ paddingLeft: 2 }} variant="h5" className={headerClass}>
+          <h2 className={`${headerClass} truncate px-2 font-bold tracking-tight text-keyos-cream`}>
             {header}
-          </Typography>
+          </h2>
           {!activeMessageConversation.isGroupChat && (
             <Tooltip
-              classes={{ tooltip: classes.tooltip }}
               title={`${t('GENERIC.CALL')} ${targetNumber}`}
-              placement="bottom"
             >
               <button
                 onClick={() => initializeCall(targetNumber)}
-                className="rounded-full p-3 hover:bg-neutral-100 hover:dark:bg-neutral-800"
+                className="rounded-full p-3 text-keyos-muted transition hover:bg-white/10 hover:text-[color:var(--keyos-app-accent)]"
               >
                 <Phone size={18} />
               </button>
             </Tooltip>
           )}
           {activeMessageConversation.isGroupChat ? (
-            <Button>
-              <GroupIcon onClick={openGroupModal} fontSize="large" />
+            <Button onClick={openGroupModal} size="icon" variant="ghost">
+              <UsersRound size={20} />
             </Button>
           ) : !activeMessageConversation.isGroupChat && !doesContactExist ? (
-            <Button>
-              <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
+            <Button onClick={() => handleAddContact(targetNumber)} size="icon" variant="ghost">
+              <UserPlus size={20} />
             </Button>
           ) : !activeMessageConversation.isGroupChat && doesContactExist ? null : null}
-        </Box>
-        <div className="h-full">
+        </div>
+        <div className="min-h-0 flex-1">
           {isLoaded && activeMessageConversation && ResourceConfig ? (
             <Conversation
               isVoiceEnabled={ResourceConfig.voiceMessage.enabled}
@@ -250,6 +205,5 @@ export const MessageModal = () => {
           addContact={handleAddContact}
         />
       </div>
-    </Slide>
   );
 };

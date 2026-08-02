@@ -13,7 +13,7 @@ import {
 } from '@typings/darkchat';
 import { ServerPromiseResp } from '@typings/common';
 import { MockChannelMembers, MockChannelMessagesResp } from '../utils/constants';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useSetDarkchatMessagesState } from '../state/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
     localTransferOwner,
     addLocalMembers,
   } = useDarkchatActions();
-  const history = useHistory();
+  const navigate = useNavigate();
   const setMessages = useSetDarkchatMessagesState();
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
@@ -90,7 +90,7 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
       }
 
       leaveLocalChannel(id);
-      history.goBack();
+      navigate(-1);
     });
   };
 
@@ -111,7 +111,7 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
       }
 
       localTransferOwner(resp.data);
-      history.push('/darkchat');
+      navigate('/darkchat');
     });
   };
 
@@ -126,7 +126,8 @@ export const useDarkchatAPI = (): DarkchatAPIProps => {
           type: 'error',
           message: t('DARKCHAT.FEEDBACK.FETCH_MESSAGES_FAILED'),
         });
-        return history.push('/darkchat');
+        navigate('/darkchat');
+        return;
       }
 
       setMessages(res.data);

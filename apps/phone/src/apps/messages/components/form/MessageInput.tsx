@@ -1,16 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, Box, Button, ButtonGroup } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import MicIcon from '@mui/icons-material/Mic';
-import IosShareIcon from '@mui/icons-material/IosShare';
-import { NPWDInput, NPWDTextarea, TextField } from '@ui/components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import { useWordFilter } from '@os/wordfilter/hooks/useWordFilter';
-import { useConfig } from '@os/phone/hooks';
-import { Image, Mic, SendHorizonal, SendHorizontal } from 'lucide-react';
+import { Image, Mic, SendHorizontal } from 'lucide-react';
+import { Button } from '@npwd/keyos';
 
 interface IProps {
   onAddImageClick(): void;
@@ -60,35 +55,42 @@ const MessageInput = ({
   if (!messageConversation.id) return null;
 
   return (
-    <div className="px-2">
-      <div className="flex items-center space-x-2 rounded-md px-2 dark:bg-neutral-800">
+    <div className="border-t border-white/10 bg-keyos-night/90 px-3 py-3 backdrop-blur-xl">
+      <div className="flex items-end gap-2 rounded-2xl border border-white/10 bg-keyos-panel p-2 shadow-keyos-panel">
         <button
           onClick={onAddImageClick}
-          className="h-14 dark:text-white hover:dark:text-green-500"
+          className="flex size-10 shrink-0 items-center justify-center rounded-xl text-keyos-muted transition hover:bg-white/10 hover:text-keyos-cream"
+          type="button"
         >
           <Image size={24} />
         </button>
-        <NPWDTextarea
+        <textarea
           rows={1}
-          className="resize-none"
+          className="max-h-28 min-h-10 flex-1 resize-none bg-transparent px-2 py-2 text-sm text-keyos-cream outline-none placeholder:text-keyos-muted"
           onKeyDown={handleKeyPress}
           value={message}
           onChange={handleChange}
           placeholder={t('MESSAGES.NEW_MESSAGE')}
         />
-        <div className="flex items-center space-x-2">
+        <div className="flex shrink-0 items-center gap-1">
           {voiceEnabled && (
-            <button onClick={onVoiceClick} className="hover:text-green-500">
+            <button
+              onClick={onVoiceClick}
+              className="flex size-10 items-center justify-center rounded-xl text-keyos-muted transition hover:bg-white/10 hover:text-[color:var(--keyos-app-accent)]"
+              type="button"
+            >
               <Mic size={24} />
             </button>
           )}
 
-          <button
+          <Button
             onClick={handleSubmit}
-            className="rounded-lg bg-green-600 p-2 text-white hover:bg-green-700"
+            className="bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] hover:brightness-110"
+            size="icon"
+            type="button"
           >
             <SendHorizontal size={24} />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

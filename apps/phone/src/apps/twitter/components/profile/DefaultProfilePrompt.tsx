@@ -1,12 +1,6 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
-
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
-import { Box, MenuItem, SelectChangeEvent, styled } from '@mui/material';
 
 interface DefaultProfilePromptProps {
   handleUpdate: () => void;
@@ -15,54 +9,39 @@ interface DefaultProfilePromptProps {
   defaultProfileNames: string[];
 }
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    width: '100%',
-  },
-}));
-
-const Root = styled(Box)({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  padding: '15px',
-});
-
 export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   profileName,
   setProfileName,
   handleUpdate,
   defaultProfileNames,
 }) => {
-  const classes = useStyles();
   const [t] = useTranslation();
 
-  const handleChange = (event: SelectChangeEvent<string>): void => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     event.preventDefault();
     setProfileName(event.target.value);
   };
 
   return (
-    <Root>
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="profile-name">{t('TWITTER.EDIT_DEFAULT_PROFILE_NAME')}</InputLabel>
-        <Select
-          value={profileName}
-          onChange={handleChange}
-          inputProps={{
-            name: 'profileName',
-            id: 'profile-name',
-          }}
-        >
-          {defaultProfileNames.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <div className="relative h-full w-full p-[15px]">
+      <label htmlFor="profile-name" className="mb-2 block text-sm text-keyos-muted">
+        {t('TWITTER.EDIT_DEFAULT_PROFILE_NAME')}
+      </label>
+      <select
+        id="profile-name"
+        name="profileName"
+        value={profileName}
+        onChange={handleChange}
+        className="w-full rounded-md border border-white/10 bg-keyos-panel px-3 py-2 text-keyos-cream outline-none focus:ring-2 focus:ring-[color:var(--keyos-app-accent)]"
+      >
+        {defaultProfileNames.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
       <ProfileUpdateButton handleClick={handleUpdate} />
-    </Root>
+    </div>
   );
 };
 

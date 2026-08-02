@@ -1,4 +1,9 @@
-import { createAppThemeProvider } from '@os/apps/utils/createAppThemeProvider';
-import notesTheme from '../darkchat.theme';
+import React from 'react';
 
-export const DarkChatThemeProvider = createAppThemeProvider(notesTheme);
+import { AppColorScope } from '@npwd/keyos';
+
+import darkchatTheme from '../darkchat.theme';
+
+export const DarkChatThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AppColorScope colors={darkchatTheme}>{children}</AppColorScope>
+);

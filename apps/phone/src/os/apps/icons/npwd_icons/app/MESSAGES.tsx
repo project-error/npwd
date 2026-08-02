@@ -1,17 +1,20 @@
 import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
-const MessagesAppIcon = (props: SvgIconProps) => {
+type IconComponentProps = {
+  className?: string;
+  style?: React.CSSProperties;
+};
+
+const MessagesAppIcon = (props: IconComponentProps) => {
   return (
-    <SvgIcon {...props}>
-      <svg
+          <svg
         xmlns="http://www.w3.org/2000/svg"
         fillRule="evenodd"
         strokeLinejoin="round"
         strokeMiterlimit="2"
         clipRule="evenodd"
         viewBox="0 0 176 178"
-      >
+       {...props} className={props.className} style={props.style}>
         <metadata id="author">dayiskuan@gmail.com</metadata>
         <path fill="none" d="M0 0H176V178H0z"></path>
         <clipPath id="_clip1">
@@ -37,7 +40,6 @@ const MessagesAppIcon = (props: SvgIconProps) => {
           </g>
         </g>
       </svg>
-    </SvgIcon>
   );
 };
 

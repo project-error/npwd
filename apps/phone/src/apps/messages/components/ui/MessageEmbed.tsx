@@ -1,31 +1,18 @@
 import React from 'react';
-import {
-  Avatar,
-  Box,
-  Button,
-  Typography,
-  IconButton,
-  Tooltip,
-  LinearProgress,
-} from '@mui/material';
 import { Contact } from '@typings/contact';
 import { Location } from '@typings/messages';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
-import StyledMessage, { AudioMessage } from './StyledMessage';
+import { useLocation, useNavigate } from 'react-router';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import fetchNui from '../../../../utils/fetchNui';
-import TravelExplore from '@mui/icons-material/TravelExplore';
 import { MessageEvents } from '@typings/messages';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import { NoteItem } from '@typings/notes';
 import qs from 'qs';
 import { useAudioPlayer } from '@os/audio/hooks/useAudioPlayer';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import { Button, Tooltip } from '@npwd/keyos';
+import { FileText, MapPinned, MoreVertical, Pause, Play, UserPlus } from 'lucide-react';
 
 dayjs.extend(duration);
 
@@ -62,7 +49,7 @@ const ContactEmbed = ({
   openMenu: () => void;
 }) => {
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { getContactByNumber } = useContactActions();
 
@@ -70,29 +57,35 @@ const ContactEmbed = ({
 
   const handleAddContact = () => {
     const referal = encodeURIComponent(pathname);
-    history.push(`/contacts/-1?addNumber=${embed.number}&name=${embed.display}&referal=${referal}`);
+    navigate(`/contacts/-1?addNumber=${embed.number}&name=${embed.display}&referal=${referal}`);
   };
 
   return (
-    <StyledMessage>
-      <Box>
-        <Avatar src={embed?.avatar} />
-        <Typography>{embed?.display}</Typography>
-        <Typography>{embed?.number}</Typography>
-      </Box>
+    <div className="flex min-w-[220px] items-center justify-between gap-3">
+      <div className="flex items-center gap-3">
+        {embed?.avatar ? (
+          <img src={embed.avatar} className="size-10 rounded-full object-cover" alt={embed?.display} />
+        ) : (
+          <div className="flex size-10 items-center justify-center rounded-full bg-black/20 text-xs font-bold">
+            {(embed?.display || embed?.number || '?').slice(0, 2).toUpperCase()}
+          </div>
+        )}
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold">{embed?.display}</p>
+          <p className="truncate text-xs opacity-70">{embed?.number}</p>
+        </div>
+      </div>
       {showAddButton && (
-        <Box pl={1}>
-          <Button fullWidth variant="contained" color="primary" onClick={handleAddContact}>
-            {t('GENERIC.ADD')}
-          </Button>
-        </Box>
+        <Button onClick={handleAddContact} size="icon" variant="glass">
+          <UserPlus size={16} />
+        </Button>
       )}
       {isMine && (
-        <IconButton color="primary" onClick={openMenu}>
-          <MoreVertIcon />
-        </IconButton>
+        <button className="rounded-full p-1 opacity-70 hover:bg-white/10 hover:opacity-100" onClick={openMenu}>
+          <MoreVertical size={16} />
+        </button>
       )}
-    </StyledMessage>
+    </div>
   );
 };
 
@@ -106,7 +99,7 @@ const NoteEmbed = ({
   openMenu: () => void;
 }) => {
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const handleViewNote = () => {
@@ -116,28 +109,28 @@ const NoteEmbed = ({
     });
 
     const referal = encodeURIComponent(pathname);
-    history.push(`/notes/?${queryStr}&referal=${referal}`);
+    navigate(`/notes/?${queryStr}&referal=${referal}`);
   };
 
   return (
-    <StyledMessage>
-      <Box>
-        <Typography>{embed?.title}</Typography>
-        <Typography>{embed?.content.substring(0, 8) + ' ...'}</Typography>
-      </Box>
-      <Box>
+    <div className="flex min-w-[220px] items-center justify-between gap-3">
+      <div className="min-w-0">
+        <p className="truncate text-sm font-semibold">{embed?.title}</p>
+        <p className="truncate text-xs opacity-70">{embed?.content.substring(0, 24) + ' ...'}</p>
+      </div>
+      <div className="flex items-center gap-1">
         <Tooltip title={t('MESSAGES.NOTE_TOOLTIP')}>
-          <IconButton color="primary" onClick={handleViewNote}>
-            <TextSnippetIcon />
-          </IconButton>
+          <button className="rounded-full p-1.5 hover:bg-white/10" onClick={handleViewNote}>
+            <FileText size={18} />
+          </button>
         </Tooltip>
         {isMine && (
-          <IconButton color="primary" onClick={openMenu}>
-            <MoreVertIcon />
-          </IconButton>
+          <button className="rounded-full p-1.5 hover:bg-white/10" onClick={openMenu}>
+            <MoreVertical size={18} />
+          </button>
         )}
-      </Box>
-    </StyledMessage>
+      </div>
+    </div>
   );
 };
 
@@ -161,23 +154,21 @@ const LocationEmbed = ({
   };
 
   return (
-    <StyledMessage>
-      <Box>
-        <Typography>{message ?? t('MESSAGES.LOCATION_MESSAGE')}</Typography>
-      </Box>
-      <Box>
+    <div className="flex min-w-[220px] items-center justify-between gap-3">
+      <p className="text-sm font-semibold">{message ?? t('MESSAGES.LOCATION_MESSAGE')}</p>
+      <div className="flex items-center gap-1">
         <Tooltip title={t('MESSAGES.LOCATION_TOOLTIP')}>
-          <IconButton color="primary" onClick={handleSetWaypoint}>
-            <TravelExplore />
-          </IconButton>
+          <button className="rounded-full p-1.5 hover:bg-white/10" onClick={handleSetWaypoint}>
+            <MapPinned size={18} />
+          </button>
         </Tooltip>
         {isMine && (
-          <IconButton color="primary" onClick={openMenu}>
-            <MoreVertIcon />
-          </IconButton>
+          <button className="rounded-full p-1.5 hover:bg-white/10" onClick={openMenu}>
+            <MoreVertical size={18} />
+          </button>
         )}
-      </Box>
-    </StyledMessage>
+      </div>
+    </div>
   );
 };
 
@@ -198,32 +189,25 @@ const AudioEmbed = ({
       : (Math.trunc(currentTime) / Math.trunc(duration)) * 100;
 
   return (
-    <AudioMessage>
-      <Box display="flex" alignItems="center">
-        <IconButton onClick={playing ? pause : play}>
-          {playing ? (
-            <PauseIcon sx={{ color: '#232323' }} />
-          ) : (
-            <PlayArrowIcon sx={{ color: '#232323' }} />
-          )}
-        </IconButton>
-        <Box sx={{ width: '60%' }}>
-          {!calculateProgress && playing ? (
-            <LinearProgress />
-          ) : (
-            <LinearProgress variant="determinate" value={calculateProgress} />
-          )}
-        </Box>
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center gap-3">
+        <button className="rounded-full bg-black/15 p-2" onClick={playing ? pause : play}>
+          {playing ? <Pause size={18} /> : <Play size={18} />}
+        </button>
+        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-black/20">
+          <div
+            className="h-full rounded-full bg-current transition-all"
+            style={{ width: `${calculateProgress || 8}%` }}
+          />
+        </div>
         {isMine && (
-          <IconButton color="white" onClick={openMenu}>
-            <MoreVertIcon />
-          </IconButton>
+          <button className="rounded-full p-1.5 hover:bg-white/10" onClick={openMenu}>
+            <MoreVertical size={18} />
+          </button>
         )}
-      </Box>
-      <Box pl={1}>
-        <Typography>{dayjs.duration(currentTime * 1000).format('mm:ss')}</Typography>
-      </Box>
-    </AudioMessage>
+      </div>
+      <p className="pl-1 text-xs opacity-70">{dayjs.duration(currentTime * 1000).format('mm:ss')}</p>
+    </div>
   );
 };
 

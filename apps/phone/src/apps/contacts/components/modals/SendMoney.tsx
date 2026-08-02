@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, TextField } from '@ui/components';
+import { Modal } from '@ui/components';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
-import { Button } from '@ui/components/Button';
-import { TabContext, TabPanel } from '@mui/lab';
+import { Button, Input } from '@npwd/keyos';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
 interface SendMoneyModalProps {
@@ -36,24 +34,20 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
   return (
     <Modal visible={open} handleClose={closeModal}>
-      <TabContext value="1">
-        <TabPanel value="1">
-          <Typography>{t('CONTACTS.SENDMONEY')}</Typography>
-
-          <Box mt={2} mb={2}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2}>
-              <TextField
-                placeholder={t('CONTACTS.AMOUNT')}
-                value={amount}
-                onChange={handleAmountChange}
-              />
-              <Button onClick={sendContactMoney} variant="outlined" color="primary">
-                {t('GENERIC.SEND')}
-              </Button>
-            </Box>
-          </Box>
-        </TabPanel>
-      </TabContext>
+      <div className="space-y-4 pt-2">
+        <h2 className="text-xl font-bold text-keyos-cream">{t('CONTACTS.SENDMONEY')}</h2>
+        <div className="flex flex-col items-start gap-3">
+          <Input
+            inputMode="numeric"
+            onChange={handleAmountChange}
+            placeholder={t('CONTACTS.AMOUNT')}
+            value={amount}
+          />
+          <Button onClick={sendContactMoney} variant="accent">
+            {t('GENERIC.SEND')}
+          </Button>
+        </div>
+      </div>
     </Modal>
   );
 };

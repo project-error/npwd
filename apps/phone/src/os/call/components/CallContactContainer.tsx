@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar } from '@npwd/keyos';
 import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
 import { useCall } from '../hooks/useCall';
 import { useTranslation } from 'react-i18next';
@@ -14,31 +14,34 @@ const CallContactContainer = () => {
     call.isTransmitter
       ? getDisplayByNumber(call?.receiver)
       : !call.isTransmitter && call.isAnonymous
-      ? 'Anonymous'
-      : getDisplayByNumber(call?.transmitter);
+        ? 'Anonymous'
+        : getDisplayByNumber(call?.transmitter);
 
   return (
-    <Box display="flex" alignItems="center">
-      <Box flexGrow={1} overflow="hidden" textOverflow="ellipsis">
-        <Typography variant="body1">
+    <div className="flex items-center">
+      <div className="min-w-0 grow overflow-hidden text-ellipsis">
+        <p className="text-[length:var(--keyos-text-body)] text-keyos-fg">
           {call.isTransmitter
             ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
             : t('CALLS.MESSAGES.INCOMING').toUpperCase()}
-        </Typography>
-        <Typography variant="h4">{getDisplayOrNumber()}</Typography>
-      </Box>
+        </p>
+        <p className="truncate text-[length:var(--keyos-text-title)] font-semibold text-keyos-fg">
+          {getDisplayOrNumber()}
+        </p>
+      </div>
       <Avatar
-        sx={{ ml: 1, height: 80, width: 80 }}
         alt={getDisplayOrNumber()}
+        className="ml-1 size-20"
+        size="xl"
         src={
           call.isTransmitter
             ? getPictureByNumber(call.receiver)
             : !call.isTransmitter && call.isAnonymous
-            ? 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png'
-            : getPictureByNumber(call?.transmitter)
+              ? 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png'
+              : getPictureByNumber(call?.transmitter)
         }
       />
-    </Box>
+    </div>
   );
 };
 

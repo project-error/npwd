@@ -1,17 +1,17 @@
 import React, { useMemo } from 'react';
-import { createTheme, ThemeProvider, StyledEngineProvider, CircularProgress } from '@mui/material';
-import { deepMergeObjects } from '@shared/deepMergeObjects';
-import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
-import { IApp } from '../config/apps';
-import styled from '@emotion/styled';
-import { ExternalAppBoundary } from './externalAppBoundary';
+
+import { AppColorScope, AppColorTokens, LoadingSpinner } from '@npwd/keyos';
 import { useTranslation } from 'react-i18next';
 
-const colorShade = (col: any, amt: number) => {
+import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
+import { IApp } from '../config/apps';
+import { ExternalAppBoundary } from './externalAppBoundary';
+
+const colorShade = (col: string, amt: number) => {
   col = col.replace(/^#/, '');
   if (col.length === 3) col = col[0] + col[0] + col[1] + col[1] + col[2] + col[2];
 
-  let [r, g, b] = col.match(/.{2}/g);
+  let [r, g, b] = col.match(/.{2}/g)!;
   [r, g, b] = [parseInt(r, 16) + amt, parseInt(g, 16) + amt, parseInt(b, 16) + amt];
 
   r = Math.max(Math.min(255, r), 0).toString(16);
@@ -25,97 +25,46 @@ const colorShade = (col: any, amt: number) => {
   return `#${rr}${gg}${bb}`;
 };
 
-const Container = styled.div<{ background: string; color: string }>`
-  height: 100%;
-  width: 100%;
-
-  color: ${({ color }) => color ?? '#fff'};
-  background: ${({ background }) => background ?? '#222'};
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-size: 400% 400%;
-  animation: gradient 6s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-`;
-
-const ProgressContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 2rem;
-`;
-
-const IconWrapper = styled.div`
-  svg {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-
-  animation: 3s linear 0.25s infinite alternate breath;
-
-  @keyframes breath {
-    0% {
-      transform: scale(1);
-    }
-
-    100% {
-      transform: scale(1.5);
-    }
-  }
-`;
-
 const generateBackground = (bg: string) => {
   const light = colorShade(bg, 30);
   const dark = colorShade(bg, -30);
   return `linear-gradient(45deg,${light}, ${dark}, ${light}, ${dark}, ${dark})`;
 };
 
-const SplashScreen = (props: IApp) => {
-  const { backgroundColor, icon } = props;
+const SplashScreen = ({ backgroundColor, color, icon }: IApp) => {
   const background = generateBackground(backgroundColor);
 
   return (
-    <Container {...props} background={background}>
-      <IconWrapper>{icon}</IconWrapper>
-
-      <ProgressContainer>
-        <CircularProgress color="inherit" />
-      </ProgressContainer>
-    </Container>
+    <div
+      className="keyos-splash flex h-full w-full items-center justify-center bg-[length:400%_400%] animate-[gradient_6s_ease_infinite]"
+      style={{ background, color }}
+    >
+      <div className="animate-[breath_3s_linear_0.25s_infinite_alternate] [&_svg]:size-14">{icon}</div>
+      <div className="absolute bottom-0 left-0 p-8">
+        <LoadingSpinner />
+      </div>
+    </div>
   );
 };
 
 export function createExternalAppProvider(config: IApp) {
   return ({ children }: { children: React.ReactNode }) => {
     const { t } = useTranslation();
-    const phoneTheme = usePhoneTheme();
+    const appColors = usePhoneTheme(config);
     const background = generateBackground(config.backgroundColor ?? '#222');
 
-    const mergedTheme = useMemo(() => {
-      return createTheme(deepMergeObjects(phoneTheme, config?.theme));
-    }, [phoneTheme]);
+    const colors = useMemo<AppColorTokens>(() => {
+      if (config.theme && typeof config.theme === 'object' && 'accent' in config.theme) {
+        return { ...appColors, ...config.theme };
+      }
+      return appColors;
+    }, [appColors]);
 
     return (
       <ExternalAppBoundary background={background} color={config.color} t={t}>
-        <StyledEngineProvider injectFirst>
-          <React.Suspense fallback={<SplashScreen {...config} />}>
-            <ThemeProvider theme={mergedTheme}>{children}</ThemeProvider>
-          </React.Suspense>
-        </StyledEngineProvider>
+        <React.Suspense fallback={<SplashScreen {...config} />}>
+          <AppColorScope colors={colors}>{children}</AppColorScope>
+        </React.Suspense>
       </ExternalAppBoundary>
     );
   };

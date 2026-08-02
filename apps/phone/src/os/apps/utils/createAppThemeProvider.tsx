@@ -1,19 +1,9 @@
-import React, { useMemo } from 'react';
-import { createTheme, ThemeProvider, StyledEngineProvider, ThemeOptions } from '@mui/material';
-import { deepMergeObjects } from '@shared/deepMergeObjects';
-import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
+import React from 'react';
 
-export function createAppThemeProvider(theme: ThemeOptions = {}) {
-  return ({ children }: { children: React.ReactNode }) => {
-    const phoneTheme = usePhoneTheme();
-    const mergedTheme = useMemo(() => {
-      return createTheme(deepMergeObjects(phoneTheme, theme));
-    }, [phoneTheme]);
+import { AppColorScope, AppColorTokens } from '@npwd/keyos';
 
-    return (
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={mergedTheme}>{children}</ThemeProvider>
-      </StyledEngineProvider>
-    );
-  };
+export function createAppThemeProvider(colors: AppColorTokens) {
+  return ({ children }: { children: React.ReactNode }) => (
+    <AppColorScope colors={colors}>{children}</AppColorScope>
+  );
 }

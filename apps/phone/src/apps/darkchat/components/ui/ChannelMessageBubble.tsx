@@ -1,51 +1,29 @@
 import React from 'react';
 import { ChannelMessageProps } from '@typings/darkchat';
-import { Box, Typography, Paper, lighten } from '@mui/material';
-import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-
-interface MessageType {
-  isMine: boolean;
-}
-
-const StyledMessageContainer = styled(Paper)<MessageType>(({ theme, isMine }) => ({
-  color: '#fff',
-  float: isMine ? 'right' : 'left',
-  margin: theme.spacing(1),
-  padding: '6px 16px',
-  height: 'auto',
-  width: 'auto',
-  minWidth: '50%',
-  maxWidth: '80%',
-  textOverflow: 'ellipsis',
-  backgroundColor: isMine ? lighten(theme.palette.primary.dark, 0.1) : theme.palette.primary.dark,
-}));
-
-const StyledMessage = styled(Box)({
-  wordBreak: 'break-word',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-});
+import { cn } from '@utils/css';
+import { DARKCHAT_APP_SECONDARY_COLOR } from '../../darkchat.theme';
 
 const ChannelMessageBubble: React.FC<ChannelMessageProps> = (item) => {
   return (
-    <Box
-      display="flex"
-      ml={1}
-      alignItems="stretch"
-      justifyContent={item.isMine ? 'flex-end' : 'flex-start'}
-      mt={1}
+    <div
+      className={cn(
+        'mt-1 flex items-stretch',
+        item.isMine ? 'mr-1 justify-end' : 'ml-1 justify-start',
+      )}
     >
-      <StyledMessageContainer isMine={item.isMine}>
-        <StyledMessage>
-          <Typography fontSize={16}>{item.message}</Typography>
-        </StyledMessage>
-        <Typography color="#ccc" fontWeight={500} mt={1}>
-          {dayjs.unix(item.createdAt).fromNow()}
-        </Typography>
-      </StyledMessageContainer>
-    </Box>
+      <div
+        className="h-auto w-auto min-w-[50%] max-w-[80%] rounded-lg px-4 py-1.5 text-white"
+        style={{
+          backgroundColor: item.isMine ? '#5ec46a' : DARKCHAT_APP_SECONDARY_COLOR,
+        }}
+      >
+        <div className="flex items-center justify-between break-words">
+          <p className="text-base">{item.message}</p>
+        </div>
+        <p className="mt-1 font-medium text-[#ccc]">{dayjs.unix(item.createdAt).fromNow()}</p>
+      </div>
+    </div>
   );
 };
 

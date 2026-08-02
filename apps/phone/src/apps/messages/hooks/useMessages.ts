@@ -1,8 +1,12 @@
 import { useCallback } from 'react';
-import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
 import { MessageConversation } from '@typings/messages';
-import { messageState, useSetConversationId } from './state';
-import { useHistory } from 'react-router-dom';
+import {
+  useActiveMessageConversation,
+  useMessageConversationsValue,
+  useSetActiveMessageConversation,
+  useSetConversationId,
+} from './state';
+import { useNavigate } from 'react-router';
 
 interface IUseMessages {
   conversations?: MessageConversation[];
@@ -14,28 +18,22 @@ interface IUseMessages {
 }
 
 const useMessages = (): IUseMessages => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { state: conversationLoading, contents } = useRecoilValueLoadable(
-    messageState.messageCoversations,
-  );
-  const [activeMessageConversation] = useRecoilValue(
-    waitForAll([messageState.activeMessageConversation]),
-  );
+  const conversations = useMessageConversationsValue();
+  const activeMessageConversation = useActiveMessageConversation();
 
   const setCurrentConversationId = useSetConversationId();
-  const _setActiveMessageConversation = useSetRecoilState(messageState.activeMessageConversation);
+  const _setActiveMessageConversation = useSetActiveMessageConversation();
 
   const getMessageConversationById = useCallback(
     (id: number): MessageConversation | null => {
-      if (conversationLoading !== 'hasValue') return;
-
-      if (!contents.length) return;
+      if (!conversations.length) return null;
 
       // FIXME: Make sure we have contents as a number as well..
-      return contents && contents.find((c) => c.id === id);
+      return conversations.find((c) => c.id === id);
     },
-    [contents, conversationLoading],
+    [conversations],
   );
 
   const setActiveMessageConversation = useCallback(
@@ -49,12 +47,12 @@ const useMessages = (): IUseMessages => {
 
   const goToConversation = useCallback(
     (messageConversation: MessageConversation) => {
-      if (!messageConversation?.id || !history) return;
+      if (!messageConversation?.id) return;
       setCurrentConversationId(messageConversation.id);
 
-      history.push(`/messages/conversations/${messageConversation.id.toString()}`);
+      navigate(`/messages/conversations/${messageConversation.id.toString()}`);
     },
-    [setCurrentConversationId, history],
+    [setCurrentConversationId, navigate],
   );
 
   return {
@@ -62,7 +60,7 @@ const useMessages = (): IUseMessages => {
     setActiveMessageConversation,
     getMessageConversationById,
     goToConversation,
-    conversations: contents,
+    conversations,
   };
 };
 

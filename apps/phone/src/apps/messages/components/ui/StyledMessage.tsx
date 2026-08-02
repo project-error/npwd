@@ -1,15 +1,25 @@
-import { styled } from '@mui/styles';
-import { Box } from '@mui/material';
+import React from 'react';
 
-const StyledMessage = styled(Box)({
+import { cn } from '@utils/css';
 
-});
+const StyledMessage = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn(className)} {...props} />
+  ),
+);
 
-export const AudioMessage = styled(Box)({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'flex-start',
-  flexDirection: 'column',
-});
+StyledMessage.displayName = 'StyledMessage';
+
+export const AudioMessage = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn('flex w-full flex-col justify-start', className)}
+      {...props}
+    />
+  ),
+);
+
+AudioMessage.displayName = 'AudioMessage';
 
 export default StyledMessage;

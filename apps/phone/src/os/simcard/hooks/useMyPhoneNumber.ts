@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { simcardState } from './state';
 
-export const useMyPhoneNumber = () => useRecoilValue(simcardState.number);
+export const useMyPhoneNumber = () => useAtomValue(simcardState.number);

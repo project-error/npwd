@@ -1,34 +1,9 @@
 import { AppWrapper } from '@ui/components';
-import { styled } from '@mui/material/styles';
-import React, {Reducer, useEffect, useReducer, useRef} from 'react';
+import React, { Reducer, useEffect, useReducer, useRef } from 'react';
 import { AppContent } from '@ui/components/AppContent';
-import { Box } from '@mui/material';
 import { BrowserURLBar } from './BrowserURLBar';
 import { promiseTimeout } from '../../../utils/promiseTimeout';
-import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
-import {useConfig, usePhone} from "@os/phone/hooks";
-
-const PREFIX = 'BrowserApp';
-
-const classes = {
-  iframe: `${PREFIX}-iframe`,
-  root: `${PREFIX}-root`,
-};
-
-const StyledAppWrapper = styled(AppWrapper)(() => ({
-  [`& .${classes.iframe}`]: {
-    height: '100%',
-    width: '100%',
-    zoom: 0.5,
-    border: 'none',
-  },
-
-  [`& .${classes.root}`]: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-}));
+import { usePhone } from '@os/phone/hooks';
 
 interface BrowserState {
   browserUrl: string;
@@ -59,12 +34,11 @@ const browserReducer: Reducer<BrowserState, ReducerAction> = (state, action) => 
 };
 
 export const BrowserApp: React.FC = () => {
-  const [{ appSettings }] = usePhoneConfig();
   const { ResourceConfig } = usePhone();
 
   const [browserState, dispatch] = useReducer(browserReducer, {
-    browserUrl: ResourceConfig.browser.homepageUrl ?? "",
-    browserHistory: [ResourceConfig.browser.homepageUrl ?? ""],
+    browserUrl: ResourceConfig.browser.homepageUrl ?? '',
+    browserHistory: [ResourceConfig.browser.homepageUrl ?? ''],
   });
 
   const { browserHistory, browserUrl } = browserState;
@@ -78,10 +52,8 @@ export const BrowserApp: React.FC = () => {
 
   const handleGoBack = () => {
     if (browserHistory.length <= 1) return;
-    // Get last page from history
     const lastPage = browserHistory[browserHistory.length - 1];
 
-    // Bail if last page is same as current
     if (lastPage === browserUrl) return;
     _setBrowserUrl(lastPage);
   };
@@ -95,13 +67,13 @@ export const BrowserApp: React.FC = () => {
 
   useEffect(() => {
     if (ResourceConfig.browser.homepageUrl) {
-      _setBrowserUrl(ResourceConfig.browser.homepageUrl)
+      _setBrowserUrl(ResourceConfig.browser.homepageUrl);
     }
   }, [ResourceConfig.browser.homepageUrl]);
 
   return (
-    <StyledAppWrapper id="browser">
-      <AppContent className={classes.root}>
+    <AppWrapper id="browser">
+      <AppContent className="flex h-full flex-col">
         <BrowserURLBar
           browserUrl={browserUrl}
           browserHasHistory={browserHistory.length > 1}
@@ -109,12 +81,12 @@ export const BrowserApp: React.FC = () => {
           goBack={handleGoBack}
           reloadPage={reloadPage}
         />
-        <Box flexGrow={1}>
+        <div className="flex-grow">
           <iframe
             is="x-frame-bypass"
             src={browserUrl}
             // @ts-ignore
-            className={classes.iframe}
+            className="h-full w-full border-none [zoom:0.5]"
             style={{
               height: '100%',
               width: '100%',
@@ -123,8 +95,8 @@ export const BrowserApp: React.FC = () => {
             title="npwd-browser"
             ref={iframeRef}
           />
-        </Box>
+        </div>
       </AppContent>
-    </StyledAppWrapper>
+    </AppWrapper>
   );
 };

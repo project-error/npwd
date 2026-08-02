@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Add, Delete } from '@mui/icons-material';
-import { Fab, CircularProgress, useTheme, colors } from '@mui/material';
+import { Plus, Trash2 } from 'lucide-react';
 import { useIsEditing } from '../hooks/state';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
@@ -9,13 +8,8 @@ import { usePhotoActions } from '../hooks/usePhotoActions';
 import { useCheckedPhotosValue } from '../hooks/state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/material/styles';
-
-const FloatBtn = styled(Fab)(({ theme }) => ({
-  position: 'absolute',
-  bottom: theme.spacing(5),
-  right: theme.spacing(3),
-}));
+import { Button } from '@npwd/keyos';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 const NewPhotoButton = () => {
   const [isEditing, setIsEditing] = useIsEditing();
@@ -24,13 +18,11 @@ const NewPhotoButton = () => {
   const { takePhoto, deletePhotos } = usePhotoActions();
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
-  const phoneTheme = useTheme();
 
   const handleTakePhoto = () => {
     setIsLoading(true);
     fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then((serverResp) => {
       if (serverResp.status !== 'ok') {
-        // We do early returns so we want to unset the loading here
         setIsLoading(false);
         return addAlert({
           message: t(serverResp.errorMsg),
@@ -57,15 +49,23 @@ const NewPhotoButton = () => {
 
   if (isLoading)
     return (
-      <FloatBtn color="primary" disabled={true}>
-        <CircularProgress />
-      </FloatBtn>
+      <Button
+        className="absolute bottom-10 right-6 z-50 rounded-2xl bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] shadow-keyos-glow"
+        disabled
+        size="icon"
+      >
+        <LoadingSpinner height="auto" className="size-6" />
+      </Button>
     );
 
   return (
-    <FloatBtn color="primary" onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}>
-      {!isEditing ? <Add style={{color: phoneTheme.palette.primary.main}}/> : <Delete style={{color: phoneTheme.palette.error.main}}/>}
-    </FloatBtn>
+    <Button
+      className="absolute bottom-10 right-6 z-50 rounded-2xl bg-[color:var(--keyos-app-accent)] text-[color:var(--keyos-app-accent-foreground)] shadow-keyos-glow hover:brightness-110"
+      onClick={!isEditing ? handleTakePhoto : handleDeletePhotos}
+      size="icon"
+    >
+      {!isEditing ? <Plus /> : <Trash2 className="text-red-500" />}
+    </Button>
   );
 };
 

@@ -1,126 +1,65 @@
 import React, { useEffect } from 'react';
-import {
-  Typography,
-  Grid,
-  IconButton,
-  Slide,
-  Paper,
-  Box,
-  List,
-  Divider,
-  GridProps,
-  Button,
-} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
-import Battery90Icon from '@mui/icons-material/Battery90';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import Default from '../../../config/default.json';
-import { NotificationItem } from './NotificationItem';
+import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
+import { Button, Divider, List, ListItem, StatusBar } from '@npwd/keyos';
+import { ChevronUp } from 'lucide-react';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
 import {
-  notifications,
+  useNotificationValue,
   useNavbarUncollapsed,
   useUnreadNotificationIds,
   useUnreadNotifications,
 } from '@os/new-notifications/state';
-import { useRecoilValue } from 'recoil';
 import { useApp } from '@os/apps/hooks/useApps';
 import { UnreadNotificationBarProps } from '@typings/notifications';
 import { useNotification } from '../useNotification';
-import {BatteryFull, SignalMedium} from "lucide-react";
-import {cn} from "@utils/css";
+import { cn } from '@utils/css';
+import { usePlayer } from '@os/phone/hooks/usePlayer';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    height: '30px',
-    width: '100%',
-    color: theme.palette.text.primary,
-    zIndex: 99,
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    position: 'relative',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  item: {
-    margin: '0 6px',
-  },
-  text: {
-    position: 'relative',
-    lineHeight: '30px',
-    color: theme.palette.text.primary,
-  },
-  icon: {
-    padding: '4px',
-    color: theme.palette.text.primary,
-  },
-  drawer: {
-    backgroundColor: theme.palette.background.default,
-    width: '100%',
-    position: 'absolute',
-    top: '30px',
-    zIndex: 98,
-  },
-  closeNotifBtn: {
-    position: 'absolute',
-    right: '8px',
-    top: '8px',
-  },
-  notificationItem: {
-    position: 'relative',
-  },
-  collapseBtn: {
-    margin: '0 auto',
-  },
-}));
-
-interface WrapperGridProps extends GridProps {
-  tgtNoti?: UnreadNotificationBarProps;
-  key: string | number;
-}
-
-const IconUnreadGrid: React.FC<WrapperGridProps> = ({ tgtNoti }) => {
+const IconUnreadBadge: React.FC<{ tgtNoti?: UnreadNotificationBarProps }> = ({ tgtNoti }) => {
   const notificationTgtApp = useApp(tgtNoti.appId);
 
   return (
-    <Grid
-      item
-      key={tgtNoti.id}
-      component={IconButton}
-      sx={{
-        color: 'text.primary',
-        fontSize: 'small',
-      }}
-    >
+    <span className="flex size-6 items-center justify-center rounded-full bg-[color:var(--keyos-surface-overlay)] text-keyos-fg">
       {notificationTgtApp.notificationIcon}
-    </Grid>
+    </span>
   );
 };
 
-interface UnreadNotificationListItemProps {
-  tgtNotiId: string;
-  key: string | number;
-}
+const UnreadNotificationListItem: React.FC<{ tgtNotiId: string }> = ({ tgtNotiId }) => {
+  const { appId, content, path } = useNotificationValue(tgtNotiId);
+  const { markAsRead } = useNotification();
+  const { icon, nameLocale } = useApp(appId);
+  const [t] = useTranslation();
+  const navigate = useNavigate();
+  const closeBar = useSetNavbarUncollapsed();
 
-const UnreadNotificationListItem: React.FC<UnreadNotificationListItemProps> = ({ tgtNotiId }) => {
-  const notiContents = useRecoilValue(notifications(tgtNotiId));
+  const handleOnClose = () => {
+    markAsRead(tgtNotiId);
+    closeBar(false);
+    navigate(path);
+  };
 
-  return <NotificationItem key={tgtNotiId} {...notiContents} />;
+  return (
+    <ListItem
+      button
+      onClick={handleOnClose}
+      primaryText={t(nameLocale)}
+      secondaryText={content}
+      startElement={icon}
+    />
+  );
 };
 
 export const NotificationBar = () => {
-  const classes = useStyles();
   const time = usePhoneTime();
+  const playerSource = usePlayer();
   const [barCollapsed, setBarUncollapsed] = useNavbarUncollapsed();
 
   const unreadNotificationIds = useUnreadNotificationIds();
-
   const unreadNotifications = useUnreadNotifications();
-
   const { markAllAsRead } = useNotification();
 
   const handleClearNotis = async () => {
@@ -134,70 +73,78 @@ export const NotificationBar = () => {
     }
   }, [unreadNotificationIds, setBarUncollapsed]);
 
+  const uniqueNotificationApps =
+    unreadNotifications?.filter(
+      (val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId),
+    ) ?? [];
+
   return (
     <>
-      <div
-        className={cn(classes.root, "flex items-center justify-between flex-nowrap")}
-        onClick={() => {
-          setBarUncollapsed((curr) => !curr);
-        }}
-      >
-        <Grid container item wrap="nowrap">
-          {unreadNotifications &&
-            unreadNotifications
-              .filter((val, idx, self) => idx === self.findIndex((t) => t.appId === val.appId))
-              .map((notification, idx) => {
-                return <IconUnreadGrid tgtNoti={notification} key={idx} />;
-              })}
-        </Grid>
-        {time && (
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {time}
-            </Typography>
-          </Grid>
-        )}
-        <div className="flex items-center justify-end">
-          <div>
-            <SignalMedium />
-          </div>
-          <div className="mt-1.5 text-green-300">
-            <BatteryFull />
-          </div>
-        </div>
-      </div>
-      <Slide direction="down" in={barCollapsed} mountOnEnter unmountOnExit>
-        <Paper square className={classes.drawer}>
-          <Box py={1}>
+      <StatusBar
+        onPress={() => setBarUncollapsed((curr) => !curr)}
+        playerId={
+          playerSource > 0 ? (
+            <span className="text-[length:var(--keyos-text-caption)] font-medium text-keyos-muted">
+              #{playerSource}
+            </span>
+          ) : undefined
+        }
+        notificationIcons={
+          uniqueNotificationApps.length > 0 ? (
+            <div className="flex items-center gap-1">
+              {uniqueNotificationApps.map((notification, idx) => (
+                <IconUnreadBadge tgtNoti={notification} key={idx} />
+              ))}
+            </div>
+          ) : undefined
+        }
+        time={time}
+      />
+
+      {barCollapsed && (
+        <div
+          className={cn(
+            'absolute inset-x-0 top-[var(--keyos-status-bar-height)] z-[98] max-h-[calc(100%-var(--keyos-status-bar-height)-var(--keyos-home-indicator-height))] overflow-hidden',
+            'animate-in slide-in-from-top-2 fade-in-0 duration-200',
+            'border-b border-[color:var(--keyos-border-subtle)] bg-keyos-panel/95 backdrop-blur-xl',
+          )}
+        >
+          <div className="flex items-center justify-between px-4 py-2">
+            <p className="text-[length:var(--keyos-text-headline)] font-semibold text-keyos-fg">
+              Notifications
+            </p>
             {unreadNotificationIds?.length !== 0 && (
-              <Box pl={2}>
-                <Button color="primary" size="small" onClick={handleClearNotis}>
-                  Clear all notification
-                </Button>
-              </Box>
+              <Button onClick={handleClearNotis} size="sm" variant="ghost">
+                Clear all
+              </Button>
             )}
-            <List>
-              <Divider />
-              {unreadNotificationIds &&
-                unreadNotificationIds
+          </div>
+          <Divider />
+          <div className="keyos-hide-scrollbar max-h-[420px] overflow-y-auto px-2 pb-2">
+            {unreadNotificationIds?.length ? (
+              <List className="my-2 border-0 bg-transparent shadow-none">
+                {unreadNotificationIds
                   .filter((val, idx, self) => idx === self.findIndex((t: string) => t === val))
                   .map((notification, idx) => (
                     <UnreadNotificationListItem key={idx} tgtNotiId={notification} />
                   ))}
-            </List>
-          </Box>
-          <Box display="flex" flexDirection="column">
-            {!unreadNotificationIds.length && <NoNotificationText />}
-            <IconButton
-              className={classes.collapseBtn}
-              size="small"
+              </List>
+            ) : (
+              <NoNotificationText />
+            )}
+          </div>
+          <div className="flex justify-center pb-2">
+            <Button
+              aria-label="Collapse notifications"
               onClick={() => setBarUncollapsed(false)}
+              size="icon-sm"
+              variant="ghost"
             >
-              <ArrowDropUpIcon />
-            </IconButton>
-          </Box>
-        </Paper>
-      </Slide>
+              <ChevronUp className="size-5" />
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

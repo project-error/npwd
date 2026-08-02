@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { PlayCircle } from 'lucide-react';
+
 import { Tooltip } from '@ui/components/Tooltip';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import {
   NPWDButton,
   ListItem as NPWDListItem,
@@ -9,15 +9,14 @@ import {
   SwitchThumb,
   SliderRoot,
 } from '@npwd/keyos';
-import {LucideIcon} from "lucide-react";
+import { LucideIcon } from 'lucide-react';
 
 interface SettingItemProps {
   options?: any;
   label: string;
   value?: string | object | number | null;
   onClick?: any;
-  Icon: LucideIcon
-  theme: any;
+  Icon: LucideIcon;
 }
 
 export const SettingItem: React.FC<SettingItemProps> = ({
@@ -26,7 +25,6 @@ export const SettingItem: React.FC<SettingItemProps> = ({
   value,
   onClick,
   Icon,
-  theme,
 }) => (
   <NPWDListItem
     onClick={() => onClick?.(options, label)}
@@ -45,7 +43,6 @@ interface SoundItemProps {
   Icon: LucideIcon;
   tooltip: string;
   onPreviewClicked: any;
-  theme: any;
 }
 
 export const SoundItem: React.FC<SoundItemProps> = ({
@@ -68,17 +65,17 @@ export const SoundItem: React.FC<SoundItemProps> = ({
         <NPWDButton
           size="icon"
           variant="ghost"
-          className="rounded-full text-neutral-900 dark:text-white"
+          className="rounded-full text-keyos-fg"
           onClick={(e) => {
             e.stopPropagation();
             onPreviewClicked?.(options, label);
           }}
         >
-          <PlayCircleIcon />
+          <PlayCircle className="size-5" />
         </NPWDButton>
       </Tooltip>
     }
-  ></NPWDListItem>
+  />
 );
 
 interface SettingSliderProps {
@@ -86,7 +83,6 @@ interface SettingSliderProps {
   icon: JSX.Element;
   value: number;
   onCommit: (value: number | number[]) => void;
-  theme: any;
 }
 
 export const SettingItemSlider: React.FC<SettingSliderProps> = ({
@@ -94,7 +90,6 @@ export const SettingItemSlider: React.FC<SettingSliderProps> = ({
   label,
   value,
   onCommit,
-  theme,
 }) => (
   <NPWDListItem
     startElement={icon}
@@ -120,7 +115,6 @@ interface SettingSwitchProps {
   onClick: any;
   icon: JSX.Element;
   secondary: string;
-  theme: any;
 }
 
 export const SettingSwitch: React.FC<SettingSwitchProps> = ({
@@ -149,7 +143,6 @@ interface SettingItemIconActionProps {
   labelSecondary: string;
   handleAction: () => void;
   actionLabel: string;
-  theme: any;
 }
 
 export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
@@ -159,24 +152,17 @@ export const SettingItemIconAction: React.FC<SettingItemIconActionProps> = ({
   actionIcon,
   labelSecondary,
   actionLabel,
-  theme,
 }) => (
-  <>
-    <NPWDListItem
-      startElement={<Icon size={20} />}
-      primaryText={label}
-      secondaryText={labelSecondary}
-      endElement={
-        <Tooltip
-          arrow
-          title={<Typography variant="body2">{actionLabel}</Typography>}
-          placement="left"
-        >
-          <NPWDButton onClick={handleAction} size="icon" variant="ghost" className="rounded-full text-neutral-900 dark:text-white">
-            {actionIcon}
-          </NPWDButton>
-        </Tooltip>
-      }
-    />
-  </>
+  <NPWDListItem
+    startElement={<Icon size={20} />}
+    primaryText={label}
+    secondaryText={labelSecondary}
+    endElement={
+      <Tooltip arrow title={actionLabel} placement="left">
+        <NPWDButton onClick={handleAction} size="icon" variant="ghost" className="rounded-full text-keyos-fg">
+          {actionIcon}
+        </NPWDButton>
+      </Tooltip>
+    }
+  />
 );

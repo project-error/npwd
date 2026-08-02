@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, CircularProgress, MenuItem } from '@mui/material';
-import DoneIcon from '@mui/icons-material/Done';
+import { Check } from 'lucide-react';
 import { TwitterEvents } from '@typings/twitter';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 function ReportButton({ handleClose, tweetId, isReported }) {
   const { t } = useTranslation();
@@ -35,25 +35,25 @@ function ReportButton({ handleClose, tweetId, isReported }) {
 
   if (isReported) {
     return (
-      <MenuItem onClick={handleClose}>
-        <DoneIcon />
-        <span style={{ marginLeft: '5px' }}>{t('TWITTER.REPORTED')}</span>
-      </MenuItem>
+      <button type="button" className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-white/10" onClick={handleClose}>
+        <Check size={18} />
+        <span>{t('TWITTER.REPORTED')}</span>
+      </button>
     );
   }
 
   if (loading) {
     return (
-      <Button disabled>
-        <CircularProgress id="twitter-report-progress" size={22} />
-      </Button>
+      <div className="flex items-center justify-center px-4 py-2">
+        <LoadingSpinner height={22} className="[&>div]:size-[22px]" />
+      </div>
     );
   }
 
   return (
-    <MenuItem dense onClick={handleClick}>
+    <button type="button" className="w-full px-4 py-2 text-left text-sm hover:bg-white/10" onClick={handleClick}>
       {t('TWITTER.REPORT')}
-    </MenuItem>
+    </button>
   );
 }
 

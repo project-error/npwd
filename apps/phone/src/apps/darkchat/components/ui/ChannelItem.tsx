@@ -1,26 +1,29 @@
 import React from 'react';
-import { Avatar, ListItemAvatar, ListItemText, useTheme } from '@mui/material';
 import { ChannelItemProps } from '@typings/darkchat';
-import { ListItem } from '@ui/components/ListItem';
-import { useHistory } from 'react-router-dom';
+import { ListItem } from '@npwd/keyos';
+import { useNavigate } from 'react-router';
 import { useSetActiveDarkchatState } from '../../state/state';
+import { MessageSquare } from 'lucide-react';
 
 export const ChannelItem: React.FC<ChannelItemProps> = (item) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const setActiveConversation = useSetActiveDarkchatState();
-  const phoneTheme = useTheme();
 
   const handleGoToConversation = () => {
     setActiveConversation(item);
-    history.push(`/darkchat/conversation/${item.id}`);
+    navigate(`/darkchat/conversation/${item.id}`);
   };
 
   return (
-    <ListItem button onClick={handleGoToConversation}>
-      <ListItemAvatar>
-        <Avatar alt="dark dark chat" />
-      </ListItemAvatar>
-      <ListItemText primary={item.label ?? item.identifier} style={{ color: phoneTheme.palette.text.primary }} />
-    </ListItem>
+    <ListItem
+      button
+      onClick={handleGoToConversation}
+      startElement={
+        <div className="flex size-10 items-center justify-center rounded-full bg-[color:var(--keyos-app-accent)]/20 text-[color:var(--keyos-app-accent)]">
+          <MessageSquare size={18} />
+        </div>
+      }
+      primaryText={item.label ?? item.identifier}
+    />
   );
 };

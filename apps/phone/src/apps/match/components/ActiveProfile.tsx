@@ -1,8 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Card, Fab, Box } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Clear';
-import FireIcon from '@mui/icons-material/Whatshot';
-import makeStyles from '@mui/styles/makeStyles';
+import { X, Flame } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { FormattedProfile } from '@typings/match';
@@ -10,82 +7,21 @@ import Draggable from './Draggable';
 import StatusDisplay from './StatusDisplay';
 import Profile from './profile/Profile';
 import { Tooltip } from '@ui/components/Tooltip';
-
-const useStyles = makeStyles({
-  root: {
-    position: 'relative',
-    margin: '15px 15px 25px 15px',
-    height: 'calc(95% - 90px)',
-    width: 'calc(100% - 30px)',
-    overflow: 'hidden',
-    cursor: 'pointer',
-  },
-  media: {
-    height: '60%',
-  },
-  content: {
-    height: '40%',
-  },
-  status: {
-    position: 'absolute',
-    zIndex: 20,
-    padding: '5px 15px',
-    top: 40,
-    fontSize: '28px',
-    fontWeight: 'bold',
-  },
-  statusVisible: {
-    transition: 'opacity 0.25s ease-in-out',
-  },
-  // when a user swipes on a profile we need to hide the transition
-  // otherwise the status will be transitioning out when the next
-  // profile shows up
-  statusNull: {
-    transition: 'opacity 0s',
-  },
-  like: {
-    color: 'green',
-    border: '6px solid green',
-    left: 30,
-    transform: 'rotate(-18deg)',
-  },
-  nope: {
-    color: 'red',
-    border: '6px solid red',
-    right: 30,
-    transform: 'rotate(18deg)',
-  },
-  buttons: {
-    position: 'absolute',
-    bottom: 70,
-    width: '100%',
-    height: '55px',
-  },
-  button: {
-    margin: '0px 15px',
-  },
-});
+import { cn } from '@utils/css';
 
 interface IProps {
   profile: FormattedProfile;
   onSwipe: (id: number, liked: boolean) => void;
 }
 
-// this represents how far from the original mouse
-// click a user has to drag the profile in order for
-// it to be registered as a like or dislike
 const DECISION_THRESHOLD_X_px = 150;
 
 const ActiveProfile = ({ profile, onSwipe }: IProps) => {
-  const c = useStyles();
   const [t] = useTranslation();
   const [status, setStatus] = useState(null);
   const statusRef = useRef(null);
   const idRef = useRef(null);
 
-  // we are reading mutated state from the Draggable element so we
-  // keep track of it using a ref. Without this ref it will appear
-  // from React's point of view that the state is not updating
   statusRef.current = status;
   idRef.current = profile.id;
 
@@ -100,15 +36,11 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     }
   }
 
-  // handles when user uses mouse to "swipe", or
-  // more specifically drag the card to one side or the other
   const handleSwipe = () => {
     onSwipe(idRef.current, statusRef.current);
     setStatus(null);
   };
 
-  // these handlers are explicit and used for when the
-  // user clicks on buttons
   const handleLike = () => {
     onSwipe(idRef.current, true);
     setStatus(null);
@@ -121,42 +53,49 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
   const isLiked = status === true;
   const notLiked = status === false;
 
-  const likeClass = `${c.status} ${isLiked ? c.statusVisible : c.statusNull} ${c.like}`;
-  const nopeClass = `${c.status} ${notLiked ? c.statusVisible : c.statusNull} ${c.nope}`;
+  const statusBase = 'absolute top-10 z-20 px-[15px] py-[5px] text-[28px] font-bold';
+  const likeClass = cn(
+    statusBase,
+    isLiked ? 'opacity-100 transition-opacity duration-[250ms]' : 'opacity-0 transition-none',
+    'left-[30px] -rotate-[18deg] border-[6px] border-green-500 text-green-500',
+  );
+  const nopeClass = cn(
+    statusBase,
+    notLiked ? 'opacity-100 transition-opacity duration-[250ms]' : 'opacity-0 transition-none',
+    'right-[30px] rotate-[18deg] border-[6px] border-red-500 text-red-500',
+  );
 
   return (
     <>
       <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
-        <Card raised className={c.root}>
+        <div className="relative m-[15px_15px_25px_15px] h-[calc(95%-90px)] w-[calc(100%-30px)] cursor-pointer overflow-hidden rounded-xl bg-keyos-panel shadow-lg">
           <StatusDisplay className={likeClass} text={t('MATCH.MESSAGES.LIKED')} visible={isLiked} />
           <StatusDisplay className={nopeClass} text={t('MATCH.MESSAGES.NOPE')} visible={notLiked} />
           <Profile profile={profile} />
-        </Card>
+        </div>
       </Draggable>
-      <Box className={c.buttons} display="flex" justifyContent="center">
+      <div className="absolute bottom-[70px] flex h-[55px] w-full items-center justify-center">
         <Tooltip title={t('MATCH.DISLIKE')} aria-label="dislike">
-          <Fab
-            size="large"
-            color="secondary"
+          <button
+            type="button"
             aria-label="dislike"
             onClick={handleNope}
-            className={c.button}
+            className="mx-[15px] flex size-14 items-center justify-center rounded-full bg-keyos-muted text-white shadow-lg hover:opacity-90"
           >
-            <CancelIcon />
-          </Fab>
+            <X size={28} />
+          </button>
         </Tooltip>
         <Tooltip title={t('MATCH.LIKE')} aria-label="like">
-          <Fab
-            size="large"
-            color="primary"
+          <button
+            type="button"
             aria-label="like"
             onClick={handleLike}
-            className={c.button}
+            className="mx-[15px] flex size-14 items-center justify-center rounded-full bg-[color:var(--keyos-app-accent)] text-white shadow-lg hover:opacity-90"
           >
-            <FireIcon />
-          </Fab>
+            <Flame size={28} />
+          </button>
         </Tooltip>
-      </Box>
+      </div>
     </>
   );
 };

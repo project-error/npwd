@@ -1,8 +1,6 @@
 import { FormattedTweet, UpdateProfileProps } from '@typings/twitter';
-import { twitterState, useSetFilteredTweets, useSetTweets, useSetTwitterProfile } from './state';
+import { useSetFilteredTweets, useSetTweets, useSetTwitterProfile } from './state';
 import { useCallback } from 'react';
-import { Snapshot, useRecoilCallback } from 'recoil';
-import AddTweetModal from '../components/AddTweetModal';
 
 interface TwitterActionProps {
   updateTweets: (tweets: FormattedTweet[]) => void;
@@ -14,22 +12,15 @@ interface TwitterActionProps {
   updateTweetLikes: (tweetId: number, isAddLike: boolean) => void;
 }
 
-const getIsTweetsLoading = (snapshot: Snapshot) =>
-  snapshot.getLoadable<FormattedTweet[]>(twitterState.tweets).state !== 'hasValue';
-
 export const useTwitterActions = (): TwitterActionProps => {
   const setTweets = useSetTweets();
   const setFilteredTweets = useSetFilteredTweets();
   const setTwitterProfile = useSetTwitterProfile();
 
-  const updateTweets = useRecoilCallback(
-    ({ snapshot, set }) =>
-      (tweet: FormattedTweet[]) => {
-        const tweetsLoading = getIsTweetsLoading(snapshot);
-        if (tweetsLoading) return;
-
-        set(twitterState.tweets, (curVal) => [...curVal, ...tweet]);
-      },
+  const updateTweets = useCallback(
+    (tweet: FormattedTweet[]) => {
+      setTweets((curVal) => [...curVal, ...tweet]);
+    },
     [setTweets],
   );
 
@@ -51,23 +42,17 @@ export const useTwitterActions = (): TwitterActionProps => {
     [setFilteredTweets],
   );
 
-  const addTweet = useRecoilCallback(({ snapshot, set }) => async (tweet: FormattedTweet) => {
-    const tweetsLoading = getIsTweetsLoading(snapshot);
+  const addTweet = useCallback(
+    (tweet: FormattedTweet) => {
+      setTweets((curVal) => [tweet, ...curVal]);
+    },
+    [setTweets],
+  );
 
-    if (tweetsLoading) return;
-
-    set(twitterState.tweets, (curVal) => [tweet, ...curVal]);
-  });
-
-  const deleteTweet = useRecoilCallback(
-    ({ snapshot, set }) =>
-      (tweetId: number) => {
-        const tweetsLoading = getIsTweetsLoading(snapshot);
-
-        if (tweetsLoading) return;
-
-        set(twitterState.tweets, (curVal) => [...curVal].filter((t) => t.id !== tweetId));
-      },
+  const deleteTweet = useCallback(
+    (tweetId: number) => {
+      setTweets((curVal) => [...curVal].filter((t) => t.id !== tweetId));
+    },
     [setTweets],
   );
 

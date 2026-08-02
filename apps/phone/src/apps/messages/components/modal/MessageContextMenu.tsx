@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContextMenu, IContextMenuOption } from '@ui/components/ContextMenu';
 import qs from 'qs';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { MessageImageModal } from './MessageImageModal';
 import MessageContactModal from './MessageContactModal';
 import { MessageConversation, MessageEvents } from '@typings/messages';
@@ -28,7 +28,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
   image,
   note,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
   const [imagePreview, setImagePreview] = useState(null);
@@ -43,7 +43,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         label: t('MESSAGES.MEDIA_OPTION'),
         icon: <BookImage />,
         onClick: () =>
-          history.push(
+          navigate(
             `/camera?${qs.stringify({
               referal: encodeURIComponent(pathname + search),
             })}`,
@@ -58,7 +58,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         label: t('MESSAGES.NOTE_OPTION'),
         icon: <StickyNote />,
         onClick: () =>
-          history.push(
+          navigate(
             `/notes?${qs.stringify({
               referal: encodeURIComponent(pathname + search),
             })}`,
@@ -80,7 +80,7 @@ const MessageContextMenu: React.FC<MessageCtxMenuProps> = ({
         },
       },
     ],
-    [history, pathname, search, t, sendEmbedMessage, activeMessageConversation, messageGroup],
+    [navigate, pathname, search, t, sendEmbedMessage, activeMessageConversation, messageGroup],
   );
 
   return (

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { phoneState } from '@os/phone/hooks/state';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 import { AlertEvents } from '@typings/alerts';
@@ -49,8 +49,8 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
-  const isPhoneOpen = useRecoilValue(phoneState.visibility);
-  const isPhoneDisabled = useRecoilValue(phoneState.isPhoneDisabled);
+  const isPhoneOpen = useAtomValue(phoneState.visibility);
+  const isPhoneDisabled = useAtomValue(phoneState.isPhoneDisabled);
 
   const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 

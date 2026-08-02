@@ -1,35 +1,15 @@
-import { styled, Box, Typography, IconButton } from '@mui/material';
 import { useApps } from '@os/apps/hooks/useApps';
 import fetchNui from '@utils/fetchNui';
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { Button } from '@npwd/keyos';
 
 interface SystemNotificationBaseProps extends CustomContentProps {
   secondaryTitle?: string;
   controls: boolean;
 }
-
-const StyledSnackbar = styled(SnackbarContent)(({ theme }) => ({
-  padding: '14px 16px',
-  flexDirection: 'column',
-  display: 'flex',
-  background: theme.palette.background.paper,
-  borderRadius: '12px !important',
-  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-}));
-
-const StyledMessage = styled('div')({
-  color: 'white',
-  fontSize: 16,
-  textOverflow: 'ellipsis',
-  display: '-webkit-box',
-  overflow: 'hidden',
-  boxOrient: 'vertical',
-  lineClamp: 2,
-});
 
 export type SystemNotificationBaseComponent = React.FC<SystemNotificationBaseProps>;
 
@@ -54,37 +34,35 @@ export const SystemNotificationBase = forwardRef<HTMLDivElement, SystemNotificat
     };
 
     return (
-      <StyledSnackbar onClick={handleCloseNoti} style={{ minWidth: '370px' }} ref={ref}>
-        <Box display="flex" alignItems="center" color="white" width="100%" mb={0.7}>
-          <Box
-            p="5px"
-            borderRadius={30}
-            bgcolor={app.backgroundColor}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
+      <SnackbarContent
+        className="keyos-surface-panel flex min-w-[370px] flex-col rounded-xl bg-keyos-panel p-4 shadow-[rgba(0,0,0,0.35)_0px_5px_15px]"
+        onClick={handleCloseNoti}
+        ref={ref}
+      >
+        <div className="mb-1.5 flex w-full items-center text-white">
+          <div
+            className="flex items-center justify-center rounded-full p-[5px]"
+            style={{ backgroundColor: app.backgroundColor }}
           >
-            <app.NotificationIcon fontSize="inherit" />
-          </Box>
-          <Box color="#bfbfbf" fontWeight={400} paddingLeft={1} flexGrow={1} fontSize={16}>
-            {t('APPS_SYSTEM')}
-          </Box>
-          <Box>
-            <Typography color="#bfbfbf">{secondaryTitle}</Typography>
-          </Box>
-        </Box>
-        <StyledMessage>{message}</StyledMessage>
+            <app.NotificationIcon className="size-[inherit]" />
+          </div>
+          <div className="grow pl-1 text-base font-normal text-[#bfbfbf]">{t('APPS_SYSTEM')}</div>
+          <div>
+            <p className="text-[#bfbfbf]">{secondaryTitle}</p>
+          </div>
+        </div>
+        <div className="line-clamp-2 overflow-hidden text-base text-white">{message}</div>
         {controls && (
-          <Box>
-            <IconButton size="small" onClick={handleConfirmAction}>
-              <CheckCircleIcon />
-            </IconButton>
-            <IconButton size="small" onClick={handleCancelAction}>
-              <CancelIcon />
-            </IconButton>
-          </Box>
+          <div>
+            <Button onClick={handleConfirmAction} size="icon-sm" variant="ghost">
+              <CheckCircle className="size-4" />
+            </Button>
+            <Button onClick={handleCancelAction} size="icon-sm" variant="ghost">
+              <XCircle className="size-4" />
+            </Button>
+          </div>
         )}
-      </StyledSnackbar>
+      </SnackbarContent>
     );
   },
 );

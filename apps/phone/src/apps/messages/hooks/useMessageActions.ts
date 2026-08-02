@@ -1,12 +1,11 @@
 import {
-  messageState,
   useConversationId,
+  useMessageConversationsValue,
   useSetMessageConversations,
   useSetMessages,
 } from './state';
 import { useCallback } from 'react';
 import { Message, MessageConversation } from '@typings/messages';
-import { useRecoilValueLoadable } from 'recoil';
 import { useContactActions } from '../../contacts/hooks/useContactActions';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { Contact } from '@typings/contact';
@@ -22,10 +21,7 @@ interface MessageActionProps {
 }
 
 export const useMessageActions = (): MessageActionProps => {
-  const { state: messageLoading } = useRecoilValueLoadable(messageState.messages);
-  const { state: conversationLoading, contents: conversations } = useRecoilValueLoadable(
-    messageState.messageCoversations,
-  );
+  const conversations = useMessageConversationsValue();
   const setMessageConversation = useSetMessageConversations();
   const setMessages = useSetMessages();
   const { getContactByNumber } = useContactActions();
@@ -80,20 +76,17 @@ export const useMessageActions = (): MessageActionProps => {
 
   const removeLocalConversation = useCallback(
     (conversationsId: number[]) => {
-      if (conversationLoading !== 'hasValue') return;
-
       if (!conversations.length) return;
 
       setMessageConversation((curVal) =>
         [...curVal].filter((conversation) => !conversationsId.includes(conversation.id)),
       );
     },
-    [setMessageConversation, conversationLoading, conversations],
+    [setMessageConversation, conversations],
   );
 
   const updateLocalMessages = useCallback(
     (messageDto: Message) => {
-      if (messageLoading !== 'hasValue') return;
       if (conversationId !== messageDto.conversation_id) return;
 
       setMessages((currVal) => [
@@ -109,7 +102,7 @@ export const useMessageActions = (): MessageActionProps => {
         },
       ]);
     },
-    [messageLoading, setMessages, conversationId],
+    [setMessages, conversationId],
   );
 
   const deleteLocalMessage = useCallback(

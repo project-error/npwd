@@ -1,14 +1,11 @@
 import { useCallback, useEffect } from 'react';
-import { matchPath, useHistory } from 'react-router-dom';
-import { atom, useRecoilState } from 'recoil';
+import { matchPath, useLocation } from 'react-router';
+import { atom, useAtom } from 'jotai';
 import { IAppConfig } from '@os/apps/config/apps';
 import { useApps } from '@os/apps/hooks/useApps';
 
 const state = {
-  recentlyUsed: atom({
-    key: 'recentlyUsed',
-    default: [],
-  }),
+  recentlyUsed: atom<IAppConfig[]>([]),
 };
 
 const MAX_QUICK_ACCESS_ITEMS = 5;
@@ -23,19 +20,19 @@ const unshiftApp = (arr: IAppConfig[], app) => {
 };
 
 export const useQuickAccess = () => {
-  const history = useHistory();
+  const location = useLocation();
   const { apps, getApp } = useApps();
-  const [recentlyUsed, setRecentlyUsed] = useRecoilState<IAppConfig[]>(state.recentlyUsed);
+  const [recentlyUsed, setRecentlyUsed] = useAtom(state.recentlyUsed);
 
   useEffect(() => {
     setRecentlyUsed([getApp('SETTINGS')]);
   }, [getApp, setRecentlyUsed]);
 
   const listener = useCallback(
-    (location) => {
+    (pathname: string) => {
       const newState = [...recentlyUsed];
       apps.forEach((app) => {
-        if (matchPath(location.pathname, { path: app.path, exact: true })) {
+        if (matchPath({ path: app.path, end: true }, pathname)) {
           unshiftApp(newState, app);
         }
       });
@@ -44,7 +41,9 @@ export const useQuickAccess = () => {
     [apps, recentlyUsed, setRecentlyUsed],
   );
 
-  history.listen(listener);
+  useEffect(() => {
+    listener(location.pathname);
+  }, [listener, location.pathname]);
 
   return recentlyUsed;
 };

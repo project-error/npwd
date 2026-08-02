@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "target": "es5",
-    "downlevelIteration": true,
+    "target": "es2020",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["vite/client", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -11,7 +11,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noImplicitAny": false,

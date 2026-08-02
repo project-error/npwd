@@ -29,27 +29,51 @@
   ],
   "frames": [
     {
-      "label": "Default",
+      "label": "Titanium Gray",
+      "value": "samsung-titanium"
+    },
+    {
+      "label": "Titanium Black",
+      "value": "samsung-black"
+    },
+    {
+      "label": "Titanium Violet",
+      "value": "samsung-violet"
+    },
+    {
+      "label": "Titanium White",
+      "value": "samsung-white"
+    },
+    {
+      "label": "Titanium Blue",
+      "value": "samsung-blue"
+    },
+    {
+      "label": "Titanium Green",
+      "value": "samsung-green"
+    },
+    {
+      "label": "Classic Default",
       "value": "default.png"
     },
     {
-      "label": "Blue",
+      "label": "Classic Blue",
       "value": "blue.png"
     },
     {
-      "label": "Gold",
+      "label": "Classic Gold",
       "value": "gold.png"
     },
     {
-      "label": "Minimal",
+      "label": "Classic Minimal",
       "value": "minimal.png"
     },
     {
-      "label": "Pink",
+      "label": "Classic Pink",
       "value": "pink.png"
     },
     {
-      "label": "White",
+      "label": "Classic White",
       "value": "white.png"
     }
   ],
@@ -222,8 +246,8 @@
     },
     "customWallpaper": "",
     "frame": {
-      "label": "Default",
-      "value": "default.png"
+      "label": "Titanium Gray",
+      "value": "samsung-titanium"
     },
     "theme": {
       "label": "Dark",
@@ -278,10 +302,6 @@
     {
       "label": "Dark",
       "value": "taso-dark"
-    },
-    {
-      "label": "Light",
-      "value": "default-light"
     }
   ],
   "debug": {

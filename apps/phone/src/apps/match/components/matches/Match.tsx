@@ -1,35 +1,24 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import ListItemText from '@mui/material/ListItemText';
-import { Box, Button, ListItem } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import PersonIcon from '@mui/icons-material/Person';
-import ChatIcon from '@mui/icons-material/Chat';
+import { useNavigate } from 'react-router';
+import { UserRound, MessageCircle } from 'lucide-react';
+import { ListItem } from '@npwd/keyos';
+import { NPWDButton } from '@npwd/keyos';
 
 import { FormattedMatch } from '@typings/match';
 import Profile from '../profile/Profile';
-
-const useStyles = makeStyles({
-  profile: {
-    position: 'relative',
-    height: '90%',
-    marginTop: '15px',
-  },
-});
 
 interface IProps {
   match: FormattedMatch;
 }
 
 export const Match = ({ match }: IProps) => {
-  const history = useHistory();
-  const classes = useStyles();
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const [showProfile, setShowProfile] = useState(false);
 
   const handleMessage = () => {
-    history.push(`/messages/new?phoneNumber=${match.phoneNumber}`);
+    navigate(`/messages/new?phoneNumber=${match.phoneNumber}`);
   };
 
   const handleProfile = () => {
@@ -42,19 +31,25 @@ export const Match = ({ match }: IProps) => {
 
   return (
     <>
-      <ListItem divider>
-        <ListItemText primary={match.name} secondary={secondaryText} />
-        <Button onClick={handleProfile}>
-          <PersonIcon />
-        </Button>
-        <Button onClick={handleMessage}>
-          <ChatIcon />
-        </Button>
-      </ListItem>
+      <ListItem
+        button
+        primaryText={match.name}
+        secondaryText={secondaryText}
+        endElement={
+          <div className="flex items-center gap-1">
+            <NPWDButton size="icon" variant="ghost" onClick={handleProfile}>
+              <UserRound size={20} />
+            </NPWDButton>
+            <NPWDButton size="icon" variant="ghost" onClick={handleMessage}>
+              <MessageCircle size={20} />
+            </NPWDButton>
+          </div>
+        }
+      />
       {showProfile && (
-        <Box className={classes.profile}>
+        <div className="relative mt-[15px] h-[90%]">
           <Profile profile={match} />
-        </Box>
+        </div>
       )}
     </>
   );

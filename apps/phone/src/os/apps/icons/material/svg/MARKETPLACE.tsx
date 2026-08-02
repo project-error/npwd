@@ -1,6 +1,6 @@
 import React from 'react';
-import { MonetizationOn } from '@mui/icons-material';
+import { Store } from 'lucide-react';
 
-const MarketplaceIcon: React.FC = () => <MonetizationOn fontSize="small" />;
+const MarketplaceIcon: React.FC = () => <Store size={16} />;
 
 export default MarketplaceIcon;

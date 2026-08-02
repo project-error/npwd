@@ -1,16 +1,17 @@
 import React from 'react';
-import { Box, Checkbox, IconButton } from '@mui/material';
-import useStyles from './grid.styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 import { usePhotosValue, useIsEditing, useCheckedPhotos } from '../../hooks/state';
-import EditIcon from '@mui/icons-material/Edit';
+import { Pencil } from 'lucide-react';
+import { cn } from '@utils/css';
+
+const photoClass =
+  'h-[129px] w-[129px] max-h-[150px] max-w-[150px] border border-inset border-white bg-cover bg-center bg-no-repeat';
 
 export const GalleryGrid = () => {
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = useQueryParams();
   const photos = usePhotosValue();
   const [isEditing, setIsEditing] = useIsEditing();
@@ -19,7 +20,7 @@ export const GalleryGrid = () => {
   const referal = query.referal ? decodeURIComponent(query.referal) : '/camera/image';
 
   const handlePhotoOpen = (photo) => {
-    history.push(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
+    navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
   };
 
   const toggleEdit = () => {
@@ -41,32 +42,42 @@ export const GalleryGrid = () => {
 
   return (
     <div>
-      <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
+      <div className="relative flex flex-grow flex-wrap content-start">
         {!!photos.length && (
-          <Box position="absolute" top={10} right={3}>
-            <IconButton onClick={toggleEdit}>
-              <EditIcon />
-            </IconButton>
-          </Box>
+          <div className="absolute right-3 top-2.5">
+            <button
+              type="button"
+              aria-label="Edit photos"
+              className="rounded-full p-2 text-keyos-fg transition-colors hover:bg-white/10"
+              onClick={toggleEdit}
+            >
+              <Pencil />
+            </button>
+          </div>
         )}
         {photos.map((photo) => {
           return isEditing ? (
-            <Box key={photo.id}>
+            <div key={photo.id}>
               <div
                 style={{ backgroundImage: `url(${photo.image})` }}
-                className={classes.photo}
+                className={cn(photoClass, 'cursor-pointer')}
                 onClick={() => toggleCheck(photo.id)}
               >
-                <Checkbox checked={checkedPhotos.indexOf(photo.id) !== -1} />
+                <input
+                  type="checkbox"
+                  checked={checkedPhotos.indexOf(photo.id) !== -1}
+                  readOnly
+                  className="size-5 accent-[color:var(--keyos-app-accent)]"
+                />
               </div>
-            </Box>
+            </div>
           ) : (
-            <Box key={photo.id} onClick={() => handlePhotoOpen(photo)}>
-              <div style={{ backgroundImage: `url(${photo.image})` }} className={classes.photo} />
-            </Box>
+            <div key={photo.id} onClick={() => handlePhotoOpen(photo)} className="cursor-pointer">
+              <div style={{ backgroundImage: `url(${photo.image})` }} className={photoClass} />
+            </div>
           );
         })}
-      </Box>
+      </div>
     </div>
   );
 };

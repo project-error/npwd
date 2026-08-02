@@ -1,26 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@mui/styles/makeStyles';
-import { Box, FormControlLabel, Switch, Typography, useTheme } from '@mui/material';
+import { SwitchRoot, SwitchThumb } from '@npwd/keyos';
 import Loader from '../Loader';
 import ProfileForm from '../profile/ProfileForm';
 import { useProfile } from '../../hooks/useProfile';
 
-const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    width: '100%',
-  },
-  switch: {
-    marginLeft: '15px',
-  },
-});
-
 function ProfileEditor() {
   const { profile, noProfileExists } = useProfile();
-  const classes = useStyles();
   const [t] = useTranslation();
-  const phoneTheme = useTheme();
   const [showPreview, setShowPreview] = useState(false);
 
   const toggleSwitch = () => {
@@ -30,15 +17,15 @@ function ProfileEditor() {
   if (!profile && !noProfileExists) return <Loader />;
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.switch}>
-        <FormControlLabel
-          control={<Switch checked={showPreview} onChange={toggleSwitch} />}
-          label={<Typography style={{ color: phoneTheme.palette.text.primary }}>{t<string>('MATCH.EDIT_PROFILE_PREVIEW')}</Typography>}
-        />
-      </Box>
+    <div className="h-full w-full">
+      <div className="ml-[15px] flex items-center gap-3">
+        <SwitchRoot checked={showPreview} onCheckedChange={toggleSwitch}>
+          <SwitchThumb />
+        </SwitchRoot>
+        <span className="text-keyos-fg">{t<string>('MATCH.EDIT_PROFILE_PREVIEW')}</span>
+      </div>
       <ProfileForm showPreview={showPreview} profile={profile} />
-    </Box>
+    </div>
   );
 }
 

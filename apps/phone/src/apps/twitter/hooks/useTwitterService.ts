@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
-import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { APP_TWITTER, SETTING_MENTIONS } from '../utils/constants';
-import { twitterState, useTweetsState } from './state';
+import { useSetFilteredTweets, useTweetsState, useTwitterProfileValue } from './state';
 import { Tweet, TwitterEvents } from '@typings/twitter';
 import { useTwitterActions } from './useTwitterActions';
 import { processBroadcastedTweet, processTweet } from '../utils/tweets';
 import { useNotification } from '@os/new-notifications/useNotification';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useSettings } from '@apps/settings/hooks/useSettings';
 
 function isMentioned(profileName: string, message: string) {
@@ -30,10 +29,8 @@ export const useTwitterService = () => {
   const { pathname } = useLocation();
   const [settings] = useSettings();
 
-  const { state: profileLoading, contents: profileContent } = useRecoilValueLoadable(
-    twitterState.profile,
-  );
-  const setFilteredTweets = useSetRecoilState(twitterState.filteredTweets);
+  const profileContent = useTwitterProfileValue();
+  const setFilteredTweets = useSetFilteredTweets();
 
   const _setFilteredTweets = (tweets: Tweet[]) => {
     setFilteredTweets(tweets.map(processTweet));
@@ -67,7 +64,6 @@ export const useTwitterService = () => {
 
   const handleTweetBroadcast = useCallback(
     (tweet: Tweet) => {
-      if (profileLoading !== 'hasValue') return;
       if (!profileContent) return;
 
       const currentProfileName = profileContent?.profile_name;
@@ -88,7 +84,7 @@ export const useTwitterService = () => {
         addNotification(tweet);
       }
     },
-    [addTweet, addNotification, profileContent, profileLoading, setTweets, tweets.length, pathname, settings.TWITTER_notiFilter.value],
+    [addTweet, addNotification, profileContent, setTweets, tweets.length, pathname, settings.TWITTER_notiFilter.value],
   );
 
   const handleTweetLikedBroadcast = useCallback((

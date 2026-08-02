@@ -1,28 +1,15 @@
-import { blue, common } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const CONTACTS_APP_PRIMARY_COLOR = blue[500];
-export const CONTACTS_APP_TEXT_COLOR = common.white;
+export const CONTACTS_APP_PRIMARY_COLOR = '#3b82f6';
+export const CONTACTS_APP_TEXT_COLOR = '#ffffff';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: CONTACTS_APP_PRIMARY_COLOR,
-      dark: blue[700],
-      light: blue[300],
-      contrastText: CONTACTS_APP_TEXT_COLOR,
-    },
-    secondary: {
-      main: '#d32f2f',
-      light: '#eb4242',
-      dark: '#941212',
-      contrastText: CONTACTS_APP_TEXT_COLOR,
-    },
-    success: {
-      main: '#2196f3',
-      contrastText: CONTACTS_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: CONTACTS_APP_PRIMARY_COLOR,
+  accentForeground: CONTACTS_APP_TEXT_COLOR,
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#93a4bd',
+  surface: '#11141a',
 };
 
 export default theme;

@@ -1,26 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import makeStyles from '@mui/styles/makeStyles';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Whatshot';
-import GroupIcon from '@mui/icons-material/Group';
-import ProfileIcon from '@mui/icons-material/Person';
-
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-});
+import { Link, useLocation } from 'react-router';
+import { Flame, Users, UserRound } from 'lucide-react';
+import { TabBar } from '@npwd/keyos';
 
 export function MatchBottomNavigation({ activePage, handleChange }) {
-  const classes = useStyles();
+  const { pathname } = useLocation();
+
+  const items = [
+    { value: '/match', label: '', icon: <Flame size={20} /> },
+    { value: '/match/matches', label: '', icon: <Users size={20} /> },
+    { value: '/match/profile', label: '', icon: <UserRound size={20} /> },
+  ];
 
   return (
-    <BottomNavigation value={activePage} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction component={Link} to="/match" icon={<HomeIcon />} />
-      <BottomNavigationAction component={Link} to="/match/matches" icon={<GroupIcon />} />
-      <BottomNavigationAction component={Link} to="/match/profile" icon={<ProfileIcon />} />
-    </BottomNavigation>
+    <TabBar
+      items={items}
+      value={pathname}
+      onChange={(value) => handleChange(null, items.findIndex((item) => item.value === value))}
+      renderItem={(item, active) => (
+        <Link
+          to={item.value}
+          className={`flex min-w-0 flex-1 flex-col items-center justify-center rounded-[var(--keyos-radius-pill)] px-3 py-2 transition-all duration-150 ${
+            active
+              ? 'bg-[color:var(--keyos-app-accent)]/20 text-[color:var(--keyos-app-accent)]'
+              : 'text-keyos-muted hover:text-keyos-fg'
+          }`}
+        >
+          <span className="[&_svg]:size-5">{item.icon}</span>
+        </Link>
+      )}
+    />
   );
 }
 

@@ -1,75 +1,57 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   ChannelItemProps,
   ChannelMember,
   ChannelMessageProps,
   DarkchatEvents,
 } from '@typings/darkchat';
-import fetchNui from '@utils/fetchNui';
 import { MockChannelMembers, MockChannels } from '../utils/constants';
-import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryState, useQueryStateValue, useSetQueryState } from '@common/query/query-state';
+
+export const DARKCHAT_CHANNELS_QUERY_KEY = ['darkchat', 'channels'] as const;
+export const DARKCHAT_MESSAGES_QUERY_KEY = ['darkchat', 'messages', 'active'] as const;
+export const DARKCHAT_MEMBERS_QUERY_KEY = ['darkchat', 'members', 'active'] as const;
+
+const fetchChannels = () =>
+  fetchNuiData<ChannelItemProps[]>(
+    DarkchatEvents.FETCH_CHANNELS,
+    undefined,
+    buildRespObj(MockChannels),
+  ).catch((err) => {
+    console.error(err);
+    return [];
+  });
 
 export const darkChatState = {
-  channels: atom<ChannelItemProps[]>({
-    key: 'darkchatChannels',
-    default: selector({
-      key: 'defaultDarkchatChannels',
-      get: async () => {
-        try {
-          // TODO: Enum for this
-          const res = await fetchNui<ServerPromiseResp<ChannelItemProps[]>>(
-            DarkchatEvents.FETCH_CHANNELS,
-            undefined,
-            buildRespObj(MockChannels),
-          );
-
-          return res.data;
-        } catch (err) {
-          console.error(err);
-          return [];
-        }
-      },
-    }),
-  }),
-  members: atom<ChannelMember[]>({
-    key: 'darkchatMembers',
-    default: null,
-  }),
-  darkChatMessages: atom<ChannelMessageProps[]>({
-    key: 'darkChatMessages',
-    default: [],
-  }),
-  activeConversation: atom<ChannelItemProps>({
-    key: 'darkChatActiveConversation',
-    default: null,
-  }),
-  showUploadMediaModal: atom<boolean>({
-    key: 'darkChatShowUploadModal',
-    default: false,
-  }),
-  showOwnerModal: atom<boolean>({
-    key: 'darkChatShowOwnerModal',
-    default: false,
-  }),
-  modalMedia: atom<string>({
-    key: 'darkChatModalMedia',
-    default: '',
-  }),
+  channels: DARKCHAT_CHANNELS_QUERY_KEY,
+  members: DARKCHAT_MEMBERS_QUERY_KEY,
+  darkChatMessages: DARKCHAT_MESSAGES_QUERY_KEY,
+  activeConversation: atom<ChannelItemProps>(null),
+  showUploadMediaModal: atom<boolean>(false),
+  showOwnerModal: atom<boolean>(false),
+  modalMedia: atom<string>(''),
 };
 
-export const useChannelsValue = () => useRecoilValue(darkChatState.channels);
-export const useSetChannelsState = () => useSetRecoilState(darkChatState.channels);
+export const useChannelsValue = () =>
+  useQueryStateValue<ChannelItemProps[]>(DARKCHAT_CHANNELS_QUERY_KEY, fetchChannels, []);
+export const useSetChannelsState = () =>
+  useSetQueryState<ChannelItemProps[]>(DARKCHAT_CHANNELS_QUERY_KEY, []);
 
 export const useActiveDarkchatValue = () =>
-  useRecoilValue<ChannelItemProps>(darkChatState.activeConversation);
-export const useSetActiveDarkchatState = () => useSetRecoilState(darkChatState.activeConversation);
-export const useActiveDarkchatState = () => useRecoilState(darkChatState.activeConversation);
+  useAtomValue(darkChatState.activeConversation);
+export const useSetActiveDarkchatState = () => useSetAtom(darkChatState.activeConversation);
+export const useActiveDarkchatState = () => useAtom(darkChatState.activeConversation);
 
 export const useDarkchatMessagesValue = () =>
-  useRecoilValue<ChannelMessageProps[]>(darkChatState.darkChatMessages);
-export const useSetDarkchatMessagesState = () => useSetRecoilState(darkChatState.darkChatMessages);
-export const useDarkchatMessagesState = () => useRecoilState(darkChatState.darkChatMessages);
+  useQueryStateValue<ChannelMessageProps[]>(DARKCHAT_MESSAGES_QUERY_KEY, async () => [], []);
+export const useSetDarkchatMessagesState = () =>
+  useSetQueryState<ChannelMessageProps[]>(DARKCHAT_MESSAGES_QUERY_KEY, []);
+export const useDarkchatMessagesState = () =>
+  useQueryState<ChannelMessageProps[]>(DARKCHAT_MESSAGES_QUERY_KEY, async () => [], []);
 
-export const useDarkchatMembersValue = () => useRecoilValue<ChannelMember[]>(darkChatState.members);
-export const useSetDarkchatMembers = () => useSetRecoilState(darkChatState.members);
+export const useDarkchatMembersValue = () =>
+  useQueryStateValue<ChannelMember[]>(DARKCHAT_MEMBERS_QUERY_KEY, async () => MockChannelMembers, []);
+export const useSetDarkchatMembers = () =>
+  useSetQueryState<ChannelMember[]>(DARKCHAT_MEMBERS_QUERY_KEY, []);

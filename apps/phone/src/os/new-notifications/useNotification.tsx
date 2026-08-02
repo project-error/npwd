@@ -1,14 +1,15 @@
 import { useSnackbar } from 'notistack';
-import { useRecoilCallback } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useCallback } from 'react';
 import { useApps } from '../apps/hooks/useApps';
 import uuid from 'react-uuid';
 
 import {
-  notifications,
   allNotificationIds,
   activeNotificationIds,
   unreadNotificationIds,
   unreadNotifications,
+  notificationsAtom,
 } from './state';
 
 interface NotificationProps {
@@ -23,30 +24,60 @@ interface NotificationProps {
 export const useNotification = (): NotificationProps => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { getApp } = useApps();
+  const notificationMap = useAtomValue(notificationsAtom);
+  const allIds = useAtomValue(allNotificationIds);
+  const activeIds = useAtomValue(activeNotificationIds);
+  const unreadIds = useAtomValue(unreadNotificationIds);
+  const setNotifications = useSetAtom(notificationsAtom);
+  const setAllIds = useSetAtom(allNotificationIds);
+  const setActiveIds = useSetAtom(activeNotificationIds);
+  const setUnreadIds = useSetAtom(unreadNotificationIds);
+  const setUnreadNotifications = useSetAtom(unreadNotifications);
 
-  const enqueueNotification = useRecoilCallback(
-    ({ set, snapshot }) =>
-      async ({
-        appId,
-        content,
-        secondaryTitle,
-        notisId,
-        path,
-        keepOpen = false,
-        onClick,
-        duration,
-      }: any) => {
-        const app = getApp(appId);
+  const removeActive = useCallback(
+    (id: string) => {
+      closeSnackbar(id);
 
-        const curNotis = await snapshot.getPromise(allNotificationIds);
-        const uniqID = `${notisId}:${uuid()}`;
+      setNotifications((current) => {
+        const notiTgt = current[id];
+        if (!notiTgt) return current;
 
-        if (curNotis.includes(uniqID)) {
-          console.error(`Notification with key: [${uniqID}] already exists!`);
-          return;
-        }
+        return {
+          ...current,
+          [id]: {
+            ...notiTgt,
+            isActive: false,
+          },
+        };
+      });
 
-        set(notifications(uniqID), {
+      setActiveIds((current) => current.filter((curId) => curId !== id));
+    },
+    [closeSnackbar, setActiveIds, setNotifications],
+  );
+
+  const enqueueNotification = useCallback(
+    ({
+      appId,
+      content,
+      secondaryTitle,
+      notisId,
+      path,
+      keepOpen = false,
+      onClick,
+      duration,
+    }: any) => {
+      const app = getApp(appId);
+      const uniqID = `${notisId}:${uuid()}`;
+
+      if (allIds.includes(uniqID)) {
+        console.error(`Notification with key: [${uniqID}] already exists!`);
+        return;
+      }
+
+      setNotifications((current) => ({
+        ...current,
+        [uniqID]: {
           appId: app.id,
           content,
           path,
@@ -56,152 +87,136 @@ export const useNotification = (): NotificationProps => {
           keepOpen,
           duration,
           id: uniqID,
-        });
-
-        set(allNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
-        set(activeNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
-        set(unreadNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
-
-        set(unreadNotifications, (curVal) => [
-          ...curVal,
-          {
-            id: uniqID,
-            appId,
-            path: path,
-          },
-        ]);
-
-        enqueueSnackbar(content, {
-          variant: 'npwdNotification',
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
-          },
-          persist: keepOpen,
-          key: uniqID,
-          onExited: () => {
-            removeActive(uniqID);
-          },
-          onClick,
-          secondaryTitle,
-          path,
-          app,
-          autoHideDuration: 3000 || duration,
-          disableWindowBlurListener: true,
-        });
-      },
-  );
-
-  const removeAllActive = useRecoilCallback(
-    ({ reset, snapshot, set }) =>
-      async () => {
-        const allActiveIds = await snapshot.getPromise(activeNotificationIds);
-
-        for (const id of allActiveIds) {
-          const noti = await snapshot.getPromise(notifications(id));
-          if (!noti) continue;
-
-          set(notifications(id), {
-            ...noti,
-            isActive: false,
-          });
-        }
-
-        reset(activeNotificationIds);
-      },
-    [],
-  );
-
-  const removeActive = useRecoilCallback(
-    ({ set, snapshot }) =>
-      async (id: string) => {
-        closeSnackbar(id);
-
-        const activeIds = await snapshot.getPromise(activeNotificationIds);
-        const tgtAtom = notifications(id);
-        const notiTgt = await snapshot.getPromise(tgtAtom);
-
-        if (!notiTgt) return;
-
-        set(tgtAtom, {
-          ...notiTgt,
-          isActive: false,
-        });
-
-        // Without the target
-        const newActiveIds = activeIds.filter((curId) => curId !== id);
-
-        set(activeNotificationIds, newActiveIds);
-      },
-    [closeSnackbar],
-  );
-
-  const markAsRead =
-    // Ignoring the recoil setter as its stable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useRecoilCallback(
-      ({ set, snapshot }) =>
-        async (key: string) => {
-          const tgtState = notifications(key);
-          const { isActive, isRead, ...restNoti } = await snapshot.getPromise(tgtState);
-
-          set(tgtState, {
-            ...restNoti,
-            isRead: true,
-            isActive: false,
-          });
-
-          // If the targeted notification isn't currently active, we should bail.
-          if (isActive) {
-            closeSnackbar(key);
-            const curActiveNotis = await snapshot.getPromise(activeNotificationIds);
-
-            const newActiveNotis = curActiveNotis.filter((id) => id !== key);
-            set(activeNotificationIds, newActiveNotis);
-          }
-
-          const curUnreadNotisIds = await snapshot.getPromise(unreadNotificationIds);
-
-          const newUnreadNotisIds = curUnreadNotisIds.filter((id) => id !== key);
-          set(unreadNotificationIds, newUnreadNotisIds);
-
-          const curUnreadNotis = await snapshot.getPromise(unreadNotifications);
-
-          const newUnreadNotis = curUnreadNotis.filter((noti) => noti.id !== key);
-          set(unreadNotifications, newUnreadNotis);
         },
-      [closeSnackbar],
-    );
+      }));
 
-  const markAllAsRead = useRecoilCallback(({ snapshot }) => async () => {
-    const allNotis = await snapshot.getPromise(unreadNotificationIds);
+      setAllIds((curIds) => [...curIds, uniqID]);
+      setActiveIds((curIds) => [...curIds, uniqID]);
+      setUnreadIds((curIds) => [...curIds, uniqID]);
 
-    for (const id of allNotis) {
-      await markAsRead(id);
-    }
-  });
+      setUnreadNotifications((curVal) => [
+        ...curVal,
+        {
+          id: uniqID,
+          appId,
+          path,
+        },
+      ]);
 
-  const clearAllNotifications = useRecoilCallback(({ reset, snapshot }) => async () => {
-    const allNotis = await snapshot.getPromise(allNotificationIds);
+      enqueueSnackbar(content, {
+        variant: 'npwdNotification',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+        persist: keepOpen,
+        key: uniqID,
+        onExited: () => {
+          removeActive(uniqID);
+        },
+        onClick,
+        secondaryTitle,
+        path,
+        app,
+        autoHideDuration: duration || 3000,
+        disableWindowBlurListener: true,
+      });
+    },
+    [
+      allIds,
+      enqueueSnackbar,
+      getApp,
+      removeActive,
+      setActiveIds,
+      setAllIds,
+      setNotifications,
+      setUnreadIds,
+      setUnreadNotifications,
+    ],
+  );
 
-    // In case we still have one open, we want to clear everything prior to reset.
-    for (const id of allNotis) {
-      const tgtAtom = notifications(id);
-      const noti = await snapshot.getPromise(tgtAtom);
+  const removeAllActive = useCallback(() => {
+    setNotifications((current) => {
+      const next = { ...current };
 
-      if (noti.isActive) {
-        closeSnackbar(id);
+      for (const id of activeIds) {
+        const noti = next[id];
+        if (!noti) continue;
+
+        next[id] = {
+          ...noti,
+          isActive: false,
+        };
       }
 
-      // Reset the notification atom
-      reset(tgtAtom);
+      return next;
+    });
+
+    setActiveIds([]);
+  }, [activeIds, setActiveIds, setNotifications]);
+
+  const markAsRead = useCallback(
+    async (key: string) => {
+      const target = notificationMap[key];
+      if (!target) return;
+
+      setNotifications((current) => ({
+        ...current,
+        [key]: {
+          ...current[key],
+          isRead: true,
+          isActive: false,
+        },
+      }));
+
+      if (target.isActive) {
+        closeSnackbar(key);
+        setActiveIds((current) => current.filter((id) => id !== key));
+      }
+
+      setUnreadIds((current) => current.filter((id) => id !== key));
+      setUnreadNotifications((current) => current.filter((noti) => noti.id !== key));
+    },
+    [
+      closeSnackbar,
+      notificationMap,
+      setActiveIds,
+      setNotifications,
+      setUnreadIds,
+      setUnreadNotifications,
+    ],
+  );
+
+  const markAllAsRead = useCallback(async () => {
+    for (const id of unreadIds) {
+      await markAsRead(id);
+    }
+  }, [markAsRead, unreadIds]);
+
+  const clearAllNotifications = useCallback(async () => {
+    for (const id of allIds) {
+      const noti = notificationMap[id];
+
+      if (noti?.isActive) {
+        closeSnackbar(id);
+      }
     }
 
-    reset(unreadNotificationIds);
-    reset(unreadNotifications);
-    reset(activeNotificationIds);
-    reset(allNotificationIds);
-  });
+    setNotifications({});
+    setUnreadIds([]);
+    setUnreadNotifications([]);
+    setActiveIds([]);
+    setAllIds([]);
+  }, [
+    allIds,
+    closeSnackbar,
+    notificationMap,
+    setActiveIds,
+    setAllIds,
+    setNotifications,
+    setUnreadIds,
+    setUnreadNotifications,
+  ]);
 
   return {
     enqueueNotification,

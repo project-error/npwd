@@ -1,14 +1,8 @@
-import { styled } from '@mui/styles';
+import React from 'react';
+import { cn } from '@utils/css';
 
-const Backdrop = styled('div')({
-  background: 'black',
-  opacity: '0.6',
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  zIndex: 5,
-});
+const Backdrop: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
+  <div className={cn('absolute inset-0 z-[5] bg-black/60', className)} {...props} />
+);
 
 export default Backdrop;

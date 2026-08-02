@@ -1,6 +1,6 @@
 import React from 'react';
-import { LocationSearching } from '@mui/icons-material';
+import { Locate } from 'lucide-react';
 
-const LocationIcon: React.FC = () => <LocationSearching fontSize="large" />;
+const LocationIcon: React.FC = () => <Locate size={16} />;
 
 export default LocationIcon;

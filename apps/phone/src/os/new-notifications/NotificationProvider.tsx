@@ -19,7 +19,7 @@ const styles = {
 };
 
 export const NotificationProvider: React.FC = ({ children }) => {
-  // we'll probably change this out with a recoil family
+  // This legacy provider is kept isolated from the Jotai notification store.
   const [notis, setNotis] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const { getApp } = useApps();

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { List } from '@ui/components/List';
+import { ListItem } from '@ui/components/ListItem';
 import { useNotesValue, useSetModalVisible } from '../hooks/state';
 import { useSetSelectedNote } from '../hooks/state';
 import { NoteItem } from '@typings/notes';
-import { useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 
@@ -17,14 +17,13 @@ const NoteList = () => {
   const [t] = useTranslation();
   const setModalVisible = useSetModalVisible();
   const query = useQueryParams();
-  const history = useHistory();
-  const phoneTheme = useTheme();
+  const navigate = useNavigate();
 
   const referal = query.referal && decodeURIComponent(query.referal);
 
   const handleNoteModal = (note: NoteItem) => {
     if (referal) {
-      history.push(addQueryToLocation(getLocationFromUrl(referal), 'note', String(note.id)));
+      navigate(addQueryToLocation(getLocationFromUrl(referal), 'note', String(note.id)));
       return;
     }
     setNote(note);
@@ -36,34 +35,16 @@ const NoteList = () => {
       <List disablePadding>
         {notes.map((note) => (
           <ListItem key={note.id} button divider onClick={() => handleNoteModal(note)}>
-            <ListItemText>
-              {
-                <Typography style={{ color: phoneTheme.palette.text.primary }}>
-                  {note.title}
-                </Typography>
-              }
-            </ListItemText>
+            <p className="px-4 py-3 text-keyos-fg">{note.title}</p>
           </ListItem>
         ))}
       </List>
     );
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
-      height="100%"
-    >
-      <Typography
-        color="inherit"
-        variant="h6"
-        style={{ fontWeight: 300, color: phoneTheme.palette.text.primary }}
-      >
-        {t('NOTES.FEEDBACK.NO_NOTES')}
-      </Typography>
-    </Box>
+    <div className="flex h-full flex-col items-center justify-center">
+      <p className="text-xl font-light text-keyos-fg">{t('NOTES.FEEDBACK.NO_NOTES')}</p>
+    </div>
   );
 };
 

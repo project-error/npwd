@@ -1,14 +1,21 @@
 import React from 'react';
-import { Box, BoxProps, CircularProgress } from '@mui/material';
+import { cn } from '@utils/css';
 
-export const LoadingSpinner: React.FC<BoxProps> = ({ ...props }) => (
-  <Box
-    display="flex"
-    justifyContent="center"
-    alignItems="center"
-    height={props.height ?? '100%'}
+export interface LoadingSpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+  height?: React.CSSProperties['height'];
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  className,
+  height = '100%',
+  style,
+  ...props
+}) => (
+  <div
+    className={cn('flex items-center justify-center', className)}
+    style={{ height, ...style }}
     {...props}
   >
-    <CircularProgress />
-  </Box>
+    <div className="size-8 animate-spin rounded-full border-2 border-keyos-muted/30 border-t-keyos-amber" />
+  </div>
 );

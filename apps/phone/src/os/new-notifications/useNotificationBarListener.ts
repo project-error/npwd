@@ -1,26 +1,25 @@
-import { useEffect } from 'react';
-import { matchPath, useHistory } from 'react-router-dom';
-import { useRecoilCallback } from 'recoil';
-import { unreadNotifications } from './state';
+import { useCallback, useEffect } from 'react';
+import { matchPath, useLocation } from 'react-router';
+import { useUnreadNotifications } from './state';
 import { useNotification } from './useNotification';
 
 export const useNotificationBarListener = () => {
-  const history = useHistory();
+  const location = useLocation();
   const { markAsRead } = useNotification();
+  const unreadNotis = useUnreadNotifications();
 
-  const historyListener = useRecoilCallback(({ snapshot }) => async (location: any) => {
-    const unreadNotis = await snapshot.getPromise(unreadNotifications);
-
-    for (const unreadNoti of unreadNotis) {
-      if (matchPath(location.pathname, { path: unreadNoti.path, exact: false })) {
-        await markAsRead(unreadNoti.id);
+  const locationListener = useCallback(
+    async (pathname: string) => {
+      for (const unreadNoti of unreadNotis) {
+        if (matchPath({ path: unreadNoti.path, end: false }, pathname)) {
+          await markAsRead(unreadNoti.id);
+        }
       }
-    }
-  });
+    },
+    [markAsRead, unreadNotis],
+  );
 
   useEffect(() => {
-    const unlisten = history.listen(historyListener);
-
-    return unlisten;
-  }, [history, historyListener]);
+    locationListener(location.pathname);
+  }, [location.pathname, locationListener]);
 };

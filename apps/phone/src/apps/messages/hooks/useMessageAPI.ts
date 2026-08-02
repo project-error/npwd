@@ -11,10 +11,9 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { messageState, useSetMessages } from './state';
-import { useRecoilValueLoadable } from 'recoil';
-import { MockConversationServerResp } from '../utils/constants';
+import { useNavigate } from 'react-router';
+import { useMessageConversationsValue, useSetMessages } from './state';
+import { getMockConversationServerResp } from '../utils/constants';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 
 type UseMessageAPIProps = {
@@ -37,9 +36,8 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     removeLocalConversation,
     setMessageReadState,
   } = useMessageActions();
-  const history = useHistory();
-  const { state: messageConversationsState, contents: messageConversationsContents } =
-    useRecoilValueLoadable(messageState.messageCoversations);
+  const navigate = useNavigate();
+  const messageConversations = useMessageConversationsValue();
   const setMessages = useSetMessages();
 
   const myPhoneNumber = useMyPhoneNumber();
@@ -126,10 +124,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
   const addConversation = useCallback(
     (conversation: PreDBConversation) => {
-      if (messageConversationsState !== 'hasValue') {
-        return;
-      }
-
       fetchNui<ServerPromiseResp<MessageConversation>, PreDBConversation>(
         MessageEvents.CREATE_MESSAGE_CONVERSATION,
         {
@@ -139,7 +133,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         },
       ).then((resp) => {
         if (resp.status !== 'ok') {
-          history.push('/messages');
+          navigate('/messages');
 
           if (resp.errorMsg === 'MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE') {
             return addAlert({
@@ -158,12 +152,12 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
         // FIXME: This won't work properly has the conversationList will differ each time someone creates a convo.
         // FIXME: Just like this for now.
-        const doesConversationExist = messageConversationsContents.find(
+        const doesConversationExist = messageConversations.find(
           (c) => c.conversationList === resp.data.conversationList,
         );
 
         if (doesConversationExist) {
-          history.push('/messages');
+          navigate('/messages');
           return addAlert({
             message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
             type: 'error',
@@ -180,16 +174,15 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           unreadCount: 0,
         });
 
-        history.push(`/messages`);
+        navigate('/messages');
       });
     },
     [
-      history,
+      navigate,
       updateLocalConversations,
       addAlert,
       t,
-      messageConversationsContents,
-      messageConversationsState,
+      messageConversations,
     ],
   );
 
@@ -219,7 +212,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
           conversationId,
           page,
         },
-        MockConversationServerResp,
+        getMockConversationServerResp(conversationId),
       ).then((resp) => {
         if (resp.status !== 'ok') {
           addAlert({
@@ -227,13 +220,14 @@ export const useMessageAPI = (): UseMessageAPIProps => {
             type: 'error',
           });
 
-          return history.push('/messages');
+          navigate('/messages');
+          return;
         }
 
         setMessages(resp.data);
       });
     },
-    [setMessages, addAlert, t, history],
+    [setMessages, addAlert, t, navigate],
   );
 
   return {

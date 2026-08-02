@@ -1,49 +1,31 @@
-import { Button, ButtonProps, alpha } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import { Button } from '@npwd/keyos';
+import { cn } from '@utils/css';
 
 type StatusButtonStyleColor = 'success' | 'error' | 'warning' | 'info';
 
-interface IStatusButtonStyleProps {
+type StatusButtonVariant = 'contained' | 'outlined' | 'text';
+
+const colorVariantMap: Record<StatusButtonStyleColor, React.ComponentProps<typeof Button>['variant']> = {
+  error: 'danger',
+  info: 'accent',
+  success: 'success',
+  warning: 'primary',
+};
+
+export interface StatusButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color: StatusButtonStyleColor;
+  variant?: StatusButtonVariant;
 }
 
-const useStyles = makeStyles(
-  (theme) => ({
-    root: {
-      color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
-      '&:hover': {
-        backgroundColor: ({ color }: IStatusButtonStyleProps) =>
-          alpha(theme.palette[color].light, theme.palette.action.hoverOpacity),
-      },
-    },
-    outlined: {
-      border: ({ color }: IStatusButtonStyleProps) =>
-        `1px solid ${alpha(theme.palette[color].main, 0.5)}`,
-      '&:hover': {
-        border: ({ color }: IStatusButtonStyleProps) => `1px solid ${theme.palette[color].main}`,
-      },
-    },
-    contained: {
-      color: ({ color }: IStatusButtonStyleProps) => theme.palette[color].contrastText,
-      backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].main,
-      '&:hover': {
-        backgroundColor: ({ color }: IStatusButtonStyleProps) => theme.palette[color].dark,
-      },
-    },
-  }),
-  { name: 'MuiButton' },
-);
+export const StatusButton: React.FC<StatusButtonProps> = ({
+  color = 'info',
+  variant = 'contained',
+  className,
+  ...props
+}) => {
+  const keyosVariant =
+    variant === 'text' ? 'ghost' : variant === 'outlined' ? 'glass' : colorVariantMap[color];
 
-export const StatusButton: React.FC<
-  Omit<ButtonProps, 'color'> & { color: StatusButtonStyleColor }
-> = ({ color = 'info', variant, className, ...props }) => {
-  const classes = useStyles({ color });
-  return (
-    <Button
-      variant={variant}
-      className={`${classes.root} ${classes[variant] || ''} ${className}`}
-      {...props}
-    />
-  );
+  return <Button className={cn(className)} variant={keyosVariant} {...props} />;
 };

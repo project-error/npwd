@@ -4,8 +4,10 @@ import {useTranslation} from 'react-i18next';
 
 import {useDebounce} from '@os/phone/hooks/useDebounce';
 import {useSetContactFilterInput} from '../../hooks/state';
-import {NPWDInput, NPWDSearchInput} from '@ui/components';
-import {Search} from "lucide-react";
+import { Input } from '@npwd/keyos';
+import { Search } from 'lucide-react';
+import { contactsSurfaces } from '../ui/contacts-surfaces';
+import { cn } from '@utils/css';
 
 export const SearchContacts: React.FC = () => {
     const [t] = useTranslation();
@@ -19,11 +21,11 @@ export const SearchContacts: React.FC = () => {
     }, [debouncedVal, setFilterVal]);
 
     return (
-        <div className="w-full py-2">
-            <div className="flex items-center justify-start bg-neutral-200 dark:bg-neutral-800 rounded-md px-2 space-x-2 border dark:border-neutral-700">
-                <Search className="h-5 w-5 dark:text-neutral-400"/>
-                <NPWDInput
-                    className="group-focus:ring-2"
+        <div className="relative">
+            <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-keyos-muted"/>
+                <Input
+                    className={cn(contactsSurfaces.input, 'pl-10')}
                     onChange={(e) => setInputVal(e.target.value)}
                     placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
                     value={inputVal}

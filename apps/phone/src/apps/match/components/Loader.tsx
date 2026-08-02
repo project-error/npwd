@@ -1,25 +1,11 @@
 import React from 'react';
-import { Box, CircularProgress } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  progress: {
-    marginTop: '140px',
-  },
-});
+import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 
 function Loader() {
-  const classes = useStyles();
   return (
-    <Box className={classes.root}>
-      <CircularProgress size={60} className={classes.progress} />
-    </Box>
+    <div className="flex h-full w-full justify-center">
+      <LoadingSpinner height={60} className="mt-[140px]" />
+    </div>
   );
 }
 

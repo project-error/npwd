@@ -1,4 +1,4 @@
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 import { simcardState } from './state';
 import { useMyPhoneNumber } from './useMyPhoneNumber';
 import InjectDebugData from '../../debug/InjectDebugData';
@@ -14,7 +14,7 @@ InjectDebugData([
 ]);
 
 export const useSimcardService = () => {
-  const setNumber = useSetRecoilState(simcardState.number);
+  const setNumber = useSetAtom(simcardState.number);
   useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, setNumber);
   return useMyPhoneNumber();
 };

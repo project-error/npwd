@@ -1,23 +1,23 @@
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 import { PhoneEvents } from '@typings/phone';
 import { phoneState } from './state';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 
 export const usePhoneService = () => {
   const { getApp } = useApps();
   const { addAlert } = useSnackbar();
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const setVisibility = useSetRecoilState(phoneState.visibility);
-  const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
-  const setPhoneTime = useSetRecoilState(phoneState.phoneTime);
-  const setIsPhoneDisabled = useSetRecoilState(phoneState.isPhoneDisabled);
-  const setPlayerSource = useSetRecoilState(phoneState.playerSource);
-  const setIdentifier = useSetRecoilState(phoneState.playerIdentifier);
+  const setVisibility = useSetAtom(phoneState.visibility);
+  const setResourceConfig = useSetAtom(phoneState.resourceConfig);
+  const setPhoneTime = useSetAtom(phoneState.phoneTime);
+  const setIsPhoneDisabled = useSetAtom(phoneState.isPhoneDisabled);
+  const setPlayerSource = useSetAtom(phoneState.playerSource);
+  const setIdentifier = useSetAtom(phoneState.playerIdentifier);
 
   const setPlayerIdentifier = (value: string) => {
     setIdentifier(value);
@@ -30,9 +30,9 @@ export const usePhoneService = () => {
       const foundApp = getApp(app.toUpperCase());
 
       if (!foundApp) return console.error(`App "${app}" is an invalid app id to open`);
-      history.push(foundApp.path);
+      navigate(foundApp.path);
     },
-    [getApp, history],
+    [getApp, navigate],
   );
 
   useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);

@@ -1,28 +1,15 @@
-import { red, common } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
 export const MATCH_APP_PRIMARY_COLOR = '#FE3B73';
-export const MATCH_APP_TEXT_COLOR = common.white;
+export const MATCH_APP_TEXT_COLOR = '#ffffff';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: MATCH_APP_PRIMARY_COLOR,
-      dark: red[700],
-      light: red[300],
-      contrastText: MATCH_APP_TEXT_COLOR,
-    },
-    secondary: {
-      main: '#d32f2f',
-      light: '#eb4242',
-      dark: '#941212',
-      contrastText: MATCH_APP_TEXT_COLOR,
-    },
-    success: {
-      main: '#2196f3',
-      contrastText: MATCH_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: MATCH_APP_PRIMARY_COLOR,
+  accentForeground: MATCH_APP_TEXT_COLOR,
+  danger: '#d32f2f',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

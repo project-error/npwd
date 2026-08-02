@@ -1,11 +1,4 @@
 import React from 'react';
-import { Theme } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
-
-interface IStyleProps {
-  size: string;
-}
 
 interface PictureThumbnailProps {
   src: string;
@@ -13,13 +6,15 @@ interface PictureThumbnailProps {
   size?: string;
 }
 
-const useStyles = makeStyles<Theme, IStyleProps>({
-  root: ({ size }) => ({
-    objectFit: 'contain',
-    width: size,
-  }),
-});
-
-export const PictureThumbnail: React.FC<PictureThumbnailProps> = ({ src, alt, size = '3em' }) => (
-  <img className={useStyles({ size }).root} src={src} alt={alt} />
+export const PictureThumbnail: React.FC<PictureThumbnailProps> = ({
+  src,
+  alt,
+  size = '3em',
+}) => (
+  <img
+    alt={alt}
+    className="object-contain"
+    src={src}
+    style={{ width: size }}
+  />
 );

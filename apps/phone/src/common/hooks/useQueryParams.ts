@@ -1,5 +1,5 @@
 import qs, { ParsedQs } from 'qs';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useMemo } from 'react';
 
 /**

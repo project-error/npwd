@@ -1,57 +1,40 @@
 import React, { useState } from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PersonIcon from '@mui/icons-material/Person';
-import HistoryIcon from '@mui/icons-material/History';
+import { NavLink, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { Contact, History, Phone } from 'lucide-react';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  icon: {
-    color: theme.palette.primary.main,
-  },
-}));
+import { Contact, Grid3X3, History } from 'lucide-react';
+import { TabBar } from '@npwd/keyos';
 
 const DialerNavBar: React.FC = () => {
-  const classes = useStyles();
   const { pathname } = useLocation();
-  const [page, setPage] = useState(pathname);
   const [t] = useTranslation();
+  const [page, setPage] = useState(pathname);
 
-  const handleChange = (_e, newPage) => {
-    setPage(newPage);
-  };
+  const items = [
+    { value: '/phone', label: t('DIALER.HISTORY', 'Recents'), icon: <History /> },
+    { value: '/phone/contacts', label: t('APPS_CONTACTS', 'Contacts'), icon: <Contact /> },
+    { value: '/phone/dial', label: t('DIALER.KEYPAD', 'Keypad'), icon: <Grid3X3 /> },
+  ];
 
   return (
-    <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
-      <BottomNavigationAction
-        value="/phone"
-        component={NavLink}
-        icon={<History />}
-        to="/phone"
-      />
-      <BottomNavigationAction
-        value="/phone/dial"
-        color="secondary"
-        component={NavLink}
-        icon={<Phone />}
-        to="/phone/dial"
-      />
-      <BottomNavigationAction
-        value="/phone/contacts"
-        color="secondary"
-        component={NavLink}
-        icon={<Contact />}
-        to="/phone/contacts"
-      />
-    </BottomNavigation>
+    <TabBar
+      items={items}
+      value={page}
+      onChange={setPage}
+      renderItem={(item, active) => (
+        <NavLink
+          to={item.value}
+          className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-[var(--keyos-radius-pill)] px-3 py-1.5 text-[length:var(--keyos-text-micro)] font-medium transition-all duration-150 ${
+            active
+              ? 'bg-[color:var(--keyos-app-accent)]/20 text-[color:var(--keyos-app-accent)]'
+              : 'text-keyos-muted hover:text-keyos-fg'
+          }`}
+          onClick={() => setPage(item.value)}
+        >
+          <span className="[&_svg]:size-5">{item.icon}</span>
+          <span className="truncate">{item.label}</span>
+        </NavLink>
+      )}
+    />
   );
 };
 

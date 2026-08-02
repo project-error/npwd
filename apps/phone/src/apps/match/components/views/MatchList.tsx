@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
 
 import Loader from '../Loader';
 import PageText from '../PageText';
@@ -11,17 +8,7 @@ import { useMatches } from '../../hooks/useMatches';
 import MatchPagination from '../MatchPagination';
 import { useMatchActions } from '../../hooks/useMatchActions';
 
-const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-  },
-});
-
 function MatchList() {
-  const classes = useStyles();
   const [t] = useTranslation();
   const { matches, error } = useMatches();
   const { newMatchesPage } = useMatchActions();
@@ -29,7 +16,7 @@ function MatchList() {
   const [matchPage, setMatchPage] = useState<number>(1);
 
   const handlePageChange = useCallback(
-    (e: React.ChangeEvent<unknown>, page: number) => {
+    (_e: React.ChangeEvent<unknown>, page: number) => {
       setMatchPage(page);
     },
     [setMatchPage],
@@ -47,18 +34,18 @@ function MatchList() {
   const totalPageCount = Math.ceil(matches.length / MAX_PAGE_SIZE);
 
   return (
-    <Box className={classes.root}>
-      <Box>
+    <div className="flex h-full flex-col justify-between">
+      <div>
         {matches.map((match) => (
           <Match key={match.id} match={match} />
         ))}
-      </Box>
-      <Box mb={2} width="100%" display="flex" justifyContent="center" alignItems="center">
+      </div>
+      <div className="mb-2 flex w-full items-center justify-center">
         {totalPageCount > 1 && (
           <MatchPagination onChange={handlePageChange} totalCount={totalPageCount} />
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 

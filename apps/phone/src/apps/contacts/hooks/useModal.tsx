@@ -1,8 +1,8 @@
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { showMoneyModal } from './state';
 
 export const useModal = () => {
-  const [contactPayModal, setContactPayModal] = useRecoilState<boolean>(showMoneyModal);
+  const [contactPayModal, setContactPayModal] = useAtom(showMoneyModal);
 
   return { contactPayModal, setContactPayModal };
 };

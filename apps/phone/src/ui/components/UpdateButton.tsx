@@ -1,28 +1,17 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Fab } from '@mui/material';
-import PublishIcon from '@mui/icons-material/Publish';
-
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    bottom: '15px',
-    right: '15px',
-  },
-});
+import { NPWDButton } from '@npwd/keyos';
+import { Upload } from 'lucide-react';
 
 interface ProfileUpdateButtonProps {
   handleClick: () => void;
 }
 
 export const ProfileUpdateButton: React.FC<ProfileUpdateButtonProps> = ({ handleClick }) => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <Fab color="primary" onClick={handleClick}>
-        <PublishIcon />
-      </Fab>
+    <div className="absolute bottom-[15px] right-[15px]">
+      <NPWDButton aria-label="Update profile" onClick={handleClick} size="icon" variant="primary">
+        <Upload className="size-5" />
+      </NPWDButton>
     </div>
   );
 };

@@ -2,8 +2,8 @@ import { CallEvents, CallHistoryItem } from '@typings/call';
 import { IAlert, useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
-import { dialState, useSetHistory } from './state';
-import { useRecoilCallback } from 'recoil';
+import { useSetHistory } from './state';
+import { useCallback } from 'react';
 
 export const useDialService = () => {
   const { addAlert } = useSnackbar();
@@ -17,16 +17,11 @@ export const useDialService = () => {
     });
   };
 
-  const saveCall = useRecoilCallback(
-    ({ snapshot }) =>
-      (callObj: CallHistoryItem) => {
-        const { state } = snapshot.getLoadable(dialState.history);
-
-        if (state !== 'hasValue') return;
-
-        setHistory((curHistory) => [callObj, ...curHistory]);
-      },
-    [],
+  const saveCall = useCallback(
+    (callObj: CallHistoryItem) => {
+      setHistory((curHistory) => [callObj, ...curHistory]);
+    },
+    [setHistory],
   );
 
   useNuiEvent('DIALER', CallEvents.WAS_ACCEPTED, saveCall);

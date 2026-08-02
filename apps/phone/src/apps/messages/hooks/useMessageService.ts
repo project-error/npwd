@@ -2,7 +2,7 @@ import { useNuiEvent } from 'fivem-nui-react-lib';
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import { useMessageActions } from './useMessageActions';
 import { useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useActiveMessageConversation } from './state';
 import { usePhoneVisibility } from '@os/phone/hooks';
 import { useNotification } from '@os/new-notifications/useNotification';

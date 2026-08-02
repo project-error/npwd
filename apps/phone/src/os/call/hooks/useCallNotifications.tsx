@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ActiveCall } from '@typings/call';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
@@ -12,7 +12,7 @@ const NOTIFICATION_ID = 'call:current';
 
 export const useCallNotifications = () => {
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { addNotificationAlert, removeId } = useNotifications();
   const { getDisplayByNumber } = useContactActions();
   const contacts = useContacts();
@@ -31,7 +31,7 @@ export const useCallNotifications = () => {
     id: NOTIFICATION_ID,
     cantClose: false,
     icon,
-    onClick: () => history.push('/call'),
+    onClick: () => navigate('/call'),
     notificationIcon,
   };
 

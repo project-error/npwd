@@ -1,8 +1,8 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { settingsState } from '../state/settings.state';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { resetSettingsAtom, settingsState } from '../state/settings.state';
 
-export const useSettings = () => useRecoilState(settingsState);
-export const useSettingsValue = () => useRecoilValue(settingsState);
-export const useSetSettings = () => useSetRecoilState(settingsState);
+export const useSettings = () => useAtom(settingsState);
+export const useSettingsValue = () => useAtomValue(settingsState);
+export const useSetSettings = () => useSetAtom(settingsState);
 
-export const useResetSettings = () => useResetRecoilState(settingsState);
+export const useResetSettings = () => useSetAtom(resetSettingsAtom);

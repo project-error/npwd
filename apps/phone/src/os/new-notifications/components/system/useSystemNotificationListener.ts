@@ -2,42 +2,42 @@ import { activeNotificationIds, allNotificationIds } from '@os/new-notifications
 import { NotificationEvents, SystemNotificationDTO } from '@typings/notifications';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useSnackbar } from 'notistack';
-import { useRecoilCallback } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useCallback } from 'react';
 import uuid from 'react-uuid';
 import { useNotification } from '@os/new-notifications/useNotification';
 
 export const useSystemNotificationListener = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { removeActive } = useNotification();
-  const createNotification = useRecoilCallback(
-    ({ set, snapshot }) =>
-      async (dto: SystemNotificationDTO) => {
-        const curNotis = await snapshot.getPromise(allNotificationIds);
-        const uniqID = `${dto.uniqId}:${uuid()}`;
+  const allIds = useAtomValue(allNotificationIds);
+  const setActiveIds = useSetAtom(activeNotificationIds);
 
-        if (curNotis.includes(uniqID)) {
-          console.error(`Notification with key: [${uniqID}] already exists!`);
-          return;
-        }
+  const createNotification = useCallback(
+    (dto: SystemNotificationDTO) => {
+      const uniqID = `${dto.uniqId}:${uuid()}`;
 
-        // TODO: We might want add this to unread as well, hmm - not sure how
-        // we want to do that with controls as well :/
-        // This will atleast make the phone pop up
-        set(activeNotificationIds, (curIds: string[]) => [...curIds, uniqID]);
+      if (allIds.includes(uniqID)) {
+        console.error(`Notification with key: [${uniqID}] already exists!`);
+        return;
+      }
 
-        enqueueSnackbar(dto.content, {
-          variant: 'npwdSystemNotification',
-          secondaryTitle: dto.secondaryTitle,
-          key: dto.uniqId,
-          persist: dto.keepOpen || false,
-          autoHideDuration: dto.duration || 3000,
-          controls: dto.controls ?? false,
-          onExited: () => {
-            removeActive(uniqID);
-          },
-        });
-      },
-    [],
+      // This makes the phone pop up while notistack owns the system notification UI.
+      setActiveIds((curIds: string[]) => [...curIds, uniqID]);
+
+      enqueueSnackbar(dto.content, {
+        variant: 'npwdSystemNotification',
+        secondaryTitle: dto.secondaryTitle,
+        key: dto.uniqId,
+        persist: dto.keepOpen || false,
+        autoHideDuration: dto.duration || 3000,
+        controls: dto.controls ?? false,
+        onExited: () => {
+          removeActive(uniqID);
+        },
+      });
+    },
+    [allIds, enqueueSnackbar, removeActive, setActiveIds],
   );
 
   const removeSystemNotification = ({ uniqId }) => {

@@ -8,7 +8,7 @@ export const getResourceName = () =>
 
 export const buildRespObj = (
   data: any,
-  status?: 'ok' | 'error',
+  status: 'ok' | 'error' = 'ok',
   errorMsg?: string,
 ): ServerPromiseResp<any> => ({
   data,

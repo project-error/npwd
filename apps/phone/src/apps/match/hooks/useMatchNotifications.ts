@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { matchPath, useHistory } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 
@@ -8,22 +8,16 @@ const NOTIFICATION_ID = 'match:broadcast';
 
 export const useMatchNotifications = () => {
   const [t] = useTranslation();
-  const { push, listen } = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { removeId, addNotification, addNotificationAlert } = useNotifications();
   const { icon, notificationIcon } = useApp('MATCH');
 
   useEffect(() => {
-    return listen((location) => {
-      if (
-        matchPath(location.pathname, {
-          path: `/match/matches`,
-          exact: true,
-        })
-      ) {
-        removeId(NOTIFICATION_ID);
-      }
-    });
-  }, [listen, removeId]);
+    if (matchPath({ path: '/match/matches', end: true }, location.pathname)) {
+      removeId(NOTIFICATION_ID);
+    }
+  }, [location.pathname, removeId]);
 
   const setNotification = useCallback(
     ({ name }) => {
@@ -32,7 +26,7 @@ export const useMatchNotifications = () => {
         id: NOTIFICATION_ID,
         sound: true,
         title: t('MATCH.FEEDBACK.NEW_LIKE_FOUND'),
-        onClick: () => push(`/match/matches`),
+        onClick: () => navigate('/match/matches'),
         content: name,
         icon,
         notificationIcon,
@@ -41,7 +35,7 @@ export const useMatchNotifications = () => {
       addNotificationAlert(notification);
       addNotification(notification);
     },
-    [addNotification, addNotificationAlert, icon, notificationIcon, push, t],
+    [addNotification, addNotificationAlert, icon, navigate, notificationIcon, t],
   );
 
   return { setNotification };

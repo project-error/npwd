@@ -1,0 +1,33 @@
+import React from 'react';
+import { Route, Routes } from 'react-router';
+import { AppWrapper } from '@ui/components';
+import { AppContent } from '@ui/components/AppContent';
+import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListContainer';
+import { NavigationBar } from './navigation/NavigationBar';
+import { ListingFormContainer } from './form/ListingFormContainer';
+import { AppTitle } from '@ui/components/AppTitle';
+import { useApp } from '@os/apps/hooks/useApps';
+import { WordFilterProvider } from '@os/wordfilter/providers/WordFilterProvider';
+import { createExternalAppProvider } from '@os/apps/utils/createExternalAppProvider';
+
+export const MarketplaceApp: React.FC = () => {
+  const marketplaceApp = useApp('MARKETPLACE');
+  const Provider = createExternalAppProvider(marketplaceApp);
+
+  return (
+    <Provider>
+      <AppWrapper id="marketplace-app">
+        <AppTitle app={marketplaceApp} />
+        <AppContent>
+          <WordFilterProvider>
+            <Routes>
+              <Route path="/marketplace" element={<MarketplaceListContainer />} />
+              <Route path="/marketplace/new" element={<ListingFormContainer />} />
+            </Routes>
+          </WordFilterProvider>
+        </AppContent>
+        <NavigationBar />
+      </AppWrapper>
+    </Provider>
+  );
+};

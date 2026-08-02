@@ -1,11 +1,10 @@
 import {
-  darkChatState,
   useSetActiveDarkchatState,
   useSetChannelsState,
   useSetDarkchatMembers,
   useSetDarkchatMessagesState,
 } from '../state/state';
-import { useRecoilCallback } from 'recoil';
+import { useCallback } from 'react';
 import {
   ChannelItemProps,
   ChannelMember,
@@ -29,100 +28,77 @@ export const useDarkchatActions = (): DarkchatActionsProps => {
   const setActiveChannel = useSetActiveDarkchatState();
   const setChatMembers = useSetDarkchatMembers();
 
-  const addLocalChannel = useRecoilCallback<[ChannelItemProps], void>(
-    ({ snapshot }) =>
-      async (channel) => {
-        const { state } = await snapshot.getLoadable(darkChatState.channels);
-
-        if (state !== 'hasValue') return null;
-        setChannels((curVal) => [channel, ...curVal]);
-      },
-    [],
+  const addLocalChannel = useCallback(
+    (channel: ChannelItemProps) => {
+      setChannels((curVal) => [channel, ...curVal]);
+    },
+    [setChannels],
   );
 
-  const leaveLocalChannel = useRecoilCallback<[number], void>(
-    ({ snapshot }) =>
-      async (id) => {
-        const { state } = await snapshot.getLoadable(darkChatState.channels);
-
-        if (state !== 'hasValue') return null;
-        setChannels((currVal) => [...currVal].filter((c) => c.id !== id));
-      },
-    [],
+  const leaveLocalChannel = useCallback(
+    (id: number) => {
+      setChannels((currVal) => [...currVal].filter((c) => c.id !== id));
+    },
+    [setChannels],
   );
 
-  const addLocalMessage = useRecoilCallback<[ChannelMessageProps], void>(
-    ({ snapshot }) =>
-      async (message) => {
-        const { state } = await snapshot.getLoadable(darkChatState.darkChatMessages);
-
-        if (state !== 'hasValue') return null;
-        setMessages((curVal) => [...curVal, message]);
-      },
+  const addLocalMessage = useCallback(
+    (message: ChannelMessageProps) => {
+      setMessages((curVal) => [...curVal, message]);
+    },
+    [setMessages],
   );
 
-  const addLocalMembers = useRecoilCallback<[ChannelMember[]], void>(
-    ({ snapshot }) =>
-      async (members) => {
-        const { state } = await snapshot.getLoadable(darkChatState.members);
-        if (state !== 'hasValue') return null;
-        setChatMembers(members);
-      },
+  const addLocalMembers = useCallback(
+    (members: ChannelMember[]) => {
+      setChatMembers(members);
+    },
+    [setChatMembers],
   );
 
-  const updateLocalChannelLabel = useRecoilCallback<[UpdateLabelDto], void>(
-    ({ snapshot }) =>
-      async (dto) => {
-        const { state } = await snapshot.getLoadable(darkChatState.channels);
+  const updateLocalChannelLabel = useCallback(
+    (dto: UpdateLabelDto) => {
+      setChannels((curVal) =>
+        [...curVal].map((channel) => {
+          if (dto.channelId === channel.id) {
+            return {
+              ...channel,
+              label: dto.label,
+            };
+          }
 
-        if (state !== 'hasValue') return null;
-        setChannels((curVal) =>
-          [...curVal].map((channel) => {
-            if (dto.channelId === channel.id) {
-              return {
-                ...channel,
-                label: dto.label,
-              };
-            }
-
-            return channel;
-          }),
-        );
-      },
+          return channel;
+        }),
+      );
+    },
+    [setChannels],
   );
 
-  const localTransferOwner = useRecoilCallback<[OwnerTransferResp], void>(
-    ({ snapshot }) =>
-      async (dto) => {
-        const { state } = await snapshot.getLoadable(darkChatState.channels);
-        if (state !== 'hasValue') return null;
+  const localTransferOwner = useCallback(
+    (dto: OwnerTransferResp) => {
+      setChannels((curVal) =>
+        [...curVal].map((channel) => {
+          if (dto.channelId === channel.id) {
+            return {
+              ...channel,
+              owner: dto.ownerPhoneNumber,
+            };
+          }
 
-        setChannels((curVal) =>
-          [...curVal].map((channel) => {
-            if (dto.channelId === channel.id) {
-              return {
-                ...channel,
-                owner: dto.ownerPhoneNumber,
-              };
-            }
+          return channel;
+        }),
+      );
 
-            return channel;
-          }),
-        );
+      setActiveChannel((curVal) => {
+        if (!curVal || dto.channelId !== curVal.id) return curVal;
 
-        setActiveChannel((curVal) =>
-          [...curVal].map((channel) => {
-            if (dto.channelId === channel.id) {
-              return {
-                ...channel,
-                owner: dto.ownerPhoneNumber,
-              };
-            }
-
-            return channel;
-          }),
-        );
-      },
+        return {
+          ...curVal,
+          owner: dto.ownerPhoneNumber,
+        };
+      });
+    },
+    [setActiveChannel, setChannels],
   );
 
   return {

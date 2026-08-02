@@ -1,10 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import useStyles from './modal.styles';
-import { Button, Paper } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ShareIcon from '@mui/icons-material/Share';
-import { useHistory } from 'react-router-dom';
+import { ArrowLeft, Trash2, Share2 } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { ShareModal } from './ShareModal';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
@@ -13,12 +9,12 @@ import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { Button } from '@ui/components/Button';
 
 export const GalleryModal = () => {
   const [shareOpen, setShareOpen] = useState(null);
 
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = useQueryParams();
   const { deletePhoto } = usePhotoActions();
   const { addAlert } = useSnackbar();
@@ -32,7 +28,7 @@ export const GalleryModal = () => {
   );
 
   const _handleClose = () => {
-    history.push(referal);
+    navigate(referal);
   };
 
   const handleDeletePhoto = () => {
@@ -45,7 +41,7 @@ export const GalleryModal = () => {
 
       deletePhoto(meta.image);
 
-      history.goBack();
+      navigate(-1);
     });
   };
 
@@ -58,21 +54,26 @@ export const GalleryModal = () => {
   return (
     <>
       <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)} />
-      <Paper className={classes.modal}>
-        <div className={shareOpen ? classes.backgroundModal : null} />
-        <Button onClick={_handleClose}>
-          <ArrowBackIcon />
+      <div className="absolute h-full w-full">
+        {shareOpen && (
+          <div className="absolute inset-0 z-[5] bg-black/60" />
+        )}
+        <Button onClick={_handleClose} variant="text">
+          <ArrowLeft />
         </Button>
-        <div className={classes.image} style={{ backgroundImage: `url(${meta.image})` }} />
-        <div className={classes.actionDiv}>
-          <Button onClick={handleDeletePhoto}>
-            <DeleteIcon fontSize="large" />
+        <div
+          className="mx-auto mt-16 h-[380px] max-h-[380px] w-auto bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${meta.image})` }}
+        />
+        <div className="mt-4 flex justify-evenly">
+          <Button onClick={handleDeletePhoto} variant="text">
+            <Trash2 size={28} />
           </Button>
-          <Button onClick={handleSharePhoto}>
-            <ShareIcon fontSize="large" />
+          <Button onClick={handleSharePhoto} variant="text">
+            <Share2 size={28} />
           </Button>
         </div>
-      </Paper>
+      </div>
     </>
   );
 };

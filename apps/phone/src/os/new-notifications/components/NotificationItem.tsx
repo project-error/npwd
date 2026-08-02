@@ -1,10 +1,9 @@
 import React from 'react';
-import { ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { ListItem } from '@npwd/keyos';
 import { useApp } from '@os/apps/hooks/useApps';
-import { useRecoilValue } from 'recoil';
-import { notifications, useSetNavbarUncollapsed } from '@os/new-notifications/state';
+import { useNotificationValue, useSetNavbarUncollapsed } from '@os/new-notifications/state';
 import { useNotification } from '@os/new-notifications/useNotification';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 interface NotificationItemProps {
   id: string;
@@ -12,28 +11,26 @@ interface NotificationItemProps {
 }
 
 export const NotificationItem: React.FC<NotificationItemProps> = ({ id, key }) => {
-  const { appId, content, path } = useRecoilValue(notifications(id));
+  const { appId, content, path } = useNotificationValue(id);
   const { markAsRead } = useNotification();
   const { icon } = useApp(appId);
-  const history = useHistory();
+  const navigate = useNavigate();
   const closeBar = useSetNavbarUncollapsed();
 
   const handleOnClose = () => {
     markAsRead(id);
-    closeBar(false); // set's to be to collapsed - wording is weird
-    history.push(path);
+    closeBar(false);
+    navigate(path);
   };
 
   return (
     <ListItem
-      divider
       button
-      onClick={handleOnClose}
-      sx={{ pr: '28px', position: 'relative' }}
+      className="relative pr-7"
       key={key}
-    >
-      {icon && <ListItemAvatar>{icon}</ListItemAvatar>}
-      <ListItemText secondary={content} />
-    </ListItem>
+      onClick={handleOnClose}
+      secondaryText={content}
+      startElement={icon}
+    />
   );
 };

@@ -1,3 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@custom-variant dark (&:where(.dark, .dark *));
+@import './theme-tokens.css';
+
+@theme {
+  --color-keyos-night: var(--keyos-night);
+  --color-keyos-panel: var(--keyos-panel);
+  --color-keyos-panel-strong: var(--keyos-panel-strong);
+  --color-keyos-cream: var(--keyos-cream);
+  --color-keyos-fg: var(--keyos-fg);
+  --color-keyos-muted: var(--keyos-muted);
+  --color-keyos-amber: var(--keyos-amber);
+  --color-keyos-amber-soft: var(--keyos-amber-soft);
+
+  --shadow-keyos-panel: var(--keyos-shadow-panel);
+  --shadow-keyos-pop: var(--keyos-shadow-pop);
+  --shadow-keyos-glow: var(--keyos-shadow-glow);
+
+  --font-sans: 'Geist Variable', Inter, ui-sans-serif, system-ui, sans-serif;
+}

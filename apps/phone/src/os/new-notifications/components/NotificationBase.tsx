@@ -2,7 +2,7 @@ import {IApp} from '@os/apps/config/apps';
 import {SnackbarContent, CustomContentProps} from 'notistack';
 import React, {forwardRef} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {useNotification} from '../useNotification';
 import {cn} from "@npwd/keyos";
 
@@ -19,10 +19,10 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
     const {markAsRead} = useNotification();
     const {app, message, secondaryTitle, path, onClick} = props;
     const [t] = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleNotisClick = () => {
-        path && !onClick ? history.push(path) : onClick();
+        path && !onClick ? navigate(path) : onClick();
         markAsRead(props.id.toString());
     };
 
@@ -38,30 +38,28 @@ const NotificationBase = forwardRef<HTMLDivElement, NotificationBaseProps>((prop
         console.warn('App does not have a notification icon');
     }
 
-    console.log("app bg", app.backgroundColor)
-
     return (
         <SnackbarContent
             onClick={handleNotisClick}
             ref={ref}
             style={{minWidth: '370px'}}
-            className="bg-neutral-50 dark:bg-neutral-900 py-3.5 px-4 flex rounded-md shadow-md border-2 border-neutral-200 dark:border-neutral-800"
+            className="keyos-shine-bg keyos-surface-panel flex rounded-md border border-[color:var(--keyos-border-muted)] bg-keyos-panel px-4 py-3.5"
         >
-            <div className="flex items-center text-neutral-900 dark:text-neutral-50 w-full mb-2">
+            <div className="mb-2 flex w-full items-center text-keyos-cream">
                 <div
                     className={cn("p-2 flex items-center justify-center rounded-full")}
                     style={{backgroundColor: app.backgroundColor}}
                 >
                     {app.NotificationIcon && <app.NotificationIcon fontSize="inherit"/>}
                 </div>
-                <div className="text-neutral-900 dark:text-neutral-50 font-semibold pl-1 grow text-sm">
+                <div className="grow pl-1 text-sm font-semibold text-keyos-cream">
                     {t(app.nameLocale)}
                 </div>
                 <div>
-                    <p className="text-neutral-900 dark:text-neutral-50 text-sm">{secondaryTitle}</p>
+                    <p className="text-sm text-keyos-muted">{secondaryTitle}</p>
                 </div>
             </div>
-            <div className="text-neutral-900 dark:text-neutral-50 text-base overflow-hidden line-clamp-2">
+            <div className="line-clamp-2 overflow-hidden text-base text-keyos-cream">
                 <p>{message}</p>
             </div>
         </SnackbarContent>

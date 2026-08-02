@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const RingingText = () => {
@@ -20,7 +19,7 @@ const RingingText = () => {
     return () => clearInterval(id);
   }, [step, text, t]);
 
-  return <Typography>{text}</Typography>;
+  return <p className="text-[length:var(--keyos-text-body)] text-keyos-fg">{text}</p>;
 };
 
 export default RingingText;

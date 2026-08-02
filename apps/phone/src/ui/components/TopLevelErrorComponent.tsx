@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { captureException } from '@sentry/react';
+import { Button, Dialog, DialogDescription, DialogTitle } from '@npwd/keyos';
 
 interface TopLevelErrorCompProps {
   hasError: boolean;
@@ -26,21 +19,19 @@ const ErrorDialogComp: React.FC<ErrorDialogCompProps> = ({ isOpen, errorMsg }) =
   const handleReloadClick = () => window.location.reload();
 
   return (
-    <Dialog open={isOpen}>
-      <DialogTitle>{t('MISC.TOP_LEVEL_ERR_TITLE')}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          {t('MISC.TOP_LEVEL_ERR_MSG')}
-          <br />
-          <br />
-          <code style={{ color: 'red' }}>{errorMsg}</code>
-        </DialogContentText>
-        <DialogActions>
-          <Button color="primary" onClick={handleReloadClick}>
-            {t('MISC.TOP_LEVEL_ERR_ACTION')}
-          </Button>
-        </DialogActions>
-      </DialogContent>
+    <Dialog container={document.getElementById('phone')} open={isOpen} showClose={false}>
+      <DialogTitle className="pr-8 text-xl font-bold text-keyos-amber">
+        {t('MISC.TOP_LEVEL_ERR_TITLE')}
+      </DialogTitle>
+      <DialogDescription className="mt-3 text-sm leading-relaxed text-keyos-cream">
+        {t('MISC.TOP_LEVEL_ERR_MSG')}
+      </DialogDescription>
+      <code className="mt-4 block max-h-40 overflow-auto rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-xs text-red-200">
+        {errorMsg}
+      </code>
+      <div className="mt-5 flex justify-end">
+        <Button onClick={handleReloadClick}>{t('MISC.TOP_LEVEL_ERR_ACTION')}</Button>
+      </div>
     </Dialog>
   );
 };

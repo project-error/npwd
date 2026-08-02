@@ -1,5 +1,9 @@
-import { createAppThemeProvider } from '@os/apps/utils/createAppThemeProvider';
+import React from 'react';
+
+import { AppColorScope } from '@npwd/keyos';
 
 import exampleTheme from '../example.theme';
 
-export const ExampleThemeProvider = createAppThemeProvider(exampleTheme);
+export const ExampleThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <AppColorScope colors={exampleTheme}>{children}</AppColorScope>;
+};

@@ -1,33 +1,45 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
 import { AppIcon } from './AppIcon';
-import { Box, Grid, GridSize } from '@mui/material';
-import { Link } from 'react-router-dom';
 import { IApp } from '@os/apps/config/apps';
+import { cn } from '@utils/css';
 
 interface GridMenuProps {
   items: IApp[];
   Component?: React.ElementType;
-  xs?: GridSize;
+  columns?: number;
+  className?: string;
+  showLabels?: boolean;
 }
 
-export const GridMenu: React.FC<GridMenuProps> = ({ items, Component = AppIcon, xs }) => {
+export const GridMenu: React.FC<GridMenuProps> = ({
+  items,
+  Component = AppIcon,
+  columns = 4,
+  className,
+  showLabels = false,
+}) => {
+  const [t] = useTranslation();
+
   return (
-    <Grid container alignItems="center" direction="row">
-      {items &&
-        items.length &&
-        items.map((item) => (
-          <Fragment key={item.id}>
-            {!item.isDisabled && (
-              <Grid item xs={xs} key={item.id}>
-                <Box textAlign="center">
-                  <Link to={item.path}>
-                    <Component {...item} />
-                  </Link>
-                </Box>
-              </Grid>
-            )}
-          </Fragment>
+    <div
+      className={cn('grid w-full gap-x-2 gap-y-5', className)}
+      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+    >
+      {items
+        ?.filter((item) => !item.isDisabled)
+        .map((item) => (
+          <div key={item.id} className="flex flex-col items-center">
+            <Link to={item.path} className="inline-flex flex-col items-center">
+              <Component {...item} />
+              {showLabels && (
+                <span className="keyos-app-icon-label">{t(item.nameLocale)}</span>
+              )}
+            </Link>
+          </div>
         ))}
-    </Grid>
+    </div>
   );
 };

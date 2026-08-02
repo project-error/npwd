@@ -1,18 +1,15 @@
-import { amber, common } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const MESSAGES_APP_PRIMARY_COLOR = "#22c55e";
-export const MESSAGES_APP_TEXT_COLOR = common.white;
+export const MESSAGES_APP_PRIMARY_COLOR = '#22c55e';
+export const MESSAGES_APP_TEXT_COLOR = '#ffffff';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: MESSAGES_APP_PRIMARY_COLOR,
-      dark: amber[900],
-      light: amber[100],
-      contrastText: MESSAGES_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: MESSAGES_APP_PRIMARY_COLOR,
+  accentForeground: MESSAGES_APP_TEXT_COLOR,
+  danger: '#ef4444',
+  dangerForeground: MESSAGES_APP_TEXT_COLOR,
+  muted: '#94a3b8',
+  surface: 'rgb(9 20 16 / 0.78)',
 };
 
 export default theme;

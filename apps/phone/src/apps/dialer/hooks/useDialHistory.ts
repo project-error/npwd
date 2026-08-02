@@ -1,4 +1,3 @@
-import { useRecoilValue } from 'recoil';
-import { dialState } from './state';
+import { useDialHistoryValue } from './state';
 
-export const useDialHistory = () => useRecoilValue(dialState.history);
+export const useDialHistory = () => useDialHistoryValue();

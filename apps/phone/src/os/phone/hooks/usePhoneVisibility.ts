@@ -1,15 +1,15 @@
 import { useCurrentCallValue } from '@os/call/hooks/state';
-import { activeNotificationIds } from '@os/new-notifications/state';
+import { useActiveNotificationIds } from '@os/new-notifications/state';
 import { useEffect, useMemo, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { isEnvBrowser } from '../../../utils/misc';
 import { phoneState } from './state';
 
 export const usePhoneVisibility = () => {
-  const visibility = useRecoilValue(phoneState.visibility);
+  const visibility = useAtomValue(phoneState.visibility);
   const [{ zoom }] = useSettings();
-  const activeNotifications = useRecoilValue(activeNotificationIds);
+  const activeNotifications = useActiveNotificationIds();
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
   const currentCall = useCurrentCallValue();
 

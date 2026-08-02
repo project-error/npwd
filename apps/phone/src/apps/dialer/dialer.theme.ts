@@ -1,18 +1,15 @@
-import { common, green } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const DIALER_APP_PRIMARY_COLOR = green[600];
-export const DIALER_APP_TEXT_COLOR = common.white;
+export const DIALER_APP_PRIMARY_COLOR = '#43a047';
+export const DIALER_APP_TEXT_COLOR = '#ffffff';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: DIALER_APP_PRIMARY_COLOR,
-      dark: green[800],
-      light: green[400],
-      contrastText: DIALER_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: DIALER_APP_PRIMARY_COLOR,
+  accentForeground: DIALER_APP_TEXT_COLOR,
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

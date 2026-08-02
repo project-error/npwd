@@ -1,14 +1,14 @@
-import React, { HTMLAttributes, useEffect, useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import useMessages from '../../../messages/hooks/useMessages';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { NPWDInput } from '@ui/components';
-import { NPWDButton } from '@npwd/keyos';
+import { Button, Input } from '@npwd/keyos';
+import { ContactAction } from '../ui/contact-buttons';
+import { contactsSurfaces } from '../ui/contacts-surfaces';
 import { ContactsDatabaseLimits } from '@typings/contact';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 import { SendMoneyModal } from '../../components/modals/SendMoney';
@@ -16,7 +16,6 @@ import { ArrowLeft, HelpingHand, MessageCircle, Phone, Trash2 } from 'lucide-rea
 import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useModal } from '@apps/contacts/hooks/useModal';
 import { usePhone } from '@os/phone/hooks/usePhone';
-import { cn } from '@utils/css';
 import { initials } from '@utils/misc';
 
 interface ContactInfoRouteParams {
@@ -31,43 +30,8 @@ interface ContactInfoRouteQuery {
   avatar?: string;
 }
 
-const useStyles = makeStyles({
-  root: {
-    height: '100%',
-    width: '100%',
-  },
-  listContainer: {
-    marginTop: 30,
-    width: '75%',
-    margin: '0 auto',
-    textAlign: 'center',
-  },
-  avatar: {
-    margin: 'auto',
-    height: '125px',
-    width: '124px',
-    marginBottom: 29,
-  },
-  input: {
-    marginBottom: 20,
-    margin: 'auto',
-    textAlign: 'center',
-  },
-  inputProps: {
-    fontSize: 22,
-  },
-  button: {
-    color: '#000000',
-    backgroundColor: '#838383',
-    '&:hover': {
-      backgroundColor: '#6a6a6a',
-    },
-  },
-});
-
 const ContactsInfoPage: React.FC = () => {
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<ContactInfoRouteParams>();
   const {
     addNumber,
@@ -141,7 +105,7 @@ const ContactsInfoPage: React.FC = () => {
       return goToConversation(conversation);
     }
 
-    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+    navigate(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 
   const handleContactDelete = () => {
@@ -167,115 +131,90 @@ const ContactsInfoPage: React.FC = () => {
   if (!ResourceConfig) return null;
 
   return (
-    <div className="mx-auto h-full w-full">
+    <div className="mx-auto h-full w-full overflow-y-auto">
       <SendMoneyModal
         open={contactPayModal}
         closeModal={() => setContactPayModal(false)}
         openContact={number}
       />
       <button
-        onClick={() => history.goBack()}
-        className="ml-4 mt-4 rounded-md px-3 py-1 hover:dark:bg-neutral-800"
+        onClick={() => navigate(-1)}
+        className="ml-4 mt-4 rounded-xl px-3 py-2 text-keyos-muted transition hover:bg-white/10 hover:text-keyos-cream"
       >
-        <ArrowLeft className="h-6 w-6 dark:text-neutral-300" />
+        <ArrowLeft className="h-6 w-6" />
       </button>
       <div className="mx-auto w-9/12">
         <div>
           {avatar && avatar.length > 0 ? (
             <img
               src={avatar}
-              className="mx-auto h-24 w-24 rounded-full text-center"
+              className={`${contactsSurfaces.avatarRing} mx-auto h-24 w-24 rounded-full object-cover text-center`}
               alt={'avatar'}
             />
           ) : (
-            <div className="rounded-full-600 mx-auto h-24 w-24 text-center">
-              <span className="text-5xl text-gray-600 dark:text-gray-300">
-                {initials(contact.display)}
+            <div className={`${contactsSurfaces.avatarPlaceholder} mx-auto flex h-24 w-24 items-center justify-center rounded-full text-center`}>
+              <span className="text-5xl font-semibold text-[color:var(--keyos-app-accent)]">
+                {initials(name)}
               </span>
             </div>
           )}
         </div>
         <div className="mt-8 space-y-2">
-          <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NAME')}</div>
-          <NPWDInput
+          <div className="text-sm font-medium text-keyos-muted">{t('CONTACTS.FORM_NAME')}</div>
+          <Input
             value={name}
             onChange={handleDisplayChange}
-            className="focus:ring-2 focus:ring-blue-500"
+            className={contactsSurfaces.input}
           />
         </div>
 
         {contact && (
           <div className="mt-4 flex w-full items-center justify-between">
-            <ContactAction
-              onClick={startCall}
-              Icon={Phone}
-              className="border-blue-500 bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-500 dark:text-white hover:dark:bg-blue-600"
-            />
-            <ContactAction onClick={handleMessage} Icon={MessageCircle} />
+            <ContactAction onClick={startCall} Icon={Phone} variant="accent" />
+            <ContactAction onClick={handleMessage} Icon={MessageCircle} variant="accent" />
 
             {ResourceConfig?.general?.useResourceIntegration &&
               ResourceConfig?.contacts?.frameworkPay && (
-                <button
-                  onClick={openpayModal}
-                  className="group flex items-center justify-center rounded-md py-2 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-                >
-                  <HelpingHand className="h-6 w-6 dark:text-neutral-400 dark:group-hover:text-neutral-100" />
-                </button>
+                <Button onClick={openpayModal} size="icon-sm" variant="secondary">
+                  <HelpingHand className="h-4 w-4" />
+                </Button>
               )}
-            <ContactAction onClick={handleContactDelete} Icon={Trash2} />
+            <ContactAction onClick={handleContactDelete} Icon={Trash2} variant="danger" />
           </div>
         )}
 
         <div className="mt-8 space-y-4">
           <div className="space-y-2">
-            <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_NUMBER')}</div>
-            <NPWDInput
+            <div className="text-sm font-medium text-keyos-muted">{t('CONTACTS.FORM_NUMBER')}</div>
+            <Input
               value={number}
               onChange={handleNumberChange}
-              className="focus:ring-2 focus:ring-blue-500"
+              className={contactsSurfaces.input}
             />
           </div>
           <div className="space-y-2">
-            <div className="text-sm font-medium text-neutral-400">{t('CONTACTS.FORM_AVATAR')}</div>
-            <NPWDInput
+            <div className="text-sm font-medium text-keyos-muted">{t('CONTACTS.FORM_AVATAR')}</div>
+            <Input
               value={avatar}
               onChange={handleAvatarChange}
-              className="outline-none focus:ring-2 focus:ring-blue-500"
+              className={contactsSurfaces.input}
             />
           </div>
         </div>
 
         <div className="mt-8">
           {contact ? (
-            <NPWDButton onClick={handleContactUpdate} className="w-full">
+            <Button className="w-full" onClick={handleContactUpdate} variant="accent">
               {t('GENERIC.UPDATE')}
-            </NPWDButton>
+            </Button>
           ) : (
-            <NPWDButton onClick={handleContactAdd} className="w-full">
+            <Button className="w-full" onClick={handleContactAdd} variant="accent">
               {t('GENERIC.ADD')}
-            </NPWDButton>
+            </Button>
           )}
         </div>
       </div>
     </div>
-  );
-};
-
-interface ContactActionProps extends HTMLAttributes<HTMLButtonElement> {
-  onClick: () => void;
-  Icon: React.Component;
-}
-export const ContactAction: React.FC<ContactActionProps> = ({ Icon, onClick, ...props }) => {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'group flex items-center justify-center rounded-full bg-neutral-200 p-2.5 text-neutral-900 hover:bg-neutral-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700',
-        props.className,
-      )}
-    >
-      <Icon className="h-6 w-6" />
-    </button>
   );
 };
 

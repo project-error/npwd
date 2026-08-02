@@ -1,27 +1,18 @@
 import React, { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@ui/components/Input';
-import { IconButton, styled, Tooltip } from '@mui/material';
-import { Box } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Tooltip } from '@ui/components/Tooltip';
+import { ImagePlus } from 'lucide-react';
+import { NPWDButton } from '@npwd/keyos';
+import { useLocation, useNavigate } from 'react-router';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import qs from 'qs';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 
-const ImageInput = styled(TextField)({
-  flex: '1 1 100%',
-  padding: '10px 15px',
-  marginTop: '15px',
-  '&::placeholder': {
-    textOverflow: 'ellipsis',
-  },
-});
-
 export const ImagePrompt = ({ visible, value, handleChange }) => {
   const textFieldRef = useRef(null);
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const query = useQueryParams();
 
@@ -35,23 +26,24 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
   );
 
   const handleChooseImage = useCallback(() => {
-    history.push(
+    navigate(
       `/camera?${qs.stringify({
         referal: encodeURIComponent(pathname + search),
       })}`,
     );
-  }, [history, pathname, search]);
+  }, [navigate, pathname, search]);
 
   useEffect(() => {
     if (!query?.image) return;
     handleChange(query.image, true);
-    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [query?.image, history, pathname, search, handleChange]);
+    navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
+  }, [query?.image, navigate, pathname, search, handleChange]);
 
   if (!visible) return null;
   return (
-    <Box display="flex" justifyContent="space-between" alignItems="center">
-      <ImageInput
+    <div className="flex items-center justify-between">
+      <TextField
+        className="mt-[15px] flex-[1_1_100%] px-[15px] py-[10px] [&_input::placeholder]:text-ellipsis"
         value={value}
         inputProps={{
           style: {
@@ -64,12 +56,12 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
         placeholder={t('TWITTER.IMAGE_PLACEHOLDER')}
         inputRef={textFieldRef}
       />
-      <Tooltip placement="left" title="Select an image from your gallery">
-        <IconButton onClick={handleChooseImage}>
-          <AddPhotoAlternateIcon />
-        </IconButton>
+      <Tooltip title="Select an image from your gallery">
+        <NPWDButton size="icon" variant="ghost" onClick={handleChooseImage}>
+          <ImagePlus size={20} />
+        </NPWDButton>
       </Tooltip>
-    </Box>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { phoneState } from './state';
 
 export const usePlayer = () => {
-  return useRecoilValue(phoneState.playerSource);
+  return useAtomValue(phoneState.playerSource);
 };

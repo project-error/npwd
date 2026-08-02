@@ -1,4 +1,7 @@
-import { createAppThemeProvider } from '@os/apps/utils/createAppThemeProvider';
+import React from 'react';
+import { AppColorScope } from '@npwd/keyos';
 import messagesTheme from '../messages.theme';
 
-export const MessagesThemeProvider = createAppThemeProvider(messagesTheme);
+export const MessagesThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <AppColorScope colors={messagesTheme}>{children}</AppColorScope>;
+};

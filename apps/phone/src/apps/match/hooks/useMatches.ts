@@ -1,5 +1,4 @@
-import { matchState, useFormattedMatches } from './state';
-import { useRecoilValue } from 'recoil';
+import { useErrorLoadingMatches, useFormattedMatches } from './state';
 import { FormattedMatch } from '@typings/match';
 
 interface UseMatchProps {
@@ -10,7 +9,7 @@ interface UseMatchProps {
 
 export const useMatches = (): UseMatchProps => {
   const [matches, setMatches] = useFormattedMatches();
-  const error = useRecoilValue(matchState.errorLoadingMatches);
+  const error = useErrorLoadingMatches();
 
   return { matches, setMatches, error };
 };

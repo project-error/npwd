@@ -1,38 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useCall } from '@os/call/hooks/useCall';
 
 const keyboardState = {
-  ArrowRight: atom({
-    key: 'ArrowRight',
-    default: null,
-  }),
-  ArrowLeft: atom({
-    key: 'ArrowLeft',
-    default: null,
-  }),
-  ArrowUp: atom({
-    key: 'ArrowUp',
-    default: null,
-  }),
-  ArrowDown: atom({
-    key: 'ArrowDown',
-    default: null,
-  }),
-  Backspace: atom({
-    key: 'Backspace',
-    default: null,
-  }),
-  Enter: atom({
-    key: 'Enter',
-    default: null,
-  }),
-  Escape: atom({
-    key: 'Escape',
-    default: null,
-  }),
+  ArrowRight: atom(null),
+  ArrowLeft: atom(null),
+  ArrowUp: atom(null),
+  ArrowDown: atom(null),
+  Backspace: atom(null),
+  Enter: atom(null),
+  Escape: atom(null),
 };
 
 const validKeys = [
@@ -48,21 +27,21 @@ const validKeys = [
 const isKeyValid = (key) => validKeys.indexOf(key) !== -1;
 
 export const useKeyboardService = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { closePhone } = usePhone();
   const { call } = useCall();
 
-  const ArrowRight = useRecoilValue(keyboardState.ArrowRight);
-  const ArrowLeft = useRecoilValue(keyboardState.ArrowLeft);
-  const ArrowUp = useRecoilValue(keyboardState.ArrowUp);
-  const ArrowDown = useRecoilValue(keyboardState.ArrowDown);
-  const Backspace = useRecoilValue(keyboardState.Backspace);
-  const Enter = useRecoilValue(keyboardState.Enter);
-  const Escape = useRecoilValue(keyboardState.Escape);
+  const ArrowRight = useAtomValue(keyboardState.ArrowRight);
+  const ArrowLeft = useAtomValue(keyboardState.ArrowLeft);
+  const ArrowUp = useAtomValue(keyboardState.ArrowUp);
+  const ArrowDown = useAtomValue(keyboardState.ArrowDown);
+  const Backspace = useAtomValue(keyboardState.Backspace);
+  const Enter = useAtomValue(keyboardState.Enter);
+  const Escape = useAtomValue(keyboardState.Escape);
 
   const handlers = useRef(new Map());
-  const setEscape = useSetRecoilState<any>(keyboardState.Escape);
-  const setBackspace = useSetRecoilState(keyboardState.Backspace);
+  const setEscape = useSetAtom(keyboardState.Escape);
+  const setBackspace = useSetAtom(keyboardState.Backspace);
 
   useEffect(
     function registerCustomKeys() {
@@ -109,9 +88,9 @@ export const useKeyboardService = () => {
         // Dont do anything if we are typing something, or if we're in a call :)
         return;
       }
-      history.goBack();
+      navigate(-1);
     },
-    [history, call],
+    [navigate, call],
   );
 
   const closePhoneHandler = (event) => {
@@ -126,6 +105,6 @@ export const useKeyboardService = () => {
       handlers.current.set('Escape', closePhoneHandler);
       handlers.current.set('Backspace', backspaceHandler);
     },
-    [setEscape, setBackspace, history, backspaceHandler, closePhone],
+    [setEscape, setBackspace, backspaceHandler, closePhone],
   );
 };

@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
-import { Button, Grid } from '@mui/material';
-import { GridProps } from '@mui/material';
+import { Button } from '@ui/components/Button';
+import { cn } from '@utils/css';
 
 interface ButtonOptions {
   onClick: () => void;
@@ -8,25 +8,21 @@ interface ButtonOptions {
 }
 
 interface CalculatorButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  GridProps?: GridProps;
+  colSpan?: 1 | 2 | 3;
   buttonOpts: ButtonOptions;
 }
 
 export const CalculatorButton: React.FC<CalculatorButtonProps> = ({
   className,
   buttonOpts,
-  GridProps,
+  colSpan = 1,
 }) => (
-  <Grid key={buttonOpts.label} item xs={3} {...GridProps}>
-    <Button
-      fullWidth
-      className={className}
-      onClick={buttonOpts.onClick}
-      sx={{
-        color: 'white',
-      }}
-    >
-      {buttonOpts.label}
-    </Button>
-  </Grid>
+  <Button
+    fullWidth
+    className={cn('p-4 text-xl text-white', className)}
+    onClick={buttonOpts.onClick}
+    style={{ gridColumn: colSpan > 1 ? `span ${colSpan}` : undefined }}
+  >
+    {buttonOpts.label}
+  </Button>
 );

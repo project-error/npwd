@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchContacts } from './SearchContacts';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { useFilteredContacts } from '../../hooks/state';
 import { Contact, ContactEvents } from "@typings/contact";
 import { useCall } from '@os/call/hooks/useCall';
@@ -9,7 +9,7 @@ import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { useContactActions } from '@apps/contacts/hooks/useContactActions';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { Phone, MessageSquare, Plus, Clipboard, UsersRound } from 'lucide-react';
-import { List, ListItem, NPWDButton } from '@npwd/keyos';
+import { List, ListItem } from '@npwd/keyos';
 import { initials } from '@utils/misc';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { Tooltip } from '@ui/components/Tooltip';
@@ -19,9 +19,12 @@ import { setClipboard } from "@os/phone/hooks";
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import fetchNui from "@utils/fetchNui";
 
+import { contactIconButtonClass } from '../ui/contact-buttons';
+import { contactsSurfaces } from '../ui/contacts-surfaces';
+
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // FIXME: This should be reduced before being passed to the component
   const groupedContacts = filteredContacts.reduce((r, e) => {
@@ -33,28 +36,31 @@ export const ContactList: React.FC = () => {
   }, []);
 
   const myNumber = useMyPhoneNumber()
-  const {avatar_url} = useTwitterProfileValue()
+  const twitterProfile = useTwitterProfileValue()
+  const avatar_url = twitterProfile?.avatar_url ?? ''
 
   return (
-    <div className="relative">
-      <div className="sticky top-0 z-50">
-        <div className="flex items-center space-x-2 bg-neutral-100 px-4 dark:bg-neutral-900">
-          <SearchContacts />
-          <NPWDButton
-            size="icon"
-            className="rounded-full p-2 text-neutral-900"
-            variant="ghost"
-            onClick={() => history.push('/contacts/-1')}
+    <div className="relative flex h-full flex-col">
+      <div className={contactsSurfaces.stickyHeader}>
+        <div className="flex items-center gap-2 px-4 py-2">
+          <div className="min-w-0 flex-1">
+            <SearchContacts />
+          </div>
+          <button
+            type="button"
+            aria-label="Add contact"
+            className={contactIconButtonClass.accent}
+            onClick={() => navigate('/contacts/-1')}
           >
-            <Plus className="h-6 w-6" />
-          </NPWDButton>
+            <Plus size={16} />
+          </button>
         </div>
       </div>
 
-      <div className="mt-4 overflow-y-auto px-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-4">
         <nav className="space-y-2 overflow-y-auto" aria-label="Directory">
           <div key="self" className="relative">
-            <List>
+            <List className={contactsSurfaces.list}>
                 <SelfContact key="self" number={myNumber} avatar={avatar_url} />
             </List>
           </div>
@@ -63,10 +69,10 @@ export const ContactList: React.FC = () => {
             .sort()
             .map((letter) => (
               <div key={letter} className="relative">
-                <div className="sticky top-0 z-10 rounded-xl border-b border-t border-gray-200 bg-neutral-50 px-6 py-1 text-sm font-medium text-gray-500 dark:border-none dark:bg-neutral-800">
+                <div className={contactsSurfaces.sectionHeader}>
                   <h3>{letter}</h3>
                 </div>
-                <List>
+                <List className={contactsSurfaces.list}>
                   {groupedContacts[letter].contacts.map((contact: Contact) => (
                     <ContactItem key={contact.id} {...contact} />
                   ))}
@@ -110,32 +116,32 @@ const SelfContact = ({number, avatar}: {number: string, avatar:string}) => {
             {avatar && avatar.length > 0 ? (
               <img src={avatar} className="inline-block h-10 w-10 rounded-full" alt={'avatar'} />
             ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                <span className="text-gray-600 dark:text-gray-300">Me</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--keyos-app-surface)]">
+                <span className="text-sm font-semibold text-[color:var(--keyos-app-accent)]">Me</span>
               </div>
             )}
             <div>
-              <p className="text-base font-medium text-neutral-900 dark:text-neutral-100">
+              <p className="text-base font-medium text-keyos-cream">
                 {t('CONTACTS.MY_NUMBER')}
               </p>
-              <p className="text-sm text-neutral-400">{number}</p>
+              <p className="text-sm text-keyos-muted">{number}</p>
             </div>
           </div>
-          <div className="space-x-3">
+          <div className="flex gap-2">
             <Tooltip title={t('GENERIC.WRITE_TO_CLIPBOARD_TOOLTIP', {content: 'Number'}) as string}>
               <button
                 onClick={copyNumber}
-                className="rounded-full bg-neutral-100 p-3 text-neutral-300 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-700"
+                className={contactIconButtonClass.muted}
               >
-                <Clipboard size={20} />
+                <Clipboard size={16} />
               </button>
             </Tooltip>
             <Tooltip title={t('CONTACTS.NEARBY_SHARE')} >
               <button
                 onClick={shareLocal}
-                className="rounded-full bg-neutral-100 p-3 text-neutral-300 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-700"
+                className={contactIconButtonClass.muted}
               >
-                <UsersRound size={20} />
+                <UsersRound size={16} />
               </button>
             </Tooltip>
           </div>
@@ -153,7 +159,7 @@ const ContactItem = ({ number, avatar, id, display }: ContactItemProps) => {
   const { goToConversation } = useMessages();
   const { findExistingConversation } = useContactActions();
   const myPhoneNumber = useMyPhoneNumber();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const startCall = (e) => {
     e.stopPropagation();
@@ -181,7 +187,7 @@ const ContactItem = ({ number, avatar, id, display }: ContactItemProps) => {
       return goToConversation(conversation);
     }
 
-    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+    navigate(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 
   return (
@@ -199,29 +205,29 @@ const ContactItem = ({ number, avatar, id, display }: ContactItemProps) => {
             {avatar && avatar.length > 0 ? (
               <img src={avatar} className="inline-block h-10 w-10 rounded-full" alt={'avatar'} />
             ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                <span className="text-gray-600 dark:text-gray-300">{initials(display)}</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--keyos-app-surface)]">
+                <span className="font-semibold text-[color:var(--keyos-app-accent)]">{initials(display)}</span>
               </div>
             )}
             <div>
-              <p className="text-base font-medium text-neutral-900 dark:text-neutral-100">
+              <p className="text-base font-medium text-keyos-cream">
                 {display}
               </p>
-              <p className="text-sm text-neutral-400">{number}</p>
+              <p className="text-sm text-keyos-muted">{number}</p>
             </div>
           </div>
-          <div className="space-x-3">
+          <div className="flex shrink-0 gap-2">
             <button
               onClick={startCall}
-              className="rounded-full bg-green-100 p-3 text-green-500 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-neutral-700"
+              className={contactIconButtonClass.call}
             >
-              <Phone size={20} />
+              <Phone size={16} />
             </button>
             <button
               onClick={handleMessage}
-              className="rounded-full bg-blue-100 p-3 text-blue-400 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-neutral-700"
+              className={contactIconButtonClass.accent}
             >
-              <MessageSquare size={20} />
+              <MessageSquare size={16} />
             </button>
           </div>
         </Link>

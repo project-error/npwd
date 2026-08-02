@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../../hooks/useProfile';
-import Avatar from '../Avatar';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { TwitterEvents } from '@typings/twitter';
@@ -10,48 +9,34 @@ import fetchNui from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTwitterActions } from '../../hooks/useTwitterActions';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import qs from 'qs';
-import { Box, Button, styled } from '@mui/material';
-import ImageIcon from '@mui/icons-material/Image';
 import { ImagePlus } from 'lucide-react';
-
-const ProfileRoot = styled(Box)({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  padding: '15px',
-});
 
 export function Profile() {
   const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = useQueryParams();
   const { pathname, search } = useLocation();
 
   const { updateLocalProfile } = useTwitterActions();
 
-  // note that this assumes we are defensively checking
-  // that profile is not null in a parent above this component.
-  // Annoyingling adding conditionals above this line to not render
-  // when profile === null results in a react error that different
-  // amounts of hooks are rendering
   const [avatarUrl, handleAvatarChange] = useState(
     profile.avatar_url || 'https://i.fivemanage.com/images/3ClWwmpwkFhL.png',
   );
   const [name, handleNameChange] = useState(profile.profile_name || '');
 
   const handleChooseImage = useCallback(() => {
-    history.push(
+    navigate(
       `/camera?${qs.stringify({
         referal: encodeURIComponent(pathname + search),
       })}`,
     );
-  }, [history, pathname, search]);
+  }, [navigate, pathname, search]);
 
   const handleUpdate = () => {
     const data = {
@@ -79,17 +64,16 @@ export function Profile() {
   useEffect(() => {
     if (!query?.image) return;
     handleAvatarChange(query.image);
-  }, [query?.image, history, pathname, search, handleAvatarChange]);
+  }, [query?.image, pathname, search, handleAvatarChange]);
 
-  // fetching the config is an asynchronous call so defend against it
   if (!ResourceConfig) return null;
 
   const { enableAvatars, allowEditableProfileName } = ResourceConfig.twitter;
 
   return (
-    <ProfileRoot>
+    <div className="relative h-full w-full p-[15px]">
       {enableAvatars && (
-        <div className="reletive flex">
+        <div className="relative flex">
           <div
             className="group relative flex w-auto rounded-full bg-black"
             onClick={handleChooseImage}
@@ -99,13 +83,13 @@ export function Profile() {
               className="h-20 w-20 cursor-pointer rounded-full object-cover object-center hover:opacity-75"
               alt="profileimage"
             />
-            <div className="pointer-events-none absolute left-[50%] top-[50%] flex hidden translate-x-[-50%] translate-y-[-50%] transform items-center justify-center group-hover:block">
+            <div className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform items-center justify-center group-hover:flex">
               <ImagePlus size={24} className="text-white" />
             </div>
           </div>
         </div>
       )}
-      <Box height={8} />
+      <div className="h-2" />
 
       <ProfileField
         label={t('TWITTER.EDIT_PROFILE_AVATAR')}
@@ -120,7 +104,7 @@ export function Profile() {
         allowChange={allowEditableProfileName}
       />
       <ProfileUpdateButton handleClick={handleUpdate} />
-    </ProfileRoot>
+    </div>
   );
 }
 

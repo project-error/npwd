@@ -1,64 +1,46 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useMemo } from 'react';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Contact, ContactEvents } from '@typings/contact';
-import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import { buildRespObj } from '@utils/misc';
 import { BrowserContactsState } from '../utils/constants';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryState, useQueryStateValue, useSetQueryState } from '@common/query/query-state';
 
-export const contacts = atom<Contact[]>({
-  key: 'contactsList',
-  default: selector({
-    key: 'contactsListDefault',
-    get: async () => {
-      try {
-        const resp = await fetchNui<ServerPromiseResp<Contact[]>>(
-          ContactEvents.GET_CONTACTS,
-          undefined,
-          buildRespObj(BrowserContactsState),
-        );
+export const CONTACTS_QUERY_KEY = ['contacts'] as const;
 
-        console.log(resp);
-        return resp.data;
-      } catch (e) {
-        console.error(e);
-        return [];
-      }
-    },
-  }),
-});
+const fetchContacts = () =>
+  fetchNuiData<Contact[]>(
+    ContactEvents.GET_CONTACTS,
+    undefined,
+    buildRespObj(BrowserContactsState),
+  ).catch((e) => {
+    console.error(e);
+    return [];
+  });
 
-export const showMoneyModal = atom<boolean>({
-  key: 'contactPayModal',
-  default: false,
-});
+export const showMoneyModal = atom<boolean>(false);
 
+export const filterInput = atom<string>('');
 
-export const filterInput = atom<string>({
-  key: 'filterInput',
-  default: '',
-});
+export const useSetContacts = () => useSetQueryState<Contact[]>(CONTACTS_QUERY_KEY, []);
+export const useContacts = () => useQueryState<Contact[]>(CONTACTS_QUERY_KEY, fetchContacts, []);
+export const useContactsValue = () =>
+  useQueryStateValue<Contact[]>(CONTACTS_QUERY_KEY, fetchContacts, []);
 
-export const filteredContacts = selector({
-  key: 'filteredContacts',
-  get: ({ get }) => {
-    const filterInputVal: string = get(filterInput);
-    const contactsValue = get(contacts);
+export const useFilteredContacts = () => {
+  const contactsValue = useContactsValue();
+  const filterInputVal = useAtomValue(filterInput);
 
-    if (!filterInputVal) return contacts;
+  return useMemo(() => {
+    if (!filterInputVal) return contactsValue;
 
     const regExp = new RegExp(filterInputVal, 'gi');
 
     return contactsValue.filter(
       (contact) => contact.display.match(regExp) || contact.number.match(regExp),
     );
-  },
-});
+  }, [contactsValue, filterInputVal]);
+};
 
-export const useSetContacts = () => useSetRecoilState(contacts);
-export const useContacts = () => useRecoilState(contacts);
-export const useContactsValue = () => useRecoilValue(contacts);
-
-export const useFilteredContacts = () => useRecoilValue(filteredContacts);
-
-export const useContactFilterInput = () => useRecoilState(filterInput);
-export const useSetContactFilterInput = () => useSetRecoilState(filterInput);
+export const useContactFilterInput = () => useAtom(filterInput);
+export const useSetContactFilterInput = () => useSetAtom(filterInput);

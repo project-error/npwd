@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { Image as ImageType } from '@typings/twitter';
 import React from 'react';
 import Image from './Image';
@@ -9,11 +8,15 @@ interface ImageDisplayProps {
   removeImage?: (id: string) => void;
 }
 
-export const ImageDisplay: React.FC<ImageDisplayProps> = ({ visible, images, removeImage }) => {
+export const ImageDisplay: React.FC<ImageDisplayProps> = ({
+  visible,
+  images,
+  removeImage = null,
+}) => {
   if (!visible || !images || images.length === 0) return null;
 
   return (
-    <Box p={1}>
+    <div className="p-1">
       {images.map((image) => (
         <Image
           key={image.id}
@@ -21,12 +24,8 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ visible, images, rem
           handleClick={removeImage ? () => removeImage(image.id) : null}
         />
       ))}
-    </Box>
+    </div>
   );
-};
-
-ImageDisplay.defaultProps = {
-  removeImage: null,
 };
 
 export default ImageDisplay;

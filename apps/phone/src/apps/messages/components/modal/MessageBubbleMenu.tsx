@@ -1,12 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { ContextMenu } from '@ui/components/ContextMenu';
 import { useSelectedMessageValue } from '../../hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { Message } from '@typings/messages';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { usePhotoAPI } from '@apps/camera/hooks/usePhotoAPI';
+import { ImageDown, Trash2 } from 'lucide-react';
 
 interface MessageBubbleMenuProps {
   open: boolean;
@@ -38,7 +37,7 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({
     () => [
       {
         label: t('MESSAGES.FEEDBACK.DELETE_MESSAGE'),
-        icon: <DeleteIcon />,
+        icon: <Trash2 />,
         onClick: handleDeleteMessage,
       },
     ],
@@ -49,7 +48,7 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({
     () => [
       {
         label: 'Save image',
-        icon: <PhotoLibraryIcon />,
+        icon: <ImageDown />,
         onClick: handleSaveImage,
       },
     ],

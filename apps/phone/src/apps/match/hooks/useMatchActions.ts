@@ -1,14 +1,10 @@
 import { FormattedMatch, FormattedProfile, MatchEvents } from '@typings/match';
 import fetchNui from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { matchState, useSetFormattedProfiles, useSetMatches } from './state';
+import { useSetFormattedProfiles, useSetMatches } from './state';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Snapshot, useRecoilCallback } from 'recoil';
-
-const getIsMatchesLoading = (snapshot: Snapshot) =>
-  snapshot.getLoadable<FormattedProfile[]>(matchState.profiles).state !== 'hasValue';
 
 export const useMatchActions = () => {
   const setProfiles = useSetFormattedProfiles();
@@ -55,16 +51,13 @@ export const useMatchActions = () => {
     [setProfiles, addAlert, t, setMatches],
   );
 
-  const addMatchAccount = useRecoilCallback(
-    ({ snapshot, set }) =>
-      async (profile: FormattedProfile, myProfile: FormattedProfile) => {
-        if (profile.identifier === myProfile.identifier) return;
+  const addMatchAccount = useCallback(
+    (profile: FormattedProfile, myProfile: FormattedProfile) => {
+      if (profile.identifier === myProfile.identifier) return;
 
-        const matchesLoading = getIsMatchesLoading(snapshot);
-        if (matchesLoading) return;
-
-        set(matchState.profiles, (curVal) => [profile, ...curVal]);
-      },
+      setProfiles((curVal) => [profile, ...curVal]);
+    },
+    [setProfiles],
   );
 
   const addMatchedAccount = async () => {

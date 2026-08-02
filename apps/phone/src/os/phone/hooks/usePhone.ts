@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { ResourceConfig } from '@typings/config';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { phoneState } from './state';
@@ -13,8 +13,8 @@ interface IUsePhone {
 }
 
 export const usePhone = (): IUsePhone => {
-  const isPhoneOpen = useRecoilValue(phoneState.visibility);
-  const config = useRecoilValue(phoneState.resourceConfig);
+  const isPhoneOpen = useAtomValue(phoneState.visibility);
+  const config = useAtomValue(phoneState.resourceConfig);
 
   const { removeAlerts } = useNotifications();
 

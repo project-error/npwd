@@ -1,42 +1,22 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Paper, Typography, Button } from '@mui/material';
 import { useApp } from '@os/apps/hooks/useApps';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import styled from '@emotion/styled';
-import { useHistory } from 'react-router-dom';
+import { ArrowLeft, Edit, Check, ShieldCheck } from 'lucide-react';
+import { NPWDButton } from '@npwd/keyos';
+import { useNavigate } from 'react-router';
 import { useActiveDarkchatValue } from '../../state/state';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { TextField } from '@ui/components/Input';
 import { useModal } from '@apps/darkchat/hooks/useModal';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useTranslation } from 'react-i18next';
-
-interface HeaderProps {
-  background: string;
-}
-
-const Header = styled(Paper)<HeaderProps>(({ theme, background }) => ({
-  backgroundColor: background || theme.palette.background.default,
-  height: '60px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  borderRadius: 0,
-}));
-
-const LeaveButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
-}));
+import { Button } from '@ui/components/Button';
 
 const DarkChatHeader: React.FC = () => {
   const { backgroundColor } = useApp('DARKCHAT');
   const activeConversation = useActiveDarkchatValue();
   const { setOwnerModal } = useModal();
   const { leaveChannel, updateChannelLabel } = useDarkchatAPI();
-  const { goBack } = useHistory();
+  const navigate = useNavigate();
   const myPhoneNumber = useMyPhoneNumber();
   const [t] = useTranslation();
 
@@ -65,12 +45,15 @@ const DarkChatHeader: React.FC = () => {
   const isOwner = myPhoneNumber === activeConversation.owner;
 
   return (
-    <Header background={backgroundColor}>
-      <Box display="flex" alignItems="center" flexDirection="row" gap={1}>
-        <IconButton onClick={goBack}>
-          <ArrowBackIcon />
-        </IconButton>
-        <Box display="flex" gap={2} alignItems="center">
+    <header
+      className="flex h-[60px] items-center justify-between rounded-none"
+      style={{ backgroundColor: backgroundColor || 'var(--keyos-app-surface)' }}
+    >
+      <div className="flex flex-row items-center gap-1">
+        <NPWDButton size="icon" variant="ghost" onClick={() => navigate(-1)}>
+          <ArrowLeft size={22} />
+        </NPWDButton>
+        <div className="flex items-center gap-2">
           {isEditing ? (
             <TextField
               inputProps={{ style: { fontSize: 23 } }}
@@ -78,37 +61,35 @@ const DarkChatHeader: React.FC = () => {
               onChange={(e) => setLabel(e.currentTarget.value)}
             />
           ) : (
-            <Typography fontSize={26}>{label}</Typography>
+            <p className="text-[26px] text-keyos-cream">{label}</p>
           )}
           {isOwner && (
-            <Box>
+            <div>
               {isEditing ? (
-                <IconButton disableFocusRipple disableTouchRipple onClick={handleUpdateLabel}>
-                  <CheckIcon />
-                </IconButton>
+                <NPWDButton size="icon" variant="ghost" onClick={handleUpdateLabel}>
+                  <Check size={20} />
+                </NPWDButton>
               ) : (
-                <IconButton
-                  disableFocusRipple
-                  disableTouchRipple
-                  onClick={() => setIsEditing(true)}
-                >
-                  <EditIcon />
-                </IconButton>
+                <NPWDButton size="icon" variant="ghost" onClick={() => setIsEditing(true)}>
+                  <Edit size={20} />
+                </NPWDButton>
               )}
-            </Box>
+            </div>
           )}
-        </Box>
-      </Box>
-      <Box pr={2}>
+        </div>
+      </div>
+      <div className="pr-2">
         {isOwner ? (
-          <IconButton onClick={openOwnerModal}>
-            <AdminPanelSettingsIcon />
-          </IconButton>
+          <NPWDButton size="icon" variant="ghost" onClick={openOwnerModal}>
+            <ShieldCheck size={22} />
+          </NPWDButton>
         ) : (
-          <LeaveButton onClick={handleLeaveChannel}>{t('DARKCHAT.LEAVE')}</LeaveButton>
+          <Button variant="text" onClick={handleLeaveChannel}>
+            {t('DARKCHAT.LEAVE')}
+          </Button>
         )}
-      </Box>
-    </Header>
+      </div>
+    </header>
   );
 };
 

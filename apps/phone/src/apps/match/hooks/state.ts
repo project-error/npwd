@@ -1,100 +1,87 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { FormattedMatch, FormattedProfile, MatchEvents } from '@typings/match';
-import fetchNui from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from '../../../utils/misc';
 import { MockMatchesData, MockMyProfileData, MockProfilesData } from '../utils/constants';
+import { fetchNuiData } from '@common/query/fetch-nui-query';
+import { useQueryState, useQueryStateValue, useSetQueryState } from '@common/query/query-state';
 
-export const matchState = {
-  profiles: atom<FormattedProfile[]>({
-    key: 'profiles',
-    default: selector({
-      key: 'matchDefaultProfiles',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<FormattedProfile[]>>(
-            MatchEvents.GET_PROFILES,
-          );
-          LogDebugEvent({ action: 'fetchProfiles', data: resp.data });
-          return resp.data;
-        } catch (e) {
-          if (isEnvBrowser()) {
-            return MockProfilesData;
-          }
-          console.error(e);
-          return [];
-        }
-      },
-    }),
-  }),
-  errorLoadingProfiles: atom<boolean>({
-    key: 'errorLoadingProfiles',
-    default: false,
-  }),
-  matches: atom<FormattedMatch[]>({
-    key: 'matches',
-    default: selector({
-      key: 'defaultMatches',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<FormattedMatch[]>>(
-            MatchEvents.GET_MATCHES,
-            { page: 0 },
-          );
-          LogDebugEvent({ action: 'fetchMatches', data: resp.data });
-          return resp.data;
-        } catch (e) {
-          if (isEnvBrowser()) {
-            return MockMatchesData;
-          }
-          return [];
-        }
-      },
-    }),
-  }),
-  errorLoadingMatches: atom<boolean>({
-    key: 'errorLoadingMatches',
-    default: false,
-  }),
-  myProfile: atom<FormattedProfile | null>({
-    key: 'myProfile',
-    default: selector({
-      key: 'myProfileDefault',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<FormattedProfile>>(
-            MatchEvents.GET_MY_PROFILE,
-          );
-          LogDebugEvent({ action: 'fetchMyProfile', data: resp.data });
-          return resp.data;
-        } catch (e) {
-          if (isEnvBrowser()) {
-            return MockMyProfileData;
-          }
-          console.error(e);
-          return null;
-        }
-      },
-    }),
-  }),
-  noProfileExists: atom<boolean>({
-    key: 'noProfileExists',
-    default: false,
-  }),
+export const MATCH_PROFILES_QUERY_KEY = ['match', 'profiles'] as const;
+export const MATCH_MATCHES_QUERY_KEY = ['match', 'matches'] as const;
+export const MATCH_MY_PROFILE_QUERY_KEY = ['match', 'my-profile'] as const;
+
+const fetchProfiles = async () => {
+  try {
+    const profiles = await fetchNuiData<FormattedProfile[]>(MatchEvents.GET_PROFILES);
+    LogDebugEvent({ action: 'fetchProfiles', data: profiles });
+    return profiles;
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return MockProfilesData;
+    }
+    console.error(e);
+    return [];
+  }
 };
 
-export const useFormattedProfiles = () => useRecoilState(matchState.profiles);
-export const useFormattedProfilesValue = () => useRecoilValue(matchState.profiles);
-export const useSetFormattedProfiles = () => useSetRecoilState(matchState.profiles);
+const fetchMatches = async () => {
+  try {
+    const matches = await fetchNuiData<FormattedMatch[]>(MatchEvents.GET_MATCHES, { page: 0 });
+    LogDebugEvent({ action: 'fetchMatches', data: matches });
+    return matches;
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return MockMatchesData;
+    }
+    return [];
+  }
+};
 
-export const useMyProfile = () => useRecoilState(matchState.myProfile);
-export const useMyProfileValue = () => useRecoilValue(matchState.myProfile);
-export const useSetMyProfile = () => useSetRecoilState(matchState.myProfile);
+const fetchMyProfile = async () => {
+  try {
+    const profile = await fetchNuiData<FormattedProfile>(MatchEvents.GET_MY_PROFILE);
+    LogDebugEvent({ action: 'fetchMyProfile', data: profile });
+    return profile;
+  } catch (e) {
+    if (isEnvBrowser()) {
+      return MockMyProfileData;
+    }
+    console.error(e);
+    return null;
+  }
+};
 
-export const useProfileExistsValue = () => useRecoilValue(matchState.noProfileExists);
-export const useProfileExists = () => useRecoilState(matchState.noProfileExists);
+export const matchState = {
+  profiles: MATCH_PROFILES_QUERY_KEY,
+  errorLoadingProfiles: atom<boolean>(false),
+  matches: MATCH_MATCHES_QUERY_KEY,
+  errorLoadingMatches: atom<boolean>(false),
+  myProfile: MATCH_MY_PROFILE_QUERY_KEY,
+  noProfileExists: atom<boolean>(false),
+};
 
-export const useFormattedMatches = () => useRecoilState(matchState.matches);
-export const useMatchesValue = () => useRecoilValue(matchState.matches);
-export const useSetMatches = () => useSetRecoilState(matchState.matches);
+export const useFormattedProfiles = () =>
+  useQueryState<FormattedProfile[]>(MATCH_PROFILES_QUERY_KEY, fetchProfiles, []);
+export const useFormattedProfilesValue = () =>
+  useQueryStateValue<FormattedProfile[]>(MATCH_PROFILES_QUERY_KEY, fetchProfiles, []);
+export const useSetFormattedProfiles = () =>
+  useSetQueryState<FormattedProfile[]>(MATCH_PROFILES_QUERY_KEY, []);
+
+export const useMyProfile = () =>
+  useQueryState<FormattedProfile | null>(MATCH_MY_PROFILE_QUERY_KEY, fetchMyProfile, null);
+export const useMyProfileValue = () =>
+  useQueryStateValue<FormattedProfile | null>(MATCH_MY_PROFILE_QUERY_KEY, fetchMyProfile, null);
+export const useSetMyProfile = () =>
+  useSetQueryState<FormattedProfile | null>(MATCH_MY_PROFILE_QUERY_KEY, null);
+
+export const useProfileExistsValue = () => useAtomValue(matchState.noProfileExists);
+export const useProfileExists = () => useAtom(matchState.noProfileExists);
+
+export const useFormattedMatches = () =>
+  useQueryState<FormattedMatch[]>(MATCH_MATCHES_QUERY_KEY, fetchMatches, []);
+export const useMatchesValue = () =>
+  useQueryStateValue<FormattedMatch[]>(MATCH_MATCHES_QUERY_KEY, fetchMatches, []);
+export const useSetMatches = () => useSetQueryState<FormattedMatch[]>(MATCH_MATCHES_QUERY_KEY, []);
+
+export const useErrorLoadingProfiles = () => useAtomValue(matchState.errorLoadingProfiles);
+export const useErrorLoadingMatches = () => useAtomValue(matchState.errorLoadingMatches);

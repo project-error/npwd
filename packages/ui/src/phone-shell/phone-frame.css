@@ -1,0 +1,122 @@
+/* Samsung-style CSS phone frame — kept lightweight for GPU performance */
+
+.phone-device-shell {
+  --frame-body: #8a8d93;
+  --frame-body-dark: #5c5f66;
+  --frame-body-light: #c4c7cc;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--keyos-frame-bezel-top) var(--keyos-frame-bezel-x) var(--keyos-frame-bezel-bottom);
+  border-radius: 52px;
+  background-color: var(--frame-body);
+  background-image: linear-gradient(
+    165deg,
+    var(--frame-body-light) 0%,
+    var(--frame-body) 45%,
+    var(--frame-body-dark) 100%
+  );
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.4);
+  contain: layout paint;
+}
+
+.phone-device-shell[data-color='titanium'] {
+  --frame-body: #8a8d93;
+  --frame-body-dark: #5c5f66;
+  --frame-body-light: #c4c7cc;
+}
+
+.phone-device-shell[data-color='black'] {
+  --frame-body: #2a2a2e;
+  --frame-body-dark: #111114;
+  --frame-body-light: #4a4a50;
+}
+
+.phone-device-shell[data-color='violet'] {
+  --frame-body: #6b5b7a;
+  --frame-body-dark: #3d3348;
+  --frame-body-light: #9a8aa8;
+}
+
+.phone-device-shell[data-color='white'] {
+  --frame-body: #e8e8ec;
+  --frame-body-dark: #b8b8c0;
+  --frame-body-light: #fafafc;
+}
+
+.phone-device-shell[data-color='blue'] {
+  --frame-body: #4a6678;
+  --frame-body-dark: #2a3d4a;
+  --frame-body-light: #7a9ab0;
+}
+
+.phone-device-shell[data-color='green'] {
+  --frame-body: #4a6b58;
+  --frame-body-dark: #2a4035;
+  --frame-body-light: #7a9a88;
+}
+
+.phone-screen-samsung {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--keyos-screen-radius);
+  isolation: isolate;
+}
+
+/* Side buttons — flat colors, no gradients */
+.phone-frame-button {
+  position: absolute;
+  z-index: 2;
+  border-radius: 2px;
+  background: var(--frame-body-dark);
+}
+
+.phone-frame-button--volume-up {
+  top: 180px;
+  left: -2px;
+  width: 3px;
+  height: 34px;
+}
+
+.phone-frame-button--volume-down {
+  top: 224px;
+  left: -2px;
+  width: 3px;
+  height: 34px;
+}
+
+.phone-frame-button--power {
+  top: 200px;
+  right: -2px;
+  width: 3px;
+  height: 48px;
+}
+
+/* Punch-hole camera */
+.phone-frame-punch-hole {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--keyos-frame-bezel-top) + 8px);
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #050505;
+  box-shadow: 0 0 0 2px var(--frame-body-dark);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-device-shell {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.35);
+  }
+}

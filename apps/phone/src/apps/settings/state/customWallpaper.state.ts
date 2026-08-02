@@ -1,8 +1,5 @@
-import { atom, useRecoilState } from 'recoil';
+import { atom, useAtom } from 'jotai';
 
-const customWallpaperState = atom({
-  key: 'customWallpaperState',
-  default: false,
-});
+const customWallpaperState = atom(false);
 
-export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState);
+export const useCustomWallpaperModal = () => useAtom(customWallpaperState);

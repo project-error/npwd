@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { useNavigate } from 'react-router';
+import { useAtom } from 'jotai';
 import { Tweet } from '@typings/twitter';
 
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useSettings } from '../../settings/hooks/useSettings';
 import { SETTING_MENTIONS } from '../utils/constants';
-import { twitterState } from './state';
+import { twitterState, useTwitterProfileValue } from './state';
 
 const NOTIFICATION_ID = 'twitter:broadcast';
 
@@ -18,17 +18,16 @@ function isMentioned(profileName: string, message: string) {
 export const useTwitterNotifications = () => {
   const [settings] = useSettings();
   const [t] = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { addNotificationAlert, addNotification, hasNotification, removeId } = useNotifications();
 
   const { icon, notificationIcon } = useApp('TWITTER');
 
-  const [unreadCount, setUnreadCount] = useRecoilState(twitterState.unreadTweetsCount);
-  const { state: profileLoading, contents: profile } = useRecoilValueLoadable(twitterState.profile);
+  const [unreadCount, setUnreadCount] = useAtom(twitterState.unreadTweetsCount);
+  const profile = useTwitterProfileValue();
 
   const setNotification = ({ profile_name, message, isRetweet }: Tweet) => {
-    if (profileLoading !== 'hasValue') return;
     const titleStr = isRetweet
       ? 'TWITTER.MESSAGES.NEW_RETWEET_BROADCAST'
       : 'TWITTER.MESSAGES.NEW_BROADCAST';
@@ -55,7 +54,7 @@ export const useTwitterNotifications = () => {
       id: NOTIFICATION_ID,
       sound: profileMentioned,
       title: t(titleStr, { profile_name }),
-      onClick: () => history.push('/twitter'),
+      onClick: () => navigate('/twitter'),
       content: message,
       icon,
       notificationIcon,

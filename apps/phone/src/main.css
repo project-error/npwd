@@ -1,8 +1,33 @@
 @import url('non.geist');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '../../../packages/ui/src/theme-tokens.css';
+@import '../../../packages/ui/src/phone-shell/phone-frame.css';
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../../../packages/ui/src";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-keyos-night: var(--keyos-night);
+  --color-keyos-panel: var(--keyos-panel);
+  --color-keyos-panel-strong: var(--keyos-panel-strong);
+  --color-keyos-cream: var(--keyos-cream);
+  --color-keyos-fg: var(--keyos-fg);
+  --color-keyos-muted: var(--keyos-muted);
+  --color-keyos-amber: var(--keyos-amber);
+  --color-keyos-amber-soft: var(--keyos-amber-soft);
+
+  --shadow-keyos-panel: var(--keyos-shadow-panel);
+  --shadow-keyos-pop: var(--keyos-shadow-pop);
+  --shadow-keyos-glow: var(--keyos-shadow-glow);
+
+  --radius-keyos-sm: var(--keyos-radius-sm);
+  --radius-keyos-md: var(--keyos-radius-md);
+  --radius-keyos-lg: var(--keyos-radius-lg);
+  --radius-keyos-xl: var(--keyos-radius-xl);
+  --radius-keyos-2xl: var(--keyos-radius-2xl);
+
+  --font-sans: 'Geist Variable', Inter, ui-sans-serif, system-ui, sans-serif;
+}
 
 body {
   font-family: 'Geist Variable', sans-serif;

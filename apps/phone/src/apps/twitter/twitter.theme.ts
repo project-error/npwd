@@ -1,20 +1,15 @@
-import { common } from '@mui/material/colors';
+import { AppColorTokens } from '@npwd/keyos';
 
 export const TWITTER_APP_PRIMARY_COLOR = '#0ea5e9';
-export const TWITTER_APP_TEXT_COLOR = common.white;
+export const TWITTER_APP_TEXT_COLOR = '#ffffff';
 
-const theme = {
-  palette: {
-    primary: {
-      main: TWITTER_APP_PRIMARY_COLOR,
-      dark: '#0ea5e9',
-      light: '#0ea5e9',
-      contrastText: TWITTER_APP_TEXT_COLOR,
-    },
-    secondary: {
-      main: '#999',
-    },
-  },
+const theme: AppColorTokens = {
+  accent: TWITTER_APP_PRIMARY_COLOR,
+  accentForeground: TWITTER_APP_TEXT_COLOR,
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

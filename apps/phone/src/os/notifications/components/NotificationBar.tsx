@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import { Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
-import Battery90Icon from '@mui/icons-material/Battery90';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Button, Divider, List } from '@npwd/keyos';
+import { BatteryFull, ChevronUp, SignalMedium } from 'lucide-react';
 import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
@@ -11,56 +8,9 @@ import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
 import { usePlayer } from '@os/phone/hooks/usePlayer';
 import { usePhone } from '@os/phone/hooks/usePhone';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    height: '30px',
-    width: '100%',
-    color: theme.palette.text.primary,
-    zIndex: 99,
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    position: 'relative',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  item: {
-    margin: '0 6px',
-  },
-  text: {
-    position: 'relative',
-    lineHeight: '30px',
-    color: theme.palette.text.primary,
-  },
-  icon: {
-    padding: '4px',
-    color: theme.palette.text.primary,
-  },
-  drawer: {
-    backgroundColor: theme.palette.background.default,
-    width: '100%',
-    position: 'absolute',
-    top: '30px',
-    zIndex: 98,
-  },
-  closeNotifBtn: {
-    position: 'absolute',
-    right: '8px',
-    top: '8px',
-  },
-  notificationItem: {
-    position: 'relative',
-  },
-  collapseBtn: {
-    margin: '0 auto',
-  },
-}));
+import { cn } from '@utils/css';
 
 export const NotificationBar = () => {
-  const classes = useStyles();
-
   const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } =
     useNotifications();
 
@@ -79,56 +29,47 @@ export const NotificationBar = () => {
 
   return (
     <>
-      <Grid
-        className={classes.root}
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        wrap="nowrap"
+      <div
+        className="relative z-[99] flex h-[30px] w-full cursor-pointer items-center justify-between px-[15px] text-keyos-fg"
         onClick={() => {
           setBarUncollapsed((curr) => !curr);
         }}
       >
-        <Grid container item wrap="nowrap">
+        <div className="flex min-w-0 items-center">
           {icons.map((notifIcon) => (
-            <Grid item key={notifIcon.key} component={IconButton} className={classes.icon}>
+            <div className="p-1 text-keyos-fg" key={notifIcon.key}>
               {notifIcon.icon}
-            </Grid>
+            </div>
           ))}
-        </Grid>
+        </div>
         {time && (
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {time}
-            </Typography>
-          </Grid>
+          <span className="mx-1.5 text-[length:var(--keyos-text-caption)] font-medium leading-[30px] text-keyos-fg">
+            {time}
+          </span>
         )}
-        <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
+        <div className="flex items-center justify-end">
           {showId && (
-            <Grid sx={{ marginRight: 1 }} item>
-              <Typography className={classes.text} variant="button">
-                ID: {source}
-              </Typography>
-            </Grid>
+            <span className="mr-1 text-[length:var(--keyos-text-caption)] font-medium leading-[30px] text-keyos-fg">
+              ID: {source}
+            </span>
           )}
-          <Grid item>
-            <SignalIcon fontSize="small" />
-          </Grid>
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button" sx={{ textTransform: 'none' }}>
-              {Default.cellProvider}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Battery90Icon style={{ transform: 'rotate(90deg)', display: 'block' }} />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
-        <Paper square className={classes.drawer}>
-          <Box py={1}>
-            <List>
-              <Divider />
+          <SignalMedium className="size-4" />
+          <span className="mx-1.5 text-[length:var(--keyos-text-caption)] font-medium normal-case leading-[30px] text-keyos-fg">
+            {Default.cellProvider}
+          </span>
+          <BatteryFull className="size-4 rotate-90" />
+        </div>
+      </div>
+
+      {barUncollapsed && (
+        <div
+          className={cn(
+            'absolute inset-x-0 top-[30px] z-[98] w-full bg-keyos-panel',
+            'animate-in slide-in-from-top-2 fade-in-0 duration-200',
+          )}
+        >
+          <div className="py-1">
+            <List className="my-0 border-0 bg-transparent shadow-none">
               {notifications.map((notification, idx) => (
                 <NotificationItem
                   key={idx}
@@ -147,19 +88,22 @@ export const NotificationBar = () => {
                 />
               ))}
             </List>
-          </Box>
-          <Box display="flex" flexDirection="column">
+          </div>
+          <Divider />
+          <div className="flex flex-col">
             {!notifications.length && <NoNotificationText />}
-            <IconButton
-              className={classes.collapseBtn}
-              size="small"
+            <Button
+              aria-label="Collapse notifications"
+              className="mx-auto"
               onClick={() => setBarUncollapsed(false)}
+              size="icon-sm"
+              variant="ghost"
             >
-              <ArrowDropUpIcon />
-            </IconButton>
-          </Box>
-        </Paper>
-      </Slide>
+              <ChevronUp className="size-5" />
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

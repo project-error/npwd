@@ -1,7 +1,6 @@
-import { useRecoilState } from 'recoil';
-import { twitterState } from './state';
+import { useFilteredTweets as useFilteredTweetsState } from './state';
 
 export const useFilteredTweets = () => {
-  const [tweets, setTweets] = useRecoilState(twitterState.filteredTweets);
+  const [tweets, setTweets] = useFilteredTweetsState();
   return { tweets, setTweets };
 };

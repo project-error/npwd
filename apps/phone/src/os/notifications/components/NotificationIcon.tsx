@@ -1,6 +1,7 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { buttonVariants } from '@npwd/keyos';
+import { NavLink } from 'react-router';
+import { cn } from '@utils/css';
 
 interface INotificationIcon {
   icon: JSX.Element;
@@ -9,8 +10,11 @@ interface INotificationIcon {
 
 export const NotificationIcon = ({ icon, to }: INotificationIcon) => {
   return (
-    <IconButton component={NavLink} to={to} size="small">
+    <NavLink
+      className={cn(buttonVariants({ variant: 'ghost', size: 'icon-sm' }))}
+      to={to}
+    >
       {icon}
-    </IconButton>
+    </NavLink>
   );
 };

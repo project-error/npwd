@@ -1,33 +1,36 @@
 import React, { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { AddCircle, Home } from '@mui/icons-material/';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.default,
-  },
-  icon: {
-    color: theme.palette.primary.main,
-  },
-}));
+import { Link, useLocation } from 'react-router';
+import { PlusCircle, Home } from 'lucide-react';
+import { TabBar } from '@npwd/keyos';
 
 export const NavigationBar: React.FC = () => {
-  const classes = useStyles();
-  const [activePage, setActivePage] = useState(0);
+  const { pathname } = useLocation();
+  const [activePage, setActivePage] = useState(pathname);
+
+  const items = [
+    { value: '/marketplace', label: 'Home', icon: <Home /> },
+    { value: '/marketplace/new', label: 'New', icon: <PlusCircle /> },
+  ];
+
   return (
-    <BottomNavigation
+    <TabBar
+      items={items}
       value={activePage}
-      onChange={(event, newPage) => {
-        setActivePage(newPage);
-      }}
-      showLabels
-      className={classes.root}
-    >
-      <BottomNavigationAction component={Link} icon={<Home />} to="/marketplace" />
-      <BottomNavigationAction component={Link} icon={<AddCircle />} to="/marketplace/new" />
-    </BottomNavigation>
+      onChange={setActivePage}
+      renderItem={(item, active) => (
+        <Link
+          to={item.value}
+          className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-[var(--keyos-radius-pill)] px-3 py-1.5 text-[length:var(--keyos-text-micro)] font-medium transition-all duration-150 ${
+            active
+              ? 'bg-[color:var(--keyos-app-accent)]/20 text-[color:var(--keyos-app-accent)]'
+              : 'text-keyos-muted hover:text-keyos-fg'
+          }`}
+          onClick={() => setActivePage(item.value)}
+        >
+          <span className="[&_svg]:size-5">{item.icon}</span>
+          <span className="truncate">{item.label}</span>
+        </Link>
+      )}
+    />
   );
 };

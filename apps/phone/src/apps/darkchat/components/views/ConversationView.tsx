@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
 import { useActiveDarkchatValue, useDarkchatMessagesValue } from '../../state/state';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { useDarkchatAPI } from '../../hooks/useDarkchatAPI';
 import ChannelMessageBubble from '../ui/ChannelMessageBubble';
@@ -9,7 +8,6 @@ import ChannelImageBubble from '../ui/ChannelImageBubble';
 import ChannelInput from '../ui/ChannelInput';
 import { UploadMediaModal } from '../modals/UploadMedia';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { useHistory } from 'react-router-dom';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { useModal } from '../../hooks/useModal';
 import Backdrop from '@ui/components/Backdrop';
@@ -19,7 +17,7 @@ export const ConversationView: React.FC = () => {
   const activeConversation = useActiveDarkchatValue();
   const { fetchMessages, fetchMembers } = useDarkchatAPI();
   const messages = useDarkchatMessagesValue();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = useQueryParams();
   const { pathname, search } = useLocation();
   const { setModalMedia, modalVisible, ownerModal, setOwnerModal } = useModal();
@@ -29,8 +27,8 @@ export const ConversationView: React.FC = () => {
 
     setModalMedia(query.image);
 
-    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [query?.image, history, pathname, search, setModalMedia]);
+    navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
+  }, [query?.image, navigate, pathname, search, setModalMedia]);
 
   useEffect(() => {
     fetchMessages(activeConversation.id);
@@ -40,23 +38,22 @@ export const ConversationView: React.FC = () => {
   if (!activeConversation && !messages) return <LoadingSpinner />;
 
   return (
-    <Box display="flex" flexDirection="column" flex={1} flexGrow={1}>
+    <div className="flex flex-1 flex-grow flex-col">
       <UploadMediaModal />
       <OwnerModal open={ownerModal} closeModal={() => setOwnerModal(false)} />
       {modalVisible || (ownerModal && <Backdrop />)}
-      <Box display="flex" flexDirection="column" width="100%" height={605} overflow="auto">
+      <div className="flex h-[605px] w-full flex-col overflow-auto">
         {messages.map((message) =>
-          /* type is wether or not the message is a image or not */
           message.isImage ? (
-            <ChannelImageBubble {...message} />
+            <ChannelImageBubble key={message.id} {...message} />
           ) : (
-            <ChannelMessageBubble {...message} />
+            <ChannelMessageBubble key={message.id} {...message} />
           ),
         )}
-      </Box>
-      <Box>
+      </div>
+      <div>
         <ChannelInput />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

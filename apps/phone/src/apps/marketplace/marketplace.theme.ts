@@ -1,19 +1,16 @@
-import { common, red } from '@mui/material/colors';
-import { ThemeOptions } from '@mui/material';
+import { AppColorTokens } from '@npwd/keyos';
 
-export const MARKETPLACE_APP_PRIMARY_COLOR = red[500];
-export const MARKETPLACE_APP_ICON_COLOR = common.white;
-export const MARKETPLACE_APP_TEXT_COLOR = common.black;
+export const MARKETPLACE_APP_PRIMARY_COLOR = '#f44336';
+export const MARKETPLACE_APP_ICON_COLOR = '#ffffff';
+export const MARKETPLACE_APP_TEXT_COLOR = '#000000';
 
-const theme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: MARKETPLACE_APP_PRIMARY_COLOR,
-      dark: red[700],
-      light: red[200],
-      contrastText: MARKETPLACE_APP_TEXT_COLOR,
-    },
-  },
+const theme: AppColorTokens = {
+  accent: MARKETPLACE_APP_PRIMARY_COLOR,
+  accentForeground: MARKETPLACE_APP_ICON_COLOR,
+  danger: '#ef4444',
+  dangerForeground: '#ffffff',
+  muted: '#94a3b8',
+  surface: '#11141a',
 };
 
 export default theme;

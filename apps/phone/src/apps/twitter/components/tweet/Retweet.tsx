@@ -1,30 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Repeat } from '@mui/icons-material';
-import { Box, styled } from '@mui/material';
+import { Repeat } from 'lucide-react';
 
 interface IProps {
   profileName: string;
 }
 
-const RetweetContainer = styled(Box)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  fontSize: '16px',
-  justifyContent: 'flex-start',
-  width: '100%',
-  display: 'flex',
-  alignItems: 'flex-start',
-  paddingBottom: '8px',
-  marginBottom: '6px',
-  marginTop: '-6px',
-}));
-
 function Retweet({ profileName }: IProps) {
   const [t] = useTranslation();
   return (
-    <RetweetContainer>
-      <Repeat /> {profileName} {t('TWITTER.RETWEETED')}
-    </RetweetContainer>
+    <div className="-mt-1.5 mb-1.5 flex w-full items-start justify-start pb-2 text-base text-[color:var(--keyos-app-accent)]">
+      <Repeat size={16} className="mr-1 mt-0.5 shrink-0" /> {profileName} {t('TWITTER.RETWEETED')}
+    </div>
   );
 }
 

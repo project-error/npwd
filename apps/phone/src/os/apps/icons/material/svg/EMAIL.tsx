@@ -1,6 +1,6 @@
 import React from 'react';
-import { Email } from '@mui/icons-material';
+import { Mail } from 'lucide-react';
 
-const EmailIcon: React.FC = () => <Email fontSize="small" />;
+const EmailIcon: React.FC = () => <Mail size={16} />;
 
 export default EmailIcon;

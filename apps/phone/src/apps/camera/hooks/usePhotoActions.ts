@@ -1,6 +1,5 @@
-import { photoState, useSetPhotos } from './state';
+import { useSetPhotos } from './state';
 import { useCallback } from 'react';
-import { useRecoilCallback } from 'recoil';
 import { GalleryPhoto } from '@typings/photo';
 
 export const usePhotoActions = () => {
@@ -27,14 +26,10 @@ export const usePhotoActions = () => {
     [setPhotos],
   );
 
-  const saveLocalImage = useRecoilCallback<[GalleryPhoto], void>(
-    ({ snapshot }) =>
-      async (dto) => {
-        const { state } = await snapshot.getLoadable(photoState.photos);
-        if (state !== 'hasValue') return;
-
-        setPhotos((curVal) => [dto, ...curVal]);
-      },
+  const saveLocalImage = useCallback(
+    (dto: GalleryPhoto) => {
+      setPhotos((curVal) => [dto, ...curVal]);
+    },
     [setPhotos],
   );
 
